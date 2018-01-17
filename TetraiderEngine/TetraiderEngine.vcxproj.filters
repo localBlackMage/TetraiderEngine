@@ -107,12 +107,6 @@
     <ClInclude Include="Source\Math\MathDefs.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\json.hpp">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FrameRateManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
@@ -130,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="Source\JsonReader.h">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\json.hpp">
+      <Filter>External Libraries</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

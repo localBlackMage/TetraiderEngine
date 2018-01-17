@@ -19,14 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\FrameRateManager.cpp" />
+    <ClCompile Include="Source\GameObjectManager.cpp" />
+    <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\JsonReader.cpp" />
     <ClCompile Include="Source\Math\LineSegment2D.cpp" />
     <ClCompile Include="Source\Math\Matrix2x2.cpp" />
     <ClCompile Include="Source\Math\Matrix3x3.cpp" />
     <ClCompile Include="Source\Math\Matrix4x4.cpp" />
     <ClCompile Include="Source\Math\Vector2D.cpp" />
     <ClCompile Include="Source\Math\Vector3D.cpp" />
+    <ClCompile Include="Source\RenderManager.cpp" />
+    <ClCompile Include="Source\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\External\json.hpp" />
+    <ClInclude Include="Source\External\stb_image.h" />
+    <ClInclude Include="Source\FrameRateManager.h" />
+    <ClInclude Include="Source\GameObjectManager.h" />
+    <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\JsonReader.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
     <ClInclude Include="Source\Math\Matrix2x2.h" />
@@ -34,6 +46,8 @@
     <ClInclude Include="Source\Math\Matrix4x4.h" />
     <ClInclude Include="Source\Math\Vector2D.h" />
     <ClInclude Include="Source\Math\Vector3D.h" />
+    <ClInclude Include="Source\RenderManager.h" />
+    <ClInclude Include="Source\ResourceManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
