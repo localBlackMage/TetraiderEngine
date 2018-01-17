@@ -66,10 +66,16 @@
     <ClCompile Include="Source\Math\LineSegment2D.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\InputManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+    <ClCompile Include="Source\JsonReader.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Source\FrameRateManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjectManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\RenderManager.cpp">
@@ -77,12 +83,6 @@
     </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObjectManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\JsonReader.cpp">
-      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,10 +107,19 @@
     <ClInclude Include="Source\Math\MathDefs.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InputManager.h">
-      <Filter>Header Files\Managers</Filter>
+    <ClInclude Include="Source\External\json.hpp">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\stb_image.h">
+      <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\FrameRateManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjectManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Source\RenderManager.h">
@@ -118,15 +127,6 @@
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjectManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\json.hpp">
-      <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\JsonReader.h">
       <Filter>Header Files\Utility</Filter>
