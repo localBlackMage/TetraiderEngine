@@ -1,21 +1,16 @@
 /* Start Header -------------------------------------------------------
-Copyright (C) 2017 DigiPen Institute of Technology.
+Copyright (C) 2018 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Matrix2x2.h
-Purpose: Provides a 2 by 2 Matrix and associated functionality
+Purpose: Provides a 2 x 2 Matrix and associated functionality
 Language: C++
-Platform: Windows 8.1 / 10.0.15063.0  or  GCC 7.1.0
-Project: CS529_holdenprofit_
-Author: Holden Profit, holden.profit, 42833
-Creation date: 9/29/17
+Project: GAM541
+Author: Holden Profit
+Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
 #pragma once
-
-#ifndef _USE_MATH_DEFINES
-#define _USE_MATH_DEFINES
-#endif
 
 #ifndef MATRIX2X2_H
 #define MATRIX2X2_H

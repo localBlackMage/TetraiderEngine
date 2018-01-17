@@ -16,6 +16,8 @@ Creation date: 1/12/18
 #define MATH_DEFINES_H
 
 #define TEST_MODE 0
+#define PASS "PASS"
+#define FAIL "!!!!! FAIL !!!!!"
 #define EPSILON 0.0001
 #define PI       3.14159265358979323846f   // pi
 #define PI_2     1.57079632679489661923f   // pi/2

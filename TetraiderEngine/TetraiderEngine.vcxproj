@@ -18,6 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Math\LineSegment2D.cpp" />
+    <ClCompile Include="Source\Math\LineSegment3D.cpp" />
+    <ClCompile Include="Source\Math\Math2D.cpp" />
+    <ClCompile Include="Source\Math\Math3D.cpp" />
+    <ClCompile Include="Source\Math\Matrix2x2.cpp" />
+    <ClCompile Include="Source\Math\Matrix3x3.cpp" />
+    <ClCompile Include="Source\Math\Matrix4x4.cpp" />
+    <ClCompile Include="Source\Math\Vector2D.cpp" />
+    <ClCompile Include="Source\Math\Vector3D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Math\LineSegment2D.h" />
+    <ClInclude Include="Source\Math\LineSegment3D.h" />
+    <ClInclude Include="Source\Math\Math2D.h" />
+    <ClInclude Include="Source\Math\Math3D.h" />
+    <ClInclude Include="Source\Math\MathDefs.h" />
+    <ClInclude Include="Source\Math\Matrix2x2.h" />
+    <ClInclude Include="Source\Math\Matrix3x3.h" />
+    <ClInclude Include="Source\Math\Matrix4x4.h" />
+    <ClInclude Include="Source\Math\Vector2D.h" />
+    <ClInclude Include="Source\Math\Vector3D.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3D9758DE-D09F-499F-BF86-1ADC16174BA2}</ProjectGuid>
@@ -110,31 +133,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Math\LineSegment2D.cpp" />
-    <ClCompile Include="Math\LineSegment3D.cpp" />
-    <ClCompile Include="Math\Math2D.cpp" />
-    <ClCompile Include="Math\Math3D.cpp" />
-    <ClCompile Include="Math\Matrix.cpp" />
-    <ClCompile Include="Math\Matrix2x2.cpp" />
-    <ClCompile Include="Math\Matrix3x3.cpp" />
-    <ClCompile Include="Math\Matrix4x4.cpp" />
-    <ClCompile Include="Math\Vector2D.cpp" />
-    <ClCompile Include="Math\Vector3D.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Math\LineSegment2D.h" />
-    <ClInclude Include="Math\LineSegment3D.h" />
-    <ClInclude Include="Math\Math2D.h" />
-    <ClInclude Include="Math\Math3D.h" />
-    <ClInclude Include="Math\MathDefs.h" />
-    <ClInclude Include="Math\Matrix.h" />
-    <ClInclude Include="Math\Matrix2x2.h" />
-    <ClInclude Include="Math\Matrix3x3.h" />
-    <ClInclude Include="Math\Matrix4x4.h" />
-    <ClInclude Include="Math\Vector2D.h" />
-    <ClInclude Include="Math\Vector3D.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

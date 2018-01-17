@@ -14,83 +14,83 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{df15ae0d-15eb-422e-a40f-4658835a13fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{dcb51233-6201-422f-974f-55041051e5ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Math\Vector">
-      <UniqueIdentifier>{54045e20-a908-4386-ab07-1b76664f327c}</UniqueIdentifier>
+      <UniqueIdentifier>{e940ce22-07c2-414f-a828-84a98b3b5658}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Math\Vector">
-      <UniqueIdentifier>{9ba69d29-b037-4092-b4e7-a4aebd8fe67b}</UniqueIdentifier>
+      <UniqueIdentifier>{7cb21f73-075a-4b6e-8e31-5fd4423b85ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math\Matrix">
+      <UniqueIdentifier>{8e81bf07-ee7e-422b-80ce-790bb0732590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{5afa5e69-7bd8-4b79-af6e-4113777358a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math\Matrix">
+      <UniqueIdentifier>{998e647a-c09b-4e46-a7ab-346acfc3802a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math\Vector">
+      <UniqueIdentifier>{11b98312-189f-47e9-a1a5-5dc282721ec5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Math\LineSegment2D.cpp">
-      <Filter>Source Files\Math</Filter>
+    <ClCompile Include="Source\Math\LineSegment2D.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Math\LineSegment3D.cpp">
-      <Filter>Source Files\Math</Filter>
+    <ClCompile Include="Source\Math\LineSegment3D.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Math2D.cpp">
-      <Filter>Source Files\Math</Filter>
+    <ClCompile Include="Source\Math\Math2D.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Math3D.cpp">
-      <Filter>Source Files\Math</Filter>
+    <ClCompile Include="Source\Math\Math3D.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Matrix.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix2x2.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix3x3.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix4x4.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector3D.cpp">
+    <ClCompile Include="Source\Math\Vector3D.cpp">
       <Filter>Source Files\Math\Vector</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Vector2D.cpp">
+    <ClCompile Include="Source\Math\Vector2D.cpp">
       <Filter>Source Files\Math\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Matrix4x4.cpp">
+      <Filter>Source Files\Math\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Matrix2x2.cpp">
+      <Filter>Source Files\Math\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Math\Matrix3x3.cpp">
+      <Filter>Source Files\Math\Matrix</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Math\LineSegment2D.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="Source\Math\LineSegment2D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\LineSegment3D.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="Source\Math\LineSegment3D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Math2D.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="Source\Math\Math2D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Math3D.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="Source\Math\Math3D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Matrix.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="Source\Math\MathDefs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Matrix2x2.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Matrix3x3.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Matrix4x4.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Vector3D.h">
+    <ClInclude Include="Source\Math\Vector3D.h">
       <Filter>Header Files\Math\Vector</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Vector2D.h">
+    <ClInclude Include="Source\Math\Vector2D.h">
       <Filter>Header Files\Math\Vector</Filter>
     </ClInclude>
-    <ClInclude Include="Math\MathDefs.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="Source\Math\Matrix4x4.h">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Matrix2x2.h">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Matrix3x3.h">
+      <Filter>Header Files\Math\Matrix</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

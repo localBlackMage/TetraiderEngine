@@ -1,21 +1,16 @@
 /* Start Header -------------------------------------------------------
-Copyright (C) 2017 DigiPen Institute of Technology.
+Copyright (C) 2018 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Vector3D.h
+File Name: Vector2D.h
 Purpose: Provides a 3 Dimensional Vector (with w coordinate for Homogeneous uses)
 Language: C++
-Platform: Windows 8.1 / 10.0.15063.0  or  GCC 7.1.0
-Project: CS529_holdenprofit_
-Author: Holden Profit, holden.profit, 42833
-Creation date: 9/29/17
+Project: GAM541
+Author: Holden Profit
+Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
 #pragma once
-
-#ifndef _USE_MATH_DEFINES
-#define _USE_MATH_DEFINES
-#endif
 
 #ifndef VECTOR3_H
 #define VECTOR3_H
@@ -24,28 +19,19 @@ Creation date: 9/29/17
 
 class Vector3D
 {
-private:
-	float m_x, m_y, m_z, m_w;
-
 public:
+	float x, y, z, w;
+
 	Vector3D();
-	Vector3D(float x, float y, float z);
-	Vector3D(float x, float y, float z, float w);
+	Vector3D(float _x, float _y, float _z);
+	Vector3D(float _x, float _y, float _z, float _w);
 	Vector3D(const Vector3D & rhs);
 	Vector3D(const Vector2D & rhs);
 	Vector3D& operator= (Vector3D rhs);
 	~Vector3D();
 
-	void Set(float x, float y, float z);
-	void Set(float x, float y, float z, float w);
-	float getX() const { return m_x; };
-	void setX(float x) { m_x = x; };
-	float getY() const { return m_y; };
-	void setY(float y) { m_y = y; };
-	float getZ() const { return m_z; };
-	void setZ(float z) { m_z = z; };
-	float getW() const { return m_w; };
-	void setW(float w) { m_w = w; };
+	void Set(float _x, float _y, float _z);
+	void Set(float _x, float _y, float _z, float _w);
 
 	operator float*();
 	bool operator== (const  Vector3D& other) const;

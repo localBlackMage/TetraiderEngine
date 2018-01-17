@@ -1,9 +1,7 @@
 #include "Matrix4x4.h"
 #include "Matrix3x3.h"
-#include "AcrylicorTypedefs.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "MathDefs.h"
+#include <iostream>
 
 Matrix4x4::Matrix4x4() {}
 
@@ -108,15 +106,11 @@ Matrix4x4::~Matrix4x4() {}
 
 float Matrix4x4::Get(int row, int col) const
 {
-	if (row < 0 || row > 3 || col < 0 || col > 3)
-		throw "Invalid row or column access.";
 	return m_matrix[row][col];
 }
 
 void Matrix4x4::Set(int row, int col, float val)
 {
-	if (row < 0 || row > 3 || col < 0 || col > 3)
-		throw "Invalid row or column access.";
 	m_matrix[row][col] = val;
 }
 
@@ -211,11 +205,10 @@ float Matrix4x4::Determinant() const
 
 void Matrix4x4::Print() const
 {
-	printf("( %f %f %f %f )\n", m_matrix[0][0], m_matrix[0][1], m_matrix[0][2], m_matrix[0][3]);
-	printf("( %f %f %f %f )\n", m_matrix[1][0], m_matrix[1][1], m_matrix[1][2], m_matrix[1][3]);
-	printf("( %f %f %f %f )\n", m_matrix[2][0], m_matrix[2][1], m_matrix[2][2], m_matrix[2][3]);
-	printf("( %f %f %f %f )\n", m_matrix[3][0], m_matrix[3][1], m_matrix[3][2], m_matrix[3][3]);
-	printf("\n");
+	std::cout << "[ " << m_matrix[0][0] << ", " << m_matrix[0][1] << ", " << m_matrix[0][2] << ", " << m_matrix[0][3] << "]" << std::endl;
+	std::cout << "[ " << m_matrix[1][0] << ", " << m_matrix[1][1] << ", " << m_matrix[1][2] << ", " << m_matrix[1][3] << "]" << std::endl;
+	std::cout << "[ " << m_matrix[2][0] << ", " << m_matrix[2][1] << ", " << m_matrix[2][2] << ", " << m_matrix[2][3] << "]" << std::endl;
+	std::cout << "[ " << m_matrix[3][0] << ", " << m_matrix[3][1] << ", " << m_matrix[3][2] << ", " << m_matrix[3][3] << "]" << std::endl;
 }
 
 #pragma region Static Methods
@@ -273,6 +266,8 @@ Matrix4x4 Matrix4x4::Transpose3x3(const Matrix4x4& other)
 
 Matrix4x4 Matrix4x4::Inverse(const Matrix4x4& other)
 {
+	// TODO: Fix
+
 	//float idet = 1.0f / other.Determinant();
 
 	//return Matrix4x4(
@@ -322,7 +317,7 @@ Matrix4x4 Matrix4x4::Inverse3x3(const Matrix4x4& other)
 
 Matrix4x4 Matrix4x4::Rotate(const float degrees, const Vector3D& axis)
 {
-	float x = axis.getX(), y = axis.getY(), z = axis.getZ(),
+	float x = axis.x, y = axis.y, z = axis.z,
 		rad = degrees * DEG_TO_RAD,
 		c = cosf(rad),
 		a = (1 - c) / Vector3D::Dot(axis, axis),
@@ -339,9 +334,9 @@ Matrix4x4 Matrix4x4::Rotate(const float degrees, const Vector3D& axis)
 Matrix4x4 Matrix4x4::Translate(const Vector3D& amt)
 {
 	return Matrix4x4(
-		1.0f, 0.0f, 0.0f, amt.getX(),
-		0.0f, 1.0f, 0.0f, amt.getY(),
-		0.0f, 0.0f, 1.0f, amt.getZ(),
+		1.0f, 0.0f, 0.0f, amt.x,
+		0.0f, 1.0f, 0.0f, amt.y,
+		0.0f, 0.0f, 1.0f, amt.z,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 }
@@ -532,9 +527,6 @@ Matrix4x4 Matrix4x4::operator*(const float scalar) const
 
 Matrix4x4 Matrix4x4::operator/(const float divisor) const
 {
-	if (divisor == 0.0f)
-		throw "Division by zero error!";
-
 	return Matrix4x4(
 		m_matrix[0][0] / divisor, m_matrix[0][1] / divisor, m_matrix[0][2] / divisor, m_matrix[0][3] / divisor,
 		m_matrix[1][0] / divisor, m_matrix[1][1] / divisor, m_matrix[1][2] / divisor, m_matrix[1][3] / divisor,
@@ -547,10 +539,10 @@ Matrix4x4 Matrix4x4::operator/(const float divisor) const
 Vector3D Matrix4x4::operator*(const Vector3D& other) const
 {
 	return Vector3D(
-		m_matrix[0][0] * other.getX() + m_matrix[0][1] * other.getY() + m_matrix[0][2] * other.getZ() + m_matrix[0][3] * other.getW(),
-		m_matrix[1][0] * other.getX() + m_matrix[1][1] * other.getY() + m_matrix[1][2] * other.getZ() + m_matrix[1][3] * other.getW(),
-		m_matrix[2][0] * other.getX() + m_matrix[2][1] * other.getY() + m_matrix[2][2] * other.getZ() + m_matrix[2][3] * other.getW(),
-		m_matrix[3][0] * other.getX() + m_matrix[3][1] * other.getY() + m_matrix[3][2] * other.getZ() + m_matrix[3][3] * other.getW()
+		m_matrix[0][0] * other.x + m_matrix[0][1] * other.y + m_matrix[0][2] * other.z + m_matrix[0][3] * other.w,
+		m_matrix[1][0] * other.x + m_matrix[1][1] * other.y + m_matrix[1][2] * other.z + m_matrix[1][3] * other.w,
+		m_matrix[2][0] * other.x + m_matrix[2][1] * other.y + m_matrix[2][2] * other.z + m_matrix[2][3] * other.w,
+		m_matrix[3][0] * other.x + m_matrix[3][1] * other.y + m_matrix[3][2] * other.z + m_matrix[3][3] * other.w
 	);
 }
 #pragma endregion
@@ -558,7 +550,7 @@ Vector3D Matrix4x4::operator*(const Vector3D& other) const
 #if TEST_MODE
 void Matrix4x4Tests()
 {
-	printf("\n========== Running Matrix3x3 tests ==========\n\n");
+	std::cout << "\n========== Running Matrix3x3 tests ==========\n\n");
 
 #pragma region Methods
 	Matrix4x4 m0 = Matrix4x4();
@@ -573,31 +565,31 @@ void Matrix4x4Tests()
 	}
 
 	m1.Transpose();
-	printf("Matrix4x4 Transpose: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 Transpose: %s\n", (m0 == m1) ? PASS : FAIL);
 
 	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; j++)
 			m0.Set(i, j, 0.0f);
 	m1.Zero();
-	printf("Matrix4x4 Zero: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 Zero: %s\n", (m0 == m1) ? PASS : FAIL);
 
 	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; j++)
 			m0.Set(i, j, i == j ? 1.0f : 0.0f);
 
 	m1.Identity();
-	printf("Matrix4x4 Identity: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 Identity: %s\n", (m0 == m1) ? PASS : FAIL);
 #pragma endregion
 #pragma region StaticMethods
 	m0.Zero();
 
 	Matrix4x4 zero = Matrix4x4::Zero4D();
-	printf("Matrix4x4::Zero4D: %s\n", (zero == m0) ? PASS : FAIL);
+	std::cout << "Matrix4x4::Zero4D: %s\n", (zero == m0) ? PASS : FAIL);
 
 	m0.Identity();
 
 	Matrix4x4 identity = Matrix4x4::Identity4D();
-	printf("Matrix4x4::Identity4D: %s\n", (m0 == identity) ? PASS : FAIL);
+	std::cout << "Matrix4x4::Identity4D: %s\n", (m0 == identity) ? PASS : FAIL);
 #pragma endregion
 #pragma region Operations
 
@@ -607,13 +599,13 @@ void Matrix4x4Tests()
 			m1.Set(i, j, i - j);
 		}
 	}
-	printf("Matrix4x4 == Matrix4x4 equal: %s\n", (m0 == m0) ? PASS : FAIL);
+	std::cout << "Matrix4x4 == Matrix4x4 equal: %s\n", (m0 == m0) ? PASS : FAIL);
 
-	printf("Matrix4x4 == Matrix4x4 not equal: %s\n", (m0 == m1) ? FAIL : PASS);
+	std::cout << "Matrix4x4 == Matrix4x4 not equal: %s\n", (m0 == m1) ? FAIL : PASS);
 
-	printf("Matrix4x4 != Matrix4x4 not equal: %s\n", (m0 != m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 != Matrix4x4 not equal: %s\n", (m0 != m1) ? PASS : FAIL);
 
-	printf("Matrix4x4 != Matrix4x4 equal: %s\n", (m0 != m0) ? FAIL : PASS);
+	std::cout << "Matrix4x4 != Matrix4x4 equal: %s\n", (m0 != m0) ? FAIL : PASS);
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -621,7 +613,7 @@ void Matrix4x4Tests()
 			m1.Set(i, j, -(i + j));
 		}
 	}
-	printf("Matrix4x4 + Matrix4x4: %s\n", (zero == m0 + m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 + Matrix4x4: %s\n", (zero == m0 + m1) ? PASS : FAIL);
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -629,7 +621,7 @@ void Matrix4x4Tests()
 			m1.Set(i, j, i + j);
 		}
 	}
-	printf("Matrix4x4 - Matrix4x4: %s\n", (zero == m0 - m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 - Matrix4x4: %s\n", (zero == m0 - m1) ? PASS : FAIL);
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -643,7 +635,7 @@ void Matrix4x4Tests()
 		26.0f, 40.0f, 54.0f, 68.0f,
 		32.0f, 50.0f, 68.0f, 86.0f
 	);
-	printf("Matrix4x4 * Matrix4x4: %s\n", (m0 * m1 == result) ? PASS : FAIL);
+	std::cout << "Matrix4x4 * Matrix4x4: %s\n", (m0 * m1 == result) ? PASS : FAIL);
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -651,7 +643,7 @@ void Matrix4x4Tests()
 			m1.Set(i, j, (i + j) * 2.0f);
 		}
 	}
-	printf("Matrix4x4 * scalar: %s\n", ((m0 * 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 * scalar: %s\n", ((m0 * 2.0f) == m1) ? PASS : FAIL);
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -659,10 +651,10 @@ void Matrix4x4Tests()
 			m1.Set(i, j, (i + j) / 2.0f);
 		}
 	}
-	printf("Matrix4x4 / divisor: %s\n", ((m0 / 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 / divisor: %s\n", ((m0 / 2.0f) == m1) ? PASS : FAIL);
 #pragma endregion
 #pragma region Vector3D
-	printf("\n========== Running Matrix4x4 - Vector3D tests ==========\n\n");
+	std::cout << "\n========== Running Matrix4x4 - Vector3D tests ==========\n\n");
 	Matrix4x4 x44 = Matrix4x4(
 		1.0f, 2.0f, 3.0f, 4.0f, 
 		5.0f, 6.0f, 7.0f, 8.0f, 
@@ -670,7 +662,7 @@ void Matrix4x4Tests()
 		5.0f, 4.0f, 3.0f, 2.0f);
 	Vector3D v3 = Vector3D(1.0f, 2.0f, 3.0f, 1.0f);
 	Vector3D v3Test = Vector3D(42.0f, 94.0f, 88.0f, 36.0f);
-	printf("Matrix4x4 * Vector3D: %s\n", (v3Test == (x44 * v3)) ? PASS : FAIL);
+	std::cout << "Matrix4x4 * Vector3D: %s\n", (v3Test == (x44 * v3)) ? PASS : FAIL);
 #pragma endregion
 }
 #endif
