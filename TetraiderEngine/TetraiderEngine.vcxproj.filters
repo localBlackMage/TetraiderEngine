@@ -31,11 +31,14 @@
     <Filter Include="Source Files\Math\Vector">
       <UniqueIdentifier>{11b98312-189f-47e9-a1a5-5dc282721ec5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{06ccda4e-6f1e-42fd-8ec4-ffaba1113c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{4ae565c8-33b8-415a-9277-089eff1f278d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Math\LineSegment2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Math\Vector3D.cpp">
       <Filter>Source Files\Math\Vector</Filter>
     </ClCompile>
@@ -51,14 +54,14 @@
     <ClCompile Include="Source\Math\Matrix3x3.cpp">
       <Filter>Source Files\Math\Matrix</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Math\LineSegment2D.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Math\LineSegment2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\MathDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Math\Vector3D.h">
       <Filter>Header Files\Math\Vector</Filter>
     </ClInclude>
@@ -73,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="Source\Math\Matrix3x3.h">
       <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\LineSegment2D.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\MathDefs.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
