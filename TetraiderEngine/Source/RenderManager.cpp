@@ -2,6 +2,7 @@
 #include <glew.h>
 #include <GL/gl.h>
 #include <iostream>
+#include <fstream>
 #include <windows.h>
 #include "JsonReader.h"
 
@@ -41,7 +42,14 @@ void RenderManager::_InitWindow(std::string title)
 
 std::string RenderManager::_LoadTextFile(std::string fname)
 {
-	return std::string();
+	std::string out, line;
+	std::ifstream in(fname);
+	std::getline(in, line);
+	while (in) {
+		out += line + "\n";
+		std::getline(in, line);
+	}
+	return out;
 }
 
 bool RenderManager::Init()
