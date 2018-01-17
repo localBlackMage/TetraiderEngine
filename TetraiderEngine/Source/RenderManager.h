@@ -15,21 +15,58 @@ Creation date: 1/17/18
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
+#include <SDL.h>
+#include <string>
+#include <map>
+#include "ShaderProgram.h"
+#include "Shader.h"
+#include "STBSurface.h"
+
 class RenderManager
 {
 private:
-	RenderManager();
+	int m_width, m_height;
+	SDL_GLContext m_context;
+	SDL_Window * m_pWindow;
+
+	std::map<std::string, ShaderProgram *> m_shaderPrograms;
+	ShaderProgram * m_pCurrentProgram;
+
+	RenderManager(int width, int height, std::string title);
 	~RenderManager();
 
+	void _InitWindow(std::string title);
+	std::string _LoadTextFile(std::string fname);
 public:
 	RenderManager(const RenderManager &) = delete;
 	void operator=(const RenderManager &) = delete;
 
-	static RenderManager& GetInstance()
+	static RenderManager& GetInstance(int width = 800, int height = 600, std::string title = "Default Window Title")
 	{
-		static RenderManager instance;
+		static RenderManager instance(width, height, title);
 		return instance;
 	}
+
+	bool Init();
+	void FrameStart();
+	void FrameEnd();
+	float GetAspectRatio() const;
+
+	void RenderGameObject(/*GameObject& camera, GameObject go*/);
+
+
+	void LoadShaderProgram(std::string fileName);
+	ShaderProgram * GetShaderProgram(std::string programName);
+	ShaderProgram * CreateShaderProgram(std::string programName);
+
+	Shader * CreateVertexShader(std::string vertexShaderText);
+	Shader * CreateVertexShaderFromFile(std::string fileName);
+	Shader * CreateFragmentShader(std::string fragmentShaderText);
+	Shader * CreateFragmentShaderFromFile(std::string fileName);
+
+	void SelectShaderProgram(std::string programName);
+
+	GLuint CreateTextureBuffer(const STB_Surface * const stbSurface);
 };
 
 #endif
