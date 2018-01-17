@@ -18,7 +18,9 @@ Creation date: 1/17/18
 class FrameRateManager
 {
 private:
-	unsigned int m_maxFrameRate;
+	unsigned int m_maxFrameRate, m_ticksPerFrame;
+	unsigned int m_tickStart, m_tickEnd;
+	unsigned int m_frameTime;
 
 	FrameRateManager(unsigned int maxFrameRate);
 	~FrameRateManager();
@@ -26,6 +28,9 @@ private:
 public:
 	FrameRateManager(const FrameRateManager &) = delete;
 	void operator=(const FrameRateManager &) = delete;
+	void FrameStart();
+	void FrameEnd();
+	unsigned int GetFrameTime();
 
 	static FrameRateManager& GetInstance(unsigned int maxFrameRate = 60)
 	{
