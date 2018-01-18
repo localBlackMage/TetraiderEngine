@@ -2,7 +2,7 @@
 #include "MathDefs.h"
 #include <iostream>
 
-Vector3D::Vector3D() : x(0.f), y(0.f), w(1.f) { }
+Vector3D::Vector3D() : x(0.f), y(0.f), z(0.f), w(1.f) { }
 
 Vector3D::Vector3D(float _x, float _y, float _z) : x(_x), y(_y), z(_z), w(1.f) { }
 

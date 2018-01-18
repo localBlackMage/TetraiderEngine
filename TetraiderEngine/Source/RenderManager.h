@@ -20,7 +20,12 @@ Creation date: 1/17/18
 #include <map>
 #include "ShaderProgram.h"
 #include "Shader.h"
+
+
 #include "STBSurface.h"
+#include "Mesh.h"
+#include "Math\Matrix4x4.h"
+#include "Math\Vector3D.h"
 
 class RenderManager
 {
@@ -37,6 +42,18 @@ private:
 
 	void _InitWindow(std::string title);
 	std::string _LoadTextFile(std::string fname);
+
+	// TODO: Get rid of this
+	Matrix4x4 _MatrixFromCameraVectors(const Vector3D & right, const Vector3D & up, const Vector3D & forward)
+	{
+		return Matrix4x4(
+			right.x, right.y, right.z, 0.0f,
+			up.x, up.y, up.z, 0.0f,
+			-forward.x, -forward.y, -forward.z, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+
 public:
 	RenderManager(const RenderManager &) = delete;
 	void operator=(const RenderManager &) = delete;
@@ -53,7 +70,7 @@ public:
 	float GetAspectRatio() const;
 
 	void RenderGameObject(/*GameObject& camera, GameObject go*/);
-
+	void RenderSTB(SurfaceTextureBuffer* pSTB, Mesh* pMesh);
 
 	void LoadShaderProgram(std::string fileName);
 	ShaderProgram * GetShaderProgram(std::string programName);
@@ -65,8 +82,6 @@ public:
 	Shader * CreateFragmentShaderFromFile(std::string fileName);
 
 	void SelectShaderProgram(std::string programName);
-
-	GLuint CreateTextureBuffer(const STB_Surface * const stbSurface);
 };
 
 #endif

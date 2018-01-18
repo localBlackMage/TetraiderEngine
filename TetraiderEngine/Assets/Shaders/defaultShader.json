@@ -1,0 +1,19 @@
+{
+  "default": {
+    "vertex": "../TetraiderEngine/Assets/Shaders/defaultVertShader.vert",
+    "fragment": "../TetraiderEngine/Assets/Shaders/defaultFragShader.frag",
+    "attributes": [
+      "position",
+      "texture_coord"
+    ],
+    "uniforms": [
+      "persp_matrix",
+      "view_matrix",
+      "model_matrix",
+      "normal_matrix",
+      "color",
+      "frame_offset",
+      "frame_size"
+    ]
+  }
+}

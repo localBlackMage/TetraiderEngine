@@ -16,12 +16,34 @@ Creation date: 1/17/18
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 
+#include <map>
+#include <utility>
+#include "Mesh.h"
+#include "STBSurface.h"
+
+// TODO: Remove this
+struct TextureInfo {
+	bool hasAlpha;
+	float frameWidth, frameHeight;
+	int rows, cols;
+};
+
 class ResourceManager
 {
 private:
+	std::map<std::string, Mesh*> m_meshes;
+	std::map<std::string, SurfaceTextureBuffer * > m_textures;
+
 	ResourceManager();
 	~ResourceManager();
 
+	//struct TextureInfo {
+	//	bool hasAlpha;
+	//	float frameWidth, frameHeight;
+	//	int rows, cols;
+	//};
+
+	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
 public:
 	ResourceManager(const ResourceManager &) = delete;
 	void operator=(const ResourceManager &) = delete;
@@ -31,6 +53,18 @@ public:
 		static ResourceManager instance;
 		return instance;
 	}
+
+	Mesh * LoadMesh(std::string meshName);
+	Mesh * GetMesh(std::string meshName);
+	void UnloadMesh(std::string meshName);
+
+	SurfaceTextureBuffer * LoadTexture(std::string textureName, std::string fileName, TextureInfo info);
+	SurfaceTextureBuffer * GetTexture(const std::string textureName);
+	void UnloadTexture(std::string textureName);
+
+	void LoadTexturesFromFile(std::string fileName);
+
+	void UnloadAll();
 };
 
 #endif

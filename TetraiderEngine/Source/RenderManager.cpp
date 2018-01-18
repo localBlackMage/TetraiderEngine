@@ -5,6 +5,13 @@
 #include <fstream>
 #include <windows.h>
 #include "JsonReader.h"
+#include "Math\Matrix4x4.h"
+
+
+// TODO: Find a better spot for these
+const Vector3D XAXIS = Vector3D(1, 0, 0, 0);
+const Vector3D YAXIS = Vector3D(0, 1, 0, 0);
+const Vector3D ZAXIS = Vector3D(0, 0, 1, 0);
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height)
@@ -28,7 +35,7 @@ void RenderManager::_InitWindow(std::string title)
 		freopen_s(&file, "CONOUT$", "wt", stderr);
 		freopen_s(&file, "CONOUT$", "wt", stdin);
 
-		SetConsoleTitle("Acrylicor Engine");
+		SetConsoleTitle("Tetraider Engine");
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -94,6 +101,65 @@ void RenderManager::RenderGameObject(/*GameObject& camera, GameObject go*/)
 	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cComp->GetViewMatrix());
 
 	//_RenderGameObject(gameObject);
+}
+
+void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
+{
+	SelectShaderProgram("default");
+	glUseProgram(m_pCurrentProgram->GetProgram());
+	Matrix4x4 P = Matrix4x4::Orthographic(m_width, m_height, 0.1f);
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)&P);
+	Matrix4x4 rotationM = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS * -1);
+
+	Matrix4x4 V = rotationM * Matrix4x4::Translate(Vector3D(0, 0, 10));
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)&V);
+
+	Matrix4x4 trans, rot, scale;
+
+	trans = Matrix4x4::Translate(Vector3D());
+	rot = Matrix4x4::Rotate(0, XAXIS) * Matrix4x4::Rotate(0, YAXIS) * Matrix4x4::Rotate(0, ZAXIS);
+	scale = Matrix4x4::Scale(64.f, 64.f, 64.f);
+	Matrix4x4 M = trans * rot * scale;
+	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
+
+
+	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());
+	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+
+	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("texture_coord"));
+	glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetTextCoordBuffer());
+	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
+
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), 0, 0);
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), 64, 64);
+
+	glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), 1);
+	glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), 1);
+
+	glUniform4f(m_pCurrentProgram->GetUniform("color"), 1, 1, 1, 1);
+
+	//if (sComp->TextureHasAlpha()) {
+	//	glDisable(GL_DEPTH_TEST);
+	//	glEnable(GL_ALPHA_TEST);
+	//	glAlphaFunc(GL_GREATER, 0.4f);
+	//	glEnable(GL_BLEND);
+	//	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//}
+	//else {
+		glDisable(GL_ALPHA_TEST);
+		glEnable(GL_DEPTH_TEST);
+	//}
+
+	// select the texture to use
+	glBindTexture(GL_TEXTURE_2D, pSTB->bufferId);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 #pragma region Shaders
@@ -182,21 +248,3 @@ void RenderManager::SelectShaderProgram(std::string programName)
 	m_pCurrentProgram = m_shaderPrograms[programName];
 }
 #pragma endregion
-
-GLuint RenderManager::CreateTextureBuffer(const STB_Surface * const stbSurface)
-{
-	GLuint textureBuffer;
-	glGenTextures(1, &textureBuffer);
-	glBindTexture(GL_TEXTURE_2D, textureBuffer);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-	glTexImage2D(GL_TEXTURE_2D, 0,
-		stbSurface->hasAlpha ? GL_RGBA : GL_RGB,
-		stbSurface->width, stbSurface->height, 0,
-		stbSurface->hasAlpha ? GL_RGBA : GL_RGB,
-		GL_UNSIGNED_BYTE, stbSurface->data);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	return textureBuffer;
-}
