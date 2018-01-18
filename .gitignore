@@ -305,5 +305,6 @@ __pycache__/
 OpenCover/
 
 !TetraiderEngine/SDL2/lib/*
+!TetraiderEngine/GL/lib/*
 
 ~AutoRecover.*
