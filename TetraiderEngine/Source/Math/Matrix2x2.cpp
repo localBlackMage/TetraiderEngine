@@ -1,13 +1,7 @@
 #include "Matrix2x2.h"
 #include "MathDefs.h"
-#include <iostream>
-
-/*
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
-#include "AcrylicorTypedefs.h"
-*/
+#include <iostream>
 
 Matrix2x2::Matrix2x2() {}
 
@@ -184,7 +178,7 @@ Vector2D Matrix2x2::operator*(const Vector2D& other)
 #if TEST_MODE
 void Matrix2x2Tests()
 {
-	std::cout << "\n========== Running Matrix2x2 tests ==========\n\n");
+	std::cout << "\n========== Running Matrix2x2 tests ==========\n\n";
 
 #pragma region Methods
 	Matrix2x2 m0 = Matrix2x2();
@@ -200,21 +194,21 @@ void Matrix2x2Tests()
 			m1.Set(i, j, i + j * 2);
 
 	m1.Transpose();
-	std::cout << "Matrix2x2 Transpose: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 Transpose: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
 			m0.Set(i, j, 0.0f);
 
 	m1.Zero();
-	std::cout << "Matrix2x2 Zero: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 Zero: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
 			m0.Set(i, j, i == j ? 1.0f : 0.0f);
 
 	m1.Identity();
-	std::cout << "Matrix2x2 Identity: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 Identity: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 #pragma endregion Methods
 #pragma region StaticMethods
 	for (i = 0; i < 2; i++)
@@ -222,14 +216,14 @@ void Matrix2x2Tests()
 			m0.Set(i, j, 0.0f);
 
 	Matrix2x2 zero = Matrix2x2::Zero2D();
-	std::cout << "Matrix2x2::Zero: %s\n", (zero == m0) ? PASS : FAIL);
+	std::cout << "Matrix2x2::Zero: " << ((zero == m0) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
 			m0.Set(i, j, i == j ? 1.0f : 0.0f);
 
 	Matrix2x2 identity = Matrix2x2::Identity2D();
-	std::cout << "Matrix2x2::Identity: %s\n", (m0 == identity) ? PASS : FAIL);
+	std::cout << "Matrix2x2::Identity: " << ((m0 == identity) ? PASS : FAIL) << std::endl;
 #pragma endregion StaticMethods
 #pragma region Operations
 	for (i = 0; i < 2; i++)
@@ -239,13 +233,13 @@ void Matrix2x2Tests()
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
 			m1.Set(i, j, i - j);
-	std::cout << "Matrix2x2 == Matrix2x2 equal: %s\n", (m0 == m0) ? PASS : FAIL);
+	std::cout << "Matrix2x2 == Matrix2x2 equal: " << ((m0 == m0) ? PASS : FAIL) << std::endl;
 
-	std::cout << "Matrix2x2 == Matrix2x2 not equal: %s\n", (m0 == m1) ? FAIL : PASS);
+	std::cout << "Matrix2x2 == Matrix2x2 not equal: " << ((m0 == m1) ? FAIL : PASS);
 
-	std::cout << "Matrix2x2 != Matrix2x2 not equal: %s\n", (m0 != m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 != Matrix2x2 not equal: " << ((m0 != m1) ? PASS : FAIL) << std::endl;
 
-	std::cout << "Matrix2x2 != Matrix2x2 equal: %s\n", (m0 != m0) ? FAIL : PASS);
+	std::cout << "Matrix2x2 != Matrix2x2 equal: " << ((m0 != m0) ? FAIL : PASS);
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
@@ -254,7 +248,7 @@ void Matrix2x2Tests()
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
 			m1.Set(i, j, -(i + j));
-	std::cout << "Matrix2x2 + Matrix2x2: %s\n", (zero == m0 + m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 + Matrix2x2: " << ((zero == m0 + m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
@@ -262,7 +256,7 @@ void Matrix2x2Tests()
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
 			m1.Set(i, j, i + j);
-	std::cout << "Matrix2x2 - Matrix2x2: %s\n", (zero == m0 - m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 - Matrix2x2: " << ((zero == m0 - m1) ? PASS : FAIL) << std::endl;
 
 	/*for (i = 0; i < 2; i++)
 	for (j = 0; j < 2; j++)
@@ -272,7 +266,7 @@ void Matrix2x2Tests()
 	for (j = 0; j < 2; j++)
 	m1.Set(i, j, i + j;
 	Matrix2x2 result = Matrix2x2(1.0f, 2.0f, 5.0f, 11.0f);
-	std::cout << "Matrix2x2 * Matrix2x2: %s\n", (m0 * m1 == result) ? PASS : FAIL);
+	std::cout << "Matrix2x2 * Matrix2x2: " << ((m0 * m1 == result) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 	for (j = 0; j < 2; j++)
@@ -281,7 +275,7 @@ void Matrix2x2Tests()
 	for (i = 0; i < 2; i++)
 	for (j = 0; j < 2; j++)
 	m1.Set(i, j, (i + j) * 2.0f;
-	std::cout << "Matrix2x2 * scalar: %s\n", ((m0 * 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 * scalar: " << (((m0 * 2.0f) == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 	for (j = 0; j < 2; j++)
@@ -290,7 +284,7 @@ void Matrix2x2Tests()
 	for (i = 0; i < 2; i++)
 	for (j = 0; j < 2; j++)
 	m1.Set(i, j, (i + j) / 2.0f;
-	std::cout << "Matrix2x2 / divisor: %s\n", ((m0 / 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix2x2 / divisor: " << (((m0 / 2.0f) == m1) ? PASS : FAIL) << std::endl;
 	#pragma endregion Operations
 	#pragma region Vector2D
 	std::cout << "\n========== Running Matrix2x2 - Vector2D tests ==========\n\n");
@@ -304,7 +298,7 @@ void Matrix2x2Tests()
 	v2.x = 2.0f;	v2.y = 3.0f;
 
 	Vector2D v2Test = Vector2D(8.0f, 18.0f);
-	std::cout << "Matrix2x2 * Vector2D: %s\n", (v2Test == (x22 * v2)) ? PASS : FAIL);
+	std::cout << "Matrix2x2 * Vector2D: " << ((v2Test == (x22 * v2)) ? PASS : FAIL) << std::endl;
 	*/
 #pragma endregion Vector2D
 }

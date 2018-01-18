@@ -10,8 +10,7 @@ Author: Holden Profit
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
-#pragma once
-
+//#pragma once
 
 #ifndef MATRIX3X3_H
 #define MATRIX3X3_H

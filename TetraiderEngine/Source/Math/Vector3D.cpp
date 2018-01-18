@@ -1,5 +1,6 @@
 #include "Vector3D.h"
 #include "MathDefs.h"
+#include <math.h>
 #include <iostream>
 
 Vector3D::Vector3D() : x(0.f), y(0.f), z(0.f), w(1.f) { }
@@ -8,7 +9,7 @@ Vector3D::Vector3D(float _x, float _y, float _z) : x(_x), y(_y), z(_z), w(1.f) {
 
 Vector3D::Vector3D(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) { }
 
-Vector3D::Vector3D(const Vector3D & rhs) : x(rhs.x), y(rhs.y), w(rhs.w) { }
+Vector3D::Vector3D(const Vector3D & rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w) { }
 
 Vector3D& Vector3D::operator=(const Vector3D rhs)
 {
@@ -250,18 +251,18 @@ Vector3D operator*(const float scalar, const Vector3D& other)
 #if TEST_MODE
 void Vector3DTests()
 {
-	std::cout << "\n========== Running Vector3D tests ==========\n\n");
+	std::cout << "\n========== Running Vector3D tests ==========\n\n";
 
 	Vector3D * createdVector = new Vector3D();
-	std::cout << "Created Vector(): %s\n", (createdVector->getX() == 0.0f && createdVector->getY() == 0.0f && createdVector->getW() == 1.0f) ? PASS : FAIL);
+	std::cout << "Created Vector(): " << ((createdVector->x == 0.0f && createdVector->y == 0.0f && createdVector->w == 1.0f) ? PASS : FAIL) << std::endl;
 	delete createdVector;
 
 	createdVector = new Vector3D(1.0f, 2.0f, 3.0f);
-	std::cout << "Created Vector(x, y): %s\n", (createdVector->getX() == 1.0f && createdVector->getY() == 2.0f && createdVector->getZ() == 3.0f && createdVector->getW() == 1.0f) ? PASS : FAIL);
+	std::cout << "Created Vector(x, y): " << ((createdVector->x == 1.0f && createdVector->y == 2.0f && createdVector->z == 3.0f && createdVector->w == 1.0f) ? PASS : FAIL) << std::endl;
 	delete createdVector;
 
 	createdVector = new Vector3D(2.0f, 3.0f, 4.0f, 0.0f);
-	std::cout << "Created Vector(x, y, w): %s\n", (createdVector->getX() == 2.0f && createdVector->getY() == 3.0f && createdVector->getZ() == 4.0f && createdVector->getW() == 0.0f) ? PASS : FAIL);
+	std::cout << "Created Vector(x, y, w): " << ((createdVector->x == 2.0f && createdVector->y == 3.0f && createdVector->z == 4.0f && createdVector->w == 0.0f) ? PASS : FAIL) << std::endl;
 	delete createdVector;
 
 	Vector3D v1, v2, v3, result;
@@ -269,236 +270,236 @@ void Vector3DTests()
 
 	v1.Set(1.0f, 2.0f, 3.0f);
 	v2.Set(1.0f, 2.0f, 3.0f);
-	std::cout << "Vector3D == equal: %s\n", (v1 == v2) ? PASS : FAIL);
+	std::cout << "Vector3D == equal: " << ((v1 == v2) ? PASS : FAIL) << std::endl;
 
-	v2.setX(1.1f);
-	std::cout << "Vector3D == not equal: %s\n", (v1 == v2) ? FAIL : PASS);
+	v2.x = 1.1f;
+	std::cout << "Vector3D == not equal: " << ((v1 == v2) ? FAIL : PASS);
 
 	v2.Set(2.0f, 3.0f, 4.0f);
-	std::cout << "Vector3D != not equal: %s\n", (v1 != v2) ? PASS : FAIL);
+	std::cout << "Vector3D != not equal: " << ((v1 != v2) ? PASS : FAIL) << std::endl;
 
 	v2.Set(1.0f, 2.0f, 3.0f);
-	std::cout << "Vector3D != equal: %s\n", (v1 != v2) ? FAIL : PASS);
+	std::cout << "Vector3D != equal: " << ((v1 != v2) ? FAIL : PASS);
 
 	v1.Set(0.1f, 2.0f, 1.0f);
 	v2.Set(1.0f, 3.5f, -3.0f);
 	result.Set(1.1f, 5.5f, -2.0f);
-	std::cout << "Vector3D +: %s\n", (v1 + v2 == result) ? PASS : FAIL);
+	std::cout << "Vector3D +: " << ((v1 + v2 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-0.1f, 1.0f, -1.0f);
 	v2.Set(1.0f, -2.0f, 1.0f);
 	result.Set(0.9f, -1.0f, 0.0f);
-	std::cout << "Vector3D +: %s\n", (v1 + v2 == result) ? PASS : FAIL);
+	std::cout << "Vector3D +: " << ((v1 + v2 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 2.0f, -1.0f);
 	v2.Set(1.0f, -2.0f, -1.0f);
 	result.Set(0.0f, 4.0f, 0.0f);
-	std::cout << "Vector3D -: %s\n", (v1 - v2 == result) ? PASS : FAIL);
+	std::cout << "Vector3D -: " << ((v1 - v2 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 2.5f, 1.0f);
 	v2.Set(-2.0f, 2.0f, -1.0f);
 	result.Set(0.0f, 0.5f, 2.0f);
-	std::cout << "Vector3D -: %s\n", (v1 - v2 == result) ? PASS : FAIL);
+	std::cout << "Vector3D -: " << ((v1 - v2 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 2.5f, 1.0f);
 	scalar = 2.0f;
 	result.Set(-4.0f, 5.0f, 2.0f);
-	std::cout << "Vector3D *: %s\n", (v1 * scalar == result) ? PASS : FAIL);
+	std::cout << "Vector3D *: " << ((v1 * scalar == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 2.5f, 1.0f);
 	scalar = 0.5f;
 	result.Set(-1.0f, 1.25f, 0.5f);
-	std::cout << "Vector3D *: %s\n", (v1 * scalar == result) ? PASS : FAIL);
+	std::cout << "Vector3D *: " << ((v1 * scalar == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 10.0f, 4.5f);
 	scalar = 2.0f;
 	result.Set(-1.0f, 5.0f, 2.25f);
-	std::cout << "Vector3D /: %s\n", (v1 / scalar == result) ? PASS : FAIL);
+	std::cout << "Vector3D /: " << ((v1 / scalar == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 10.0f, 1.0f);
 	scalar = 0.5f;
 	result.Set(-4.0f, 20.0f, 2.0f);
-	std::cout << "Vector3D /: %s\n", (v1 / scalar == result) ? PASS : FAIL);
+	std::cout << "Vector3D /: " << ((v1 / scalar == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(0.1f, 2.0f, 1.0f);
 	v2.Set(1.0f, 3.5f, -3.0f);
 	result.Set(1.1f, 5.5f, -2.0f);
 	v1.Add(v2);
-	std::cout << "Vector3D Add: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Add: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-0.1f, 1.0f, -1.0f);
 	v2.Set(1.0f, -2.0f, 1.0f);
 	result.Set(0.9f, -1.0f, 0.0f);
 	v1.Add(v2);
-	std::cout << "Vector3D Add: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Add: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 2.0f, -1.0f);
 	v2.Set(1.0f, -2.0f, -1.0f);
 	result.Set(0.0f, 4.0f, 0.0f);
 	v1.Sub(v2);
-	std::cout << "Vector3D Sub: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Sub: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 2.5f, 1.0f);
 	v2.Set(-2.0f, 2.0f, -1.0f);
 	result.Set(0.0f, 0.5f, 2.0f);
 	v1.Sub(v2);
-	std::cout << "Vector3D Sub: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Sub: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 2.5f, 1.0f);
 	scalar = 2.0f;
 	result.Set(-4.0f, 5.0f, 2.0f);
 	v1.Mul(scalar);
-	std::cout << "Vector3D Mul: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Mul: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 2.5f, 1.0f);
 	scalar = 0.5f;
 	result.Set(-1.0f, 1.25f, 0.5f);
 	v1.Mul(scalar);
-	std::cout << "Vector3D Mul: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Mul: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 10.0f, 4.5f);
 	scalar = 2.0f;
 	result.Set(-1.0f, 5.0f, 2.25f);
 	v1.Div(scalar);
-	std::cout << "Vector3D Div: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Div: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-2.0f, 10.0f, 1.0f);
 	scalar = 0.5f;
 	result.Set(-4.0f, 20.0f, 2.0f);
 	v1.Div(scalar);
-	std::cout << "Vector3D Div: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Div: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 1.0f, 1.0f);
 	result.Set(0.0f, 0.0f, 0.0f);
 	v1.Zero();
-	std::cout << "Vector3D Zero: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Zero: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(0.0f, 0.0f, 0.0f);
 	result.Set(1.0f, 2.0f, 3.0f);
 	v1.Set(1.0f, 2.0f, 3.0f);
-	std::cout << "Vector3D Set(x, y, z): %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Set(x, y, z): " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(0.0f, 0.0f, 0.0f, 0.0f);
 	result.Set(1.0f, 2.0f, 3.0f, 1.0f);
 	v1.Set(1.0f, 2.0f, 3.0f, 1.0f);
-	std::cout << "Vector3D Set(x, y, z, w): %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Set(x, y, z, w): " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 2.0f, -3.0f, 1.0f);
 	result.Set(-1.0f, -2.0f, 3.0f, 1.0f);
 	v1.Negate();
-	std::cout << "Vector3D Negate: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Negate: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 0.0f, -3.0f, 1.0f);
 	result.Set(-1.0f, 0.0f, 3.0f, 1.0f);
 	v1.Negate();
-	std::cout << "Vector3D Negate: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Negate: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-3.0f, 4.0f, 5.0f);
-	std::cout << "Vector3D SquareLength: %s\n", (v1.SquareLength() == 50.0f) ? PASS : FAIL);
+	std::cout << "Vector3D SquareLength: " << ((v1.SquareLength() == 50.0f) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-4.0f, 3.0f, -5.0f);
-	std::cout << "Vector3D Length: %s\n", (v1.Length() == 7.0710678f) ? PASS : FAIL);
+	std::cout << "Vector3D Length: " << ((v1.Length() == 7.0710678f) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-3.0f, 4.0f, 5.0f);
 	v2.Set(3.0f, -4.0f, -5.0f);
-	std::cout << "Vector3D SquareDistance: %s\n", (Vector3D::SquareDistance(v1, v2) == 200.0f) ? PASS : FAIL);
+	std::cout << "Vector3D SquareDistance: " << ((Vector3D::SquareDistance(v1, v2) == 200.0f) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-3.0f, 4.0f, 5.0f);
 	v2.Set(3.0f, -4.0f, -5.0f);
-	std::cout << "Vector3D Distance: %s\n", ((Vector3D::Distance(v1, v2) - 14.1421356f) < EPSILON) ? PASS : FAIL);
+	std::cout << "Vector3D Distance: " << (((Vector3D::Distance(v1, v2) - 14.1421356f) < EPSILON) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-3.0f, 4.0f, 5.0f);
 	result.Set(-0.424264f, 0.565685f, 0.707107f);
 	v1.Normalize();
-	std::cout << "Vector3D Normalize: %s\n", (v1 == result) ? PASS : FAIL);
+	std::cout << "Vector3D Normalize: " << ((v1 == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-3.0f, 4.0f, -5.0f);
 	v1.Normalize();
-	std::cout << "Vector3D Normalize Length Check: %s\n", (v1.Length() == 1.0f) ? PASS : FAIL);
-
+	std::cout << "Vector3D Normalize Length Check: " << ((v1.Length() == 1.0f) ? PASS : FAIL) << std::endl;
+	
 	v1.Set(-3.0f, 4.0f, 5.0f);
 	result.Set(-0.424264f, 0.565685f, 0.707107f);
-	std::cout << "Vector3D Normalize(vector): %s\n", (Vector3D::Normalize(v1) == result) ? PASS : FAIL);
+	std::cout << "Vector3D Normalize(vector): " << ((Vector3D::Normalize(v1) == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(-3.0f, 4.0f, -5.0f);
-	std::cout << "Vector3D Normalize(vector) Length Check: %s\n", (Vector3D::Normalize(v1).Length() == 1.0f) ? PASS : FAIL);
+	std::cout << "Vector3D Normalize(vector) Length Check: " << ((Vector3D::Normalize(v1).Length() == 1.0f) ? PASS : FAIL) << std::endl;
 
 	v1.Set(2.0f, 3.0f, 3.0f);
 	v2.Set(4.0f, 5.0f, 3.0f);
-	std::cout << "Vector3D Dot: %s\n", ((Vector3D::Dot(v1, v2) - 32.0f) < EPSILON) ? PASS : FAIL);
+	std::cout << "Vector3D Dot: " << (((Vector3D::Dot(v1, v2) - 32.0f) < EPSILON) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 0.0f, 0.0f);
 	v2.Set(0.0f, 1.0f, 0.0f);
 	result.Set(0.0f, 0.0f, 1.0f);
-	std::cout << "Vector3D Cross: %s\n", (Vector3D::Cross(v1, v2) == result) ? PASS : FAIL);
+	std::cout << "Vector3D Cross: " << ((Vector3D::Cross(v1, v2) == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(1.0f, 0.0f, 0.0f);
 	v2.Set(0.0f, 0.0f, -1.0f);
 	result.Set(0.0f, 1.0f, 0.0f);
-	std::cout << "Vector3D Cross: %s\n", (Vector3D::Cross(v1, v2) == result) ? PASS : FAIL);
+	std::cout << "Vector3D Cross: " << ((Vector3D::Cross(v1, v2) == result) ? PASS : FAIL) << std::endl;
 
 	v1.Set(0.0f, 1.0f, 0.0f);
 	v2.Set(0.0f, 0.0f, 1.0f);
 	result.Set(1.0f, 0.0f, 0.0f);
-	std::cout << "Vector3D Cross: %s\n", (Vector3D::Cross(v1, v2) == result) ? PASS : FAIL);
+	std::cout << "Vector3D Cross: " << ((Vector3D::Cross(v1, v2) == result) ? PASS : FAIL) << std::endl;
 
 #pragma region Rotation Tests
 
 	//result.x = 0.707106f;	result.y = 0.707106f;	result.w = 1.0f;
 	//angle = M_PI_4;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 0.0f;	result.y = 1.0f;	result.w = 1.0f;
 	//angle = M_PI_2;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = -1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = M_PI;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = -1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = -M_PI;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 0.0f;	result.y = -1.0f;	result.w = 1.0f;
 	//angle = 1.5f * M_PI;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = 2.0f * M_PI;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = 0.0f;
-	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleRadians (%f): %s\n", angle, (Vector3D::AngleRadians(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 0.707106f;	result.y = 0.707106f;	result.w = 1.0f;
 	//angle = 45.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 0.0f;	result.y = 1.0f;	result.w = 1.0f;
 	//angle = 90.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = -1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = 180.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = -1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = -180.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 0.0f;	result.y = -1.0f;	result.w = 1.0f;
 	//angle = 270.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = 360.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 
 	//result.x = 1.0f;	result.y = 0.0f;	result.w = 1.0f;
 	//angle = 0.0f;
-	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL);
+	//std::cout << "Vector3D AngleDegrees (%f): %s\n", angle, (Vector3D::AngleDegrees(angle) == result) ? PASS : FAIL) << std::endl;
 #pragma endregion
 }
 #endif

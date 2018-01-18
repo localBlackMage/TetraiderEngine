@@ -10,7 +10,7 @@ Author: Holden Profit
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
-#pragma once
+//#pragma once
 
 #ifndef LINESEGMENT2D_H
 #define LINESEGMENT2D_H

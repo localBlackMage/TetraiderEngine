@@ -10,12 +10,12 @@ Author: Holden Profit
 Creation date: 1/12/18
 - End Header --------------------------------------------------------*/
 
-#pragma once
+//#pragma once
 
 #ifndef MATH_DEFINES_H
 #define MATH_DEFINES_H
 
-#define TEST_MODE 0
+#define TEST_MODE 1
 #define PASS "PASS"
 #define FAIL "!!!!! FAIL !!!!!"
 #define EPSILON 0.0001

@@ -1,6 +1,7 @@
 #include "Matrix4x4.h"
 #include "Matrix3x3.h"
 #include "MathDefs.h"
+#include <math.h>
 #include <iostream>
 
 Matrix4x4::Matrix4x4() {}
@@ -550,7 +551,7 @@ Vector3D Matrix4x4::operator*(const Vector3D& other) const
 #if TEST_MODE
 void Matrix4x4Tests()
 {
-	std::cout << "\n========== Running Matrix3x3 tests ==========\n\n");
+	std::cout << "\n========== Running Matrix3x3 tests ==========\n\n";
 
 #pragma region Methods
 	Matrix4x4 m0 = Matrix4x4();
@@ -565,31 +566,31 @@ void Matrix4x4Tests()
 	}
 
 	m1.Transpose();
-	std::cout << "Matrix4x4 Transpose: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 Transpose: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; j++)
 			m0.Set(i, j, 0.0f);
 	m1.Zero();
-	std::cout << "Matrix4x4 Zero: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 Zero: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; j++)
 			m0.Set(i, j, i == j ? 1.0f : 0.0f);
 
 	m1.Identity();
-	std::cout << "Matrix4x4 Identity: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 Identity: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 #pragma endregion
 #pragma region StaticMethods
 	m0.Zero();
 
 	Matrix4x4 zero = Matrix4x4::Zero4D();
-	std::cout << "Matrix4x4::Zero4D: %s\n", (zero == m0) ? PASS : FAIL);
+	std::cout << "Matrix4x4::Zero4D: " << ((zero == m0) ? PASS : FAIL) << std::endl;
 
 	m0.Identity();
 
 	Matrix4x4 identity = Matrix4x4::Identity4D();
-	std::cout << "Matrix4x4::Identity4D: %s\n", (m0 == identity) ? PASS : FAIL);
+	std::cout << "Matrix4x4::Identity4D: " << ((m0 == identity) ? PASS : FAIL) << std::endl;
 #pragma endregion
 #pragma region Operations
 
@@ -599,13 +600,13 @@ void Matrix4x4Tests()
 			m1.Set(i, j, i - j);
 		}
 	}
-	std::cout << "Matrix4x4 == Matrix4x4 equal: %s\n", (m0 == m0) ? PASS : FAIL);
+	std::cout << "Matrix4x4 == Matrix4x4 equal: " << ((m0 == m0) ? PASS : FAIL) << std::endl;
 
-	std::cout << "Matrix4x4 == Matrix4x4 not equal: %s\n", (m0 == m1) ? FAIL : PASS);
+	std::cout << "Matrix4x4 == Matrix4x4 not equal: " << ((m0 == m1) ? FAIL : PASS);
 
-	std::cout << "Matrix4x4 != Matrix4x4 not equal: %s\n", (m0 != m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 != Matrix4x4 not equal: " << ((m0 != m1) ? PASS : FAIL) << std::endl;
 
-	std::cout << "Matrix4x4 != Matrix4x4 equal: %s\n", (m0 != m0) ? FAIL : PASS);
+	std::cout << "Matrix4x4 != Matrix4x4 equal: " << ((m0 != m0) ? FAIL : PASS);
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -613,7 +614,7 @@ void Matrix4x4Tests()
 			m1.Set(i, j, -(i + j));
 		}
 	}
-	std::cout << "Matrix4x4 + Matrix4x4: %s\n", (zero == m0 + m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 + Matrix4x4: " << ((zero == m0 + m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -621,7 +622,7 @@ void Matrix4x4Tests()
 			m1.Set(i, j, i + j);
 		}
 	}
-	std::cout << "Matrix4x4 - Matrix4x4: %s\n", (zero == m0 - m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 - Matrix4x4: " << ((zero == m0 - m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -635,7 +636,7 @@ void Matrix4x4Tests()
 		26.0f, 40.0f, 54.0f, 68.0f,
 		32.0f, 50.0f, 68.0f, 86.0f
 	);
-	std::cout << "Matrix4x4 * Matrix4x4: %s\n", (m0 * m1 == result) ? PASS : FAIL);
+	std::cout << "Matrix4x4 * Matrix4x4: " << ((m0 * m1 == result) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -643,7 +644,7 @@ void Matrix4x4Tests()
 			m1.Set(i, j, (i + j) * 2.0f);
 		}
 	}
-	std::cout << "Matrix4x4 * scalar: %s\n", ((m0 * 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 * scalar: " << (((m0 * 2.0f) == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -651,18 +652,18 @@ void Matrix4x4Tests()
 			m1.Set(i, j, (i + j) / 2.0f);
 		}
 	}
-	std::cout << "Matrix4x4 / divisor: %s\n", ((m0 / 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix4x4 / divisor: " << (((m0 / 2.0f) == m1) ? PASS : FAIL) << std::endl;
 #pragma endregion
 #pragma region Vector3D
-	std::cout << "\n========== Running Matrix4x4 - Vector3D tests ==========\n\n");
+	std::cout << "\n========== Running Matrix4x4 - Vector3D tests ==========\n\n";
 	Matrix4x4 x44 = Matrix4x4(
 		1.0f, 2.0f, 3.0f, 4.0f, 
 		5.0f, 6.0f, 7.0f, 8.0f, 
 		9.0f, 8.0f, 7.0f, 6.0f,
 		5.0f, 4.0f, 3.0f, 2.0f);
 	Vector3D v3 = Vector3D(1.0f, 2.0f, 3.0f, 1.0f);
-	Vector3D v3Test = Vector3D(42.0f, 94.0f, 88.0f, 36.0f);
-	std::cout << "Matrix4x4 * Vector3D: %s\n", (v3Test == (x44 * v3)) ? PASS : FAIL);
+	Vector3D v3Test = Vector3D(18.0f, 46.0f, 52.0f, 24.0f);
+	std::cout << "Matrix4x4 * Vector3D: " << ((v3Test == (x44 * v3)) ? PASS : FAIL) << std::endl;
 #pragma endregion
 }
 #endif

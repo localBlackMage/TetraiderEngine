@@ -10,7 +10,7 @@ Author: Holden Profit
 Creation date: 1/12/18
 - End Header --------------------------------------------------------*/
 
-#pragma once
+//#pragma once
 
 #ifndef VECTOR2_H
 #define VECTOR2_H

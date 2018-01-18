@@ -1,5 +1,6 @@
 #include "Matrix3x3.h"
 #include "MathDefs.h"
+#include <math.h>
 #include <iostream>
 
 Matrix3x3::Matrix3x3() {}
@@ -303,7 +304,7 @@ Vector3D Matrix3x3::operator*(const Vector3D& other)
 #if TEST_MODE
 void Matrix3x3Tests()
 {
-	std::cout << "\n========== Running Matrix3x3 tests ==========\n\n");
+	std::cout << "\n========== Running Matrix3x3 tests ==========\n\n";
 
 #pragma region Methods
 	Matrix3x3 m0 = Matrix3x3();
@@ -318,7 +319,7 @@ void Matrix3x3Tests()
 	}
 
 	m1.Transpose();
-	std::cout << "Matrix3x3 Transpose: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 Transpose: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -326,7 +327,7 @@ void Matrix3x3Tests()
 		}
 	}
 	m1.Zero();
-	std::cout << "Matrix3x3 Zero: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 Zero: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -335,18 +336,18 @@ void Matrix3x3Tests()
 	}
 
 	m1.Identity();
-	std::cout << "Matrix3x3 Identity: %s\n", (m0 == m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 Identity: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
 #pragma endregion
 #pragma region StaticMethods
 	m0.Zero();
 
 	Matrix3x3 zero = Matrix3x3::Zero3D();
-	std::cout << "Matrix3x3::Zero: %s\n", (zero == m0) ? PASS : FAIL);
+	std::cout << "Matrix3x3::Zero: " << ((zero == m0) ? PASS : FAIL) << std::endl;
 
 	m0.Identity();
 
 	Matrix3x3 identity = Matrix3x3::Identity3D();
-	std::cout << "Matrix3x3::Identity: %s\n", (m0 == identity) ? PASS : FAIL);
+	std::cout << "Matrix3x3::Identity: " << ((m0 == identity) ? PASS : FAIL) << std::endl;
 #pragma endregion
 
 #pragma region Operations
@@ -357,13 +358,13 @@ void Matrix3x3Tests()
 			m1.Set(i, j, i - j);
 		}
 	}
-	std::cout << "Matrix3x3 == Matrix3x3 equal: %s\n", (m0 == m0) ? PASS : FAIL);
+	std::cout << "Matrix3x3 == Matrix3x3 equal: " << ((m0 == m0) ? PASS : FAIL) << std::endl;
 
-	std::cout << "Matrix3x3 == Matrix3x3 not equal: %s\n", (m0 == m1) ? FAIL : PASS);
+	std::cout << "Matrix3x3 == Matrix3x3 not equal: " << ((m0 == m1) ? FAIL : PASS);
 
-	std::cout << "Matrix3x3 != Matrix3x3 not equal: %s\n", (m0 != m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 != Matrix3x3 not equal: " << ((m0 != m1) ? PASS : FAIL) << std::endl;
 
-	std::cout << "Matrix3x3 != Matrix3x3 equal: %s\n", (m0 != m0) ? FAIL : PASS);
+	std::cout << "Matrix3x3 != Matrix3x3 equal: " << ((m0 != m0) ? FAIL : PASS);
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -371,7 +372,7 @@ void Matrix3x3Tests()
 			m1.Set(i, j, -(i + j));
 		}
 	}
-	std::cout << "Matrix3x3 + Matrix3x3: %s\n", (zero == m0 + m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 + Matrix3x3: " << ((zero == m0 + m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -379,7 +380,7 @@ void Matrix3x3Tests()
 			m1.Set(i, j, i + j);
 		}
 	}
-	std::cout << "Matrix3x3 - Matrix3x3: %s\n", (zero == m0 - m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 - Matrix3x3: " << ((zero == m0 - m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -388,7 +389,7 @@ void Matrix3x3Tests()
 		}
 	}
 	Matrix3x3 result = Matrix3x3(5.0f, 8.0f, 11.0f, 8.0f, 14.0f, 20.0f, 11.0f, 20.0f, 29.0f);
-	std::cout << "Matrix3x3 * Matrix3x3: %s\n", (m0 * m1 == result) ? PASS : FAIL);
+	std::cout << "Matrix3x3 * Matrix3x3: " << ((m0 * m1 == result) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -396,7 +397,7 @@ void Matrix3x3Tests()
 			m1.Set(i, j, (i + j) * 2.0f);
 		}
 	}
-	std::cout << "Matrix3x3 * scalar: %s\n", ((m0 * 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 * scalar: " << (((m0 * 2.0f) == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -404,22 +405,22 @@ void Matrix3x3Tests()
 			m1.Set(i, j, (i + j) / 2.0f);
 		}
 	}
-	std::cout << "Matrix3x3 / divisor: %s\n", ((m0 / 2.0f) == m1) ? PASS : FAIL);
+	std::cout << "Matrix3x3 / divisor: " << (((m0 / 2.0f) == m1) ? PASS : FAIL) << std::endl;
 #pragma endregion
 #pragma region Vector2D
-	std::cout << "\n========== Running Matrix3x3 - Vector2D tests ==========\n\n");
+	std::cout << "\n========== Running Matrix3x3 - Vector2D tests ==========\n\n";
 	Matrix3x3 x22 = Matrix3x3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
 	Vector2D v2 = Vector2D(1.0f, 2.0f, 1.0f);
 	Vector2D v2Test = Vector2D(8.0f, 20.0f, 32.0f);
-	std::cout << "Matrix3x3 * Vector2D: %s\n", (v2Test == (x22 * v2)) ? PASS : FAIL);
+	std::cout << "Matrix3x3 * Vector2D: " << ((v2Test == (x22 * v2)) ? PASS : FAIL) << std::endl;
 #pragma endregion
 
 #pragma region Vector3D
-	std::cout << "\n========== Running Matrix3x3 - Vector3D tests ==========\n\n");
+	std::cout << "\n========== Running Matrix3x3 - Vector3D tests ==========\n\n";
 	Matrix3x3 x33 = Matrix3x3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
 	Vector3D v3 = Vector3D(1.0f, 2.0f, 3.0f);
 	Vector3D v3Test = Vector3D(14.0f, 32.0f, 50.0f);
-	std::cout << "Matrix3x3 * Vector3D: %s\n", (v3Test == (x33 * v3)) ? PASS : FAIL);
+	std::cout << "Matrix3x3 * Vector3D: " << ((v3Test == (x33 * v3)) ? PASS : FAIL) << std::endl;
 #pragma endregion
 }
 #endif
