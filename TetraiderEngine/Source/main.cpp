@@ -19,13 +19,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 	ResourceManager& resourceMngr = ResourceManager::GetInstance();
 	
 	// TODO: Remove
-	TextureInfo info;
-	info.frameWidth = 64;
-	info.frameHeight = 64;
-	info.rows = 0;
-	info.cols = 0;
-	info.hasAlpha = false;
-	SurfaceTextureBuffer * pSTB = resourceMngr.LoadTexture("Test", "../TetraiderEngine/Assets/Textures/test.png", info);
+	//TextureInfo info;
+	//info.frameWidth = 64;
+	//info.frameHeight = 64;
+	//info.rows = 0;
+	//info.cols = 0;
+	//info.hasAlpha = false;
+	//SurfaceTextureBuffer * pSTB = resourceMngr.LoadTexture("Test", "../TetraiderEngine/Assets/Textures/test.png", info);
 	Mesh * pMesh = resourceMngr.GetMesh("quad");
 
 	renderMngr.LoadShaderProgram("../TetraiderEngine/Assets/Shaders/defaultShader.json");
@@ -35,8 +35,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 		dt = frameRateMngr.GetFrameTime();
 		renderMngr.FrameStart();
 
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+			case SDL_QUIT:
+				break;
+			}
+		}
 
-		renderMngr.RenderSTB(pSTB, pMesh);
+		renderMngr.RenderSTB(nullptr, pMesh);
 
 		
 		renderMngr.FrameEnd();

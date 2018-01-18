@@ -45,6 +45,11 @@ void RenderManager::_InitWindow(std::string title)
 		m_width, m_height,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
+
+
+
+	SDL_SetWindowSize(m_pWindow, m_width, m_height);
+	glViewport(0, 0, m_width, m_height);
 }
 
 std::string RenderManager::_LoadTextFile(std::string fname)
@@ -73,7 +78,7 @@ bool RenderManager::Init()
 void RenderManager::FrameStart()
 {
 	// clear frame buffer and z-buffer
-	glClearColor(0.0f, 0.0f, 0.0f, 1);
+	glClearColor(0.0f, 0.0f, 1.0f, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearDepth(1);
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -108,54 +113,32 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 	SelectShaderProgram("default");
 	glUseProgram(m_pCurrentProgram->GetProgram());
 	Matrix4x4 P = Matrix4x4::Orthographic(m_width, m_height, 0.1f);
+	//Matrix4x4 P = Matrix4x4::Identity4D();
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)&P);
-	Matrix4x4 rotationM = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS * -1);
-
-	Matrix4x4 V = rotationM * Matrix4x4::Translate(Vector3D(0, 0, 10));
+	
+	Matrix4x4 V = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS * -1) * Matrix4x4::Translate(Vector3D(0, 0, 10));
+	//Matrix4x4 V = Matrix4x4::Identity4D();
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)&V);
 
 	Matrix4x4 trans, rot, scale;
 
 	trans = Matrix4x4::Translate(Vector3D());
 	rot = Matrix4x4::Rotate(0, XAXIS) * Matrix4x4::Rotate(0, YAXIS) * Matrix4x4::Rotate(0, ZAXIS);
-	scale = Matrix4x4::Scale(64.f, 64.f, 64.f);
+	scale = Matrix4x4::Scale(100.f, 100.f, 1.f);
 	Matrix4x4 M = trans * rot * scale;
-	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
 
 
 	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
 	glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());
 	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("texture_coord"));
-	glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetTextCoordBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
 
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), 0, 0);
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), 64, 64);
-
-	glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), 1);
-	glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), 1);
-
-	glUniform4f(m_pCurrentProgram->GetUniform("color"), 1, 1, 1, 1);
-
-	//if (sComp->TextureHasAlpha()) {
-	//	glDisable(GL_DEPTH_TEST);
-	//	glEnable(GL_ALPHA_TEST);
-	//	glAlphaFunc(GL_GREATER, 0.4f);
-	//	glEnable(GL_BLEND);
-	//	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//}
-	//else {
-		glDisable(GL_ALPHA_TEST);
-		glEnable(GL_DEPTH_TEST);
-	//}
+	glDisable(GL_ALPHA_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	// select the texture to use
-	glBindTexture(GL_TEXTURE_2D, pSTB->bufferId);
+	//glBindTexture(GL_TEXTURE_2D, pSTB->bufferId);
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
