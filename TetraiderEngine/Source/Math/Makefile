@@ -1,5 +1,5 @@
-PRG=acrylicor.exe
-FLAGS=-O2 -Wall -Wextra -ansi -pedantic -Wunused -std=c++11
+PRG=mathTest.exe
+FLAGS=-O2 -Wall -Wextra -ansi -pedantic -Wunknown-pragmas -Wunused -std=c++11
 MSCOPEN=/EHsc /Fe
 MSCARGS=opengl32.lib glew32.lib sdl2.lib sdl2main.lib /link /subsystem:console
 

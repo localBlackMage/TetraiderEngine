@@ -306,5 +306,7 @@ OpenCover/
 
 !TetraiderEngine/SDL2/lib/*
 !TetraiderEngine/GL/lib/*
+TetraiderEngine/Source/Math/*.o
+TetraiderEngine/Source/Math/*.exe
 
 ~AutoRecover.*
