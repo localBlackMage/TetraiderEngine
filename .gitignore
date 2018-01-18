@@ -304,6 +304,6 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
-
+!TetraiderEngine/SDL2/lib/*
 
 ~AutoRecover.*
