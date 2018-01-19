@@ -221,7 +221,7 @@ void Vector2DTests()
 
 	Vector2D v1, v2, v3, result;
 	float scalar;
-	double angle;
+	float angle;
 
 	v1.Set(1.0f, 2.0f);
 	v2.Set(1.0f, 2.0f);

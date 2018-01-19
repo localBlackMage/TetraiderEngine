@@ -1,6 +1,5 @@
 #include "DebugManager.h"
-
-#define PI 3.14159265358979323
+#include "Math\MathDefs.h"
 
 void DebugManager::DrawLine(Vector3D* pA, Vector3D* pB, DebugColor color) {
 	if (!m_isDebugModeEnabled)

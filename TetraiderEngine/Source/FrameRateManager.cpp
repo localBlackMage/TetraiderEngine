@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <stdint.h>
 
-#define MIN_FRAME_TIME 0.01666666666666666666666666666667
+#define MIN_FRAME_TIME 0.01666666666666666666666666666667f
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 	m_maxFrameRate(maxFrameRate) {

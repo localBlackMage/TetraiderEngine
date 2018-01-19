@@ -616,8 +616,8 @@ void Matrix4x4Tests()
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, i - j);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(i - j));
 		}
 	}
 	std::cout << "Matrix4x4 == Matrix4x4 equal: " << ((m0 == m0) ? PASS : FAIL) << std::endl;
@@ -630,24 +630,24 @@ void Matrix4x4Tests()
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, -(i + j));
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(-(i + j)));
 		}
 	}
 	std::cout << "Matrix4x4 + Matrix4x4: " << ((zero == m0 + m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(i + j));
 		}
 	}
 	std::cout << "Matrix4x4 - Matrix4x4: " << ((zero == m0 - m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(i + j));
 		}
 	}
 	Matrix4x4 result = Matrix4x4(
@@ -660,16 +660,16 @@ void Matrix4x4Tests()
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, (i + j) * 2.0f);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float((i + j) * 2.0f));
 		}
 	}
 	std::cout << "Matrix4x4 * scalar: " << (((m0 * 2.0f) == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, (i + j) / 2.0f);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float((i + j) / 2.0f));
 		}
 	}
 	std::cout << "Matrix4x4 / divisor: " << (((m0 / 2.0f) == m1) ? PASS : FAIL) << std::endl;

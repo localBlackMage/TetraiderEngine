@@ -354,8 +354,8 @@ void Matrix3x3Tests()
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, i - j);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(i - j));
 		}
 	}
 	std::cout << "Matrix3x3 == Matrix3x3 equal: " << ((m0 == m0) ? PASS : FAIL) << std::endl;
@@ -368,24 +368,24 @@ void Matrix3x3Tests()
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, -(i + j));
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(-(i + j)));
 		}
 	}
 	std::cout << "Matrix3x3 + Matrix3x3: " << ((zero == m0 + m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(i + j));
 		}
 	}
 	std::cout << "Matrix3x3 - Matrix3x3: " << ((zero == m0 - m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float(i + j));
 		}
 	}
 	Matrix3x3 result = Matrix3x3(5.0f, 8.0f, 11.0f, 8.0f, 14.0f, 20.0f, 11.0f, 20.0f, 29.0f);
@@ -393,16 +393,16 @@ void Matrix3x3Tests()
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, (i + j) * 2.0f);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float((i + j) * 2.0f));
 		}
 	}
 	std::cout << "Matrix3x3 * scalar: " << (((m0 * 2.0f) == m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			m0.Set(i, j, i + j);
-			m1.Set(i, j, (i + j) / 2.0f);
+			m0.Set(i, j, float(i + j));
+			m1.Set(i, j, float((i + j) / 2.0f));
 		}
 	}
 	std::cout << "Matrix3x3 / divisor: " << (((m0 / 2.0f) == m1) ? PASS : FAIL) << std::endl;

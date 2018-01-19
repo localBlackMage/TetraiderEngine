@@ -187,11 +187,11 @@ void Matrix2x2Tests()
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m0.Set(i, j, i * 2 + j);
+			m0.Set(i, j, float(i * 2 + j));
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m1.Set(i, j, i + j * 2);
+			m1.Set(i, j, float(i + j * 2));
 
 	m1.Transpose();
 	std::cout << "Matrix2x2 Transpose: " << ((m0 == m1) ? PASS : FAIL) << std::endl;
@@ -228,11 +228,11 @@ void Matrix2x2Tests()
 #pragma region Operations
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m0.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m1.Set(i, j, i - j);
+			m1.Set(i, j, float(i - j));
 	std::cout << "Matrix2x2 == Matrix2x2 equal: " << ((m0 == m0) ? PASS : FAIL) << std::endl;
 
 	std::cout << "Matrix2x2 == Matrix2x2 not equal: " << ((m0 == m1) ? FAIL : PASS);
@@ -243,19 +243,19 @@ void Matrix2x2Tests()
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m0.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m1.Set(i, j, -(i + j));
+			m1.Set(i, j, float(-(i + j)));
 	std::cout << "Matrix2x2 + Matrix2x2: " << ((zero == m0 + m1) ? PASS : FAIL) << std::endl;
 
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m0.Set(i, j, i + j);
+			m0.Set(i, j, float(i + j));
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
-			m1.Set(i, j, i + j);
+			m1.Set(i, j, float(i + j));
 	std::cout << "Matrix2x2 - Matrix2x2: " << ((zero == m0 - m1) ? PASS : FAIL) << std::endl;
 
 	/*for (i = 0; i < 2; i++)
