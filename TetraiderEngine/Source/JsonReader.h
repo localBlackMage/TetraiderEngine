@@ -36,7 +36,7 @@ namespace JsonReader {
 	//template <typename T>
 	//void ParseJsonValue(const json j, T&, T, String, String, String);
 
-
+	float ParseFloat(const json j, String);
 	float ParseFloat(const json j, String, String);
 	float ParseFloat(const json j, String, String, String);
 

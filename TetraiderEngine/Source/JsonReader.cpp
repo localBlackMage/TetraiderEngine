@@ -36,6 +36,14 @@ namespace JsonReader {
 	//	result = defaultValue;
 	//}
 
+	float ParseFloat(const json j, String first)
+	{
+		if (j.find(first) != j.end())
+				return j[first];
+
+		return 0.0f;
+	}
+
 	float ParseFloat(const json j, String first, String second)
 	{
 		if (j.find(first) != j.end()) {

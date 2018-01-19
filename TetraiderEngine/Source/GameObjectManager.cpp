@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "GameConfig.h"
 #include <fstream>
 #include <iostream>
 
@@ -88,8 +89,9 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 }
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
-
-	json j = OpenJsonFile(name);
+	GameConfig& gameConfig = GameConfig::GetInstance();
+	std::string s = gameConfig.m_prefabsDir + name + ".json";
+	json j = OpenJsonFile(s);
 
 	GameObject *pGameObject = new GameObject;
 	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
@@ -108,16 +110,16 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	return pGameObject;
 }
 
-Component* GameObjectManager::AddComponentToGameObject(GameObject* pGO, json j) {
+/*Component* GameObjectManager::AddComponentToGameObject(GameObject* pGO, json j) {
 	Component* pComponent = componentFactory.CreateComponent(ParseString(j, "Component"));
 	pGO->AddComponent(pComponent);
 	pComponent->Serialize(j);
 	pComponent->LateInitialize();
 	return pComponent;
-}
+}*/
 
 void GameObjectManager::SetGameObjectTag(std::string tag, GameObject* pGO) {
-	if (tag == "Tag_Player")
+	if (tag == "Player")
 		pGO->m_tag = GameObjectTag::Player;
 	else
 		pGO->m_tag = GameObjectTag::NONE;

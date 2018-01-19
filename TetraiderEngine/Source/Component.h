@@ -5,6 +5,7 @@
 #include "GameObject.h"
 
 using json = nlohmann::json;
+using namespace JsonReader;
 
 enum class ComponentType {
 	Transform,

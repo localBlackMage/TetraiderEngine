@@ -1,5 +1,5 @@
 #include "GameConfig.h"
-#include "ResourceManager.h"
+#include "LevelManager.h"
 
 using namespace JsonReader;
 
@@ -18,4 +18,9 @@ void GameConfig::LoadConfig(std::string s) {
 	m_sfxDir = ParseString(gameSettings, "sfxDir");
 	m_shadersDir = ParseString(gameSettings, "shadersDir");
 	m_texturesDir = ParseString(gameSettings, "texturesDir");
+
+	// Set level parameters
+	json levelSettings = j["LEVEL_SETTINGS"];
+	LevelManager& levelManager = LevelManager::GetInstance();
+	levelManager.Initialize(levelSettings);
 }

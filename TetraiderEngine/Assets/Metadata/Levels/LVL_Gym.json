@@ -1,0 +1,9 @@
+{
+	"GAME_OBJECTS": [{
+			"prefab": "p_Test",
+			"positionX": 50,
+			"positionY": 100,
+			"positionZ": 0
+		}
+	]
+}

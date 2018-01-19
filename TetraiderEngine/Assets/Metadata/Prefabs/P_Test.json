@@ -1,0 +1,16 @@
+{
+	"Tag": "None",
+	"COMPONENTS": [{
+			"Component": "Transform",
+			"positionX": 0,
+			"positionY": 0,
+			"positionZ": 0,
+			"scaleX": 60,
+			"scaleY": 60,
+			"scaleZ": 1,
+			"rotation": 0,
+			"pivotOffsetX": 0,
+			"pivotOffsetY": 0
+		}
+	]
+}

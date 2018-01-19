@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "GameObjectManager.h"
 #include "InputManager.h"
+#include "LevelManager.h"
 
 GameStateManager::GameStateManager(): m_previousState(GameState::CURRENT_LEVEL), m_currentState(GameState::CURRENT_LEVEL), m_nextState(GameState::CURRENT_LEVEL) {}
 
@@ -16,6 +17,7 @@ void GameStateManager::Update() {
 	RenderManager& renderMngr = RenderManager::GetInstance();
 	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
 	InputManager& inputMngr = InputManager::GetInstance();
+	LevelManager& levelMngr = LevelManager::GetInstance();
 
 	Mesh * pMesh = resourceMngr.GetMesh("quad");
 	float dt = 1 / 60.0f;
@@ -23,13 +25,13 @@ void GameStateManager::Update() {
 	SDL_Event event;
 
 	while (m_currentState != GameState::QUIT) {
-		// TODO: Load level here
+		levelMngr.LoadLevel();
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;
 			m_nextState = m_previousState;
 		}
-
+		//-------------------------------- GAME LOOP STARTS ----------------------------------------------------//
 		while (m_currentState == m_nextState) {
 			frameRateMngr.FrameStart();
 			dt = frameRateMngr.GetFrameTime();
@@ -53,6 +55,7 @@ void GameStateManager::Update() {
 				}
 			}
 		}
+		//-------------------------------- GAME LOOP ENDS ----------------------------------------------------//
 
 		if (m_nextState != GameState::RESTART) {
 			//TODO: Unload some assets
@@ -65,3 +68,5 @@ void GameStateManager::Update() {
 		m_currentState = m_nextState;
 	}
 }
+
+void GameStateManager::SetGameState(GameState state) { m_currentState = state; }

@@ -6,7 +6,10 @@
 #include <windows.h>
 #include "JsonReader.h"
 #include "Math\Matrix4x4.h"
-
+/*----------------Moodie code--------------*/
+#include "GameObjectManager.h"
+#include "Transform.h"
+/*-----------------------------------------*/
 
 // TODO: Find a better spot for these
 const Vector3D XAXIS = Vector3D(1, 0, 0, 0);
@@ -120,29 +123,29 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 	//Matrix4x4 V = Matrix4x4::Identity4D();
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)&V);
 
-	Matrix4x4 trans, rot, scale;
+	/*----------------Moodie Code--------------------*/
+	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
+	for (auto gameObject : gameObjectMngr.mGameObjects) {
+		Transform* const pTransform = static_cast<Transform*>(gameObject->GetComponent(ComponentType::Transform));
+		if (!pTransform)
+			continue;
+		Matrix4x4 I = Matrix4x4::Identity4D();
+		glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)pTransform->m_pTransform);
 
-	trans = Matrix4x4::Translate(Vector3D());
-	rot = Matrix4x4::Rotate(0, XAXIS) * Matrix4x4::Rotate(0, YAXIS) * Matrix4x4::Rotate(0, ZAXIS);
-	scale = Matrix4x4::Scale(100.f, 100.f, 1.f);
-	Matrix4x4 M = trans * rot * scale;
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
+		glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+		glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());
+		glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 
+		glDisable(GL_ALPHA_TEST);
+		glEnable(GL_DEPTH_TEST);
 
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
-	glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+		// select the texture to use
+		// glBindTexture(GL_TEXTURE_2D, pSTB->bufferId);
 
-
-	glDisable(GL_ALPHA_TEST);
-	glEnable(GL_DEPTH_TEST);
-
-	// select the texture to use
-	//glBindTexture(GL_TEXTURE_2D, pSTB->bufferId);
-
-	// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
+		// draw the mesh
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
+		glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
+	}
 }
 
 #pragma region Shaders
