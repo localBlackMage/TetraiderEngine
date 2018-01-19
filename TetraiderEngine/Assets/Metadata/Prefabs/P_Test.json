@@ -14,6 +14,7 @@
 		},
 		{
 			"Component": "Sprite",
+			"Texture": "test.png",
 			"xTiling": 1,
 			"yTiling": 1,
 			"uOffset": 0,
