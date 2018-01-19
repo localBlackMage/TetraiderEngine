@@ -40,6 +40,7 @@
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +68,7 @@
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
+    <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\STBSurface.h" />
     <ClInclude Include="Source\Transform.h" />
   </ItemGroup>

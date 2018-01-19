@@ -11,6 +11,18 @@
 			"rotation": 0,
 			"pivotOffsetX": 0,
 			"pivotOffsetY": 0
+		},
+		{
+			"Component": "Sprite",
+			"xTiling": 1,
+			"yTiling": 1,
+			"uOffset": 0,
+			"vOffset": 0,
+			"hasAlpha": true,
+			"r": 0,
+			"g": 0,
+			"b": 0,
+			"a": 0
 		}
 	]
 }
