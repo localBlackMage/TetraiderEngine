@@ -20,7 +20,7 @@ class FrameRateManager
 private:
 	unsigned int m_maxFrameRate, m_ticksPerFrame;
 	unsigned int m_tickStart, m_tickEnd;
-	unsigned int m_frameTime;
+	float m_frameTime;
 
 	FrameRateManager(unsigned int maxFrameRate);
 	~FrameRateManager();
@@ -30,7 +30,7 @@ public:
 	void operator=(const FrameRateManager &) = delete;
 	void FrameStart();
 	void FrameEnd();
-	unsigned int GetFrameTime();
+	float GetFrameTime(); // in seconds
 
 	static FrameRateManager& GetInstance(unsigned int maxFrameRate = 60)
 	{

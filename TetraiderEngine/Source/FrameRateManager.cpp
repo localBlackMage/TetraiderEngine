@@ -27,9 +27,9 @@ void FrameRateManager::FrameEnd() {
 	while (m_tickEnd - m_tickStart < m_ticksPerFrame) {
 		m_tickEnd = SDL_GetTicks();
 	}
-	m_frameTime = m_tickEnd - m_tickStart;
+	m_frameTime = (float)(m_tickEnd - m_tickStart) / 1000.0f;
 }
 
-unsigned int FrameRateManager::GetFrameTime() {
+float FrameRateManager::GetFrameTime() {
 	return m_frameTime;
 }
