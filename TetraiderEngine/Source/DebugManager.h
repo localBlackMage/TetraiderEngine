@@ -10,12 +10,6 @@ struct DB_Color {
 	float a = 0;
 };
 
-enum class DebugType {
-	LINE,
-	WIRE_RECTANGLE,
-	WIRE_CIRCLE,
-};
-
 struct DebugCommand {
 	bool active = false;
 	DB_Color color;
