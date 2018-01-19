@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include <iostream>
 #include "JsonReader.h"
+#include "GameConfig.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
 
@@ -93,7 +94,7 @@ void ResourceManager::UnloadMesh(std::string meshName)
 	}
 }
 
-SurfaceTextureBuffer * ResourceManager::LoadTexture(std::string textureName, std::string fileName, TextureInfo info)
+SurfaceTextureBuffer * ResourceManager::LoadTexture(std::string textureName, std::string filePath, bool hasAlpha)
 {
 	SurfaceTextureBuffer * stbuff = m_textures[textureName];
 
@@ -101,21 +102,23 @@ SurfaceTextureBuffer * ResourceManager::LoadTexture(std::string textureName, std
 		return stbuff;
 
 	STB_Surface * surface = new STB_Surface();
+	GameConfig& gameConfig = GameConfig::GetInstance();
+	std::string texturePath = gameConfig.m_texturesDir + filePath;
 	if (surface) {
-		surface->hasAlpha = info.hasAlpha;
-		surface->data = stbi_load(fileName.c_str(),
+		surface->hasAlpha = hasAlpha;
+		surface->data = stbi_load(texturePath.c_str(),
 			&surface->width, &surface->height,
 			&surface->channels,
-			info.hasAlpha ? STBI_rgb_alpha : STBI_rgb);
+			hasAlpha ? STBI_rgb_alpha : STBI_rgb);
 
 		if (!surface->data) {
-			std::cerr << "Failed to read file: " << fileName << std::endl;
+			std::cerr << "Failed to read file: " << texturePath << std::endl;
 			return nullptr;
 		}
-		surface->frameWidth = info.frameWidth / surface->width;
+		/*surface->frameWidth = info.frameWidth / surface->width;
 		surface->frameHeight = info.frameHeight / surface->height;
 		surface->rows = info.rows;
-		surface->columns = info.cols;
+		surface->columns = info.cols;*/
 		GLuint bufferId = _CreateTextureBuffer(surface);
 
 		stbuff = new SurfaceTextureBuffer(surface, bufferId);
@@ -123,7 +126,7 @@ SurfaceTextureBuffer * ResourceManager::LoadTexture(std::string textureName, std
 		return stbuff;
 	}
 	else {
-		std::cerr << "Failed to create texture: " << textureName << " : " << fileName << std::endl;
+		std::cerr << "Failed to create texture: " << textureName << " : " << texturePath << std::endl;
 		return nullptr;
 	}
 }
@@ -165,7 +168,7 @@ void ResourceManager::LoadTexturesFromFile(std::string fileName)
 				info.rows = JsonReader::ParseInt(j, key, "rows");
 				info.cols = JsonReader::ParseInt(j, key, "columns");
 				info.hasAlpha = JsonReader::ParseBool(j, key, "alpha");
-				LoadTexture(key, JsonReader::ParseString(j, key, "filename"), info);
+				LoadTexture(key, JsonReader::ParseString(j, key, "filename"), info.hasAlpha);
 			}
 		}
 	}

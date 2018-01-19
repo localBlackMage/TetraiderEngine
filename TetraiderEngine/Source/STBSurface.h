@@ -24,10 +24,10 @@ struct STB_Surface {
 	int height;
 	int channels;
 	bool hasAlpha;
-	float frameWidth; 
+	/*float frameWidth; 
 	float frameHeight;
 	int rows;
-	int columns;
+	int columns;*/
 };
 
 struct SurfaceTextureBuffer {

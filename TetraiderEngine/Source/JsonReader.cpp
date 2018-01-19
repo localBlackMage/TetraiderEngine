@@ -3,6 +3,7 @@
 
 #include "JsonReader.h"
 #include <fstream>
+#include <iostream>
 
 namespace JsonReader {
 	//template <typename T>
@@ -248,11 +249,17 @@ namespace JsonReader {
 
 	json OpenJsonFile(String fileName)
 	{
-		std::ifstream i(fileName);
-		json j;
-		i >> j;
-		i.close();
-		return j;
+		try {
+			std::ifstream i(fileName);
+			json j;
+			i >> j;
+			i.close();
+			return j;
+		}
+		catch (json::parse_error &e) {
+			std::cerr << e.what() << " in" + fileName << std::endl;
+			return 0;
+		}
 	}
 
 	bool KeyIs(json::iterator it, String key)

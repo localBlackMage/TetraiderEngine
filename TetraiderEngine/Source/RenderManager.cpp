@@ -116,7 +116,7 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 	//Matrix4x4 P = Matrix4x4::Identity4D();
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)&P);
 	
-	Matrix4x4 V = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS * -1) * Matrix4x4::Translate(Vector3D(0, 0, 10));
+	Matrix4x4 V = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS) * Matrix4x4::Translate(Vector3D(0, 0, 10));
 	//Matrix4x4 V = Matrix4x4::Identity4D();
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)&V);
 

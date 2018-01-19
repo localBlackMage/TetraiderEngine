@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 
+using namespace JsonReader;
+
 GameObjectManager::GameObjectManager() {}
 
 GameObjectManager::~GameObjectManager() {
@@ -86,38 +88,28 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 }
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	std::string s = "Metadata\\Archetypes\\" + name + ".json";
-	std::ifstream i(s);
 
-	try {
-		json j;
-		i >> j;
-		i.close();
+	json j = OpenJsonFile(name);
 
-		GameObject *pGameObject = new GameObject;
-		SetGameObjectTag(j.at("Tag").get<std::string>(), pGameObject);
+	GameObject *pGameObject = new GameObject;
+	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
 
-		int size = j["COMPONENTS"].size();
-		for (int i = 0; i < size; ++i) {
-			Component* pComponent = componentFactory.CreateComponent(j["COMPONENTS"][i].at("Component").get<std::string>());
-			pGameObject->AddComponent(pComponent);
-			pComponent->Serialize(j["COMPONENTS"][i]);
-		}
-
-		pGameObject->LateInitialize();
-
-		AddGameObjectToQueue(pGameObject);
-
-		return pGameObject;
+	int size = j["COMPONENTS"].size();
+	for (int i = 0; i < size; ++i) {
+		Component* pComponent = componentFactory.CreateComponent(ParseString(j["COMPONENTS"][i], "Component"));
+		pGameObject->AddComponent(pComponent);
+		pComponent->Serialize(j["COMPONENTS"][i]);
 	}
-	catch (json::parse_error &e) {
-		std::cerr << e.what() << " " << s << std::endl;
-		return 0;
-	}
+
+	pGameObject->LateInitialize();
+
+	AddGameObjectToQueue(pGameObject);
+
+	return pGameObject;
 }
 
 Component* GameObjectManager::AddComponentToGameObject(GameObject* pGO, json j) {
-	Component* pComponent = componentFactory.CreateComponent(j.at("Component").get<std::string>());
+	Component* pComponent = componentFactory.CreateComponent(ParseString(j, "Component"));
 	pGO->AddComponent(pComponent);
 	pComponent->Serialize(j);
 	pComponent->LateInitialize();

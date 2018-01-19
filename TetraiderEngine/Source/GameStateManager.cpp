@@ -1,12 +1,29 @@
 #include "GameStateManager.h"
+#include "FrameRateManager.h"
+#include "RenderManager.h"
+#include "ResourceManager.h"
+#include "GameObjectManager.h"
+#include "InputManager.h"
 
 GameStateManager::GameStateManager(): m_previousState(GameState::CURRENT_LEVEL), m_currentState(GameState::CURRENT_LEVEL), m_nextState(GameState::CURRENT_LEVEL) {}
 
 GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
+	// TODO: Clean up
+	FrameRateManager& frameRateMngr = FrameRateManager::GetInstance();
+	ResourceManager& resourceMngr = ResourceManager::GetInstance();
+	RenderManager& renderMngr = RenderManager::GetInstance();
+	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
+	InputManager& inputMngr = InputManager::GetInstance();
+
+	Mesh * pMesh = resourceMngr.GetMesh("quad");
+	float dt = 1 / 60.0f;
+
+	SDL_Event event;
+
 	while (m_currentState != GameState::QUIT) {
-		// Load level
+		// TODO: Load level here
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;
@@ -14,15 +31,34 @@ void GameStateManager::Update() {
 		}
 
 		while (m_currentState == m_nextState) {
-			// Update game loop
-			UpdateGameLoop();
+			frameRateMngr.FrameStart();
+			dt = frameRateMngr.GetFrameTime();
+			// inputMngr.Update();					// Update input keys
+			renderMngr.FrameStart();				// Clear depth Check if this needs to be done after game logic
+
+			gameObjectMngr.Update(dt);				// Update game logic
+			gameObjectMngr.UpdateStatus();			// Update status of game objects
+			renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
+
+			renderMngr.FrameEnd();
+			frameRateMngr.FrameEnd();
+
+			//TODO: Move logic to update game loop
+			// UpdateGameLoop();
+
+			while (SDL_PollEvent(&event)) {
+				switch (event.type) {
+				case SDL_QUIT:
+					break;
+				}
+			}
 		}
 
 		if (m_nextState != GameState::RESTART) {
-			// Unload some assets
+			//TODO: Unload some assets
 		}
 		else {
-			// Unload all assets
+			//TODO: Unload all assets
 		}
 
 		m_previousState = m_currentState;

@@ -1,0 +1,16 @@
+{
+	"GAME_SETTINGS": {
+		"levelFilesDir": "../TetraiderEngine/Assets/Metadata/Levels/",
+		"prefabsDir": "../TetraiderEngine/Assets/Metadata/Prefabs/",
+		"sfxDir": "../TetraiderEngine/Assets/SFX/",
+		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
+		"texturesDir": "../TetraiderEngine/Assets/Textures/"
+	},
+	"LEVEL_SETTINGS": {
+		"Start": 0,
+		"Levels": [{
+			"Name": "Test"
+		}
+		]
+	}
+}

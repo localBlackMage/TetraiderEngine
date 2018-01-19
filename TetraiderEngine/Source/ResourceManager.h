@@ -58,7 +58,7 @@ public:
 	Mesh * GetMesh(std::string meshName);
 	void UnloadMesh(std::string meshName);
 
-	SurfaceTextureBuffer * LoadTexture(std::string textureName, std::string fileName, TextureInfo info);
+	SurfaceTextureBuffer * LoadTexture(std::string textureName, std::string fileName, bool hasAlpha);
 	SurfaceTextureBuffer * GetTexture(const std::string textureName);
 	void UnloadTexture(std::string textureName);
 
