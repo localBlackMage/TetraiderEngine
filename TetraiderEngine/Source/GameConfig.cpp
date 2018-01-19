@@ -1,5 +1,6 @@
 #include "GameConfig.h"
 #include "LevelManager.h"
+#include "DebugManager.h"
 
 using namespace JsonReader;
 
@@ -23,4 +24,8 @@ void GameConfig::LoadConfig(std::string s) {
 	json levelSettings = j["LEVEL_SETTINGS"];
 	LevelManager& levelManager = LevelManager::GetInstance();
 	levelManager.Initialize(levelSettings);
+
+	// Set debug parameters
+	DebugManager& debugManager = DebugManager::GetInstance();
+	debugManager.m_isDebugModeEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
 }

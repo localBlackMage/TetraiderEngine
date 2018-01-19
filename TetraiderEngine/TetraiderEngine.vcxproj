@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\ComponentFactory.cpp" />
+    <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\FrameRateManager.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -46,6 +47,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentFactory.h" />
+    <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\External\json.hpp" />
     <ClInclude Include="Source\External\stb_image.h" />
     <ClInclude Include="Source\FrameRateManager.h" />

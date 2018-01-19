@@ -4,7 +4,8 @@
 		"prefabsDir": "../TetraiderEngine/Assets/Metadata/Prefabs/",
 		"sfxDir": "../TetraiderEngine/Assets/SFX/",
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
-		"texturesDir": "../TetraiderEngine/Assets/Textures/"
+		"texturesDir": "../TetraiderEngine/Assets/Textures/",
+		"isDebugModeEnabled": true
 	},
 	"LEVEL_SETTINGS": {
 		"Start": 0,
