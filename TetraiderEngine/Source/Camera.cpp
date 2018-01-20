@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Transform.h"
+#include "RenderManager.h"
 
 Camera::Camera() :
 	Component(ComponentType::Camera),
@@ -11,11 +12,6 @@ Camera::Camera() :
 
 Camera::~Camera()
 {
-}
-
-void Camera::LateInitialize()
-{
-	m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
 }
 
 Matrix4x4 Camera::_MatrixFromCameraVectors(const Vector3D & right, const Vector3D & up, const Vector3D & forward)
@@ -42,4 +38,60 @@ void Camera::_CalcPerspectiveMatrix()
 void Camera::_CalcOrthographicMatrix()
 {
 	m_orthographicMatrix = Matrix4x4::Orthographic(m_screenWidth, m_screenHeight, 0.1f);
+}
+
+void Camera::Serialize(json j)
+{
+	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
+}
+
+void Camera::LateInitialize()
+{
+	m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+}
+
+void Camera::Update(float dt)
+{
+	RenderManager& renderMngr = RenderManager::GetInstance();
+	m_aspectRatio = renderMngr.GetAspectRatio();
+	m_screenWidth = renderMngr.WindowWidth();
+	m_screenHeight = renderMngr.WindowHeight();
+	_CalcViewMatrix();
+	//switch (m_cameraType) {
+	//case CAM_BOTH:
+	//	_CalcPerspectiveMatrix();
+	//	_CalcOrthographicMatrix();
+	//	break;
+	//case CAM_PERSP:
+	//	_CalcPerspectiveMatrix();
+	//	break;
+	//case CAM_ORTHO:
+	_CalcOrthographicMatrix();
+	//	break;
+	//}
+}
+
+float Camera::GetFOV() const
+{
+	return m_fov;
+}
+
+float Camera::GetAspect() const
+{
+	return m_aspectRatio;
+}
+
+Matrix4x4 Camera::GetViewMatrix() const
+{
+	return m_viewMatrix;
+}
+
+Matrix4x4 Camera::GetPerspectiveMatrix() const
+{
+	return m_perspectiveMatrix;
+}
+
+Matrix4x4 Camera::GetOrthographicMatrix() const
+{
+	return m_orthographicMatrix;
 }

@@ -9,6 +9,8 @@ class Component;
 class ComponentFactory {
 public:
 	ComponentFactory();
+	~ComponentFactory() {};
+
 	Component* CreateComponent(std::string component);
 };
 

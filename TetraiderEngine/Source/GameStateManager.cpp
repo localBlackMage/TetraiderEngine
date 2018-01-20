@@ -46,7 +46,7 @@ void GameStateManager::Update() {
 
 			// TODO: Update to render all game objects
 			//renderMngr.RenderGameObject();
-			renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
+			//renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
 
 			renderMngr.FrameEnd();
 			frameRateMngr.FrameEnd();

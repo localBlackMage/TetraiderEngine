@@ -24,7 +24,15 @@ public:
 	Camera();
 	~Camera();
 
+	virtual void Serialize(json j);
 	virtual void LateInitialize();
+	virtual void Update(float dt);
+
+	float GetFOV() const;
+	float GetAspect() const;
+	Matrix4x4 GetViewMatrix() const;
+	Matrix4x4 GetPerspectiveMatrix() const;
+	Matrix4x4 GetOrthographicMatrix() const;
 };
 
 #endif

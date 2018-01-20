@@ -93,6 +93,13 @@ void RenderManager::FrameEnd()
 	SDL_GL_SwapWindow(m_pWindow);
 }
 
+void RenderManager::Resize(int width, int height)
+{
+	m_width = width;
+	m_height = height;
+	glViewport(0, 0, width, height);
+}
+
 float RenderManager::GetAspectRatio() const
 {
 	return (float)m_width / (float)m_height;
@@ -111,7 +118,7 @@ void RenderManager::RenderGameObject(GameObject& camera, GameObject& go)
 
 	//_RenderGameObject(gameObject);
 }
-
+/*
 void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 {
 	SelectShaderProgram("default");
@@ -124,7 +131,7 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 	//Matrix4x4 V = Matrix4x4::Identity4D();
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)&V);
 
-	/*----------------Moodie Code--------------------*/
+	/*----------------Moodie Code--------------------
 	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
 	for (auto gameObject : gameObjectMngr.mGameObjects) {
 		Transform* const pTransform = static_cast<Transform*>(gameObject->GetComponent(ComponentType::Transform));
@@ -148,6 +155,7 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 		glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
 	}
 }
+*/
 
 #pragma region Shaders
 void RenderManager::LoadShaderProgram(std::string fileName)

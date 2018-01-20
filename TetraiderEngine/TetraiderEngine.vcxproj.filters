@@ -135,8 +135,8 @@
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Controller.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,8 +227,8 @@
     <ClInclude Include="Source\Camera.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Controller.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
