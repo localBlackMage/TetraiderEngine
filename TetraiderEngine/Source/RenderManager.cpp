@@ -98,7 +98,7 @@ float RenderManager::GetAspectRatio() const
 	return (float)m_width / (float)m_height;
 }
 
-void RenderManager::RenderGameObject(/*GameObject& camera, GameObject go*/)
+void RenderManager::RenderGameObject(GameObject& camera, GameObject& go)
 {
 	//CameraComponent * cComp = static_cast<CameraComponent*>(camera.Get(COMPONENT_TYPE::CAMERA));
 	//_SelectShaderProgram(gameObject);

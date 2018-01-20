@@ -20,6 +20,7 @@ Creation date: 1/17/18
 #include <map>
 #include "ShaderProgram.h"
 #include "Shader.h"
+#include "GameObject.h"
 
 
 #include "STBSurface.h"
@@ -69,7 +70,7 @@ public:
 	void FrameEnd();
 	float GetAspectRatio() const;
 
-	void RenderGameObject(/*GameObject& camera, GameObject go*/);
+	void RenderGameObject(GameObject& camera, GameObject& go);
 	void RenderSTB(SurfaceTextureBuffer* pSTB, Mesh* pMesh);
 
 	void LoadShaderProgram(std::string fileName);
