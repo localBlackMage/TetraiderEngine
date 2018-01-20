@@ -19,6 +19,7 @@ public:
 	~GameObject();
 
 	void Update(float dt);
+	void LateUpdate(float dt);
 	void AddComponent(Component* pComponent);
 	void LateInitialize();
 	void Destroy();

@@ -20,6 +20,11 @@ void GameObject::Update(float dt) {
 		comp->Update(dt);
 }
 
+void GameObject::LateUpdate(float dt) {
+	for (auto &comp : mComponents)
+		comp->LateUpdate(dt);
+}
+
 void GameObject::LateInitialize() {
 	for (auto &comp : mComponents)
 		comp->LateInitialize();

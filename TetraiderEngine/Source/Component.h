@@ -11,6 +11,7 @@ enum class ComponentType {
 	Transform,
 	Sprite,
 	Animation,
+	Controller,
 
 	NONE
 };
@@ -21,6 +22,7 @@ public:
 	virtual ~Component() {};
 	virtual void LateInitialize() = 0;
 	virtual void Update(float dt) = 0;
+	virtual void LateUpdate(float dt) = 0;
 	virtual void Serialize(json j) = 0;
 	// TODO
 	// virtual void LateUpdate(float dt) = 0;

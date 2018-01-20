@@ -23,7 +23,6 @@ void GameStateManager::Update() {
 	LevelManager& levelMngr = LevelManager::GetInstance();
 
 	Mesh * pMesh = resourceMngr.GetMesh("quad");
-	GameObject * pGO = gameObjectMngr.CreateGameObject("P_Test");
 	float dt = 1 / 60.0f;
 
 	SDL_Event event;
@@ -39,15 +38,15 @@ void GameStateManager::Update() {
 		while (m_currentState == m_nextState) {
 			frameRateMngr.FrameStart();
 			dt = frameRateMngr.GetFrameTime();
-			// inputMngr.Update();					// Update input keys
+			inputMngr.Update();						// Update input keys
 			renderMngr.FrameStart();				// Clear depth Check if this needs to be done after game logic
 
 			gameObjectMngr.Update(dt);				// Update game logic
 			gameObjectMngr.UpdateStatus();			// Update status of game objects
 
 			// TODO: Update to render all game objects
-			renderMngr.RenderGameObject();
-			//renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
+			//renderMngr.RenderGameObject();
+			renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
 
 			renderMngr.FrameEnd();
 			frameRateMngr.FrameEnd();

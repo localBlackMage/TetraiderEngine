@@ -39,6 +39,10 @@
       }
     },
 	{
+		"Component": "Controller",
+		"speed": 100
+	},
+	{
 		"Component": "Animation",
 		"defaultAnimation": 1,
 		"MY_ANIMATIONS":[

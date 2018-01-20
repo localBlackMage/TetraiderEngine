@@ -29,8 +29,8 @@ void GameObjectManager::UpdateStatus() {
 
 void GameObjectManager::LateUpdate(float dt) {
 	for (auto gameObject : mGameObjects) {
-		// if (gameObject->m_isActive)
-			// gameObject->LateUpdate(dt);
+		 if (gameObject->m_isActive)
+			 gameObject->LateUpdate(dt);
 	}
 }
 
