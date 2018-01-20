@@ -22,12 +22,12 @@ class Component {
 public:
 	Component(ComponentType _type) : type(_type) {};
 	virtual ~Component() {};
-	virtual void LateInitialize() = 0;
+	virtual void LateInitialize() {};
 	virtual void Update(float dt) = 0;
-	virtual void LateUpdate(float dt) = 0;
+	virtual void LateUpdate(float dt) {};
 	virtual void Serialize(json j) = 0;
+	virtual void Override(json j) = 0;
 	// TODO
-	// virtual void LateUpdate(float dt) = 0;
 	// virtual void HandleEvent(Event* pEvent) {}
 
 	GameObject *pGO;

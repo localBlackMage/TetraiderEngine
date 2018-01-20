@@ -21,9 +21,9 @@ public:
 	~Transform();
 
 	virtual void Update(float dt);
-	virtual void Serialize(json j);
-	virtual void LateInitialize() {}
 	virtual void LateUpdate(float dt);
+	virtual void Serialize(json j);
+	virtual void Override(json j) {};
 
 	void SetPosition(Vector3D pos);
 	Vector3D GetPosition() const;

@@ -6,10 +6,10 @@
 #include <windows.h>
 #include "JsonReader.h"
 #include "Math\Matrix4x4.h"
-/*----------------Moodie code--------------*/
-#include "GameObjectManager.h"
+//#include "GameObjectManager.h"
 #include "Transform.h"
-/*-----------------------------------------*/
+#include "Camera.h"
+#include "Sprite.h"
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height)
@@ -68,6 +68,79 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 	}
 }
 
+bool RenderManager::_GameObjectHasRenderableComponent(GameObject & gameObject)
+{
+	return true;
+	//return gameObject.Has(ComponentType::SPRITE) || gameObject.Has(ComponentType::SCROLLING_SPRITE) || gameObject.Has(ComponentType::TEXT);
+}
+
+void RenderManager::_RenderSprite(Sprite * pSpriteComp)
+{
+	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
+	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+
+	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("texture_coord"));
+	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetTextCoordBuffer());
+	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
+
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
+
+	glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), pSpriteComp->TileX());
+	glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), pSpriteComp->TileY());
+
+	Vector3D color = pSpriteComp->GetColor();
+	glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
+
+	if (pSpriteComp->TextureHasAlpha()) {
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.4f);
+		glEnable(GL_BLEND);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else {
+		glDisable(GL_ALPHA_TEST);
+		glEnable(GL_DEPTH_TEST);
+	}
+
+	// select the texture to use
+	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * pSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
+}
+
+void RenderManager::_RenderGameObject(GameObject& gameObject)
+{
+	// Only attempt to draw if the game object has a sprite component and transform component
+	if (!gameObject.GetComponent(ComponentType::Transform) || !_GameObjectHasRenderableComponent(gameObject))
+		return;
+
+	Matrix4x4 M = static_cast<Transform*>(gameObject.GetComponent(ComponentType::Transform))->GetTransform();
+	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
+
+	// set shader attributes
+	if (gameObject.GetComponent(ComponentType::Sprite))
+		_RenderSprite(static_cast<Sprite*>(gameObject.GetComponent(ComponentType::Sprite)));
+}
+
+void RenderManager::_SelectShaderProgram(GameObject & gameObject)
+{
+	std::string shader = "";
+
+	//if (gameObject.Has(ComponentType::Sprite))
+	//	shader = static_cast<Sprite*>(gameObject.GetComponent(ComponentType::Sprite))->Shader();
+
+	SelectShaderProgram(shader == "" ? "default" : shader);
+}
+
+
 bool RenderManager::Init()
 {
 	// GLEW: get function bindings (if possible)
@@ -107,16 +180,16 @@ float RenderManager::GetAspectRatio() const
 
 void RenderManager::RenderGameObject(GameObject& camera, GameObject& go)
 {
-	//CameraComponent * cComp = static_cast<CameraComponent*>(camera.Get(COMPONENT_TYPE::CAMERA));
-	//_SelectShaderProgram(gameObject);
-	//glUseProgram(m_pCurrentProgram->GetProgram());
+	if (camera == go) return;
+	Camera * cameraComp = static_cast<Camera*>(camera.GetComponent(ComponentType::Camera));
+	_SelectShaderProgram(go);
+	glUseProgram(m_pCurrentProgram->GetProgram());
 
-	//// TODO: FIX
-	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cComp->GetOrthographicMatrix());
-	////glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cComp->GetPerspectiveMatrix());
-	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cComp->GetViewMatrix());
+	// TODO: Update to support grabbing Perspective Matricies if needed
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cameraComp->GetOrthographicMatrix());
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cameraComp->GetViewMatrix());
 
-	//_RenderGameObject(gameObject);
+	_RenderGameObject(gameObject);
 }
 /*
 void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
@@ -236,10 +309,10 @@ Shader * RenderManager::CreateFragmentShaderFromFile(std::string fileName)
 
 void RenderManager::SelectShaderProgram(std::string programName)
 {
-	//if (!m_shaderPrograms[programName]) {
-	//	std::cout << "Shader program \"" << programName.c_str() << "\" does not exist." << std::endl;
-	//	return;
-	//}
+	if (!m_shaderPrograms[programName]) {
+		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;
+		return;
+	}
 	m_pCurrentProgram = m_shaderPrograms[programName];
 }
 #pragma endregion

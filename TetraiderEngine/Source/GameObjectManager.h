@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "ComponentFactory.h"
+#include "RenderManager.h"
 
 // Forward declarations
 class GameObject;
@@ -13,17 +14,22 @@ enum class GameObjectTag;
 class GameObjectManager
 {
 private:
-	GameObjectManager();
-	~GameObjectManager();
-
+	unsigned int m_currentId;
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
+	GameObject* m_pCamera;
+	RenderManager& renderMngr;
+
+	GameObjectManager();
+	~GameObjectManager();
+	
 	void SetGameObjectTag(std::string tag, GameObject* pGO);
 	void AddGameObject(GameObject* pGO);
 	void AddGameObjectToQueue(GameObject* pGO);
 	void AddGameObjectsFromQueueToMainVector();
 	void DestroyAllGameObjects();
 	void DestroyGameObjects();
+
 public:
 	GameObjectManager(const GameObjectManager &) = delete;
 	void operator=(const GameObjectManager &) = delete;
@@ -36,6 +42,8 @@ public:
 
 	void Update(float dt);
 	void LateUpdate(float dt);
+	void RenderGameObjects();
+
 	GameObject* CreateGameObject(std::string name);
 	void UpdateStatus();
 	// Component* AddComponentToGameObject(GameObject* pGO, json j);

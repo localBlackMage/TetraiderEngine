@@ -22,11 +22,12 @@ Creation date: 1/17/18
 #include "Shader.h"
 #include "GameObject.h"
 
-
 #include "STBSurface.h"
 #include "Mesh.h"
 #include "Math\Matrix4x4.h"
 #include "Math\Vector3D.h"
+
+class Sprite;
 
 class RenderManager
 {
@@ -43,6 +44,10 @@ private:
 
 	void _InitWindow(std::string title);
 	std::string _LoadTextFile(std::string fname);
+	bool _GameObjectHasRenderableComponent(GameObject & gameObject);
+	void _RenderSprite(Sprite* pSpriteComp);
+	void _RenderGameObject(GameObject& gameObject);
+	void _SelectShaderProgram(GameObject& gameObject);
 
 public:
 	RenderManager(const RenderManager &) = delete;

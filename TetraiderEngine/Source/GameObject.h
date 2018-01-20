@@ -9,14 +9,17 @@ enum class ComponentType;
 
 enum class GameObjectTag {
 	Player,
+	Camera,
 
 	NONE
 };
 
 class GameObject {
 public:
-	GameObject();
+	GameObject(unsigned int id);
 	~GameObject();
+
+	bool operator==(const GameObject& rhs) const;
 
 	void Update(float dt);
 	void LateUpdate(float dt);
@@ -24,6 +27,7 @@ public:
 	void LateInitialize();
 	void Destroy();
 	Component* GetComponent(ComponentType type);
+	bool HasComponent(ComponentType type);
 	
 	bool m_isActive;
 	bool m_isRender;
@@ -35,6 +39,7 @@ public:
 	// void AddEventSubscription(EventType type);
 private:
 	std::vector<Component*> mComponents;
+	unsigned int m_id;
 };
 
 #endif 

@@ -6,8 +6,12 @@
 #include <iostream>
 
 using namespace JsonReader;
+static const std::string COMPONENTS = "COMPONENTS";
 
-GameObjectManager::GameObjectManager() {}
+GameObjectManager::GameObjectManager() :
+	m_currentId(0),
+	renderMngr(RenderManager::GetInstance())
+{}
 
 GameObjectManager::~GameObjectManager() {
 	DestroyAllGameObjects();
@@ -31,6 +35,14 @@ void GameObjectManager::LateUpdate(float dt) {
 	for (auto gameObject : mGameObjects) {
 		 if (gameObject->m_isActive)
 			 gameObject->LateUpdate(dt);
+	}
+}
+
+void GameObjectManager::RenderGameObjects()
+{
+	for (GameObject* GO : mGameObjects) {
+		if (GO->m_isActive)
+			renderMngr.RenderGameObject(*m_pCamera, *GO);
 	}
 }
 
@@ -93,14 +105,17 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	std::string s = gameConfig.m_prefabsDir + name + ".json";
 	json j = OpenJsonFile(s);
 
-	GameObject *pGameObject = new GameObject;
+	GameObject *pGameObject = new GameObject(++m_currentId);
 	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
 
-	int size = j["COMPONENTS"].size();
+	// TODO: Find a cleaner way to do this?
+	if (pGameObject->m_tag == GameObjectTag::Camera)	m_pCamera = pGameObject;
+
+	int size = j[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
-		Component* pComponent = componentFactory.CreateComponent(ParseString(j["COMPONENTS"][i], "Component"));
+		Component* pComponent = componentFactory.CreateComponent(ParseString(j[COMPONENTS][i], "Component"));
 		pGameObject->AddComponent(pComponent);
-		pComponent->Serialize(j["COMPONENTS"][i]);
+		pComponent->Serialize(j[COMPONENTS][i]);
 	}
 
 	pGameObject->LateInitialize();
@@ -119,8 +134,11 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 }*/
 
 void GameObjectManager::SetGameObjectTag(std::string tag, GameObject* pGO) {
+	// TODO: Convert Tags to something better, try the trick mentioned by Prof. Rabin
 	if (tag == "Player")
 		pGO->m_tag = GameObjectTag::Player;
+	else if (tag == "Camera")
+		pGO->m_tag = GameObjectTag::Camera;
 	else
 		pGO->m_tag = GameObjectTag::NONE;
 }

@@ -1,7 +1,11 @@
 #include "GameObject.h"
 #include "Component.h"
 
-GameObject::GameObject() : m_isDestroy(false), m_isActive(true), m_isCollisionDisabled(false), m_isRender(true) {}
+GameObject::GameObject(unsigned int id) : 
+	m_id(id), 
+	m_isDestroy(false), m_isActive(true), 
+	m_isCollisionDisabled(false), 
+	m_isRender(true) {}
 
 GameObject::~GameObject() {
 	// Delete all components
@@ -9,6 +13,11 @@ GameObject::~GameObject() {
 		delete comp;
 
 	mComponents.clear();
+}
+
+bool GameObject::operator==(const GameObject& rhs) const
+{
+	return rhs.m_id == m_id;
 }
 
 void GameObject::Destroy() {
@@ -44,4 +53,12 @@ Component* GameObject::GetComponent(ComponentType const type) {
 	}
 
 	return NULL;
+}
+
+bool GameObject::HasComponent(ComponentType type)
+{
+	for (auto &comp : mComponents) {
+		if (comp->type == type)
+			return true;
+	}
 }

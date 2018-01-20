@@ -1,0 +1,16 @@
+{
+  "Tag": "Camera",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {},
+      "scale": {},
+      "pivotOffset": {},
+      "rotation": {}
+    },
+    {
+      "Component": "Camera",
+      "fov": 105
+    }
+  ]
+}

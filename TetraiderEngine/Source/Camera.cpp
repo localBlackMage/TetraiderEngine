@@ -45,6 +45,11 @@ void Camera::Serialize(json j)
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
 }
 
+void Camera::Override(json j)
+{
+	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
+}
+
 void Camera::LateInitialize()
 {
 	m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));

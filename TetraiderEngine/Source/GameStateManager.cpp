@@ -22,8 +22,7 @@ void GameStateManager::Update() {
 	InputManager& inputMngr = InputManager::GetInstance();
 	LevelManager& levelMngr = LevelManager::GetInstance();
 
-	Mesh * pMesh = resourceMngr.GetMesh("quad");
-	float dt = 1 / 60.0f;
+	float dt = 1.f / 60.0f;
 
 	SDL_Event event;
 
@@ -44,9 +43,7 @@ void GameStateManager::Update() {
 			gameObjectMngr.Update(dt);				// Update game logic
 			gameObjectMngr.UpdateStatus();			// Update status of game objects
 
-			// TODO: Update to render all game objects
-			//renderMngr.RenderGameObject();
-			//renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
+			gameObjectMngr.RenderGameObjects();
 
 			renderMngr.FrameEnd();
 			frameRateMngr.FrameEnd();

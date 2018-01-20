@@ -1,11 +1,15 @@
 {
-	"GAME_OBJECTS": [{
-			"prefab": "p_Test",
-			"position": {
-				"x": 50,
-				"y": 100,
-				"z": 0
-			}
-		}
-	]
+  "GAME_OBJECTS": [
+    {
+      "prefab": "P_Camera"
+    },
+    {
+      "prefab": "p_Test",
+      "position": {
+        "x": 50,
+        "y": 100,
+        "z": 0
+      }
+    }
+  ]
 }

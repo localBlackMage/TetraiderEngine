@@ -11,9 +11,9 @@ public:
 	Controller();
 	~Controller();
 	virtual void Update(float dt);
-	virtual void Serialize(json j);
 	virtual void LateInitialize();
-	virtual void LateUpdate(float dt) {}
+	virtual void Serialize(json j);
+	virtual void Override(json j) {};
 private:
 	float m_speed;
 	Transform* m_pTransform;
