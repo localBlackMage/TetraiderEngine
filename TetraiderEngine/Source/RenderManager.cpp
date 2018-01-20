@@ -131,7 +131,7 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 		if (!pTransform)
 			continue;
 		Matrix4x4 I = Matrix4x4::Identity4D();
-		glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)pTransform->m_transform);
+		glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)pTransform->GetTransform());
 
 		glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
 		glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());

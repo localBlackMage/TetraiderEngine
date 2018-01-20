@@ -13,6 +13,7 @@ enum class ComponentType {
 	Animation,
 	Controller,
 	Body,
+	Camera,
 
 	NONE
 };
