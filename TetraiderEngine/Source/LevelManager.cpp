@@ -5,6 +5,7 @@
 
 #include "Transform.h"
 #include "Camera.h"
+#include "Sprite.h"
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
@@ -87,6 +88,9 @@ void LevelManager::LoadLevel(json j) {
 
 			Camera* pCamera = static_cast<Camera*>(pGO->GetComponent(ComponentType::Camera));
 			if (pCamera)	pCamera->Override(j[GAME_OBJECTS][i]);
+
+			Sprite* pSprite = static_cast<Sprite*>(pGO->GetComponent(ComponentType::Sprite));
+			if (pSprite)	pSprite->Override(j[GAME_OBJECTS][i]);
 		}
 	}
 

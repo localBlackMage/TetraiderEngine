@@ -23,7 +23,7 @@ protected:
 	std::string m_shader;
 
 public:
-	Sprite(std::string spriteName);
+	Sprite(std::string spriteName = "");
 	~Sprite();
 
 	virtual void Update(float dt);
@@ -40,7 +40,9 @@ public:
 	bool TextureHasAlpha() const;
 
 	float GetUOffset() const;
+	void SetUOffset(float uOffset);
 	float GetVOffset() const;
+	void SetVOffset(float vOffset);
 
 	float TileX() const;
 	void SetTileX(float tile);

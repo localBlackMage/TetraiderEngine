@@ -61,4 +61,5 @@ bool GameObject::HasComponent(ComponentType type)
 		if (comp->type == type)
 			return true;
 	}
+	return false;
 }

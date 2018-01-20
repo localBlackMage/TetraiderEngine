@@ -28,10 +28,10 @@ void Animation::Update(float dt) {
 	if (m_currentFrame == m_frames && !m_isLooping)
 		return;
 
-	m_pSprite->m_xTiling = m_uStartPos;
-	m_pSprite->m_yTiling = m_vStartPos;
-	m_pSprite->m_uOffset = m_uStartPos*m_currentFrame*m_reverse;
-	m_pSprite->m_vOffset = m_vStartPos*m_currentAnimation;
+	m_pSprite->SetTileX(m_uStartPos);
+	m_pSprite->SetTileY(m_vStartPos);
+	m_pSprite->SetUOffset(m_uStartPos*m_currentFrame*m_reverse);
+	m_pSprite->SetVOffset(m_vStartPos*m_currentAnimation);
 
 	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
 }

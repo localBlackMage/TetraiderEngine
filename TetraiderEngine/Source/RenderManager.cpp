@@ -84,8 +84,8 @@ void RenderManager::_RenderSprite(Sprite * pSpriteComp)
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetTextCoordBuffer());
 	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
 
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), 0, 0);// pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), 0, 0);//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
 
 	glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), pSpriteComp->TileX());
 	glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), pSpriteComp->TileY());
@@ -93,21 +93,21 @@ void RenderManager::_RenderSprite(Sprite * pSpriteComp)
 	Vector3D color = pSpriteComp->GetColor();
 	glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
 
-	if (pSpriteComp->TextureHasAlpha()) {
-		glDisable(GL_DEPTH_TEST);
-		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.4f);
-		glEnable(GL_BLEND);
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-	else {
-		glDisable(GL_ALPHA_TEST);
-		glEnable(GL_DEPTH_TEST);
-	}
+	//if (pSpriteComp->TextureHasAlpha()) {
+	//	glDisable(GL_DEPTH_TEST);
+	//	glEnable(GL_ALPHA_TEST);
+	//	glAlphaFunc(GL_GREATER, 0.4f);
+	//	glEnable(GL_BLEND);
+	//	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//}
+	//else {
+	//	glDisable(GL_ALPHA_TEST);
+	//	glEnable(GL_DEPTH_TEST);
+	//}
 
 	// select the texture to use
-	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());
@@ -189,7 +189,7 @@ void RenderManager::RenderGameObject(GameObject& camera, GameObject& go)
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cameraComp->GetOrthographicMatrix());
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cameraComp->GetViewMatrix());
 
-	_RenderGameObject(gameObject);
+	_RenderGameObject(go);
 }
 /*
 void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)

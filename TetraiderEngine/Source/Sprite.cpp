@@ -21,7 +21,8 @@ Sprite::~Sprite() {}
 void Sprite::Update(float dt) {}
 
 void Sprite::Serialize(json j) {
-	texturePath = ParseString(j, "Texture");
+	//texturePath = ParseString(j, "Texture");
+	m_texture = ResourceManager::GetInstance().GetTexture(ParseString(j, "Texture"));
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
@@ -31,7 +32,8 @@ void Sprite::Serialize(json j) {
 
 void Sprite::Override(json j)
 {
-	texturePath = ParseString(j, "Texture");
+	//texturePath = ParseString(j, "Texture");
+	m_texture = ResourceManager::GetInstance().GetTexture(ParseString(j, "Texture"));
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
@@ -71,12 +73,22 @@ bool Sprite::TextureHasAlpha() const
 
 float Sprite::GetUOffset() const
 {
-	return 0; //return m_frameY * m_texture->surface->frameHeight;
+	return m_uOffset; //return m_frameY * m_texture->surface->frameHeight;
+}
+
+void Sprite::SetUOffset(float uOffset)
+{
+	m_uOffset = uOffset;
 }
 
 float Sprite::GetVOffset() const
 {
-	return 0; //return m_frameX * m_texture->surface->frameWidth;
+	return m_vOffset; //return m_frameX * m_texture->surface->frameWidth;
+}
+
+void Sprite::SetVOffset(float vOffset)
+{
+	m_vOffset = vOffset;
 }
 
 float Sprite::TileX() const
