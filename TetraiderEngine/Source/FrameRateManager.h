@@ -10,8 +10,6 @@ Author: Holden Profit, Hyoyup Chung
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
-#pragma once
-
 #ifndef FRAME_RATE_MANAGER_H
 #define FRAME_RATE_MANAGER_H
 
