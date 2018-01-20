@@ -18,7 +18,13 @@ Transform::~Transform()
 {
 }
 
-void Transform::Update(float dt) {
+void Transform::Update(float dt) 
+{
+
+}
+
+void Transform::LateUpdate(float dt) 
+{
 	Matrix4x4 trans, rot, scal, pivotOffset;
 	scal = Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z);
 	rot = Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS);
@@ -27,8 +33,6 @@ void Transform::Update(float dt) {
 
 	m_transform = trans*rot*scal*pivotOffset;
 }
-
-void Transform::LateUpdate(float dt) {}
 
 void Transform::Serialize(json j) {
 	m_is2d = ValueExists(j, "transform", "2D") ? ParseBool(j, "transform", "2D") : true;
