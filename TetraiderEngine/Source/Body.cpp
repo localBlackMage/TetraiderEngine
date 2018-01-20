@@ -3,7 +3,8 @@
 #include <iostream>
 
 Body::Body() :
-	Component(ComponentType::Body)
+	Component(ComponentType::Body),
+	m_isStatic(false)
 {
 }
 
@@ -11,7 +12,11 @@ Body::~Body() {}
 
 void Body::Update(float dt) {}
 
-void Body::Serialize(json j) {}
+void Body::Integrate(float dt) {}
+
+void Body::Serialize(json j) {
+	m_isStatic = ParseBool(j, "isStatic");
+}
 
 void Body::LateInitialize() {
 	if (!m_pTransform) {

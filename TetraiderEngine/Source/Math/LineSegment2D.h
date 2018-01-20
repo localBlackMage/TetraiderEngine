@@ -20,7 +20,7 @@ Creation date: 1/17/18
 class LineSegment2D
 {
 private:
-	Vector2D m_p0, m_p1, m_norm;
+	Vector2D m_p0, m_p1, m_norm, m_direction;
 	float m_nDotP0;
 
 public:
@@ -34,6 +34,7 @@ public:
 	void setP1(Vector2D p01);
 	Vector2D getNorm() const { return m_norm; }
 	float getNDotP0() const { return m_nDotP0; }
+	Vector2D getDirection() const { return m_direction; }
 };
 
 #endif

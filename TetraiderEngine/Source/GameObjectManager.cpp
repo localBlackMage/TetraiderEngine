@@ -1,4 +1,5 @@
 #include "GameObjectManager.h"
+#include "PhysicsManager.h"
 #include "GameObject.h"
 #include "Component.h"
 #include "GameConfig.h"
@@ -51,9 +52,11 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 
 	// TO DO
 	/*if (pGO->GetComponent(CT_UI_ELEMENT))
-		mainManager.pUI_Manager->AddGameObject(pGO);
-	if (pGO->GetComponent(CT_BODY))
-		mainManager.pPhysicsManager->AddGameObject(pGO);*/
+		mainManager.pUI_Manager->AddGameObject(pGO);*/
+	if (pGO->GetComponent(ComponentType::Body)) {
+		PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
+		physicsMngr.AddGameObject(pGO);
+	}
 }
 
 void GameObjectManager::DestroyGameObjects() {
@@ -61,7 +64,9 @@ void GameObjectManager::DestroyGameObjects() {
 		if ((*it)->m_isDestroy) {
 			// TODO
 			// Unsubscribe from events
-			// Remove from physics and UI manager list
+			// UI manager list
+			PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
+			physicsMngr.RemoveGameObject(*it);
 			delete (*it);
 			it = mGameObjects.erase(it);
 		}

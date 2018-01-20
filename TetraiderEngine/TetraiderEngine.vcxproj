@@ -34,6 +34,7 @@
     <ClCompile Include="Source\JsonReader.cpp" />
     <ClCompile Include="Source\LevelManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Math\Collisions.cpp" />
     <ClCompile Include="Source\Math\LineSegment2D.cpp" />
     <ClCompile Include="Source\Math\Matrix2x2.cpp" />
     <ClCompile Include="Source\Math\Matrix3x3.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="Source\Math\Vector2D.cpp" />
     <ClCompile Include="Source\Math\Vector3D.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\PhysicsManager.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -66,6 +68,7 @@
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\JsonReader.h" />
     <ClInclude Include="Source\LevelManager.h" />
+    <ClInclude Include="Source\Math\Collisions.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
     <ClInclude Include="Source\Math\Matrix2x2.h" />
@@ -74,10 +77,12 @@
     <ClInclude Include="Source\Math\Vector2D.h" />
     <ClInclude Include="Source\Math\Vector3D.h" />
     <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
+    <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\STBSurface.h" />
     <ClInclude Include="Source\Transform.h" />
