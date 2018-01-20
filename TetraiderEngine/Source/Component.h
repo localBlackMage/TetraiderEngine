@@ -12,6 +12,7 @@ enum class ComponentType {
 	Sprite,
 	Animation,
 	Controller,
+	Body,
 
 	NONE
 };

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\Controller.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
@@ -48,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentFactory.h" />
     <ClInclude Include="Source\Controller.h" />
