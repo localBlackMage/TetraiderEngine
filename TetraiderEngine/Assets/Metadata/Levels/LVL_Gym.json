@@ -1,9 +1,11 @@
 {
 	"GAME_OBJECTS": [{
 			"prefab": "p_Test",
-			"positionX": 50,
-			"positionY": 100,
-			"positionZ": 0
+			"position": {
+				"x": 50,
+				"y": 100,
+				"z": 0
+			}
 		}
 	]
 }

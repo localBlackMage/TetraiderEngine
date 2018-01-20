@@ -132,6 +132,9 @@
     <ClCompile Include="Source\DebugManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Math\Vector3D.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="Source\DebugManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@ using namespace JsonReader;
 enum class ComponentType {
 	Transform,
 	Sprite,
+	Animation,
 
 	NONE
 };

@@ -1,5 +1,5 @@
 {
-	"Tag": "None",
+  "Tag": "Player",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -21,7 +21,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "test.png",
+      "Texture": "T_playerTest.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -37,6 +37,29 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 1,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 12,
+			"animationSpeed": 18,
+			"isLooping": true
+		},
+		{
+			"Name": "Idle",
+			"frames": 12,
+			"animationSpeed": 18,
+			"isLooping": true
+		},
+		{
+			"Name": "Death",
+			"frames": 1,
+			"animationSpeed": 18,
+			"isLooping": false
+		}]
+	}
   ]
 }

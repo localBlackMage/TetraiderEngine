@@ -73,19 +73,12 @@ void LevelManager::LoadLevel(json j) {
 		if (pGO) {
 			Transform* pT = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
 			if (pT) {
-				if (j["GAME_OBJECTS"][i].find("positionX") != j["GAME_OBJECTS"][i].end() && j["GAME_OBJECTS"][i].find("positionY") != j["GAME_OBJECTS"][i].end() && j["GAME_OBJECTS"][i].find("positionZ") != j["GAME_OBJECTS"][i].end()) {
+				if (j["GAME_OBJECTS"][i].find("position") != j["GAME_OBJECTS"][i].end()) {
 					Vector3D pos;
+					
 					pos.Set(ParseFloat(j["GAME_OBJECTS"][i], "positionX"), ParseFloat(j["GAME_OBJECTS"][i], "positionY"), ParseFloat(j["GAME_OBJECTS"][i], "positionZ"));
-					pT->SetPosition(pos);
+					pT->SetPosition(ParseVector3D(j["GAME_OBJECTS"][i], "position"));
 				}
-				if (j["GAME_OBJECTS"][i].find("scaleX") != j["GAME_OBJECTS"][i].end())
-					pT->m_scale.x = j["GAME_OBJECTS"][i]["scaleX"];
-				if (j["GAME_OBJECTS"][i].find("scaleY") != j["GAME_OBJECTS"][i].end())
-					pT->m_scale.y = j["GAME_OBJECTS"][i]["scaleY"];
-				if (j["GAME_OBJECTS"][i].find("scaleZ") != j["GAME_OBJECTS"][i].end())
-					pT->m_scale.z = j["GAME_OBJECTS"][i]["scaleZ"];
-				if (j["GAME_OBJECTS"][i].find("rotation") != j["GAME_OBJECTS"][i].end())
-					pT->m_angle = j["GAME_OBJECTS"][i]["rotation"];
 			}
 		}
 	}
