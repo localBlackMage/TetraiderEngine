@@ -27,6 +27,7 @@ public:
 	virtual void Serialize(json j);
 	virtual void LateInitialize();
 	virtual void Update(float dt);
+	virtual void LateUpdate(float dt) {};
 
 	float GetFOV() const;
 	float GetAspect() const;
