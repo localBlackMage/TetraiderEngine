@@ -6,6 +6,9 @@
 #include "InputManager.h"
 #include "LevelManager.h"
 
+
+#include "GameObject.h"
+
 GameStateManager::GameStateManager(): m_previousState(GameState::CURRENT_LEVEL), m_currentState(GameState::CURRENT_LEVEL), m_nextState(GameState::CURRENT_LEVEL) {}
 
 GameStateManager::~GameStateManager() {}
@@ -20,6 +23,7 @@ void GameStateManager::Update() {
 	LevelManager& levelMngr = LevelManager::GetInstance();
 
 	Mesh * pMesh = resourceMngr.GetMesh("quad");
+	GameObject * pGO = gameObjectMngr.CreateGameObject("P_Test");
 	float dt = 1 / 60.0f;
 
 	SDL_Event event;
@@ -40,7 +44,10 @@ void GameStateManager::Update() {
 
 			gameObjectMngr.Update(dt);				// Update game logic
 			gameObjectMngr.UpdateStatus();			// Update status of game objects
-			renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
+
+			// TODO: Update to render all game objects
+			renderMngr.RenderGameObject();
+			//renderMngr.RenderSTB(nullptr, pMesh);   // Draw elements 
 
 			renderMngr.FrameEnd();
 			frameRateMngr.FrameEnd();

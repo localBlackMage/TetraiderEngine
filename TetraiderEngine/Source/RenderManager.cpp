@@ -11,11 +11,6 @@
 #include "Transform.h"
 /*-----------------------------------------*/
 
-// TODO: Find a better spot for these
-const Vector3D XAXIS = Vector3D(1, 0, 0, 0);
-const Vector3D YAXIS = Vector3D(0, 1, 0, 0);
-const Vector3D ZAXIS = Vector3D(0, 0, 1, 0);
-
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height)
 {
@@ -59,12 +54,18 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 {
 	std::string out, line;
 	std::ifstream in(fname);
-	std::getline(in, line);
-	while (in) {
-		out += line + "\n";
+	if (in) {
 		std::getline(in, line);
+		while (in) {
+			out += line + "\n";
+			std::getline(in, line);
+		}
+		return out;
 	}
-	return out;
+	else {
+		std::cout << "Error reading in file: " << fname << std::endl;
+		return "";
+	}
 }
 
 bool RenderManager::Init()
@@ -130,7 +131,7 @@ void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
 		if (!pTransform)
 			continue;
 		Matrix4x4 I = Matrix4x4::Identity4D();
-		glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)pTransform->m_pTransform);
+		glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)pTransform->m_transform);
 
 		glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
 		glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());

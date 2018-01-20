@@ -16,7 +16,7 @@ enum class ComponentType {
 
 class Component {
 public:
-	Component() {};
+	Component(ComponentType _type) : type(_type) {};
 	virtual ~Component() {};
 	virtual void LateInitialize() = 0;
 	virtual void Update(float dt) = 0;

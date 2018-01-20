@@ -68,6 +68,10 @@ public:
 
 Vector3D operator*(const float scalar, const Vector3D& other);
 
+static const Vector3D XAXIS = Vector3D(1, 0, 0, 0);
+static const Vector3D YAXIS = Vector3D(0, 1, 0, 0);
+static const Vector3D ZAXIS = Vector3D(0, 0, 1, 0);
+
 void Vector3DTests();
 
 #endif

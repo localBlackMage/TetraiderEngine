@@ -59,12 +59,16 @@ namespace JsonReader {
 	std::vector<String> ParseStringList(const json j, String, String);
 	std::vector<String> ParseStringList(const json j, String, String, String);
 
+	Vector2D ParseVector2D(const json j, String);
 	Vector2D ParseVector2D(const json j, String, String);
 	
+	Vector3D ParseVector3D(const json j, String);
 	Vector3D ParseVector3D(const json j, String, String);
 
+	Vector3D ParseColor(const json j, String);
 	Vector3D ParseColor(const json j, String, String);
 
+	bool ValueExists(const json j, String);
 	bool ValueExists(const json j, String, String);
 	bool ValueExists(const json j, String, String, String);
 	

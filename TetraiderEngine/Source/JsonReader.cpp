@@ -192,6 +192,18 @@ namespace JsonReader {
 		return std::vector<String>();
 	}
 
+	Vector2D ParseVector2D(const json j, String first)
+	{
+		if (j.find(first) != j.end()) {
+			return Vector2D(
+				ParseFloat(j, first, "x"),
+				ParseFloat(j, first, "y"),
+				ParseFloat(j, first, "w")
+			);
+		}
+		return Vector2D();
+	}
+
 	Vector2D ParseVector2D(const json j, String first, String second)
 	{
 		if (j.find(first) != j.end()) {
@@ -204,6 +216,19 @@ namespace JsonReader {
 			}
 		}
 		return Vector2D();
+	}
+
+	Vector3D ParseVector3D(const json j, String first)
+	{
+		if (j.find(first) != j.end()) {
+			return Vector3D(
+				ParseFloat(j, first, "x"),
+				ParseFloat(j, first, "y"),
+				ParseFloat(j, first, "z"),
+				ParseFloat(j, first, "w")
+			);
+		}
+		return Vector3D();
 	}
 
 	Vector3D ParseVector3D(const json j, String first, String second)
@@ -221,6 +246,19 @@ namespace JsonReader {
 		return Vector3D();
 	}
 
+	Vector3D ParseColor(const json j, String first)
+	{
+		if (j.find(first) != j.end()) {
+			return Vector3D(
+				ValueExists(j, first) ? ParseFloat(j, first, "r") : 1.0f,
+				ValueExists(j, first) ? ParseFloat(j, first, "g") : 1.0f,
+				ValueExists(j, first) ? ParseFloat(j, first, "b") : 1.0f,
+				ValueExists(j, first) ? ParseFloat(j, first, "a") : 1.0f
+			);
+		}
+		return Vector3D(1, 1, 1, 1);
+	}
+
 	Vector3D ParseColor(const json j, String first, String second)
 	{
 		if (j.find(first) != j.end()) {
@@ -234,6 +272,11 @@ namespace JsonReader {
 			}
 		}
 		return Vector3D(1, 1, 1, 1);
+	}
+
+	bool ValueExists(const json j, String first)
+	{
+		return j.find(first) != j.end();
 	}
 
 	bool ValueExists(const json j, String first, String second)

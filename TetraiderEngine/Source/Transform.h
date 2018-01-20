@@ -2,25 +2,25 @@
 #define TRANSFORM_H
 
 #include "Component.h"
-class Vector3D;
-class Matrix4x4;
+#include "Math\Vector3D.h"
+#include "Math\Matrix4x4.h"
 
-class Transform :public Component {
+class Transform : public Component {
 public:
 	Transform();
 	~Transform();
-	Vector3D* m_pScale;
-	Vector3D* m_pPivotOffset;
-	Matrix4x4* m_pTransform;
+	Vector3D m_scale;
+	Vector3D m_pivotOffset;
+	Matrix4x4 m_transform;
 	float m_angle;
 	virtual void Update(float dt);
 	virtual void Serialize(json j);
 	virtual void LateInitialize() {}
 	virtual void LateUpdate(float dt);
-	const Vector3D* GetPosition();
-	void SetPosition(const Vector3D* pPos);
+	const Vector3D GetPosition();
+	void SetPosition(const Vector3D& pos);
 private:
-	Vector3D* m_pPosition;
+	Vector3D m_position;
 };
 
 #endif
