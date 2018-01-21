@@ -85,10 +85,10 @@ void RenderManager::_RenderSprite(Sprite * pSpriteComp)
 	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
 
 	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), 0, 0);// pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), 0, 0);//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), 1, 1);//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
 
-	glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), pSpriteComp->TileX());
-	glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), pSpriteComp->TileY());
+	//glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), 1); // pSpriteComp->TileX());
+	//glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), 1); // pSpriteComp->TileY());
 
 	Vector3D color = pSpriteComp->GetColor();
 	glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
@@ -121,9 +121,9 @@ void RenderManager::_RenderGameObject(GameObject& gameObject)
 		return;
 
 	Matrix4x4 M = static_cast<Transform*>(gameObject.GetComponent(ComponentType::Transform))->GetTransform();
-	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	//Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
+	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
 
 	// set shader attributes
 	if (gameObject.GetComponent(ComponentType::Sprite))

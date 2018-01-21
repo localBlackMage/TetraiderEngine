@@ -3,7 +3,9 @@
   "COMPONENTS": [
     {
       "Component": "Transform",
-      "position": {},
+      "position": {
+		"z": 1
+	  },
       "scale": {},
       "pivotOffset": {},
       "rotation": {

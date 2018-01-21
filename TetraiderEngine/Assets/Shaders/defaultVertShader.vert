@@ -5,7 +5,6 @@ in vec2 texture_coord;
 uniform mat4 persp_matrix;
 uniform mat4 view_matrix;
 uniform mat4 model_matrix;
-uniform mat4 normal_matrix;
 uniform vec2 frame_offset;
 uniform vec2 frame_size;
 uniform vec4 color;
