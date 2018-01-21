@@ -21,7 +21,7 @@ public:
 
 class Circle : public Shape {
 public:
-	Circle() : Shape(ST_Circle) {}
+	Circle(float _radius) : Shape(ST_Circle), radius(_radius) {}
 	virtual ~Circle() {}
 	float radius;
 private:
@@ -29,16 +29,13 @@ private:
 
 class AABB : public Shape {
 public:
-	AABB() : Shape(ST_AABB) {
-		halfWidth = halfWidth*0.5f;
-		halfHeight = halfHeight*0.5f;
-	}
+	AABB(float _width, float _height) : Shape(ST_AABB), width(_width), height(_height), halfWidth(_width/2.0f), halfHeight(_height/2.0f) {}
 	virtual ~AABB() {}
 	float halfWidth;
 	float halfHeight;
-private:
 	float width;
 	float height;
+private:
 };
 
 #endif

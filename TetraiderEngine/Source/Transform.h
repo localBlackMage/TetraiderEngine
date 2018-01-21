@@ -5,6 +5,9 @@
 #include "Math\Vector3D.h"
 #include "Math\Matrix4x4.h"
 
+//Forward declaration
+class Body;
+
 class Transform : public Component {
 private:
 	Vector3D m_position;
@@ -65,6 +68,7 @@ public:
 	void ScaleUniform(float amount);
 
 	Matrix4x4 GetTransform() const;
+	friend Body;
 };
 
 #endif

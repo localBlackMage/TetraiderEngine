@@ -5,24 +5,14 @@
 #include "GameObjectManager.h"
 #include "InputManager.h"
 #include "LevelManager.h"
-
-
-#include "GameObject.h"
+#include "PhysicsManager.h"
 
 GameStateManager::GameStateManager(): m_previousState(GameState::CURRENT_LEVEL), m_currentState(GameState::CURRENT_LEVEL), m_nextState(GameState::CURRENT_LEVEL) {}
 
 GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
-	// TODO: Clean up
-	FrameRateManager& frameRateMngr = FrameRateManager::GetInstance();
-	ResourceManager& resourceMngr = ResourceManager::GetInstance();
-	RenderManager& renderMngr = RenderManager::GetInstance();
-	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
-	InputManager& inputMngr = InputManager::GetInstance();
 	LevelManager& levelMngr = LevelManager::GetInstance();
-
-	float dt = 1.f / 60.0f;
 
 	SDL_Event event;
 
@@ -33,23 +23,10 @@ void GameStateManager::Update() {
 			m_currentState = m_previousState;
 			m_nextState = m_previousState;
 		}
-		//-------------------------------- GAME LOOP STARTS ----------------------------------------------------//
+
+		// Game loop
 		while (m_currentState == m_nextState) {
-			frameRateMngr.FrameStart();
-			dt = frameRateMngr.GetFrameTime();
-			inputMngr.Update();						// Update input keys
-			renderMngr.FrameStart();				// Clear depth Check if this needs to be done after game logic
-
-			gameObjectMngr.Update(dt);				// Update game logic
-			gameObjectMngr.UpdateStatus();			// Update status of game objects
-
-			gameObjectMngr.RenderGameObjects();
-
-			renderMngr.FrameEnd();
-			frameRateMngr.FrameEnd();
-
-			//TODO: Move logic to update game loop
-			// UpdateGameLoop();
+			UpdateGameLoop();
 
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
@@ -58,7 +35,6 @@ void GameStateManager::Update() {
 				}
 			}
 		}
-		//-------------------------------- GAME LOOP ENDS ----------------------------------------------------//
 
 		if (m_nextState != GameState::RESTART) {
 			//TODO: Unload some assets
@@ -73,3 +49,28 @@ void GameStateManager::Update() {
 }
 
 void GameStateManager::SetGameState(GameState state) { m_currentState = state; }
+
+void GameStateManager::UpdateGameLoop() {
+	// TODO: Clean up
+	FrameRateManager& frameRateMngr = FrameRateManager::GetInstance();
+	ResourceManager& resourceMngr = ResourceManager::GetInstance();
+	RenderManager& renderMngr = RenderManager::GetInstance();
+	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
+	InputManager& inputMngr = InputManager::GetInstance();
+	PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
+
+	frameRateMngr.FrameStart();							// Record start of frame
+	renderMngr.FrameStart();							// Clear depth and color
+	float dt = frameRateMngr.GetFrameTime();			// Grab delta frame time
+
+	inputMngr.Update();									// Update input keys
+	gameObjectMngr.Update(dt);							// Update game logic
+	gameObjectMngr.UpdateStatus();						// Update status of game objects
+	physicsMngr.Integrate(dt);							// Move physics bodies
+	physicsMngr.ResolveCollisions();					// Resolve collisions on physics bodies
+	gameObjectMngr.LateUpdate(dt);						// Update game logic that occurs after physics
+	gameObjectMngr.RenderGameObjects();					// Render all game objects
+
+	renderMngr.FrameEnd();								// Swap window buffer
+	frameRateMngr.FrameEnd();							// Lock FPS 
+}

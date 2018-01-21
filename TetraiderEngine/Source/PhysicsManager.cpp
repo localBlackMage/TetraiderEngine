@@ -84,17 +84,25 @@ void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB) {
 }
 
 bool StaticCircleToStaticCircle(Body* pBodyA, Body* pBodyB) {
-	return false;
+	Circle *pCircle1 = static_cast<Circle*>(pBodyA->m_pShape);
+	Circle *pCircle2 = static_cast<Circle*>(pBodyB->m_pShape);
+	return StaticCircleToStaticCircle(pBodyA->GetPosition(), pCircle1->radius, pBodyB->GetPosition(), pCircle2->radius);
 }
 
 bool StaticCircleToStaticAABB(Body* pBodyA, Body* pBodyB) {
-	return false;
+	Circle *pCircle = static_cast<Circle*>(pBodyA->m_pShape);
+	AABB *pRect = static_cast<AABB*>(pBodyB->m_pShape);
+	return StaticCircleToStaticRect(pBodyA->GetPosition(), pCircle->radius, pBodyB->GetPosition(), pRect->halfWidth, pRect->halfHeight);
 }
 
 bool StaticAABBToStaticCircle(Body* pBodyA, Body* pBodyB) {
-	return false;
+	AABB *pRect = static_cast<AABB*>(pBodyA->m_pShape);
+	Circle *pCircle = static_cast<Circle*>(pBodyB->m_pShape);
+	return StaticCircleToStaticRect(pBodyB->GetPosition(), pCircle->radius, pBodyA->GetPosition(), pRect->halfWidth, pRect->halfHeight);
 }
 
 bool StaticAABBToStaticAABB(Body* pBodyA, Body* pBodyB) {
-	return false;
+	AABB *pRect1 = static_cast<AABB*>(pBodyA->m_pShape);
+	AABB *pRect2 = static_cast<AABB*>(pBodyB->m_pShape);
+	return StaticRectToStaticRect(pBodyA->GetPosition(), pRect1->halfWidth, pRect1->halfHeight, pBodyB->GetPosition(), pRect2->halfWidth, pRect2->halfHeight);
 }
