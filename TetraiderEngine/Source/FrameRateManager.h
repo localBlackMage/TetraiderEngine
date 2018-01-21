@@ -22,19 +22,19 @@ private:
 
 	FrameRateManager(unsigned int maxFrameRate);
 	~FrameRateManager();
-
 public:
 	FrameRateManager(const FrameRateManager &) = delete;
 	void operator=(const FrameRateManager &) = delete;
-	void FrameStart();
-	void FrameEnd();
-	float GetFrameTime(); // in seconds
 
 	static FrameRateManager& GetInstance(unsigned int maxFrameRate = 60)
 	{
 		static FrameRateManager instance(maxFrameRate);
 		return instance;
 	}
+
+	void FrameStart();
+	void FrameEnd();
+	float GetFrameTime(); // in seconds
 };
 
 #endif

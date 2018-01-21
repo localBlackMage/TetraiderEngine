@@ -15,11 +15,22 @@ Creation date: 1/17/18
 
 #include "SDL_keycode.h"
 
+enum class MouseBtn {
+	MOUSEBTN_LEFT,
+	MOUSEBTN_RIGHT,
+
+	NONE
+};
+
 class InputManager
 {
 private:
 	Uint8 *mPreviousKeyStates;
 	Uint8 *mCurrentKeyStates;
+	bool prevLeftMouse, leftMouse;
+	bool prevRightMouse, rightMouse;
+	int mousePosX, mousePosY;
+	int mousePosRelX, mousePosRelY;
 
 	InputManager();
 	~InputManager();
@@ -33,17 +44,20 @@ public:
 		static InputManager instance;
 		return instance;
 	}
+
 	void Update();
+	// Keyboard Input
 	bool IsKeyPressed(const SDL_Scancode);
 	bool IsKeyTriggered(const SDL_Scancode);
 	bool IsKeyReleased(const SDL_Scancode);
-
-	// TODO: handle mouse inputs
-	//bool IsMouseButtonPressed(const MouseBtn);
-	//bool IsMouseButtonTriggered(const MouseBtn);
-	//bool IsMouseButtonReleased(const MouseBtn);
-	//Vector2DInt MousePos();
-	//Vector2DInt MousePosRel();
+	// Mouse Input
+	bool IsMouseButtonPressed(const MouseBtn);
+	bool IsMouseButtonTriggered(const MouseBtn);
+	bool IsMouseButtonReleased(const MouseBtn);
+	int MousePosX();
+	int MousePosY();
+	int MousePosRelX();
+	int MousePosRelY();
 };
 
 #endif
