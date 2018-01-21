@@ -3,14 +3,15 @@
 
 using namespace JsonReader;
 
-Sprite::Sprite(String spriteName) :
+Sprite::Sprite(std::string textureName) :
 	Component(ComponentType::Sprite), 
 	m_xTiling(1.0f), 
 	m_yTiling(1.0f), 
 	m_uOffset(0.f),
 	m_vOffset(0.f),
 	m_color(Vector3D()),
-	m_texture(ResourceManager::GetInstance().GetTexture(spriteName)),
+	m_textureName(textureName),
+	m_texture(ResourceManager::GetInstance().GetTexture(textureName)),
 	m_mesh(*ResourceManager::GetInstance().LoadMesh("quad")),
 	m_shader("")
 {
@@ -20,9 +21,12 @@ Sprite::~Sprite() {}
 
 void Sprite::Update(float dt) {}
 
-void Sprite::Serialize(json j) {
-	//texturePath = ParseString(j, "Texture");
-	m_texture = ResourceManager::GetInstance().GetTexture(ParseString(j, "Texture"));
+void Sprite::Serialize(json j) 
+{
+	if (ValueExists(j, "Texture")) {
+		m_textureName = ParseString(j, "Texture");
+		m_texture = ResourceManager::GetInstance().GetTexture(m_textureName);
+	}
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
@@ -32,8 +36,10 @@ void Sprite::Serialize(json j) {
 
 void Sprite::Override(json j)
 {
-	//texturePath = ParseString(j, "Texture");
-	m_texture = ResourceManager::GetInstance().GetTexture(ParseString(j, "Texture"));
+	if (ValueExists(j, "Texture")) {
+		m_textureName = ParseString(j, "Texture");
+		m_texture = ResourceManager::GetInstance().GetTexture(m_textureName);
+	}
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
@@ -52,13 +58,13 @@ void Sprite::SetMesh(Mesh & mesh) {
 
 String Sprite::GetSpriteName() const
 {
-	return m_texturePath;
+	return m_textureName;
 }
 
-void Sprite::SetSprite(String texturePath)
+void Sprite::SetSprite(std::string textureName)
 {
-	m_texturePath = texturePath;
-	m_texture = ResourceManager::GetInstance().GetTexture(texturePath);
+	m_textureName = textureName;
+	m_texture = ResourceManager::GetInstance().GetTexture(m_textureName);
 }
 
 GLuint Sprite::GetTextureBuffer() const

@@ -26,6 +26,7 @@ public:
 
 	virtual void LateInitialize();
 	virtual void Update(float dt);
+	virtual void LateUpdate(float dt);
 	virtual void Serialize(json j);
 	virtual void Override(json j);
 

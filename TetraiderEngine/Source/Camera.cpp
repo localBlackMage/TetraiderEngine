@@ -26,7 +26,8 @@ Matrix4x4 Camera::_MatrixFromCameraVectors(const Vector3D & right, const Vector3
 
 void Camera::_CalcViewMatrix()
 {
-	Matrix4x4 rotationM = _MatrixFromCameraVectors(m_pTransform->Right(), m_pTransform->Up(), m_pTransform->Forward());
+	//Matrix4x4 rotationM = _MatrixFromCameraVectors(m_pTransform->Right(), m_pTransform->Up(), m_pTransform->Forward());
+	Matrix4x4 rotationM = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS * -1);
 	m_viewMatrix = rotationM * Matrix4x4::Translate(-1 * m_pTransform->GetPosition());
 }
 
@@ -56,6 +57,11 @@ void Camera::LateInitialize()
 }
 
 void Camera::Update(float dt)
+{
+
+}
+
+void Camera::LateUpdate(float dt)
 {
 	RenderManager& renderMngr = RenderManager::GetInstance();
 	m_aspectRatio = renderMngr.GetAspectRatio();

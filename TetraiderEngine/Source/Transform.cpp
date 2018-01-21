@@ -8,7 +8,7 @@ Transform::Transform() :
 	m_scale(Vector3D()), 
 	m_transform(Matrix4x4()), 
 	m_pivotOffset(Vector3D()),
-	m_lookAt(Vector3D()),
+	m_lookAt(Vector3D(0.f, 1.f, 0.f)),
 	m_angleX(0.f), m_angleY(0.f), m_angleZ(0.f),
 	m_is2d(true)
 {
@@ -35,13 +35,27 @@ void Transform::LateUpdate(float dt)
 }
 
 void Transform::Serialize(json j) {
-	m_is2d = ValueExists(j, "transform", "2D") ? ParseBool(j, "transform", "2D") : true;
+	m_is2d = ValueExists(j, "2D") ? ParseBool(j, "2D") : true;
 	m_position = ParseVector3D(j, "position");
 	m_scale = ParseVector3D(j, "scale");
 	m_angleX = ParseFloat(j, "rotation", "x");
 	m_angleY = ParseFloat(j, "rotation", "y");
 	m_angleZ = ParseFloat(j, "rotation", "z");
 	m_pivotOffset = ParseVector3D(j, "pivotOffset");
+}
+
+void Transform::Override(json j)
+{
+	m_position = ValueExists(j, "position") ? ParseVector3D(j, "position") : m_position;
+	m_scale = ValueExists(j, "scale") ? ParseVector3D(j, "scale") : m_scale;
+
+	SetAngles(
+		ValueExists(j, "rotation", "x") ? ParseFloat(j, "rotation", "x") : m_angleX,
+		ValueExists(j, "rotation", "y") ? ParseFloat(j, "rotation", "y") : m_angleY,
+		ValueExists(j, "rotation", "z") ? ParseFloat(j, "rotation", "z") : m_angleZ
+	);
+
+	m_pivotOffset = ValueExists(j, "pivotOffset") ? ParseVector3D(j, "pivotOffset") : m_pivotOffset;
 }
 
 #pragma region Translation
@@ -143,10 +157,10 @@ Vector3D Transform::Forward() const
 
 Vector3D Transform::Right() const
 {
-	Vector3D up = m_is2d ? Vector3D(0, 0, 1, 0) : Vector3D(0, 1, 0, 0);
+	Vector3D up = m_is2d ? ZAXIS : YAXIS;
 	Vector3D lCrossR = Vector3D::Cross(m_lookAt, up);
 	float lenLCrossR = lCrossR.Length();
-	return lenLCrossR != 0.0f ? lCrossR * (1.0f / lenLCrossR) : (m_is2d ? Vector3D(0, 1, 0, 0) : Vector3D(0, 0, 1, 0));
+	return lenLCrossR != 0.0f ? lCrossR * (1.0f / lenLCrossR) : (m_is2d ? YAXIS : ZAXIS);
 }
 
 Vector3D Transform::Up() const

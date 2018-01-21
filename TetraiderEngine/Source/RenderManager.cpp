@@ -93,21 +93,21 @@ void RenderManager::_RenderSprite(Sprite * pSpriteComp)
 	Vector3D color = pSpriteComp->GetColor();
 	glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
 
-	//if (pSpriteComp->TextureHasAlpha()) {
-	//	glDisable(GL_DEPTH_TEST);
-	//	glEnable(GL_ALPHA_TEST);
-	//	glAlphaFunc(GL_GREATER, 0.4f);
-	//	glEnable(GL_BLEND);
-	//	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//}
-	//else {
-	//	glDisable(GL_ALPHA_TEST);
-	//	glEnable(GL_DEPTH_TEST);
-	//}
+	if (pSpriteComp->TextureHasAlpha()) {
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.4f);
+		glEnable(GL_BLEND);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else {
+		glDisable(GL_ALPHA_TEST);
+		glEnable(GL_DEPTH_TEST);
+	}
 
 	// select the texture to use
-	//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());

@@ -21,29 +21,25 @@ Creation date: 1/17/18
 #include "Mesh.h"
 #include "STBSurface.h"
 
-// TODO: Remove this
-struct TextureInfo {
-	bool hasAlpha;
-	float frameWidth, frameHeight;
-	int rows, cols;
-};
-
 class ResourceManager
 {
 private:
+	struct TextureInfo {
+		std::string filename;
+		bool hasAlpha;
+		float frameWidth, frameHeight;
+		int rows, cols;
+	};
+	
 	std::map<std::string, Mesh*> m_meshes;
 	std::map<std::string, SurfaceTextureBuffer * > m_textures;
 
 	ResourceManager();
 	~ResourceManager();
 
-	//struct TextureInfo {
-	//	bool hasAlpha;
-	//	float frameWidth, frameHeight;
-	//	int rows, cols;
-	//};
-
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
+	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir);
+	SurfaceTextureBuffer * _LoadTexture(std::string textureName);
 public:
 	ResourceManager(const ResourceManager &) = delete;
 	void operator=(const ResourceManager &) = delete;
@@ -58,11 +54,8 @@ public:
 	Mesh * GetMesh(std::string meshName);
 	void UnloadMesh(std::string meshName);
 
-	SurfaceTextureBuffer * LoadTexture(std::string textureName, std::string fileName, bool hasAlpha);
 	SurfaceTextureBuffer * GetTexture(const std::string textureName);
 	void UnloadTexture(std::string textureName);
-
-	void LoadTexturesFromFile(std::string fileName);
 
 	void UnloadAll();
 };

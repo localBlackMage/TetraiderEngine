@@ -59,6 +59,59 @@ GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurfac
 	return textureBuffer;
 }
 
+ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir)
+{
+	json j = JsonReader::OpenJsonFile(texturesDir + textureInfoFilePath + ".json");
+	TextureInfo info;
+	if (j.is_object()) {
+		info.filename = texturesDir + JsonReader::ParseString(j, "filename");
+		info.frameWidth = JsonReader::ParseFloat(j, "frameWidth");
+		info.frameHeight = JsonReader::ParseFloat(j, "frameHeight");
+		info.rows = JsonReader::ParseInt(j, "rows");
+		info.cols = JsonReader::ParseInt(j, "columns");
+		info.hasAlpha = JsonReader::ParseBool(j, "alpha");
+	}
+	return info;
+}
+
+SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
+{
+	SurfaceTextureBuffer * stbuff = m_textures[textureName];
+
+	if (stbuff)
+		return stbuff;
+
+	STB_Surface * surface = new STB_Surface();
+	GameConfig& gameConfig = GameConfig::GetInstance();
+	if (surface) {
+		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, gameConfig.m_texturesDir);
+
+		surface->hasAlpha = info.hasAlpha;
+		surface->data = stbi_load(info.filename.c_str(),
+			&surface->width, &surface->height,
+			&surface->channels,
+			info.hasAlpha ? STBI_rgb_alpha : STBI_rgb);
+
+		if (!surface->data) {
+			std::cerr << "Failed to read file: " << textureName << std::endl;
+			return nullptr;
+		}
+		/*surface->frameWidth = info.frameWidth / surface->width;
+		surface->frameHeight = info.frameHeight / surface->height;
+		surface->rows = info.rows;
+		surface->columns = info.cols;*/
+		GLuint bufferId = _CreateTextureBuffer(surface);
+
+		stbuff = new SurfaceTextureBuffer(surface, bufferId);
+		m_textures[textureName] = stbuff;
+		return stbuff;
+	}
+	else {
+		std::cerr << "Failed to create texture: " << textureName << std::endl;
+		return nullptr;
+	}
+}
+
 
 Mesh * ResourceManager::LoadMesh(std::string meshName)
 {
@@ -94,53 +147,16 @@ void ResourceManager::UnloadMesh(std::string meshName)
 	}
 }
 
-SurfaceTextureBuffer * ResourceManager::LoadTexture(std::string textureName, std::string filePath, bool hasAlpha)
-{
-	SurfaceTextureBuffer * stbuff = m_textures[textureName];
-
-	if (stbuff)
-		return stbuff;
-
-	STB_Surface * surface = new STB_Surface();
-	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string texturePath = gameConfig.m_texturesDir + filePath;
-	if (surface) {
-		surface->hasAlpha = hasAlpha;
-		surface->data = stbi_load(texturePath.c_str(),
-			&surface->width, &surface->height,
-			&surface->channels,
-			hasAlpha ? STBI_rgb_alpha : STBI_rgb);
-
-		if (!surface->data) {
-			std::cerr << "Failed to read file: " << texturePath << std::endl;
-			return nullptr;
-		}
-		/*surface->frameWidth = info.frameWidth / surface->width;
-		surface->frameHeight = info.frameHeight / surface->height;
-		surface->rows = info.rows;
-		surface->columns = info.cols;*/
-		GLuint bufferId = _CreateTextureBuffer(surface);
-
-		stbuff = new SurfaceTextureBuffer(surface, bufferId);
-		m_textures[textureName] = stbuff;
-		return stbuff;
-	}
-	else {
-		std::cerr << "Failed to create texture: " << textureName << " : " << texturePath << std::endl;
-		return nullptr;
-	}
-}
-
 SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName)
 {
+	if (textureName == "") return nullptr;
+
 	SurfaceTextureBuffer * stbuff = m_textures[textureName];
 
 	if (stbuff)
 		return stbuff;
-	else {
-		std::cerr << textureName << " has not yet been created." << std::endl;
-		return nullptr;
-	}
+	else
+		return _LoadTexture(textureName);
 }
 
 void ResourceManager::UnloadTexture(std::string textureName)
@@ -154,6 +170,7 @@ void ResourceManager::UnloadTexture(std::string textureName)
 	}
 }
 
+/*
 void ResourceManager::LoadTexturesFromFile(std::string fileName)
 {
 	try {
@@ -176,6 +193,7 @@ void ResourceManager::LoadTexturesFromFile(std::string fileName)
 		std::cerr << ex.what() << std::endl;
 	}
 }
+*/
 
 void ResourceManager::UnloadAll()
 {

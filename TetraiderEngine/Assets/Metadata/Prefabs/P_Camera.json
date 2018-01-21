@@ -6,7 +6,10 @@
       "position": {},
       "scale": {},
       "pivotOffset": {},
-      "rotation": {}
+      "rotation": {
+		"x": -90
+	  },
+	  "2D": false
     },
     {
       "Component": "Camera",

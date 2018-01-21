@@ -53,7 +53,7 @@ public:
 	RenderManager(const RenderManager &) = delete;
 	void operator=(const RenderManager &) = delete;
 
-	static RenderManager& GetInstance(int width = 800, int height = 600, std::string title = "Default Window Title")
+	static RenderManager& GetInstance(int width = 1200, int height = 800, std::string title = "Default Window Title")
 	{
 		static RenderManager instance(width, height, title);
 		return instance;

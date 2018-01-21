@@ -79,12 +79,8 @@ void LevelManager::LoadLevel(json j) {
 
 		// Overwrite values for transform component if they exist
 		if (pGO) {
-			Transform* pT = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
-			if (pT) {
-				if (j[GAME_OBJECTS][i].find("position") != j[GAME_OBJECTS][i].end()) {
-					pT->SetPosition(ParseVector3D(j[GAME_OBJECTS][i], "position"));
-				}
-			}
+			Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			if (pTransform)	pTransform->Override(j[GAME_OBJECTS][i]);
 
 			Camera* pCamera = static_cast<Camera*>(pGO->GetComponent(ComponentType::Camera));
 			if (pCamera)	pCamera->Override(j[GAME_OBJECTS][i]);

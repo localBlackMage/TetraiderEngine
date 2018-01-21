@@ -9,21 +9,19 @@
 
 class Sprite : public Component 
 {
-protected:
-	std::string m_texturePath;
-	
+protected:	
 	float m_xTiling;
 	float m_yTiling;
 	float m_uOffset;
 	float m_vOffset;
 	Vector3D m_color;
+	std::string m_textureName;
 	SurfaceTextureBuffer * m_texture;
 	Mesh& m_mesh;
-
 	std::string m_shader;
 
 public:
-	Sprite(std::string spriteName = "");
+	Sprite(std::string textureName = "");
 	~Sprite();
 
 	virtual void Update(float dt);

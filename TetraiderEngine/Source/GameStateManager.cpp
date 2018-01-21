@@ -23,6 +23,16 @@ void GameStateManager::Update() {
 			m_currentState = m_previousState;
 			m_nextState = m_previousState;
 		}
+		//-------------------------------- GAME LOOP STARTS ----------------------------------------------------//
+		while (m_currentState == m_nextState) {
+			frameRateMngr.FrameStart();
+			dt = frameRateMngr.GetFrameTime();
+			inputMngr.Update();						// Update input keys
+			renderMngr.FrameStart();				// Clear depth Check if this needs to be done after game logic
+
+			gameObjectMngr.Update(dt);				// Update game logic
+			gameObjectMngr.UpdateStatus();			// Update status of game objects
+			gameObjectMngr.LateUpdate(dt);				// Update game logic
 
 		// Game loop
 		while (m_currentState == m_nextState) {
