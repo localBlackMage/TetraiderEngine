@@ -19,6 +19,7 @@ Creation date: 1/17/18
 #include <map>
 #include <utility>
 #include "Mesh.h"
+#include "DebugLineMesh.h"
 #include "STBSurface.h"
 
 class ResourceManager
@@ -31,6 +32,7 @@ private:
 		int rows, cols;
 	};
 	
+	DebugLineMesh * m_pDebugLineMesh;
 	std::map<std::string, Mesh*> m_meshes;
 	std::map<std::string, SurfaceTextureBuffer * > m_textures;
 
@@ -50,6 +52,7 @@ public:
 		return instance;
 	}
 
+	DebugLineMesh* GetDebugLineMesh();
 	Mesh * LoadMesh(std::string meshName);
 	Mesh * GetMesh(std::string meshName);
 	void UnloadMesh(std::string meshName);

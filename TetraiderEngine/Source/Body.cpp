@@ -94,12 +94,12 @@ void Body::DrawDebugShape() {
 	switch (m_pShape->type) {
 		case ST_Circle: {
 			Circle* pC = static_cast<Circle*>(m_pShape);
-			debugMngr.DrawWireCircle(&m_pTransform->GetPosition(), pC->radius, DebugColor::GREEN);
+			debugMngr.DrawWireCircle(m_pTransform->GetPosition(), pC->radius, DebugColor::GREEN);
 			break;
 		}
 		case ST_AABB: {
 			AABB* pRect = static_cast<AABB*>(m_pShape);
-			debugMngr.DrawWireRectangle(&m_pTransform->GetPosition(), pRect->height, pRect->width, DebugColor::GREEN);
+			debugMngr.DrawWireRectangle(m_pTransform->GetPosition(), m_pTransform->GetRotVector(), m_pTransform->GetScaleVector(), DebugColor::GREEN);
 			break;
 		}
 	}

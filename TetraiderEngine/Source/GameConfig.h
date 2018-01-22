@@ -12,6 +12,12 @@ private:
 	GameConfig();
 	~GameConfig();
 
+	std::string m_texturesDir;
+	std::string m_levelFilesDir;
+	std::string m_prefabsDir;
+	std::string m_sfxDir;
+	std::string m_shadersDir;
+
 public:
 	GameConfig(const GameConfig &) = delete;
 	void operator=(const GameConfig &) = delete;
@@ -24,11 +30,11 @@ public:
 
 	void LoadConfig(std::string);
 
-	std::string m_texturesDir;
-	std::string m_levelFilesDir;
-	std::string m_prefabsDir;
-	std::string m_sfxDir;
-	std::string m_shadersDir;
+	std::string TexturesDir() const { return m_texturesDir; }
+	std::string LevelFilesDir() const { return m_levelFilesDir; }
+	std::string PrefabsDir() const { return m_prefabsDir; }
+	std::string SFXDir() const { return m_sfxDir; }
+	std::string ShadersDir() const { return m_shadersDir; }
 };
 
 #endif

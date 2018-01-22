@@ -26,28 +26,39 @@ Creation date: 1/17/18
 #include "Mesh.h"
 #include "Math\Matrix4x4.h"
 #include "Math\Vector3D.h"
+#include "DebugManager.h"
 
 class Sprite;
 
 class RenderManager
 {
 private:
+	friend class DebugManager;
+
 	int m_width, m_height;
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
 
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
+	std::string m_debugShaderName;
 
 	RenderManager(int width, int height, std::string title);
 	~RenderManager();
 
 	void _InitWindow(std::string title);
 	std::string _LoadTextFile(std::string fname);
-	bool _GameObjectHasRenderableComponent(GameObject & gameObject);
-	void _RenderSprite(Sprite* pSpriteComp);
-	void _RenderGameObject(GameObject& gameObject);
-	void _SelectShaderProgram(GameObject& gameObject);
+	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
+	void _RenderSprite(const Sprite* pSpriteComp);
+	void _RenderGameObject(const GameObject& gameObject);
+	void _SelectShaderProgram(const GameObject& gameObject);
+	void _SetUpCamera(const GameObject& camera);
+
+	void _SetUpDebug(const GameObject& camera);
+	void _RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
+	void _RenderRect(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
+	void _RenderCircle(const Vector3D & color, float radius, const Vector3D& position);
+	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 
 public:
 	RenderManager(const RenderManager &) = delete;
@@ -67,10 +78,11 @@ public:
 	int WindowHeight() { return m_height; }
 	float GetAspectRatio() const;
 
-	void RenderGameObject(GameObject& camera, GameObject& go);
-	//void RenderSTB(SurfaceTextureBuffer* pSTB, Mesh* pMesh);
+	void RenderGameObject(const GameObject& camera, const GameObject& go);
 
-	void LoadShaderProgram(std::string fileName);
+	void LoadShaders();
+	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }
+	void LoadShaderProgram(std::string filePath, std::string fileName);
 	ShaderProgram * GetShaderProgram(std::string programName);
 	ShaderProgram * CreateShaderProgram(std::string programName);
 

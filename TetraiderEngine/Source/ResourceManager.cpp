@@ -21,6 +21,8 @@ ResourceManager::ResourceManager()
 	);
 
 	quad->FinishMesh();
+
+	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
 }
 
 ResourceManager::~ResourceManager() 
@@ -84,7 +86,7 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 	STB_Surface * surface = new STB_Surface();
 	GameConfig& gameConfig = GameConfig::GetInstance();
 	if (surface) {
-		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, gameConfig.m_texturesDir);
+		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, gameConfig.TexturesDir());
 
 		surface->hasAlpha = info.hasAlpha;
 		surface->data = stbi_load(info.filename.c_str(),
@@ -112,6 +114,11 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 	}
 }
 
+
+DebugLineMesh * ResourceManager::GetDebugLineMesh()
+{
+	return m_pDebugLineMesh;
+}
 
 Mesh * ResourceManager::LoadMesh(std::string meshName)
 {

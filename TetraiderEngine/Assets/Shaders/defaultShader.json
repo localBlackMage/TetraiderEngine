@@ -1,7 +1,7 @@
 {
 	"default": {
-		"vertex": "../TetraiderEngine/Assets/Shaders/defaultVertShader.vert",
-		"fragment": "../TetraiderEngine/Assets/Shaders/defaultFragShader.frag",
+		"vertex": "defaultVertShader.vert",
+		"fragment": "defaultFragShader.frag",
 		"attributes": [
 			"position",
 			"texture_coord"

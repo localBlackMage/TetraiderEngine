@@ -43,6 +43,7 @@ public:
 	void RotateX(float amount);
 	void RotateY(float amount);
 	void RotateZ(float amount);
+	Vector3D GetRotVector() const;
 
 	Vector3D Forward() const;
 	Vector3D Right() const;
@@ -66,6 +67,7 @@ public:
 	void SetScale(float scaleX, float scaleY);
 	void SetScale(float scaleX, float scaleY, float scaleZ);
 	void ScaleUniform(float amount);
+	Vector3D GetScaleVector() const;
 
 	Matrix4x4 GetTransform() const;
 	friend Body;

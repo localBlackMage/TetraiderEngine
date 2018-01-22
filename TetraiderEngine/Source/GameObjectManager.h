@@ -19,6 +19,7 @@ private:
 	std::vector<GameObject*> m_GameObjectsQueue;
 	GameObject* m_pCamera;
 	RenderManager& renderMngr;
+	std::vector<GameObject*> mGameObjects;
 
 	GameObjectManager();
 	~GameObjectManager();
@@ -48,7 +49,8 @@ public:
 	void UpdateStatus();
 	// Component* AddComponentToGameObject(GameObject* pGO, json j);
 	GameObject* FindObjectWithTag(GameObjectTag tag);
-	std::vector<GameObject*> mGameObjects;
+	
+	GameObject* GetActiveCamera();
 };
 
 #endif

@@ -1,19 +1,26 @@
 #ifndef DEBUG_MANAGER_H
 #define DEBUG_MANAGER_H
 
-#include <vector>
-#include "../Source/Math/Vector3D.h"
+#include <queue>
+#include "Math/Vector3D.h"
+#include "Math/Matrix4x4.h"
 
+class GameObject;
 
-struct DB_Color {
-	float r, g, b = 0;
-	float a = 0;
+enum DebugShape {
+	S_CIRCLE = 0,
+	S_RECT,
+	S_LINE
 };
 
 struct DebugCommand {
+	DebugShape shape;
+	Vector3D color;
+	Vector3D pos, rot, scale;
 	bool active = false;
-	DB_Color color;
-	std::vector<Vector3D> mPoints;
+	DebugCommand(DebugShape _shape, Vector3D _color, Vector3D _pos, Vector3D _rot, Vector3D _scale, bool _active = false) :
+		shape(_shape), color(_color), pos(_pos), rot(_rot), scale(_scale), active(_active) {}
+
 };
 
 enum class DebugColor {
@@ -32,8 +39,11 @@ private:
 	DebugManager();
 	~DebugManager();
 
-	DB_Color red, blue, green, grey, yellow, cyan, white, black;
-	void SetColor(DB_Color* pColor, DebugColor color);
+	Vector3D red, blue, green, grey, yellow, cyan, white, black;
+	std::queue<DebugCommand*> m_debugCommands;
+	bool m_isDebugModeEnabled;
+
+	Vector3D _GetColor(DebugColor color);
 public:
 	DebugManager(const DebugManager &) = delete;
 	void operator=(const DebugManager &) = delete;
@@ -44,13 +54,15 @@ public:
 		return instance;
 	}
 
-	bool m_isDebugModeEnabled;
+	void SetDebugMode(bool isDebugEnabled) { m_isDebugModeEnabled = isDebugEnabled; };
 
-	void DrawLine(Vector3D* pA, Vector3D* pB, DebugColor color);
-	void DrawWireRectangle(Vector3D* pA, float height, float width, DebugColor color);
-	void DrawWireCircle(Vector3D* pA, float radius, DebugColor color);
+	void DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor color);
+	void DrawWireRectangle(const Vector3D& pA, float height, float width, DebugColor color);
+	void DrawWireRectangle(const Vector3D& pos, const Vector3D& rot, const Vector3D& scale, DebugColor color);
+	void DrawWireCircle(const Vector3D& pA, float radius, DebugColor color);
+
 	void ClearDebugCommands();
-	std::vector<DebugCommand*> m_debugCommands;
+	void RenderDebugCommands(const GameObject& camera);
 };
 
 #endif

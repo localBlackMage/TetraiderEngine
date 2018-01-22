@@ -150,6 +150,11 @@ void Transform::RotateZ(float amount)
 	_UpdateLookAt();
 }
 
+Vector3D Transform::GetRotVector() const
+{
+	return Vector3D(m_angleX, m_angleY, m_angleZ);
+}
+
 Vector3D Transform::Forward() const
 {
 	return Vector3D::Normalize(m_lookAt);
@@ -238,6 +243,10 @@ void Transform::SetScale(float scaleX, float scaleY, float scaleZ)
 void Transform::ScaleUniform(float amount)
 {
 	m_scale += (Vector3D(1.f, 1.f, 1.f) * amount);
+}
+Vector3D Transform::GetScaleVector() const
+{
+	return m_scale;
 }
 Matrix4x4 Transform::GetTransform() const
 {

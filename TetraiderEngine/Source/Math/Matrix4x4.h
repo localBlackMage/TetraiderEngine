@@ -48,6 +48,7 @@ public:
 	static Matrix4x4 Inverse3x3(const Matrix4x4& other);
 	static Matrix4x4 Rotate(const float degrees, const Vector3D& axis);
 	static Matrix4x4 Translate(const Vector3D& amt);
+	static Matrix4x4 Scale(const Vector3D& scalar);
 	static Matrix4x4 Scale(const float scalar);
 	static Matrix4x4 Scale(const float scaleX, const float scaleY, const float scaleZ);
 	static Matrix4x4 Perspective(const float fov, const float aspect, const float near, const float far);

@@ -1,6 +1,7 @@
 #include "GameConfig.h"
 #include "LevelManager.h"
 #include "DebugManager.h"
+#include "RenderManager.h"
 
 using namespace JsonReader;
 
@@ -27,5 +28,7 @@ void GameConfig::LoadConfig(std::string s) {
 
 	// Set debug parameters
 	DebugManager& debugManager = DebugManager::GetInstance();
-	debugManager.m_isDebugModeEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
+	debugManager.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
+
+	RenderManager::GetInstance().SetDebugShaderName(ParseString(gameSettings, "debugShader"));
 }

@@ -27,6 +27,7 @@ public:
 	void LateInitialize();
 	void Destroy();
 	Component* GetComponent(ComponentType type);
+	const Component* GetComponent(ComponentType type) const;
 	bool HasComponent(ComponentType type);
 	
 	bool m_isActive;

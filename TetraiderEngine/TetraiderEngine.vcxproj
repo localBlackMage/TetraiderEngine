@@ -24,6 +24,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\Controller.cpp" />
+    <ClCompile Include="Source\DebugLineMesh.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\FrameRateManager.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentFactory.h" />
     <ClInclude Include="Source\Controller.h" />
+    <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\External\json.hpp" />
     <ClInclude Include="Source\External\stb_image.h" />

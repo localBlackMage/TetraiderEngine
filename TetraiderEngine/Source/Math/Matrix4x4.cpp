@@ -362,6 +362,16 @@ Matrix4x4 Matrix4x4::Translate(const Vector3D& amt)
 	);
 }
 
+Matrix4x4 Matrix4x4::Scale(const Vector3D & scalar)
+{
+	return Matrix4x4(
+		scalar.x, 0.0f, 0.0f, 0.0f,
+		0.0f, scalar.y, 0.0f, 0.0f,
+		0.0f, 0.0f, scalar.z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+}
+
 Matrix4x4 Matrix4x4::Scale(const float scalar)
 {
 	return Matrix4x4(

@@ -52,7 +52,17 @@ Component* GameObject::GetComponent(ComponentType const type) {
 			return comp;
 	}
 
-	return NULL;
+	return nullptr;
+}
+
+const Component * GameObject::GetComponent(ComponentType type) const
+{
+	for (auto &comp : mComponents) {
+		if (comp->type == type)
+			return comp;
+	}
+
+	return nullptr;
 }
 
 bool GameObject::HasComponent(ComponentType type)

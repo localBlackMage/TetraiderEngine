@@ -5,14 +5,18 @@
 #include <fstream>
 #include <windows.h>
 #include "JsonReader.h"
+#include "DebugLineMesh.h"
 #include "Math\Matrix4x4.h"
-//#include "GameObjectManager.h"
+#include "GameConfig.h"
+#include "ResourceManager.h"
+
 #include "Transform.h"
 #include "Camera.h"
 #include "Sprite.h"
 
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_width(width), m_height(height)
+	m_width(width), m_height(height),
+	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
 	_InitWindow(title);
 }
@@ -68,13 +72,14 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 	}
 }
 
-bool RenderManager::_GameObjectHasRenderableComponent(GameObject & gameObject)
+bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
+	// TODO: Fill out
 	return true;
 	//return gameObject.Has(ComponentType::SPRITE) || gameObject.Has(ComponentType::SCROLLING_SPRITE) || gameObject.Has(ComponentType::TEXT);
 }
 
-void RenderManager::_RenderSprite(Sprite * pSpriteComp)
+void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
 	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
@@ -114,23 +119,23 @@ void RenderManager::_RenderSprite(Sprite * pSpriteComp)
 	glDrawElements(GL_TRIANGLES, 3 * pSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
-void RenderManager::_RenderGameObject(GameObject& gameObject)
+void RenderManager::_RenderGameObject(const GameObject& gameObject)
 {
 	// Only attempt to draw if the game object has a sprite component and transform component
 	if (!gameObject.GetComponent(ComponentType::Transform) || !_GameObjectHasRenderableComponent(gameObject))
 		return;
 
-	Matrix4x4 M = static_cast<Transform*>(gameObject.GetComponent(ComponentType::Transform))->GetTransform();
+	Matrix4x4 M = static_cast<const Transform*>(gameObject.GetComponent(ComponentType::Transform))->GetTransform();
 	//Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
 	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
 
 	// set shader attributes
 	if (gameObject.GetComponent(ComponentType::Sprite))
-		_RenderSprite(static_cast<Sprite*>(gameObject.GetComponent(ComponentType::Sprite)));
+		_RenderSprite(static_cast<const Sprite*>(gameObject.GetComponent(ComponentType::Sprite)));
 }
 
-void RenderManager::_SelectShaderProgram(GameObject & gameObject)
+void RenderManager::_SelectShaderProgram(const GameObject & gameObject)
 {
 	std::string shader = "";
 
@@ -140,6 +145,135 @@ void RenderManager::_SelectShaderProgram(GameObject & gameObject)
 	SelectShaderProgram(shader == "" ? "default" : shader);
 }
 
+void RenderManager::_SetUpCamera(const GameObject & camera)
+{
+	const Camera * cameraComp = static_cast<const Camera*>(camera.GetComponent(ComponentType::Camera));
+	glUseProgram(m_pCurrentProgram->GetProgram());
+
+	// TODO: Update to support grabbing Perspective Matricies if needed
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cameraComp->GetOrthographicMatrix());
+	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cameraComp->GetViewMatrix());
+}
+
+void RenderManager::_SetUpDebug(const GameObject& camera)
+{
+	SelectShaderProgram(m_debugShaderName);
+	_SetUpCamera(camera);
+
+	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	glBindBuffer(GL_ARRAY_BUFFER, ResourceManager::GetInstance().GetDebugLineMesh()->GetVertexBuffer());
+	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+}
+
+void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)
+{
+	switch (shape) {
+	case DebugShape::S_RECT:
+		_RenderRect(color, pos, rot, scale);
+		break;
+	case DebugShape::S_CIRCLE:
+		_RenderCircle(color, scale.x / 2.f, pos);
+		break;
+	case DebugShape::S_LINE:
+		_RenderLine(color, pos, rot, scale);
+		break;
+	}
+
+
+	//glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	//glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
+	//glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+	//
+	//Vector3D color = pSpriteComp->GetColor();
+	//glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
+	//
+	//
+	//// select the texture to use
+	//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	//
+	//// draw the mesh
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());
+	//glDrawElements(GL_TRIANGLES, 3 * pSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
+}
+
+void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
+{
+	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+
+	float halfWidth = scale.x / 2.f,
+		halfHeight = scale.y / 2.f;
+
+	// square base matrix
+	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, Vector3D(0, 0, 1, 0));
+	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, Vector3D(0, 0, 1, 0)) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
+	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 0.f);
+
+	Matrix4x4 Left = Base
+		* Matrix4x4::Translate(Vector3D(-halfWidth, 0, 0))
+		* SideBase;
+	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Left);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+	Matrix4x4 Right = Base
+		* Matrix4x4::Translate(Vector3D(halfWidth, 0, 0))
+		* SideBase;
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Right);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+	Matrix4x4 Top = Base
+		* Matrix4x4::Translate(Vector3D(0, halfHeight, 0))
+		* TopBotScale;
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Top);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+	Matrix4x4 Bottom = Base
+		* Matrix4x4::Translate(Vector3D(0, -halfHeight, 0))
+		* TopBotScale;
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Bottom);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+}
+
+void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Vector3D & pos)
+{
+	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+
+	Matrix4x4 ArcMatrix;
+	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
+	int max = 360;
+	float degreeAmt = 360.f / float(max);
+	Vector3D AXIS_Z = Vector3D(0, 0, 1);
+	Vector3D a = pos + Vector3D(radius, 0, 0);
+	Vector3D b = Matrix4x4::Rotate(degreeAmt, AXIS_Z) * a;
+	float lineLength = Vector3D::Distance(a, b);
+	// circle base matrix
+	Matrix4x4 Base = Matrix4x4::Translate(Vector3D(radius, 0, 0))
+		* Matrix4x4::Rotate(90.f, Vector3D(0, 0, 1))
+		* Matrix4x4::Scale(lineLength, 0, 0);
+	Matrix4x4 Position = Matrix4x4::Translate(pos);
+	for (int i = 0; i < max; ++i) {
+		ArcMatrix = Position
+			* Matrix4x4::Rotate(degreeAmt * float(i), AXIS_Z)
+			* Base;
+
+		glUniformMatrix4fv(modelMatrix, 1, true, (float*)ArcMatrix);
+		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+	}
+}
+
+void RenderManager::_RenderLine(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
+{
+	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+
+	Matrix4x4 model = Matrix4x4::Translate(pos) * 
+		Matrix4x4::Rotate(rot.z, Vector3D(0, 0, 1)) *
+		Matrix4x4::Scale(scale.x) * 
+		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
+
+	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)model);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+}
 
 bool RenderManager::Init()
 {
@@ -155,7 +289,7 @@ bool RenderManager::Init()
 void RenderManager::FrameStart()
 {
 	// clear frame buffer and z-buffer
-	glClearColor(0.0f, 0.0f, 1.0f, 1);
+	glClearColor(0.0f, 0.0f, 0.0f, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearDepth(1);
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -178,70 +312,36 @@ float RenderManager::GetAspectRatio() const
 	return (float)m_width / (float)m_height;
 }
 
-void RenderManager::RenderGameObject(GameObject& camera, GameObject& go)
+void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& go)
 {
 	if (camera == go) return;
-	Camera * cameraComp = static_cast<Camera*>(camera.GetComponent(ComponentType::Camera));
 	_SelectShaderProgram(go);
-	glUseProgram(m_pCurrentProgram->GetProgram());
-
-	// TODO: Update to support grabbing Perspective Matricies if needed
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cameraComp->GetOrthographicMatrix());
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cameraComp->GetViewMatrix());
-
+	_SetUpCamera(camera);
 	_RenderGameObject(go);
 }
-/*
-void RenderManager::RenderSTB(SurfaceTextureBuffer * pSTB, Mesh * pMesh)
-{
-	SelectShaderProgram("default");
-	glUseProgram(m_pCurrentProgram->GetProgram());
-	Matrix4x4 P = Matrix4x4::Orthographic(m_width, m_height, 0.1f);
-	//Matrix4x4 P = Matrix4x4::Identity4D();
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)&P);
-	
-	Matrix4x4 V = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS) * Matrix4x4::Translate(Vector3D(0, 0, 10));
-	//Matrix4x4 V = Matrix4x4::Identity4D();
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)&V);
-
-	/*----------------Moodie Code--------------------
-	GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
-	for (auto gameObject : gameObjectMngr.mGameObjects) {
-		Transform* const pTransform = static_cast<Transform*>(gameObject->GetComponent(ComponentType::Transform));
-		if (!pTransform)
-			continue;
-		Matrix4x4 I = Matrix4x4::Identity4D();
-		glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)pTransform->GetTransform());
-
-		glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
-		glBindBuffer(GL_ARRAY_BUFFER, pMesh->GetVertexBuffer());
-		glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
-
-		glDisable(GL_ALPHA_TEST);
-		glEnable(GL_DEPTH_TEST);
-
-		// select the texture to use
-		// glBindTexture(GL_TEXTURE_2D, pSTB->bufferId);
-
-		// draw the mesh
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
-		glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
-	}
-}
-*/
 
 #pragma region Shaders
-void RenderManager::LoadShaderProgram(std::string fileName)
+
+void RenderManager::LoadShaders()
+{
+	GameConfig& gameConfig = GameConfig::GetInstance();
+	std::string shaderDir = gameConfig.ShadersDir();
+
+	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
+	LoadShaderProgram(shaderDir, "defaultShader.json"); // TODO: Move this
+}
+
+void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)
 {
 	try {
-		json j = JsonReader::OpenJsonFile(fileName);
+		json j = JsonReader::OpenJsonFile(filePath + fileName);
 
 		if (j.is_object()) {
 			for (json::iterator it = j.begin(); it != j.end(); ++it) {
 				std::string programName = it.key();
 				ShaderProgram * program = CreateShaderProgram(programName);
-				Shader * vShader = CreateVertexShaderFromFile(j[programName]["vertex"]);
-				Shader * fShader = CreateFragmentShaderFromFile(j[programName]["fragment"]);
+				Shader * vShader = CreateVertexShaderFromFile(filePath + ParseString(j, programName, "vertex"));
+				Shader * fShader = CreateFragmentShaderFromFile(filePath + ParseString(j, programName, "fragment"));
 
 				program->AttachShader(*vShader);
 				program->AttachShader(*fShader);

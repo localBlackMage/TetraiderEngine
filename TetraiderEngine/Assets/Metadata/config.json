@@ -5,7 +5,8 @@
 		"sfxDir": "../TetraiderEngine/Assets/SFX/",
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
-		"isDebugModeEnabled": true
+		"isDebugModeEnabled": true,
+		"debugShader": "lineShader"
 	},
 	"LEVEL_SETTINGS": {
 		"Start": 0,

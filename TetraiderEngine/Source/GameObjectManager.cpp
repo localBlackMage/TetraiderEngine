@@ -93,6 +93,11 @@ GameObject* GameObjectManager::FindObjectWithTag(GameObjectTag tag) {
 	return 0;
 }
 
+GameObject * GameObjectManager::GetActiveCamera()
+{
+	return m_pCamera;
+}
+
 void GameObjectManager::AddGameObjectToQueue(GameObject* pGO) {
 	m_GameObjectsQueue.push_back(pGO);
 }
@@ -107,7 +112,7 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string s = gameConfig.m_prefabsDir + name + ".json";
+	std::string s = gameConfig.PrefabsDir() + name + ".json";
 	json j = OpenJsonFile(s);
 
 	GameObject *pGameObject = new GameObject(++m_currentId);

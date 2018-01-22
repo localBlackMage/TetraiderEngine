@@ -14,8 +14,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
 	RenderManager& renderMngr = RenderManager::GetInstance();
 	renderMngr.Init();
+	renderMngr.LoadShaders();
 	// TODO: Load shader from somewhere else
-	renderMngr.LoadShaderProgram("../TetraiderEngine/Assets/Shaders/defaultShader.json");
+	//renderMngr.LoadShaderProgram("../TetraiderEngine/Assets/Shaders/defaultShader.json");
 
 	GameStateManager& gameStateMngr = GameStateManager::GetInstance();
 	gameStateMngr.Update(); // Start game loop
