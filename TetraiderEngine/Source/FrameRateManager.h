@@ -19,6 +19,7 @@ private:
 	unsigned int m_maxFrameRate, m_ticksPerFrame;
 	unsigned int m_tickStart, m_tickEnd;
 	float m_frameTime;
+	float m_totalElapsedTime;
 
 	FrameRateManager(unsigned int maxFrameRate);
 	~FrameRateManager();
@@ -34,6 +35,8 @@ public:
 
 	void FrameStart();
 	void FrameEnd();
+	void ResetElapsedTime();
+	float GetElapsedTime(); // total elapsed time from level start in seconds
 	float GetFrameTime(); // in seconds
 };
 
