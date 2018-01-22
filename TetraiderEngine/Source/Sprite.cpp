@@ -34,20 +34,6 @@ void Sprite::Serialize(json j)
 	m_color = ParseColor(j, "color");
 }
 
-void Sprite::Override(json j)
-{
-	if (ValueExists(j, "Texture")) {
-		m_textureName = ParseString(j, "Texture");
-		m_texture = ResourceManager::GetInstance().GetTexture(m_textureName);
-	}
-	m_xTiling = ParseFloat(j, "tiling", "x");
-	m_yTiling = ParseFloat(j, "tiling", "y");
-	m_uOffset = ParseFloat(j, "uvOffset", "u");
-	m_vOffset = ParseFloat(j, "uvOffset", "v");
-	m_color = ParseColor(j, "color");
-}
-
-
 const Mesh & Sprite::GetMesh() const {
 	return m_mesh;
 }

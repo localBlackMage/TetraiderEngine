@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include "Body.h"
 
 #include <iostream>
 
@@ -44,20 +45,6 @@ void Transform::Serialize(json j) {
 	m_pivotOffset = ParseVector3D(j, "pivotOffset");
 }
 
-void Transform::Override(json j)
-{
-	m_position = ValueExists(j, "position") ? ParseVector3D(j, "position") : m_position;
-	m_scale = ValueExists(j, "scale") ? ParseVector3D(j, "scale") : m_scale;
-
-	SetAngles(
-		ValueExists(j, "rotation", "x") ? ParseFloat(j, "rotation", "x") : m_angleX,
-		ValueExists(j, "rotation", "y") ? ParseFloat(j, "rotation", "y") : m_angleY,
-		ValueExists(j, "rotation", "z") ? ParseFloat(j, "rotation", "z") : m_angleZ
-	);
-
-	m_pivotOffset = ValueExists(j, "pivotOffset") ? ParseVector3D(j, "pivotOffset") : m_pivotOffset;
-}
-
 #pragma region Translation
 Vector3D Transform::GetPosition() const
 {
@@ -68,12 +55,9 @@ void Transform::SetPosition(Vector3D pos)
 {
 	m_position = pos;
 
-	//TODO: Update body position here
-	/*
-	Body* pBody = static_cast<Body*>(pGO->GetComponent(CT_BODY));
-	if (pBody) {
-	Vector3DSet(pBody->pPosition, pPosition);
-	}*/
+	Body* pBody = static_cast<Body*>(pGO->GetComponent(ComponentType::Body));
+	if (pBody)
+		pBody->m_Position.Set(m_position.x, m_position.y, m_position.z);
 }
 
 void Transform::Move(Vector3D amount)

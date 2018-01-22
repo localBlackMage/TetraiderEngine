@@ -105,5 +105,5 @@ void Body::DrawDebugShape() {
 	}
 }
 
-void Body::AddForce(const Vector3D* pForce) { m_Forces.Add(*pForce); }
+void Body::AddForce(const Vector3D& force) { m_Forces.Add(force); }
 void Body::ClearForces() { m_Forces.Zero(); }

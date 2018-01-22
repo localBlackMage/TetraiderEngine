@@ -79,14 +79,19 @@ void LevelManager::LoadLevel(json j) {
 
 		// Overwrite values for transform component if they exist
 		if (pGO) {
-			Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
-			if (pTransform)	pTransform->Override(j[GAME_OBJECTS][i]);
+			if (j["GAME_OBJECTS"][i].find("position") != j["GAME_OBJECTS"][i].end()) {
+				Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+				if (pTransform) pTransform->SetPosition(ParseVector3D(j["GAME_OBJECTS"][i], "position"));
+			}
 
-			Camera* pCamera = static_cast<Camera*>(pGO->GetComponent(ComponentType::Camera));
-			if (pCamera)	pCamera->Override(j[GAME_OBJECTS][i]);
+			//	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			//	if (pTransform)	pTransform->Serialize(j[GAME_OBJECTS][i]);
 
-			Sprite* pSprite = static_cast<Sprite*>(pGO->GetComponent(ComponentType::Sprite));
-			if (pSprite)	pSprite->Override(j[GAME_OBJECTS][i]);
+			//	Camera* pCamera = static_cast<Camera*>(pGO->GetComponent(ComponentType::Camera));
+			//	if (pCamera)	pCamera->Serialize(j[GAME_OBJECTS][i]);
+
+			//	Sprite* pSprite = static_cast<Sprite*>(pGO->GetComponent(ComponentType::Sprite));
+			//	if (pSprite)	pSprite->Serialize(j[GAME_OBJECTS][i]);
 		}
 	}
 

@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include "Transform.h"
+#include "Body.h"
 #include "InputManager.h"
 
 #include <iostream>
@@ -18,15 +19,15 @@ void Controller::Update(float dt) {
 	Vector3D posOffset;
 
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_D))
-		posOffset.x += m_speed*dt;
+		posOffset.x += m_speed;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_A))
-		posOffset.x -= m_speed*dt;
+		posOffset.x -= m_speed;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_W))
-		posOffset.y += m_speed*dt;
+		posOffset.y += m_speed;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_S))
-		posOffset.y -= m_speed*dt;
+		posOffset.y -= m_speed;
 
-	m_pTransform->SetPosition(posOffset + m_pTransform->GetPosition());
+	m_pBody->SetVelocity(posOffset);
 }
 
 void Controller::Serialize(json j) {
@@ -44,6 +45,20 @@ void Controller::LateInitialize() {
 
 		if (!m_pTransform) {
 			printf("No Transform component found. Controller component failed to operate.\n");
+			return;
+		}
+	}
+
+	if (!m_pBody) {
+		if (pGO)
+			m_pBody = static_cast<Body*>(pGO->GetComponent(ComponentType::Body));
+		else {
+			printf("No Game Object found. Controller component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pBody) {
+			printf("No Body component found. Controller component failed to operate.\n");
 			return;
 		}
 	}

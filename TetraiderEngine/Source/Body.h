@@ -19,13 +19,14 @@ public:
 	void SetVelocity(const Vector3D& pVel);
 	void SetVelocity(float speed, float angle);
 	void Integrate(float dt);
-	void AddForce(const Vector3D* pForce);
+	void AddForce(const Vector3D& force);
 	const Vector3D& GetPosition();
 	const Vector3D& GetPreviousPosition();
 	const Vector3D& GetVelocity();
 	bool m_isStatic;
 	float m_mass;
 	Shape* m_pShape;
+	friend Transform;
 private:
 	Transform* m_pTransform;
 	Vector3D m_Acceleration;

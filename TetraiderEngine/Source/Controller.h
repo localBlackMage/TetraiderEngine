@@ -5,6 +5,7 @@
 
 // Forward declaration
 class Transform;
+class Body;
 
 class Controller : public Component {
 public:
@@ -17,6 +18,7 @@ public:
 private:
 	float m_speed;
 	Transform* m_pTransform;
+	Body* m_pBody;
 };
 
 #endif

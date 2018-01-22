@@ -26,7 +26,6 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void LateUpdate(float dt) {};
 	virtual void Serialize(json j) = 0;
-	virtual void Override(json j) {}; //  TODO: Every component needs to override this eventually
 	// TODO
 	// virtual void HandleEvent(Event* pEvent) {}
 

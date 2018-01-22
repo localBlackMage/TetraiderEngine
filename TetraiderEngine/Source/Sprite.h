@@ -26,7 +26,6 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Serialize(json j);	
-	virtual void Override(json j);
 
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
