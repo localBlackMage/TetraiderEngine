@@ -3,9 +3,13 @@
 
 class Body;
 
+#include "..\Source\Math\Vector3D.h"
+#include <vector>
+
 enum ShapeType {
 	ST_Circle,
 	ST_AABB,
+	ST_POLYGON,
 
 	ST_Count
 };
@@ -35,6 +39,14 @@ public:
 	float halfHeight;
 	float width;
 	float height;
+private:
+};
+
+class Polygon : public Shape {
+public:
+	Polygon() : Shape(ST_POLYGON) {}
+	virtual ~Polygon() {}
+	std::vector<Vector3D> m_vertices;
 private:
 };
 

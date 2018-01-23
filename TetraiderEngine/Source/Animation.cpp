@@ -37,14 +37,14 @@ void Animation::Update(float dt) {
 	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
 
 	// Test code remove later
-	InputManager& inputMngr = InputManager::GetInstance();
+	/*InputManager& inputMngr = InputManager::GetInstance();
 
 	if(inputMngr.IsKeyTriggered(SDL_SCANCODE_1)) {
 		ChangeAnimation(0);
 	}
 	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_2)) {
 		ChangeAnimation(1);
-	}
+	}*/
 }
 
 void Animation::Play(int animation) {

@@ -8,6 +8,13 @@ PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_Circle][ST_AABB] = StaticCircleToStaticAABB;
 	CollisionFunctions[ST_AABB][ST_Circle] = StaticAABBToStaticCircle;
 	CollisionFunctions[ST_AABB][ST_AABB] = StaticAABBToStaticAABB;
+
+
+	CollisionFunctions[ST_POLYGON][ST_POLYGON] = StaticPolygonToStaticPolygon;
+	CollisionFunctions[ST_POLYGON][ST_Circle] = StaticPolygonToStaticPolygon;
+	CollisionFunctions[ST_POLYGON][ST_AABB] = StaticPolygonToStaticPolygon;
+	CollisionFunctions[ST_AABB][ST_POLYGON] = StaticPolygonToStaticPolygon;
+	CollisionFunctions[ST_Circle][ST_POLYGON] = StaticPolygonToStaticPolygon;
 }
 
 PhysicsManager::~PhysicsManager() {
@@ -72,7 +79,7 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 				GenerateContact(pBodyA, pBodyB);
 			}
 			else {
-				//printf("Collision Not Detected\n");
+			//	printf("Collision Not Detected\n");
 			}
 		}
 	}
@@ -109,4 +116,10 @@ bool StaticAABBToStaticAABB(Body* pBodyA, Body* pBodyB) {
 	AABB *pRect1 = static_cast<AABB*>(pBodyA->m_pShape);
 	AABB *pRect2 = static_cast<AABB*>(pBodyB->m_pShape);
 	return StaticRectToStaticRect(pBodyA->GetPosition(), pRect1->halfWidth, pRect1->halfHeight, pBodyB->GetPosition(), pRect2->halfWidth, pRect2->halfHeight);
+}
+
+bool StaticPolygonToStaticPolygon(Body* pBodyA, Body* pBodyB) {
+	Polygon* pPoly1 = static_cast<Polygon*>(pBodyA->m_pShape);
+	Polygon* pPoly2 = static_cast<Polygon*>(pBodyB->m_pShape);
+	return SAT(pBodyA->GetPosition(), pPoly1->m_vertices, pBodyB->GetPosition(), pPoly2->m_vertices);
 }
