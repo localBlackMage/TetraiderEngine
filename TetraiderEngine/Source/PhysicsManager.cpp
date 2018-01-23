@@ -72,7 +72,7 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 				GenerateContact(pBodyA, pBodyB);
 			}
 			else {
-				printf("Collision Not Detected\n");
+				//printf("Collision Not Detected\n");
 			}
 		}
 	}
@@ -84,7 +84,7 @@ void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB) {
 	pContact->pBody[0] = pBodyA;
 	pContact->pBody[1] = pBodyB;
 	m_pContacts.push_back(pContact);
-	printf("Collision Detected\n");
+	//printf("Collision Detected\n");
 }
 
 bool StaticCircleToStaticCircle(Body* pBodyA, Body* pBodyB) {
