@@ -1,6 +1,7 @@
 #include "Collisions.h"
 #include "Vector3D.h"
 #include "LineSegment2D.h"
+#include "..\DebugManager.h"
 #include <math.h>
 
 #define EPSILON 0.0001
@@ -66,7 +67,7 @@ void SnapPointToAABB(Vector3D &result, const Vector3D &point, const Vector3D &re
 		result.y = point.y;
 }
 
-bool StaticAABBToRay(const Vector3D AABB, float halfWidth, float halfHeight, const LineSegment2D &line) {
+bool StaticAABBToRay(const Vector3D& AABB, float halfWidth, float halfHeight, const LineSegment2D &line) {
 	double tmin = -INFINITY;
 	double tmax = +INFINITY;
 
@@ -136,4 +137,122 @@ bool StaticCircleToRay(const Vector3D& circle, float radius, const LineSegment2D
 	}
 
 	return true;
+}
+
+bool SAT(const Vector3D shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D shapeB, const std::vector<Vector3D>& shapeBvert) {
+	DebugManager& debugManager = DebugManager::GetInstance();
+
+	std::vector<Vector3D> axesA(shapeAvert.size());
+	std::vector<Vector3D> vertxA(shapeAvert.size());
+	std::vector<Vector3D> axesB(shapeBvert.size());
+	std::vector<Vector3D> vertxB(shapeBvert.size());
+
+	for (unsigned int i = 0; i < shapeAvert.size(); ++i) { vertxA[i] = shapeA + shapeAvert[i]; }
+	for (unsigned int i = 0; i < shapeBvert.size(); ++i) { vertxB[i] = shapeB + shapeBvert[i]; }
+
+	SetAxis(axesA, vertxA);
+	SetAxis(axesB, vertxB);
+
+	// Debug
+	for (unsigned int i = 0; i < axesA.size(); ++i) {
+		Vector3D pA = ((vertxA[i == vertxA.size() - 1 ? 0 : i + 1] - vertxA[i])* 0.5f) + vertxA[i];
+		Vector3D pB = pA + axesA[i] * 50;
+		debugManager.DrawLine(pA, pB, DebugColor::CYAN);
+	}
+
+	for (unsigned int i = 0; i < axesB.size(); ++i) {
+		Vector3D pA = ((vertxB[i == vertxB.size() - 1 ? 0 : i + 1] - vertxB[i])* 0.5f) + vertxB[i];
+		Vector3D pB = pA + axesB[i] * 50;
+		debugManager.DrawLine(pA, pB, DebugColor::CYAN);
+	}
+	// Debug done
+	MTV mtv;
+	mtv.overlap = INFINITY;
+	for (unsigned int i = 0; i < axesA.size(); ++i) {
+		Projection p1;
+		Projection p2;
+		ProjectOnAxis(p1, axesA[i], vertxA);
+		ProjectOnAxis(p2, axesA[i], vertxB);
+		 
+		if (!ProjectionsOverlap(p1, p2))
+			return false;
+		else {
+			float o = GetOverlap(p1, p2);
+			if (o < mtv.overlap) {
+				mtv.overlap = o;
+				mtv.normal = -1*axesA[i];
+			}
+		}
+	}
+
+	// TO DO check for containment
+	for (unsigned int i = 0; i < axesB.size(); ++i) {
+		Projection p1;
+		Projection p2;
+		ProjectOnAxis(p1, axesB[i], vertxA);
+		ProjectOnAxis(p2, axesB[i], vertxB);
+
+		if (!ProjectionsOverlap(p1, p2))
+			return false;
+		else {
+			float o = GetOverlap(p1, p2);
+			if (o < mtv.overlap) {
+				mtv.overlap = o;
+				mtv.normal = axesB[i];
+			}
+		}
+	}
+	
+	printf("overlap: %f\n", mtv.overlap);
+	return true;
+}
+
+// Assumes vertx has the same size as result
+void SetAxis(std::vector<Vector3D>& result, const std::vector<Vector3D> vertx) {
+	for (unsigned int i = 0; i < vertx.size(); ++i) {
+		// Get the edge 
+		Vector3D edge = vertx[i == vertx.size() - 1 ? 0 : i + 1] - vertx[i];
+		Vector3D normal(-edge.y, edge.x, 0);
+		normal.Normalize();
+		result[i] = normal;
+	}
+}
+
+void ProjectOnAxis(Projection& result, const Vector3D& axis, const std::vector<Vector3D>& vertx) {
+	result.min = Vector3D::Dot(axis, vertx[0]);
+	result.max = result.min;
+
+	for (unsigned int i = 1; i < vertx.size(); ++i) {
+		float p = Vector3D::Dot(axis, vertx[i]);
+
+		if (p < result.min) result.min = p;
+		else if (p > result.max) result.max = p;
+	}
+}
+
+bool ProjectionsOverlap(const Projection& projectionA, const Projection& projectionB) {
+	if (projectionA.max < projectionB.min || projectionB.max < projectionA.min)
+		return false;
+	else
+		return true;
+}
+
+// TO DO check if this is correct
+float GetOverlap(const Projection& projectionA, const Projection& projectionB) {
+	if (projectionA.min < projectionB.min) {
+		if (projectionA.max > projectionB.min && projectionA.max < projectionB.max)
+			return projectionA.max - projectionB.min;
+		else if (projectionA.max >= projectionB.max)
+			return projectionB.max - projectionB.min;
+	}
+	else if (projectionA.min >= projectionB.min) {
+		if (projectionA.max < projectionB.max)
+			return projectionA.max - projectionA.min;
+		else if (projectionA.max >= projectionB.max)
+			return projectionB.max - projectionA.min;
+	}
+	else {
+		printf("Something wrong in finding overlap\n");
+		return 0;
+	}
 }

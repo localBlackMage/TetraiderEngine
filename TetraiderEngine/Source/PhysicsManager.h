@@ -48,4 +48,6 @@ bool StaticAABBToStaticAABB(Body*, Body*); // Vector3D &normal, float &penetrati
 bool StaticCircleToStaticAABB(Body*, Body*); // Vector3D &normal, float &penetrationDepth);
 bool StaticAABBToStaticCircle(Body*, Body*); // Vector3D &normal, float &penetrationDepth);
 
+bool StaticPolygonToStaticPolygon(Body*, Body*);
+
 #endif

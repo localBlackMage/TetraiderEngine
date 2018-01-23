@@ -61,6 +61,15 @@ void Body::Serialize(json j) {
 		m_pShape = pCircle;
 		m_pShape->pBody = this;
 	}
+	else if (shape == "polygon") {
+		Polygon* pPolygon = new Polygon();
+		for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
+			Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
+			pPolygon->m_vertices.push_back(vertx);
+		}
+		m_pShape = pPolygon;
+		m_pShape->pBody = this;
+	}
 }
 
 void Body::LateInitialize() {
@@ -102,6 +111,15 @@ void Body::DrawDebugShape() {
 		case ST_AABB: {
 			AABB* pRect = static_cast<AABB*>(m_pShape);
 			debugMngr.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
+			break;
+		}
+		case ST_POLYGON: {
+			Polygon* pPoly = static_cast<Polygon*>(m_pShape);
+			for (unsigned int i = 0; i < pPoly->m_vertices.size(); ++i) {
+				Vector3D pointA = pPoly->m_vertices[i] + GetPosition();
+				Vector3D pointB = pPoly->m_vertices[i == pPoly->m_vertices.size() - 1 ? 0: i+1] + GetPosition();
+				debugMngr.DrawLine(pointA, pointB, DebugColor::GREEN);
+			}
 			break;
 		}
 	}

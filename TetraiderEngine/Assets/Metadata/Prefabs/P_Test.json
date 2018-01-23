@@ -74,9 +74,24 @@
 		"isStatic": false,
 		"mass": 1,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 100,
-			"height": 100
+			"type": "polygon",
+			"vertices": [
+			 {
+				"x": 0,
+				"y": 75,
+				"z": 0
+			 },
+			 {
+				"x": 75,
+				"y": -75,
+				"z": 0
+			 },
+			 {
+				"x": -75,
+				"y": -75,
+				"z": 0
+			 }
+			]
 		}
 	}
   ]
