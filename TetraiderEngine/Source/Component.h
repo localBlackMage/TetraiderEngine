@@ -3,6 +3,7 @@
 
 #include "JsonReader.h"
 #include "GameObject.h"
+#include "Subscriber.h"
 
 using json = nlohmann::json;
 using namespace JsonReader;
@@ -18,7 +19,9 @@ enum class ComponentType {
 	NONE
 };
 
-class Component {
+class Component : 
+	public Subscriber
+{
 public:
 	Component(ComponentType _type) : type(_type) {};
 	virtual ~Component() {};
@@ -26,8 +29,8 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void LateUpdate(float dt) {};
 	virtual void Serialize(json j) = 0;
-	// TODO
-	// virtual void HandleEvent(Event* pEvent) {}
+
+	virtual void HandleEvent(Event* pEvent) {}
 
 	GameObject *pGO;
 	ComponentType type;

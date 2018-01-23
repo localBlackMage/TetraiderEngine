@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Rendering">
       <UniqueIdentifier>{85e74455-4a57-42e9-b111-40779270da80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{b9353b5b-1726-4b65-9b76-593c34a21971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{ece808c0-b832-435b-958e-3cf46d5fecbf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -158,6 +164,18 @@
     </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EventManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SubscriberTracker.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Subscriber.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +286,21 @@
     </ClInclude>
     <ClInclude Include="Source\STBSurface.h">
       <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SubscriberTracker.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Subscriber.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EventManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EventNames.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

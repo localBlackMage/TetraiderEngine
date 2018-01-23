@@ -26,6 +26,8 @@
     <ClCompile Include="Source\Controller.cpp" />
     <ClCompile Include="Source\DebugLineMesh.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
+    <ClCompile Include="Source\Event.cpp" />
+    <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\FrameRateManager.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -49,6 +51,8 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
+    <ClCompile Include="Source\Subscriber.cpp" />
+    <ClCompile Include="Source\SubscriberTracker.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +64,9 @@
     <ClInclude Include="Source\Controller.h" />
     <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
+    <ClInclude Include="Source\Event.h" />
+    <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\EventNames.h" />
     <ClInclude Include="Source\External\json.hpp" />
     <ClInclude Include="Source\External\stb_image.h" />
     <ClInclude Include="Source\FrameRateManager.h" />
@@ -87,6 +94,8 @@
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\STBSurface.h" />
+    <ClInclude Include="Source\Subscriber.h" />
+    <ClInclude Include="Source\SubscriberTracker.h" />
     <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
