@@ -89,8 +89,8 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetTextCoordBuffer());
 	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
 
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), 0, 0);// pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), 1, 1);//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());// pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
+	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), pSpriteComp->TileX(), pSpriteComp->TileY());//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
 
 	//glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), 1); // pSpriteComp->TileX());
 	//glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), 1); // pSpriteComp->TileY());

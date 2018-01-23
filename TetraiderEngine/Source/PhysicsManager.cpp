@@ -71,6 +71,9 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 			if (CollisionFunctions[pBodyA->m_pShape->type][pBodyB->m_pShape->type](pBodyA, pBodyB)) {
 				GenerateContact(pBodyA, pBodyB);
 			}
+			else {
+				printf("Collision Not Detected\n");
+			}
 		}
 	}
 }
@@ -81,6 +84,7 @@ void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB) {
 	pContact->pBody[0] = pBodyA;
 	pContact->pBody[1] = pBodyB;
 	m_pContacts.push_back(pContact);
+	printf("Collision Detected\n");
 }
 
 bool StaticCircleToStaticCircle(Body* pBodyA, Body* pBodyB) {

@@ -15,10 +15,10 @@ Body::~Body() {}
 void Body::Update(float dt) {}
 
 void Body::Integrate(float dt) {
-	// DrawDebugShape();
-
-	if (m_isStatic)
+	if (m_isStatic) {
+		DrawDebugShape();
 		return;
+	}
 
 	// Update previous position
 	m_PrevPosition.Set(m_Position.x, m_Position.y, m_Position.z);
@@ -37,6 +37,8 @@ void Body::Integrate(float dt) {
 
 	// Clear all forces
 	ClearForces();
+
+	DrawDebugShape();
 }
 
 void Body::Serialize(json j) {
@@ -94,12 +96,12 @@ void Body::DrawDebugShape() {
 	switch (m_pShape->type) {
 		case ST_Circle: {
 			Circle* pC = static_cast<Circle*>(m_pShape);
-			debugMngr.DrawWireCircle(m_pTransform->GetPosition(), pC->radius, DebugColor::GREEN);
+			debugMngr.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
 			break;
 		}
 		case ST_AABB: {
 			AABB* pRect = static_cast<AABB*>(m_pShape);
-			debugMngr.DrawWireRectangle(m_pTransform->GetPosition(), m_pTransform->GetRotVector(), m_pTransform->GetScaleVector(), DebugColor::GREEN);
+			debugMngr.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
 			break;
 		}
 	}

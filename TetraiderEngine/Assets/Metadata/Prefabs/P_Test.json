@@ -9,8 +9,8 @@
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 100,
+        "y": 100,
         "z": 0
       },
       "pivotOffset": {
@@ -25,7 +25,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_test",
+      "Texture": "T_playerTest",
       "tiling": {
         "x": 1,
         "y": 1

@@ -67,14 +67,14 @@ void DebugManager::DrawWireRectangle(const Vector3D & pos, const Vector3D & rot,
 	);
 }
 
-void DebugManager::DrawWireCircle(const Vector3D& pos, float radius, DebugColor color) {
+void DebugManager::DrawWireCircle(const Vector3D& pos, float diameter, DebugColor color) {
 	if (!m_isDebugModeEnabled)
 		return;
 
 	m_debugCommands.push(new DebugCommand(
 		DebugShape::S_CIRCLE,
 		_GetColor(color), pos, Vector3D(), 
-		Vector3D(radius, radius, radius), true)
+		Vector3D(diameter, diameter, diameter), true)
 	);
 }
 
@@ -87,9 +87,9 @@ void DebugManager::ClearDebugCommands()
 
 void DebugManager::RenderDebugCommands(const GameObject& camera)
 {
-	DrawWireRectangle(Vector3D(200, 100, 0), Vector3D(0, 0, 50), Vector3D(100, 200, 0), DebugColor::RED);
-	DrawWireCircle(Vector3D(-200, -100, 0), 250, DebugColor::GREEN);
-	DrawLine(Vector3D(-600, 400, 0), Vector3D(600, -400, 0), DebugColor::CYAN);
+	//DrawWireRectangle(Vector3D(200, 100, 0), Vector3D(0, 0, 50), Vector3D(100, 200, 0), DebugColor::RED);
+	//DrawWireCircle(Vector3D(-200, -100, 0), 250, DebugColor::GREEN);
+	//DrawLine(Vector3D(-600, 400, 0), Vector3D(600, -400, 0), DebugColor::CYAN);
 	RenderManager& renderMngr = RenderManager::GetInstance();
 	renderMngr._SetUpDebug(camera);
 	while (!m_debugCommands.empty()) {

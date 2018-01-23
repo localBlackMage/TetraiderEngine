@@ -10,6 +10,14 @@
         "y": 0,
         "z": 0
       }
-    }
+    },
+	{
+	  "prefab": "P_ColliderTest",
+      "position": {
+        "x": 200,
+        "y": 200,
+        "z": 0
+      }
+	}
   ]
 }
