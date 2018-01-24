@@ -27,6 +27,7 @@ class InputManager
 private:
 	Uint8 *mPreviousKeyStates;
 	Uint8 *mCurrentKeyStates;
+	SDL_GameController* mGameController;
 	bool prevLeftMouse, leftMouse;
 	bool prevRightMouse, rightMouse;
 	int mousePosX, mousePosY;

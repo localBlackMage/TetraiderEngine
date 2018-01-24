@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <string.h>
+#include <iostream>
 #include "InputManager.h"
 
 
@@ -12,6 +13,12 @@ InputManager::InputManager()
 	mCurrentKeyStates = new Uint8[SDL_NUM_SCANCODES];
 	memset(mPreviousKeyStates, 0, SDL_NUM_SCANCODES * sizeof(Uint8));
 	memset(mCurrentKeyStates, 0, SDL_NUM_SCANCODES * sizeof(Uint8));
+
+	// initialize for SDL_GameController
+	if (SDL_Init(SDL_INIT_JOYSTICK) < 0) {
+		printf( "ERROR: SDL_Init() with SDL_INIT_JOYSTICK flag failed!\n");
+	}
+	if (!)
 }
 InputManager::~InputManager() {
 	// delete key states
