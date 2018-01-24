@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Shape.h"
+#include "../Source/Math/Collisions.h"
 #include "../Source/Math/Vector3D.h"
 
 // Forward declaration
@@ -10,9 +11,8 @@ class GameObject;
 class Body;
 
 struct Contact {
-	Body* pBody[2];
-	// Vector3D normal;
-	// float penetrationDepth;
+	Body* m_pBody[2];
+	MTV m_MTV;
 };
 
 class PhysicsManager {
@@ -38,16 +38,19 @@ public:
 	
 	std::vector<GameObject*> m_gameObjects;
 private:
-	bool(*CollisionFunctions[ST_Count][ST_Count])(Body*, Body*);
-	void GenerateContact(Body*, Body*);
+	bool(*CollisionFunctions[ST_Count][ST_Count])(Body*, Body*, MTV*);
+	void GenerateContact(Body*, Body*, MTV*);
 	std::vector<Contact*> m_pContacts;
 };
 
-bool StaticCircleToStaticCircle(Body*, Body*); // Vector3D &normal, float& penetrationDepth);
-bool StaticAABBToStaticAABB(Body*, Body*); // Vector3D &normal, float &penetrationDepth);
-bool StaticCircleToStaticAABB(Body*, Body*); // Vector3D &normal, float &penetrationDepth);
-bool StaticAABBToStaticCircle(Body*, Body*); // Vector3D &normal, float &penetrationDepth);
-
-bool StaticPolygonToStaticPolygon(Body*, Body*);
+bool StaticCircleToStaticCircle(Body*, Body*, MTV*); 
+bool StaticAABBToStaticAABB(Body*, Body*, MTV*); 
+bool StaticCircleToStaticAABB(Body*, Body*, MTV*); 
+bool StaticAABBToStaticCircle(Body*, Body*, MTV*);
+bool StaticPolygonToStaticPolygon(Body*, Body*, MTV*);
+bool StaticPolygonToStaticAABB(Body*, Body*, MTV*);
+bool StaticAABBToStaticPolygon(Body*, Body*, MTV*);
+bool StaticPolygonToStaticCircle(Body*, Body*, MTV*);
+bool StaticCircleToStaticPolygon(Body*, Body*, MTV*);
 
 #endif

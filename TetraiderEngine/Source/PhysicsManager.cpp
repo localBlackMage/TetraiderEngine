@@ -1,20 +1,17 @@
 #include "PhysicsManager.h"
 #include "Body.h"
 #include "GameObject.h"
-#include "../Source/Math/Collisions.h"
 
 PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_Circle][ST_Circle] = StaticCircleToStaticCircle;
 	CollisionFunctions[ST_Circle][ST_AABB] = StaticCircleToStaticAABB;
 	CollisionFunctions[ST_AABB][ST_Circle] = StaticAABBToStaticCircle;
 	CollisionFunctions[ST_AABB][ST_AABB] = StaticAABBToStaticAABB;
-
-
 	CollisionFunctions[ST_POLYGON][ST_POLYGON] = StaticPolygonToStaticPolygon;
-	CollisionFunctions[ST_POLYGON][ST_Circle] = StaticPolygonToStaticPolygon;
-	CollisionFunctions[ST_POLYGON][ST_AABB] = StaticPolygonToStaticPolygon;
-	CollisionFunctions[ST_AABB][ST_POLYGON] = StaticPolygonToStaticPolygon;
-	CollisionFunctions[ST_Circle][ST_POLYGON] = StaticPolygonToStaticPolygon;
+	CollisionFunctions[ST_POLYGON][ST_Circle] = StaticPolygonToStaticCircle;
+	CollisionFunctions[ST_POLYGON][ST_AABB] = StaticPolygonToStaticAABB;
+	CollisionFunctions[ST_AABB][ST_POLYGON] = StaticAABBToStaticPolygon;
+	CollisionFunctions[ST_Circle][ST_POLYGON] = StaticCircleToStaticPolygon;
 }
 
 PhysicsManager::~PhysicsManager() {
@@ -75,51 +72,75 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 			if (pBodyA->m_isStatic && pBodyB->m_isStatic)
 				continue;
 
-			if (CollisionFunctions[pBodyA->m_pShape->type][pBodyB->m_pShape->type](pBodyA, pBodyB)) {
-				GenerateContact(pBodyA, pBodyB);
-			}
-			else {
-			//	printf("Collision Not Detected\n");
-			}
+			MTV mtv;
+
+			if (CollisionFunctions[pBodyA->m_pShape->type][pBodyB->m_pShape->type](pBodyA, pBodyB, &mtv))
+				GenerateContact(pBodyA, pBodyB, &mtv);
 		}
 	}
 }
 
-// TODO add extra data like normals and penetration depth
-void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB) {
+void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB, MTV* pMTV) {
 	Contact* pContact = new Contact();
-	pContact->pBody[0] = pBodyA;
-	pContact->pBody[1] = pBodyB;
+	pContact->m_pBody[0] = pBodyA;
+	pContact->m_pBody[1] = pBodyB;
+	pContact->m_MTV.normal = pMTV->normal;
+	pContact->m_MTV.penetration = pMTV->penetration;
+
+	printf("Penetration: %f\n", pMTV->penetration);
 	m_pContacts.push_back(pContact);
-	//printf("Collision Detected\n");
 }
 
-bool StaticCircleToStaticCircle(Body* pBodyA, Body* pBodyB) {
+bool StaticCircleToStaticCircle(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
 	Circle *pCircle1 = static_cast<Circle*>(pBodyA->m_pShape);
 	Circle *pCircle2 = static_cast<Circle*>(pBodyB->m_pShape);
-	return StaticCircleToStaticCircle(pBodyA->GetPosition(), pCircle1->radius, pBodyB->GetPosition(), pCircle2->radius);
+	return StaticCircleToStaticCircle(pBodyA->GetPosition(), pCircle1->radius, pBodyB->GetPosition(), pCircle2->radius, *p_mtv);
 }
 
-bool StaticCircleToStaticAABB(Body* pBodyA, Body* pBodyB) {
+bool StaticCircleToStaticAABB(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
 	Circle *pCircle = static_cast<Circle*>(pBodyA->m_pShape);
 	AABB *pRect = static_cast<AABB*>(pBodyB->m_pShape);
-	return StaticCircleToStaticRect(pBodyA->GetPosition(), pCircle->radius, pBodyB->GetPosition(), pRect->halfWidth, pRect->halfHeight);
+	return StaticCircleToStaticRect(pBodyA->GetPosition(), pCircle->radius, pBodyB->GetPosition(), pRect->halfWidth, pRect->halfHeight, *p_mtv);
 }
 
-bool StaticAABBToStaticCircle(Body* pBodyA, Body* pBodyB) {
+bool StaticAABBToStaticCircle(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
 	AABB *pRect = static_cast<AABB*>(pBodyA->m_pShape);
 	Circle *pCircle = static_cast<Circle*>(pBodyB->m_pShape);
-	return StaticCircleToStaticRect(pBodyB->GetPosition(), pCircle->radius, pBodyA->GetPosition(), pRect->halfWidth, pRect->halfHeight);
+	return StaticCircleToStaticRect(pBodyB->GetPosition(), pCircle->radius, pBodyA->GetPosition(), pRect->halfWidth, pRect->halfHeight, *p_mtv);
 }
 
-bool StaticAABBToStaticAABB(Body* pBodyA, Body* pBodyB) {
+bool StaticAABBToStaticAABB(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
 	AABB *pRect1 = static_cast<AABB*>(pBodyA->m_pShape);
 	AABB *pRect2 = static_cast<AABB*>(pBodyB->m_pShape);
-	return StaticRectToStaticRect(pBodyA->GetPosition(), pRect1->halfWidth, pRect1->halfHeight, pBodyB->GetPosition(), pRect2->halfWidth, pRect2->halfHeight);
+	return StaticRectToStaticRect(pBodyA->GetPosition(), pRect1->halfWidth, pRect1->halfHeight, pBodyB->GetPosition(), pRect2->halfWidth, pRect2->halfHeight, *p_mtv);
 }
 
-bool StaticPolygonToStaticPolygon(Body* pBodyA, Body* pBodyB) {
+bool StaticPolygonToStaticPolygon(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
 	Polygon* pPoly1 = static_cast<Polygon*>(pBodyA->m_pShape);
 	Polygon* pPoly2 = static_cast<Polygon*>(pBodyB->m_pShape);
-	return SAT(pBodyA->GetPosition(), pPoly1->m_vertices, pBodyB->GetPosition(), pPoly2->m_vertices);
+	return SeperatingAxisTheorom::SAT(pBodyA->GetPosition(), pPoly1->m_vertices, pBodyB->GetPosition(), pPoly2->m_vertices, *p_mtv);
+}
+
+bool StaticPolygonToStaticAABB(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
+	Polygon* pPoly = static_cast<Polygon*>(pBodyA->m_pShape);
+	AABB *pRect = static_cast<AABB*>(pBodyB->m_pShape);
+	return StaticPolygonToStaticAABB(pBodyA->GetPosition(), pPoly->m_vertices, pBodyB->GetPosition(), pRect->halfWidth, pRect->halfHeight, *p_mtv);
+}
+
+bool StaticAABBToStaticPolygon(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
+	Polygon* pPoly = static_cast<Polygon*>(pBodyB->m_pShape);
+	AABB *pRect = static_cast<AABB*>(pBodyA->m_pShape);
+	return StaticPolygonToStaticAABB(pBodyB->GetPosition(), pPoly->m_vertices, pBodyA->GetPosition(), pRect->halfWidth, pRect->halfHeight, *p_mtv);;
+}
+
+bool StaticPolygonToStaticCircle(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
+	Polygon* pPoly = static_cast<Polygon*>(pBodyA->m_pShape);
+	Circle *pCircle = static_cast<Circle*>(pBodyB->m_pShape);
+	return StaticPolygonToStaticCircle(pBodyA->GetPosition(), pPoly->m_vertices, pBodyB->GetPosition(), pCircle->radius, *p_mtv);
+}
+
+bool StaticCircleToStaticPolygon(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
+	Polygon* pPoly = static_cast<Polygon*>(pBodyB->m_pShape);
+	Circle *pCircle = static_cast<Circle*>(pBodyA->m_pShape);
+	return StaticPolygonToStaticCircle(pBodyB->GetPosition(), pPoly->m_vertices, pBodyA->GetPosition(), pCircle->radius, *p_mtv);
 }

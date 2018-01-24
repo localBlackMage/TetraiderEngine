@@ -1,0 +1,37 @@
+{
+  "Tag": "None",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 60,
+        "y": 60,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 1,
+		"SHAPE": {
+			"type": "AABB",
+			"width": 110,
+			"height": 80
+		}
+	}
+  ]
+}
