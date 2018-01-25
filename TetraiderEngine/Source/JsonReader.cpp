@@ -6,13 +6,20 @@
 #include <iostream>
 
 namespace JsonReader {
-	//template <typename T>
-	//void ParseJsonValue(const json j, T& result, T defaultValue, String first)
-	//{
-	//	if (j.find(first) != j.end())
-	//		result = j[first];
-	//	result = defaultValue;
-	//}
+	/*template <typename ParseType, typename Indexor>
+	void ParseValue(const json j, ParseType& result, ParseType defaultValue, Indexor index)
+	{
+		if (j.find(index) != j.end())
+			result = j[index];
+		else
+			result = defaultValue;
+	}
+
+	template <typename ParseType, class ... Indexor>
+	void ParseValue(const json j, ParseType& result, ParseType defaultValue, Indexor ... indecies)
+	{
+		ParseValue(j, result, defaultValue, indecies...);
+	}*/
 
 	//template <typename T>
 	//void ParseJsonValue(const json j, T& result, T defaultValue, String first, String second)

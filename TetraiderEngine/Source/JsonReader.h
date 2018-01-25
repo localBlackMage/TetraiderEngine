@@ -27,6 +27,46 @@ using json = nlohmann::json;
 namespace JsonReader {
 	typedef std::string String;
 
+	//template <typename ParseType, typename Indexor>
+	//ParseType ParseValue(const json j, ParseType defaultValue, Indexor index)
+	//{
+	//	if (j.find(index) != j.end())
+	//		return j[index];
+	//	else
+	//		return defaultValue;
+	//}
+
+	//template <typename ParseType, class ... Indexor>
+	//ParseType ParseValue(const json j, ParseType defaultValue, Indexor ... indeces)
+	//{
+	//	return ParseValue(j, result, defaultValue, indeces...);
+	//}
+
+	template <typename ParseType, typename I1>
+	ParseType ParseValue(const json j, ParseType defaultValue, I1 i1)
+	{
+		if (j.find(i1) != j.end()) return j[i1];
+		return defaultValue;
+	}
+
+
+	template <typename ParseType, typename I1, typename I2, typename I3>
+	ParseType ParseValue(const json j, ParseType defaultValue, I1 i1, I2 i2, I3 i3)
+	{
+		if (j.find(i1) != j.end()) {
+			if (j[i1].find(i2) != j[i1].end()) {
+				if (j[i1][i2].find(i3) != j[i1][i2].end())
+					return j[i1][i2][i3];
+			}
+		}
+		return defaultValue;
+	}
+
+
+
+
+
+
 	//template <typename T>
 	//void ParseJsonValue(const json j, T&, T, String);
 
