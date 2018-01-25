@@ -8,6 +8,7 @@
 
 // Forward declaration
 class GameObject;
+enum class GameObjectTag;
 class Body;
 
 struct Contact {
@@ -35,10 +36,12 @@ public:
 	void CheckCollisionsAndGenerateContacts();
 	void FireEventsToContacts();
 	void ClearContacts();
+	bool Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize);
 	
 	std::vector<GameObject*> m_gameObjects;
 private:
 	bool(*CollisionFunctions[ST_Count][ST_Count])(Body*, Body*, MTV*);
+	bool(*RayCastFunctions[ST_Count])(const LineSegment2D&, Body*);
 	void GenerateContact(Body*, Body*, MTV*);
 	std::vector<Contact*> m_pContacts;
 };
@@ -52,5 +55,9 @@ bool StaticPolygonToStaticAABB(Body*, Body*, MTV*);
 bool StaticAABBToStaticPolygon(Body*, Body*, MTV*);
 bool StaticPolygonToStaticCircle(Body*, Body*, MTV*);
 bool StaticCircleToStaticPolygon(Body*, Body*, MTV*);
+
+bool RayCastToAABB(const LineSegment2D&, Body*);
+bool RayCastToCircle(const LineSegment2D&, Body*);
+bool RayCastToPolygon(const LineSegment2D&, Body*);
 
 #endif

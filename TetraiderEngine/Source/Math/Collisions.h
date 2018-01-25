@@ -26,6 +26,7 @@ void SnapPointToAABB(Vector3D &result, const Vector3D &point, const Vector3D &re
 
 bool StaticAABBToRay(const Vector3D &AABB, float halfWidth, float halfHeight, const LineSegment2D &line);
 bool StaticCircleToRay(const Vector3D& circle, float radius, const LineSegment2D& line);
+bool StaticPolygonToRay(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const LineSegment2D& line);
 
 bool StaticPolygonToStaticAABB(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D &rectangle, float halfWidth, float halfHeight, MTV& mtv);
 bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D &circle, float radius, MTV& mtv);
@@ -34,7 +35,7 @@ class SeperatingAxisTheorom {
 public:
 	SeperatingAxisTheorom() {}
 	~SeperatingAxisTheorom() {}
-	static bool SAT(const Vector3D shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D shapeB, const std::vector<Vector3D>& shapeBvert, MTV& mtv);	
+	static bool SAT(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D& shapeB, const std::vector<Vector3D>& shapeBvert, MTV& mtv);	
 };
 
 #endif // !COLLISIONS_H

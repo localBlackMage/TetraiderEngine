@@ -2,6 +2,9 @@
 #include "Transform.h"
 #include "Body.h"
 #include "InputManager.h"
+#include "PhysicsManager.h"
+#include "DebugManager.h"
+#include "../Source/Math/LineSegment2D.h"
 
 #include <iostream>
 

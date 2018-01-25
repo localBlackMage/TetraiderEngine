@@ -12,6 +12,10 @@ PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_POLYGON][ST_AABB] = StaticPolygonToStaticAABB;
 	CollisionFunctions[ST_AABB][ST_POLYGON] = StaticAABBToStaticPolygon;
 	CollisionFunctions[ST_Circle][ST_POLYGON] = StaticCircleToStaticPolygon;
+
+	RayCastFunctions[ST_AABB] = RayCastToAABB;
+	RayCastFunctions[ST_Circle] = RayCastToCircle;
+	RayCastFunctions[ST_POLYGON] = RayCastToPolygon;
 }
 
 PhysicsManager::~PhysicsManager() {
@@ -54,26 +58,21 @@ void PhysicsManager::ClearContacts() {
 }
 
 void PhysicsManager::CheckCollisionsAndGenerateContacts() {
-	if (m_gameObjects.size() <= 1)
-		return;
+	if (m_gameObjects.size() <= 1) return;
 
 	for (unsigned int i = 0; i < m_gameObjects.size() - 1; ++i) {
 		Body* pBodyA = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
 
-		if (pBodyA->pGO->m_isCollisionDisabled)
-			continue;
+		if (pBodyA->pGO->m_isCollisionDisabled) continue;
 
 		for (unsigned int j = i + 1; j < m_gameObjects.size(); ++j) {
 			Body* pBodyB = static_cast<Body*>(m_gameObjects[j]->GetComponent(ComponentType::Body));
 
-			if (pBodyB->pGO->m_isCollisionDisabled)
-				continue;
+			if (pBodyB->pGO->m_isCollisionDisabled) continue;
 
-			if (pBodyA->m_isStatic && pBodyB->m_isStatic)
-				continue;
+			if (pBodyA->m_isStatic && pBodyB->m_isStatic) continue;
 
 			MTV mtv;
-
 			if (CollisionFunctions[pBodyA->m_pShape->type][pBodyB->m_pShape->type](pBodyA, pBodyB, &mtv))
 				GenerateContact(pBodyA, pBodyB, &mtv);
 		}
@@ -89,6 +88,28 @@ void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB, MTV* pMTV) {
 
 	printf("Penetration: %f\n", pMTV->penetration);
 	m_pContacts.push_back(pContact);
+}
+
+bool PhysicsManager::Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize) {
+	for (unsigned int i = 0; i < m_gameObjects.size(); ++i) {
+		Body* pBody = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		
+		bool isIgnore = false;
+		for (int i = 0; i < layerSize; ++i) {
+			if (pBody->pGO->m_tag == pIgnoreLayer[i]) {
+				isIgnore = true;
+				break;
+			}
+		}
+
+		if (isIgnore) continue;
+		if (pBody->pGO->m_isCollisionDisabled) continue;
+
+		if (RayCastFunctions[pBody->m_pShape->type](ray, pBody))
+			return true;
+	}
+
+	return false;
 }
 
 bool StaticCircleToStaticCircle(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
@@ -143,4 +164,19 @@ bool StaticCircleToStaticPolygon(Body* pBodyA, Body* pBodyB, MTV* p_mtv) {
 	Polygon* pPoly = static_cast<Polygon*>(pBodyB->m_pShape);
 	Circle *pCircle = static_cast<Circle*>(pBodyA->m_pShape);
 	return StaticPolygonToStaticCircle(pBodyB->GetPosition(), pPoly->m_vertices, pBodyA->GetPosition(), pCircle->radius, *p_mtv);
+}
+
+bool RayCastToAABB(const LineSegment2D& ray, Body* pBody) {
+	AABB *pRect = static_cast<AABB*>(pBody->m_pShape);
+	return StaticAABBToRay(pBody->GetPosition(), pRect->halfWidth, pRect->halfHeight, ray);
+}
+
+bool RayCastToCircle(const LineSegment2D& ray, Body* pBody) {
+	Circle *pCircle = static_cast<Circle*>(pBody->m_pShape);
+	return StaticCircleToRay(pBody->GetPosition(), pCircle->radius, ray);
+}
+
+bool RayCastToPolygon(const LineSegment2D& ray, Body* pBody) {
+	Polygon* pPoly = static_cast<Polygon*>(pBody->m_pShape);
+	return StaticPolygonToRay(pBody->GetPosition(), pPoly->m_vertices, ray);
 }

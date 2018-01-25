@@ -11,6 +11,8 @@ Vector3D::Vector3D(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z)
 
 Vector3D::Vector3D(const Vector3D & rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w) { }
 
+Vector3D::Vector3D(const Vector2D & rhs) : x(rhs.x), y(rhs.y), z(0.f), w(rhs.w) { }
+
 Vector3D& Vector3D::operator=(const Vector3D rhs)
 {
 	x = rhs.x;

@@ -107,6 +107,11 @@ void SnapPointToAABB(Vector3D &result, const Vector3D &point, const Vector3D &re
 }
 
 bool StaticAABBToRay(const Vector3D& AABB, float halfWidth, float halfHeight, const LineSegment2D &line) {
+	Vector3D P1 = line.getP1();
+
+	if (StaticPointToStaticRect(P1, AABB, halfWidth, halfHeight))
+		return true;
+	
 	double tmin = -INFINITY;
 	double tmax = +INFINITY;
 
@@ -140,6 +145,11 @@ bool StaticAABBToRay(const Vector3D& AABB, float halfWidth, float halfHeight, co
 }
 
 bool StaticCircleToRay(const Vector3D& circle, float radius, const LineSegment2D& line) {
+	Vector3D P0 = line.getP0();
+
+	if (StaticPointToStaticCircle(P0, circle, radius))
+		return true;
+	
 	Vector2D circlePos(circle.x, circle.y);
 	Vector2D PsC(circle.x - line.getP0().x, circle.y -line.getP0().y);
 	Vector2D PsPe(line.getP1().x - line.getP0().x, line.getP1().y - line.getP0().y);
@@ -178,7 +188,7 @@ bool StaticCircleToRay(const Vector3D& circle, float radius, const LineSegment2D
 	return true;
 }
 
-bool SeperatingAxisTheorom::SAT(const Vector3D shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D shapeB, const std::vector<Vector3D>& shapeBvert, MTV& mtv) {
+bool SeperatingAxisTheorom::SAT(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D& shapeB, const std::vector<Vector3D>& shapeBvert, MTV& mtv) {
 	std::vector<Vector3D> vertxA(shapeAvert.size());
 	std::vector<Vector3D> vertxB(shapeBvert.size());
 	// Get vertixes in world coordinate space. TODO: If static object this calculation can be avoided
@@ -314,14 +324,24 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 				debugMngr.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
 				return true;
 			}
-			/*else {
-				if (edge.x > 0 && axis.y > 0) return false;
-				else if (edge.x < 0 && axis.y < 0) 	return false;
-				else if (edge.y > 0 && axis.x < 0) 	return false;
-				else if (edge.y < 0 && axis.x > 0) return false;
-			}*/
+			else {
+				axis.Normalize();
+				// If circle is in outer half plane
+				if (Vector3D::Dot(circle, axis) - Vector3D::Dot(vertxA[i], axis) > 0)
+					return false;
+			}
 		}
 	}
 
 	return false;
+}
+
+bool StaticPolygonToRay(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const LineSegment2D& line) {
+	Vector3D pos(0, 0, 0);
+	std::vector<Vector3D> lineVertx(2);
+	lineVertx[0] = Vector3D(line.getP0().x, line.getP0().y, 0);
+	lineVertx[1] = Vector3D(line.getP1().x, line.getP1().y, 0);
+
+	MTV mtv;
+	return SeperatingAxisTheorom::SAT(shapeA, shapeAvert, pos, lineVertx, mtv);
 }
