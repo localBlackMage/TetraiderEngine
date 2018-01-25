@@ -58,6 +58,7 @@
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Subscriber.cpp" />
     <ClCompile Include="Source\SubscriberTracker.cpp" />
+    <ClCompile Include="Source\TetraiderAPI.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +107,7 @@
     <ClInclude Include="Source\STBSurface.h" />
     <ClInclude Include="Source\Subscriber.h" />
     <ClInclude Include="Source\SubscriberTracker.h" />
+    <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

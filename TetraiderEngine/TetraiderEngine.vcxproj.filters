@@ -177,20 +177,8 @@
     <ClCompile Include="Source\Event.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Agent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\MathFunctions.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CamFollow.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Health.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\FlashOnTakeDamage.cpp">
-      <Filter>Source Files\Components</Filter>
+    <ClCompile Include="Source\TetraiderAPI.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,20 +305,8 @@
     <ClInclude Include="Source\EventNames.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Agent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\MathFunctions.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CamFollow.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Health.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FlashOnTakeDamage.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\TetraiderAPI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

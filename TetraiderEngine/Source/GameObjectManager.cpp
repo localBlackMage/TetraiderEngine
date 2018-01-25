@@ -19,7 +19,7 @@ GameObjectManager::~GameObjectManager() {
 	mGameObjects.clear();
 }
 
-void GameObjectManager::Update(float dt) {
+void GameObjectManager::Update(double dt) {
 	for (auto gameObject : mGameObjects) {
 		if (gameObject->m_isActive)
 			gameObject->Update(dt);
@@ -32,7 +32,7 @@ void GameObjectManager::UpdateStatus() {
 	DestroyGameObjects();
 }
 
-void GameObjectManager::LateUpdate(float dt) {
+void GameObjectManager::LateUpdate(double dt) {
 	for (auto gameObject : mGameObjects) {
 		 if (gameObject->m_isActive)
 			 gameObject->LateUpdate(dt);

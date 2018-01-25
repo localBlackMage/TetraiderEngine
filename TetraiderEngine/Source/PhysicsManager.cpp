@@ -21,7 +21,7 @@ PhysicsManager::~PhysicsManager() {
 	m_gameObjects.clear();
 }
 
-void PhysicsManager::Integrate(float dt) {
+void PhysicsManager::Integrate(double dt) {
 	int size = m_gameObjects.size();
 	for (int i = 0; i < size; ++i) {
 		Body* c = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));

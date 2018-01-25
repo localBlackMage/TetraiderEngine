@@ -73,6 +73,7 @@ void Camera::LateUpdate(float dt)
 	//	break;
 	//case CAM_ORTHO:
 	_CalcOrthographicMatrix();
+	_CalcPerspectiveMatrix();
 	//	break;
 	//}
 }

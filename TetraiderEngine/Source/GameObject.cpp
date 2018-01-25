@@ -24,12 +24,12 @@ void GameObject::Destroy() {
 	m_isDestroy = true;
 }
 
-void GameObject::Update(float dt) {
+void GameObject::Update(double dt) {
 	for (auto &comp : mComponents)
 		comp->Update(dt);
 }
 
-void GameObject::LateUpdate(float dt) {
+void GameObject::LateUpdate(double dt) {
 	for (auto &comp : mComponents)
 		comp->LateUpdate(dt);
 }

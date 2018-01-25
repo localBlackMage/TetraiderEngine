@@ -44,8 +44,8 @@ public:
 		return instance;
 	}
 
-	void Update(float dt);
-	void LateUpdate(float dt);
+	void Update(double dt);
+	void LateUpdate(double dt);
 	void RenderGameObjects();
 
 	GameObject* CreateGameObject(std::string name);
