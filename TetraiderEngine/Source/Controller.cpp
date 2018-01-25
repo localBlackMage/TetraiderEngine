@@ -37,6 +37,13 @@ void Controller::Serialize(json j) {
 	m_speed = ParseFloat(j, "speed");
 }
 
+void Controller::HandleEvent(Event* pEvent) {
+	if (pEvent->Type() == EventType::EVENT_OnCollide) {
+		OnCollide* pOnCollide = static_cast<OnCollide*>(pEvent);
+		//printf("Penetration %f: \n", pOnCollide->mtv.penetration);
+	}
+}
+
 void Controller::LateInitialize() {
 	if (!m_pTransform) {
 		if (pGO)

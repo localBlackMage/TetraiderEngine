@@ -14,7 +14,7 @@ public:
 	virtual void Update(float dt);
 	virtual void LateInitialize();
 	virtual void Serialize(json j);
-	virtual void Override(json j) {};
+	virtual void HandleEvent(Event* pEvent);
 private:
 	float m_speed;
 	Transform* m_pTransform;

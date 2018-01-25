@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "Event.h"
 
 GameObject::GameObject(unsigned int id) : 
 	m_id(id), 
@@ -8,7 +9,6 @@ GameObject::GameObject(unsigned int id) :
 	m_isRender(true) {}
 
 GameObject::~GameObject() {
-	// Delete all components
 	for (auto &comp : mComponents)
 		delete comp;
 
@@ -72,4 +72,10 @@ bool GameObject::HasComponent(ComponentType type)
 			return true;
 	}
 	return false;
+}
+
+void GameObject::HandleEvent(Event* pEvent) {
+	for (auto &comp : mComponents) {
+		comp->HandleEvent(pEvent);
+	}
 }

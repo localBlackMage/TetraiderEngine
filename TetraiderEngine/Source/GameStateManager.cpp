@@ -7,6 +7,7 @@
 #include "LevelManager.h"
 #include "PhysicsManager.h"
 #include "DebugManager.h"
+#include "EventManager.h"
 
 GameStateManager::GameStateManager(): m_previousState(GameState::CURRENT_LEVEL), m_currentState(GameState::CURRENT_LEVEL), m_nextState(GameState::CURRENT_LEVEL) {}
 
@@ -60,6 +61,7 @@ void GameStateManager::UpdateGameLoop() {
 	InputManager& inputMngr = InputManager::GetInstance();
 	PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
 	DebugManager& debugMngr = DebugManager::GetInstance();
+	EventManager& eventMngr = EventManager::GetInstance();
 
 	frameRateMngr.FrameStart();							// Record start of frame
 	renderMngr.FrameStart();							// Clear depth and color
@@ -67,6 +69,7 @@ void GameStateManager::UpdateGameLoop() {
 
 	inputMngr.Update();									// Update input keys
 	gameObjectMngr.Update(dt);							// Update game logic
+	eventMngr.Update(dt);								// Update timed events
 	gameObjectMngr.UpdateStatus();						// Update status of game objects
 	physicsMngr.Integrate(dt);							// Move physics bodies
 	physicsMngr.ResolveCollisions();					// Resolve collisions on physics bodies

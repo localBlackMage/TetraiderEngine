@@ -29,7 +29,6 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void LateUpdate(float dt) {};
 	virtual void Serialize(json j) = 0;
-
 	virtual void HandleEvent(Event* pEvent) {}
 
 	GameObject *pGO;

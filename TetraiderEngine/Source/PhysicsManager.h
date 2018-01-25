@@ -5,6 +5,7 @@
 #include "Shape.h"
 #include "../Source/Math/Collisions.h"
 #include "../Source/Math/Vector3D.h"
+#include "Event.h"
 
 // Forward declaration
 class GameObject;
@@ -12,7 +13,7 @@ enum class GameObjectTag;
 class Body;
 
 struct Contact {
-	Body* m_pBody[2];
+	Body* m_pBodies[2];
 	MTV m_MTV;
 };
 
@@ -44,6 +45,14 @@ private:
 	bool(*RayCastFunctions[ST_Count])(const LineSegment2D&, Body*);
 	void GenerateContact(Body*, Body*, MTV*);
 	std::vector<Contact*> m_pContacts;
+};
+
+class OnCollide : public Event {
+public:
+	OnCollide(): Event(EVENT_OnCollide)  {}
+	~OnCollide() {}
+	GameObject* pGO;
+	MTV mtv;
 };
 
 bool StaticCircleToStaticCircle(Body*, Body*, MTV*); 

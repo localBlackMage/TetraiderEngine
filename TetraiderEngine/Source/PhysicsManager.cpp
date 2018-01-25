@@ -12,7 +12,6 @@ PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_POLYGON][ST_AABB] = StaticPolygonToStaticAABB;
 	CollisionFunctions[ST_AABB][ST_POLYGON] = StaticAABBToStaticPolygon;
 	CollisionFunctions[ST_Circle][ST_POLYGON] = StaticCircleToStaticPolygon;
-
 	RayCastFunctions[ST_AABB] = RayCastToAABB;
 	RayCastFunctions[ST_Circle] = RayCastToCircle;
 	RayCastFunctions[ST_POLYGON] = RayCastToPolygon;
@@ -47,7 +46,16 @@ void PhysicsManager::ResolveCollisions() {
 }
 
 void PhysicsManager::FireEventsToContacts() {
-	//TODO fire events to game objects
+	for (auto contact : m_pContacts) {
+		OnCollide onCollide;
+		onCollide.mtv.normal = contact->m_MTV.normal;
+		onCollide.mtv.penetration = contact->m_MTV.penetration;
+		onCollide.pGO = contact->m_pBodies[0]->pGO;
+		contact->m_pBodies[1]->pGO->HandleEvent(&onCollide);
+
+		onCollide.pGO = contact->m_pBodies[1]->pGO;
+		contact->m_pBodies[0]->pGO->HandleEvent(&onCollide);
+	}
 }
 
 void PhysicsManager::ClearContacts() {
@@ -81,12 +89,10 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 
 void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB, MTV* pMTV) {
 	Contact* pContact = new Contact();
-	pContact->m_pBody[0] = pBodyA;
-	pContact->m_pBody[1] = pBodyB;
+	pContact->m_pBodies[0] = pBodyA;
+	pContact->m_pBodies[1] = pBodyB;
 	pContact->m_MTV.normal = pMTV->normal;
 	pContact->m_MTV.penetration = pMTV->penetration;
-
-	printf("Penetration: %f\n", pMTV->penetration);
 	m_pContacts.push_back(pContact);
 }
 
