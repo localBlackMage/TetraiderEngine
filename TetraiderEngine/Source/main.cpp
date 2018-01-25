@@ -5,9 +5,6 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nShowCmd)
 {
-	bool done = false;
-	double dt = 0.0;
-
 	// TODO: Cleanup
 	GameConfig& gameConfig = GameConfig::GetInstance();
 	gameConfig.LoadConfig("../TetraiderEngine/Assets/Metadata/Config.json");

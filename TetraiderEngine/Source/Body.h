@@ -12,13 +12,13 @@ class Body : public Component {
 public:
 	Body();
 	~Body();
-	virtual void Update(double dt);
+	virtual void Update(float dt);
 	virtual void Serialize(json j);
 	virtual void LateInitialize();
-	virtual void LateUpdate(double dt) {}
+	virtual void LateUpdate(float dt) {}
 	void SetVelocity(const Vector3D& pVel);
 	void SetVelocity(float speed, float angle);
-	void Integrate(double dt);
+	void Integrate(float dt);
 	void AddForce(const Vector3D& force);
 	const Vector3D& GetPosition();
 	const Vector3D& GetPreviousPosition();

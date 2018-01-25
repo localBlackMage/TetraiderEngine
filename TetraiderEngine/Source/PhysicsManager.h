@@ -30,7 +30,7 @@ public:
 		static PhysicsManager instance;
 		return instance;
 	}
-	void Integrate(double dt);
+	void Integrate(float dt);
 	void ResolveCollisions();
 	void AddGameObject(GameObject* pGO);
 	void RemoveGameObject(GameObject* pGO);

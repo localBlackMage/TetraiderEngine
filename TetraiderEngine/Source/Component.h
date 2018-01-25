@@ -29,8 +29,8 @@ public:
 	Component(ComponentType _type) : type(_type) {};
 	virtual ~Component() {};
 	virtual void LateInitialize() {};
-	virtual void Update(double dt) = 0;
-	virtual void LateUpdate(double dt) {};
+	virtual void Update(float dt) = 0;
+	virtual void LateUpdate(float dt) {};
 	virtual void Serialize(json j) = 0;
 	virtual void HandleEvent(Event* pEvent) {}
 

@@ -25,14 +25,8 @@ void LevelManager::Initialize(json j) {
 
 #include <iostream>
 void LevelManager::LoadLevel() {
-	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string s = gameConfig.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
-	json j = OpenJsonFile(s);
-
-	std::string testString = ParseValue(j, std::string("Default"), "Levels", currentLevel, "Name");
-	std::cout << testString << std::endl;
-
-	LoadLevel(j);
+	std::string s = GameConfig::GetInstance().LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
+	LoadLevel(OpenJsonFile(s));
 }
 
 void LevelManager::UnLoadLevel() {

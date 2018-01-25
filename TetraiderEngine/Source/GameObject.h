@@ -23,8 +23,8 @@ public:
 
 	bool operator==(const GameObject& rhs) const;
 
-	void Update(double dt);
-	void LateUpdate(double dt);
+	void Update(float dt);
+	void LateUpdate(float dt);
 	void AddComponent(Component* pComponent);
 	void LateInitialize();
 	void Destroy();

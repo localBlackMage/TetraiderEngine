@@ -12,9 +12,9 @@ Body::Body() :
 
 Body::~Body() {}
 
-void Body::Update(double dt) {}
+void Body::Update(float dt) {}
 
-void Body::Integrate(double dt) {
+void Body::Integrate(float dt) {
 	if (m_isStatic) {
 		DrawDebugShape();
 		return;
