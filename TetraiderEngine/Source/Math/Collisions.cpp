@@ -279,7 +279,7 @@ float GetOverlap(const Projection& projectionA, const Projection& projectionB) {
 			return projectionB.max - projectionA.min;
 	}
 
-	printf("SAT: Projections are not overlapping\n");
+	//printf("SAT: Projections are not overlapping\n");
 	return 0;
 }
 

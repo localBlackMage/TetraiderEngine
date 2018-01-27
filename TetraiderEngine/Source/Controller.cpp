@@ -40,6 +40,7 @@ void Controller::Serialize(json j) {
 void Controller::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollide* pOnCollide = static_cast<OnCollide*>(pEvent);
+		m_pTransform->SetPosition(m_pTransform->GetPosition() + pOnCollide->mtv.normal*pOnCollide->mtv.penetration);
 		//printf("Penetration %f: \n", pOnCollide->mtv.penetration);
 	}
 }

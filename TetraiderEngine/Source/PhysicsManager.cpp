@@ -51,9 +51,15 @@ void PhysicsManager::FireEventsToContacts() {
 		onCollide.mtv.normal = contact->m_MTV.normal;
 		onCollide.mtv.penetration = contact->m_MTV.penetration;
 		onCollide.pGO = contact->m_pBodies[0]->pGO;
+
+		Vector3D directionOfCenters = contact->m_pBodies[1]->GetPosition() - contact->m_pBodies[0]->GetPosition();
+		if (Vector3D::Dot(directionOfCenters, contact->m_MTV.normal) < 0)
+			onCollide.mtv.normal = -1 * onCollide.mtv.normal;
+
 		contact->m_pBodies[1]->pGO->HandleEvent(&onCollide);
 
 		onCollide.pGO = contact->m_pBodies[1]->pGO;
+		onCollide.mtv.normal = -1 * onCollide.mtv.normal;
 		contact->m_pBodies[0]->pGO->HandleEvent(&onCollide);
 	}
 }
