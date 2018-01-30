@@ -16,17 +16,9 @@ namespace Tetraider {
 
 	double GetFrameTime();
 
-	////! int Initialize(AcryProps props)
-	///*!
-	//\param props AcryProps configuration struct to initialize the game engine with
-	//\return Error code: 0 - everything went well, non-zero - something went wrong
-	//*/
-	//int Initialize(AcryProps props);
-
 	//! double FrameStart()
 	/*!
 	Starts the game frame. Calls various start and update methods on managers.
-	\return Delta Time - time elapsed over the duration of the last frame
 	*/
 	void FrameStart();
 

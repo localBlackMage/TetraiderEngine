@@ -5,6 +5,8 @@
 
 #include <string>
 
+// Macro trick to make message names enums
+// from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,
 typedef enum
 {
@@ -28,22 +30,29 @@ static const char* EventNameText[] =
 };
 #undef REGISTER_EVENT_NAME
 
+// Abstract struct, data objects should inherit from this
+struct EventData {};
+
 class Event
 {
 protected:
-	double m_time;
-	EventType m_type;
-	// Payload
-	// Message specific data
+	double m_time;		// Time left until event is broadcast to subscribers
+	EventType m_type;	// Type of event
+	EventData* m_data;	// Data for event, if any
 public:
 	Event(EventType type, double time = 0.0);
+	Event(EventType type, EventData* eventData, double time = 0.0);
 	virtual ~Event();
 
-	double Time() const;
-	EventType Type() const;
-	void DecrementTime(double amt);
+	double Time() const { return m_time; }
+	EventType Type() const { return m_type; }
+	EventData* Data() const { return m_data; }
 
-	static EventType GetEventTypeFromTitle(std::string eventTitle);
+	void DecrementTime(double amt) { m_time -= amt; }
+
+
+
+	//static EventType GetEventTypeFromTitle(std::string eventTitle);
 };
 
 #endif
