@@ -5,13 +5,15 @@
 #include <vector>
 #include "ComponentFactory.h"
 #include "RenderManager.h"
+#include "Subscriber.h"
 
 // Forward declarations
 class GameObject;
 class Component;
+class Event;
 enum class GameObjectTag;
 
-class GameObjectManager
+class GameObjectManager: public Subscriber
 {
 private:
 	unsigned int m_currentId;
@@ -30,6 +32,7 @@ private:
 	void AddGameObjectsFromQueueToMainVector();
 	void DestroyAllGameObjects();
 	void DestroyGameObjects();
+	void HandleEvent(Event *pEvent);
 
 public:
 	GameObjectManager(const GameObjectManager &) = delete;
@@ -46,6 +49,7 @@ public:
 	void RenderGameObjects();
 
 	GameObject* CreateGameObject(std::string name);
+	GameObjectTag GameObjectManager::FindTagWithString(std::string tag);
 	void UpdateStatus();
 	// Component* AddComponentToGameObject(GameObject* pGO, json j);
 	GameObject* FindObjectWithTag(GameObjectTag tag);

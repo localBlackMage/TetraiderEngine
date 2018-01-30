@@ -9,8 +9,7 @@
 #include <iostream>
 
 Controller::Controller() :
-	Component(ComponentType::Controller),
-	m_speed (0.0f)
+	Agent(ComponentType::Controller)
 {
 }
 
@@ -19,58 +18,33 @@ Controller::~Controller() {}
 void Controller::Update(float dt) {
 	InputManager& inputMngr = InputManager::GetInstance();
 
-	Vector3D posOffset;
+	Vector3D moveDir;
 
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_D))
-		posOffset.x += m_speed;
+		moveDir.x += 1;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_A))
-		posOffset.x -= m_speed;
+		moveDir.x -= 1;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_W))
-		posOffset.y += m_speed;
+		moveDir.y += 1;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_S))
-		posOffset.y -= m_speed;
+		moveDir.y -= 1;
 
-	m_pBody->SetVelocity(posOffset);
+	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_Q))
+		AddVelocity(Vector3D(-750, -750, 0));
+
+	moveDir.Normalize();
+	m_targetVelocity = moveDir*m_speed;
+	Agent::Update(dt);
 }
 
 void Controller::Serialize(json j) {
-	m_speed = ParseFloat(j, "speed");
+	Agent::Serialize(j["AgentData"]);
 }
 
 void Controller::HandleEvent(Event* pEvent) {
-	if (pEvent->Type() == EventType::EVENT_OnCollide) {
-		OnCollide* pOnCollide = static_cast<OnCollide*>(pEvent);
-		m_pTransform->SetPosition(m_pTransform->GetPosition() + pOnCollide->mtv.normal*pOnCollide->mtv.penetration);
-		//printf("Penetration %f: \n", pOnCollide->mtv.penetration);
-	}
+	Agent::HandleEvent(pEvent);
 }
 
 void Controller::LateInitialize() {
-	if (!m_pTransform) {
-		if (pGO)
-			m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
-		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pTransform) {
-			printf("No Transform component found. Controller component failed to operate.\n");
-			return;
-		}
-	}
-
-	if (!m_pBody) {
-		if (pGO)
-			m_pBody = static_cast<Body*>(pGO->GetComponent(ComponentType::Body));
-		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pBody) {
-			printf("No Body component found. Controller component failed to operate.\n");
-			return;
-		}
-	}
+	Agent::LateInitialize();
 }

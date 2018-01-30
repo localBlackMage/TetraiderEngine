@@ -2,6 +2,7 @@
 #define LEVEL_MANAGER_H
 
 #include "JsonReader.h"
+#include "Event.h"
 
 using json = nlohmann::json;
 
@@ -34,6 +35,12 @@ public:
 	void NextLevel();
 	void RestartGame();
 	bool IsLastLevel();
+};
+
+class OnLevelInitialized : public Event {
+public:
+	OnLevelInitialized() : Event(EVENT_OnLevelInitialized) {}
+	~OnLevelInitialized() {}
 };
 
 #endif

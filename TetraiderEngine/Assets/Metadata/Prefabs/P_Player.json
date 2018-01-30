@@ -44,7 +44,10 @@
     },
 	{
 		"Component": "Controller",
-		"speed": 100
+		"AgentData": {
+			"speed": 200,
+			"acceleration": 10
+		}
 	},
 	{
 		"Component": "Animation",

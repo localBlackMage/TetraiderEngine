@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\CamFollow.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\Controller.cpp" />
     <ClCompile Include="Source\DebugLineMesh.cpp" />
@@ -39,6 +41,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Math\Collisions.cpp" />
     <ClCompile Include="Source\Math\LineSegment2D.cpp" />
+    <ClCompile Include="Source\Math\MathFunctions.cpp" />
     <ClCompile Include="Source\Math\Matrix2x2.cpp" />
     <ClCompile Include="Source\Math\Matrix3x3.cpp" />
     <ClCompile Include="Source\Math\Matrix4x4.cpp" />
@@ -56,9 +59,11 @@
     <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\CamFollow.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentFactory.h" />
     <ClInclude Include="Source\Controller.h" />
@@ -80,6 +85,7 @@
     <ClInclude Include="Source\Math\Collisions.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
+    <ClInclude Include="Source\Math\MathFunctions.h" />
     <ClInclude Include="Source\Math\Matrix2x2.h" />
     <ClInclude Include="Source\Math\Matrix3x3.h" />
     <ClInclude Include="Source\Math\Matrix4x4.h" />

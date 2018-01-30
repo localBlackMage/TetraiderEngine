@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include "GameObjectManager.h"
 #include "GameConfig.h"
+#include "EventManager.h"
 
 #include "Transform.h"
 #include "Camera.h"
@@ -95,5 +96,7 @@ void LevelManager::LoadLevel(json j) {
 		}
 	}
 
-	gameObjectManager.UpdateStatus();
+	EventManager& eventMngr = EventManager::GetInstance();
+	OnLevelInitialized onLevelInitialized;
+	eventMngr.BroadcastEvent(&onLevelInitialized);
 }

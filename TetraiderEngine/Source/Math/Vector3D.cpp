@@ -189,6 +189,8 @@ float Vector3D::Length() const
 
 void Vector3D::Normalize()
 {
+	if (x == 0 && y == 0 && z == 0)
+		return;
 	Div(Length());
 }
 

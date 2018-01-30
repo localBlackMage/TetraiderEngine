@@ -5,6 +5,7 @@
 #include "Controller.h"
 #include "Body.h"
 #include "Camera.h"
+#include "CamFollow.h"
 
 ComponentFactory::ComponentFactory() { }
 
@@ -15,6 +16,7 @@ Component* ComponentFactory::CreateComponent(std::string component) {
 	else if (component == "Controller") return new Controller();
 	else if (component == "Body") return new Body();
 	else if (component == "Camera") return new Camera();
+	else if (component == "CamFollow") return new CamFollow();
 
 	return 0;
 }

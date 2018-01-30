@@ -144,11 +144,21 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 }*/
 
 void GameObjectManager::SetGameObjectTag(std::string tag, GameObject* pGO) {
+	pGO->m_tag = FindTagWithString(tag);
+}
+
+GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 	// TODO: Convert Tags to something better, try the trick mentioned by Prof. Rabin
 	if (tag == "Player")
-		pGO->m_tag = GameObjectTag::Player;
+		return GameObjectTag::Player;
 	else if (tag == "Camera")
-		pGO->m_tag = GameObjectTag::Camera;
+		return GameObjectTag::Camera;
 	else
-		pGO->m_tag = GameObjectTag::NONE;
+		return GameObjectTag::NONE;
+}
+
+void GameObjectManager::HandleEvent(Event *pEvent) {
+	if (pEvent->Type() == EVENT_OnLevelInitialized) {
+		UpdateStatus();
+	}
 }

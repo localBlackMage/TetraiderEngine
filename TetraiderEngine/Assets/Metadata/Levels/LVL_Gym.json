@@ -4,7 +4,7 @@
       "prefab": "P_Camera"
     },
     {
-      "prefab": "p_Test",
+      "prefab": "P_Player",
       "position": {
         "x": 0,
         "y": 0,

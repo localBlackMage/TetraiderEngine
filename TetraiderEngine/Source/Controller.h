@@ -2,12 +2,9 @@
 #define CONTROLLER_H
 
 #include "Component.h"
+#include "Agent.h"
 
-// Forward declaration
-class Transform;
-class Body;
-
-class Controller : public Component {
+class Controller : public Agent {
 public:
 	Controller();
 	~Controller();
@@ -15,10 +12,7 @@ public:
 	virtual void LateInitialize();
 	virtual void Serialize(json j);
 	virtual void HandleEvent(Event* pEvent);
-private:
-	float m_speed;
-	Transform* m_pTransform;
-	Body* m_pBody;
+protected:
 };
 
 #endif

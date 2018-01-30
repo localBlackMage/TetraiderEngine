@@ -4,6 +4,7 @@
 
 Subscriber::Subscriber()
 {
+	_AddSubscriberToTracker();
 }
 
 Subscriber::~Subscriber()

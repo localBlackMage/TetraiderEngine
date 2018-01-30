@@ -15,6 +15,7 @@ enum class ComponentType {
 	Controller,
 	Body,
 	Camera,
+	CamFollow,
 
 	NONE
 };

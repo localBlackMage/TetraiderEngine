@@ -10,6 +10,7 @@ typedef enum
 {
 	#include "EventNames.h"
 	EVENT_OnCollide,
+	EVENT_OnLevelInitialized,
 	EVENT_NUM
 } EventType;
 #undef REGISTER_EVENT_NAME
