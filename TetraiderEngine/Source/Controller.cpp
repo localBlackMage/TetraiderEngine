@@ -4,6 +4,7 @@
 #include "InputManager.h"
 #include "PhysicsManager.h"
 #include "DebugManager.h"
+#include "Health.h"
 #include "../Source/Math/LineSegment2D.h"
 
 #include <iostream>
@@ -29,8 +30,11 @@ void Controller::Update(float dt) {
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_S))
 		moveDir.y -= 1;
 
-	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_Q))
+	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_Q)) {
 		AddVelocity(Vector3D(-750, -750, 0));
+		Health* pHealth = static_cast<Health*>(pGO->GetComponent(ComponentType::Health));
+		pHealth->TakeDamage(10);
+	}
 
 	moveDir.Normalize();
 	m_targetVelocity = moveDir*m_speed;

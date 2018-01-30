@@ -16,6 +16,8 @@ enum class ComponentType {
 	Body,
 	Camera,
 	CamFollow,
+	Health,
+	FlashOnTakeDamage,
 
 	NONE
 };

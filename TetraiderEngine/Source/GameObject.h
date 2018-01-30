@@ -11,6 +11,7 @@ enum class ComponentType;
 enum class GameObjectTag {
 	Player,
 	Camera,
+	Enemy,
 
 	NONE
 };
