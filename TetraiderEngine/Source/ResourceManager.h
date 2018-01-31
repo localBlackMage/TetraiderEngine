@@ -52,6 +52,7 @@ public:
 		return instance;
 	}
 
+	bool Init();
 	DebugLineMesh* GetDebugLineMesh();
 	Mesh * LoadMesh(std::string meshName);
 	Mesh * GetMesh(std::string meshName);

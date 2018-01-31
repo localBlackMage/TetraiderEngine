@@ -45,6 +45,10 @@ void Transform::Serialize(json j) {
 	m_pivotOffset = ParseVector3D(j, "pivotOffset");
 }
 
+void Transform::HandleEvent(Event * p_event)
+{
+}
+
 #pragma region Translation
 Vector3D Transform::GetPosition() const
 {

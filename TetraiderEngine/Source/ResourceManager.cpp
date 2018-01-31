@@ -5,25 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
 
-ResourceManager::ResourceManager()
-{
-	Mesh * quad = LoadMesh("quad");
-
-	quad->AddTriangle(
-		-0.5f, -0.5f, 0.0f, .0f, 1.f, 0xFFFFFFFF,
-		0.5f, -0.5f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
-		-0.5f, 0.5f, 0.0f, .0f, .0f, 0xFFFFFFFF
-	);
-	quad->AddTriangle(
-		0.5f, -0.5f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
-		0.5f, 0.5f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
-		-0.5f, 0.5f, 0.0f, .0f, .0f, 0xFFFFFFFF
-	);
-
-	quad->FinishMesh();
-
-	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
-}
+ResourceManager::ResourceManager(){}
 
 ResourceManager::~ResourceManager() 
 {
@@ -114,6 +96,27 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 	}
 }
 
+
+bool ResourceManager::Init()
+{
+	Mesh * quad = LoadMesh("quad");
+
+	quad->AddTriangle(
+		-0.5f, -0.5f, 0.0f, .0f, 1.f, 0xFFFFFFFF,
+		0.5f, -0.5f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
+		-0.5f, 0.5f, 0.0f, .0f, .0f, 0xFFFFFFFF
+	);
+	quad->AddTriangle(
+		0.5f, -0.5f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
+		0.5f, 0.5f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
+		-0.5f, 0.5f, 0.0f, .0f, .0f, 0xFFFFFFFF
+	);
+
+	quad->FinishMesh();
+
+	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
+	return true;
+}
 
 DebugLineMesh * ResourceManager::GetDebugLineMesh()
 {

@@ -1,4 +1,6 @@
 #include "TetraiderAPI.h"
+#include "GameConfig.h"
+#include "GameStateManager.h"
 //#include "WindowManager.h"
 #include "InputManager.h"
 #include "FrameRateManager.h"
@@ -15,6 +17,8 @@
 #include "JsonReader.h"
 #include "Mesh.h"
 
+static GameConfig& gameConfig = GameConfig::GetInstance();
+static GameStateManager& gameStateMngr = GameStateManager::GetInstance();
 static EventManager& eventMngr = EventManager::GetInstance();
 static FrameRateManager& frameRateMngr = FrameRateManager::GetInstance();
 //static WindowManager& windowMngr = WindowManager::GetInstance();
@@ -30,9 +34,20 @@ static DebugManager& debugMngr = DebugManager::GetInstance();
 
 namespace Tetraider {
 
-	int Initialize(std::string configFileName)
+	int Initialize(std::string configFile)
 	{
+		
+		gameConfig.LoadConfig(configFile);
+		renderMngr.Init();
+		renderMngr.LoadShaders();
+		resourceMngr.Init();
+
 		return 0;
+	}
+
+	void StartGameLoop()
+	{
+		gameStateMngr.Update(); // Start game loop
 	}
 
 	double GetFrameTime()

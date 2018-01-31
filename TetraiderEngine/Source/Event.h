@@ -11,12 +11,6 @@
 typedef enum
 {
 	#include "EventNames.h"
-	EVENT_OnCollide,
-	EVENT_OnLevelInitialized,
-	EVENT_OnEnemyHealthZero,
-	EVENT_OnPlayerHealthZero,
-	EVENT_OnTakeDamage,
-	EVENT_OnPlayerHeal,
 
 	EVENT_NUM
 } EventType;
@@ -52,7 +46,7 @@ public:
 
 
 
-	//static EventType GetEventTypeFromTitle(std::string eventTitle);
+	static EventType GetEventTypeFromTitle(std::string eventTitle);
 };
 
 #endif

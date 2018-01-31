@@ -14,6 +14,8 @@ namespace Tetraider {
 	*/
 	int Initialize(std::string configFileName);
 
+	void StartGameLoop();
+
 	double GetFrameTime();
 
 	//! double FrameStart()
