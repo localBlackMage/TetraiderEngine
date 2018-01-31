@@ -1,5 +1,4 @@
 #include "GameStateManager.h"
-#include "LevelManager.h"
 #include "TetraiderAPI.h"
 
 GameStateManager::GameStateManager() : 
@@ -11,10 +10,8 @@ GameStateManager::GameStateManager() :
 GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
-	LevelManager& levelMngr = LevelManager::GetInstance();
-	
 	while (m_currentState != GameState::QUIT) {
-		levelMngr.LoadLevel();
+		T_LEVELS.LoadLevel();
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;

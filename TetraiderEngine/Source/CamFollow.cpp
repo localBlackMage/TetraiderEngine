@@ -1,7 +1,6 @@
 #include "CamFollow.h"
 #include "Transform.h"
-#include "GameObjectManager.h"
-#include "../Source/Math/MathFunctions.h"
+#include "Math/MathFunctions.h"
 
 CamFollow::CamFollow() :
 	Component(ComponentType::CamFollow),
@@ -43,7 +42,6 @@ void CamFollow::LateUpdate(float dt) {
 
 void CamFollow::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
-		GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
-		m_pTarget = gameObjectMngr.FindObjectWithTag(gameObjectMngr.FindTagWithString(m_defaultTargetTag));
+		m_pTarget = T_GAME_OBJECTS.FindObjectWithTag(T_GAME_OBJECTS.FindTagWithString(m_defaultTargetTag));
 	}
 }

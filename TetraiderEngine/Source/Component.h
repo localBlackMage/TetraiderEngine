@@ -4,6 +4,7 @@
 #include "JsonReader.h"
 #include "GameObject.h"
 #include "Subscriber.h"
+#include "TetraiderAPI.h"
 
 using json = nlohmann::json;
 using namespace JsonReader;

@@ -36,21 +36,14 @@ private:
 	std::map<std::string, Mesh*> m_meshes;
 	std::map<std::string, SurfaceTextureBuffer * > m_textures;
 
-	ResourceManager();
-	~ResourceManager();
-
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
 	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir);
 	SurfaceTextureBuffer * _LoadTexture(std::string textureName);
 public:
+	ResourceManager();
+	~ResourceManager();
 	ResourceManager(const ResourceManager &) = delete;
 	void operator=(const ResourceManager &) = delete;
-
-	static ResourceManager& GetInstance()
-	{
-		static ResourceManager instance;
-		return instance;
-	}
 
 	bool Init();
 	DebugLineMesh* GetDebugLineMesh();

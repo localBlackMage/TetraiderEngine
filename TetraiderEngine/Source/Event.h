@@ -5,8 +5,7 @@
 
 #include <string>
 
-// Macro trick to make message names enums
-// from the file EventNames.h
+// Macro trick to make Event names enums from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,
 typedef enum
 {
@@ -40,7 +39,9 @@ public:
 
 	double Time() const { return m_time; }
 	EventType Type() const { return m_type; }
-	EventData* Data() const { return m_data; }
+
+	template <typename T>
+	T* Data() const { return static_cast<T*>(m_data); }
 
 	void DecrementTime(double amt) { m_time -= amt; }
 

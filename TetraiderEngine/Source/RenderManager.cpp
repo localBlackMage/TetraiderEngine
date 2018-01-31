@@ -7,8 +7,7 @@
 #include "JsonReader.h"
 #include "DebugLineMesh.h"
 #include "Math\Matrix4x4.h"
-#include "GameConfig.h"
-#include "ResourceManager.h"
+#include "TetraiderAPI.h"
 
 #include "Transform.h"
 #include "Camera.h"
@@ -161,7 +160,7 @@ void RenderManager::_SetUpDebug(const GameObject& camera)
 	_SetUpCamera(camera);
 
 	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
-	glBindBuffer(GL_ARRAY_BUFFER, ResourceManager::GetInstance().GetDebugLineMesh()->GetVertexBuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, T_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
 	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 }
 
@@ -178,22 +177,6 @@ void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color
 		_RenderLine(color, pos, rot, scale);
 		break;
 	}
-
-
-	//glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
-	//glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
-	//glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
-	//
-	//Vector3D color = pSpriteComp->GetColor();
-	//glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
-	//
-	//
-	//// select the texture to use
-	//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
-	//
-	//// draw the mesh
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());
-	//glDrawElements(GL_TRIANGLES, 3 * pSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
@@ -307,6 +290,23 @@ void RenderManager::Resize(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void RenderManager::SetWindowWidth(int width)
+{
+	m_width = width;
+	glViewport(0, 0, width, m_height);
+}
+
+void RenderManager::SetWindowHeight(int height)
+{
+	m_height = height;
+	glViewport(0, 0, m_width, height);
+}
+
+void RenderManager::SetWindowTitle(std::string title)
+{
+	// TODO: FINISH THIS
+}
+
 float RenderManager::GetAspectRatio() const
 {
 	return (float)m_width / (float)m_height;
@@ -324,8 +324,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 
 void RenderManager::LoadShaders()
 {
-	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string shaderDir = gameConfig.ShadersDir();
+	std::string shaderDir = T_GAME_CONFIG.ShadersDir();
 
 	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
 	LoadShaderProgram(shaderDir, "defaultShader.json"); // TODO: Move this

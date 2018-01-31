@@ -21,18 +21,13 @@ private:
 	float m_frameTime;
 	float m_totalElapsedTime;
 
-	FrameRateManager(unsigned int maxFrameRate);
-	~FrameRateManager();
 public:
+	FrameRateManager(unsigned int maxFrameRate = 60);
+	~FrameRateManager();
 	FrameRateManager(const FrameRateManager &) = delete;
 	void operator=(const FrameRateManager &) = delete;
 
-	static FrameRateManager& GetInstance(unsigned int maxFrameRate = 60)
-	{
-		static FrameRateManager instance(maxFrameRate);
-		return instance;
-	}
-
+	void SetMaxFrameRate(unsigned int maxFrameRate = 60);
 	void FrameStart();
 	void FrameEnd();
 	void ResetElapsedTime();

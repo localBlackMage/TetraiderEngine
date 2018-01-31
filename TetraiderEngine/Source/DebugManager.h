@@ -36,23 +36,16 @@ enum class DebugColor {
 
 class DebugManager {
 private:
-	DebugManager();
-	~DebugManager();
-
 	Vector3D red, blue, green, grey, yellow, cyan, white, black;
 	std::queue<DebugCommand*> m_debugCommands;
 	bool m_isDebugModeEnabled;
 
 	Vector3D _GetColor(DebugColor color);
 public:
+	DebugManager();
+	~DebugManager();
 	DebugManager(const DebugManager &) = delete;
 	void operator=(const DebugManager &) = delete;
-
-	static DebugManager& GetInstance()
-	{
-		static DebugManager instance;
-		return instance;
-	}
 
 	void SetDebugMode(bool isDebugEnabled) { m_isDebugModeEnabled = isDebugEnabled; };
 

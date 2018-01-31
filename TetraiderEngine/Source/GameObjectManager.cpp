@@ -1,17 +1,15 @@
 #include "GameObjectManager.h"
-#include "PhysicsManager.h"
 #include "GameObject.h"
 #include "Component.h"
-#include "GameConfig.h"
 #include <fstream>
 #include <iostream>
+#include "TetraiderAPI.h"
 
 using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
 
 GameObjectManager::GameObjectManager() :
-	m_currentId(0),
-	renderMngr(RenderManager::GetInstance())
+	m_currentId(0)
 {}
 
 GameObjectManager::~GameObjectManager() {
@@ -43,7 +41,7 @@ void GameObjectManager::RenderGameObjects()
 {
 	for (GameObject* GO : mGameObjects) {
 		if (GO->m_isActive)
-			renderMngr.RenderGameObject(*m_pCamera, *GO);
+			T_RENDERER.RenderGameObject(*m_pCamera, *GO);
 	}
 }
 
@@ -54,8 +52,7 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 	/*if (pGO->GetComponent(CT_UI_ELEMENT))
 		mainManager.pUI_Manager->AddGameObject(pGO);*/
 	if (pGO->GetComponent(ComponentType::Body)) {
-		PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
-		physicsMngr.AddGameObject(pGO);
+		T_PHYSICS.AddGameObject(pGO);
 	}
 }
 
@@ -65,8 +62,7 @@ void GameObjectManager::DestroyGameObjects() {
 			// TODO
 			// Unsubscribe from events
 			// UI manager list
-			PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
-			physicsMngr.RemoveGameObject(*it);
+			T_PHYSICS.RemoveGameObject(*it);
 			delete (*it);
 			it = mGameObjects.erase(it);
 		}
@@ -111,8 +107,7 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 }
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string s = gameConfig.PrefabsDir() + name + ".json";
+	std::string s = T_GAME_CONFIG.PrefabsDir() + name + ".json";
 	json j = OpenJsonFile(s);
 
 	GameObject *pGameObject = new GameObject(++m_currentId);

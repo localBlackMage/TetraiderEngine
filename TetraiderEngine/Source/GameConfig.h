@@ -9,9 +9,6 @@ using json = nlohmann::json;
 class GameConfig
 {
 private:
-	GameConfig();
-	~GameConfig();
-
 	std::string m_texturesDir;
 	std::string m_levelFilesDir;
 	std::string m_prefabsDir;
@@ -19,14 +16,10 @@ private:
 	std::string m_shadersDir;
 
 public:
+	GameConfig();
+	~GameConfig();
 	GameConfig(const GameConfig &) = delete;
 	void operator=(const GameConfig &) = delete;
-
-	static GameConfig& GetInstance()
-	{
-		static GameConfig instance;
-		return instance;
-	}
 
 	void LoadConfig(std::string);
 

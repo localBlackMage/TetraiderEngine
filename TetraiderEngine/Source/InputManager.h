@@ -32,18 +32,11 @@ private:
 	int mousePosX, mousePosY;
 	int mousePosRelX, mousePosRelY;
 
+public:
 	InputManager();
 	~InputManager();
-
-public:
 	InputManager(const InputManager &) = delete;
 	void operator=(const InputManager &) = delete;
-
-	static InputManager& GetInstance()
-	{
-		static InputManager instance;
-		return instance;
-	}
 
 	void Update();
 	// Keyboard Input

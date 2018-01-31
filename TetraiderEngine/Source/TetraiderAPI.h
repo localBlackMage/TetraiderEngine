@@ -3,8 +3,40 @@
 #define TETRAIDER_API_H
 
 #include <string>
+#include "GameConfig.h"
+#include "GameStateManager.h"
+//#include "WindowManager.h"
+#include "InputManager.h"
+#include "FrameRateManager.h"
+#include "RenderManager.h"
+#include "ResourceManager.h"
+#include "GameObjectManager.h"
+//#include "GameObjectFactory.h"
+#include "PhysicsManager.h"
+#include "EventManager.h"
+#include "LevelManager.h"
+#include "DebugManager.h"
+//#include "json.hpp"
+#include <iostream>
+#include "JsonReader.h"
+#include "Mesh.h"
 
-class Mesh;
+#include "Singleton.h"
+
+#define T_GAME_CONFIG Singleton<GameConfig>::GetInstance()
+#define T_GAME_STATE Singleton<GameStateManager>::GetInstance()
+#define T_EVENTS Singleton<EventManager>::GetInstance()
+#define T_FRAMERATE Singleton<FrameRateManager>::GetInstance()
+//#define T_WINDOW Singleton<WindowManager>::GetInstance()
+#define T_RENDERER Singleton<RenderManager>::GetInstance()
+#define T_INPUT Singleton<InputManager>::GetInstance()
+#define T_RESOURCES Singleton<ResourceManager>::GetInstance()
+//#define T_GO_FACTORY Singleton<GameObjectFactory>::GetInstance()
+#define T_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
+#define T_PHYSICS Singleton<PhysicsManager>::GetInstance()
+#define T_LEVELS Singleton<LevelManager>::GetInstance()
+#define T_DEBUG Singleton<DebugManager>::GetInstance()
+
 
 namespace Tetraider {
 	//! int Initialize(std::string configFileName)
@@ -16,7 +48,7 @@ namespace Tetraider {
 
 	void StartGameLoop();
 
-	double GetFrameTime();
+	float GetFrameTime();
 
 	//! double FrameStart()
 	/*!
@@ -29,7 +61,7 @@ namespace Tetraider {
 	Calls various update methods on managers
 	\param deltaTime - Duration of the previous frame
 	*/
-	void Update(double deltaTime);
+	void Update(float deltaTime);
 
 	//! void FrameEnd()
 	/*!

@@ -1,7 +1,7 @@
 #include "ResourceManager.h"
 #include <iostream>
 #include "JsonReader.h"
-#include "GameConfig.h"
+#include "TetraiderAPI.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
 
@@ -66,9 +66,8 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 		return stbuff;
 
 	STB_Surface * surface = new STB_Surface();
-	GameConfig& gameConfig = GameConfig::GetInstance();
 	if (surface) {
-		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, gameConfig.TexturesDir());
+		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, T_GAME_CONFIG.TexturesDir());
 
 		surface->hasAlpha = info.hasAlpha;
 		surface->data = stbi_load(info.filename.c_str(),

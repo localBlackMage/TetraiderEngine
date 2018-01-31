@@ -1,5 +1,4 @@
 #include "Health.h"
-#include "EventManager.h"
 
 Health::Health(): Component(ComponentType::Health) {}
 Health::~Health() {}
@@ -23,14 +22,13 @@ void Health::TakeDamage(int damage) {
 
 	if (m_currentHealth <= 0) {
 		m_currentHealth = 0;
-		EventManager& eventMngr = EventManager::GetInstance();
 		if (pGO->m_tag == GameObjectTag::Player) {
 			OnPlayerHealthZero onPlayerHealthZero;
-			eventMngr.BroadcastEventToSubscribers(&onPlayerHealthZero);
+			T_EVENTS.BroadcastEventToSubscribers(&onPlayerHealthZero);
 		}
 		else if (pGO->m_tag == GameObjectTag::Enemy) {
 			OnEnemyHealthZero onEnemyHealthZero;
-			eventMngr.BroadcastEventToSubscribers(&onEnemyHealthZero);
+			T_EVENTS.BroadcastEventToSubscribers(&onEnemyHealthZero);
 		}
 	}
 
@@ -47,11 +45,10 @@ void Health::Heal(int heal) {
 	}
 
 	if (pGO->m_tag == GameObjectTag::Player) {
-		EventManager& eventMngr = EventManager::GetInstance();
 		OnPlayerHeal onPlayerHeal;
 		onPlayerHeal.currentHealth;
 		onPlayerHeal.maxHealth;
-		eventMngr.BroadcastEventToSubscribers(&onPlayerHeal);
+		T_EVENTS.BroadcastEventToSubscribers(&onPlayerHeal);
 	}
 }
 

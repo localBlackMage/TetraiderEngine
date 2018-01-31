@@ -1,7 +1,5 @@
 #include "GameConfig.h"
-#include "LevelManager.h"
-#include "DebugManager.h"
-#include "RenderManager.h"
+#include "TetraiderAPI.h"
 
 using namespace JsonReader;
 
@@ -23,12 +21,10 @@ void GameConfig::LoadConfig(std::string s) {
 
 	// Set level parameters
 	json levelSettings = j["LEVEL_SETTINGS"];
-	LevelManager& levelManager = LevelManager::GetInstance();
-	levelManager.Initialize(levelSettings);
+	T_LEVELS.Initialize(levelSettings);
 
 	// Set debug parameters
-	DebugManager& debugManager = DebugManager::GetInstance();
-	debugManager.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
+	T_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
 
-	RenderManager::GetInstance().SetDebugShaderName(ParseString(gameSettings, "debugShader"));
+	T_RENDERER.SetDebugShaderName(ParseString(gameSettings, "debugShader"));
 }

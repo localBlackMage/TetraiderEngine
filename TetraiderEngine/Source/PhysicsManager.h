@@ -17,19 +17,14 @@ struct Contact {
 	MTV m_MTV;
 };
 
-class PhysicsManager {
-private:
+class PhysicsManager 
+{
+public:
 	PhysicsManager();
 	~PhysicsManager();
-
-public:
 	PhysicsManager(const PhysicsManager &) = delete;
 	void operator=(const PhysicsManager &) = delete;
 
-	static PhysicsManager& GetInstance() {
-		static PhysicsManager instance;
-		return instance;
-	}
 	void Integrate(float dt);
 	void ResolveCollisions();
 	void AddGameObject(GameObject* pGO);
@@ -49,7 +44,7 @@ private:
 
 class OnCollide : public Event {
 public:
-	OnCollide(): Event(EVENT_OnCollide)  {}
+	OnCollide(): Event(EventType::EVENT_OnCollide)  {}
 	~OnCollide() {}
 	GameObject* pGO;
 	MTV mtv;

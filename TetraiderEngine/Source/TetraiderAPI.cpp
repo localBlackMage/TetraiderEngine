@@ -1,98 +1,66 @@
 #include "TetraiderAPI.h"
-#include "GameConfig.h"
-#include "GameStateManager.h"
-//#include "WindowManager.h"
-#include "InputManager.h"
-#include "FrameRateManager.h"
-#include "RenderManager.h"
-#include "ResourceManager.h"
-#include "GameObjectManager.h"
-//#include "GameObjectFactory.h"
-#include "PhysicsManager.h"
-#include "EventManager.h"
-#include "LevelManager.h"
-#include "DebugManager.h"
-//#include "json.hpp"
-#include <iostream>
-#include "JsonReader.h"
-#include "Mesh.h"
-
-static GameConfig& gameConfig = GameConfig::GetInstance();
-static GameStateManager& gameStateMngr = GameStateManager::GetInstance();
-static EventManager& eventMngr = EventManager::GetInstance();
-static FrameRateManager& frameRateMngr = FrameRateManager::GetInstance();
-//static WindowManager& windowMngr = WindowManager::GetInstance();
-static RenderManager& renderMngr = RenderManager::GetInstance();
-static InputManager& inputMngr = InputManager::GetInstance();
-static ResourceManager& resourceMngr = ResourceManager::GetInstance();
-//static GameObjectFactory& gameObjectFactory = GameObjectFactory::GetInstance();
-static GameObjectManager& gameObjectMngr = GameObjectManager::GetInstance();
-static PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
-static LevelManager& levelMngr = LevelManager::GetInstance();
-static DebugManager& debugMngr = DebugManager::GetInstance();
-
 
 namespace Tetraider {
 
 	int Initialize(std::string configFile)
 	{
 		
-		gameConfig.LoadConfig(configFile);
-		renderMngr.Init();
-		renderMngr.LoadShaders();
-		resourceMngr.Init();
+		T_GAME_CONFIG.LoadConfig(configFile);
+		T_RENDERER.Init();
+		T_RENDERER.LoadShaders();
+		T_RESOURCES.Init();
 
 		return 0;
 	}
 
 	void StartGameLoop()
 	{
-		gameStateMngr.Update(); // Start game loop
+		T_GAME_STATE.Update(); // Start game loop
 	}
 
-	double GetFrameTime()
+	float GetFrameTime()
 	{
-		return frameRateMngr.GetFrameTime();;
+		return T_FRAMERATE.GetFrameTime();;
 	}
 
 	void FrameStart()
 	{
-		frameRateMngr.FrameStart();
-		renderMngr.FrameStart();
+		T_FRAMERATE.FrameStart();
+		T_RENDERER.FrameStart();
 	}
 
-	void Update(double deltaTime)
+	void Update(float deltaTime)
 	{
-		inputMngr.Update();									// Update input keys
-		eventMngr.Update(deltaTime);
-		gameObjectMngr.Update(deltaTime);					// Update game logic
-		gameObjectMngr.UpdateStatus();						// Update status of game objects
-		physicsMngr.Integrate(deltaTime);					// Move physics bodies
-		physicsMngr.ResolveCollisions();					// Resolve collisions on physics bodies
-		gameObjectMngr.LateUpdate(deltaTime);				// Update game logic that occurs after physics
-		gameObjectMngr.RenderGameObjects();					// Render all game objects
-		debugMngr.RenderDebugCommands(*gameObjectMngr.GetActiveCamera());
+		T_INPUT.Update();									// Update input keys
+		T_EVENTS.Update(deltaTime);							// Pump the event manager
+		T_GAME_OBJECTS.Update(deltaTime);					// Update game logic
+		T_GAME_OBJECTS.UpdateStatus();						// Update status of game objects
+		T_PHYSICS.Integrate(deltaTime);						// Move physics bodies
+		T_PHYSICS.ResolveCollisions();						// Resolve collisions on physics bodies
+		T_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
+		T_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
+		T_DEBUG.RenderDebugCommands(*T_GAME_OBJECTS.GetActiveCamera());
 	}
 
 	void FrameEnd()
 	{
-		renderMngr.FrameEnd();								// Swap window buffer
-		frameRateMngr.FrameEnd();							// Lock FPS 
+		T_RENDERER.FrameEnd();								// Swap window buffer
+		T_FRAMERATE.FrameEnd();								// Lock FPS 
 		// TODO: Clean up GameObjects
 	}
 
 	Mesh * CreateMesh(std::string meshName)
 	{
-		return resourceMngr.LoadMesh(meshName);
+		return T_RESOURCES.LoadMesh(meshName);
 	}
 
 	void UnloadResources()
 	{
-		resourceMngr.UnloadAll();
+		T_RESOURCES.UnloadAll();
 	}
 
 	void LoadPrefabs(std::string fileName)
 	{
-		//gameObjectFactory.LoadGameObjectsFromFile(fileName);
+		//T_GO_FACTORY.LoadGameObjectsFromFile(fileName);
 	}
 }

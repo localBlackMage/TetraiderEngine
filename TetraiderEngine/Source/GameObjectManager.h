@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "ComponentFactory.h"
-#include "RenderManager.h"
 #include "Subscriber.h"
 
 // Forward declarations
@@ -20,11 +19,7 @@ private:
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
 	GameObject* m_pCamera;
-	RenderManager& renderMngr;
 	std::vector<GameObject*> mGameObjects;
-
-	GameObjectManager();
-	~GameObjectManager();
 	
 	void SetGameObjectTag(std::string tag, GameObject* pGO);
 	void AddGameObject(GameObject* pGO);
@@ -35,14 +30,10 @@ private:
 	void HandleEvent(Event *pEvent);
 
 public:
+	GameObjectManager();
+	~GameObjectManager();
 	GameObjectManager(const GameObjectManager &) = delete;
 	void operator=(const GameObjectManager &) = delete;
-
-	static GameObjectManager& GetInstance()
-	{
-		static GameObjectManager instance;
-		return instance;
-	}
 
 	void Update(float dt);
 	void LateUpdate(float dt);
