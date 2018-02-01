@@ -25,16 +25,14 @@ void Health::TakeDamage(int damage) {
 	if (m_currentHealth <= 0) {
 		m_currentHealth = 0;
 		if (pGO->m_tag == GameObjectTag::T_Player) {
-			T_EVENTS.BroadcastEventToSubscribers(new Event(EventType::EVENT_OnPlayerHealthZero));
+			T_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHealthZero));
 		}
 		else if (pGO->m_tag == GameObjectTag::T_Enemy) {
-			T_EVENTS.BroadcastEventToSubscribers(new Event(EventType::EVENT_OnEnemyHealthZero));
+			T_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnEnemyHealthZero));
 		}
 	}
-	pGO->HandleEvent(new Event(
-		EventType::EVENT_OnTakeDamage,
-		new HealthChangeData(m_currentHealth, m_maxHealth)
-	));
+
+	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth)));
 }
 
 void Health::Heal(int heal) {
@@ -44,9 +42,9 @@ void Health::Heal(int heal) {
 	}
 
 	if (pGO->m_tag == GameObjectTag::T_Player) {
-		T_EVENTS.BroadcastEventToSubscribers(new Event(
+		T_EVENTS.BroadcastEventToSubscribers(&Event(
 			EventType::EVENT_OnPlayerHeal,
-			new HealthChangeData(m_currentHealth, m_maxHealth)
+			&HealthChangeData(m_currentHealth, m_maxHealth)
 		));
 	}
 }

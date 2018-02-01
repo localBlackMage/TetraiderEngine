@@ -48,25 +48,18 @@ void PhysicsManager::ResolveCollisions() {
 
 void PhysicsManager::FireEventsToContacts() {
 	for (auto contact : m_pContacts) {
-		OnCollideData * dataFirst = new OnCollideData(
-			contact->m_pBodies[0]->pGO,
-			MTV(contact->m_MTV.normal, contact->m_MTV.penetration)
-		);
+		OnCollideData dataFirst(contact->m_pBodies[0]->pGO, MTV(contact->m_MTV.normal, contact->m_MTV.penetration));
 
 		Vector3D directionOfCenters = contact->m_pBodies[1]->GetPosition() - contact->m_pBodies[0]->GetPosition();
 		if (Vector3D::Dot(directionOfCenters, contact->m_MTV.normal) < 0)
-			dataFirst->mtv.normal = -1 * dataFirst->mtv.normal;
+			dataFirst.mtv.normal = -1 * dataFirst.mtv.normal;
 
-		contact->m_pBodies[1]->pGO->HandleEvent(new Event(EventType::EVENT_OnCollide, dataFirst));
+		contact->m_pBodies[1]->pGO->HandleEvent(&Event(EventType::EVENT_OnCollide, &dataFirst));
 
-		contact->m_pBodies[0]->pGO->HandleEvent(
-			new Event(EventType::EVENT_OnCollide, 
-				new OnCollideData(
-					contact->m_pBodies[1]->pGO,
-					MTV(-1 * dataFirst->mtv.normal, dataFirst->mtv.penetration)
-				)
-			)
-		);
+		dataFirst.mtv.normal = -1* dataFirst.mtv.normal;
+		dataFirst.pGO = contact->m_pBodies[1]->pGO;
+
+		contact->m_pBodies[0]->pGO->HandleEvent(&Event(EventType::EVENT_OnCollide, &dataFirst));
 	}
 }
 

@@ -89,6 +89,5 @@ void LevelManager::LoadLevel(json j) {
 		}
 	}
 
-	OnLevelInitialized onLevelInitialized;
-	T_EVENTS.BroadcastEvent(&onLevelInitialized);
+	T_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 }

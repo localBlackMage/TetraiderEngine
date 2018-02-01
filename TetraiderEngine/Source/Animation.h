@@ -14,7 +14,6 @@ public:
 	virtual void Serialize(json j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
-	virtual void Override(json j) {};
 
 	void Play(int animation);
 	void Play(int animation, bool isReverse);

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\Attack.cpp" />
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CamFollow.cpp" />
@@ -49,8 +50,11 @@
     <ClCompile Include="Source\Math\Matrix4x4.cpp" />
     <ClCompile Include="Source\Math\Vector2D.cpp" />
     <ClCompile Include="Source\Math\Vector3D.cpp" />
+    <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
+    <ClCompile Include="Source\Projectile.cpp" />
+    <ClCompile Include="Source\RangeAttack.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -64,6 +68,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Attack.h" />
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CamFollow.h" />
@@ -100,8 +105,11 @@
     <ClInclude Include="Source\Math\Matrix4x4.h" />
     <ClInclude Include="Source\Math\Vector2D.h" />
     <ClInclude Include="Source\Math\Vector3D.h" />
+    <ClInclude Include="Source\MeleeAttack.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
+    <ClInclude Include="Source\Projectile.h" />
+    <ClInclude Include="Source\RangeAttack.h" />
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Shader.h" />

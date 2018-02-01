@@ -76,6 +76,12 @@
     <Filter Include="Source Files\Components\Base">
       <UniqueIdentifier>{d08c12c4-e8eb-434a-aac0-0c039c9ef8d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Attacks">
+      <UniqueIdentifier>{9ee42b91-d4d6-4e0b-9d88-fb0914909437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Attacks">
+      <UniqueIdentifier>{ecfafb14-4674-4b8d-a084-570cf18bef67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -200,6 +206,18 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source Files\Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Attack.cpp">
+      <Filter>Source Files\Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeleeAttack.cpp">
+      <Filter>Source Files\Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RangeAttack.cpp">
+      <Filter>Source Files\Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +379,18 @@
     </ClInclude>
     <ClInclude Include="Source\ComponentTypesNames.h">
       <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Attack.h">
+      <Filter>Header Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeleeAttack.h">
+      <Filter>Header Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RangeAttack.h">
+      <Filter>Header Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
