@@ -1,9 +1,7 @@
+#include "GameObject.h"
 #include "Agent.h"
-#include "Transform.h"
 #include "Body.h"
-#include "PhysicsManager.h"
-#include "../Source/Math/MathFunctions.h"
-
+#include "Transform.h"
 #include <iostream>
 
 void Agent::Update(float dt) {
@@ -18,15 +16,15 @@ void Agent::Serialize(json j) {
 
 void Agent::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
-		OnCollide* pOnCollide = static_cast<OnCollide*>(pEvent);
-		m_pTransform->SetPosition(m_pTransform->GetPosition() + pOnCollide->mtv.normal*pOnCollide->mtv.penetration);
+		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
+		m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 	}
 }
 
 void Agent::LateInitialize() {
 	if (!m_pTransform) {
 		if (pGO)
-			m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 		else {
 			printf("No Game Object found. Controller component failed to operate.\n");
 			return;
@@ -40,7 +38,7 @@ void Agent::LateInitialize() {
 
 	if (!m_pBody) {
 		if (pGO)
-			m_pBody = static_cast<Body*>(pGO->GetComponent(ComponentType::Body));
+			m_pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
 		else {
 			printf("No Game Object found. Controller component failed to operate.\n");
 			return;

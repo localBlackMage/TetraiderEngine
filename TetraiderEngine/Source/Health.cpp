@@ -1,6 +1,8 @@
+#include "GameObject.h"
 #include "Health.h"
+#include "TetraiderAPI.h"
 
-Health::Health(): Component(ComponentType::Health) {}
+Health::Health(): Component(ComponentType::C_Health) {}
 Health::~Health() {}
 
 void Health::Update(float dt) {}
@@ -22,20 +24,17 @@ void Health::TakeDamage(int damage) {
 
 	if (m_currentHealth <= 0) {
 		m_currentHealth = 0;
-		if (pGO->m_tag == GameObjectTag::Player) {
-			OnPlayerHealthZero onPlayerHealthZero;
-			T_EVENTS.BroadcastEventToSubscribers(&onPlayerHealthZero);
+		if (pGO->m_tag == GameObjectTag::T_Player) {
+			T_EVENTS.BroadcastEventToSubscribers(new Event(EventType::EVENT_OnPlayerHealthZero));
 		}
-		else if (pGO->m_tag == GameObjectTag::Enemy) {
-			OnEnemyHealthZero onEnemyHealthZero;
-			T_EVENTS.BroadcastEventToSubscribers(&onEnemyHealthZero);
+		else if (pGO->m_tag == GameObjectTag::T_Enemy) {
+			T_EVENTS.BroadcastEventToSubscribers(new Event(EventType::EVENT_OnEnemyHealthZero));
 		}
 	}
-
-	OnTakeDamage onTakeDamage;
-	onTakeDamage.currentHealth = m_currentHealth;
-	onTakeDamage.maxHealth = m_maxHealth;
-	pGO->HandleEvent(&onTakeDamage);
+	pGO->HandleEvent(new Event(
+		EventType::EVENT_OnTakeDamage,
+		new HealthChangeData(m_currentHealth, m_maxHealth)
+	));
 }
 
 void Health::Heal(int heal) {
@@ -44,11 +43,11 @@ void Health::Heal(int heal) {
 		m_currentHealth = m_maxHealth;
 	}
 
-	if (pGO->m_tag == GameObjectTag::Player) {
-		OnPlayerHeal onPlayerHeal;
-		onPlayerHeal.currentHealth;
-		onPlayerHeal.maxHealth;
-		T_EVENTS.BroadcastEventToSubscribers(&onPlayerHeal);
+	if (pGO->m_tag == GameObjectTag::T_Player) {
+		T_EVENTS.BroadcastEventToSubscribers(new Event(
+			EventType::EVENT_OnPlayerHeal,
+			new HealthChangeData(m_currentHealth, m_maxHealth)
+		));
 	}
 }
 

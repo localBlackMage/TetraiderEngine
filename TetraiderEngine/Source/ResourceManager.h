@@ -16,11 +16,11 @@ Creation date: 1/17/18
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 
-#include <map>
-#include <utility>
 #include "Mesh.h"
 #include "DebugLineMesh.h"
 #include "STBSurface.h"
+#include <map>
+#include <utility>
 
 class ResourceManager
 {

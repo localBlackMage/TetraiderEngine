@@ -4,7 +4,7 @@
 using namespace JsonReader;
 
 Sprite::Sprite(std::string textureName) :
-	Component(ComponentType::Sprite), 
+	Component(ComponentType::C_Sprite),
 	m_xTiling(1.0f), 
 	m_yTiling(1.0f), 
 	m_uOffset(0.f),

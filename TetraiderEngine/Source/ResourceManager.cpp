@@ -1,9 +1,9 @@
 #include "ResourceManager.h"
-#include <iostream>
 #include "JsonReader.h"
 #include "TetraiderAPI.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
+#include <iostream>
 
 ResourceManager::ResourceManager(){}
 

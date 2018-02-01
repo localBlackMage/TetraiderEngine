@@ -1,13 +1,12 @@
+#include "GameObject.h"
 #include "Controller.h"
-#include "Transform.h"
-#include "Body.h"
 #include "Health.h"
-#include "Math/LineSegment2D.h"
+#include "TetraiderAPI.h"
 
 #include <iostream>
 
 Controller::Controller() :
-	Agent(ComponentType::Controller)
+	Agent(ComponentType::C_Controller)
 {
 }
 
@@ -27,7 +26,7 @@ void Controller::Update(float dt) {
 
 	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q)) {
 		AddVelocity(Vector3D(-750, -750, 0));
-		Health* pHealth = static_cast<Health*>(pGO->GetComponent(ComponentType::Health));
+		Health* pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
 		pHealth->TakeDamage(10);
 	}
 

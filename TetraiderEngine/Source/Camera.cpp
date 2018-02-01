@@ -1,9 +1,10 @@
+#include "GameObject.h"
 #include "Camera.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
 
 Camera::Camera() :
-	Component(ComponentType::Camera),
+	Component(ComponentType::C_Camera),
 	m_fov(105.f), m_aspectRatio(1.f), m_screenWidth(1), m_screenHeight(1),
 	m_viewMatrix(Matrix4x4()), m_perspectiveMatrix(Matrix4x4()), m_orthographicMatrix(Matrix4x4())
 {
@@ -48,7 +49,7 @@ void Camera::Serialize(json j)
 
 void Camera::LateInitialize()
 {
-	m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+	m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 }
 
 void Camera::Update(float dt)

@@ -1,10 +1,10 @@
+#pragma once
 #ifndef SPRITE_H
 #define SPRITE_H
 
 #include "Component.h"
-#include "Math\Vector3D.h"
-#include "Mesh.h"
 #include "STBSurface.h"
+#include "Mesh.h"
 #include <string>
 
 class Sprite : public Component 

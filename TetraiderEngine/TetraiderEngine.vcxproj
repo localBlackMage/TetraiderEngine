@@ -69,6 +69,8 @@
     <ClInclude Include="Source\CamFollow.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentFactory.h" />
+    <ClInclude Include="Source\ComponentTypes.h" />
+    <ClInclude Include="Source\ComponentTypesNames.h" />
     <ClInclude Include="Source\Controller.h" />
     <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
@@ -82,6 +84,7 @@
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GameObjectManager.h" />
+    <ClInclude Include="Source\GameObjectTags.h" />
     <ClInclude Include="Source\GameStateManager.h" />
     <ClInclude Include="Source\Health.h" />
     <ClInclude Include="Source\InputManager.h" />
@@ -91,6 +94,7 @@
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
     <ClInclude Include="Source\Math\MathFunctions.h" />
+    <ClInclude Include="Source\Math\MathLibs.h" />
     <ClInclude Include="Source\Math\Matrix2x2.h" />
     <ClInclude Include="Source\Math\Matrix3x3.h" />
     <ClInclude Include="Source\Math\Matrix4x4.h" />
@@ -108,6 +112,7 @@
     <ClInclude Include="Source\STBSurface.h" />
     <ClInclude Include="Source\Subscriber.h" />
     <ClInclude Include="Source\SubscriberTracker.h" />
+    <ClInclude Include="Source\TagNames.h" />
     <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Transform.h" />
   </ItemGroup>

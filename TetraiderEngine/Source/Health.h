@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HEALTH_H
 #define HEALTH_H
 
@@ -23,34 +24,6 @@ private:
 	int m_currentHealth;
 	int m_maxHealth;
 	bool m_isInvincible;
-};
-
-class OnEnemyHealthZero :public Event {
-public:
-	OnEnemyHealthZero(): Event(EVENT_OnEnemyHealthZero) { }
-	~OnEnemyHealthZero() {}
-};
-
-class OnPlayerHealthZero :public Event {
-public:
-	OnPlayerHealthZero(): Event(EVENT_OnPlayerHealthZero) {}
-	~OnPlayerHealthZero() {}
-};
-
-class OnTakeDamage :public Event {
-public:
-	OnTakeDamage(): Event(EVENT_OnTakeDamage) {}
-	~OnTakeDamage() {}
-	int currentHealth;
-	int maxHealth;
-};
-
-class OnPlayerHeal :public Event {
-public:
-	OnPlayerHeal(): Event(EVENT_OnPlayerHeal) {}
-	~OnPlayerHeal() {}
-	int currentHealth;
-	int maxHealth;
 };
 
 #endif

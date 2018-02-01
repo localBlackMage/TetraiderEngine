@@ -1,9 +1,9 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "TetraiderAPI.h"
 #include <fstream>
 #include <iostream>
-#include "TetraiderAPI.h"
 
 using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
@@ -51,7 +51,7 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 	// TO DO
 	/*if (pGO->GetComponent(CT_UI_ELEMENT))
 		mainManager.pUI_Manager->AddGameObject(pGO);*/
-	if (pGO->GetComponent(ComponentType::Body)) {
+	if (pGO->HasComponent(ComponentType::C_Body)) {
 		T_PHYSICS.AddGameObject(pGO);
 	}
 }
@@ -114,7 +114,7 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
 
 	// TODO: Find a cleaner way to do this?
-	if (pGameObject->m_tag == GameObjectTag::Camera)	m_pCamera = pGameObject;
+	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCamera = pGameObject;
 
 	int size = j[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
@@ -144,9 +144,9 @@ void GameObjectManager::SetGameObjectTag(std::string tag, GameObject* pGO) {
 
 GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 	// TODO: Convert Tags to something better, try the trick mentioned by Prof. Rabin
-	if (tag == "Player") return GameObjectTag::Player;
-	else if (tag == "Camera") return GameObjectTag::Camera;
-	else if (tag == "Enemy") return GameObjectTag::Enemy;
+	if (tag == "Player") return GameObjectTag::T_Player;
+	else if (tag == "Camera") return GameObjectTag::T_Camera;
+	else if (tag == "Enemy") return GameObjectTag::T_Enemy;
 	else return GameObjectTag::NONE;
 }
 

@@ -4,13 +4,13 @@
 #define EVENT_H
 
 #include <string>
+#include "Math\MathLibs.h"
 
 // Macro trick to make Event names enums from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,
 typedef enum
 {
 	#include "EventNames.h"
-
 	EVENT_NUM
 } EventType;
 #undef REGISTER_EVENT_NAME
@@ -23,8 +23,25 @@ static const char* EventNameText[] =
 };
 #undef REGISTER_EVENT_NAME
 
+class GameObject;
+
 // Abstract struct, data objects should inherit from this
 struct EventData {};
+
+struct OnCollideData : public EventData {
+	OnCollideData(GameObject* _pGO, MTV _mtv) :
+		pGO(_pGO), mtv(_mtv) {}
+	GameObject* pGO;
+	MTV mtv;
+};
+
+struct HealthChangeData : public EventData {
+	HealthChangeData(int _currentHealth, int _maxHealth) :
+		mCurrentHealth(_currentHealth), mMaxHealth(_maxHealth) {}
+	int mCurrentHealth;
+	int mMaxHealth;
+};
+
 
 class Event
 {
@@ -44,8 +61,6 @@ public:
 	T* Data() const { return static_cast<T*>(m_data); }
 
 	void DecrementTime(double amt) { m_time -= amt; }
-
-
 
 	static EventType GetEventTypeFromTitle(std::string eventTitle);
 };

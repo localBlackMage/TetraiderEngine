@@ -1,9 +1,9 @@
+#pragma once
 #ifndef CAMERA_H
 #define CAMERA_H
 
 #include "Component.h"
-#include "Math\Vector3D.h"
-#include "Math\Matrix4x4.h"
+#include "Math\MathLibs.h"
 
 class Transform;
 

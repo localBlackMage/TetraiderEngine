@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CAM_FOLLOW_H
 #define CAM_FOLLOW_H
 

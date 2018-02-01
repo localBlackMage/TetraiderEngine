@@ -1,16 +1,16 @@
+#pragma once
 #ifndef GAME_OBJECT_MANAGER_H
 #define GAME_OBJECT_MANAGER_H
 
-#include <string>
-#include <vector>
+#include "GameObjectTags.h"
 #include "ComponentFactory.h"
 #include "Subscriber.h"
+#include <string>
+#include <vector>
 
 // Forward declarations
 class GameObject;
-class Component;
 class Event;
-enum class GameObjectTag;
 
 class GameObjectManager: public Subscriber
 {

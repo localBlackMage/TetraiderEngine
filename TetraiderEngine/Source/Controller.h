@@ -1,7 +1,7 @@
+#pragma once
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "Component.h"
 #include "Agent.h"
 
 class Controller : public Agent {

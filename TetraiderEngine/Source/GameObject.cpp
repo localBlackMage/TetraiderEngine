@@ -39,36 +39,37 @@ void GameObject::LateInitialize() {
 		comp->LateInitialize();
 }
 
-// Assumes that type is already set in pComponent
 void GameObject::AddComponent(Component* pComponent) {
 	// Check if component exists before adding
 	pComponent->pGO = this;
 	mComponents.push_back(pComponent);
 }
 
-Component* GameObject::GetComponent(ComponentType const type) {
+template <typename C>
+C* GameObject::GetComponent(ComponentType type) {
 	for (auto &comp : mComponents) {
-		if (comp->type == type)
-			return comp;
+		if (comp->Type() == type)
+			return static_cast<C*>(comp);
 	}
 
 	return nullptr;
 }
 
-const Component * GameObject::GetComponent(ComponentType type) const
+template <typename C>
+const C * GameObject::GetComponent(ComponentType type) const
 {
 	for (auto &comp : mComponents) {
-		if (comp->type == type)
-			return comp;
+		if (comp->Type() == type)
+			return static_cast<C*>(comp);
 	}
 
 	return nullptr;
 }
 
-bool GameObject::HasComponent(ComponentType type)
+bool GameObject::HasComponent(ComponentType type) const
 {
 	for (auto &comp : mComponents) {
-		if (comp->type == type)
+		if (comp->Type() == type)
 			return true;
 	}
 	return false;

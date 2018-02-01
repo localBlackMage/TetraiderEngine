@@ -2,26 +2,19 @@
 #ifndef TETRAIDER_API_H
 #define TETRAIDER_API_H
 
-#include <string>
 #include "GameConfig.h"
 #include "GameStateManager.h"
-//#include "WindowManager.h"
 #include "InputManager.h"
 #include "FrameRateManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "GameObjectManager.h"
-//#include "GameObjectFactory.h"
 #include "PhysicsManager.h"
 #include "EventManager.h"
 #include "LevelManager.h"
 #include "DebugManager.h"
-//#include "json.hpp"
-#include <iostream>
-#include "JsonReader.h"
-#include "Mesh.h"
-
 #include "Singleton.h"
+#include <string>
 
 #define T_GAME_CONFIG Singleton<GameConfig>::GetInstance()
 #define T_GAME_STATE Singleton<GameStateManager>::GetInstance()

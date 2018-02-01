@@ -1,9 +1,9 @@
+#pragma once
 #ifndef DEBUG_MANAGER_H
 #define DEBUG_MANAGER_H
 
 #include <queue>
-#include "Math/Vector3D.h"
-#include "Math/Matrix4x4.h"
+#include "Math/MathLibs.h"
 
 class GameObject;
 
@@ -50,7 +50,6 @@ public:
 	void SetDebugMode(bool isDebugEnabled) { m_isDebugModeEnabled = isDebugEnabled; };
 
 	void DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor color);
-	void DrawWireRectangle(const Vector3D& pA, float height, float width, DebugColor color);
 	void DrawWireRectangle(const Vector3D& pos, const Vector3D& rot, const Vector3D& scale, DebugColor color);
 	void DrawWireCircle(const Vector3D& pA, float radius, DebugColor color);
 

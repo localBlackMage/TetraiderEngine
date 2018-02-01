@@ -1,3 +1,4 @@
+#include "GameObject.h"
 #include "Body.h"
 #include "Transform.h"
 #include "Shape.h"
@@ -5,7 +6,7 @@
 #include <iostream>
 
 Body::Body() :
-	Component(ComponentType::Body),
+	Component(ComponentType::C_Body),
 	m_isStatic(false)
 {
 }
@@ -75,7 +76,7 @@ void Body::Serialize(json j) {
 void Body::LateInitialize() {
 	if (!m_pTransform) {
 		if (pGO)
-			m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 		else {
 			printf("No Game Object found. Body component failed to operate.\n");
 			return;

@@ -1,15 +1,15 @@
+#pragma once
 #ifndef PHYSICS_MANAGER_H
 #define PHYSICS_MANAGER_H
 
-#include <vector>
-#include "Shape.h"
-#include "../Source/Math/Collisions.h"
-#include "../Source/Math/Vector3D.h"
+#include "Math/MathLibs.h"
+#include "GameObjectTags.h"
 #include "Event.h"
+#include "Shape.h"
+#include <vector>
 
 // Forward declaration
 class GameObject;
-enum class GameObjectTag;
 class Body;
 
 struct Contact {
@@ -40,14 +40,6 @@ private:
 	bool(*RayCastFunctions[ST_Count])(const LineSegment2D&, Body*);
 	void GenerateContact(Body*, Body*, MTV*);
 	std::vector<Contact*> m_pContacts;
-};
-
-class OnCollide : public Event {
-public:
-	OnCollide(): Event(EventType::EVENT_OnCollide)  {}
-	~OnCollide() {}
-	GameObject* pGO;
-	MTV mtv;
 };
 
 bool StaticCircleToStaticCircle(Body*, Body*, MTV*); 

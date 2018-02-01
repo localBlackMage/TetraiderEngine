@@ -46,12 +46,6 @@
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{4cdcf74a-41cf-44e0-bb28-aab3948ee9c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Shaders">
-      <UniqueIdentifier>{bbea58ba-7e19-4f43-85e6-cb5c33282541}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{ef2b9fe1-0d95-4562-a637-a4dd4abf36d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{8e938e7a-9dd2-42ea-8db1-bb6fef224bd3}</UniqueIdentifier>
     </Filter>
@@ -69,6 +63,15 @@
     </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{ece808c0-b832-435b-958e-3cf46d5fecbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Base">
+      <UniqueIdentifier>{d8735028-3640-4f3e-b2ea-e558670fbec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\Shaders">
+      <UniqueIdentifier>{bbea58ba-7e19-4f43-85e6-cb5c33282541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Shaders">
+      <UniqueIdentifier>{ef2b9fe1-0d95-4562-a637-a4dd4abf36d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,10 +115,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Rendering\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="Source\ShaderProgram.cpp">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Rendering\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source Files\Components</Filter>
@@ -243,19 +246,10 @@
       <Filter>External Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderProgram.h">
-      <Filter>Header Files\Shaders</Filter>
+      <Filter>Header Files\Rendering\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shader.h">
-      <Filter>Header Files\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentFactory.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\Rendering\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameStateManager.h">
       <Filter>Header Files\Managers</Filter>
@@ -338,8 +332,32 @@
     <ClInclude Include="Source\GameConfig.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTypes.h">
+      <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TagNames.h">
+      <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjectTags.h">
+      <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentFactory.h">
+      <Filter>Header Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\MathLibs.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Singleton.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTypesNames.h">
+      <Filter>Header Files\Components\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

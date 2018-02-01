@@ -1,3 +1,4 @@
+#include "GameObject.h"
 #include "LevelManager.h"
 #include "TetraiderAPI.h"
 
@@ -73,17 +74,17 @@ void LevelManager::LoadLevel(json j) {
 		// Overwrite values for transform component if they exist
 		if (pGO) {
 			if (j["GAME_OBJECTS"][i].find("position") != j["GAME_OBJECTS"][i].end()) {
-				Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 				if (pTransform) pTransform->SetPosition(ParseVector3D(j["GAME_OBJECTS"][i], "position"));
 			}
 
-			//	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			//	Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 			//	if (pTransform)	pTransform->Serialize(j[GAME_OBJECTS][i]);
 
-			//	Camera* pCamera = static_cast<Camera*>(pGO->GetComponent(ComponentType::Camera));
+			//	Camera* pCamera = pGO->GetComponent<Camera>(ComponentType::C_Camera);
 			//	if (pCamera)	pCamera->Serialize(j[GAME_OBJECTS][i]);
 
-			//	Sprite* pSprite = static_cast<Sprite*>(pGO->GetComponent(ComponentType::Sprite));
+			//	Sprite* pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
 			//	if (pSprite)	pSprite->Serialize(j[GAME_OBJECTS][i]);
 		}
 	}

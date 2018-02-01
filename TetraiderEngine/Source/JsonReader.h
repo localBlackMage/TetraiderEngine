@@ -17,8 +17,7 @@ Creation date: 10/29/17
 #define JSON_READER_H
 
 #include "External\json.hpp"
-#include "Math\Vector2D.h"
-#include "Math\Vector3D.h"
+#include "Math/MathLibs.h"
 #include <vector>
 #include <string>
 

@@ -1,8 +1,9 @@
+#pragma once
+
 #ifndef AGENT_H
 #define AGENT_H
 
 #include "Component.h"
-#include "..\Source\Math\Vector3D.h"
 
 // Forward declaration
 class Transform;

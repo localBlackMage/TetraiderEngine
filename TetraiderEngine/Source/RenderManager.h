@@ -15,20 +15,22 @@ Creation date: 1/17/18
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
+//#include "GameObject.h"
+
+//#include "STBSurface.h"
+//#include "Mesh.h"
+#include "Math\MathLibs.h"
+//#include "DebugManager.h"
 #include <SDL.h>
 #include <string>
 #include <map>
-#include "ShaderProgram.h"
-#include "Shader.h"
-#include "GameObject.h"
 
-#include "STBSurface.h"
-#include "Mesh.h"
-#include "Math\Matrix4x4.h"
-#include "Math\Vector3D.h"
-#include "DebugManager.h"
-
+class DebugManager;
+class GameObject;
+class ShaderProgram;
+class Shader;
 class Sprite;
+enum DebugShape;
 
 class RenderManager
 {

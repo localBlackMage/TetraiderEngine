@@ -1,3 +1,4 @@
+#include "GameObject.h"
 #include "Animation.h"
 #include "Sprite.h"
 #include <iostream>
@@ -5,7 +6,7 @@
 using  namespace JsonReader;
 
 Animation::Animation(): 
-	Component(ComponentType::Animation), 
+	Component(ComponentType::C_Animation), 
 	m_animationSpeed(0), 
 	m_uStartPos(1), 
 	m_vStartPos(1), 
@@ -103,7 +104,7 @@ void Animation::Serialize(json j) {
 void Animation::LateInitialize() {
 	if (!m_pSprite) {
 		if (pGO)
-			m_pSprite = static_cast<Sprite*>(pGO->GetComponent(ComponentType::Sprite));
+			m_pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
 		else {
 			printf("No Game Object found. Animation component failed to operate.\n");
 			return;

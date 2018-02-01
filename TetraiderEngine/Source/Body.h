@@ -1,8 +1,10 @@
+#pragma once
+
 #ifndef BODY_H
 #define BODY_H
 
 #include "Component.h"
-#include "../Source/Math/Vector3D.h"
+#include "Math\MathLibs.h"
 
 // Forward declaration
 class Transform;

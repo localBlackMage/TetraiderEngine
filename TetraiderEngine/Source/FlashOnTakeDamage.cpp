@@ -1,7 +1,8 @@
+#include "GameObject.h"
 #include "FlashOnTakeDamage.h"
 #include "Sprite.h"
 
-FlashOnTakeDamage::FlashOnTakeDamage(): Component(ComponentType::FlashOnTakeDamage), m_flashTime(2.0f) {}
+FlashOnTakeDamage::FlashOnTakeDamage(): Component(ComponentType::C_FlashOnTakeDamage), m_flashTime(2.0f) {}
 FlashOnTakeDamage::~FlashOnTakeDamage() {}
 
 void FlashOnTakeDamage::Update(float dt) {
@@ -23,7 +24,7 @@ void FlashOnTakeDamage::Serialize(json j) {
 void FlashOnTakeDamage::LateInitialize() {
 	if (!m_pSprite) {
 		if (pGO)
-			m_pSprite = static_cast<Sprite*>(pGO->GetComponent(ComponentType::Sprite));
+			m_pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
 		else {
 			printf("No Game Object found. FlashOnTakeDamage component failed to operate.\n");
 			return;

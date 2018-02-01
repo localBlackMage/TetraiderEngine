@@ -1,9 +1,11 @@
+#include "GameObject.h"
 #include "CamFollow.h"
 #include "Transform.h"
-#include "Math/MathFunctions.h"
+#include "TetraiderAPI.h"
+#include "Math/MathLibs.h"
 
 CamFollow::CamFollow() :
-	Component(ComponentType::CamFollow),
+	Component(ComponentType::C_CamFollow),
 	m_followSpeed(0.0f)
 {}
 
@@ -18,7 +20,7 @@ void CamFollow::LateInitialize()
 {
 	if (!m_pTransform) {
 		if (pGO)
-			m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 		else {
 			printf("No Game Object found. Camfollow component failed to operate.\n");
 			return;
@@ -34,7 +36,7 @@ void CamFollow::LateInitialize()
 void CamFollow::Update(float dt) {}
 
 void CamFollow::LateUpdate(float dt) {
-	Transform* targetTransform = static_cast<Transform*>(m_pTarget->GetComponent(ComponentType::Transform));
+	Transform* targetTransform = m_pTarget->GetComponent<Transform>(ComponentType::C_Transform);
 	float z = m_pTransform->GetPosition().z;
 	Vector3D lerpPosition = Lerp(m_pTransform->GetPosition(), targetTransform->GetPosition(), m_followSpeed*dt);
 	m_pTransform->SetPosition(Vector3D(lerpPosition.x, lerpPosition.y, z));

@@ -1,17 +1,20 @@
 #include "RenderManager.h"
+#include "TetraiderAPI.h"
+#include "JsonReader.h"
+#include "DebugLineMesh.h"
+#include "ShaderProgram.h"
+#include "Shader.h"
+
+#include "GameObject.h"
+#include "Transform.h"
+#include "Camera.h"
+#include "Sprite.h"
+
 #include <glew.h>
 #include <GL/gl.h>
 #include <iostream>
 #include <fstream>
 #include <windows.h>
-#include "JsonReader.h"
-#include "DebugLineMesh.h"
-#include "Math\Matrix4x4.h"
-#include "TetraiderAPI.h"
-
-#include "Transform.h"
-#include "Camera.h"
-#include "Sprite.h"
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height),
@@ -73,9 +76,7 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 
 bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
-	// TODO: Fill out
-	return true;
-	//return gameObject.Has(ComponentType::SPRITE) || gameObject.Has(ComponentType::SCROLLING_SPRITE) || gameObject.Has(ComponentType::TEXT);
+	return gameObject.HasComponent(ComponentType::C_Sprite);
 }
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
@@ -121,32 +122,32 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 void RenderManager::_RenderGameObject(const GameObject& gameObject)
 {
 	// Only attempt to draw if the game object has a sprite component and transform component
-	if (!gameObject.GetComponent(ComponentType::Transform) || !_GameObjectHasRenderableComponent(gameObject))
+	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
 		return;
 
-	Matrix4x4 M = static_cast<const Transform*>(gameObject.GetComponent(ComponentType::Transform))->GetTransform();
+	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
 	//Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
 	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
 
 	// set shader attributes
-	if (gameObject.GetComponent(ComponentType::Sprite))
-		_RenderSprite(static_cast<const Sprite*>(gameObject.GetComponent(ComponentType::Sprite)));
+	if (gameObject.HasComponent(ComponentType::C_Sprite))
+		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
 }
 
 void RenderManager::_SelectShaderProgram(const GameObject & gameObject)
 {
 	std::string shader = "";
 
-	//if (gameObject.Has(ComponentType::Sprite))
-	//	shader = static_cast<Sprite*>(gameObject.GetComponent(ComponentType::Sprite))->Shader();
+	//if (gameObject.HasComponent(ComponentType::C_Sprite))
+	//	shader = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite))->Shader();
 
 	SelectShaderProgram(shader == "" ? "default" : shader);
 }
 
 void RenderManager::_SetUpCamera(const GameObject & camera)
 {
-	const Camera * cameraComp = static_cast<const Camera*>(camera.GetComponent(ComponentType::Camera));
+	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	glUseProgram(m_pCurrentProgram->GetProgram());
 
 	// TODO: Update to support grabbing Perspective Matricies if needed

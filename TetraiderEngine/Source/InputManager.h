@@ -10,6 +10,7 @@ Author: Holden Profit, Hyoyup Chung
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
+#pragma once
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 

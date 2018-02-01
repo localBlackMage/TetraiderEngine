@@ -1,6 +1,6 @@
 #include "DebugManager.h"
 #include "TetraiderAPI.h"
-#include "Math/MathDefs.h"
+#include "Math/MathLibs.h"
 
 Vector3D DebugManager::_GetColor(DebugColor color) {
 	switch (color) {

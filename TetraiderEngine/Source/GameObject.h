@@ -1,22 +1,19 @@
+#pragma once
+
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
 #include <vector>
+#include "Subscriber.h"
+#include "GameObjectTags.h"
+#include "ComponentTypes.h"
 
 // Forward declaration
-class Component;
 class Event;
-enum class ComponentType;
+class Component;
 
-enum class GameObjectTag {
-	Player,
-	Camera,
-	Enemy,
-
-	NONE
-};
-
-class GameObject {
+class GameObject :
+ public Subscriber {
 public:
 	GameObject(unsigned int id);
 	~GameObject();
@@ -28,16 +25,20 @@ public:
 	void AddComponent(Component* pComponent);
 	void LateInitialize();
 	void Destroy();
-	Component* GetComponent(ComponentType type);
-	const Component* GetComponent(ComponentType type) const;
-	bool HasComponent(ComponentType type);
+
+	template <typename C>
+	C* GetComponent(ComponentType type);
+	template <typename C>
+	const C* GetComponent(ComponentType type) const;
+	bool HasComponent(ComponentType type) const;
 	
 	bool m_isActive;
 	bool m_isRender;
 	bool m_isCollisionDisabled;
 	bool m_isDestroy;
 	GameObjectTag m_tag;
-	void HandleEvent(Event* pEvent);
+
+	virtual void HandleEvent(Event* pEvent);
 private:
 	std::vector<Component*> mComponents;
 	unsigned int m_id;

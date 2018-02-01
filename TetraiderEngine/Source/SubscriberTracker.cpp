@@ -1,10 +1,7 @@
 #include "SubscriberTracker.h"
-#include "Subscriber.h"
 #include <algorithm>
 
-SubscriberTracker::SubscriberTracker()
-{
-}
+SubscriberTracker::SubscriberTracker(){}
 
 SubscriberTracker::~SubscriberTracker() {}
 

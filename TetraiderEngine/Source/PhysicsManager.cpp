@@ -1,6 +1,7 @@
 #include "PhysicsManager.h"
-#include "Body.h"
 #include "GameObject.h"
+#include "Component.h"
+#include "Body.h"
 
 PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_Circle][ST_Circle] = StaticCircleToStaticCircle;
@@ -24,7 +25,7 @@ PhysicsManager::~PhysicsManager() {
 void PhysicsManager::Integrate(float dt) {
 	int size = m_gameObjects.size();
 	for (int i = 0; i < size; ++i) {
-		Body* c = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		Body* c = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
 		c->Integrate(dt);
 	}
 }
@@ -47,20 +48,25 @@ void PhysicsManager::ResolveCollisions() {
 
 void PhysicsManager::FireEventsToContacts() {
 	for (auto contact : m_pContacts) {
-		OnCollide onCollide;
-		onCollide.mtv.normal = contact->m_MTV.normal;
-		onCollide.mtv.penetration = contact->m_MTV.penetration;
-		onCollide.pGO = contact->m_pBodies[0]->pGO;
+		OnCollideData * dataFirst = new OnCollideData(
+			contact->m_pBodies[0]->pGO,
+			MTV(contact->m_MTV.normal, contact->m_MTV.penetration)
+		);
 
 		Vector3D directionOfCenters = contact->m_pBodies[1]->GetPosition() - contact->m_pBodies[0]->GetPosition();
 		if (Vector3D::Dot(directionOfCenters, contact->m_MTV.normal) < 0)
-			onCollide.mtv.normal = -1 * onCollide.mtv.normal;
+			dataFirst->mtv.normal = -1 * dataFirst->mtv.normal;
 
-		contact->m_pBodies[1]->pGO->HandleEvent(&onCollide);
+		contact->m_pBodies[1]->pGO->HandleEvent(new Event(EventType::EVENT_OnCollide, dataFirst));
 
-		onCollide.pGO = contact->m_pBodies[1]->pGO;
-		onCollide.mtv.normal = -1 * onCollide.mtv.normal;
-		contact->m_pBodies[0]->pGO->HandleEvent(&onCollide);
+		contact->m_pBodies[0]->pGO->HandleEvent(
+			new Event(EventType::EVENT_OnCollide, 
+				new OnCollideData(
+					contact->m_pBodies[1]->pGO,
+					MTV(-1 * dataFirst->mtv.normal, dataFirst->mtv.penetration)
+				)
+			)
+		);
 	}
 }
 
@@ -75,12 +81,12 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 	if (m_gameObjects.size() <= 1) return;
 
 	for (unsigned int i = 0; i < m_gameObjects.size() - 1; ++i) {
-		Body* pBodyA = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		Body* pBodyA = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
 
 		if (pBodyA->pGO->m_isCollisionDisabled) continue;
 
 		for (unsigned int j = i + 1; j < m_gameObjects.size(); ++j) {
-			Body* pBodyB = static_cast<Body*>(m_gameObjects[j]->GetComponent(ComponentType::Body));
+			Body* pBodyB = m_gameObjects[j]->GetComponent<Body>(ComponentType::C_Body);
 
 			if (pBodyB->pGO->m_isCollisionDisabled) continue;
 
@@ -104,7 +110,7 @@ void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB, MTV* pMTV) {
 
 bool PhysicsManager::Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize) {
 	for (unsigned int i = 0; i < m_gameObjects.size(); ++i) {
-		Body* pBody = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		Body* pBody = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
 		
 		bool isIgnore = false;
 		for (int i = 0; i < layerSize; ++i) {

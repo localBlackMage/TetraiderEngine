@@ -1,9 +1,9 @@
+#pragma once
 #ifndef FLASH_ONTAKEDAMAGE_H
 #define FLASH_ONTAKEDAMAGE_H
 
 #include "Component.h"
-#include "../Source/Math/Vector3D.h"
-#include "../Source/Math/MathFunctions.h"
+#include "Math/MathLibs.h"
 
 class Sprite;
 
