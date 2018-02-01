@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "Sprite.h"
+#include <iostream>
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
@@ -21,7 +22,6 @@ void LevelManager::Initialize(json j) {
 	firstLevel = currentLevel;
 }
 
-#include <iostream>
 void LevelManager::LoadLevel() {
 	std::string s = T_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
 	LoadLevel(OpenJsonFile(s));

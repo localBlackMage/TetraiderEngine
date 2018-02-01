@@ -1,7 +1,6 @@
+#include "InputManager.h"
 #include <SDL.h>
 #include <string.h>
-#include "InputManager.h"
-
 
 
 InputManager::InputManager()
