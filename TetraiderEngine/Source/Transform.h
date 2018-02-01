@@ -27,6 +27,8 @@ public:
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(json j);
 
+	virtual void HandleEvent(Event * p_event);
+
 	void SetPosition(Vector3D pos);
 	Vector3D GetPosition() const;
 	void Move(Vector3D amount);

@@ -1,7 +1,7 @@
 #include "Body.h"
 #include "Transform.h"
 #include "Shape.h"
-#include "DebugManager.h"
+#include "TetraiderAPI.h"
 #include <iostream>
 
 Body::Body() :
@@ -61,6 +61,15 @@ void Body::Serialize(json j) {
 		m_pShape = pCircle;
 		m_pShape->pBody = this;
 	}
+	else if (shape == "polygon") {
+		Polygon* pPolygon = new Polygon();
+		for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
+			Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
+			pPolygon->m_vertices.push_back(vertx);
+		}
+		m_pShape = pPolygon;
+		m_pShape->pBody = this;
+	}
 }
 
 void Body::LateInitialize() {
@@ -91,17 +100,24 @@ void Body::SetVelocity(float speed, float angle) {
 }
 
 void Body::DrawDebugShape() {
-	DebugManager& debugMngr = DebugManager::GetInstance();
-
 	switch (m_pShape->type) {
 		case ST_Circle: {
 			Circle* pC = static_cast<Circle*>(m_pShape);
-			debugMngr.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
+			T_DEBUG.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
 			break;
 		}
 		case ST_AABB: {
 			AABB* pRect = static_cast<AABB*>(m_pShape);
-			debugMngr.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
+			T_DEBUG.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
+			break;
+		}
+		case ST_POLYGON: {
+			Polygon* pPoly = static_cast<Polygon*>(m_pShape);
+			for (unsigned int i = 0; i < pPoly->m_vertices.size(); ++i) {
+				Vector3D pointA = pPoly->m_vertices[i] + GetPosition();
+				Vector3D pointB = pPoly->m_vertices[i == pPoly->m_vertices.size() - 1 ? 0: i+1] + GetPosition();
+				T_DEBUG.DrawLine(pointA, pointB, DebugColor::GREEN);
+			}
 			break;
 		}
 	}

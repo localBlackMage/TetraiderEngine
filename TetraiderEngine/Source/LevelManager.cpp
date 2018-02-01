@@ -1,7 +1,5 @@
 #include "LevelManager.h"
-#include "GameStateManager.h"
-#include "GameObjectManager.h"
-#include "GameConfig.h"
+#include "TetraiderAPI.h"
 
 #include "Transform.h"
 #include "Camera.h"
@@ -22,11 +20,10 @@ void LevelManager::Initialize(json j) {
 	firstLevel = currentLevel;
 }
 
+#include <iostream>
 void LevelManager::LoadLevel() {
-	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string s = gameConfig.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
-	json j = OpenJsonFile(s);
-	LoadLevel(j);
+	std::string s = T_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
+	LoadLevel(OpenJsonFile(s));
 }
 
 void LevelManager::UnLoadLevel() {
@@ -43,10 +40,8 @@ void LevelManager::UnLoadLevelForRestart() {
 }
 
 void LevelManager::ChangeLevel(int i) {
-	GameStateManager& gameStateMngr = GameStateManager::GetInstance();
-
 	if (i == currentLevel) {
-		gameStateMngr.SetGameState(GameState::RESTART);
+		T_GAME_STATE.SetGameState(GameState::RESTART);
 	}
 	else if (i >= maxLevel) {
 		printf("LEVEL DOES NOT EXIST IN CONFIG SETTINGS. LOADING LEVEL FAILED\n");
@@ -54,7 +49,7 @@ void LevelManager::ChangeLevel(int i) {
 	}
 	else {
 		currentLevel = i;
-		gameStateMngr.SetGameState(GameState::NEXT_LEVEL);
+		T_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
 	}
 }
 
@@ -67,12 +62,10 @@ void LevelManager::RestartGame() {
 }
 
 void LevelManager::LoadLevel(json j) {
-	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
-
 	// TODO: Hard code this string 'GAME_OBJECTS' into a #define or something somewhere
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
-		GameObject* pGO = gameObjectManager.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
+		GameObject* pGO = T_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
 
 		// TODO: Clean up - Send JSON to the component itself for parsing via component.Override
 		// cycle through pGO's Components, call Override on each, pass json
@@ -95,5 +88,6 @@ void LevelManager::LoadLevel(json j) {
 		}
 	}
 
-	gameObjectManager.UpdateStatus();
+	OnLevelInitialized onLevelInitialized;
+	T_EVENTS.BroadcastEvent(&onLevelInitialized);
 }

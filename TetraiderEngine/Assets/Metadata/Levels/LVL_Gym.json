@@ -4,7 +4,7 @@
       "prefab": "P_Camera"
     },
     {
-      "prefab": "p_Test",
+      "prefab": "P_Player",
       "position": {
         "x": 0,
         "y": 0,
@@ -12,12 +12,12 @@
       }
     },
 	{
-	  "prefab": "P_ColliderTest",
+      "prefab": "P_ColliderTest2",
       "position": {
-        "x": 200,
-        "y": 200,
+        "x": 300,
+        "y": 20,
         "z": 0
       }
-	}
+    }
   ]
 }

@@ -5,11 +5,13 @@
 
 // Forward declaration
 class Component;
+class Event;
 enum class ComponentType;
 
 enum class GameObjectTag {
 	Player,
 	Camera,
+	Enemy,
 
 	NONE
 };
@@ -35,9 +37,7 @@ public:
 	bool m_isCollisionDisabled;
 	bool m_isDestroy;
 	GameObjectTag m_tag;
-	// TODO 
-	// void HandleEvent(Event* pEvent);
-	// void AddEventSubscription(EventType type);
+	void HandleEvent(Event* pEvent);
 private:
 	std::vector<Component*> mComponents;
 	unsigned int m_id;

@@ -51,6 +51,7 @@ public:
 	SurfaceTextureBuffer * GetTexture() const;
 
 	Vector3D GetColor() const { return m_color; }
+	void SetColor(const Vector3D& color) { m_color = color; }
 };
 
 #endif

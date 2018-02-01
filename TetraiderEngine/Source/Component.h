@@ -4,6 +4,7 @@
 #include "JsonReader.h"
 #include "GameObject.h"
 #include "Subscriber.h"
+#include "TetraiderAPI.h"
 
 using json = nlohmann::json;
 using namespace JsonReader;
@@ -15,6 +16,9 @@ enum class ComponentType {
 	Controller,
 	Body,
 	Camera,
+	CamFollow,
+	Health,
+	FlashOnTakeDamage,
 
 	NONE
 };
@@ -29,7 +33,6 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void LateUpdate(float dt) {};
 	virtual void Serialize(json j) = 0;
-
 	virtual void HandleEvent(Event* pEvent) {}
 
 	GameObject *pGO;

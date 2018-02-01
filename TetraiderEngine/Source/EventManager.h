@@ -16,17 +16,11 @@ private:
 	std::vector<Event*> m_events;
 	double m_time;
 
+public:
 	EventManager();
 	~EventManager();
-public:
 	EventManager(const EventManager &) = delete;
 	void operator=(const EventManager &) = delete;
-
-	static EventManager& GetInstance()
-	{
-		static EventManager instance;
-		return instance;
-	}
 
 	void Update(double deltaTime);
 	void AddDelayedEvent(Event * newEvent);

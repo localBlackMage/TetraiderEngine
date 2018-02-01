@@ -1,9 +1,11 @@
 #include "Subscriber.h"
-#include "EventManager.h"
+#include "TetraiderAPI.h"
 #include "SubscriberTracker.h"
 
 Subscriber::Subscriber()
 {
+	// This may need to be removed later. 
+	_AddSubscriberToTracker();
 }
 
 Subscriber::~Subscriber()
@@ -19,7 +21,7 @@ void Subscriber::_AddSubscriberToTracker()
 void Subscriber::_SubscribeToEvents(std::vector<std::string> events)
 {
 	for (std::string eventType : events)
-		EventManager::GetInstance().Subscribe(eventType, this);
+		T_EVENTS.Subscribe(eventType, this);
 }
 
 void Subscriber::AddEventSubscriptionToSubscribeTo(std::string eventType)
@@ -29,10 +31,10 @@ void Subscriber::AddEventSubscriptionToSubscribeTo(std::string eventType)
 
 void Subscriber::SubscribeToEvent(std::string eventType)
 {
-	EventManager::GetInstance().Subscribe(eventType, this);
+	T_EVENTS.Subscribe(eventType, this);
 }
 
 void Subscriber::SubscribeToEvent(EventType eventType)
 {
-	EventManager::GetInstance().Subscribe(eventType, this);
+	T_EVENTS.Subscribe(eventType, this);
 }

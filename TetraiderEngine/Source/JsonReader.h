@@ -27,19 +27,11 @@ using json = nlohmann::json;
 namespace JsonReader {
 	typedef std::string String;
 
-	//template <typename T>
-	//void ParseJsonValue(const json j, T&, T, String);
-
-	//template <typename T>
-	//void ParseJsonValue(const json j, T&, T, String, String);
-
-	//template <typename T>
-	//void ParseJsonValue(const json j, T&, T, String, String, String);
-
 	float ParseFloat(const json j, String);
 	float ParseFloat(const json j, String, String);
 	float ParseFloat(const json j, String, String, String);
 
+	double ParseDouble(const json j, String);
 	double ParseDouble(const json j, String, String);
 	double ParseDouble(const json j, String, String, String);
 
@@ -75,9 +67,6 @@ namespace JsonReader {
 	json OpenJsonFile(String fileName);
 
 	bool KeyIs(json::iterator it, String key);
-	
-
-	//#include "JsonReader.cpp"
 }
 
 #endif

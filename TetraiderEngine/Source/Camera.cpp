@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "Transform.h"
-#include "RenderManager.h"
+#include "TetraiderAPI.h"
 
 Camera::Camera() :
 	Component(ComponentType::Camera),
@@ -58,10 +58,9 @@ void Camera::Update(float dt)
 
 void Camera::LateUpdate(float dt)
 {
-	RenderManager& renderMngr = RenderManager::GetInstance();
-	m_aspectRatio = renderMngr.GetAspectRatio();
-	m_screenWidth = renderMngr.WindowWidth();
-	m_screenHeight = renderMngr.WindowHeight();
+	m_aspectRatio = T_RENDERER.GetAspectRatio();
+	m_screenWidth = T_RENDERER.WindowWidth();
+	m_screenHeight = T_RENDERER.WindowHeight();
 	_CalcViewMatrix();
 	//switch (m_cameraType) {
 	//case CAM_BOTH:
@@ -73,6 +72,7 @@ void Camera::LateUpdate(float dt)
 	//	break;
 	//case CAM_ORTHO:
 	_CalcOrthographicMatrix();
+	_CalcPerspectiveMatrix();
 	//	break;
 	//}
 }
