@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef COLLISIONS_H
 #define COLLISIONS
 
@@ -7,6 +9,9 @@
 class LineSegment2D;
 
 struct MTV {
+	MTV() {}
+	MTV(Vector3D _normal, float _penetration) :
+		normal(_normal), penetration(_penetration) {}
 	Vector3D normal;
 	float penetration;
 };

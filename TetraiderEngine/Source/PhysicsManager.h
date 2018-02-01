@@ -1,34 +1,30 @@
+#pragma once
 #ifndef PHYSICS_MANAGER_H
 #define PHYSICS_MANAGER_H
 
-#include <vector>
+#include "Math/MathLibs.h"
+#include "GameObjectTags.h"
+#include "Event.h"
 #include "Shape.h"
-#include "../Source/Math/Collisions.h"
-#include "../Source/Math/Vector3D.h"
+#include <vector>
 
 // Forward declaration
 class GameObject;
-enum class GameObjectTag;
 class Body;
 
 struct Contact {
-	Body* m_pBody[2];
+	Body* m_pBodies[2];
 	MTV m_MTV;
 };
 
-class PhysicsManager {
-private:
+class PhysicsManager 
+{
+public:
 	PhysicsManager();
 	~PhysicsManager();
-
-public:
 	PhysicsManager(const PhysicsManager &) = delete;
 	void operator=(const PhysicsManager &) = delete;
 
-	static PhysicsManager& GetInstance() {
-		static PhysicsManager instance;
-		return instance;
-	}
 	void Integrate(float dt);
 	void ResolveCollisions();
 	void AddGameObject(GameObject* pGO);

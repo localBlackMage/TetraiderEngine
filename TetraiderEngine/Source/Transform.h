@@ -1,9 +1,10 @@
+#pragma once
+
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
 #include "Component.h"
-#include "Math\Vector3D.h"
-#include "Math\Matrix4x4.h"
+#include "Math\MathLibs.h"
 
 //Forward declaration
 class Body;
@@ -26,6 +27,8 @@ public:
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(json j);
+
+	virtual void HandleEvent(Event * p_event);
 
 	void SetPosition(Vector3D pos);
 	Vector3D GetPosition() const;

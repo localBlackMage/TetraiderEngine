@@ -16,11 +16,11 @@ Creation date: 1/17/18
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 
-#include <map>
-#include <utility>
 #include "Mesh.h"
 #include "DebugLineMesh.h"
 #include "STBSurface.h"
+#include <map>
+#include <utility>
 
 class ResourceManager
 {
@@ -36,22 +36,16 @@ private:
 	std::map<std::string, Mesh*> m_meshes;
 	std::map<std::string, SurfaceTextureBuffer * > m_textures;
 
-	ResourceManager();
-	~ResourceManager();
-
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
 	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir);
 	SurfaceTextureBuffer * _LoadTexture(std::string textureName);
 public:
+	ResourceManager();
+	~ResourceManager();
 	ResourceManager(const ResourceManager &) = delete;
 	void operator=(const ResourceManager &) = delete;
 
-	static ResourceManager& GetInstance()
-	{
-		static ResourceManager instance;
-		return instance;
-	}
-
+	bool Init();
 	DebugLineMesh* GetDebugLineMesh();
 	Mesh * LoadMesh(std::string meshName);
 	Mesh * GetMesh(std::string meshName);

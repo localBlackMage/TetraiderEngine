@@ -1,9 +1,9 @@
+#pragma once
 #ifndef DEBUG_MANAGER_H
 #define DEBUG_MANAGER_H
 
 #include <queue>
-#include "Math/Vector3D.h"
-#include "Math/Matrix4x4.h"
+#include "Math/MathLibs.h"
 
 class GameObject;
 
@@ -36,28 +36,20 @@ enum class DebugColor {
 
 class DebugManager {
 private:
-	DebugManager();
-	~DebugManager();
-
 	Vector3D red, blue, green, grey, yellow, cyan, white, black;
 	std::queue<DebugCommand*> m_debugCommands;
 	bool m_isDebugModeEnabled;
 
 	Vector3D _GetColor(DebugColor color);
 public:
+	DebugManager();
+	~DebugManager();
 	DebugManager(const DebugManager &) = delete;
 	void operator=(const DebugManager &) = delete;
-
-	static DebugManager& GetInstance()
-	{
-		static DebugManager instance;
-		return instance;
-	}
 
 	void SetDebugMode(bool isDebugEnabled) { m_isDebugModeEnabled = isDebugEnabled; };
 
 	void DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor color);
-	void DrawWireRectangle(const Vector3D& pA, float height, float width, DebugColor color);
 	void DrawWireRectangle(const Vector3D& pos, const Vector3D& rot, const Vector3D& scale, DebugColor color);
 	void DrawWireCircle(const Vector3D& pA, float radius, DebugColor color);
 

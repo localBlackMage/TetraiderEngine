@@ -1,7 +1,7 @@
 #include "Collisions.h"
 #include "Vector3D.h"
 #include "LineSegment2D.h"
-#include "..\DebugManager.h"
+#include "../TetraiderAPI.h"
 #include <math.h>
 
 #define EPSILON 0.0001
@@ -279,7 +279,7 @@ float GetOverlap(const Projection& projectionA, const Projection& projectionB) {
 			return projectionB.max - projectionA.min;
 	}
 
-	printf("SAT: Projections are not overlapping\n");
+	//printf("SAT: Projections are not overlapping\n");
 	return 0;
 }
 
@@ -320,8 +320,7 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 				axis.Normalize();
 				mtv.normal = axis;
 				mtv.penetration = fabsf(radius - Vector3D::Distance(projection, circle));
-				DebugManager& debugMngr = DebugManager::GetInstance();
-				debugMngr.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
+				T_DEBUG.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
 				return true;
 			}
 			else {

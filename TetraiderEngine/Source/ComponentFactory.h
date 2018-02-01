@@ -1,3 +1,4 @@
+#pragma once
 #ifndef COMPONENT_FACTORY_H
 #define COMPONENT_FACTORY_H
 

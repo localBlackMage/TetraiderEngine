@@ -1,18 +1,18 @@
 #include "Sprite.h"
-#include "ResourceManager.h"
+#include "TetraiderAPI.h"
 
 using namespace JsonReader;
 
 Sprite::Sprite(std::string textureName) :
-	Component(ComponentType::Sprite), 
+	Component(ComponentType::C_Sprite),
 	m_xTiling(1.0f), 
 	m_yTiling(1.0f), 
 	m_uOffset(0.f),
 	m_vOffset(0.f),
 	m_color(Vector3D()),
 	m_textureName(textureName),
-	m_texture(ResourceManager::GetInstance().GetTexture(textureName)),
-	m_mesh(*ResourceManager::GetInstance().LoadMesh("quad")),
+	m_texture(T_RESOURCES.GetTexture(textureName)),
+	m_mesh(*T_RESOURCES.LoadMesh("quad")),
 	m_shader("")
 {
 }
@@ -25,7 +25,7 @@ void Sprite::Serialize(json j)
 {
 	if (ValueExists(j, "Texture")) {
 		m_textureName = ParseString(j, "Texture");
-		m_texture = ResourceManager::GetInstance().GetTexture(m_textureName);
+		m_texture = T_RESOURCES.GetTexture(m_textureName);
 	}
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
@@ -50,7 +50,7 @@ String Sprite::GetSpriteName() const
 void Sprite::SetSprite(std::string textureName)
 {
 	m_textureName = textureName;
-	m_texture = ResourceManager::GetInstance().GetTexture(m_textureName);
+	m_texture = T_RESOURCES.GetTexture(m_textureName);
 }
 
 GLuint Sprite::GetTextureBuffer() const

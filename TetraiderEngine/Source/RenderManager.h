@@ -15,20 +15,17 @@ Creation date: 1/17/18
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
+#include "Math\MathLibs.h"
 #include <SDL.h>
 #include <string>
 #include <map>
-#include "ShaderProgram.h"
-#include "Shader.h"
-#include "GameObject.h"
 
-#include "STBSurface.h"
-#include "Mesh.h"
-#include "Math\Matrix4x4.h"
-#include "Math\Vector3D.h"
-#include "DebugManager.h"
-
+class DebugManager;
+class GameObject;
+class ShaderProgram;
+class Shader;
 class Sprite;
+enum DebugShape;
 
 class RenderManager
 {
@@ -42,9 +39,6 @@ private:
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
 	std::string m_debugShaderName;
-
-	RenderManager(int width, int height, std::string title);
-	~RenderManager();
 
 	void _InitWindow(std::string title);
 	std::string _LoadTextFile(std::string fname);
@@ -61,19 +55,19 @@ private:
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 
 public:
+	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
+	~RenderManager();
 	RenderManager(const RenderManager &) = delete;
 	void operator=(const RenderManager &) = delete;
-
-	static RenderManager& GetInstance(int width = 1200, int height = 800, std::string title = "Default Window Title")
-	{
-		static RenderManager instance(width, height, title);
-		return instance;
-	}
 
 	bool Init();
 	void FrameStart();
 	void FrameEnd();
 	void Resize(int width, int height);
+
+	void SetWindowWidth(int width);
+	void SetWindowHeight(int height);
+	void SetWindowTitle(std::string title);
 	int WindowWidth() { return m_width; }
 	int WindowHeight() { return m_height; }
 	float GetAspectRatio() const;

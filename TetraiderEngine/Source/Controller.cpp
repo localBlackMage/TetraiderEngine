@@ -1,74 +1,66 @@
+#include "GameObject.h"
 #include "Controller.h"
-#include "Transform.h"
-#include "Body.h"
-#include "InputManager.h"
-#include "PhysicsManager.h"
-#include "DebugManager.h"
-#include "../Source/Math/LineSegment2D.h"
-#include "AudioManager.h"
+#include "Health.h"
+#include "TetraiderAPI.h"
 #include <iostream>
 
 Controller::Controller() :
-	Component(ComponentType::Controller),
-	m_speed (0.0f)
+	Agent(ComponentType::C_Controller)
 {
 }
 
 Controller::~Controller() {}
 
 void Controller::Update(float dt) {
-	InputManager& inputMngr = InputManager::GetInstance();
-	AudioManager& audio = AudioManager::GetInstance();
 	Vector3D posOffset;
 
-	if (inputMngr.IsKeyPressed(SDL_SCANCODE_D))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D))
 		posOffset.x += m_speed;
-	if (inputMngr.IsKeyPressed(SDL_SCANCODE_A))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A))
 		posOffset.x -= m_speed;
-	if (inputMngr.IsKeyPressed(SDL_SCANCODE_W))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W))
 		posOffset.y += m_speed;
-	if (inputMngr.IsKeyPressed(SDL_SCANCODE_S))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S))
 		posOffset.y -= m_speed;
-	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_SPACE))
+	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE))
 	{
-		audio.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
+		T_AUDIO.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
 		std::cout << "shots fired!\n";
 	}
 	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_P))
-		audio.TogglePause();
+		T_AUDIO.TogglePause();
 	m_pBody->SetVelocity(posOffset);
+
+	Vector3D moveDir;
+
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D))
+		moveDir.x += 1;
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A))
+		moveDir.x -= 1;
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W))
+		moveDir.y += 1;
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S))
+		moveDir.y -= 1;
+
+	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q)) {
+		AddVelocity(Vector3D(-750, -750, 0));
+		Health* pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
+		pHealth->TakeDamage(10);
+	}
+
+	moveDir.Normalize();
+	m_targetVelocity = moveDir*m_speed;
+	Agent::Update(dt);
 }
 
 void Controller::Serialize(json j) {
-	m_speed = ParseFloat(j, "speed");
+	Agent::Serialize(j["AgentData"]);
+}
+
+void Controller::HandleEvent(Event* pEvent) {
+	Agent::HandleEvent(pEvent);
 }
 
 void Controller::LateInitialize() {
-	if (!m_pTransform) {
-		if (pGO)
-			m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
-		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pTransform) {
-			printf("No Transform component found. Controller component failed to operate.\n");
-			return;
-		}
-	}
-
-	if (!m_pBody) {
-		if (pGO)
-			m_pBody = static_cast<Body*>(pGO->GetComponent(ComponentType::Body));
-		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pBody) {
-			printf("No Body component found. Controller component failed to operate.\n");
-			return;
-		}
-	}
+	Agent::LateInitialize();
 }

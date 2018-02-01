@@ -1,8 +1,7 @@
 #include "GameObjectManager.h"
-#include "PhysicsManager.h"
 #include "GameObject.h"
 #include "Component.h"
-#include "GameConfig.h"
+#include "TetraiderAPI.h"
 #include <fstream>
 #include <iostream>
 
@@ -10,8 +9,7 @@ using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
 
 GameObjectManager::GameObjectManager() :
-	m_currentId(0),
-	renderMngr(RenderManager::GetInstance())
+	m_currentId(0)
 {}
 
 GameObjectManager::~GameObjectManager() {
@@ -43,7 +41,7 @@ void GameObjectManager::RenderGameObjects()
 {
 	for (GameObject* GO : mGameObjects) {
 		if (GO->m_isActive)
-			renderMngr.RenderGameObject(*m_pCamera, *GO);
+			T_RENDERER.RenderGameObject(*m_pCamera, *GO);
 	}
 }
 
@@ -53,9 +51,8 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 	// TO DO
 	/*if (pGO->GetComponent(CT_UI_ELEMENT))
 		mainManager.pUI_Manager->AddGameObject(pGO);*/
-	if (pGO->GetComponent(ComponentType::Body)) {
-		PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
-		physicsMngr.AddGameObject(pGO);
+	if (pGO->HasComponent(ComponentType::C_Body)) {
+		T_PHYSICS.AddGameObject(pGO);
 	}
 }
 
@@ -65,8 +62,7 @@ void GameObjectManager::DestroyGameObjects() {
 			// TODO
 			// Unsubscribe from events
 			// UI manager list
-			PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
-			physicsMngr.RemoveGameObject(*it);
+			T_PHYSICS.RemoveGameObject(*it);
 			delete (*it);
 			it = mGameObjects.erase(it);
 		}
@@ -111,15 +107,14 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 }
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	GameConfig& gameConfig = GameConfig::GetInstance();
-	std::string s = gameConfig.PrefabsDir() + name + ".json";
+	std::string s = T_GAME_CONFIG.PrefabsDir() + name + ".json";
 	json j = OpenJsonFile(s);
 
 	GameObject *pGameObject = new GameObject(++m_currentId);
 	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
 
 	// TODO: Find a cleaner way to do this?
-	if (pGameObject->m_tag == GameObjectTag::Camera)	m_pCamera = pGameObject;
+	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCamera = pGameObject;
 
 	int size = j[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
@@ -144,11 +139,19 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 }*/
 
 void GameObjectManager::SetGameObjectTag(std::string tag, GameObject* pGO) {
+	pGO->m_tag = FindTagWithString(tag);
+}
+
+GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 	// TODO: Convert Tags to something better, try the trick mentioned by Prof. Rabin
-	if (tag == "Player")
-		pGO->m_tag = GameObjectTag::Player;
-	else if (tag == "Camera")
-		pGO->m_tag = GameObjectTag::Camera;
-	else
-		pGO->m_tag = GameObjectTag::NONE;
+	if (tag == "Player") return GameObjectTag::T_Player;
+	else if (tag == "Camera") return GameObjectTag::T_Camera;
+	else if (tag == "Enemy") return GameObjectTag::T_Enemy;
+	else return GameObjectTag::NONE;
+}
+
+void GameObjectManager::HandleEvent(Event *pEvent) {
+	if (pEvent->Type() == EVENT_OnLevelInitialized) {
+		UpdateStatus();
+	}
 }

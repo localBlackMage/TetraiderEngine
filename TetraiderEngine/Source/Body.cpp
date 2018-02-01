@@ -1,11 +1,12 @@
+#include "GameObject.h"
 #include "Body.h"
 #include "Transform.h"
 #include "Shape.h"
-#include "DebugManager.h"
+#include "TetraiderAPI.h"
 #include <iostream>
 
 Body::Body() :
-	Component(ComponentType::Body),
+	Component(ComponentType::C_Body),
 	m_isStatic(false)
 {
 }
@@ -75,7 +76,7 @@ void Body::Serialize(json j) {
 void Body::LateInitialize() {
 	if (!m_pTransform) {
 		if (pGO)
-			m_pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentType::Transform));
+			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 		else {
 			printf("No Game Object found. Body component failed to operate.\n");
 			return;
@@ -100,17 +101,15 @@ void Body::SetVelocity(float speed, float angle) {
 }
 
 void Body::DrawDebugShape() {
-	DebugManager& debugMngr = DebugManager::GetInstance();
-
 	switch (m_pShape->type) {
 		case ST_Circle: {
 			Circle* pC = static_cast<Circle*>(m_pShape);
-			debugMngr.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
+			T_DEBUG.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
 			break;
 		}
 		case ST_AABB: {
 			AABB* pRect = static_cast<AABB*>(m_pShape);
-			debugMngr.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
+			T_DEBUG.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
 			break;
 		}
 		case ST_POLYGON: {
@@ -118,7 +117,7 @@ void Body::DrawDebugShape() {
 			for (unsigned int i = 0; i < pPoly->m_vertices.size(); ++i) {
 				Vector3D pointA = pPoly->m_vertices[i] + GetPosition();
 				Vector3D pointB = pPoly->m_vertices[i == pPoly->m_vertices.size() - 1 ? 0: i+1] + GetPosition();
-				debugMngr.DrawLine(pointA, pointB, DebugColor::GREEN);
+				T_DEBUG.DrawLine(pointA, pointB, DebugColor::GREEN);
 			}
 			break;
 		}

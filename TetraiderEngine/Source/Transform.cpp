@@ -1,10 +1,10 @@
 #include "Transform.h"
 #include "Body.h"
-
+#include "GameObject.h"
 #include <iostream>
 
 Transform::Transform() :
-	Component(ComponentType::Transform),
+	Component(ComponentType::C_Transform),
 	m_position(Vector3D()), 
 	m_scale(Vector3D()), 
 	m_transform(Matrix4x4()), 
@@ -45,6 +45,10 @@ void Transform::Serialize(json j) {
 	m_pivotOffset = ParseVector3D(j, "pivotOffset");
 }
 
+void Transform::HandleEvent(Event * p_event)
+{
+}
+
 #pragma region Translation
 Vector3D Transform::GetPosition() const
 {
@@ -55,7 +59,7 @@ void Transform::SetPosition(Vector3D pos)
 {
 	m_position = pos;
 
-	Body* pBody = static_cast<Body*>(pGO->GetComponent(ComponentType::Body));
+	Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
 	if (pBody)
 		pBody->m_Position.Set(m_position.x, m_position.y, m_position.z);
 }

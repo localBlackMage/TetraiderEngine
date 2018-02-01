@@ -1,6 +1,7 @@
 #include "PhysicsManager.h"
-#include "Body.h"
 #include "GameObject.h"
+#include "ComponentTypes.h"
+#include "Body.h"
 
 PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_Circle][ST_Circle] = StaticCircleToStaticCircle;
@@ -12,7 +13,6 @@ PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_POLYGON][ST_AABB] = StaticPolygonToStaticAABB;
 	CollisionFunctions[ST_AABB][ST_POLYGON] = StaticAABBToStaticPolygon;
 	CollisionFunctions[ST_Circle][ST_POLYGON] = StaticCircleToStaticPolygon;
-
 	RayCastFunctions[ST_AABB] = RayCastToAABB;
 	RayCastFunctions[ST_Circle] = RayCastToCircle;
 	RayCastFunctions[ST_POLYGON] = RayCastToPolygon;
@@ -25,7 +25,7 @@ PhysicsManager::~PhysicsManager() {
 void PhysicsManager::Integrate(float dt) {
 	int size = m_gameObjects.size();
 	for (int i = 0; i < size; ++i) {
-		Body* c = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		Body* c = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
 		c->Integrate(dt);
 	}
 }
@@ -47,7 +47,20 @@ void PhysicsManager::ResolveCollisions() {
 }
 
 void PhysicsManager::FireEventsToContacts() {
-	//TODO fire events to game objects
+	for (auto contact : m_pContacts) {
+		OnCollideData dataFirst(contact->m_pBodies[0]->pGO, MTV(contact->m_MTV.normal, contact->m_MTV.penetration));
+
+		Vector3D directionOfCenters = contact->m_pBodies[1]->GetPosition() - contact->m_pBodies[0]->GetPosition();
+		if (Vector3D::Dot(directionOfCenters, contact->m_MTV.normal) < 0)
+			dataFirst.mtv.normal = -1 * dataFirst.mtv.normal;
+
+		contact->m_pBodies[1]->pGO->HandleEvent(&Event(EventType::EVENT_OnCollide, &dataFirst));
+
+		dataFirst.mtv.normal = -1* dataFirst.mtv.normal;
+		dataFirst.pGO = contact->m_pBodies[1]->pGO;
+
+		contact->m_pBodies[0]->pGO->HandleEvent(&Event(EventType::EVENT_OnCollide, &dataFirst));
+	}
 }
 
 void PhysicsManager::ClearContacts() {
@@ -61,12 +74,12 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 	if (m_gameObjects.size() <= 1) return;
 
 	for (unsigned int i = 0; i < m_gameObjects.size() - 1; ++i) {
-		Body* pBodyA = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		Body* pBodyA = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
 
 		if (pBodyA->pGO->m_isCollisionDisabled) continue;
 
 		for (unsigned int j = i + 1; j < m_gameObjects.size(); ++j) {
-			Body* pBodyB = static_cast<Body*>(m_gameObjects[j]->GetComponent(ComponentType::Body));
+			Body* pBodyB = m_gameObjects[j]->GetComponent<Body>(ComponentType::C_Body);
 
 			if (pBodyB->pGO->m_isCollisionDisabled) continue;
 
@@ -81,18 +94,16 @@ void PhysicsManager::CheckCollisionsAndGenerateContacts() {
 
 void PhysicsManager::GenerateContact(Body* pBodyA, Body* pBodyB, MTV* pMTV) {
 	Contact* pContact = new Contact();
-	pContact->m_pBody[0] = pBodyA;
-	pContact->m_pBody[1] = pBodyB;
+	pContact->m_pBodies[0] = pBodyA;
+	pContact->m_pBodies[1] = pBodyB;
 	pContact->m_MTV.normal = pMTV->normal;
 	pContact->m_MTV.penetration = pMTV->penetration;
-
-	printf("Penetration: %f\n", pMTV->penetration);
 	m_pContacts.push_back(pContact);
 }
 
 bool PhysicsManager::Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize) {
 	for (unsigned int i = 0; i < m_gameObjects.size(); ++i) {
-		Body* pBody = static_cast<Body*>(m_gameObjects[i]->GetComponent(ComponentType::Body));
+		Body* pBody = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
 		
 		bool isIgnore = false;
 		for (int i = 0; i < layerSize; ++i) {

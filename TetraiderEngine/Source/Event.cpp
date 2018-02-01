@@ -1,34 +1,25 @@
 #include "Event.h"
 #include <unordered_map>
 
-static std::unordered_map<std::string, EventType> TitleMap = {
-
-};
-
 Event::Event(EventType type, double time) :
-	m_time(time), m_type(type)
+	m_time(time), m_type(type), m_data(nullptr)
 {}
 
-Event::~Event()
+Event::Event(EventType type, EventData * eventData, double time) : 
+	m_time(time), m_type(type), m_data(eventData)
 {
 }
 
-double Event::Time() const
-{
-	return m_time;
-}
-
-EventType Event::Type() const
-{
-	return m_type;
-}
-
-void Event::DecrementTime(double amt)
-{
-	m_time -= amt;
-}
+Event::~Event(){}
 
 EventType Event::GetEventTypeFromTitle(std::string eventTitle)
 {
-	return TitleMap[eventTitle];
+	unsigned int idx = 0;
+	for (const char* title : EventNameText) {
+		if (eventTitle == title) {
+			return EventType(idx);
+		}
+		++idx;
+	}
+	return EventType::INVALID_EVENT;
 }

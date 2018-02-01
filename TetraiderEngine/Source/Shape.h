@@ -1,9 +1,10 @@
+#pragma once
 #ifndef SHAPE_H
 #define SHAPE_H
 
 class Body;
 
-#include "..\Source\Math\Vector3D.h"
+#include "Math/MathLibs.h"
 #include <vector>
 
 enum ShapeType {

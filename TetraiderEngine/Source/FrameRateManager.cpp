@@ -20,6 +20,15 @@ FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 
 FrameRateManager::~FrameRateManager() {}
 
+void FrameRateManager::SetMaxFrameRate(unsigned int maxFrameRate)
+{
+	if (maxFrameRate == 0) {
+		m_maxFrameRate = UINT16_MAX;
+	}
+	else { m_maxFrameRate = maxFrameRate; }
+	m_ticksPerFrame = 1000 / m_maxFrameRate;
+}
+
 void FrameRateManager::FrameStart() {
 	m_tickStart = SDL_GetTicks();
 }
@@ -31,8 +40,6 @@ void FrameRateManager::FrameEnd() {
 	}
 	m_frameTime = (float)(m_tickEnd - m_tickStart) / 1000.0f;
 	m_totalElapsedTime += m_frameTime;
-	//std::cout << m_frameTime<<"\n";
-	//std::cout << m_totalElapsedTime << "\n";
 }
 
 void FrameRateManager::ResetElapsedTime() {

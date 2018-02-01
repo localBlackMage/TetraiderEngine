@@ -1,6 +1,6 @@
 #include "DebugManager.h"
-#include "RenderManager.h"
-#include "Math/MathDefs.h"
+#include "TetraiderAPI.h"
+#include "Math/MathLibs.h"
 
 Vector3D DebugManager::_GetColor(DebugColor color) {
 	switch (color) {
@@ -87,14 +87,10 @@ void DebugManager::ClearDebugCommands()
 
 void DebugManager::RenderDebugCommands(const GameObject& camera)
 {
-	//DrawWireRectangle(Vector3D(200, 100, 0), Vector3D(0, 0, 50), Vector3D(100, 200, 0), DebugColor::RED);
-	//DrawWireCircle(Vector3D(-200, -100, 0), 250, DebugColor::GREEN);
-	//DrawLine(Vector3D(-600, 400, 0), Vector3D(600, -400, 0), DebugColor::CYAN);
-	RenderManager& renderMngr = RenderManager::GetInstance();
-	renderMngr._SetUpDebug(camera);
+	T_RENDERER._SetUpDebug(camera);
 	while (!m_debugCommands.empty()) {
 		DebugCommand* debugCommand = m_debugCommands.front();
-		renderMngr._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
+		T_RENDERER._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
 		m_debugCommands.pop();
 	}
 }

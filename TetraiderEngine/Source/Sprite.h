@@ -1,10 +1,10 @@
+#pragma once
 #ifndef SPRITE_H
 #define SPRITE_H
 
 #include "Component.h"
-#include "Math\Vector3D.h"
-#include "Mesh.h"
 #include "STBSurface.h"
+#include "Mesh.h"
 #include <string>
 
 class Sprite : public Component 
@@ -51,6 +51,7 @@ public:
 	SurfaceTextureBuffer * GetTexture() const;
 
 	Vector3D GetColor() const { return m_color; }
+	void SetColor(const Vector3D& color) { m_color = color; }
 };
 
 #endif

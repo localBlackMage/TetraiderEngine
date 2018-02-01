@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "Event.h"
 
 GameObject::GameObject(unsigned int id) : 
 	m_id(id), 
@@ -8,7 +9,6 @@ GameObject::GameObject(unsigned int id) :
 	m_isRender(true) {}
 
 GameObject::~GameObject() {
-	// Delete all components
 	for (auto &comp : mComponents)
 		delete comp;
 
@@ -39,37 +39,23 @@ void GameObject::LateInitialize() {
 		comp->LateInitialize();
 }
 
-// Assumes that type is already set in pComponent
 void GameObject::AddComponent(Component* pComponent) {
 	// Check if component exists before adding
 	pComponent->pGO = this;
 	mComponents.push_back(pComponent);
 }
 
-Component* GameObject::GetComponent(ComponentType const type) {
-	for (auto &comp : mComponents) {
-		if (comp->type == type)
-			return comp;
-	}
-
-	return nullptr;
-}
-
-const Component * GameObject::GetComponent(ComponentType type) const
+bool GameObject::HasComponent(ComponentType type) const
 {
 	for (auto &comp : mComponents) {
-		if (comp->type == type)
-			return comp;
-	}
-
-	return nullptr;
-}
-
-bool GameObject::HasComponent(ComponentType type)
-{
-	for (auto &comp : mComponents) {
-		if (comp->type == type)
+		if (comp->Type() == type)
 			return true;
 	}
 	return false;
+}
+
+void GameObject::HandleEvent(Event* pEvent) {
+	for (auto &comp : mComponents) {
+		comp->HandleEvent(pEvent);
+	}
 }

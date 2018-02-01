@@ -10,6 +10,7 @@ Author: Holden Profit, Hyoyup Chung
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
+#pragma once
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
@@ -32,18 +33,11 @@ private:
 	int mousePosX, mousePosY;
 	int mousePosRelX, mousePosRelY;
 
+public:
 	InputManager();
 	~InputManager();
-
-public:
 	InputManager(const InputManager &) = delete;
 	void operator=(const InputManager &) = delete;
-
-	static InputManager& GetInstance()
-	{
-		static InputManager instance;
-		return instance;
-	}
 
 	void Update();
 	// Keyboard Input

@@ -16,9 +16,8 @@ Creation date: 10/29/17
 #ifndef JSON_READER_H
 #define JSON_READER_H
 
-#include "External\json.hpp"
-#include "Math\Vector2D.h"
-#include "Math\Vector3D.h"
+#include "External/json.hpp"
+#include "Math/MathLibs.h"
 #include <vector>
 #include <string>
 
@@ -27,19 +26,11 @@ using json = nlohmann::json;
 namespace JsonReader {
 	typedef std::string String;
 
-	//template <typename T>
-	//void ParseJsonValue(const json j, T&, T, String);
-
-	//template <typename T>
-	//void ParseJsonValue(const json j, T&, T, String, String);
-
-	//template <typename T>
-	//void ParseJsonValue(const json j, T&, T, String, String, String);
-
 	float ParseFloat(const json j, String);
 	float ParseFloat(const json j, String, String);
 	float ParseFloat(const json j, String, String, String);
 
+	double ParseDouble(const json j, String);
 	double ParseDouble(const json j, String, String);
 	double ParseDouble(const json j, String, String, String);
 
@@ -75,9 +66,6 @@ namespace JsonReader {
 	json OpenJsonFile(String fileName);
 
 	bool KeyIs(json::iterator it, String key);
-	
-
-	//#include "JsonReader.cpp"
 }
 
 #endif
