@@ -5,7 +5,7 @@
 #include "PhysicsManager.h"
 #include "DebugManager.h"
 #include "../Source/Math/LineSegment2D.h"
-
+#include "AudioManager.h"
 #include <iostream>
 
 Controller::Controller() :
@@ -18,7 +18,7 @@ Controller::~Controller() {}
 
 void Controller::Update(float dt) {
 	InputManager& inputMngr = InputManager::GetInstance();
-
+	AudioManager& audio = AudioManager::GetInstance();
 	Vector3D posOffset;
 
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_D))
@@ -29,7 +29,13 @@ void Controller::Update(float dt) {
 		posOffset.y += m_speed;
 	if (inputMngr.IsKeyPressed(SDL_SCANCODE_S))
 		posOffset.y -= m_speed;
-
+	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_SPACE))
+	{
+		audio.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
+		std::cout << "shots fired!\n";
+	}
+	if (inputMngr.IsKeyTriggered(SDL_SCANCODE_P))
+		audio.TogglePause();
 	m_pBody->SetVelocity(posOffset);
 }
 

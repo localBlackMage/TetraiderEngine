@@ -7,6 +7,7 @@
 #include "LevelManager.h"
 #include "PhysicsManager.h"
 #include "DebugManager.h"
+#include "AudioManager.h"
 
 GameStateManager::GameStateManager(): m_previousState(GameState::CURRENT_LEVEL), m_currentState(GameState::CURRENT_LEVEL), m_nextState(GameState::CURRENT_LEVEL) {}
 
@@ -14,8 +15,11 @@ GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
 	LevelManager& levelMngr = LevelManager::GetInstance();
-
+	AudioManager& audio = AudioManager::GetInstance();
 	SDL_Event event;
+
+	//start back ground music
+	audio.PlaySong("../TetraiderEngine/Assets/SFX/bgm.mp3");
 
 	while (m_currentState != GameState::QUIT) {
 		levelMngr.LoadLevel();
@@ -32,6 +36,7 @@ void GameStateManager::Update() {
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_QUIT:
+
 					break;
 				}
 			}
@@ -60,6 +65,7 @@ void GameStateManager::UpdateGameLoop() {
 	InputManager& inputMngr = InputManager::GetInstance();
 	PhysicsManager& physicsMngr = PhysicsManager::GetInstance();
 	DebugManager& debugMngr = DebugManager::GetInstance();
+	AudioManager& audio = AudioManager::GetInstance();
 
 	frameRateMngr.FrameStart();							// Record start of frame
 	renderMngr.FrameStart();							// Clear depth and color
@@ -71,6 +77,7 @@ void GameStateManager::UpdateGameLoop() {
 	physicsMngr.Integrate(dt);							// Move physics bodies
 	physicsMngr.ResolveCollisions();					// Resolve collisions on physics bodies
 	gameObjectMngr.LateUpdate(dt);						// Update game logic that occurs after physics
+	audio.Update(dt);									//Update audio state				
 	gameObjectMngr.RenderGameObjects();					// Render all game objects
 	debugMngr.RenderDebugCommands(*gameObjectMngr.GetActiveCamera());
 

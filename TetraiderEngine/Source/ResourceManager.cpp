@@ -4,6 +4,7 @@
 #include "GameConfig.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
+#include "AudioManager.h"
 
 ResourceManager::ResourceManager()
 {
