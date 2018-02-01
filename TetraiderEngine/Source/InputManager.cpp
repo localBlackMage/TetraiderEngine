@@ -15,15 +15,20 @@ InputManager::InputManager()
 	memset(mCurrentKeyStates, 0, SDL_NUM_SCANCODES * sizeof(Uint8));
 
 	// initialize for SDL_GameController
-	if (SDL_Init(SDL_INIT_JOYSTICK) < 0) {
+	if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) < 0) {
 		printf( "ERROR: SDL_Init() with SDL_INIT_JOYSTICK flag failed!\n");
 	}
-	if (!)
+	// open connected controller	
+	//mGameController = SDL_GameControllerOpen(0);
+
+
+	
 }
 InputManager::~InputManager() {
 	// delete key states
 	delete mCurrentKeyStates;
-	delete mPreviousKeyStates;
+	delete mPreviousKeyStates;			
+	//SDL_GameControllerClose(mGameController);
 }
 
 void InputManager::Update() {
@@ -58,6 +63,15 @@ void InputManager::Update() {
 	// update CurrentKeyStates (only copy what is fetched)
 	memcpy(mCurrentKeyStates, currentKeyStates, fetchedNum * sizeof(Uint8));
 
+	// Update Current GameController States
+	// TODO: get all other btn states and update prev, etc.
+	SDL_GameController *mGameController;
+	mGameController = SDL_GameControllerOpen(0);
+	mGameControllerStates.Up = SDL_GameControllerGetButton(mGameController, SDL_CONTROLLER_BUTTON_DPAD_UP);
+	mGameControllerStates.Down = SDL_GameControllerGetButton(mGameController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+	mGameControllerStates.Left = SDL_GameControllerGetButton(mGameController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+	mGameControllerStates.Right = SDL_GameControllerGetButton(mGameController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
 }
 
 bool InputManager::IsKeyPressed(const SDL_Scancode scancode) {
@@ -72,29 +86,29 @@ bool InputManager::IsKeyReleased(const SDL_Scancode scancode) {
 	return (mCurrentKeyStates[scancode] == 0 && mPreviousKeyStates[scancode] == 1);
 }
 
-bool InputManager::IsMouseButtonPressed(MouseBtn btn) {
-	if (btn == MouseBtn::MOUSEBTN_LEFT)
+bool InputManager::IsMouseButtonPressed(MOUSEBTN btn) {
+	if (btn == MOUSEBTN::MOUSE_BTN_LEFT)
 		return (leftMouse);
-	else if (btn == MouseBtn::MOUSEBTN_RIGHT)
+	else if (btn == MOUSEBTN::MOUSE_BTN_RIGHT)
 		return (rightMouse);
 
 	return false;
 }
 
-bool InputManager::IsMouseButtonTriggered(MouseBtn btn) {
-	if (btn == MouseBtn::MOUSEBTN_LEFT)
+bool InputManager::IsMouseButtonTriggered(MOUSEBTN btn) {
+	if (btn == MOUSEBTN::MOUSE_BTN_LEFT)
 		return (!prevLeftMouse && leftMouse);
-	else if (btn == MouseBtn::MOUSEBTN_RIGHT)
+	else if (btn == MOUSEBTN::MOUSE_BTN_RIGHT)
 		return (!prevRightMouse && rightMouse);
 
 	return false;
 }
 
 
-bool InputManager::IsMouseButtonReleased(MouseBtn btn) {
-	if (btn == MouseBtn::MOUSEBTN_LEFT)
+bool InputManager::IsMouseButtonReleased(MOUSEBTN btn) {
+	if (btn == MOUSEBTN::MOUSE_BTN_LEFT)
 		return (prevLeftMouse && !leftMouse);
-	else if (btn == MouseBtn::MOUSEBTN_RIGHT)
+	else if (btn == MOUSEBTN::MOUSE_BTN_RIGHT)
 		return (prevRightMouse && !rightMouse);
 
 	return false;
@@ -104,3 +118,29 @@ int InputManager::MousePosX() { return mousePosX; }
 int InputManager::MousePosY() { return mousePosY; }
 int InputManager::MousePosRelX() { return mousePosRelX; }
 int InputManager::MousePosRelY() { return mousePosRelY; }
+
+
+bool InputManager::IsKeyPressed(const XBOX_SCANCODE btn) {
+	switch (btn) {
+	case XBOX_SCANCODE::XBOX_DPAD_UP:
+		return mGameControllerStates.Up;
+		break;
+	case XBOX_SCANCODE::XBOX_DPAD_DOWN:
+		return mGameControllerStates.Down;
+		break;
+
+	case XBOX_SCANCODE::XBOX_DPAD_LEFT:
+		return mGameControllerStates.Left;
+		break;
+	case XBOX_SCANCODE::XBOX_DPAD_RIGHT:
+		return mGameControllerStates.Right;
+		break;
+	}
+	return false;
+}
+bool InputManager::IsKeyTriggered(const XBOX_SCANCODE btn) {
+	return false;
+}
+bool InputManager::IsKeyReleased(const XBOX_SCANCODE btn) {
+	return false;
+}
