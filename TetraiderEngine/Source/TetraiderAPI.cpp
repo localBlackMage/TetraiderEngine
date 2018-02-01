@@ -33,7 +33,7 @@ namespace Tetraider {
 	{
 		T_INPUT.Update();									// Update input keys
 		T_EVENTS.Update(deltaTime);							// Pump the event manager
-		T_AUDIO.Update(dt);
+		T_AUDIO.Update(deltaTime);
 		T_GAME_OBJECTS.Update(deltaTime);					// Update game logic
 		T_GAME_OBJECTS.UpdateStatus();						// Update status of game objects
 		T_PHYSICS.Integrate(deltaTime);						// Move physics bodies

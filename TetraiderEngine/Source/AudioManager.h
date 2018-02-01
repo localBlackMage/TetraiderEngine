@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _AUDIO_ENGINE_H_
 #define _AUDIO_ENINGE_H_
 
@@ -17,15 +18,11 @@
 class AudioManager
 {
 public:
-
+	AudioManager();
+	~AudioManager();
 	AudioManager(const AudioManager &) = delete;
 	void operator=(const AudioManager &) = delete;
 
-	static AudioManager& GetInstance()
-	{
-		static AudioManager instance;
-		return instance;
-	}
 	void Update(float elapsed);
 	void LoadSFX(const std::string& path);
 	void LoadSong(const std::string& path);
@@ -41,8 +38,6 @@ public:
 	void ResumeAll();*/
 	void TogglePause();
 private:
-	AudioManager();
-	~AudioManager();
 
 	typedef std::map<std::string, FMOD::Sound*> SoundMap;
 	typedef std::map<FMOD::Sound*, FMOD::Channel*> SFX_ChannelMap;
