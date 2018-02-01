@@ -2,10 +2,10 @@
 #ifndef FLASH_ONTAKEDAMAGE_H
 #define FLASH_ONTAKEDAMAGE_H
 
+class Sprite;
+
 #include "Component.h"
 #include "Math/MathLibs.h"
-
-class Sprite;
 
 class FlashOnTakeDamage : public Component {
 public:

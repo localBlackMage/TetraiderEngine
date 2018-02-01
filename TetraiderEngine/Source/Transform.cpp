@@ -1,7 +1,6 @@
-#include "GameObject.h"
 #include "Transform.h"
 #include "Body.h"
-
+#include "GameObject.h"
 #include <iostream>
 
 Transform::Transform() :

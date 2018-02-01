@@ -27,9 +27,26 @@ public:
 	void Destroy();
 
 	template <typename C>
-	C* GetComponent(ComponentType type);
+	C* GetComponent(ComponentType type) {
+		for (auto &comp : mComponents) {
+			if (comp->Type() == type)
+				return static_cast<C*>(comp);
+		}
+
+		return nullptr;
+	}
+
 	template <typename C>
-	const C* GetComponent(ComponentType type) const;
+	const C * GetComponent(ComponentType type) const
+	{
+		for (auto &comp : mComponents) {
+			if (comp->Type() == type)
+				return static_cast<C*>(comp);
+		}
+
+		return nullptr;
+	}
+
 	bool HasComponent(ComponentType type) const;
 	
 	bool m_isActive;

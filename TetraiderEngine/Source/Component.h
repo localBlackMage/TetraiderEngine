@@ -3,7 +3,6 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "Event.h"
 #include "ComponentTypes.h"
 #include "Subscriber.h"
 #include "JsonReader.h"
@@ -12,6 +11,7 @@ using json = nlohmann::json;
 using namespace JsonReader;
 
 class GameObject;
+class Event;
 
 class Component : 
 	public Subscriber

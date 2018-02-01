@@ -1,6 +1,6 @@
 #include "PhysicsManager.h"
 #include "GameObject.h"
-#include "Component.h"
+#include "ComponentTypes.h"
 #include "Body.h"
 
 PhysicsManager::PhysicsManager() {

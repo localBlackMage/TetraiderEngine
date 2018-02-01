@@ -45,27 +45,6 @@ void GameObject::AddComponent(Component* pComponent) {
 	mComponents.push_back(pComponent);
 }
 
-template <typename C>
-C* GameObject::GetComponent(ComponentType type) {
-	for (auto &comp : mComponents) {
-		if (comp->Type() == type)
-			return static_cast<C*>(comp);
-	}
-
-	return nullptr;
-}
-
-template <typename C>
-const C * GameObject::GetComponent(ComponentType type) const
-{
-	for (auto &comp : mComponents) {
-		if (comp->Type() == type)
-			return static_cast<C*>(comp);
-	}
-
-	return nullptr;
-}
-
 bool GameObject::HasComponent(ComponentType type) const
 {
 	for (auto &comp : mComponents) {
