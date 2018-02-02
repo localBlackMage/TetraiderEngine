@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "ComponentTypes.h"
 #include "Body.h"
+#include "TetraiderAPI.h"
 
 PhysicsManager::PhysicsManager() {
 	CollisionFunctions[ST_Circle][ST_Circle] = StaticCircleToStaticCircle;
@@ -19,7 +20,8 @@ PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
-	m_gameObjects.clear();
+	//m_gameObjects.clear();
+	T_GAME_OBJECTS.DestroyAllGameObjects();
 }
 
 void PhysicsManager::Integrate(float dt) {
@@ -35,9 +37,11 @@ void PhysicsManager::AddGameObject(GameObject* pGO) {
 }
 
 void PhysicsManager::RemoveGameObject(GameObject* pGO) {
-	std::vector<GameObject*>::iterator it = std::find(m_gameObjects.begin(), m_gameObjects.end(), pGO);
-	if (it != m_gameObjects.end())
-		m_gameObjects.erase(it);
+	if (m_gameObjects.size() > 0) {
+		std::vector<GameObject*>::iterator it = std::find(m_gameObjects.begin(), m_gameObjects.end(), pGO);
+		if (it != m_gameObjects.end())
+			m_gameObjects.erase(it);
+	}
 }
 
 void PhysicsManager::ResolveCollisions() {

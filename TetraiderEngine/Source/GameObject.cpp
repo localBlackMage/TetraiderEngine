@@ -13,9 +13,8 @@ GameObject::GameObject(unsigned int id) :
 }
 
 GameObject::~GameObject() {
-	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i)
-	{
-		if (mComponents[i] != nullptr)
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
 			delete mComponents[i];
 	}
 }
@@ -30,25 +29,29 @@ void GameObject::Destroy() {
 }
 
 void GameObject::Update(float dt) {
-	for (auto &comp : mComponents)
-		comp->Update(dt);
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->Update(dt);
+	}
 }
 
 void GameObject::LateUpdate(float dt) {
-	for (auto &comp : mComponents)
-		comp->LateUpdate(dt);
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->LateUpdate(dt);
+	}
 }
 
 void GameObject::LateInitialize() {
-	for (auto &comp : mComponents)
-		comp->LateInitialize();
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->LateInitialize();
+	}
 }
 
 void GameObject::AddComponent(Component* pComponent) {
-	// Check if component exists before adding
 	pComponent->pGO = this;
 	mComponents[pComponent->Type()] = pComponent;
-	//mComponents.push_back(pComponent);
 }
 
 bool GameObject::HasComponent(ComponentType type) const

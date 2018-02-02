@@ -21,6 +21,7 @@ private:
 
 	void _UpdateLookAt();
 public:
+	const static ComponentType test = ComponentType::C_Transform;
 	Transform();
 	~Transform();
 
@@ -29,6 +30,8 @@ public:
 	virtual void Serialize(json j);
 
 	virtual void HandleEvent(Event * p_event);
+
+	bool operator<(const Transform& other) const;
 
 	void SetPosition(Vector3D pos);
 	Vector3D GetPosition() const;

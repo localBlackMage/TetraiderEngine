@@ -49,6 +49,11 @@ void Transform::HandleEvent(Event * p_event)
 {
 }
 
+bool Transform::operator<(const Transform & other) const
+{
+	return m_position.y > other.m_position.y;
+}
+
 #pragma region Translation
 Vector3D Transform::GetPosition() const
 {

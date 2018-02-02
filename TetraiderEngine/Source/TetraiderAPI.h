@@ -8,12 +8,12 @@
 #include "FrameRateManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
-#include "GameObjectManager.h"
 #include "PhysicsManager.h"
 #include "EventManager.h"
 #include "LevelManager.h"
 #include "DebugManager.h"
 #include "AudioManager.h"
+#include "GameObjectManager.h"
 #include "Singleton.h"
 #include <string>
 
@@ -26,11 +26,11 @@
 #define T_INPUT Singleton<InputManager>::GetInstance()
 #define T_RESOURCES Singleton<ResourceManager>::GetInstance()
 //#define T_GO_FACTORY Singleton<GameObjectFactory>::GetInstance()
-#define T_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
-#define T_PHYSICS Singleton<PhysicsManager>::GetInstance()
 #define T_LEVELS Singleton<LevelManager>::GetInstance()
 #define T_DEBUG Singleton<DebugManager>::GetInstance()
 #define T_AUDIO Singleton<AudioManager>::GetInstance()
+#define T_PHYSICS Singleton<PhysicsManager>::GetInstance()
+#define T_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
 
 
 namespace Tetraider {

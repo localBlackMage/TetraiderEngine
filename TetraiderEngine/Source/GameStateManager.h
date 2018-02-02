@@ -2,6 +2,8 @@
 #ifndef GAME_STATE_MANAGER_H
 #define GAME_STATE_MANAGER_H
 
+#include "Subscriber.h"
+
 enum class GameState {
 	QUIT,
 	RESTART,
@@ -11,7 +13,7 @@ enum class GameState {
 	NONE
 };
 
-class GameStateManager
+class GameStateManager : public Subscriber
 {
 private:
 	GameState m_previousState;
@@ -26,6 +28,7 @@ public:
 
 	void SetGameState(GameState);
 	void Update();
+	virtual void HandleEvent(Event* p_event);
 };
 
 #endif

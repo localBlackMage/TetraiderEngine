@@ -1,10 +1,10 @@
 #include "GameStateManager.h"
 #include "TetraiderAPI.h"
 
-GameStateManager::GameStateManager() : 
-	m_previousState(GameState::CURRENT_LEVEL), 
-	m_currentState(GameState::CURRENT_LEVEL), 
-	m_nextState(GameState::CURRENT_LEVEL) 
+GameStateManager::GameStateManager() :
+	m_previousState(GameState::CURRENT_LEVEL),
+	m_currentState(GameState::CURRENT_LEVEL),
+	m_nextState(GameState::CURRENT_LEVEL)
 {}
 
 GameStateManager::~GameStateManager() {}
@@ -39,6 +39,12 @@ void GameStateManager::Update() {
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 	}
+}
+
+void GameStateManager::HandleEvent(Event * p_event)
+{
+	if (p_event->Type() == EventType::WINDOW_CLOSED)
+		m_nextState = GameState::QUIT;
 }
 
 void GameStateManager::SetGameState(GameState state) { m_currentState = state; }

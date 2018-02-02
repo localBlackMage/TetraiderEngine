@@ -8,9 +8,34 @@
 #include <string>
 #include <vector>
 
+enum LAYER {
+	BACKGROUND = 0,
+	ONE,
+	TWO,
+	TREE,
+	UI,
+	NUM_LAYERS,
+	NOT_RENDERED
+};
+
 // Forward declarations
 class GameObject;
 class Event;
+
+class GameObjectLayer {
+private:
+	std::vector<GameObject*> m_layerObjects;
+public:
+	GameObjectLayer() {};
+	~GameObjectLayer() {};
+	GameObjectLayer(const GameObjectLayer &) = delete;
+	void operator=(const GameObjectLayer &) = delete;
+
+	void RenderLayer(GameObject* camera);
+	void AddToLayer(GameObject* pGO);
+	void RemoveFromLayer(GameObject* pGO);
+	void ClearLayer();
+};
 
 class GameObjectManager: public Subscriber
 {
@@ -19,17 +44,23 @@ private:
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
 	GameObject* m_pCamera;
+
+	GameObjectLayer* m_layers[LAYER::NUM_LAYERS];
 	std::vector<GameObject*> mGameObjects;
 	
 	void SetGameObjectTag(std::string tag, GameObject* pGO);
+	void SetGameObjectTag(GameObjectTag tag, GameObject* pGO);
 	void AddGameObject(GameObject* pGO);
 	void AddGameObjectToQueue(GameObject* pGO);
 	void AddGameObjectsFromQueueToMainVector();
-	void DestroyAllGameObjects();
+	
 	void DestroyGameObjects();
 	void HandleEvent(Event *pEvent);
 
+	void _InsertGameObjectIntoList(GameObject* pGO);
+	LAYER _GetLayerFromString(std::string layerName);
 public:
+	void DestroyAllGameObjects();
 	GameObjectManager();
 	~GameObjectManager();
 	GameObjectManager(const GameObjectManager &) = delete;

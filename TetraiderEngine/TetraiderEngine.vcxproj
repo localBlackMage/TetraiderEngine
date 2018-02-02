@@ -118,6 +118,7 @@
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Singleton.h" />
+    <ClInclude Include="Source\Sorting.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\STBSurface.h" />
     <ClInclude Include="Source\Subscriber.h" />

@@ -19,6 +19,7 @@ class Component :
 protected:
 	ComponentType m_type;
 public:
+	const static ComponentType test;
 	Component(ComponentType _type) : m_type(_type) {};
 	virtual ~Component() {};
 	virtual void LateInitialize() {};
