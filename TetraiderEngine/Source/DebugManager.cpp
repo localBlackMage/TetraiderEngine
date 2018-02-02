@@ -1,5 +1,6 @@
 #include "DebugManager.h"
 #include "TetraiderAPI.h"
+#include "GameObject.h"
 #include "Math/MathLibs.h"
 
 Vector3D DebugManager::_GetColor(DebugColor color) {
@@ -85,12 +86,12 @@ void DebugManager::ClearDebugCommands()
 	}
 }
 
-void DebugManager::RenderDebugCommands(const GameObject& camera)
+void DebugManager::RenderDebugCommands()
 {
-	T_RENDERER._SetUpDebug(camera);
+	TETRA_RENDERER._SetUpDebug(*TETRA_GAME_OBJECTS.GetCamera(1));
 	while (!m_debugCommands.empty()) {
 		DebugCommand* debugCommand = m_debugCommands.front();
-		T_RENDERER._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
+		TETRA_RENDERER._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
 		m_debugCommands.pop();
 	}
 }

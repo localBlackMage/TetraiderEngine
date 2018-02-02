@@ -17,20 +17,18 @@
 #include "Singleton.h"
 #include <string>
 
-#define T_GAME_CONFIG Singleton<GameConfig>::GetInstance()
-#define T_GAME_STATE Singleton<GameStateManager>::GetInstance()
-#define T_EVENTS Singleton<EventManager>::GetInstance()
-#define T_FRAMERATE Singleton<FrameRateManager>::GetInstance()
-//#define T_WINDOW Singleton<WindowManager>::GetInstance()
-#define T_RENDERER Singleton<RenderManager>::GetInstance()
-#define T_INPUT Singleton<InputManager>::GetInstance()
-#define T_RESOURCES Singleton<ResourceManager>::GetInstance()
-//#define T_GO_FACTORY Singleton<GameObjectFactory>::GetInstance()
-#define T_LEVELS Singleton<LevelManager>::GetInstance()
-#define T_DEBUG Singleton<DebugManager>::GetInstance()
-#define T_AUDIO Singleton<AudioManager>::GetInstance()
-#define T_PHYSICS Singleton<PhysicsManager>::GetInstance()
-#define T_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
+#define TETRA_GAME_CONFIG Singleton<GameConfig>::GetInstance()
+#define TETRA_GAME_STATE Singleton<GameStateManager>::GetInstance()
+#define TETRA_EVENTS Singleton<EventManager>::GetInstance()
+#define TETRA_FRAMERATE Singleton<FrameRateManager>::GetInstance()
+#define TETRA_RENDERER Singleton<RenderManager>::GetInstance()
+#define TETRA_INPUT Singleton<InputManager>::GetInstance()
+#define TETRA_RESOURCES Singleton<ResourceManager>::GetInstance()
+#define TETRA_LEVELS Singleton<LevelManager>::GetInstance()
+#define TETRA_DEBUG Singleton<DebugManager>::GetInstance()
+#define TETRA_AUDIO Singleton<AudioManager>::GetInstance()
+#define TETRA_PHYSICS Singleton<PhysicsManager>::GetInstance()
+#define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
 
 
 namespace Tetraider {

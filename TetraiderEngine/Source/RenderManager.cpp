@@ -161,7 +161,7 @@ void RenderManager::_SetUpDebug(const GameObject& camera)
 	_SetUpCamera(camera);
 
 	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
-	glBindBuffer(GL_ARRAY_BUFFER, T_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
 	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 }
 
@@ -325,7 +325,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 
 void RenderManager::LoadShaders()
 {
-	std::string shaderDir = T_GAME_CONFIG.ShadersDir();
+	std::string shaderDir = TETRA_GAME_CONFIG.ShadersDir();
 
 	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
 	LoadShaderProgram(shaderDir, "defaultShader.json"); // TODO: Move this

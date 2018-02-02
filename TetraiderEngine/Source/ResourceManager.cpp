@@ -67,7 +67,7 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 
 	STB_Surface * surface = new STB_Surface();
 	if (surface) {
-		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, T_GAME_CONFIG.TexturesDir());
+		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir());
 
 		surface->hasAlpha = info.hasAlpha;
 		surface->data = stbi_load(info.filename.c_str(),

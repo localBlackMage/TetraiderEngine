@@ -17,7 +17,7 @@ bool MeleeAttack::Use(const Vector3D& direction) {
 }
 
 void MeleeAttack::Attack() {
-	if (T_FRAMERATE.GetElapsedTime() - m_lastUsedTimeStamp < m_triggerAttackIn) return;
+	if (TETRA_FRAMERATE.GetElapsedTime() - m_lastUsedTimeStamp < m_triggerAttackIn) return;
 
 	// Do cone calculation here with radius direction and angle on health components
 	m_isAttacking = false;

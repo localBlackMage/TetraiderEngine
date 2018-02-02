@@ -320,7 +320,7 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 				axis.Normalize();
 				mtv.normal = axis;
 				mtv.penetration = fabsf(radius - Vector3D::Distance(projection, circle));
-				T_DEBUG.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
+				TETRA_DEBUG.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
 				return true;
 			}
 			else {

@@ -21,7 +21,7 @@ void Subscriber::_AddSubscriberToTracker()
 void Subscriber::_SubscribeToEvents(std::vector<std::string> events)
 {
 	for (std::string eventType : events)
-		T_EVENTS.Subscribe(eventType, this);
+		TETRA_EVENTS.Subscribe(eventType, this);
 }
 
 void Subscriber::AddEventSubscriptionToSubscribeTo(std::string eventType)
@@ -31,10 +31,10 @@ void Subscriber::AddEventSubscriptionToSubscribeTo(std::string eventType)
 
 void Subscriber::SubscribeToEvent(std::string eventType)
 {
-	T_EVENTS.Subscribe(eventType, this);
+	TETRA_EVENTS.Subscribe(eventType, this);
 }
 
 void Subscriber::SubscribeToEvent(EventType eventType)
 {
-	T_EVENTS.Subscribe(eventType, this);
+	TETRA_EVENTS.Subscribe(eventType, this);
 }

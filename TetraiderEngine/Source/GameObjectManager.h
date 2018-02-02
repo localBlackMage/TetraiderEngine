@@ -5,18 +5,10 @@
 #include "GameObjectTags.h"
 #include "ComponentFactory.h"
 #include "Subscriber.h"
+#include "Layers.h"
 #include <string>
 #include <vector>
 
-enum LAYER {
-	BACKGROUND = 0,
-	ONE,
-	TWO,
-	TREE,
-	UI,
-	NUM_LAYERS,
-	NOT_RENDERED
-};
 
 // Forward declarations
 class GameObject;
@@ -28,8 +20,8 @@ private:
 public:
 	GameObjectLayer() {};
 	~GameObjectLayer() {};
-	GameObjectLayer(const GameObjectLayer &) = delete;
-	void operator=(const GameObjectLayer &) = delete;
+	GameObjectLayer(const GameObjectLayer & rhs);
+	void operator=(const GameObjectLayer & rhs);
 
 	void RenderLayer(GameObject* camera);
 	void AddToLayer(GameObject* pGO);
@@ -37,19 +29,21 @@ public:
 	void ClearLayer();
 };
 
+
 class GameObjectManager: public Subscriber
 {
 private:
 	unsigned int m_currentId;
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
-	GameObject* m_pCamera;
+	std::vector<GameObject*> m_pCameras;
 
-	GameObjectLayer* m_layers[LAYER::NUM_LAYERS];
+	GameObjectLayer m_layers[RENDER_LAYER::L_NUM_LAYERS];
 	std::vector<GameObject*> mGameObjects;
 	
 	void SetGameObjectTag(std::string tag, GameObject* pGO);
 	void SetGameObjectTag(GameObjectTag tag, GameObject* pGO);
+	void SetGameObjectLayer(std::string layer, GameObject* pGO);
 	void AddGameObject(GameObject* pGO);
 	void AddGameObjectToQueue(GameObject* pGO);
 	void AddGameObjectsFromQueueToMainVector();
@@ -58,9 +52,7 @@ private:
 	void HandleEvent(Event *pEvent);
 
 	void _InsertGameObjectIntoList(GameObject* pGO);
-	LAYER _GetLayerFromString(std::string layerName);
 public:
-	void DestroyAllGameObjects();
 	GameObjectManager();
 	~GameObjectManager();
 	GameObjectManager(const GameObjectManager &) = delete;
@@ -69,14 +61,17 @@ public:
 	void Update(float dt);
 	void LateUpdate(float dt);
 	void RenderGameObjects();
+	void DestroyAllGameObjects();
+	void UpdateStatus();
+
+	// TODO: This method is a temporary hack for getting a camera, a more thorough 
+	// architecture should be implemented
+	GameObject* GetCamera(int camIndex) const { return m_pCameras[camIndex]; }
 
 	GameObject* CreateGameObject(std::string name);
 	GameObjectTag GameObjectManager::FindTagWithString(std::string tag);
-	void UpdateStatus();
-	// Component* AddComponentToGameObject(GameObject* pGO, json j);
 	GameObject* FindObjectWithTag(GameObjectTag tag);
-	
-	GameObject* GetActiveCamera();
+	RENDER_LAYER GetLayerFromString(std::string layerName);
 };
 
 #endif

@@ -20,8 +20,8 @@ PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
-	//m_gameObjects.clear();
-	T_GAME_OBJECTS.DestroyAllGameObjects();
+	m_gameObjects.clear();
+	//T_GAME_OBJECTS.DestroyAllGameObjects(); // THIS IS CAUSING A CRASH, DON'T DO. BAD. NO. BAD PROGRAMMER.
 }
 
 void PhysicsManager::Integrate(float dt) {

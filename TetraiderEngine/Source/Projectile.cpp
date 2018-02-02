@@ -9,7 +9,7 @@
 Projectile::Projectile() : Component(C_Projectile) {}
 
 void Projectile::Update(float dt) {
-	if (T_FRAMERATE.GetElapsedTime() - m_creationLifeTime > m_lifeTime)
+	if (TETRA_FRAMERATE.GetElapsedTime() - m_creationLifeTime > m_lifeTime)
 		pGO->Destroy();
 }
 
@@ -37,7 +37,7 @@ void Projectile::SetProperties(const Vector3D& position, int damage, float speed
 	m_lifeTime = lifeTime;
 	m_isEnemyProjectile = isEnemyProjectile;
 	m_pBody->SetVelocity(speed*dir);
-	m_creationLifeTime = T_FRAMERATE.GetElapsedTime();
+	m_creationLifeTime = TETRA_FRAMERATE.GetElapsedTime();
 }
 
 void Projectile::LateInitialize() {

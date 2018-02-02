@@ -2,13 +2,14 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
+#include <algorithm>
 
 Camera::Camera() :
 	Component(ComponentType::C_Camera),
 	m_fov(105.f), m_aspectRatio(1.f), m_screenWidth(1), m_screenHeight(1),
 	m_viewMatrix(Matrix4x4()), m_perspectiveMatrix(Matrix4x4()), m_orthographicMatrix(Matrix4x4())
 {
-
+	std::fill_n(m_layersToRender, int(RENDER_LAYER::L_NUM_LAYERS), false);
 }
 
 Camera::~Camera()
@@ -45,6 +46,11 @@ void Camera::_CalcOrthographicMatrix()
 void Camera::Serialize(json j)
 {
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
+	std::vector<std::string> layers = j["layers"];
+
+	for (std::string layer : layers) {
+		m_layersToRender[TETRA_GAME_OBJECTS.GetLayerFromString(layer)] = true;
+	}
 }
 
 void Camera::LateInitialize()
@@ -59,9 +65,9 @@ void Camera::Update(float dt)
 
 void Camera::LateUpdate(float dt)
 {
-	m_aspectRatio = T_RENDERER.GetAspectRatio();
-	m_screenWidth = T_RENDERER.WindowWidth();
-	m_screenHeight = T_RENDERER.WindowHeight();
+	m_aspectRatio = TETRA_RENDERER.GetAspectRatio();
+	m_screenWidth = TETRA_RENDERER.WindowWidth();
+	m_screenHeight = TETRA_RENDERER.WindowHeight();
 	_CalcViewMatrix();
 	//switch (m_cameraType) {
 	//case CAM_BOTH:
@@ -76,6 +82,16 @@ void Camera::LateUpdate(float dt)
 	_CalcPerspectiveMatrix();
 	//	break;
 	//}
+}
+
+bool Camera::ShouldRenderLayer(RENDER_LAYER layer) const
+{
+	return m_layersToRender[layer];
+}
+
+bool Camera::ShouldRenderLayer(int layer) const
+{
+	return m_layersToRender[layer];
 }
 
 float Camera::GetFOV() const

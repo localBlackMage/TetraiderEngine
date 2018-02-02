@@ -407,5 +407,8 @@
     <ClInclude Include="Source\Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Layers.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

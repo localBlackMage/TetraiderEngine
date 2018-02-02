@@ -14,15 +14,10 @@
 	  },
 	  "2D": false
     },
-	{
-	  "Component": "CamFollow",
-	  "followSpeed": 10,
-	  "defaultTargetTag": "Player"
-	},
     {
       "Component": "Camera",
       "fov": 105,
-	  "layers": ["BG", "1", "2", "3"]
+	  "layers": ["UI"]
     }
   ]
 }

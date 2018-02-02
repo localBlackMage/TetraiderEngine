@@ -14,7 +14,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 
 	Transform* pTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
 	Vector3D instantiatePos = pTransform->GetPosition() + m_offset*direction;
-	GameObject* pProjectileGO = T_GAME_OBJECTS.CreateGameObject(projectilePrefab);
+	GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(projectilePrefab);
 	Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 
 	bool isEnemyProjectile = false;

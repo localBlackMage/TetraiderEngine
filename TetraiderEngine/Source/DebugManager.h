@@ -54,7 +54,7 @@ public:
 	void DrawWireCircle(const Vector3D& pA, float radius, DebugColor color);
 
 	void ClearDebugCommands();
-	void RenderDebugCommands(const GameObject& camera);
+	void RenderDebugCommands();
 };
 
 #endif

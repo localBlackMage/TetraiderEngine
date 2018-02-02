@@ -12,10 +12,10 @@ GameStateManager::~GameStateManager() {}
 void GameStateManager::Update() {
 
 	//start back ground music
-	T_AUDIO.PlaySong("../TetraiderEngine/Assets/SFX/bgm.mp3");
+	TETRA_AUDIO.PlaySong("../TetraiderEngine/Assets/SFX/bgm.mp3");
 
 	while (m_currentState != GameState::QUIT) {
-		T_LEVELS.LoadLevel();
+		TETRA_LEVELS.LoadLevel();
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;

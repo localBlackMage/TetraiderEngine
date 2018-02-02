@@ -38,10 +38,10 @@ void Animation::Update(float dt) {
 	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
 
 	// Test code remove later
-	if(T_INPUT.IsKeyTriggered(SDL_SCANCODE_1)) {
+	if(TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_1)) {
 		ChangeAnimation(0);
 	}
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_2)) {
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_2)) {
 		ChangeAnimation(1);
 	}
 }

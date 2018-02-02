@@ -14,24 +14,24 @@ Controller::~Controller() {}
 void Controller::Update(float dt) {
 	Vector3D moveDir;
 
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| T_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A) || T_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
 		moveDir.x -= 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W) || T_INPUT.IsKeyPressed(XBOX_DPAD_UP))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_W) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_UP))
 		moveDir.y += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S) || T_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_S) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
 
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE))
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE))
 	{
-		T_AUDIO.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
+		TETRA_AUDIO.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
 		std::cout << "shots fired!\n";
 	}
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
-		T_AUDIO.TogglePause();
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
+		TETRA_AUDIO.TogglePause();
 
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || T_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)){
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)){
 		AddVelocity(Vector3D(-750, -750, 0));
 		Health* pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
 		pHealth->TakeDamage(10);

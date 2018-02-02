@@ -3,9 +3,11 @@
 #define CAMERA_H
 
 #include "Component.h"
+#include "Layers.h"
 #include "Math\MathLibs.h"
 
 class Transform;
+enum RENDER_LAYER;
 
 class Camera : public Component
 {
@@ -15,6 +17,7 @@ private:
 	float m_fov, m_aspectRatio;
 	unsigned int m_screenWidth, m_screenHeight;
 	Matrix4x4 m_viewMatrix, m_perspectiveMatrix, m_orthographicMatrix;
+	bool m_layersToRender[RENDER_LAYER::L_NUM_LAYERS];
 
 	Matrix4x4 _MatrixFromCameraVectors(const Vector3D& right, const Vector3D& up, const Vector3D& forward);
 	void _CalcViewMatrix();
@@ -29,6 +32,8 @@ public:
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(json j);
 
+	bool ShouldRenderLayer(RENDER_LAYER layer) const;
+	bool ShouldRenderLayer(int layer) const;
 	float GetFOV() const;
 	float GetAspect() const;
 	Matrix4x4 GetViewMatrix() const;

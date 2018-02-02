@@ -44,6 +44,6 @@ void CamFollow::LateUpdate(float dt) {
 
 void CamFollow::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
-		m_pTarget = T_GAME_OBJECTS.FindObjectWithTag(T_GAME_OBJECTS.FindTagWithString(m_defaultTargetTag));
+		m_pTarget = TETRA_GAME_OBJECTS.FindObjectWithTag(TETRA_GAME_OBJECTS.FindTagWithString(m_defaultTargetTag));
 	}
 }

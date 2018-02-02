@@ -23,7 +23,7 @@ void LevelManager::Initialize(json j) {
 }
 
 void LevelManager::LoadLevel() {
-	std::string s = T_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
+	std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
 	LoadLevel(OpenJsonFile(s));
 }
 
@@ -42,7 +42,7 @@ void LevelManager::UnLoadLevelForRestart() {
 
 void LevelManager::ChangeLevel(int i) {
 	if (i == currentLevel) {
-		T_GAME_STATE.SetGameState(GameState::RESTART);
+		TETRA_GAME_STATE.SetGameState(GameState::RESTART);
 	}
 	else if (i >= maxLevel) {
 		printf("LEVEL DOES NOT EXIST IN CONFIG SETTINGS. LOADING LEVEL FAILED\n");
@@ -50,7 +50,7 @@ void LevelManager::ChangeLevel(int i) {
 	}
 	else {
 		currentLevel = i;
-		T_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
+		TETRA_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
 	}
 }
 
@@ -66,7 +66,7 @@ void LevelManager::LoadLevel(json j) {
 	// TODO: Hard code this string 'GAME_OBJECTS' into a #define or something somewhere
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
-		GameObject* pGO = T_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
+		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
 
 		// TODO: Clean up - Send JSON to the component itself for parsing via component.Override
 		// cycle through pGO's Components, call Override on each, pass json
@@ -89,5 +89,5 @@ void LevelManager::LoadLevel(json j) {
 		}
 	}
 
-	T_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
+	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 }

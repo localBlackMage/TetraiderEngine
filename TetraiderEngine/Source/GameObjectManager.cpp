@@ -1,21 +1,12 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "Camera.h"
 #include "Transform.h"
 #include "Sorting.h"
 #include "TetraiderAPI.h"
 #include <fstream>
 #include <iostream>
-#include <unordered_map>
-
-static std::unordered_map<std::string, LAYER> LAYER_STRINGS = {
-	{ "N/A", LAYER::NOT_RENDERED },
-	{ "BG", LAYER::BACKGROUND },
-	{ "1", LAYER::ONE },
-	{ "2", LAYER::TWO },
-	{ "3", LAYER::TREE },
-	{ "UI", LAYER::UI }
-};
 
 using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
@@ -28,13 +19,20 @@ static bool SortTransformY(GameObject*left, GameObject*right)
 	return tLeft->GetPosition().y > tRight->GetPosition().y;
 }
 
+#pragma region GameObjectLayer
 
+GameObjectLayer::GameObjectLayer(const GameObjectLayer & rhs) : m_layerObjects(rhs.m_layerObjects) {}
+
+void GameObjectLayer::operator=(const GameObjectLayer & rhs)
+{
+	m_layerObjects = rhs.m_layerObjects;
+}
 
 void GameObjectLayer::RenderLayer(GameObject* camera)
 {
 	for (GameObject* pGO : m_layerObjects) {
 		if (pGO->m_isActive)
-			T_RENDERER.RenderGameObject(*camera, *pGO);
+			TETRA_RENDERER.RenderGameObject(*camera, *pGO);
 	}
 }
 
@@ -57,27 +55,17 @@ void GameObjectLayer::ClearLayer()
 	m_layerObjects.clear();
 }
 
+#pragma endregion
 
 
 
 
 
-
-GameObjectManager::GameObjectManager() :
-	m_currentId(0)
-{
-	for (int i = 0; i < LAYER::NUM_LAYERS; ++i) {
-		m_layers[i] = new GameObjectLayer(); // TODO: Move to memory manager
-	}
-}
+GameObjectManager::GameObjectManager() : m_currentId(0) {}
 
 GameObjectManager::~GameObjectManager() {
 	DestroyAllGameObjects();
 	mGameObjects.clear();
-
-	for (int i = 0; i < LAYER::NUM_LAYERS; ++i) {
-		delete m_layers[i]; // TODO: Move to memory manager
-	}
 }
 
 void GameObjectManager::Update(float dt) {
@@ -102,27 +90,29 @@ void GameObjectManager::LateUpdate(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	for (int layer = 0; layer < LAYER::NUM_LAYERS; ++layer) {
-		m_layers[layer]->RenderLayer(m_pCamera);
+	for (GameObject* cameraGO : m_pCameras) {
+		Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
+		for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
+			if (cameraComp->ShouldRenderLayer(layer))
+				m_layers[layer].RenderLayer(cameraGO);
+		}
 	}
 }
 
 void GameObjectManager::AddGameObject(GameObject* pGO) {
 	_InsertGameObjectIntoList(pGO);
 
-	// TO DO
-	/*if (pGO->GetComponent(CT_UI_ELEMENT))
-		mainManager.pUI_Manager->AddGameObject(pGO);*/
 	if (pGO->HasComponent(ComponentType::C_Body)) {
-		T_PHYSICS.AddGameObject(pGO);
+		TETRA_PHYSICS.AddGameObject(pGO);
 	}
 }
 
 void GameObjectManager::DestroyGameObjects() {
 	for (std::vector<GameObject*>::iterator it = mGameObjects.begin(); it != mGameObjects.end();) {
 		if ((*it)->m_isDestroy) {
-			m_layers[(*it)->GetLayer()]->RemoveFromLayer(*it);
-			T_PHYSICS.RemoveGameObject(*it);
+			if ((*it)->GetLayer() != L_NOT_RENDERED)
+				m_layers[(*it)->GetLayer()].RemoveFromLayer(*it);
+			TETRA_PHYSICS.RemoveGameObject(*it);
 			delete (*it); // TODO: Move to memory manager
 			it = mGameObjects.erase(it);
 		}
@@ -149,11 +139,6 @@ GameObject* GameObjectManager::FindObjectWithTag(GameObjectTag tag) {
 	return 0;
 }
 
-GameObject * GameObjectManager::GetActiveCamera()
-{
-	return m_pCamera;
-}
-
 void GameObjectManager::AddGameObjectToQueue(GameObject* pGO) {
 	m_GameObjectsQueue.push_back(pGO);
 }
@@ -167,14 +152,15 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 }
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	std::string s = T_GAME_CONFIG.PrefabsDir() + name + ".json";
+	std::string s = TETRA_GAME_CONFIG.PrefabsDir() + name + ".json";
 	json j = OpenJsonFile(s);
 
 	GameObject *pGameObject = new GameObject(++m_currentId); // TODO: Move to memory manager
 	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
+	SetGameObjectLayer(ParseString(j, "Layer"), pGameObject);
 
 	// TODO: Find a cleaner way to do this?
-	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCamera = pGameObject;
+	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCameras.push_back(pGameObject);
 
 	int size = j[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
@@ -207,6 +193,11 @@ void GameObjectManager::SetGameObjectTag(GameObjectTag tag, GameObject * pGO)
 	pGO->m_tag = tag;
 }
 
+void GameObjectManager::SetGameObjectLayer(std::string layer, GameObject * pGO)
+{
+	pGO->SetLayer(GetLayerFromString(layer));
+}
+
 GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 	// TODO: Convert Tags to something better, try the trick mentioned by Prof. Rabin
 	if (tag == "Player") return GameObjectTag::T_Player;
@@ -227,12 +218,11 @@ void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO)
 {
 	mGameObjects.push_back(pGO);
 
-	pGO->SetLayer(LAYER::BACKGROUND);
-	if (pGO->GetLayer() != LAYER::NOT_RENDERED)
-		m_layers[pGO->GetLayer()]->AddToLayer(pGO);
+	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
+		m_layers[pGO->GetLayer()].AddToLayer(pGO);
 }
 
-LAYER GameObjectManager::_GetLayerFromString(std::string layerName)
+RENDER_LAYER GameObjectManager::GetLayerFromString(std::string layerName)
 {
-	return LAYER_STRINGS[layerName];
+	return RENDER_LAYER_STRINGS[layerName];
 }

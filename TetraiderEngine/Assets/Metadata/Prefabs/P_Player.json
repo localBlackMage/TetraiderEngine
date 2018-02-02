@@ -1,5 +1,6 @@
 {
   "Tag": "Player",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",

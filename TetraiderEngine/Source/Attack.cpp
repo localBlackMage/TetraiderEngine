@@ -5,7 +5,7 @@
 bool Attack::Use(const Vector3D& direction) {
 	if (m_isOnCooldown) return false;
 
-	m_lastUsedTimeStamp = T_FRAMERATE.GetElapsedTime();
+	m_lastUsedTimeStamp = TETRA_FRAMERATE.GetElapsedTime();
 	m_isOnCooldown = true;
 	m_isAttacking = true;
 	return true;
@@ -13,7 +13,7 @@ bool Attack::Use(const Vector3D& direction) {
 
 void Attack::Update(float dt) {
 	if (m_isOnCooldown) {
-		if (T_FRAMERATE.GetElapsedTime() - m_lastUsedTimeStamp > m_coolDown)
+		if (TETRA_FRAMERATE.GetElapsedTime() - m_lastUsedTimeStamp > m_coolDown)
 			m_isOnCooldown = false;
 	}
 }

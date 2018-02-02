@@ -7,11 +7,11 @@
 #include "Subscriber.h"
 #include "GameObjectTags.h"
 #include "ComponentTypes.h"
+#include "Layers.h"
 
 // Forward declaration
 class Event;
 class Component;
-enum LAYER;
 
 class GameObject : public Subscriber 
 {
@@ -37,7 +37,7 @@ public:
 	void LateInitialize();
 	void Destroy();
 
-	void SetLayer(LAYER layer) { m_layer = layer; }
+	void SetLayer(RENDER_LAYER layer) { m_layer = layer; }
 	unsigned short GetLayer() { return m_layer; }
 	unsigned int ID() const { return m_id; }
 	void AddComponent(Component* pComponent);

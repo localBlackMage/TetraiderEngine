@@ -38,7 +38,7 @@ void InputManager::Update() {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_QUIT:
-				T_EVENTS.BroadcastEvent(&Event(EventType::WINDOW_CLOSED));
+				TETRA_EVENTS.BroadcastEvent(&Event(EventType::WINDOW_CLOSED));
 				break;
 		}
 	}

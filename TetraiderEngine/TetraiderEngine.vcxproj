@@ -97,6 +97,7 @@
     <ClInclude Include="Source\Health.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\JsonReader.h" />
+    <ClInclude Include="Source\Layers.h" />
     <ClInclude Include="Source\LevelManager.h" />
     <ClInclude Include="Source\Math\Collisions.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
