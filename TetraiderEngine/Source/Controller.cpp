@@ -14,15 +14,14 @@ Controller::~Controller() {}
 void Controller::Update(float dt) {
 	Vector3D moveDir;
 
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| T_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A) || T_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
 		moveDir.x -= 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W) || T_INPUT.IsKeyPressed(XBOX_DPAD_UP))
 		moveDir.y += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S) || T_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
-
 
 	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE))
 	{
@@ -32,7 +31,7 @@ void Controller::Update(float dt) {
 	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
 		T_AUDIO.TogglePause();
 
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q)) {
+	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || T_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)){
 		AddVelocity(Vector3D(-750, -750, 0));
 		Health* pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
 		pHealth->TakeDamage(10);
