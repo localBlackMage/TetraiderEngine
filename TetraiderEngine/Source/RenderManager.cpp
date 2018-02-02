@@ -177,6 +177,9 @@ void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color
 	case DebugShape::S_LINE:
 		_RenderLine(color, pos, rot, scale);
 		break;
+	case DebugShape::S_CONE:
+		_RenderCone(color, pos, rot, scale);
+		break;
 	}
 }
 
@@ -188,8 +191,8 @@ void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, co
 		halfHeight = scale.y / 2.f;
 
 	// square base matrix
-	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, Vector3D(0, 0, 1, 0));
-	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, Vector3D(0, 0, 1, 0)) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
+	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, ZAXIS);
+	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, ZAXIS) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
 	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 0.f);
 
 	Matrix4x4 Left = Base
@@ -232,7 +235,7 @@ void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Ve
 	float lineLength = Vector3D::Distance(a, b);
 	// circle base matrix
 	Matrix4x4 Base = Matrix4x4::Translate(Vector3D(radius, 0, 0))
-		* Matrix4x4::Rotate(90.f, Vector3D(0, 0, 1))
+		* Matrix4x4::Rotate(90.f, ZAXIS)
 		* Matrix4x4::Scale(lineLength, 0, 0);
 	Matrix4x4 Position = Matrix4x4::Translate(pos);
 	for (int i = 0; i < max; ++i) {
@@ -250,11 +253,62 @@ void RenderManager::_RenderLine(const Vector3D & color, const Vector3D & pos, co
 	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
 
 	Matrix4x4 model = Matrix4x4::Translate(pos) * 
-		Matrix4x4::Rotate(rot.z, Vector3D(0, 0, 1)) *
+		Matrix4x4::Rotate(rot.z, ZAXIS) *
 		Matrix4x4::Scale(scale.x) * 
 		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
 
 	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)model);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+}
+
+void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & arcWidthAndRadius)
+{
+	float arcWidth = arcWidthAndRadius.x;
+	float radius = arcWidthAndRadius.y;
+
+	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+
+	Matrix4x4 ArcMatrix;
+	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
+	int max = 360;
+	float degreeAmt = arcWidth / float(max);
+	float offset = rot.z - (arcWidth / 2.f);
+	//max += int(rot.z);
+	Vector3D AXIS_Z = Vector3D(0, 0, 1);
+	Vector3D a = pos + Vector3D(radius, 0, 0);
+	Vector3D b = Matrix4x4::Rotate(degreeAmt, AXIS_Z) * a;
+	float lineLength = Vector3D::Distance(a, b);
+	// Draw cone arc
+	// circle base matrix
+	Matrix4x4 Base = Matrix4x4::Translate(Vector3D(radius, 0, 0))
+		* Matrix4x4::Rotate(90.f, ZAXIS)
+		* Matrix4x4::Scale(lineLength, 0, 0);
+	Matrix4x4 Position = Matrix4x4::Translate(pos);
+	for (int i = 0; i < max; ++i) {
+		ArcMatrix = Position
+			* Matrix4x4::Rotate(degreeAmt * float(i) + offset, AXIS_Z)
+			* Base;
+
+		glUniformMatrix4fv(modelMatrix, 1, true, (float*)ArcMatrix);
+		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+	}
+	
+
+	// Draw cone lines
+	Matrix4x4 model = Matrix4x4::Translate(pos) *
+		Matrix4x4::Rotate(rot.z + (arcWidth / 2.f), ZAXIS) *
+		Matrix4x4::Scale(radius) *
+		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
+
+	glUniformMatrix4fv(modelMatrix, 1, true, (float*)model);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+	model = Matrix4x4::Translate(pos) *
+		Matrix4x4::Rotate(rot.z - (arcWidth / 2.f), ZAXIS) *
+		Matrix4x4::Scale(radius) *
+		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
+
 	glUniformMatrix4fv(modelMatrix, 1, true, (float*)model);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
@@ -305,7 +359,7 @@ void RenderManager::SetWindowHeight(int height)
 
 void RenderManager::SetWindowTitle(std::string title)
 {
-	// TODO: FINISH THIS
+	SDL_SetWindowTitle(m_pWindow, title.c_str());
 }
 
 float RenderManager::GetAspectRatio() const

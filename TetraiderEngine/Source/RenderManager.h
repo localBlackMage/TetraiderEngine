@@ -53,6 +53,7 @@ private:
 	void _RenderRect(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 	void _RenderCircle(const Vector3D & color, float radius, const Vector3D& position);
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
+	void _RenderCone(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& arcWidthAndRadius);
 
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
