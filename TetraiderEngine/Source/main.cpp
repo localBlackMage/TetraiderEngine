@@ -5,9 +5,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 {
 	//TODO load sound from somewhere else
 	//Load audio
-	TETRA_AUDIO.LoadSong("../TetraiderEngine/Assets/SFX/bgm.mp3");
-	TETRA_AUDIO.LoadSFX("../TetraiderEngine/Assets/SFX/pew.mp3");
-
+	TETRA_RESOURCES.LoadSong("../TetraiderEngine/Assets/SFX/bgm.mp3");
+	TETRA_RESOURCES.LoadSFX("../TetraiderEngine/Assets/SFX/pew.mp3");
 
 	Tetraider::Initialize("../TetraiderEngine/Assets/Metadata/Config.json");
 	Tetraider::StartGameLoop();

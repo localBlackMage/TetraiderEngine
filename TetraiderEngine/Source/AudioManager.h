@@ -15,6 +15,8 @@
 
 // NOTES
 // use Stream only when playing large music files, everything else should be loaded into memory
+// BACKGROUND MUSIC FILES are loaded from HARD DRIVE
+// SFX sounds are loaded from the MEMORY
 class AudioManager
 {
 public:
@@ -24,8 +26,8 @@ public:
 	void operator=(const AudioManager &) = delete;
 
 	void Update(float elapsed);
-	void LoadSFX(const std::string& path);
-	void LoadSong(const std::string& path);
+	/*void LoadSFX(const std::string& path);
+	void LoadSong(const std::string& path);*/
 	void PlaySFX(const std::string& path, float volume/*float minVol, float maxVol, float minPitch, float maxPitch*/);
 	void PlaySong(const std::string& path);
 	void StopSFXs();
@@ -33,23 +35,26 @@ public:
 	void SetMasterVolume(float volume);
 	void SetSFXsVolume(float volume);
 	void SetSongsVolume(float volume);
-	bool isPlaying(int channelId);
+	void ErrorCheck(FMOD_RESULT result);
+	inline FMOD::System* getSystem() { return m_pSystem; }
+	inline FMOD_MODE* getMode() { return m_Modes; }
 	/*void PauseAll();
 	void ResumeAll();*/
 	void TogglePause();
 private:
 
-	typedef std::map<std::string, FMOD::Sound*> SoundMap;
-	typedef std::map<FMOD::Sound*, FMOD::Channel*> SFX_ChannelMap;
+	//typedef std::map<std::string, FMOD::Sound*> SoundMap;
+	//typedef std::map<std::string, FMOD::Channel*> SoundChannelMap;
 	enum Category{SFX,SONG,CATEGORY_COUNT};
-	void Load(Category type, const std::string& path);
+	/*void Load(Category type, const std::string& path);*/
 
-	void ErrorCheck(FMOD_RESULT result);
+	
 
 	FMOD::System* m_pSystem;
 	FMOD::ChannelGroup* m_pMaster;
 	FMOD::ChannelGroup* m_pGroups[CATEGORY_COUNT];
-	SoundMap m_Sounds[CATEGORY_COUNT];
+	//SoundChannelMap m_SoundChannel[CATEGORY_COUNT];
+	//SoundMap m_Sounds[CATEGORY_COUNT];
 	FMOD_MODE m_Modes[CATEGORY_COUNT];
 
 	FMOD::Channel* m_pCurrentSongChannel;
@@ -61,7 +66,7 @@ private:
 	enum FadeState{FADE_NONE,FADE_IN,FADE_OUT};
 	FadeState m_fade;
 	bool m_isPaused;
-	
+	//bool m_isPlaying;
 };
 
 

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Attack.cpp" />
@@ -68,6 +69,7 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Attack.h" />

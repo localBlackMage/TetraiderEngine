@@ -23,6 +23,25 @@ ResourceManager::~ResourceManager()
 		}
 	}
 	m_textures.clear();
+
+	//Release sound in each category
+	//auto soundMap = T_RESOURCES.GetSoundMap();         
+	 SoundMap::iterator iter;
+	//auto& iter = soundMap.begin();
+	/*for ()
+	{
+	iter.second->release();
+	}*/
+
+	for (int i = 0; i<CATEGORY_COUNT; ++i)
+	{
+		for (iter = m_Sounds[i].begin(); iter != m_Sounds[i].end(); ++iter)
+		{
+			iter->second->release();
+		}
+		m_Sounds[i].clear();
+	}
+	
 }
 
 GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurface)
@@ -86,6 +105,30 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName, bo
 		std::cerr << "Failed to create texture: " << textureName << std::endl;
 		return nullptr;
 	}
+}
+
+void ResourceManager::Load(Sound_Category type, const std::string & path)
+{
+	if (m_Sounds[type].find(path) != m_Sounds[type].end())
+		return;
+	FMOD::Sound* sound;
+	TETRA_AUDIO.ErrorCheck(TETRA_AUDIO.getSystem()->createSound(path.c_str(), TETRA_AUDIO.getMode()[type], 0, &sound));
+	m_Sounds[type].insert(std::make_pair(path, sound));
+}
+
+void ResourceManager::LoadSFX(const std::string & path)
+{
+	Load(SFX, path);
+}
+
+void ResourceManager::LoadSong(const std::string & path)
+{
+	Load(SONG, path);
+}
+
+SoundMap* ResourceManager::GetSoundMap()
+{
+	return m_Sounds;
 }
 
 bool ResourceManager::Init()

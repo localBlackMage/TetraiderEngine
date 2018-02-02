@@ -21,7 +21,12 @@ Creation date: 1/17/18
 #include "STBSurface.h"
 #include <map>
 #include <utility>
+#include "fmod_errors.h"
+#include "fmod_studio.hpp"
+#include "fmod.hpp"
 
+enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
+typedef std::map<std::string, FMOD::Sound*> SoundMap;
 class ResourceManager
 {
 private:
@@ -34,9 +39,15 @@ private:
 	std::map<std::string, Mesh*> m_meshes;
 	std::map<std::string, SurfaceTextureBuffer * > m_textures;
 
+	
+	SoundMap m_Sounds[CATEGORY_COUNT];
+	
+
+
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
 	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha);
 	SurfaceTextureBuffer * _LoadTexture(std::string textureName, bool hasAlpha);
+
 public:
 	ResourceManager();
 	~ResourceManager();
@@ -53,6 +64,11 @@ public:
 	void UnloadTexture(std::string textureName);
 
 	void UnloadAll();
+
+	void Load(Sound_Category type, const std::string& path);
+	void LoadSFX(const std::string& path);
+	void LoadSong(const std::string& path);
+	SoundMap* GetSoundMap();
 };
 
 #endif
