@@ -57,7 +57,8 @@ public:
 
 	virtual void HandleEvent(Event* pEvent);
 private:
-	std::vector<Component*> mComponents;
+	//std::vector<Component*> mComponents;
+	Component* mComponents[ComponentType::NUM_COMPONENTS];
 	unsigned int m_id;
 };
 

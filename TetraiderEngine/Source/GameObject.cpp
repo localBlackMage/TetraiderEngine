@@ -1,18 +1,23 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Event.h"
+#include <algorithm>
 
 GameObject::GameObject(unsigned int id) : 
 	m_id(id), 
 	m_isDestroy(false), m_isActive(true), 
 	m_isCollisionDisabled(false), 
-	m_isRender(true) {}
+	m_isRender(true) 
+{
+	std::fill_n(mComponents, ComponentType::NUM_COMPONENTS, nullptr);
+}
 
 GameObject::~GameObject() {
-	for (auto &comp : mComponents)
-		delete comp;
-
-	mComponents.clear();
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i)
+	{
+		if (mComponents[i] != nullptr)
+			delete mComponents[i];
+	}
 }
 
 bool GameObject::operator==(const GameObject& rhs) const
@@ -42,7 +47,8 @@ void GameObject::LateInitialize() {
 void GameObject::AddComponent(Component* pComponent) {
 	// Check if component exists before adding
 	pComponent->pGO = this;
-	mComponents.push_back(pComponent);
+	mComponents[pComponent->Type()] = pComponent;
+	//mComponents.push_back(pComponent);
 }
 
 bool GameObject::HasComponent(ComponentType type) const
