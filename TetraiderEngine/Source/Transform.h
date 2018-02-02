@@ -21,7 +21,6 @@ private:
 
 	void _UpdateLookAt();
 public:
-	const static ComponentType test = ComponentType::C_Transform;
 	Transform();
 	~Transform();
 

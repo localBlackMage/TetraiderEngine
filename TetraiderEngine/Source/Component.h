@@ -19,7 +19,6 @@ class Component :
 protected:
 	ComponentType m_type;
 public:
-	const static ComponentType test;
 	Component(ComponentType _type) : m_type(_type) {};
 	virtual ~Component() {};
 	virtual void LateInitialize() {};
@@ -28,6 +27,8 @@ public:
 	virtual void Serialize(json j) = 0;
 	virtual void HandleEvent(Event* pEvent) {}
 	ComponentType Type() const { return m_type; }
+
+	virtual static ComponentType TypeIs() = 0;
 
 	GameObject *pGO;
 };
