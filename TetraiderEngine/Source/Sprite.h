@@ -19,6 +19,7 @@ protected:
 	SurfaceTextureBuffer * m_texture;
 	Mesh& m_mesh;
 	std::string m_shader;
+	bool m_hasAlpha;
 
 public:
 	Sprite(std::string textureName = "");

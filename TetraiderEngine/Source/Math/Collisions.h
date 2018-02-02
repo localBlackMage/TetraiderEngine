@@ -36,6 +36,8 @@ bool StaticPolygonToRay(const Vector3D& shapeA, const std::vector<Vector3D>& sha
 bool StaticPolygonToStaticAABB(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D &rectangle, float halfWidth, float halfHeight, MTV& mtv);
 bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vector3D>& shapeAvert, const Vector3D &circle, float radius, MTV& mtv);
 
+bool IsPointInCone(const Vector3D& point, const Vector3D& center, float radius, Vector3D& dir, float angle);
+
 class SeperatingAxisTheorom {
 public:
 	SeperatingAxisTheorom() {}

@@ -57,10 +57,6 @@ void GameObjectLayer::ClearLayer()
 
 #pragma endregion
 
-
-
-
-
 GameObjectManager::GameObjectManager() : m_currentId(0) {}
 
 GameObjectManager::~GameObjectManager() {
@@ -105,6 +101,9 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 	if (pGO->HasComponent(ComponentType::C_Body)) {
 		TETRA_PHYSICS.AddGameObject(pGO);
 	}
+	if (pGO->HasComponent(ComponentType::C_Health)) {
+		mGameObjectsWithHealthComponents.push_back(pGO);
+	}
 }
 
 void GameObjectManager::DestroyGameObjects() {
@@ -112,8 +111,10 @@ void GameObjectManager::DestroyGameObjects() {
 		if ((*it)->m_isDestroy) {
 			if ((*it)->GetLayer() != L_NOT_RENDERED)
 				m_layers[(*it)->GetLayer()].RemoveFromLayer(*it);
+
+			RemoveGameObjectsFromHealthList(*it);
 			TETRA_PHYSICS.RemoveGameObject(*it);
-			delete (*it); // TODO: Move to memory manager
+			delete (*it);
 			it = mGameObjects.erase(it);
 		}
 		else {
@@ -203,7 +204,8 @@ GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 	if (tag == "Player") return GameObjectTag::T_Player;
 	else if (tag == "Camera") return GameObjectTag::T_Camera;
 	else if (tag == "Enemy") return GameObjectTag::T_Enemy;
-	else return GameObjectTag::NONE;
+	else if (tag == "Projectile") return GameObjectTag::T_Projectile;
+	else return GameObjectTag::T_None;
 }
 
 void GameObjectManager::HandleEvent(Event *pEvent) {
@@ -225,4 +227,12 @@ void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO)
 RENDER_LAYER GameObjectManager::GetLayerFromString(std::string layerName)
 {
 	return RENDER_LAYER_STRINGS[layerName];
+}
+
+void GameObjectManager::RemoveGameObjectsFromHealthList(GameObject* pGO) {
+	if (mGameObjectsWithHealthComponents.size() > 0) {
+		std::vector<GameObject*>::iterator it = std::find(mGameObjectsWithHealthComponents.begin(), mGameObjectsWithHealthComponents.end(), pGO);
+		if (it != mGameObjectsWithHealthComponents.end())
+			mGameObjectsWithHealthComponents.erase(it);
+	}
 }

@@ -9,7 +9,7 @@ typedef enum
 {
 #include "TagNames.h"
 
-	NONE
+	T_None
 } GameObjectTag;
 #undef REGISTER_TAG_NAME
 

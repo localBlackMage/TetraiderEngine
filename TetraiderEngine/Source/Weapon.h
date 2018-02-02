@@ -4,16 +4,20 @@
 
 #include "Component.h"
 
+class Attack;
+
 class Weapon : public Component {
 public:
-	Weapon(): Component(C_Weapon) {}
-	~Weapon() {}
-	virtual void Update(float dt) {}
-	virtual void Serialize(json j) {}
-	virtual void LateInitialize() {}
+	Weapon();
+	~Weapon();
+	virtual void Update(float dt);
+	virtual void Serialize(json j);
+	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
-	virtual void HandleEvent(Event* pEvent) {}
+	virtual void HandleEvent(Event* pEvent);
+	bool UseAttack(int attack, const Vector3D& dirToAttack);
 private:
+	std::vector<Attack*> m_Attacks;
 };
 
 #endif

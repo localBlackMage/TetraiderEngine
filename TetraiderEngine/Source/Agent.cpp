@@ -17,6 +17,9 @@ void Agent::Serialize(json j) {
 void Agent::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
+		if (collisionData->pGO->m_tag == T_Projectile)
+			return;
+
 		m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 	}
 }

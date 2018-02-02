@@ -43,22 +43,15 @@ GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurfac
 	return textureBuffer;
 }
 
-ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir)
+ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha)
 {
-	json j = JsonReader::OpenJsonFile(texturesDir + textureInfoFilePath + ".json");
 	TextureInfo info;
-	if (j.is_object()) {
-		info.filename = texturesDir + JsonReader::ParseString(j, "filename");
-		info.frameWidth = JsonReader::ParseFloat(j, "frameWidth");
-		info.frameHeight = JsonReader::ParseFloat(j, "frameHeight");
-		info.rows = JsonReader::ParseInt(j, "rows");
-		info.cols = JsonReader::ParseInt(j, "columns");
-		info.hasAlpha = JsonReader::ParseBool(j, "alpha");
-	}
+	info.filename = texturesDir + textureInfoFilePath;
+	info.hasAlpha = hasAlpha;
 	return info;
 }
 
-SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
+SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName, bool hasAlpha)
 {
 	SurfaceTextureBuffer * stbuff = m_textures[textureName];
 
@@ -67,7 +60,7 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 
 	STB_Surface * surface = new STB_Surface();
 	if (surface) {
-		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir());
+		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir(), hasAlpha);
 
 		surface->hasAlpha = info.hasAlpha;
 		surface->data = stbi_load(info.filename.c_str(),
@@ -94,7 +87,6 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 		return nullptr;
 	}
 }
-
 
 bool ResourceManager::Init()
 {
@@ -156,7 +148,7 @@ void ResourceManager::UnloadMesh(std::string meshName)
 	}
 }
 
-SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName)
+SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName, bool hasAlpha)
 {
 	if (textureName == "") return nullptr;
 
@@ -165,7 +157,7 @@ SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName
 	if (stbuff)
 		return stbuff;
 	else
-		return _LoadTexture(textureName);
+		return _LoadTexture(textureName, hasAlpha);
 }
 
 void ResourceManager::UnloadTexture(std::string textureName)

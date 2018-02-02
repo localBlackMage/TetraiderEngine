@@ -16,7 +16,7 @@ void Health::Serialize(json j) {
 void Health::LateInitialize() {}
 void Health::HandleEvent(Event* pEvent) {}
 
-void Health::TakeDamage(int damage) {
+void Health::TakeDamage(int damage, const Vector3D& sourceOfAttack) {
 	if (m_isInvincible || m_currentHealth == 0)
 		return;
 
@@ -32,7 +32,7 @@ void Health::TakeDamage(int damage) {
 		}
 	}
 
-	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth)));
+	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, sourceOfAttack)));
 }
 
 void Health::Heal(int heal) {
@@ -42,13 +42,9 @@ void Health::Heal(int heal) {
 	}
 
 	if (pGO->m_tag == GameObjectTag::T_Player) {
-		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(
-			EventType::EVENT_OnPlayerHeal,
-			&HealthChangeData(m_currentHealth, m_maxHealth)
-		));
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal,&HealthChangeData(m_currentHealth, m_maxHealth, Vector3D())));
 	}
 }
 
 bool Health::IsHealthFull() { return m_currentHealth == m_maxHealth; }
 void Health::UpdgradeMaxHealth(int value) { m_maxHealth += value; }
-

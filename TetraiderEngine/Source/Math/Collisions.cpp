@@ -344,3 +344,15 @@ bool StaticPolygonToRay(const Vector3D& shapeA, const std::vector<Vector3D>& sha
 	MTV mtv;
 	return SeperatingAxisTheorom::SAT(shapeA, shapeAvert, pos, lineVertx, mtv);
 }
+
+// TODO: Test if this functions works for angles grater than 180
+bool IsPointInCone(const Vector3D& point, const Vector3D& center, float radius, Vector3D& dir, float angle) {
+	if (!StaticPointToStaticCircle(point, center, radius))
+		return false;
+
+	Vector3D dirToPoint = point - center;
+	dirToPoint.Normalize();
+
+	float a = acosf(Vector3D::Dot(dirToPoint, dir));
+	return a < angle*0.5f;
+}

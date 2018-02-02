@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Controller.h"
+#include "Weapon.h"
 #include "Health.h"
 #include "TetraiderAPI.h"
 #include <iostream>
@@ -23,18 +24,15 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_S) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
 
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE))
-	{
-		TETRA_AUDIO.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
-		std::cout << "shots fired!\n";
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE)) {
+		m_pWeapon->UseAttack(1, Vector3D(1, 0, 0));
 	}
+
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
 		TETRA_AUDIO.TogglePause();
 
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)){
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)) {
 		AddVelocity(Vector3D(-750, -750, 0));
-		Health* pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
-		pHealth->TakeDamage(10);
 	}
 
 	moveDir.Normalize();
@@ -53,4 +51,18 @@ void Controller::HandleEvent(Event* pEvent) {
 
 void Controller::LateInitialize() {
 	Agent::LateInitialize();
+
+	if(!m_pWeapon) {
+		if (pGO)
+			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
+		else {
+			printf("No Game Object found. Controller component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pWeapon) {
+			printf("No Weapon component found. Controller component failed to operate.\n");
+			return;
+		}
+	}
 }

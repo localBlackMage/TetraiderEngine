@@ -11,9 +11,10 @@ Sprite::Sprite(std::string textureName) :
 	m_vOffset(0.f),
 	m_color(Vector3D()),
 	m_textureName(textureName),
-	m_texture(TETRA_RESOURCES.GetTexture(textureName)),
+	m_texture(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
-	m_shader("")
+	m_shader(""),
+	m_hasAlpha(true)
 {
 }
 
@@ -23,15 +24,14 @@ void Sprite::Update(float dt) {}
 
 void Sprite::Serialize(json j) 
 {
-	if (ValueExists(j, "Texture")) {
-		m_textureName = ParseString(j, "Texture");
-		m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
-	}
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
 	m_vOffset = ParseFloat(j, "uvOffset", "v");
 	m_color = ParseColor(j, "color");
+	m_hasAlpha = ParseBool(j, "hasAlpha");
+	m_textureName = ParseString(j, "Texture");
+	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
 }
 
 const Mesh & Sprite::GetMesh() const {
@@ -50,7 +50,7 @@ String Sprite::GetSpriteName() const
 void Sprite::SetSprite(std::string textureName)
 {
 	m_textureName = textureName;
-	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
+	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
 }
 
 GLuint Sprite::GetTextureBuffer() const

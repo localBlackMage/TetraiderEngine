@@ -47,6 +47,7 @@ private:
 	void AddGameObject(GameObject* pGO);
 	void AddGameObjectToQueue(GameObject* pGO);
 	void AddGameObjectsFromQueueToMainVector();
+	void RemoveGameObjectsFromHealthList(GameObject* pGO);
 	
 	void DestroyGameObjects();
 	void HandleEvent(Event *pEvent);
@@ -63,6 +64,7 @@ public:
 	void RenderGameObjects();
 	void DestroyAllGameObjects();
 	void UpdateStatus();
+	std::vector<GameObject*> mGameObjectsWithHealthComponents; // TODO: Introduce a getter
 
 	// TODO: This method is a temporary hack for getting a camera, a more thorough 
 	// architecture should be implemented

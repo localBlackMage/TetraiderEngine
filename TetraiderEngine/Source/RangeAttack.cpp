@@ -5,7 +5,14 @@
 #include "Projectile.h"
 #include "GameObject.h"
 
-RangeAttack::RangeAttack() {}
+RangeAttack::RangeAttack(float coolDown, int baseDamage, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
+	Attack(coolDown, baseDamage),
+	m_projectileSpeed(projectileSpeed),
+	m_offset(offset),
+	m_lifeTime(lifeTime),
+	m_projectilePrefab(projectilePrefab)
+{}
+
 RangeAttack::~RangeAttack() {}
 
 // Assumes direction is normalized
@@ -14,7 +21,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 
 	Transform* pTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
 	Vector3D instantiatePos = pTransform->GetPosition() + m_offset*direction;
-	GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(projectilePrefab);
+	GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab);
 	Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 
 	bool isEnemyProjectile = false;
@@ -22,7 +29,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 		isEnemyProjectile = true;
 
 	// TODO: Change base damage to take into consideration character stats
-	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_speed, direction, m_lifeTime, isEnemyProjectile);
+	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile);
 	return true;
 }
 

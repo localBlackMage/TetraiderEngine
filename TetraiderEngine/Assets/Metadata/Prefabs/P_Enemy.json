@@ -1,6 +1,5 @@
 {
-  "Tag": "Player",
-  "Layer": "1",
+  "Tag": "Enemy",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -26,7 +25,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_playerTest.png",
+      "Texture": "T_enemyTest.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -43,13 +42,6 @@
         "a": 1
       }
     },
-	{
-		"Component": "Controller",
-		"AgentData": {
-			"speed": 200,
-			"acceleration": 10
-		}
-	},
 	{
 		"Component": "Animation",
 		"defaultAnimation": 1,

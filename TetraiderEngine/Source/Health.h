@@ -3,6 +3,7 @@
 #define HEALTH_H
 
 #include "Component.h"
+#include "Math\Vector3D.h"
 
 class Health : public Component {
 public:
@@ -16,7 +17,7 @@ public:
 
 	bool IsHealthFull();
 	void UpdgradeMaxHealth(int value);
-	void TakeDamage(int damage);
+	void TakeDamage(int damage, const Vector3D& sourceOfAttack);
 	void Heal(int heal);
 	int GetHealth() { return m_currentHealth; }
 	void Invincibility(bool active) { m_isInvincible = active; }

@@ -28,8 +28,6 @@ private:
 	struct TextureInfo {
 		std::string filename;
 		bool hasAlpha;
-		float frameWidth, frameHeight;
-		int rows, cols;
 	};
 	
 	DebugLineMesh * m_pDebugLineMesh;
@@ -37,8 +35,8 @@ private:
 	std::map<std::string, SurfaceTextureBuffer * > m_textures;
 
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
-	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir);
-	SurfaceTextureBuffer * _LoadTexture(std::string textureName);
+	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha);
+	SurfaceTextureBuffer * _LoadTexture(std::string textureName, bool hasAlpha);
 public:
 	ResourceManager();
 	~ResourceManager();
@@ -51,7 +49,7 @@ public:
 	Mesh * GetMesh(std::string meshName);
 	void UnloadMesh(std::string meshName);
 
-	SurfaceTextureBuffer * GetTexture(const std::string textureName);
+	SurfaceTextureBuffer * GetTexture(const std::string textureName, bool hasAlpha);
 	void UnloadTexture(std::string textureName);
 
 	void UnloadAll();

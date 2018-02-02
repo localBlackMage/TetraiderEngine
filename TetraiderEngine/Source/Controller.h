@@ -4,6 +4,8 @@
 
 #include "Agent.h"
 
+class Weapon;
+
 class Controller : public Agent {
 public:
 	Controller();
@@ -13,6 +15,7 @@ public:
 	virtual void Serialize(json j);
 	virtual void HandleEvent(Event* pEvent);
 protected:
+	Weapon* m_pWeapon;
 };
 
 #endif

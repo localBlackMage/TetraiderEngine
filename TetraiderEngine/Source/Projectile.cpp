@@ -25,7 +25,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 
 		// If object has health component, deal damage before destroying itself
 		Health* pHealth = collisionData->pGO->GetComponent<Health>(ComponentType::C_Health);
-		if (pHealth) pHealth->TakeDamage(m_damage);
+		if (pHealth) pHealth->TakeDamage(m_damage, m_pTransform->GetPosition());
 
 		pGO->Destroy();
 	}
