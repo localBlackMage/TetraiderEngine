@@ -46,21 +46,21 @@ private:
 
 	void ErrorCheck(FMOD_RESULT result);
 
-	FMOD::System* system;
-	FMOD::ChannelGroup* master;
-	FMOD::ChannelGroup* groups[CATEGORY_COUNT];
-	SoundMap sounds[CATEGORY_COUNT];
-	FMOD_MODE modes[CATEGORY_COUNT];
+	FMOD::System* m_pSystem;
+	FMOD::ChannelGroup* m_pMaster;
+	FMOD::ChannelGroup* m_pGroups[CATEGORY_COUNT];
+	SoundMap m_Sounds[CATEGORY_COUNT];
+	FMOD_MODE m_Modes[CATEGORY_COUNT];
 
-	FMOD::Channel* currentSong;
-	std::string currentSongPath;
-	std::string nextSongPath;
-	std::string currentSfxPath;
-	std::string nextSfxPath;
+	FMOD::Channel* m_pCurrentSongChannel;
+	std::string m_currentSongPath;
+	std::string m_nextSongPath;
+	std::string m_currentSfxPath;
+	std::string m_nextSfxPath;
 
 	enum FadeState{FADE_NONE,FADE_IN,FADE_OUT};
-	FadeState fade;
-	bool isPaused;
+	FadeState m_fade;
+	bool m_isPaused;
 	
 };
 
