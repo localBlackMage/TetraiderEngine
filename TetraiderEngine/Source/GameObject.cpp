@@ -9,7 +9,7 @@ GameObject::GameObject(unsigned int id) :
 	m_isCollisionDisabled(false), 
 	m_isRender(true) 
 {
-	std::fill_n(mComponents, ComponentType::NUM_COMPONENTS, nullptr);
+	std::fill_n(mComponents, int(ComponentType::NUM_COMPONENTS), nullptr);
 }
 
 GameObject::~GameObject() {
@@ -56,15 +56,12 @@ void GameObject::AddComponent(Component* pComponent) {
 
 bool GameObject::HasComponent(ComponentType type) const
 {
-	for (auto &comp : mComponents) {
-		if (comp->Type() == type)
-			return true;
-	}
-	return false;
+	return mComponents[type];
 }
 
 void GameObject::HandleEvent(Event* pEvent) {
-	for (auto &comp : mComponents) {
-		comp->HandleEvent(pEvent);
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->HandleEvent(pEvent);
 	}
 }

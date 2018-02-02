@@ -17,7 +17,6 @@ class GameObject : public Subscriber
 {
 private:
 	Component* mComponents[ComponentType::NUM_COMPONENTS];
-	//std::vector<Component*> mComponents;
 	unsigned int m_id;
 	unsigned short m_layer;
 public:
@@ -46,24 +45,14 @@ public:
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {
-		return mComponents[type];
+		return static_cast<C*>(mComponents[type]);
 	}
 
 	template <typename C>
 	const C * GetComponent(ComponentType type) const
 	{
-		return mComponents[type];
+		return static_cast<C*>(mComponents[type]);
 	}
-
-	bool HasComponent(ComponentType type) const;
-	
-	bool m_isActive;
-	bool m_isRender;
-	bool m_isCollisionDisabled;
-	bool m_isDestroy;
-	GameObjectTag m_tag;
-
-	virtual void HandleEvent(Event* pEvent);
 };
 
 #endif 

@@ -28,8 +28,6 @@ public:
 	virtual void HandleEvent(Event* pEvent) {}
 	ComponentType Type() const { return m_type; }
 
-	virtual static ComponentType TypeIs() = 0;
-
 	GameObject *pGO;
 };
 

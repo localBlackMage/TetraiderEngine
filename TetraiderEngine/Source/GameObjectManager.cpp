@@ -102,12 +102,7 @@ void GameObjectManager::LateUpdate(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	//for (GameObject* GO : mGameObjects) {
-	//	if (GO->m_isActive)
-	//		T_RENDERER.RenderGameObject(*m_pCamera, *GO);
-	//}
-
-	for (int layer = 0; layer < NUM_LAYERS; ++layer) {
+	for (int layer = 0; layer < LAYER::NUM_LAYERS; ++layer) {
 		m_layers[layer]->RenderLayer(m_pCamera);
 	}
 }
