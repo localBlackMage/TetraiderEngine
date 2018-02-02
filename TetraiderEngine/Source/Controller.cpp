@@ -16,16 +16,16 @@ Controller::~Controller() {}
 void Controller::Update(float dt) {
 	Vector3D moveDir;
 
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D)||T_INPUT.IsKeyPressed(XBOX_SCANCODE::XBOX_DPAD_RIGHT))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| T_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A) || T_INPUT.IsKeyPressed(XBOX_SCANCODE::XBOX_DPAD_LEFT))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A) || T_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
 		moveDir.x -= 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W) || T_INPUT.IsKeyPressed(XBOX_SCANCODE::XBOX_DPAD_UP))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W) || T_INPUT.IsKeyPressed(XBOX_DPAD_UP))
 		moveDir.y += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S) || T_INPUT.IsKeyPressed(XBOX_SCANCODE::XBOX_DPAD_DOWN))
+	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S) || T_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
 
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q)) {
+	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || T_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)) {
 		AddVelocity(Vector3D(-750, -750, 0));
 		Health* pHealth = static_cast<Health*>(pGO->GetComponent(ComponentType::Health));
 		pHealth->TakeDamage(10);

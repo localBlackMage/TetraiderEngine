@@ -23,61 +23,43 @@ enum class MOUSEBTN {
 	
 	MOUSE_NUM_SCANCODES
 };
-enum class XBOX_SCANCODE {
-	XBOX_DPAD_UP,
-	XBOX_DPAD_DOWN,
-	XBOX_DPAD_RIGHT,
-	XBOX_DPAD_LEFT,
-	XBOX_BTN_BACK,
-	XBOX_BTN_START,
-	XBOX_BTN_LEFT_SHOULDER,
-	XBOX_BTN_RIGHT_SHOULDER,
+enum XBOX_SCANCODE {
 	XBOX_BTN_A,
 	XBOX_BTN_B,
 	XBOX_BTN_X,
 	XBOX_BTN_Y,
+	XBOX_BTN_BACK,
+	XBOX_BTN_GUIDE,
+	XBOX_BTN_START,
 	XBOX_BTN_LEFT_STICK,
 	XBOX_BTN_RIGHT_STICK,
+	XBOX_BTN_LEFT_SHOULDER,
+	XBOX_BTN_RIGHT_SHOULDER,
+	XBOX_DPAD_UP,
+	XBOX_DPAD_DOWN,
+	XBOX_DPAD_LEFT,
+	XBOX_DPAD_RIGHT,
 
 	XBOX_NUM_SCANCODES
-};
-
-struct GameControllerState {
-	// Button States
-	bool prevUp, Up;
-	bool prevDown, Down;
-	bool prevRight, Right;
-	bool prevLeft, Left;
-	bool prevBack, Back;
-	bool prevStart, Start;
-	bool prevLeftShoulder, LeftShoulder;
-	bool prevRightShoulder, RightShoulder;
-	bool prevA, A;
-	bool prevB, B;
-	bool prevX, X;
-	bool prevY, Y;
-	bool prevLeftStick, LeftStick;
-	bool prevRightStick, RightStick;
-	// Axis States
-	Sint16 prevLeftStickX, StickLeftX;
-	Sint16 prevRightStickY, StickRightY;
-
 };
 
 class InputManager
 {
 private:
 	// keyboard state
-	Uint8 *mPreviousKeyStates;
-	Uint8 *mCurrentKeyStates;
+	Uint8 *m_PreviousKeyStates;
+	Uint8 *m_CurrentKeyStates;
 	// mouse state
-	bool prevLeftMouse, leftMouse;
-	bool prevRightMouse, rightMouse;
-	int mousePosX, mousePosY;
-	int mousePosRelX, mousePosRelY;
-	// gamecontroller state
-	GameControllerState mGameControllerStates;
-	//SDL_GameController *mGameController;
+	bool m_PrevLeftMouse, m_LeftMouse;
+	bool m_PrevRightMouse, m_RightMouse;
+	int m_MousePosX, m_MousePosY;
+	int m_MousePosRelX, m_MousePosRelY;
+	// Game controller States
+	Uint8  *m_CurrentButtonStates;
+	Uint8  *m_PreviousButtonStates;
+	// Axis States
+	Sint16 m_PrevLeftStickX, m_StickLeftX;
+	Sint16 m_PrevRightStickY, m_StickRightY;
 
 
 public:
