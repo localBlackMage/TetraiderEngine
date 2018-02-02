@@ -12,7 +12,7 @@ public:
 	void Update(float dt);
 	bool Use(const Vector3D& direction);
 private:
-	void Attack(float dt);
+	void Attack();
 	float m_radius;
 	float m_angle;
 	float m_triggerAttackIn;

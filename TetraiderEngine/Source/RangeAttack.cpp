@@ -1,0 +1,31 @@
+#include "RangeAttack.h"
+#include "TetraiderAPI.h"
+#include "Weapon.h"
+#include "Transform.h"
+#include "Projectile.h"
+#include "GameObject.h"
+
+RangeAttack::RangeAttack() {}
+RangeAttack::~RangeAttack() {}
+
+// Assumes direction is normalized
+bool RangeAttack::Use(const Vector3D& direction) {
+	if (!Attack::Use(direction)) return false;
+
+	Transform* pTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
+	Vector3D instantiatePos = pTransform->GetPosition() + m_offset*direction;
+	GameObject* pProjectileGO = T_GAME_OBJECTS.CreateGameObject(projectilePrefab);
+	Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
+
+	bool isEnemyProjectile = false;
+	if (m_pOwner->pGO->m_tag == T_Enemy)
+		isEnemyProjectile = true;
+
+	// TODO: Change base damage to take into consideration character stats
+	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_speed, direction, m_lifeTime, isEnemyProjectile);
+	return true;
+}
+
+void RangeAttack::Update(float dt) {
+	Attack::Update(dt);
+}

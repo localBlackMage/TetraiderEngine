@@ -3,6 +3,8 @@
 
 // Assumes direction is normalized
 bool Attack::Use(const Vector3D& direction) {
+	if (m_isOnCooldown) return false;
+
 	m_lastUsedTimeStamp = T_FRAMERATE.GetElapsedTime();
 	m_isOnCooldown = true;
 	m_isAttacking = true;

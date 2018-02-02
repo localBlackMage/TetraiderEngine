@@ -3,9 +3,7 @@
 
 #include "Math/Vector3D.h"
 
-struct AttackModifier {
-
-};
+class Weapon;
 
 class Attack {
 public:
@@ -17,9 +15,10 @@ public:
 protected:
 	float m_coolDown;
 	float m_lastUsedTimeStamp;
-	float m_baseDamage;
+	int m_baseDamage;
 	bool m_isOnCooldown;
 	bool m_isAttacking;
+	Weapon* m_pOwner;
 };
 
 

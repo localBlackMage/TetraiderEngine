@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Sprite.h"
+#include "TetraiderAPI.h"
 #include <iostream>
 
 using  namespace JsonReader;
@@ -37,13 +38,12 @@ void Animation::Update(float dt) {
 	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
 
 	// Test code remove later
-	/*
 	if(T_INPUT.IsKeyTriggered(SDL_SCANCODE_1)) {
 		ChangeAnimation(0);
 	}
 	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_2)) {
 		ChangeAnimation(1);
-	}*/
+	}
 }
 
 void Animation::Play(int animation) {

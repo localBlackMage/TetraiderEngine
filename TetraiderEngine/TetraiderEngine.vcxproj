@@ -65,6 +65,7 @@
     <ClCompile Include="Source\SubscriberTracker.cpp" />
     <ClCompile Include="Source\TetraiderAPI.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Agent.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Source\TagNames.h" />
     <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\Weapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

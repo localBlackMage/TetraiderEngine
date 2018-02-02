@@ -11,6 +11,7 @@
 #include "Health.h"
 #include "FlashOnTakeDamage.h"
 #include "Projectile.h"
+#include "Weapon.h"
 
 ComponentFactory::ComponentFactory() { }
 
@@ -25,6 +26,7 @@ Component* ComponentFactory::CreateComponent(std::string component) {
 	else if (component == "Health") return new Health();
 	else if (component == "FlashOnTakeDamage") return new FlashOnTakeDamage();
 	else if (component == "Projectile") return new Projectile();
+	else if (component == "Weapon") return new Weapon();
 
 	return 0;
 }
