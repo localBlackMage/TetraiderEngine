@@ -1,8 +1,5 @@
 #version 430
 
-layout(location = 0) uniform sampler2D usampler;
-
-
 layout(location = 0) in vec4 vtint_color;
 layout(location = 1) in vec4 vsaturation_color;
 layout(location = 2) in vec2 vtexture_coord;
