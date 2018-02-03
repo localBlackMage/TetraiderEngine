@@ -24,7 +24,7 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_S) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
 
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE)) {
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE)) {
 		m_pWeapon->UseAttack(1, Vector3D(1, 0, 0));
 	}
 

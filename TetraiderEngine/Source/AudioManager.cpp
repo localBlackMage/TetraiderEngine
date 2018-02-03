@@ -49,7 +49,8 @@ AudioManager::AudioManager():m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isCh
 AudioManager::~AudioManager()
 {
 	//Release system
-	ErrorCheck(m_pSystem->release());
+	//ErrorCheck(m_pSystem->run());
+	//ErrorCheck(m_pSystem->release());
 }
 
 void AudioManager::Update(float elapsed)
@@ -101,10 +102,12 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 {
 
 	// Try to find sound effect and return if not found 
-	SoundMap::iterator sound = TETRA_RESOURCES.GetSoundMap()[SFX].find(path);
+	SoundMap::iterator sound = TETRA_RESOURCES.GetSoundMap()[SFX].find(TETRA_GAME_CONFIG.SFXDir() + path);
 	if(sound == TETRA_RESOURCES.GetSoundMap()[SFX].end())
 		return;
 	
+	// TODO if not found load sound
+
 	//vol and pitch calculation if needed
 	/*float vol = RandomBetween(minVol,maxVol);
 	float pitch= RandomBetween(minPitch, maxPitch);*/

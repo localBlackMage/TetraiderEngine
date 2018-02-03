@@ -53,6 +53,14 @@
 	},
 	{
 		"Component": "Projectile"		
+	},
+	{
+		"Component": "Audio",
+		"audioClip": "pew.mp3",
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": true
 	}
   ]
 }

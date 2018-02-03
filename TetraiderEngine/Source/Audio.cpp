@@ -7,6 +7,7 @@ void Audio::Update(float dt) {}
 
 void Audio::Serialize(json j)
 {
+	m_audioClip = ParseString(j, "audioClip");
 	m_volume = ParseFloat(j, "volume");
 	m_Ismute = ParseBool(j, "isMute");
 	m_isLoop = ParseBool(j, "isLoop");
