@@ -1,6 +1,7 @@
-#version 150
-in vec4 position;
-in vec2 texture_coord;
+#version 410
+
+layout(location = 0) in vec4 position;
+layout(location = 1) in vec4 texture_coord;
 
 uniform mat4 persp_matrix;
 uniform mat4 view_matrix;
