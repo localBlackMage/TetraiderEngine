@@ -407,17 +407,14 @@
     <ClInclude Include="Source\AudioManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Source\Weapon.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Layers.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-=======
     <ClInclude Include="Source\Audio.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
->>>>>>> moved loading audio files to resource manager
   </ItemGroup>
 </Project>
