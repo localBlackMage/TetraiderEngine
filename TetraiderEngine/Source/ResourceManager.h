@@ -25,6 +25,7 @@ Creation date: 1/17/18
 #include "fmod_studio.hpp"
 #include "fmod.hpp"
 
+
 enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
 typedef std::map<std::string, FMOD::Sound*> SoundMap;
 class ResourceManager

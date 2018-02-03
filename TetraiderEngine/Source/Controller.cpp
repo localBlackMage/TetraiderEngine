@@ -40,7 +40,6 @@ void Controller::Update(float dt) {
 	Agent::Update(dt);
 
 }
-
 void Controller::Serialize(json j) {
 	Agent::Serialize(j["AgentData"]);
 }

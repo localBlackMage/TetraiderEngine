@@ -24,24 +24,14 @@ ResourceManager::~ResourceManager()
 	}
 	m_textures.clear();
 
-	//Release sound in each category
-	//auto soundMap = T_RESOURCES.GetSoundMap();         
+	//Release sound in each category        
 	 SoundMap::iterator iter;
-	//auto& iter = soundMap.begin();
-	/*for ()
-	{
-	iter.second->release();
-	}*/
-
-	for (int i = 0; i<CATEGORY_COUNT; ++i)
-	{
-		for (iter = m_Sounds[i].begin(); iter != m_Sounds[i].end(); ++iter)
-		{
-			iter->second->release();
-		}
-		m_Sounds[i].clear();
-	}
-	
+	 for (int i = 0; i < CATEGORY_COUNT; ++i)
+	 {
+		 for (iter = m_Sounds[i].begin(); iter != m_Sounds[i].end(); ++iter)
+			 iter->second->release();
+		 m_Sounds[i].clear();
+	 }	
 }
 
 GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurface)
