@@ -31,6 +31,17 @@ GLint & ShaderProgram::GetProgramRef()
 	return m_programID;
 }
 
+bool ShaderProgram::operator==(const ShaderProgram& rhs) const
+{
+	return rhs.m_programID == m_programID;
+}
+
+bool ShaderProgram::operator!=(const ShaderProgram& rhs) const
+{
+	return rhs.m_programID != m_programID;
+}
+
+
 void ShaderProgram::LoadShader(std::string shaderPath, SHADER_TYPE type)
 {
 	

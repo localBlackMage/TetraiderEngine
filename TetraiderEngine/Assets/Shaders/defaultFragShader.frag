@@ -1,11 +1,11 @@
-#version 410
+#version 430
 
 uniform sampler2D usampler;
 
-in vec2 vtexture_coord;
-in vec2 vframe_offset;
-in vec2 vframe_size;
-in vec4 vcolor;
+layout(location = 0) in vec4 vcolor;
+layout(location = 1) in vec2 vtexture_coord;
+layout(location = 2) in vec2 vframe_offset;
+layout(location = 3) in vec2 vframe_size;
 
 out vec4 frag_color;
 

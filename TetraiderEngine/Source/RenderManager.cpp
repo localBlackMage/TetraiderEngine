@@ -16,6 +16,20 @@
 #include <fstream>
 #include <windows.h>
 
+enum SHADER_LOCATIONS {
+	POSITION = 0,
+	TEXTURE_COORD,
+
+	PERSP_MATRIX = 10,
+	VIEW_MATRIX,
+	MODEL_MATRIX,
+	NORMAL_MATRIX,
+
+	COLOR = 20,
+	FRAME_OFFSET,
+	FRAME_SIZE
+};
+
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
@@ -81,13 +95,13 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("texture_coord"));
+	glEnableVertexAttribArray(SHADER_LOCATIONS::TEXTURE_COORD);
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetTextCoordBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
+	glVertexAttribPointer(SHADER_LOCATIONS::TEXTURE_COORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
 
 	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());// pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
 	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), pSpriteComp->TileX(), pSpriteComp->TileY());//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
@@ -155,14 +169,21 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cameraComp->GetViewMatrix());
 }
 
+#pragma region Debug
+
 void RenderManager::_SetUpDebug(const GameObject& camera)
 {
 	SelectShaderProgram(m_debugShaderName);
 	_SetUpCamera(camera);
 
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	//glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	//glBindBuffer(GL_ARRAY_BUFFER, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
+	//glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+
+	
+	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
 	glBindBuffer(GL_ARRAY_BUFFER, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 }
 
 void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)
@@ -312,6 +333,8 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 	glUniformMatrix4fv(modelMatrix, 1, true, (float*)model);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
+
+#pragma endregion
 
 bool RenderManager::Init()
 {
@@ -467,6 +490,8 @@ void RenderManager::SelectShaderProgram(std::string programName)
 		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;
 		return;
 	}
-	m_pCurrentProgram = m_shaderPrograms[programName];
+
+	if (m_pCurrentProgram != m_shaderPrograms[programName])
+		m_pCurrentProgram = m_shaderPrograms[programName];
 }
 #pragma endregion

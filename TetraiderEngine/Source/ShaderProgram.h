@@ -39,6 +39,9 @@ public:
 	GLint GetProgram() const;
 	GLint& GetProgramRef();
 
+	bool operator==(const ShaderProgram& rhs) const;
+	bool operator!=(const ShaderProgram& rhs) const;
+
 	void LoadShader(std::string shaderPath, SHADER_TYPE type);
 
 	virtual void AttachShader(Shader& shader);
