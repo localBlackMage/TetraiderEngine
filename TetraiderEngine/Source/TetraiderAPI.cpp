@@ -53,13 +53,16 @@ namespace Tetraider {
 
 	void DebugMode()
 	{
-		bool isPause = true;
-		while (isPause) {
+		while (true) {
 			TETRA_INPUT.Update();								// Update input keys
 			// Step in one frame
 			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_PERIOD)) {
 				Update(TETRA_FRAMERATE.GetMaxFrameRate());
-				isPause = false;
+				break;
+			}
+			else if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SLASH)) {
+				Update(TETRA_FRAMERATE.GetMaxFrameRate());
+				break;
 			}
 			// Exit debug mode
 			else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
