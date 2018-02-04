@@ -1,6 +1,6 @@
 #version 430
 
-in vec4 vcolor;
+layout(location = 0) in vec4 vcolor;
 
 out vec4 frag_color;
 

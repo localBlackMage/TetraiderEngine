@@ -1,6 +1,7 @@
 #version 430
 
-uniform sampler2D usampler;
+layout(location = 0) uniform sampler2D usampler;
+
 
 layout(location = 0) in vec4 vcolor;
 layout(location = 1) in vec2 vtexture_coord;

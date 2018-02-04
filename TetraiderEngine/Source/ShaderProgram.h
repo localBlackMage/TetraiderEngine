@@ -26,11 +26,6 @@ protected:
 	GLint m_programID;
 	Shader * m_pVertexShader;
 	Shader * m_pFragmentShader;
-	std::map<std::string, GLint> m_attributes;
-	std::map<std::string, GLint> m_uniforms;
-
-	GLint _GetAttributeLocation(std::string attribute);
-	GLint _GetUniformLocation(std::string uniform);
 
 public:
 	ShaderProgram();
@@ -42,16 +37,8 @@ public:
 	bool operator==(const ShaderProgram& rhs) const;
 	bool operator!=(const ShaderProgram& rhs) const;
 
-	void LoadShader(std::string shaderPath, SHADER_TYPE type);
-
 	virtual void AttachShader(Shader& shader);
 	void LinkShaders();
-
-	void AddAttribute(std::string name);
-	GLint GetAttribute(std::string name);
-
-	void AddUniform(std::string name);
-	GLint GetUniform(std::string name);
 };
 
 #endif
