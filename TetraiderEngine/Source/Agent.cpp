@@ -18,7 +18,7 @@ void Agent::Update(float dt) {
 	m_pBody->SetVelocity(m_currentVelocity);
 }
 
-void Agent::Serialize(json j) {
+void Agent::Serialize(const json& j) {
 	m_speed = ParseFloat(j, "speed");
 	m_acceleration = ParseFloat(j, "acceleration");
 }

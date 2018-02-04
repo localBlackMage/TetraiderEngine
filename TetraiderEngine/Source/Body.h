@@ -14,8 +14,9 @@ class Body : public Component {
 public:
 	Body();
 	~Body();
+	static Component* CreateInstance() { return new Body(); }
 	virtual void Update(float dt);
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	void SetVelocity(const Vector3D& pVel);

@@ -25,9 +25,9 @@ protected:
 public:
 	Sprite(std::string textureName = "");
 	~Sprite();
-
+	static Component* CreateInstance() { return new Sprite(); }
 	virtual void Update(float dt);
-	virtual void Serialize(json j);	
+	virtual void Serialize(const json& j);
 
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);

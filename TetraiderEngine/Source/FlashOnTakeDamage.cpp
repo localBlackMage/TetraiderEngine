@@ -16,7 +16,7 @@ void FlashOnTakeDamage::Update(float dt) {
 		m_pSprite->SetSaturationColor(m_originalColor); // In order not to overshoot
 }
 
-void FlashOnTakeDamage::Serialize(json j) {
+void FlashOnTakeDamage::Serialize(const json& j) {
 	m_decaySpeed = ParseFloat(j, "decaySpeed");
 	m_flashColor = ParseColor(j, "flashColor");
 }

@@ -31,7 +31,7 @@ void Camera::_CalcViewMatrix()
 	m_viewMatrix = rotationM * Matrix4x4::Translate(-1 * m_pTransform->GetPosition());
 }
 
-void Camera::Serialize(json j)
+void Camera::Serialize(const json& j)
 {
 	m_isPersp = ParseBool(j, "type");
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;

@@ -26,46 +26,46 @@ using json = nlohmann::json;
 namespace JsonReader {
 	typedef std::string String;
 
-	float ParseFloat(const json j, String);
-	float ParseFloat(const json j, String, String);
-	float ParseFloat(const json j, String, String, String);
+	float ParseFloat(const json& j, const String&);
+	float ParseFloat(const json& j, const String&, const String&);
+	float ParseFloat(const json& j, const String&, const String&, const String&);
 
-	double ParseDouble(const json j, String);
-	double ParseDouble(const json j, String, String);
-	double ParseDouble(const json j, String, String, String);
+	double ParseDouble(const json& j, const String&);
+	double ParseDouble(const json& j, const String&, const String&);
+	double ParseDouble(const json& j, const String&, const String&, const String&);
 
-	int ParseInt(const json j, String);
-	int ParseInt(const json j, String, String);
-	int ParseInt(const json j, String, String, String);
+	int ParseInt(const json& j, const String&);
+	int ParseInt(const json& j, const String&, const String&);
+	int ParseInt(const json& j, const String&, const String&, const String&);
 
-	String ParseString(const json j, String);
-	String ParseString(const json j, String, String);
-	String ParseString(const json j, String, String, String);
+	String ParseString(const json& j, const String&);
+	String ParseString(const json& j, const String&, const String&);
+	String ParseString(const json& j, const String&, const String&, const String&);
 
-	bool ParseBool(const json j, String);
-	bool ParseBool(const json j, String, String);
-	bool ParseBool(const json j, String, String, String);
+	bool ParseBool(const json& j, const String&);
+	bool ParseBool(const json& j, const String&, const String&);
+	bool ParseBool(const json& j, const String&, const String&, const String&);
 
-	std::vector<String> ParseStringList(const json j, String);
-	std::vector<String> ParseStringList(const json j, String, String);
-	std::vector<String> ParseStringList(const json j, String, String, String);
+	std::vector<String> ParseStringList(const json& j, const String&);
+	std::vector<String> ParseStringList(const json& j, const String&, const String&);
+	std::vector<String> ParseStringList(const json& j, const String&, const String&, const String&);
 
-	Vector2D ParseVector2D(const json j, String);
-	Vector2D ParseVector2D(const json j, String, String);
+	Vector2D ParseVector2D(const json& j, const String&);
+	Vector2D ParseVector2D(const json& j, const String&, const String&);
 	
-	Vector3D ParseVector3D(const json j, String);
-	Vector3D ParseVector3D(const json j, String, String);
+	Vector3D ParseVector3D(const json& j, const String&);
+	Vector3D ParseVector3D(const json& j, const String&, const String&);
 
-	Vector3D ParseColor(const json j, String);
-	Vector3D ParseColor(const json j, String, String);
+	Vector3D ParseColor(const json& j, const String&);
+	Vector3D ParseColor(const json& j, const String&, const String&);
 
-	bool ValueExists(const json j, String);
-	bool ValueExists(const json j, String, String);
-	bool ValueExists(const json j, String, String, String);
+	bool ValueExists(const json& j, const String&);
+	bool ValueExists(const json& j, const String&, const String&);
+	bool ValueExists(const json& j, const String&, const String&, const String&);
 	
-	json OpenJsonFile(String fileName);
+	json OpenJsonFile(const String& fileName);
 
-	bool KeyIs(json::iterator it, String key);
+	bool KeyIs(json::iterator it, const String& key);
 }
 
 #endif

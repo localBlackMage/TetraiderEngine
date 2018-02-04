@@ -29,7 +29,7 @@ void Weapon::Update(float dt) {
 	}
 }
 
-void Weapon::Serialize(json j) {
+void Weapon::Serialize(const json& j) {
 	//TODO: This should not reallocate memory on level override
 	int numberOfAttacks = j["Attacks"].size();
 

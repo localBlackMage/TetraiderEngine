@@ -77,7 +77,7 @@ void Animation::ChangeAnimation(int animation) {
 	m_isLooping = ParseBool(myAnimations[m_currentAnimation], "isLooping");
 }
 
-void Animation::Serialize(json j) {
+void Animation::Serialize(const json& j) {
 	m_maxFrames = 0;
 	m_currentAnimation = ParseInt(j, "defaultAnimation");
 	myAnimations = j["MY_ANIMATIONS"];

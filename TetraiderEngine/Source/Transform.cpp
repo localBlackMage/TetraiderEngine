@@ -35,7 +35,7 @@ void Transform::LateUpdate(float dt)
 	m_transform = trans*rot*scal*pivotOffset;
 }
 
-void Transform::Serialize(json j) {
+void Transform::Serialize(const json& j) {
 	m_is2d = ValueExists(j, "2D") ? ParseBool(j, "2D") : true;
 	m_position = ParseVector3D(j, "position");
 	m_scale = ParseVector3D(j, "scale");

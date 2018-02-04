@@ -23,7 +23,7 @@ Sprite::~Sprite() {}
 
 void Sprite::Update(float dt) {}
 
-void Sprite::Serialize(json j) 
+void Sprite::Serialize(const json& j)
 {
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");

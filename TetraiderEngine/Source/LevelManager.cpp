@@ -15,7 +15,7 @@ LevelManager::~LevelManager() {}
 
 bool LevelManager::IsLastLevel() {return currentLevel == (maxLevel - 1); }
 
-void LevelManager::Initialize(json j) {
+void LevelManager::Initialize(const json& j) {
 	levelConfig = j;
 	maxLevel = levelConfig["Levels"].size();
 	currentLevel = levelConfig["Start"];
@@ -62,7 +62,7 @@ void LevelManager::RestartGame() {
 	ChangeLevel(firstLevel);
 }
 
-void LevelManager::LoadLevel(json j) {
+void LevelManager::LoadLevel(const json& j) {
 	// TODO: Hard code this string 'GAME_OBJECTS' into a #define or something somewhere
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {

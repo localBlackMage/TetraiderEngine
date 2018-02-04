@@ -43,7 +43,7 @@ void Body::Integrate(float dt) {
 	TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_pTransform->GetPosition() + m_Velocity, DebugColor::BLUE);
 }
 
-void Body::Serialize(json j) {
+void Body::Serialize(const json& j) {
 	m_isStatic = ParseBool(j, "isStatic");
 	m_mass = ParseFloat(j, "mass");
 

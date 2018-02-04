@@ -25,11 +25,11 @@ private:
 public:
 	Camera();
 	~Camera();
-
+	static Component* CreateInstance() { return new Camera(); }
 	virtual void LateInitialize();
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 
 	Vector3D TransformPointToScreenSpace(const Vector3D& worldCoordinates);
 

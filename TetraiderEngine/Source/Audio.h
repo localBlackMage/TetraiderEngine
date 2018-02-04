@@ -11,9 +11,9 @@ class Audio:public Component
 public:
 	Audio();
 	~Audio();
-
+	static Component* CreateInstance() { return new Audio(); }
 	virtual void Update(float dt);
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent) {}

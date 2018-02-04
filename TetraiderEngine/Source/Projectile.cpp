@@ -13,7 +13,7 @@ void Projectile::Update(float dt) {
 		pGO->Destroy();
 }
 
-void Projectile::Serialize(json j) {}
+void Projectile::Serialize(const json& j) {}
 
 void Projectile::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnCollide) {

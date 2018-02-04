@@ -15,7 +15,7 @@ public:
 	~Agent() {};
 	virtual void Update(float dt);
 	virtual void LateInitialize();
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
 	const Vector3D& GetCurrentVelocity() { return m_currentVelocity; }
 	const Vector3D& GetTargetVelocity() { return m_targetVelocity; }

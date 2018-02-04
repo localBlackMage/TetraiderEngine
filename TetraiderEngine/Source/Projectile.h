@@ -13,8 +13,9 @@ class Projectile : public Component {
 public:
 	Projectile();
 	~Projectile() {}
+	static Component* CreateInstance() { return new Projectile(); }
 	virtual void Update(float dt);
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);

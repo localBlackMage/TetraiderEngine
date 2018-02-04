@@ -5,7 +5,7 @@ Audio::Audio():Component(ComponentType::C_Audio) {}
 Audio::~Audio() {}
 void Audio::Update(float dt) {}
 
-void Audio::Serialize(json j)
+void Audio::Serialize(const json& j)
 {
 	m_audioClip = ParseString(j, "audioClip");
 	m_volume = ParseFloat(j, "volume");

@@ -11,7 +11,7 @@ CamFollow::CamFollow() :
 
 CamFollow::~CamFollow() {}
 
-void CamFollow::Serialize(json j) {
+void CamFollow::Serialize(const json& j) {
 	m_followSpeed = ParseFloat(j, "followSpeed");
 	m_defaultTargetTag = ParseString(j, "defaultTargetTag");
 }

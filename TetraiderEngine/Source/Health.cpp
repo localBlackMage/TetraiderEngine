@@ -7,7 +7,7 @@ Health::~Health() {}
 
 void Health::Update(float dt) {}
 
-void Health::Serialize(json j) {
+void Health::Serialize(const json& j) {
 	m_currentHealth = ParseInt(j, "startingHealth");
 	m_maxHealth = ParseInt(j, "maxHealth");
 	m_isInvincible = ParseBool(j, "isInvincible");

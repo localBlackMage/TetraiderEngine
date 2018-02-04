@@ -57,7 +57,7 @@ void Controller::Update(float dt) {
 	Agent::Update(dt);
 
 }
-void Controller::Serialize(json j) {
+void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 }
 
