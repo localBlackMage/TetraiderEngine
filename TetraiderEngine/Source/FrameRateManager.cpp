@@ -1,5 +1,5 @@
 #include "FrameRateManager.h"
-
+#include "TetraiderAPI.h"
 #include <SDL.h>
 #include <stdint.h>
 #include <iostream>
@@ -7,7 +7,8 @@
 #define MIN_FRAME_TIME 0.01666666666666666666666666666667f
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
-	m_maxFrameRate(maxFrameRate) {
+	m_secondCounter(0.f), m_frameCounter(0) 
+{
 	if (maxFrameRate == 0) {
 		m_maxFrameRate = UINT16_MAX;
 	}
@@ -38,8 +39,17 @@ void FrameRateManager::FrameEnd() {
 	while (m_tickEnd - m_tickStart < m_ticksPerFrame) {
 		m_tickEnd = SDL_GetTicks();
 	}
-	m_frameTime = (float)(m_tickEnd - m_tickStart) / 1000.0f;
+	m_frameTime = float(m_tickEnd - m_tickStart) / 1000.0f;
 	m_totalElapsedTime += m_frameTime;
+
+	++m_frameCounter;
+	m_secondCounter += m_frameTime;
+	if (m_secondCounter >= 1.f) {
+		std::cout << "FPS : " << m_frameCounter << std::endl;
+		TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_FPS_UPDATE, &FPSData(m_frameCounter)));
+		m_secondCounter = 0.f;
+		m_frameCounter = 0;
+	}
 }
 
 void FrameRateManager::ResetElapsedTime() {

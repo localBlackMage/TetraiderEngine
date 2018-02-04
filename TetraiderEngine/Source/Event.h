@@ -43,6 +43,11 @@ struct HealthChangeData : public EventData {
 	Vector3D m_sourceOfAttack;
 };
 
+struct FPSData : public EventData {
+	FPSData(int fps) : mFPS(fps) {}
+	int mFPS;
+};
+
 
 class Event
 {

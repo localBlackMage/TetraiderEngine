@@ -4,6 +4,7 @@ turned into entries within the EventType enum
 */
 REGISTER_EVENT_NAME(INVALID_EVENT) // Special case - this should always be first
 REGISTER_EVENT_NAME(WINDOW_CLOSED)
+REGISTER_EVENT_NAME(EVENT_FPS_UPDATE)
 
 REGISTER_EVENT_NAME(KEY_PRESSED)
 

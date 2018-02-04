@@ -33,7 +33,7 @@ enum SHADER_LOCATIONS {
 };
 
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_width(width), m_height(height),
+	m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
 	_InitWindow(title);
@@ -361,6 +361,14 @@ void RenderManager::Resize(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void RenderManager::HandleEvent(Event * p_event)
+{
+	if (p_event->Type() == EventType::EVENT_FPS_UPDATE) {
+		int fps = p_event->Data<FPSData>()->mFPS;
+		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
+	}
+}
+
 void RenderManager::SetWindowWidth(int width)
 {
 	m_width = width;
@@ -375,6 +383,7 @@ void RenderManager::SetWindowHeight(int height)
 
 void RenderManager::SetWindowTitle(std::string title)
 {
+	m_windowTitle = title;
 	SDL_SetWindowTitle(m_pWindow, title.c_str());
 }
 
