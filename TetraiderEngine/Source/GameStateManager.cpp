@@ -25,7 +25,9 @@ void GameStateManager::Update() {
 
 		// Game loop
 		while (m_currentState == m_nextState) {
-			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2)) { m_debugPause = !m_debugPause; } // Triggers debug mode
+			// NOTE: This condition should be before frame start
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
+				m_debugPause = !m_debugPause; 
 
 			Tetraider::FrameStart();
 
@@ -40,13 +42,15 @@ void GameStateManager::Update() {
 		if (m_nextState != GameState::RESTART) {
 			//TODO: Unload some assets
 		}
-		else {
-			Tetraider::UnloadResources();
+		else if(m_nextState == GameState::NEXT_LEVEL) {
+			//TODO: Unload some assets
 		}
 
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 	}
+
+	Tetraider::UnloadResources();	// Unloads all resources
 }
 
 void GameStateManager::HandleEvent(Event * p_event)

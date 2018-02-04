@@ -8,9 +8,7 @@
 
 namespace fs = std::experimental::filesystem;
 
-ResourceManager::ResourceManager(){
-	LoadPrefabFiles();
-}
+ResourceManager::ResourceManager(){}
 
 ResourceManager::~ResourceManager() 
 {
@@ -28,6 +26,14 @@ ResourceManager::~ResourceManager()
 		}
 	}
 	m_textures.clear();
+
+	for (auto comp : m_prefabs) {
+		if (comp.second) {
+			delete comp.second;
+		}
+	}
+
+	m_prefabs.clear();
 
 	//Release sound in each category 
 	// TODO: Double check if there are any memory leaks with this method
@@ -148,6 +154,8 @@ bool ResourceManager::Init()
 	quad->FinishMesh();
 
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
+	LoadPrefabFiles();
+	
 	return true;
 }
 
@@ -254,14 +262,6 @@ void ResourceManager::UnloadAll()
 		}
 	}
 	m_textures.clear();
-
-	for (auto comp : m_prefabs) {
-		if (comp.second) {
-			delete comp.second;
-		}
-	}
-
-	m_prefabs.clear();
 
 	//TODO: add sounds files here
 }
