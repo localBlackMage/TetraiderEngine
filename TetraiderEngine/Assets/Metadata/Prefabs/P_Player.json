@@ -107,7 +107,7 @@
 				"coolDown": 0.4,
 				"baseDamage": 0,
 				"radius": 160,
-				"angle": 100,
+				"angle": 90,
 				"triggerAttackIn": 0.05
 			},
 			{

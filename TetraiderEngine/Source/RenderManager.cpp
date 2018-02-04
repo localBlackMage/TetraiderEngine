@@ -227,10 +227,10 @@ void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Ve
 
 	Matrix4x4 ArcMatrix;
 	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
-	int max = 360;
+	int max = 32;
 	float degreeAmt = 360.f / float(max);
 	Vector3D AXIS_Z = Vector3D(0, 0, 1);
-	Vector3D a = pos + Vector3D(radius, 0, 0);
+	Vector3D a = Vector3D(radius, 0, 0);
 	Vector3D b = Matrix4x4::Rotate(degreeAmt, AXIS_Z) * a;
 	float lineLength = Vector3D::Distance(a, b);
 	// circle base matrix
@@ -271,12 +271,12 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 
 	Matrix4x4 ArcMatrix;
 	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
-	int max = 360;
+	int max = 32;
 	float degreeAmt = arcWidth / float(max);
-	float offset = rot.z - (arcWidth / 2.f);
+	float offset = rot.z - (arcWidth / 2.f) + degreeAmt/2.f;
 	//max += int(rot.z);
 	Vector3D AXIS_Z = Vector3D(0, 0, 1);
-	Vector3D a = pos + Vector3D(radius, 0, 0);
+	Vector3D a = Vector3D(radius, 0, 0);
 	Vector3D b = Matrix4x4::Rotate(degreeAmt, AXIS_Z) * a;
 	float lineLength = Vector3D::Distance(a, b);
 	// Draw cone arc
