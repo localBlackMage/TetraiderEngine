@@ -25,7 +25,8 @@ enum SHADER_LOCATIONS {
 	MODEL_MATRIX,
 	NORMAL_MATRIX,
 
-	COLOR = 20,
+	TINT_COLOR = 20,
+	SATURATION_COLOR,
 	FRAME_OFFSET,
 	FRAME_SIZE,
 	TILE
@@ -109,8 +110,10 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 
 	//glUniform2f(SHADER_LOCATIONS::TILE, 1, 1); // pSpriteComp->TileX(), pSpriteComp->TileY());
 
-	Vector3D color = pSpriteComp->GetColor();
-	glUniform4f(SHADER_LOCATIONS::COLOR, color[0], color[1], color[2], color[3]);
+	Vector3D tintColor = pSpriteComp->GetTintColor();
+	Vector3D saturationColor = pSpriteComp->GetSaturationColor();
+	glUniform4f(SHADER_LOCATIONS::TINT_COLOR, tintColor[0], tintColor[1], tintColor[2], tintColor[3]);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, saturationColor[0], saturationColor[1], saturationColor[2], saturationColor[3]);
 
 	if (pSpriteComp->TextureHasAlpha()) {
 		glDisable(GL_DEPTH_TEST);
@@ -200,7 +203,7 @@ void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color
 
 void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
 {
-	glUniform4f(SHADER_LOCATIONS::COLOR, color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	float halfWidth = scale.x / 2.f,
 		halfHeight = scale.y / 2.f;
@@ -237,7 +240,7 @@ void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, co
 
 void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Vector3D & pos)
 {
-	glUniform4f(SHADER_LOCATIONS::COLOR, color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	Matrix4x4 ArcMatrix;
 	int max = 32;
@@ -263,7 +266,7 @@ void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Ve
 
 void RenderManager::_RenderLine(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
 {
-	glUniform4f(SHADER_LOCATIONS::COLOR, color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	Matrix4x4 model = Matrix4x4::Translate(pos) * 
 		Matrix4x4::Rotate(rot.z, ZAXIS) *
@@ -279,7 +282,7 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 	float arcWidth = arcWidthAndRadius.x;
 	float radius = arcWidthAndRadius.y;
 
-	glUniform4f(SHADER_LOCATIONS::COLOR, color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	Matrix4x4 ArcMatrix;
 	int max = 32;

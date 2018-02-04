@@ -1,11 +1,11 @@
 #include "MathFunctions.h"
 
 Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t) {
-	return Vector3D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t), Lerp(vectorA.z, vectorB.z, t));
+	return Vector3D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t), Lerp(vectorA.z, vectorB.z, t), Lerp(vectorA.w, vectorB.w, t));
 }
 
 Vector2D Lerp(const Vector2D& vectorA, const Vector2D& vectorB, float t) {
-	return Vector2D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t));
+	return Vector2D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t), Lerp(vectorA.w, vectorB.w, t));
 }
 
 float Lerp(float valueA, float valueB, float t) {

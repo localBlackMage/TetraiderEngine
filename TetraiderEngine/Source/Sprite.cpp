@@ -9,7 +9,8 @@ Sprite::Sprite(std::string textureName) :
 	m_yTiling(1.0f), 
 	m_uOffset(0.f),
 	m_vOffset(0.f),
-	m_color(Vector3D()),
+	m_tintColor(Vector3D()),
+	m_saturationColor(Vector3D()),
 	m_textureName(textureName),
 	m_texture(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
@@ -28,7 +29,8 @@ void Sprite::Serialize(json j)
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
 	m_vOffset = ParseFloat(j, "uvOffset", "v");
-	m_color = ParseColor(j, "color");
+	m_tintColor = ParseColor(j, "tint");
+	m_saturationColor = ParseColor(j, "saturation");
 	m_hasAlpha = ParseBool(j, "hasAlpha");
 	m_textureName = ParseString(j, "Texture");
 	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
