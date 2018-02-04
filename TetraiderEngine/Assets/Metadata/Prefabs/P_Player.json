@@ -104,16 +104,16 @@
 		"Attacks":[
 			{
 				"type": "Melee",
-				"coolDown": 0.5,
-				"baseDamage": 10,
-				"radius": 100,
-				"angle": 90,
+				"coolDown": 0.4,
+				"baseDamage": 0,
+				"radius": 160,
+				"angle": 100,
 				"triggerAttackIn": 0.05
 			},
 			{
 				"type": "Ranged",
 				"coolDown": 0.3,
-				"baseDamage": 10,
+				"baseDamage": 0,
 				"projectileSpeed": 400,
 				"instantiationOffset": 50,
 				"lifeTime": 2,

@@ -32,6 +32,8 @@ public:
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(json j);
 
+	Vector3D TransformPointToScreenSpace(const Vector3D& worldCoordinates);
+
 	bool ShouldRenderLayer(RENDER_LAYER layer) const;
 	bool ShouldRenderLayer(int layer) const;
 	float GetFOV() const;

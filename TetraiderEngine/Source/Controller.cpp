@@ -2,7 +2,9 @@
 #include "Controller.h"
 #include "Weapon.h"
 #include "Health.h"
+#include "Transform.h"
 #include "TetraiderAPI.h"
+#include "Camera.h"
 #include <iostream>
 
 Controller::Controller() :
@@ -24,8 +26,13 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_S) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
 
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE)) {
-		m_pWeapon->UseAttack(1, Vector3D(1, 0, 0));
+
+	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_RIGHT)) {
+		m_pWeapon->UseAttack(0, m_lookDirection);
+	}
+
+	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
+		m_pWeapon->UseAttack(1, m_lookDirection);
 	}
 
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
@@ -35,8 +42,18 @@ void Controller::Update(float dt) {
 		AddVelocity(Vector3D(-750, -750, 0));
 	}
 
+	// Get dir to mouse position| TODO: Clean this up
+	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
+	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
+	Vector3D dirToMousePos = mousePos - screenSpace;
+	dirToMousePos.y *= -1;
+	dirToMousePos.Normalize();
+
 	moveDir.Normalize();
 	m_targetVelocity = moveDir * m_speed;
+	m_lookDirection = dirToMousePos;
 	Agent::Update(dt);
 
 }

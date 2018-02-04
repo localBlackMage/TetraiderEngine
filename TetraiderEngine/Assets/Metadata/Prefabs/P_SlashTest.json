@@ -1,0 +1,58 @@
+{
+  "Tag": "None",
+  "Layer": "1",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 100,
+        "y": 125,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+    {
+      "Component": "Sprite",
+      "Texture": "T_SlashTest.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "hasAlpha": true,
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Slash",
+			"frames": 5,
+			"animationSpeed": 24,
+			"isLooping": false
+		}]
+	}
+  ]
+}

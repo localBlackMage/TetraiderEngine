@@ -214,8 +214,6 @@ void GameObjectManager::HandleEvent(Event *pEvent) {
 	}
 }
 
-
-
 void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO)
 {
 	mGameObjects.push_back(pGO);

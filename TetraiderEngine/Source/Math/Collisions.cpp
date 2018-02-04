@@ -353,6 +353,6 @@ bool IsPointInCone(const Vector3D& point, const Vector3D& center, float radius, 
 	Vector3D dirToPoint = point - center;
 	dirToPoint.Normalize();
 
-	float a = acosf(Vector3D::Dot(dirToPoint, dir));
+	float a = acosf(Vector3D::Dot(dirToPoint, dir)) * 180/PI;
 	return a < angle*0.5f;
 }

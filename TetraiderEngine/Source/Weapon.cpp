@@ -1,6 +1,10 @@
 #include "Weapon.h"
 #include "RangeAttack.h"
 #include "MeleeAttack.h"
+#include "Controller.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "TetraiderAPI.h"
 
 Weapon::Weapon(): Component(C_Weapon) {}
 
@@ -13,8 +17,16 @@ Weapon::~Weapon() {
 }
 
 void Weapon::Update(float dt) {
-	for (auto attacks : m_Attacks)
+	for (auto attacks : m_Attacks) {
 		attacks->Update(dt);
+
+		// Debug
+		if (attacks->GetType() == AttackType::Melee) {
+			Controller* pController = pGO->GetComponent<Controller>(ComponentType::C_Controller);
+			if(pController)
+				attacks->Debug(pController->GetLookDirection());
+		}
+	}
 }
 
 void Weapon::Serialize(json j) {
@@ -27,6 +39,7 @@ void Weapon::Serialize(json j) {
 			Attack* attack = new MeleeAttack(
 				ParseFloat(j["Attacks"][i], "coolDown"),
 				ParseInt(j["Attacks"][i], "baseDamage"),
+				AttackType::Melee,
 				ParseFloat(j["Attacks"][i], "radius"),
 				ParseFloat(j["Attacks"][i], "angle"),
 				ParseFloat(j["Attacks"][i], "triggerAttackIn")
@@ -39,6 +52,7 @@ void Weapon::Serialize(json j) {
 			Attack* attack = new RangeAttack(
 				ParseFloat(j["Attacks"][i], "coolDown"),
 				ParseInt(j["Attacks"][i], "baseDamage"),
+				AttackType::Ranged,
 				ParseFloat(j["Attacks"][i], "projectileSpeed"),
 				ParseFloat(j["Attacks"][i], "instantiationOffset"),
 				ParseFloat(j["Attacks"][i], "lifeTime"),

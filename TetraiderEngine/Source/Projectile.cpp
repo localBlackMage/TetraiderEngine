@@ -33,6 +33,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 
 void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile) {
 	m_pTransform->SetPosition(position);
+	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x)*180/PI);
 	m_damage = damage;
 	m_lifeTime = lifeTime;
 	m_isEnemyProjectile = isEnemyProjectile;

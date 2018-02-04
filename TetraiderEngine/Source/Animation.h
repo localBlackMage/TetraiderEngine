@@ -14,6 +14,7 @@ public:
 	virtual void Serialize(json j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
+	bool IsPlaying() { return m_isPlaying; }
 
 	void Play(int animation);
 	void Play(int animation, bool isReverse);
@@ -35,6 +36,7 @@ private:
 	int m_currentFrame;
 	float m_elapsedTime;
 	float m_speedMultiplier;
+	bool m_isPlaying;
 	Sprite* m_pSprite;
 };
 

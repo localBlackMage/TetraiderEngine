@@ -5,8 +5,8 @@
 #include "Projectile.h"
 #include "GameObject.h"
 
-RangeAttack::RangeAttack(float coolDown, int baseDamage, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
-	Attack(coolDown, baseDamage),
+RangeAttack::RangeAttack(float coolDown, int baseDamage, AttackType type, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
+	Attack(coolDown, baseDamage, type),
 	m_projectileSpeed(projectileSpeed),
 	m_offset(offset),
 	m_lifeTime(lifeTime),

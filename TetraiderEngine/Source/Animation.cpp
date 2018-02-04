@@ -27,8 +27,10 @@ void Animation::Update(float dt) {
 		m_elapsedTime = 0;
 	}
 
-	if (m_currentFrame == m_frames && !m_isLooping)
+	if (m_currentFrame == m_frames && !m_isLooping) {
+		m_isPlaying = false;
 		return;
+	}
 
 	m_pSprite->SetTileX(m_uStartPos);
 	m_pSprite->SetTileY(m_vStartPos);
@@ -36,18 +38,11 @@ void Animation::Update(float dt) {
 	m_pSprite->SetVOffset(m_vStartPos*m_currentAnimation);
 
 	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
-
-	// Test code remove later
-	if(TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_1)) {
-		ChangeAnimation(0);
-	}
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_2)) {
-		ChangeAnimation(1);
-	}
+	m_isPlaying = true;
 }
 
 void Animation::Play(int animation) {
-	if (animation != m_currentAnimation)
+	if (animation != m_currentAnimation || !m_isPlaying)
 		ChangeAnimation(animation);
 }
 

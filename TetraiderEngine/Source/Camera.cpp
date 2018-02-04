@@ -118,3 +118,17 @@ Matrix4x4 Camera::GetOrthographicMatrix() const
 {
 	return m_orthographicMatrix;
 }
+
+Vector3D Camera::TransformPointToScreenSpace(const Vector3D& worldCoordinates) {
+	Matrix4x4 viewPerspectiveMatrix = GetOrthographicMatrix()*GetViewMatrix();
+	// Transform point to clipping coordinates
+	Vector3D result = viewPerspectiveMatrix*worldCoordinates;
+	result.x = result.x / result.w;
+	result.y = result.y / result.w;
+	result.z = 0;
+	result.w = 1;
+
+	result.x = (result.x + 1) / 2.0f*m_screenWidth;
+	result.y = (1 - result.y) / 2.0f*m_screenHeight;
+	return result;
+}

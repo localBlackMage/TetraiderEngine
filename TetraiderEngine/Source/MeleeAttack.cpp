@@ -1,23 +1,40 @@
 #include "MeleeAttack.h"
 #include "Weapon.h"
 #include "TetraiderAPI.h"
-#include "TetraiderAPI.h"
 #include "Transform.h"
 #include "Math\Collisions.h"
 #include "GameObject.h"
 #include "Health.h"
+#include "Controller.h"
+#include "Animation.h"
 
-MeleeAttack::MeleeAttack(float coolDown, int baseDamage, float radius, float angle, float triggerAttackIn): 
-	Attack(coolDown, baseDamage),
+MeleeAttack::MeleeAttack(float coolDown, int baseDamage, AttackType type, float radius, float angle, float triggerAttackIn):
+	Attack(coolDown, baseDamage, type),
 	m_radius(radius),
 	m_angle(angle),
-	m_triggerAttackIn(triggerAttackIn)
-	{}
+	m_triggerAttackIn(triggerAttackIn) {
+	// Dummy code
+	m_pSlashEffect = TETRA_GAME_OBJECTS.CreateGameObject("P_SlashTest");
+}
+
+MeleeAttack::~MeleeAttack() {
+	m_pSlashEffect->Destroy();
+}
 
 void MeleeAttack::Update(float dt) {
 	Attack::Update(dt);
 
 	if (m_isAttacking) Run();
+
+	// Dummy code
+	Transform* pOwnerTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
+	Controller* pOwnerController = m_pOwner->pGO->GetComponent<Controller>(ComponentType::C_Controller);
+	Transform* pSlashEffectTransform = m_pSlashEffect->GetComponent<Transform>(ComponentType::C_Transform);
+	if (pOwnerTransform && pOwnerController && pSlashEffectTransform) {
+		pSlashEffectTransform->SetPosition(pOwnerTransform->GetPosition() + pOwnerController->GetLookDirection() * 75);
+		pSlashEffectTransform->SetAngleZ(atan2f(pOwnerController->GetLookDirection().y, pOwnerController->GetLookDirection().x) * 180 / PI);
+	}
+	//------------
 }
 
 // Assumes direction is normalized
@@ -26,6 +43,10 @@ bool MeleeAttack::Use(const Vector3D& direction) {
 
 	m_dirToAttackIn = direction;
 	Run();
+	// Dummy code
+	Animation* pAnimation = m_pSlashEffect->GetComponent<Animation>(ComponentType::C_Animation);
+	pAnimation->Play(0);
+	//---------------
 	return true;
 }
 
@@ -60,4 +81,9 @@ void MeleeAttack::Run() {
 	}
 
 	m_isAttacking = false;
+}
+
+void MeleeAttack::Debug(const Vector3D& dir) {
+	Transform* pTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
+	TETRA_DEBUG.DrawWireCone(pTransform->GetPosition(), Vector3D(0.0f, 0.0f, atan2f(dir.y, dir.x)*180/PI), m_angle, m_radius, DebugColor::YELLOW);
 }

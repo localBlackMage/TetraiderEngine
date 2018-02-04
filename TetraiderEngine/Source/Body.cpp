@@ -40,6 +40,7 @@ void Body::Integrate(float dt) {
 	ClearForces();
 
 	DrawDebugShape();
+	TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_pTransform->GetPosition() + m_Velocity, DebugColor::BLUE);
 }
 
 void Body::Serialize(json j) {

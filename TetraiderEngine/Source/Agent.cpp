@@ -2,7 +2,16 @@
 #include "Agent.h"
 #include "Body.h"
 #include "Transform.h"
+#include "TetraiderAPI.h"
 #include <iostream>
+
+Agent::Agent(ComponentType _type) : 
+	Component(_type), 
+	m_speed(0.0f), 
+	m_acceleration(0.0f), 
+	m_deceleration(0.0f), 
+	m_lookDirection(Vector3D(1, 0, 0))
+{};
 
 void Agent::Update(float dt) {
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
