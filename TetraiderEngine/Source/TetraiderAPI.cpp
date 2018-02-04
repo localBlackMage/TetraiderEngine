@@ -32,6 +32,7 @@ namespace Tetraider {
 	void Update(float deltaTime)
 	{
 		TETRA_INPUT.Update();									// Update input keys
+		TETRA_DEBUG.Update();									// Toggles debug drawing if needed
 		TETRA_EVENTS.Update(deltaTime);							// Pump the event manager
 		TETRA_AUDIO.Update(deltaTime);
 		TETRA_GAME_OBJECTS.Update(deltaTime);					// Update game logic
@@ -61,7 +62,7 @@ namespace Tetraider {
 				isPause = false;
 			}
 			// Exit debug mode
-			else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1))
+			else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
 				break;
 		}
 	}

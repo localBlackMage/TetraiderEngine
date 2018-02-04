@@ -25,14 +25,14 @@ void GameStateManager::Update() {
 
 		// Game loop
 		while (m_currentState == m_nextState) {
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2)) { m_debugPause = !m_debugPause; } // Triggers debug mode
+
 			Tetraider::FrameStart();
 
 			if(!m_debugPause)
 				Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
 			else
 				Tetraider::DebugMode();							// Debug mode
-
-			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1)) { m_debugPause = !m_debugPause; } // Triggers debug mode
 
 			Tetraider::FrameEnd();
 		}

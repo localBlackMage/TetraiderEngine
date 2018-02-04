@@ -48,6 +48,7 @@ public:
 	DebugManager(const DebugManager &) = delete;
 	void operator=(const DebugManager &) = delete;
 
+	void Update();
 	void SetDebugMode(bool isDebugEnabled) { m_isDebugModeEnabled = isDebugEnabled; };
 
 	void DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor color);

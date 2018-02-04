@@ -109,3 +109,9 @@ void DebugManager::RenderDebugCommands()
 	}
 }
 
+void DebugManager::Update()
+{
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1))
+		m_isDebugModeEnabled = !m_isDebugModeEnabled;
+}
+
