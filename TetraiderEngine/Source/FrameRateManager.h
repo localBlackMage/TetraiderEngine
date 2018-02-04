@@ -22,7 +22,6 @@ private:
 	float m_frameTime;
 	float m_totalElapsedTime;
 	float m_secondCounter;
-	int m_frameCounter;
 
 public:
 	FrameRateManager(unsigned int maxFrameRate = 60);

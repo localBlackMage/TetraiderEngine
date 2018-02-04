@@ -7,7 +7,7 @@
 #define MIN_FRAME_TIME 0.01666666666666666666666666666667f
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
-	m_secondCounter(0.f), m_frameCounter(0) 
+	m_secondCounter(0.f)
 {
 	if (maxFrameRate == 0) {
 		m_maxFrameRate = UINT16_MAX;
@@ -42,13 +42,17 @@ void FrameRateManager::FrameEnd() {
 	m_frameTime = float(m_tickEnd - m_tickStart) / 1000.0f;
 	m_totalElapsedTime += m_frameTime;
 
-	++m_frameCounter;
 	m_secondCounter += m_frameTime;
-	if (m_secondCounter >= 1.f) {
-		std::cout << "FPS : " << m_frameCounter << std::endl;
-		TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_FPS_UPDATE, &FPSData(m_frameCounter)));
+	float fps = 1 / m_frameTime;
+
+	// Debug to console window if FPS drops
+	if (fps < 40.0f) {
+		std::cout << "FPS drop : " << fps << std::endl;
+	}
+
+	if (m_secondCounter >= 0.1f) {
+		TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_FPS_UPDATE, &FPSData(fps)));
 		m_secondCounter = 0.f;
-		m_frameCounter = 0;
 	}
 }
 

@@ -364,7 +364,7 @@ void RenderManager::Resize(int width, int height)
 void RenderManager::HandleEvent(Event * p_event)
 {
 	if (p_event->Type() == EventType::EVENT_FPS_UPDATE) {
-		int fps = p_event->Data<FPSData>()->mFPS;
+		int fps = (int)p_event->Data<FPSData>()->mFPS;
 		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
 	}
 }

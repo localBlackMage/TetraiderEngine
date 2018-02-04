@@ -44,8 +44,8 @@ struct HealthChangeData : public EventData {
 };
 
 struct FPSData : public EventData {
-	FPSData(int fps) : mFPS(fps) {}
-	int mFPS;
+	FPSData(float fps) : mFPS(fps) {}
+	float mFPS;
 };
 
 
