@@ -29,8 +29,17 @@ void Sprite::Serialize(const json& j)
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
 	m_vOffset = ParseFloat(j, "uvOffset", "v");
-	m_tintColor = ParseColor(j, "tint");
-	m_saturationColor = ParseColor(j, "saturation");
+
+	m_tintColor.x = ParseFloat(j["tint"], "r");
+	m_tintColor.y = ParseFloat(j["tint"], "g");
+	m_tintColor.z = ParseFloat(j["tint"], "b");
+	m_tintColor.w = ParseFloat(j["tint"], "a");
+
+	m_saturationColor.x = ParseFloat(j["saturation"], "r");
+	m_saturationColor.y = ParseFloat(j["saturation"], "g");
+	m_saturationColor.z = ParseFloat(j["saturation"], "b");
+	m_saturationColor.w = ParseFloat(j["saturation"], "a");
+
 	m_hasAlpha = ParseBool(j, "hasAlpha");
 	m_textureName = ParseString(j, "Texture");
 	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);

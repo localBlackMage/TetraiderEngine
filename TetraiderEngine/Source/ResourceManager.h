@@ -19,15 +19,18 @@ Creation date: 1/17/18
 #include "Mesh.h"
 #include "DebugLineMesh.h"
 #include "STBSurface.h"
-#include <map>
+#include <unordered_map>
 #include <utility>
 #include "fmod_errors.h"
 #include "fmod_studio.hpp"
 #include "fmod.hpp"
+#include "JsonReader.h"
 
+using json = nlohmann::json;
+using namespace JsonReader;
 
 enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
-typedef std::map<std::string, FMOD::Sound*> SoundMap;
+typedef std::unordered_map<std::string, FMOD::Sound*> SoundMap;
 class ResourceManager
 {
 private:
@@ -37,14 +40,12 @@ private:
 	};
 	
 	DebugLineMesh * m_pDebugLineMesh;
-	std::map<std::string, Mesh*> m_meshes;
-	std::map<std::string, SurfaceTextureBuffer * > m_textures;
+	std::unordered_map<std::string, Mesh*> m_meshes;
+	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
+	std::map<std::string, json*> m_prefabs;
 
-	
 	SoundMap m_Sounds[CATEGORY_COUNT];
 	
-
-
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
 	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha);
 	SurfaceTextureBuffer * _LoadTexture(std::string textureName, bool hasAlpha);
@@ -57,18 +58,19 @@ public:
 
 	bool Init();
 	DebugLineMesh* GetDebugLineMesh();
-	Mesh * LoadMesh(std::string meshName);
-	Mesh * GetMesh(std::string meshName);
-	void UnloadMesh(std::string meshName);
+	Mesh * LoadMesh(const std::string& meshName);
+	Mesh * GetMesh(const std::string& meshName);
+	void UnloadMesh(const std::string& meshName);
 
-	SurfaceTextureBuffer * GetTexture(const std::string textureName, bool hasAlpha);
-	void UnloadTexture(std::string textureName);
+	SurfaceTextureBuffer * GetTexture(const std::string& textureName, bool hasAlpha);
+	void UnloadTexture(const std::string& textureName);
 
 	void UnloadAll();
-
+	void LoadPrefabFiles();
 	void Load(Sound_Category type, const std::string& path);
 	void LoadSFX(const std::string& path);
 	void LoadSong(const std::string& path);
+	json* GetPrefabFile(const std::string& path);
 	SoundMap* GetSoundMap();
 };
 

@@ -23,8 +23,8 @@ public:
 	float x, y, z, w;
 
 	Vector3D();
-	Vector3D(float _x, float _y, float _z);
-	Vector3D(float _x, float _y, float _z, float _w);
+	Vector3D(const float& _x, const float& _y, const float& _z);
+	Vector3D(const float& _x, const float& _y, const float& _z, const float& _w);
 	Vector3D(const Vector3D & rhs);
 	Vector3D(const Vector2D & rhs);
 	Vector3D& operator= (Vector3D rhs);

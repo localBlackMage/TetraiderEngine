@@ -4,8 +4,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
 #include <iostream>
+#include <filesystem>
 
-ResourceManager::ResourceManager(){}
+namespace fs = std::experimental::filesystem;
+
+ResourceManager::ResourceManager(){
+	LoadPrefabFiles();
+}
 
 ResourceManager::~ResourceManager() 
 {
@@ -151,7 +156,7 @@ DebugLineMesh * ResourceManager::GetDebugLineMesh()
 	return m_pDebugLineMesh;
 }
 
-Mesh * ResourceManager::LoadMesh(std::string meshName)
+Mesh * ResourceManager::LoadMesh(const std::string& meshName)
 {
 	Mesh * mesh = m_meshes[meshName];
 
@@ -165,7 +170,7 @@ Mesh * ResourceManager::LoadMesh(std::string meshName)
 	return mesh;
 }
 
-Mesh * ResourceManager::GetMesh(std::string meshName)
+Mesh * ResourceManager::GetMesh(const std::string& meshName)
 {
 	Mesh * mesh = m_meshes[meshName];
 
@@ -177,7 +182,7 @@ Mesh * ResourceManager::GetMesh(std::string meshName)
 	}
 }
 
-void ResourceManager::UnloadMesh(std::string meshName)
+void ResourceManager::UnloadMesh(const std::string& meshName)
 {
 	if (m_meshes[meshName]) {
 		delete m_meshes[meshName];
@@ -185,7 +190,7 @@ void ResourceManager::UnloadMesh(std::string meshName)
 	}
 }
 
-SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName, bool hasAlpha)
+SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string& textureName, bool hasAlpha)
 {
 	if (textureName == "") return nullptr;
 
@@ -197,7 +202,7 @@ SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName
 		return _LoadTexture(textureName, hasAlpha);
 }
 
-void ResourceManager::UnloadTexture(std::string textureName)
+void ResourceManager::UnloadTexture(const std::string& textureName)
 {
 	if (m_textures[textureName]) {
 		stbi_image_free(m_textures[textureName]->surface->data);
@@ -249,4 +254,32 @@ void ResourceManager::UnloadAll()
 		}
 	}
 	m_textures.clear();
+
+	for (auto comp : m_prefabs) {
+		if (comp.second) {
+			delete comp.second;
+		}
+	}
+
+	m_prefabs.clear();
+
+	//TODO: add sounds files here
+}
+
+void ResourceManager::LoadPrefabFiles() {
+	std::string path = TETRA_GAME_CONFIG.PrefabsDir();
+	for (auto &p : fs::directory_iterator(path)) {
+		json* j = new json();
+		*j = OpenJsonFile(p.path().string());
+		m_prefabs[p.path().filename().string()] = j;
+	}
+}
+
+json* ResourceManager::GetPrefabFile(const std::string& path) {
+	json* file = m_prefabs[path];
+	if (file)
+		return file;
+
+	std::cout << "Could not Get prefab json. Invalid prefab name." << std::endl;
+	return 0;
 }

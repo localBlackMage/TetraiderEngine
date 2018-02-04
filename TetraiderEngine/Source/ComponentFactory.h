@@ -16,7 +16,7 @@ public:
 	Component* CreateComponent(std::string component);
 private:
 	typedef Component* CreationFunction();
-	std::unordered_map <std::string, CreationFunction*> m_componentFunctions;
+	std::unordered_map <std::string, CreationFunction*> m_creationFunctions;
 };
 
 #endif 

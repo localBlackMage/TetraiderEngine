@@ -7,6 +7,8 @@
 #include "TetraiderAPI.h"
 #include <fstream>
 #include <iostream>
+#include <conio.h>
+#include <chrono>
 
 using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
@@ -153,26 +155,29 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 }
 
 GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	std::string s = TETRA_GAME_CONFIG.PrefabsDir() + name + ".json";
-	json j = OpenJsonFile(s);
+	//auto start = std::chrono::system_clock::now();
+	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
-	GameObject *pGameObject = new GameObject(++m_currentId); // TODO: Move to memory manager
-	SetGameObjectTag(ParseString(j, "Tag"), pGameObject);
-	SetGameObjectLayer(ParseString(j, "Layer"), pGameObject);
+	GameObject *pGameObject = new GameObject(++m_currentId);
+	SetGameObjectTag(ParseString(*j, "Tag"), pGameObject);
+	SetGameObjectLayer(ParseString(*j, "Layer"), pGameObject);
 
 	// TODO: Find a cleaner way to do this?
 	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCameras.push_back(pGameObject);
-	int size = j[COMPONENTS].size();
+	int size = (*j)[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
-		Component* pComponent = componentFactory.CreateComponent(ParseString(j[COMPONENTS][i], "Component"));
+		Component* pComponent = componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
 		pGameObject->AddComponent(pComponent);
-		pComponent->Serialize(j[COMPONENTS][i]);
+		pComponent->Serialize((*j)[COMPONENTS][i]);
 	}
 
 	pGameObject->LateInitialize();
 
 	AddGameObjectToQueue(pGameObject);
 
+	/*auto end = std::chrono::system_clock::now();
+	std::chrono::duration<double> elapsed_seconds = end - start;
+	cout << "Object creation time:	" << elapsed_seconds.count() << endl;*/
 	return pGameObject;
 }
 
@@ -200,11 +205,7 @@ void GameObjectManager::SetGameObjectLayer(std::string layer, GameObject * pGO)
 
 GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 	// TODO: Convert Tags to something better, try the trick mentioned by Prof. Rabin
-	if (tag == "Player") return GameObjectTag::T_Player;
-	else if (tag == "Camera") return GameObjectTag::T_Camera;
-	else if (tag == "Enemy") return GameObjectTag::T_Enemy;
-	else if (tag == "Projectile") return GameObjectTag::T_Projectile;
-	else return GameObjectTag::T_None;
+	return TAG_NAMES[tag];
 }
 
 void GameObjectManager::HandleEvent(Event *pEvent) {
@@ -213,16 +214,14 @@ void GameObjectManager::HandleEvent(Event *pEvent) {
 	}
 }
 
-void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO)
-{
+void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
 	mGameObjects.push_back(pGO);
 
 	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
 		m_layers[pGO->GetLayer()].AddToLayer(pGO);
 }
 
-RENDER_LAYER GameObjectManager::GetLayerFromString(std::string layerName)
-{
+RENDER_LAYER GameObjectManager::GetLayerFromString(std::string layerName) {
 	return RENDER_LAYER_STRINGS[layerName];
 }
 

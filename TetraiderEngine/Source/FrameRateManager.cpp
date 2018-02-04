@@ -46,8 +46,8 @@ void FrameRateManager::FrameEnd() {
 	float fps = 1 / m_frameTime;
 
 	// Debug to console window if FPS drops
-	if (fps < 40.0f) {
-		std::cout << "FPS drop : " << fps << std::endl;
+	if (fps < 50.0f) {
+		std::cout << "FPS dropped to: " << fps << std::endl;
 	}
 
 	if (m_secondCounter >= 0.1f) {

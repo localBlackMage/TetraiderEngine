@@ -5,9 +5,9 @@
 
 Vector3D::Vector3D() : x(0.f), y(0.f), z(0.f), w(1.f) { }
 
-Vector3D::Vector3D(float _x, float _y, float _z) : x(_x), y(_y), z(_z), w(1.f) { }
+Vector3D::Vector3D(const float& _x, const float& _y, const float& _z) : x(_x), y(_y), z(_z), w(1.f) { }
 
-Vector3D::Vector3D(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) { }
+Vector3D::Vector3D(const float& _x, const float& _y, const float& _z, const float& _w) : x(_x), y(_y), z(_z), w(_w) { }
 
 Vector3D::Vector3D(const Vector3D & rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w) { }
 

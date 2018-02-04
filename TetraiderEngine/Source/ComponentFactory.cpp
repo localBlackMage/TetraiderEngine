@@ -14,22 +14,22 @@
 #include "Audio.h"
 
 ComponentFactory::ComponentFactory() {
-	m_componentFunctions["Transform"] = Transform::CreateInstance;
-	m_componentFunctions["Sprite"] = Sprite::CreateInstance;
-	m_componentFunctions["Animation"] = Animation::CreateInstance;
-	m_componentFunctions["Controller"] = Controller::CreateInstance;
-	m_componentFunctions["Body"] = Body::CreateInstance;
-	m_componentFunctions["Camera"] = Camera::CreateInstance;
-	m_componentFunctions["CamFollow"] = CamFollow::CreateInstance;
-	m_componentFunctions["Health"] = Health::CreateInstance;
-	m_componentFunctions["FlashOnTakeDamage"] = FlashOnTakeDamage::CreateInstance;
-	m_componentFunctions["Projectile"] = Projectile::CreateInstance;
-	m_componentFunctions["Weapon"] = Weapon::CreateInstance;
-	m_componentFunctions["Audio"] = Audio::CreateInstance;
+	m_creationFunctions["Transform"] = Transform::CreateInstance;
+	m_creationFunctions["Sprite"] = Sprite::CreateInstance;
+	m_creationFunctions["Animation"] = Animation::CreateInstance;
+	m_creationFunctions["Controller"] = Controller::CreateInstance;
+	m_creationFunctions["Body"] = Body::CreateInstance;
+	m_creationFunctions["Camera"] = Camera::CreateInstance;
+	m_creationFunctions["CamFollow"] = CamFollow::CreateInstance;
+	m_creationFunctions["Health"] = Health::CreateInstance;
+	m_creationFunctions["FlashOnTakeDamage"] = FlashOnTakeDamage::CreateInstance;
+	m_creationFunctions["Projectile"] = Projectile::CreateInstance;
+	m_creationFunctions["Weapon"] = Weapon::CreateInstance;
+	m_creationFunctions["Audio"] = Audio::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {
-	CreationFunction* Create = m_componentFunctions[component];
+	CreationFunction* Create = m_creationFunctions[component];
 	if (Create)
 		return Create();
 
