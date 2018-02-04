@@ -20,6 +20,7 @@ private:
 	GameState m_currentState;
 	GameState m_nextState;
 	//void UpdateGameLoop();
+	bool m_debugPause;
 public:
 	GameStateManager();
 	~GameStateManager();
@@ -29,6 +30,7 @@ public:
 	void SetGameState(GameState);
 	void Update();
 	virtual void HandleEvent(Event* p_event);
+	bool IsDebugPause() { return m_debugPause; }
 };
 
 #endif

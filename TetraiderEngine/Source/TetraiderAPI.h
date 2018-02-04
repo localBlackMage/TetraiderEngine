@@ -83,6 +83,8 @@ namespace Tetraider {
 	\param fileName - The json file containing what game object archetypess to load, must include file path
 	*/
 	void LoadPrefabs(std::string filePath);
+
+	void DebugMode();
 }
 
 #endif

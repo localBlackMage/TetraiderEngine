@@ -33,6 +33,7 @@ public:
 	void FrameStart();
 	void FrameEnd();
 	void ResetElapsedTime();
+	float GetMaxFrameRate();
 	float GetElapsedTime(); // total elapsed time from level start in seconds
 	float GetFrameTime(); // in seconds
 };

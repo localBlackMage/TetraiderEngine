@@ -4,7 +4,8 @@
 GameStateManager::GameStateManager() :
 	m_previousState(GameState::CURRENT_LEVEL),
 	m_currentState(GameState::CURRENT_LEVEL),
-	m_nextState(GameState::CURRENT_LEVEL)
+	m_nextState(GameState::CURRENT_LEVEL),
+	m_debugPause(false)
 {}
 
 GameStateManager::~GameStateManager() {}
@@ -25,7 +26,14 @@ void GameStateManager::Update() {
 		// Game loop
 		while (m_currentState == m_nextState) {
 			Tetraider::FrameStart();
-			Tetraider::Update(Tetraider::GetFrameTime());
+
+			if(!m_debugPause)
+				Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
+			else
+				Tetraider::DebugMode();							// Debug mode
+
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1)) { m_debugPause = !m_debugPause; } // Triggers debug mode
+
 			Tetraider::FrameEnd();
 		}
 

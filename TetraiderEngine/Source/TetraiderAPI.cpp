@@ -50,6 +50,22 @@ namespace Tetraider {
 		// TODO: Clean up GameObjects
 	}
 
+	void DebugMode()
+	{
+		bool isPause = true;
+		while (isPause) {
+			TETRA_INPUT.Update();								// Update input keys
+			// Step in one frame
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_PERIOD)) {
+				Update(TETRA_FRAMERATE.GetMaxFrameRate());
+				isPause = false;
+			}
+			// Exit debug mode
+			else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1))
+				break;
+		}
+	}
+
 	Mesh * CreateMesh(std::string meshName)
 	{
 		return TETRA_RESOURCES.LoadMesh(meshName);
