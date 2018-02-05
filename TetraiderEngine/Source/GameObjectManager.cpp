@@ -52,11 +52,9 @@ void GameObjectLayer::RenderLayer(GameObject* camera)
 
 void GameObjectLayer::ReSortLayer()
 {
-	//Sorting::TopDownMergeSort(m_layerObjects, &LeftYGreaterThanOrEqualToRightY);
-
-	std::vector<int> vec = { 10, 6, 4, 9, 3, 5, 2, 8, 7, 1, 0 };
-	Sorting::TopDownMergeSort(vec, &SortInt);
 	int i = 0;
+	Sorting::TopDownMergeSort(m_layerObjects, &LeftYGreaterThanOrEqualToRightY);
+	i = 1;
 }
 
 void GameObjectLayer::AddToLayer(GameObject * pGO)

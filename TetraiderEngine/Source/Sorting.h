@@ -35,14 +35,16 @@ namespace Sorting {
 	}
 
 	template <typename Element, typename CompareFunc>
-	static void _TopDownSplitMerge(vector<Element>& a, int begin, int end, vector<Element>& b, CompareFunc _compareFunc) {
+	static void _TopDownSplitMerge(vector<Element>& b, int begin, int end, vector<Element>& a, CompareFunc _compareFunc) {
 		if (end - begin < 2)	
 			return;
 
 		int middle = (end + begin) / 2;
+
 		_TopDownSplitMerge(a, begin, middle, b, _compareFunc);
 		_TopDownSplitMerge(a, middle, end, b, _compareFunc);
-		_TopDownMerge(a, begin, middle, end, a, _compareFunc);
+
+		_TopDownMerge(b, begin, middle, end, a, _compareFunc);
 	}
 
 	template <typename Element, typename CompareFunc>
@@ -52,7 +54,7 @@ namespace Sorting {
 
 		for (int k = begin; k < end; ++k) {
 			
-			if (i < middle && (j >= end || a[i] <= a[j])) { //_compareFunc(a[i], a[j]))) { 
+			if (i < middle && (j >= end || _compareFunc(a[i], a[j]))) {
 				b[k] = a[i];
 				++i;
 			}
