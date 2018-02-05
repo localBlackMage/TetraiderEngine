@@ -226,10 +226,10 @@ namespace JsonReader {
 	{
 		if (j.find(first) != j.end()) {
 			return Vector3D(
-				ValueExists(j, first) ? ParseFloat(j, first, "r") : 1.0f,
-				ValueExists(j, first) ? ParseFloat(j, first, "g") : 1.0f,
-				ValueExists(j, first) ? ParseFloat(j, first, "b") : 1.0f,
-				ValueExists(j, first) ? ParseFloat(j, first, "a") : 1.0f
+				ValueExists(j, first) ? j[first]["r"] : 1.0f,
+				ValueExists(j, first) ? j[first]["g"] : 1.0f,
+				ValueExists(j, first) ? j[first]["b"] : 1.0f,
+				ValueExists(j, first) ? j[first]["a"] : 1.0f
 			);
 		}
 		return Vector3D(1, 1, 1, 1);
@@ -240,10 +240,10 @@ namespace JsonReader {
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
 				return Vector3D(
-					ValueExists(j, first, second) ? ParseFloat(j, first, second, "r") : 1.0f,
-					ValueExists(j, first, second) ? ParseFloat(j, first, second, "g") : 1.0f,
-					ValueExists(j, first, second) ? ParseFloat(j, first, second, "b") : 1.0f,
-					ValueExists(j, first, second) ? ParseFloat(j, first, second, "a") : 1.0f
+					ValueExists(j, first, second) ? j[first][second]["r"] : 1.0f,
+					ValueExists(j, first, second) ? j[first][second]["g"] : 1.0f,
+					ValueExists(j, first, second) ? j[first][second]["b"] : 1.0f,
+					ValueExists(j, first, second) ? j[first][second]["a"] : 1.0f
 				);
 			}
 		}
