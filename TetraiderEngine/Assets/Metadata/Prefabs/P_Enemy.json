@@ -23,6 +23,14 @@
         "z": 0
 	  }
     },
+	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 150,
+			"acceleration": 10,
+			"knockBackSpeed": 400
+		}
+	},
     {
       "Component": "Sprite",
       "Texture": "T_enemyTest.png",

@@ -12,6 +12,7 @@
 #include "Projectile.h"
 #include "Weapon.h"
 #include "Audio.h"
+#include "NPCController.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -26,6 +27,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Projectile"] = Projectile::CreateInstance;
 	m_creationFunctions["Weapon"] = Weapon::CreateInstance;
 	m_creationFunctions["Audio"] = Audio::CreateInstance;
+	m_creationFunctions["NPCController"] = NPCController::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

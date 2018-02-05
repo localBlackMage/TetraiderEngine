@@ -25,6 +25,7 @@ protected:
 	float m_speed;
 	float m_acceleration;
 	float m_deceleration;
+	float m_knockBackSpeed;
 	Vector3D m_targetVelocity;
 	Vector3D m_lookDirection;
 	Transform* m_pTransform;

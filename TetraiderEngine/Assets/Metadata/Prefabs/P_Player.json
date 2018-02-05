@@ -53,7 +53,8 @@
 		"Component": "Controller",
 		"AgentData": {
 			"speed": 200,
-			"acceleration": 10
+			"acceleration": 10,
+			"knockBackSpeed": 0
 		}
 	},
 	{
