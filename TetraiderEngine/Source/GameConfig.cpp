@@ -21,10 +21,10 @@ void GameConfig::LoadConfig(std::string s) {
 
 	// Set level parameters
 	json levelSettings = j["LEVEL_SETTINGS"];
-	T_LEVELS.Initialize(levelSettings);
+	TETRA_LEVELS.Initialize(levelSettings);
 
 	// Set debug parameters
-	T_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
+	TETRA_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
 
-	T_RENDERER.SetDebugShaderName(ParseString(gameSettings, "debugShader"));
+	TETRA_RENDERER.SetDebugShaderName(ParseString(gameSettings, "debugShader"));
 }

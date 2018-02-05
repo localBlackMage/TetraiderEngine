@@ -14,18 +14,20 @@ protected:
 	float m_yTiling;
 	float m_uOffset;
 	float m_vOffset;
-	Vector3D m_color;
+	Vector3D m_tintColor;
+	Vector3D m_saturationColor;
 	std::string m_textureName;
 	SurfaceTextureBuffer * m_texture;
 	Mesh& m_mesh;
 	std::string m_shader;
+	bool m_hasAlpha;
 
 public:
 	Sprite(std::string textureName = "");
 	~Sprite();
-
+	static Component* CreateInstance() { return new Sprite(); }
 	virtual void Update(float dt);
-	virtual void Serialize(json j);	
+	virtual void Serialize(const json& j);
 
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
@@ -50,8 +52,11 @@ public:
 
 	SurfaceTextureBuffer * GetTexture() const;
 
-	Vector3D GetColor() const { return m_color; }
-	void SetColor(const Vector3D& color) { m_color = color; }
+	Vector3D GetTintColor() const { return m_tintColor; }
+	void SetTintColor(const Vector3D& tintColor) { m_tintColor = tintColor; }
+
+	Vector3D GetSaturationColor() const { return m_saturationColor; }
+	void SetSaturationColor(const Vector3D& saturationColor) { m_saturationColor = saturationColor; }
 };
 
 #endif

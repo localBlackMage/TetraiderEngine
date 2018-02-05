@@ -10,10 +10,12 @@ class Animation :public Component {
 public:
 	Animation();
 	~Animation();
+	static Component* CreateInstance() { return new Animation(); }
 	virtual void Update(float dt);
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
+	bool IsPlaying() { return m_isPlaying; }
 
 	void Play(int animation);
 	void Play(int animation, bool isReverse);
@@ -35,6 +37,8 @@ private:
 	int m_currentFrame;
 	float m_elapsedTime;
 	float m_speedMultiplier;
+	bool m_isPlaying;
+	bool m_isPlayOnAwake;
 	Sprite* m_pSprite;
 };
 

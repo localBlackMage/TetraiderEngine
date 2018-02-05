@@ -10,7 +10,7 @@ using json = nlohmann::json;
 class LevelManager
 {
 private:
-	void LoadLevel(json j);
+	void LoadLevel(const json& j);
 	int maxLevel;
 	int currentLevel;
 	int firstLevel;
@@ -21,7 +21,7 @@ public:
 	LevelManager(const LevelManager &) = delete;
 	void operator=(const LevelManager &) = delete;
 
-	void Initialize(json j);
+	void Initialize(const json& j);
 	void LoadLevel();
 	void UnLoadLevel();
 	void UnLoadLevelForRestart();

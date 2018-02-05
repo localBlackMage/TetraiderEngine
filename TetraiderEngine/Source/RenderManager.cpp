@@ -16,8 +16,24 @@
 #include <fstream>
 #include <windows.h>
 
+enum SHADER_LOCATIONS {
+	POSITION = 0,
+	TEXTURE_COORD,
+
+	PERSP_MATRIX = 10,
+	VIEW_MATRIX,
+	MODEL_MATRIX,
+	NORMAL_MATRIX,
+
+	TINT_COLOR = 20,
+	SATURATION_COLOR,
+	FRAME_OFFSET,
+	FRAME_SIZE,
+	TILE
+};
+
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_width(width), m_height(height),
+	m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
 	_InitWindow(title);
@@ -81,22 +97,23 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
+	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("texture_coord"));
+	glEnableVertexAttribArray(SHADER_LOCATIONS::TEXTURE_COORD);
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetTextCoordBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("texture_coord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
+	glVertexAttribPointer(SHADER_LOCATIONS::TEXTURE_COORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
 
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_offset"), pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());// pSpriteComp->GetFrameVOffset(), pSpriteComp->GetFrameUOffset());
-	glUniform2f(m_pCurrentProgram->GetUniform("frame_size"), pSpriteComp->TileX(), pSpriteComp->TileY());//pSpriteComp->FrameWidth(), pSpriteComp->FrameHeight());
+	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
+	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
-	//glUniform1f(m_pCurrentProgram->GetUniform("tile_x"), 1); // pSpriteComp->TileX());
-	//glUniform1f(m_pCurrentProgram->GetUniform("tile_y"), 1); // pSpriteComp->TileY());
+	//glUniform2f(SHADER_LOCATIONS::TILE, 1, 1); // pSpriteComp->TileX(), pSpriteComp->TileY());
 
-	Vector3D color = pSpriteComp->GetColor();
-	glUniform4f(m_pCurrentProgram->GetUniform("color"), color[0], color[1], color[2], color[3]);
+	Vector3D tintColor = pSpriteComp->GetTintColor();
+	Vector3D saturationColor = pSpriteComp->GetSaturationColor();
+	glUniform4f(SHADER_LOCATIONS::TINT_COLOR, tintColor[0], tintColor[1], tintColor[2], tintColor[3]);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, saturationColor[0], saturationColor[1], saturationColor[2], saturationColor[3]);
 
 	if (pSpriteComp->TextureHasAlpha()) {
 		glDisable(GL_DEPTH_TEST);
@@ -126,9 +143,9 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 		return;
 
 	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
-	//Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("model_matrix"), 1, true, (float*)M);
-	//glUniformMatrix4fv(m_pCurrentProgram->GetUniform("normal_matrix"), 1, true, (float*)N);
+	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+	glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
 
 	// set shader attributes
 	if (gameObject.HasComponent(ComponentType::C_Sprite))
@@ -150,19 +167,20 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	glUseProgram(m_pCurrentProgram->GetProgram());
 
-	// TODO: Update to support grabbing Perspective Matricies if needed
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("persp_matrix"), 1, true, (float*)cameraComp->GetOrthographicMatrix());
-	glUniformMatrix4fv(m_pCurrentProgram->GetUniform("view_matrix"), 1, true, (float*)cameraComp->GetViewMatrix());
+	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
+	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
 }
+
+#pragma region Debug
 
 void RenderManager::_SetUpDebug(const GameObject& camera)
 {
 	SelectShaderProgram(m_debugShaderName);
 	_SetUpCamera(camera);
-
-	glEnableVertexAttribArray(m_pCurrentProgram->GetAttribute("position"));
-	glBindBuffer(GL_ARRAY_BUFFER, T_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
-	glVertexAttribPointer(m_pCurrentProgram->GetAttribute("position"), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+	
+	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
+	glBindBuffer(GL_ARRAY_BUFFER, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
+	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
 }
 
 void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)
@@ -177,62 +195,63 @@ void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color
 	case DebugShape::S_LINE:
 		_RenderLine(color, pos, rot, scale);
 		break;
+	case DebugShape::S_CONE:
+		_RenderCone(color, pos, rot, scale);
+		break;
 	}
 }
 
 void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
 {
-	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	float halfWidth = scale.x / 2.f,
 		halfHeight = scale.y / 2.f;
 
 	// square base matrix
-	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, Vector3D(0, 0, 1, 0));
-	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, Vector3D(0, 0, 1, 0)) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
+	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, ZAXIS);
+	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, ZAXIS) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
 	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 0.f);
 
 	Matrix4x4 Left = Base
 		* Matrix4x4::Translate(Vector3D(-halfWidth, 0, 0))
 		* SideBase;
-	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
-	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Left);
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)Left);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 
 	Matrix4x4 Right = Base
 		* Matrix4x4::Translate(Vector3D(halfWidth, 0, 0))
 		* SideBase;
-	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Right);
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)Right);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 
 	Matrix4x4 Top = Base
 		* Matrix4x4::Translate(Vector3D(0, halfHeight, 0))
 		* TopBotScale;
-	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Top);
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)Top);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 
 	Matrix4x4 Bottom = Base
 		* Matrix4x4::Translate(Vector3D(0, -halfHeight, 0))
 		* TopBotScale;
-	glUniformMatrix4fv(modelMatrix, 1, true, (float*)Bottom);
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)Bottom);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
 
 void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Vector3D & pos)
 {
-	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	Matrix4x4 ArcMatrix;
-	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
-	int max = 360;
+	int max = 32;
 	float degreeAmt = 360.f / float(max);
 	Vector3D AXIS_Z = Vector3D(0, 0, 1);
-	Vector3D a = pos + Vector3D(radius, 0, 0);
+	Vector3D a = Vector3D(radius, 0, 0);
 	Vector3D b = Matrix4x4::Rotate(degreeAmt, AXIS_Z) * a;
 	float lineLength = Vector3D::Distance(a, b);
 	// circle base matrix
 	Matrix4x4 Base = Matrix4x4::Translate(Vector3D(radius, 0, 0))
-		* Matrix4x4::Rotate(90.f, Vector3D(0, 0, 1))
+		* Matrix4x4::Rotate(90.f, ZAXIS)
 		* Matrix4x4::Scale(lineLength, 0, 0);
 	Matrix4x4 Position = Matrix4x4::Translate(pos);
 	for (int i = 0; i < max; ++i) {
@@ -240,24 +259,75 @@ void RenderManager::_RenderCircle(const Vector3D & color, float radius, const Ve
 			* Matrix4x4::Rotate(degreeAmt * float(i), AXIS_Z)
 			* Base;
 
-		glUniformMatrix4fv(modelMatrix, 1, true, (float*)ArcMatrix);
+		glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)ArcMatrix);
 		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 	}
 }
 
 void RenderManager::_RenderLine(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & scale)
 {
-	glUniform4f(m_pCurrentProgram->GetUniform("color"), color.x, color.y, color.z, color.w);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
 	Matrix4x4 model = Matrix4x4::Translate(pos) * 
-		Matrix4x4::Rotate(rot.z, Vector3D(0, 0, 1)) *
+		Matrix4x4::Rotate(rot.z, ZAXIS) *
 		Matrix4x4::Scale(scale.x) * 
 		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
 
-	GLint modelMatrix = m_pCurrentProgram->GetUniform("model_matrix");
-	glUniformMatrix4fv(modelMatrix, 1, true, (float*)model);
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)model);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
+
+void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, const Vector3D & rot, const Vector3D & arcWidthAndRadius)
+{
+	float arcWidth = arcWidthAndRadius.x;
+	float radius = arcWidthAndRadius.y;
+
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
+
+	Matrix4x4 ArcMatrix;
+	int max = 32;
+	float degreeAmt = arcWidth / float(max);
+	float offset = rot.z - (arcWidth / 2.f) + degreeAmt/2.f;
+	//max += int(rot.z);
+	Vector3D AXIS_Z = Vector3D(0, 0, 1);
+	Vector3D a = Vector3D(radius, 0, 0);
+	Vector3D b = Matrix4x4::Rotate(degreeAmt, AXIS_Z) * a;
+	float lineLength = Vector3D::Distance(a, b);
+	// Draw cone arc
+	// circle base matrix
+	Matrix4x4 Base = Matrix4x4::Translate(Vector3D(radius, 0, 0))
+		* Matrix4x4::Rotate(90.f, ZAXIS)
+		* Matrix4x4::Scale(lineLength, 0, 0);
+	Matrix4x4 Position = Matrix4x4::Translate(pos);
+	for (int i = 0; i < max; ++i) {
+		ArcMatrix = Position
+			* Matrix4x4::Rotate(degreeAmt * float(i) + offset, AXIS_Z)
+			* Base;
+
+		glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)ArcMatrix);
+		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+	}
+	
+
+	// Draw cone lines
+	Matrix4x4 model = Matrix4x4::Translate(pos) *
+		Matrix4x4::Rotate(rot.z + (arcWidth / 2.f), ZAXIS) *
+		Matrix4x4::Scale(radius) *
+		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
+
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)model);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+	model = Matrix4x4::Translate(pos) *
+		Matrix4x4::Rotate(rot.z - (arcWidth / 2.f), ZAXIS) *
+		Matrix4x4::Scale(radius) *
+		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
+
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)model);
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+}
+
+#pragma endregion
 
 bool RenderManager::Init()
 {
@@ -291,6 +361,14 @@ void RenderManager::Resize(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void RenderManager::HandleEvent(Event * p_event)
+{
+	if (p_event->Type() == EventType::EVENT_FPS_UPDATE) {
+		int fps = (int)p_event->Data<FPSData>()->mFPS;
+		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
+	}
+}
+
 void RenderManager::SetWindowWidth(int width)
 {
 	m_width = width;
@@ -305,7 +383,8 @@ void RenderManager::SetWindowHeight(int height)
 
 void RenderManager::SetWindowTitle(std::string title)
 {
-	// TODO: FINISH THIS
+	m_windowTitle = title;
+	SDL_SetWindowTitle(m_pWindow, title.c_str());
 }
 
 float RenderManager::GetAspectRatio() const
@@ -315,7 +394,6 @@ float RenderManager::GetAspectRatio() const
 
 void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& go)
 {
-	if (camera == go) return;
 	_SelectShaderProgram(go);
 	_SetUpCamera(camera);
 	_RenderGameObject(go);
@@ -325,7 +403,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 
 void RenderManager::LoadShaders()
 {
-	std::string shaderDir = T_GAME_CONFIG.ShadersDir();
+	std::string shaderDir = TETRA_GAME_CONFIG.ShadersDir();
 
 	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
 	LoadShaderProgram(shaderDir, "defaultShader.json"); // TODO: Move this
@@ -346,20 +424,6 @@ void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName
 				program->AttachShader(*vShader);
 				program->AttachShader(*fShader);
 				program->LinkShaders();
-
-				if (j[programName]["uniforms"].is_array()) {
-					int unisLen = j[programName]["uniforms"].size();
-					for (int i = 0; i < unisLen; i++) {
-						program->AddUniform(j[programName]["uniforms"][i]);
-					}
-				}
-
-				if (j[programName]["attributes"].is_array()) {
-					int attrsLen = j[programName]["attributes"].size();
-					for (int i = 0; i < attrsLen; i++) {
-						program->AddAttribute(j[programName]["attributes"][i]);
-					}
-				}
 			}
 		}
 	}
@@ -413,6 +477,8 @@ void RenderManager::SelectShaderProgram(std::string programName)
 		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;
 		return;
 	}
-	m_pCurrentProgram = m_shaderPrograms[programName];
+
+	if (m_pCurrentProgram != m_shaderPrograms[programName])
+		m_pCurrentProgram = m_shaderPrograms[programName];
 }
 #pragma endregion

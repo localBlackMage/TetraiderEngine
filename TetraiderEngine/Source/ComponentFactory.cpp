@@ -1,5 +1,4 @@
 #include "ComponentFactory.h"
-
 #include "Component.h"
 #include "Transform.h"
 #include "Sprite.h"
@@ -11,20 +10,30 @@
 #include "Health.h"
 #include "FlashOnTakeDamage.h"
 #include "Projectile.h"
+#include "Weapon.h"
+#include "Audio.h"
+#include "NPCController.h"
 
-ComponentFactory::ComponentFactory() { }
+ComponentFactory::ComponentFactory() {
+	m_creationFunctions["Transform"] = Transform::CreateInstance;
+	m_creationFunctions["Sprite"] = Sprite::CreateInstance;
+	m_creationFunctions["Animation"] = Animation::CreateInstance;
+	m_creationFunctions["Controller"] = Controller::CreateInstance;
+	m_creationFunctions["Body"] = Body::CreateInstance;
+	m_creationFunctions["Camera"] = Camera::CreateInstance;
+	m_creationFunctions["CamFollow"] = CamFollow::CreateInstance;
+	m_creationFunctions["Health"] = Health::CreateInstance;
+	m_creationFunctions["FlashOnTakeDamage"] = FlashOnTakeDamage::CreateInstance;
+	m_creationFunctions["Projectile"] = Projectile::CreateInstance;
+	m_creationFunctions["Weapon"] = Weapon::CreateInstance;
+	m_creationFunctions["Audio"] = Audio::CreateInstance;
+	m_creationFunctions["NPCController"] = NPCController::CreateInstance;
+}
 
 Component* ComponentFactory::CreateComponent(std::string component) {
-	if (component == "Transform") return new Transform();
-	else if (component == "Sprite") return new Sprite();
-	else if (component == "Animation") return new Animation();
-	else if (component == "Controller") return new Controller();
-	else if (component == "Body") return new Body();
-	else if (component == "Camera") return new Camera();
-	else if (component == "CamFollow") return new CamFollow();
-	else if (component == "Health") return new Health();
-	else if (component == "FlashOnTakeDamage") return new FlashOnTakeDamage();
-	else if (component == "Projectile") return new Projectile();
+	CreationFunction* Create = m_creationFunctions[component];
+	if (Create)
+		return Create();
 
-	return 0;
+	return NULL;
 }

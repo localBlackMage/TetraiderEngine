@@ -4,6 +4,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "External\stb_image.h"
 #include <iostream>
+#include <filesystem>
+
+namespace fs = std::experimental::filesystem;
 
 ResourceManager::ResourceManager(){}
 
@@ -23,6 +26,31 @@ ResourceManager::~ResourceManager()
 		}
 	}
 	m_textures.clear();
+
+	for (auto comp : m_prefabs) {
+		if (comp.second) {
+			delete comp.second;
+		}
+	}
+
+	m_prefabs.clear();
+
+	//Release sound in each category 
+	// TODO: Double check if there are any memory leaks with this method
+	for (auto comp : m_Sounds[SONG]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+	}
+	m_Sounds[SONG].clear();
+
+	for (auto comp : m_Sounds[SFX]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+	}
+	m_Sounds[SFX].clear();
+
 }
 
 GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurface)
@@ -43,22 +71,15 @@ GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurfac
 	return textureBuffer;
 }
 
-ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir)
+ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha)
 {
-	json j = JsonReader::OpenJsonFile(texturesDir + textureInfoFilePath + ".json");
 	TextureInfo info;
-	if (j.is_object()) {
-		info.filename = texturesDir + JsonReader::ParseString(j, "filename");
-		info.frameWidth = JsonReader::ParseFloat(j, "frameWidth");
-		info.frameHeight = JsonReader::ParseFloat(j, "frameHeight");
-		info.rows = JsonReader::ParseInt(j, "rows");
-		info.cols = JsonReader::ParseInt(j, "columns");
-		info.hasAlpha = JsonReader::ParseBool(j, "alpha");
-	}
+	info.filename = texturesDir + textureInfoFilePath;
+	info.hasAlpha = hasAlpha;
 	return info;
 }
 
-SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
+SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName, bool hasAlpha)
 {
 	SurfaceTextureBuffer * stbuff = m_textures[textureName];
 
@@ -67,7 +88,7 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 
 	STB_Surface * surface = new STB_Surface();
 	if (surface) {
-		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, T_GAME_CONFIG.TexturesDir());
+		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir(), hasAlpha);
 
 		surface->hasAlpha = info.hasAlpha;
 		surface->data = stbi_load(info.filename.c_str(),
@@ -95,6 +116,35 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 	}
 }
 
+void ResourceManager::Load(Sound_Category type, const std::string & path)
+{
+	if (m_Sounds[type].find(path) != m_Sounds[type].end())
+		return;
+
+	FMOD::Sound* sound;
+	TETRA_AUDIO.ErrorCheck(TETRA_AUDIO.getSystem()->createSound(path.c_str(), TETRA_AUDIO.getMode()[type], 0, &sound));
+	m_Sounds[type][path] = sound;
+}
+
+void ResourceManager::LoadSFX(const std::string & path)
+{
+	Load(SFX, TETRA_GAME_CONFIG.SFXDir() + path);
+}
+
+void ResourceManager::LoadSong(const std::string & path)
+{
+	Load(SONG, TETRA_GAME_CONFIG.SFXDir() + path);
+}
+
+FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category type)
+{
+	FMOD::Sound* sound = m_Sounds[type][path];
+	if (sound)
+		return sound;
+
+	std::cout << "Invalid sound name." << std::endl;
+	return 0;
+}
 
 bool ResourceManager::Init()
 {
@@ -114,6 +164,8 @@ bool ResourceManager::Init()
 	quad->FinishMesh();
 
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
+	LoadPrefabFiles();
+	
 	return true;
 }
 
@@ -122,7 +174,7 @@ DebugLineMesh * ResourceManager::GetDebugLineMesh()
 	return m_pDebugLineMesh;
 }
 
-Mesh * ResourceManager::LoadMesh(std::string meshName)
+Mesh * ResourceManager::LoadMesh(const std::string& meshName)
 {
 	Mesh * mesh = m_meshes[meshName];
 
@@ -136,7 +188,7 @@ Mesh * ResourceManager::LoadMesh(std::string meshName)
 	return mesh;
 }
 
-Mesh * ResourceManager::GetMesh(std::string meshName)
+Mesh * ResourceManager::GetMesh(const std::string& meshName)
 {
 	Mesh * mesh = m_meshes[meshName];
 
@@ -148,7 +200,7 @@ Mesh * ResourceManager::GetMesh(std::string meshName)
 	}
 }
 
-void ResourceManager::UnloadMesh(std::string meshName)
+void ResourceManager::UnloadMesh(const std::string& meshName)
 {
 	if (m_meshes[meshName]) {
 		delete m_meshes[meshName];
@@ -156,7 +208,7 @@ void ResourceManager::UnloadMesh(std::string meshName)
 	}
 }
 
-SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName)
+SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string& textureName, bool hasAlpha)
 {
 	if (textureName == "") return nullptr;
 
@@ -165,10 +217,10 @@ SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string textureName
 	if (stbuff)
 		return stbuff;
 	else
-		return _LoadTexture(textureName);
+		return _LoadTexture(textureName, hasAlpha);
 }
 
-void ResourceManager::UnloadTexture(std::string textureName)
+void ResourceManager::UnloadTexture(const std::string& textureName)
 {
 	if (m_textures[textureName]) {
 		stbi_image_free(m_textures[textureName]->surface->data);
@@ -220,4 +272,24 @@ void ResourceManager::UnloadAll()
 		}
 	}
 	m_textures.clear();
+
+	//TODO: add sounds files here
+}
+
+void ResourceManager::LoadPrefabFiles() {
+	std::string path = TETRA_GAME_CONFIG.PrefabsDir();
+	for (auto &p : fs::directory_iterator(path)) {
+		json* j = new json();
+		*j = OpenJsonFile(p.path().string());
+		m_prefabs[p.path().filename().string()] = j;
+	}
+}
+
+json* ResourceManager::GetPrefabFile(const std::string& path) {
+	json* file = m_prefabs[path];
+	if (file)
+		return file;
+
+	std::cout << "Could not Get prefab json. Invalid prefab name." << std::endl;
+	return 0;
 }

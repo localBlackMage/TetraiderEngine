@@ -10,7 +10,8 @@ class GameObject;
 enum DebugShape {
 	S_CIRCLE = 0,
 	S_RECT,
-	S_LINE
+	S_LINE,
+	S_CONE
 };
 
 struct DebugCommand {
@@ -47,14 +48,16 @@ public:
 	DebugManager(const DebugManager &) = delete;
 	void operator=(const DebugManager &) = delete;
 
+	void Update();
 	void SetDebugMode(bool isDebugEnabled) { m_isDebugModeEnabled = isDebugEnabled; };
 
 	void DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor color);
 	void DrawWireRectangle(const Vector3D& pos, const Vector3D& rot, const Vector3D& scale, DebugColor color);
 	void DrawWireCircle(const Vector3D& pA, float radius, DebugColor color);
+	void DrawWireCone(const Vector3D& pos, const Vector3D& rot, float arcWidth, float radius, DebugColor color);
 
 	void ClearDebugCommands();
-	void RenderDebugCommands(const GameObject& camera);
+	void RenderDebugCommands();
 };
 
 #endif

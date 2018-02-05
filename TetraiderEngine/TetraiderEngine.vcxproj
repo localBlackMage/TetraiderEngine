@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Attack.cpp" />
@@ -54,6 +55,7 @@
     <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\MemoryManager.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\NPCController.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
@@ -66,8 +68,10 @@
     <ClCompile Include="Source\SubscriberTracker.cpp" />
     <ClCompile Include="Source\TetraiderAPI.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Attack.h" />
@@ -97,6 +101,7 @@
     <ClInclude Include="Source\Health.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\JsonReader.h" />
+    <ClInclude Include="Source\Layers.h" />
     <ClInclude Include="Source\LevelManager.h" />
     <ClInclude Include="Source\Math\Collisions.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
@@ -111,6 +116,7 @@
     <ClInclude Include="Source\MeleeAttack.h" />
     <ClInclude Include="Source\MemoryManager.h" />
     <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\NPCController.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\RangeAttack.h" />
@@ -120,6 +126,7 @@
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Singleton.h" />
+    <ClInclude Include="Source\Sorting.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\STBSurface.h" />
     <ClInclude Include="Source\Subscriber.h" />
@@ -127,6 +134,7 @@
     <ClInclude Include="Source\TagNames.h" />
     <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\Weapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

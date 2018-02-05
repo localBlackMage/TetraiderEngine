@@ -1,0 +1,74 @@
+{
+  "Tag": "None",
+  "Layer": "2",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 100,
+        "y": 125,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+    {
+      "Component": "Sprite",
+      "Texture": "T_SlashTest.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "hasAlpha": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Slash",
+			"frames": 5,
+			"animationSpeed": 24,
+			"isLooping": false,
+			"isPlayOnAwake": false
+		}]
+	},
+	{
+		"Component": "Audio",
+		"audioClip": "swordSlash.mp3",
+		"volume": 0.8,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false
+	}
+  ]
+}

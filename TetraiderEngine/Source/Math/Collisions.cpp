@@ -320,7 +320,7 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 				axis.Normalize();
 				mtv.normal = axis;
 				mtv.penetration = fabsf(radius - Vector3D::Distance(projection, circle));
-				T_DEBUG.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
+				TETRA_DEBUG.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
 				return true;
 			}
 			else {
@@ -343,4 +343,16 @@ bool StaticPolygonToRay(const Vector3D& shapeA, const std::vector<Vector3D>& sha
 
 	MTV mtv;
 	return SeperatingAxisTheorom::SAT(shapeA, shapeAvert, pos, lineVertx, mtv);
+}
+
+// TODO: Test if this functions works for angles grater than 180
+bool IsPointInCone(const Vector3D& point, const Vector3D& center, float radius, Vector3D& dir, float angle) {
+	if (!StaticPointToStaticCircle(point, center, radius))
+		return false;
+
+	Vector3D dirToPoint = point - center;
+	dirToPoint.Normalize();
+
+	float a = acosf(Vector3D::Dot(dirToPoint, dir)) * 180/PI;
+	return a < angle*0.5f;
 }

@@ -8,7 +8,7 @@
 typedef enum
 {
 #include "ComponentTypesNames.h"
-	C_NONE
+	NUM_COMPONENTS
 } ComponentType;
 #undef REGISTER_COMPONENT_TYPE
 

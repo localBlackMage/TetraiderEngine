@@ -35,18 +35,32 @@ void Transform::LateUpdate(float dt)
 	m_transform = trans*rot*scal*pivotOffset;
 }
 
-void Transform::Serialize(json j) {
+void Transform::Serialize(const json& j) {
 	m_is2d = ValueExists(j, "2D") ? ParseBool(j, "2D") : true;
-	m_position = ParseVector3D(j, "position");
-	m_scale = ParseVector3D(j, "scale");
 	m_angleX = ParseFloat(j, "rotation", "x");
 	m_angleY = ParseFloat(j, "rotation", "y");
 	m_angleZ = ParseFloat(j, "rotation", "z");
-	m_pivotOffset = ParseVector3D(j, "pivotOffset");
+
+	m_position.x = ParseFloat(j["position"], "x");
+	m_position.y = ParseFloat(j["position"], "y");
+	m_position.z = ParseFloat(j["position"], "z");
+
+	m_scale.x = ParseFloat(j["scale"], "x");
+	m_scale.y = ParseFloat(j["scale"], "y");
+	m_scale.z = ParseFloat(j["scale"], "z");
+
+	m_pivotOffset.x = ParseFloat(j["pivotOffset"], "x");
+	m_pivotOffset.y = ParseFloat(j["pivotOffset"], "y");
+	m_pivotOffset.z = ParseFloat(j["pivotOffset"], "z");
 }
 
 void Transform::HandleEvent(Event * p_event)
 {
+}
+
+bool Transform::operator<(const Transform & other) const
+{
+	return m_position.y > other.m_position.y;
 }
 
 #pragma region Translation

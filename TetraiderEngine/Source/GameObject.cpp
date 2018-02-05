@@ -1,18 +1,22 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Event.h"
+#include <algorithm>
 
 GameObject::GameObject(unsigned int id) : 
 	m_id(id), 
 	m_isDestroy(false), m_isActive(true), 
 	m_isCollisionDisabled(false), 
-	m_isRender(true) {}
+	m_isRender(true) 
+{
+	std::fill_n(mComponents, int(ComponentType::NUM_COMPONENTS), nullptr);
+}
 
 GameObject::~GameObject() {
-	for (auto &comp : mComponents)
-		delete comp;
-
-	mComponents.clear();
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			delete mComponents[i];
+	}
 }
 
 bool GameObject::operator==(const GameObject& rhs) const
@@ -25,37 +29,39 @@ void GameObject::Destroy() {
 }
 
 void GameObject::Update(float dt) {
-	for (auto &comp : mComponents)
-		comp->Update(dt);
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->Update(dt);
+	}
 }
 
 void GameObject::LateUpdate(float dt) {
-	for (auto &comp : mComponents)
-		comp->LateUpdate(dt);
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->LateUpdate(dt);
+	}
 }
 
 void GameObject::LateInitialize() {
-	for (auto &comp : mComponents)
-		comp->LateInitialize();
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->LateInitialize();
+	}
 }
 
 void GameObject::AddComponent(Component* pComponent) {
-	// Check if component exists before adding
 	pComponent->pGO = this;
-	mComponents.push_back(pComponent);
+	mComponents[pComponent->Type()] = pComponent;
 }
 
 bool GameObject::HasComponent(ComponentType type) const
 {
-	for (auto &comp : mComponents) {
-		if (comp->Type() == type)
-			return true;
-	}
-	return false;
+	return mComponents[type];
 }
 
 void GameObject::HandleEvent(Event* pEvent) {
-	for (auto &comp : mComponents) {
-		comp->HandleEvent(pEvent);
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->HandleEvent(pEvent);
 	}
 }

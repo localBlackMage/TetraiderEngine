@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace JsonReader {
-	float ParseFloat(const json j, String first)
+	float ParseFloat(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())
 				return j[first];
@@ -14,7 +14,7 @@ namespace JsonReader {
 		return 0.0f;
 	}
 
-	float ParseFloat(const json j, String first, String second)
+	float ParseFloat(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end())
@@ -23,7 +23,7 @@ namespace JsonReader {
 		return 0.0f;
 	}
 
-	float ParseFloat(const json j, String first, String second, String third)
+	float ParseFloat(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -34,13 +34,13 @@ namespace JsonReader {
 		return 0.0f;
 	}
 
-	double ParseDouble(const json j, String first)
+	double ParseDouble(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end()) return j[first];
 		return 0.0;
 	}
 
-	double ParseDouble(const json j, String first, String second)
+	double ParseDouble(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end())
@@ -49,7 +49,7 @@ namespace JsonReader {
 		return 0.0;
 	}
 
-	double ParseDouble(const json j, String first, String second, String third)
+	double ParseDouble(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -60,14 +60,14 @@ namespace JsonReader {
 		return 0.0;
 	}
 
-	int ParseInt(const json j, String first)
+	int ParseInt(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())
 			return j[first];
 		return 0;
 	}
 
-	int ParseInt(const json j, String first, String second)
+	int ParseInt(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end())
@@ -76,7 +76,7 @@ namespace JsonReader {
 		return 0;
 	}
 
-	int ParseInt(const json j, String first, String second, String third)
+	int ParseInt(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -87,14 +87,14 @@ namespace JsonReader {
 		return 0;
 	}
 
-	String ParseString(const json j, String first)
+	String ParseString(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())
 			return j[first];
 		return "";
 	}
 
-	String ParseString(const json j, String first, String second)
+	String ParseString(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end())
@@ -103,7 +103,7 @@ namespace JsonReader {
 		return "";
 	}
 
-	String ParseString(const json j, String first, String second, String third)
+	String ParseString(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -114,14 +114,14 @@ namespace JsonReader {
 		return "";
 	}
 
-	bool ParseBool(const json j, String first)
+	bool ParseBool(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())
 			return j[first];
 		return false;
 	}
 
-	bool ParseBool(const json j, String first, String second)
+	bool ParseBool(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end())
@@ -130,7 +130,7 @@ namespace JsonReader {
 		return false;
 	}
 
-	bool ParseBool(const json j, String first, String second, String third)
+	bool ParseBool(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -141,14 +141,14 @@ namespace JsonReader {
 		return false;
 	}
 
-	std::vector<String> ParseStringList(const json j, String first)
+	std::vector<String> ParseStringList(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())
 			return j[first];
 		return std::vector<String>();
 	}
 
-	std::vector<String> ParseStringList(const json j, String first, String second)
+	std::vector<String> ParseStringList(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end())
@@ -157,7 +157,7 @@ namespace JsonReader {
 		return std::vector<String>();
 	}
 
-	std::vector<String> ParseStringList(const json j, String first, String second, String third)
+	std::vector<String> ParseStringList(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -168,7 +168,7 @@ namespace JsonReader {
 		return std::vector<String>();
 	}
 
-	Vector2D ParseVector2D(const json j, String first)
+	Vector2D ParseVector2D(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end()) {
 			return Vector2D(
@@ -180,7 +180,7 @@ namespace JsonReader {
 		return Vector2D();
 	}
 
-	Vector2D ParseVector2D(const json j, String first, String second)
+	Vector2D ParseVector2D(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -194,7 +194,7 @@ namespace JsonReader {
 		return Vector2D();
 	}
 
-	Vector3D ParseVector3D(const json j, String first)
+	Vector3D ParseVector3D(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end()) {
 			return Vector3D(
@@ -207,7 +207,7 @@ namespace JsonReader {
 		return Vector3D();
 	}
 
-	Vector3D ParseVector3D(const json j, String first, String second)
+	Vector3D ParseVector3D(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -222,7 +222,7 @@ namespace JsonReader {
 		return Vector3D();
 	}
 
-	Vector3D ParseColor(const json j, String first)
+	Vector3D ParseColor(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end()) {
 			return Vector3D(
@@ -235,7 +235,7 @@ namespace JsonReader {
 		return Vector3D(1, 1, 1, 1);
 	}
 
-	Vector3D ParseColor(const json j, String first, String second)
+	Vector3D ParseColor(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -250,12 +250,12 @@ namespace JsonReader {
 		return Vector3D(1, 1, 1, 1);
 	}
 
-	bool ValueExists(const json j, String first)
+	bool ValueExists(const json& j, const String& first)
 	{
 		return j.find(first) != j.end();
 	}
 
-	bool ValueExists(const json j, String first, String second)
+	bool ValueExists(const json& j, const String& first, const String& second)
 	{
 		if (j.find(first) != j.end()) {
 			return j[first].find(second) != j[first].end();
@@ -263,7 +263,7 @@ namespace JsonReader {
 		return false;
 	}
 
-	bool ValueExists(const json j, String first, String second, String third)
+	bool ValueExists(const json& j, const String& first, const String& second, const String& third)
 	{
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
@@ -274,7 +274,7 @@ namespace JsonReader {
 		return false;
 	}
 
-	json OpenJsonFile(String fileName)
+	json OpenJsonFile(const String& fileName)
 	{
 		try {
 			std::ifstream i(fileName);
@@ -289,7 +289,7 @@ namespace JsonReader {
 		}
 	}
 
-	bool KeyIs(json::iterator it, String key)
+	bool KeyIs(json::iterator it, const String& key)
 	{
 		return it.key().compare(key) == 0;
 	}

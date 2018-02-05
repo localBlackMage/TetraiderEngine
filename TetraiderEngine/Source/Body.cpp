@@ -11,7 +11,9 @@ Body::Body() :
 {
 }
 
-Body::~Body() {}
+Body::~Body() {
+	delete m_pShape;
+}
 
 void Body::Update(float dt) {}
 
@@ -40,9 +42,10 @@ void Body::Integrate(float dt) {
 	ClearForces();
 
 	DrawDebugShape();
+	TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_pTransform->GetPosition() + m_Velocity, DebugColor::BLUE);
 }
 
-void Body::Serialize(json j) {
+void Body::Serialize(const json& j) {
 	m_isStatic = ParseBool(j, "isStatic");
 	m_mass = ParseFloat(j, "mass");
 
@@ -51,25 +54,27 @@ void Body::Serialize(json j) {
 
 	std::string shape = ParseString(j["SHAPE"], "type");
 
-	// TODO: if overriding avoid creating new shapes
-	if (shape == "AABB") {
-		AABB* pRect = new AABB(ParseFloat(j["SHAPE"], "width"), ParseFloat(j["SHAPE"], "height"));
-		m_pShape = pRect;
-		m_pShape->pBody = this;
-	}
-	else if (shape == "circle") {
-		Circle* pCircle = new Circle(ParseFloat(j["SHAPE"], "radius"));
-		m_pShape = pCircle;
-		m_pShape->pBody = this;
-	}
-	else if (shape == "polygon") {
-		Polygon* pPolygon = new Polygon();
-		for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
-			Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
-			pPolygon->m_vertices.push_back(vertx);
+	// TODO: Shapes will not get overriden by level
+	if (!m_pShape) {
+		if (shape == "AABB") {
+			AABB* pRect = new AABB(ParseFloat(j["SHAPE"], "width"), ParseFloat(j["SHAPE"], "height"));
+			m_pShape = pRect;
+			m_pShape->pBody = this;
 		}
-		m_pShape = pPolygon;
-		m_pShape->pBody = this;
+		else if (shape == "circle") {
+			Circle* pCircle = new Circle(ParseFloat(j["SHAPE"], "radius"));
+			m_pShape = pCircle;
+			m_pShape->pBody = this;
+		}
+		else if (shape == "polygon") {
+			Polygon* pPolygon = new Polygon();
+			for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
+				Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
+				pPolygon->m_vertices.push_back(vertx);
+			}
+			m_pShape = pPolygon;
+			m_pShape->pBody = this;
+		}
 	}
 }
 
@@ -104,12 +109,12 @@ void Body::DrawDebugShape() {
 	switch (m_pShape->type) {
 		case ST_Circle: {
 			Circle* pC = static_cast<Circle*>(m_pShape);
-			T_DEBUG.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
+			TETRA_DEBUG.DrawWireCircle(GetPosition(), pC->radius*2.0f, DebugColor::GREEN);
 			break;
 		}
 		case ST_AABB: {
 			AABB* pRect = static_cast<AABB*>(m_pShape);
-			T_DEBUG.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
+			TETRA_DEBUG.DrawWireRectangle(GetPosition(), Vector3D(0,0,0), Vector3D(pRect->width, pRect->height, 0), DebugColor::GREEN);
 			break;
 		}
 		case ST_POLYGON: {
@@ -117,7 +122,7 @@ void Body::DrawDebugShape() {
 			for (unsigned int i = 0; i < pPoly->m_vertices.size(); ++i) {
 				Vector3D pointA = pPoly->m_vertices[i] + GetPosition();
 				Vector3D pointB = pPoly->m_vertices[i == pPoly->m_vertices.size() - 1 ? 0: i+1] + GetPosition();
-				T_DEBUG.DrawLine(pointA, pointB, DebugColor::GREEN);
+				TETRA_DEBUG.DrawLine(pointA, pointB, DebugColor::GREEN);
 			}
 			break;
 		}

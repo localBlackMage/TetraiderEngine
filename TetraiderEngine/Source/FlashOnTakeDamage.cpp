@@ -6,17 +6,17 @@ FlashOnTakeDamage::FlashOnTakeDamage(): Component(ComponentType::C_FlashOnTakeDa
 FlashOnTakeDamage::~FlashOnTakeDamage() {}
 
 void FlashOnTakeDamage::Update(float dt) {
-	if (m_flashTime > 1)
+	if (m_flashTime > 1.f)
 		return;
 
-	m_pSprite->SetColor(Lerp(m_flashColor, m_originalColor, m_flashTime));
+	m_pSprite->SetSaturationColor(Lerp(m_flashColor, m_originalColor, m_flashTime));
 	m_flashTime += dt*m_decaySpeed;
 
-	if(m_flashTime > 1)
-		m_pSprite->SetColor(Lerp(m_flashColor, m_originalColor, 1)); // In order not to overshoot
+	if(m_flashTime > 1.f)
+		m_pSprite->SetSaturationColor(m_originalColor); // In order not to overshoot
 }
 
-void FlashOnTakeDamage::Serialize(json j) {
+void FlashOnTakeDamage::Serialize(const json& j) {
 	m_decaySpeed = ParseFloat(j, "decaySpeed");
 	m_flashColor = ParseColor(j, "flashColor");
 }
@@ -36,7 +36,7 @@ void FlashOnTakeDamage::LateInitialize() {
 		}
 	}
 
-	m_originalColor = m_pSprite->GetColor();
+	m_originalColor = m_pSprite->GetSaturationColor();
 }
 
 void FlashOnTakeDamage::HandleEvent(Event* pEvent) {

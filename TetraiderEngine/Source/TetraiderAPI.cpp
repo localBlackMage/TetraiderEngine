@@ -5,59 +5,79 @@ namespace Tetraider {
 	int Initialize(std::string configFile)
 	{
 		
-		T_GAME_CONFIG.LoadConfig(configFile);
-		T_RENDERER.Init();
-		T_RENDERER.LoadShaders();
-		T_RESOURCES.Init();
+		TETRA_GAME_CONFIG.LoadConfig(configFile);
+		TETRA_RENDERER.Init();
+		TETRA_RENDERER.LoadShaders();
+		TETRA_RESOURCES.Init();
 
 		return 0;
 	}
 
 	void StartGameLoop()
 	{
-		T_GAME_STATE.Update(); // Start game loop
+		TETRA_GAME_STATE.Update(); // Start game loop
 	}
 
 	float GetFrameTime()
 	{
-		return T_FRAMERATE.GetFrameTime();;
+		return TETRA_FRAMERATE.GetFrameTime();;
 	}
 
 	void FrameStart()
 	{
-		T_FRAMERATE.FrameStart();
-		T_RENDERER.FrameStart();
+		TETRA_FRAMERATE.FrameStart();
+		TETRA_RENDERER.FrameStart();
 	}
 
 	void Update(float deltaTime)
 	{
-		T_INPUT.Update();									// Update input keys
-		T_EVENTS.Update(deltaTime);							// Pump the event manager
-		T_AUDIO.Update(deltaTime);
-		T_GAME_OBJECTS.Update(deltaTime);					// Update game logic
-		T_GAME_OBJECTS.UpdateStatus();						// Update status of game objects
-		T_PHYSICS.Integrate(deltaTime);						// Move physics bodies
-		T_PHYSICS.ResolveCollisions();						// Resolve collisions on physics bodies
-		T_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
-		T_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
-		T_DEBUG.RenderDebugCommands(*T_GAME_OBJECTS.GetActiveCamera());
+		TETRA_INPUT.Update();									// Update input keys
+		TETRA_DEBUG.Update();									// Toggles debug drawing if needed
+		TETRA_EVENTS.Update(deltaTime);							// Pump the event manager
+		TETRA_AUDIO.Update(deltaTime);
+		TETRA_GAME_OBJECTS.Update(deltaTime);					// Update game logic
+		TETRA_GAME_OBJECTS.UpdateStatus();						// Update status of game objects
+		TETRA_PHYSICS.Integrate(deltaTime);						// Move physics bodies
+		TETRA_PHYSICS.ResolveCollisions();						// Resolve collisions on physics bodies
+		TETRA_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
+		TETRA_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
+		TETRA_DEBUG.RenderDebugCommands();
 	}
 
 	void FrameEnd()
 	{
-		T_RENDERER.FrameEnd();								// Swap window buffer
-		T_FRAMERATE.FrameEnd();								// Lock FPS 
+		TETRA_RENDERER.FrameEnd();								// Swap window buffer
+		TETRA_FRAMERATE.FrameEnd();								// Lock FPS 
 		// TODO: Clean up GameObjects
+	}
+
+	void DebugMode()
+	{
+		while (true) {
+			TETRA_INPUT.Update();								// Update input keys
+			// Step in one frame
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_PERIOD)) {
+				Update(TETRA_FRAMERATE.GetMaxFrameRate());
+				break;
+			}
+			else if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SLASH)) {
+				Update(TETRA_FRAMERATE.GetMaxFrameRate());
+				break;
+			}
+			// Exit debug mode
+			else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
+				break;
+		}
 	}
 
 	Mesh * CreateMesh(std::string meshName)
 	{
-		return T_RESOURCES.LoadMesh(meshName);
+		return TETRA_RESOURCES.LoadMesh(meshName);
 	}
 
 	void UnloadResources()
 	{
-		T_RESOURCES.UnloadAll();
+		TETRA_RESOURCES.UnloadAll();
 	}
 
 	void LoadPrefabs(std::string fileName)

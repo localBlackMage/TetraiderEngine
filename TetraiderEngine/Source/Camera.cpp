@@ -2,18 +2,17 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
+#include <algorithm>
 
 Camera::Camera() :
 	Component(ComponentType::C_Camera),
 	m_fov(105.f), m_aspectRatio(1.f), m_screenWidth(1), m_screenHeight(1),
-	m_viewMatrix(Matrix4x4()), m_perspectiveMatrix(Matrix4x4()), m_orthographicMatrix(Matrix4x4())
+	m_viewMatrix(Matrix4x4()), m_cameraMatrix(Matrix4x4()), m_isPersp(false)
 {
-
+	std::fill_n(m_layersToRender, int(RENDER_LAYER::L_NUM_LAYERS), false);
 }
 
-Camera::~Camera()
-{
-}
+Camera::~Camera(){}
 
 Matrix4x4 Camera::_MatrixFromCameraVectors(const Vector3D & right, const Vector3D & up, const Vector3D & forward)
 {
@@ -32,19 +31,15 @@ void Camera::_CalcViewMatrix()
 	m_viewMatrix = rotationM * Matrix4x4::Translate(-1 * m_pTransform->GetPosition());
 }
 
-void Camera::_CalcPerspectiveMatrix()
+void Camera::Serialize(const json& j)
 {
-	m_perspectiveMatrix = Matrix4x4::Perspective(m_fov, m_aspectRatio, 1.f);
-}
-
-void Camera::_CalcOrthographicMatrix()
-{
-	m_orthographicMatrix = Matrix4x4::Orthographic(m_screenWidth, m_screenHeight, 0.1f);
-}
-
-void Camera::Serialize(json j)
-{
+	m_isPersp = ParseBool(j, "type");
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
+	std::vector<std::string> layers = j["layers"];
+
+	for (std::string layer : layers) {
+		m_layersToRender[TETRA_GAME_OBJECTS.GetLayerFromString(layer)] = true;
+	}
 }
 
 void Camera::LateInitialize()
@@ -59,23 +54,23 @@ void Camera::Update(float dt)
 
 void Camera::LateUpdate(float dt)
 {
-	m_aspectRatio = T_RENDERER.GetAspectRatio();
-	m_screenWidth = T_RENDERER.WindowWidth();
-	m_screenHeight = T_RENDERER.WindowHeight();
+	m_aspectRatio = TETRA_RENDERER.GetAspectRatio();
+	m_screenWidth = TETRA_RENDERER.WindowWidth();
+	m_screenHeight = TETRA_RENDERER.WindowHeight();
 	_CalcViewMatrix();
-	//switch (m_cameraType) {
-	//case CAM_BOTH:
-	//	_CalcPerspectiveMatrix();
-	//	_CalcOrthographicMatrix();
-	//	break;
-	//case CAM_PERSP:
-	//	_CalcPerspectiveMatrix();
-	//	break;
-	//case CAM_ORTHO:
-	_CalcOrthographicMatrix();
-	_CalcPerspectiveMatrix();
-	//	break;
-	//}
+	m_cameraMatrix = m_isPersp ? 
+		Matrix4x4::Perspective(m_fov, m_aspectRatio, 1.f) : 
+		Matrix4x4::Orthographic(m_screenWidth, m_screenHeight, 0.1f);
+}
+
+bool Camera::ShouldRenderLayer(RENDER_LAYER layer) const
+{
+	return m_layersToRender[layer];
+}
+
+bool Camera::ShouldRenderLayer(int layer) const
+{
+	return m_layersToRender[layer];
 }
 
 float Camera::GetFOV() const
@@ -88,17 +83,16 @@ float Camera::GetAspect() const
 	return m_aspectRatio;
 }
 
-Matrix4x4 Camera::GetViewMatrix() const
-{
-	return m_viewMatrix;
-}
+Vector3D Camera::TransformPointToScreenSpace(const Vector3D& worldCoordinates) {
+	Matrix4x4 viewPerspectiveMatrix = Matrix4x4::Orthographic(m_screenWidth, m_screenHeight, 0.1f)*GetViewMatrix(); // TODO: talk to moodie
+	// Transform point to clipping coordinates
+	Vector3D result = viewPerspectiveMatrix*worldCoordinates;
+	result.x = ((result.x / result.w) + 1.f) / 2.0f * m_screenWidth;
+	result.y = (1 - (result.y / result.w)) / 2.0f * m_screenHeight;
+	result.z = 0;
+	result.w = 1;
 
-Matrix4x4 Camera::GetPerspectiveMatrix() const
-{
-	return m_perspectiveMatrix;
-}
-
-Matrix4x4 Camera::GetOrthographicMatrix() const
-{
-	return m_orthographicMatrix;
+	//result.x = (result.x + 1) / 2.0f*m_screenWidth;
+	//result.y = (1 - result.y) / 2.0f*m_screenHeight;
+	return result;
 }

@@ -11,7 +11,7 @@ CamFollow::CamFollow() :
 
 CamFollow::~CamFollow() {}
 
-void CamFollow::Serialize(json j) {
+void CamFollow::Serialize(const json& j) {
 	m_followSpeed = ParseFloat(j, "followSpeed");
 	m_defaultTargetTag = ParseString(j, "defaultTargetTag");
 }
@@ -44,6 +44,6 @@ void CamFollow::LateUpdate(float dt) {
 
 void CamFollow::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
-		m_pTarget = T_GAME_OBJECTS.FindObjectWithTag(T_GAME_OBJECTS.FindTagWithString(m_defaultTargetTag));
+		m_pTarget = TETRA_GAME_OBJECTS.FindObjectWithTag(TETRA_GAME_OBJECTS.FindTagWithString(m_defaultTargetTag));
 	}
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="pew_data" version="1.3.0" audacityversion="2.1.0" sel0="0.3792324627" sel1="0.4458049887" vpos="0" h="0.0000000000" zoom="2283.5597826087" rate="22050.0" snapto="off" selectionformat="hh:mm:ss + milliseconds">
+	<tags>
+		<tag name="starttime" value="0"/>
+		<tag name="bytelength" value="9441"/>
+		<tag name="width" value="426"/>
+		<tag name="canseekontime" value="true"/>
+		<tag name="Software" value="Lavf52.111.0"/>
+		<tag name="sourcedata" value="B4A7DD541MM1346511464367492"/>
+		<tag name="framerate" value="30"/>
+		<tag name="audiodatarate" value="67"/>
+		<tag name="totaldatarate" value="129"/>
+		<tag name="videodatarate" value="68"/>
+		<tag name="height" value="240"/>
+		<tag name="totalduration" value="0"/>
+		<tag name="duration" value="0"/>
+	</tags>
+	<wavetrack name="pew" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="22050" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="9830">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000dd3.au" len="9830" min="-0.608474" max="0.736414" rms="0.069571"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="pew" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="22050" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="9830">
+				<waveblock start="0">
+					<simpleblockfile filename="e000078f.au" len="9830" min="-0.612176" max="0.737161" rms="0.069281"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-
+#include "TetraiderAPI.h"
 
 float ChangeSemitone(float frequency, float variation)
 {
@@ -22,25 +22,23 @@ float RandomBetween(float min, float max)
 	return min + n * (max - min);
 }
 
-
-
-AudioManager::AudioManager():currentSong(0),fade(FADE_NONE),isPaused(false)
+AudioManager::AudioManager():m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isChannelGroupPaused(false)
 {
 	//initialize
-	ErrorCheck(FMOD::System_Create(&system));
-	ErrorCheck(system->init(100,FMOD_INIT_NORMAL,0));
+	ErrorCheck(FMOD::System_Create(&m_pSystem));
+	ErrorCheck(m_pSystem->init(100,FMOD_INIT_NORMAL,0));
 
 	//create channel grp for each type of sound category
-	ErrorCheck(system->getMasterChannelGroup(&master));
+	ErrorCheck(m_pSystem->getMasterChannelGroup(&m_pMaster));
 	for (int i = 0; i < CATEGORY_COUNT; i++)
 	{
-		ErrorCheck(system->createChannelGroup(0,&groups[i]));
-		ErrorCheck(master->addGroup(groups[i]));
+		ErrorCheck(m_pSystem->createChannelGroup(0,&m_pGroups[i]));
+		ErrorCheck(m_pMaster->addGroup(m_pGroups[i]));
 	}
 
 	//setup modes for each category
-	modes[SFX] = FMOD_DEFAULT ;
-	modes[SONG] = FMOD_DEFAULT | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL;
+	m_Modes[SFX] = FMOD_DEFAULT ;
+	m_Modes[SONG] = FMOD_DEFAULT | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL;
 
 	// seed value for SFx
 	srand(0);
@@ -48,18 +46,9 @@ AudioManager::AudioManager():currentSong(0),fade(FADE_NONE),isPaused(false)
 
 AudioManager::~AudioManager()
 {
-	//Release sound in each category
-	SoundMap::iterator iter;
-	for (int i=0;i<CATEGORY_COUNT;++i)
-	{
-		for (iter = sounds[i].begin(); iter != sounds[i].end(); ++iter)
-		{
-			iter->second->release();
-		}
-		sounds[i].clear();
-	}
 	//Release system
-	ErrorCheck(system->release());
+	//ErrorCheck(m_pSystem->run());
+	//ErrorCheck(m_pSystem->release());
 }
 
 void AudioManager::Update(float elapsed)
@@ -67,176 +56,170 @@ void AudioManager::Update(float elapsed)
 	//in sec
 	const float fadeTime = 1.0f;
 
-	if (currentSong != 0 && fade == FADE_IN)
+	if (m_pCurrentSongChannel != 0 && m_fade == FADE_IN)
 	{
 		float volume;
-		ErrorCheck(currentSong->getVolume(&volume));
+		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
 		float nextVolume = volume + elapsed / fadeTime;
 		if (nextVolume >= 1.0f)
 		{
-			ErrorCheck(currentSong->setVolume(1.0f));
-			fade = FADE_NONE;
+			ErrorCheck(m_pCurrentSongChannel->setVolume(1.0f));
+			m_fade = FADE_NONE;
 		}
 		else
 		{
-			ErrorCheck(currentSong->setVolume(nextVolume));
+			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
-	else if (currentSong!=0&&fade==FADE_OUT)
+	else if (m_pCurrentSongChannel !=0&& m_fade ==FADE_OUT)
 	{
 		float volume;
-		ErrorCheck(currentSong->getVolume(&volume));
+		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
 		float nextVolume = volume + elapsed / fadeTime;
 		if (nextVolume <= 0.0f)
 		{
-			ErrorCheck(currentSong->stop());
-			currentSong = 0;
-			currentSongPath.clear();
-			fade = FADE_NONE;
+			ErrorCheck(m_pCurrentSongChannel->stop());
+			m_pCurrentSongChannel = 0;
+			m_currentSongPath.clear();
+			m_fade = FADE_NONE;
 		}
 		else
 		{
-			ErrorCheck(currentSong->setVolume(nextVolume));
+			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
-	else if (currentSong==0&&!nextSongPath.empty())
+	else if (m_pCurrentSongChannel ==0&&!m_nextSongPath.empty())
 	{
-		PlaySong(nextSongPath);
-		nextSongPath.clear();
+		PlaySong(m_nextSongPath);
+		m_nextSongPath.clear();
 	}
-	ErrorCheck(system->update());
-}
-
-void AudioManager::LoadSFX(const std::string & path)
-{
-	Load(SFX,path);
-}
-
-void AudioManager::LoadSong(const std::string & path)
-{
-	Load(SONG,path);
+	ErrorCheck(m_pSystem->update());
 }
 
 void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol, float maxVol, float minPitch, float maxPitch*/)
 {
-	//if an sfx is already playing ignore
-	/*if (currentSfxPath == path)
-		return;*/
-
-
 	// Try to find sound effect and return if not found 
-	SoundMap::iterator sound = sounds[SFX].find(path);
-	if(sound == sounds[SFX].end())
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
+	if(!sound)
 		return;
 	
-	//vol and pitch calculation
+	// TODO if not found load sound
+
+	//vol and pitch calculation if needed
 	/*float vol = RandomBetween(minVol,maxVol);
 	float pitch= RandomBetween(minPitch, maxPitch);*/
 
-	//check if sfx already playing
-	
+	//check if already playing
+	/*if (isSoundPlaying(path))
+	{
+		return;
+	} */       
 
+	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
 	//play sound with initial values
-	//currentSfxPath = path;
-	FMOD::Channel* channel=NULL;
-	ErrorCheck(system->playSound(sound->second,NULL,true,&channel));
-	ErrorCheck(channel->setChannelGroup(groups[SFX]));
-	ErrorCheck(channel->setVolume(volume));
+	/*if (chMap == m_Channel[SFX].end())
+	{*/
+		FMOD::Channel* channel = NULL;
+		//ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
+		//save audiopath and its corresponding channel
+		m_Channel[SFX].insert(std::make_pair(path, channel));
+		//set to the channel grp it belongs
+		//ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
+		//ErrorCheck(channel->setVolume(volume));
+		//ErrorCheck(channel->setPaused(false));
+	
+		/*}*/
+	/*
+	else
+	{
+		//play sounds with values set on first play
+		ErrorCheck(m_pSystem->playSound(sound->second, NULL, true, &chMap->second));
+		ErrorCheck(chMap->second->setPaused(false));
+	}*/
 
-	/*float freq;
+
+ 	/* changing freq of sounds, if needed
+	float freq;
 	channel->getFrequency(&freq);
 	channel->setFrequency(ChangeSemitone(freq,pitch));*/
-	ErrorCheck(channel->setPaused(false));
 }
-
-
 
 void AudioManager::PlaySong(const std::string & path)
 {
 	//ignore if song already playing
-	if (currentSongPath==path)
+	if (m_currentSongPath == path)
 		return;
 
 	//if song is playing stop them and set this as next song
-	if (currentSong != 0)
+	if (m_pCurrentSongChannel != 0)
 	{
 		StopSongs();
-		nextSongPath = path;
+		m_nextSongPath = path;
 		return;
 	}
 	//find song in <-> sound map
-	SoundMap::iterator sound = sounds[SONG].find(path);
-	if (sound == sounds[SONG].end())
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SONG);
+	if (!sound)
 		return;
 
 	//start playing song with 0 vol and fade in
-	currentSongPath = path;
-	ErrorCheck(system->playSound(sound->second, NULL, true, &currentSong));
-	ErrorCheck(currentSong->setChannelGroup(groups[SONG]));
-	ErrorCheck(currentSong->setVolume(0.0f));
-	ErrorCheck(currentSong->setPaused(false));
-	fade = FADE_IN;
+	m_currentSongPath = path;
+	//ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
+	//ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
+	//ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
+	//ErrorCheck(m_pCurrentSongChannel->setPaused(false));
+	m_fade = FADE_IN;
+
+	SetSongsVolume(0.4f); // DUMMY CODE
 }
 
 void AudioManager::StopSFXs()
 {
-	ErrorCheck(groups[SFX]->stop());
+	ErrorCheck(m_pGroups[SFX]->stop());
 }
 
 void AudioManager::StopSongs()
 {
-	if (currentSong != 0)
-		fade = FADE_OUT;
-	nextSongPath.clear();
+	if (m_pCurrentSongChannel != 0)
+		m_fade = FADE_OUT;
+	m_nextSongPath.clear();
 }
 
 void AudioManager::SetMasterVolume(float volume)
 {
-	ErrorCheck(master->setVolume(volume));
+	ErrorCheck(m_pMaster->setVolume(volume));
 }
 
 void AudioManager::SetSFXsVolume(float volume)
 {
-	ErrorCheck(groups[SFX]->setVolume(volume));
+	ErrorCheck(m_pGroups[SFX]->setVolume(volume));
 }
 
 void AudioManager::SetSongsVolume(float volume)
 {
-	ErrorCheck(groups[SONG]->setVolume(volume));
+	ErrorCheck(m_pGroups[SONG]->setVolume(volume));
 }
-
-//void AudioManager::PauseAll()
-//{
-//	//pause all category of sounds
-//	for (int i = 0; i < CATEGORY_COUNT; i++)
-//		groups[i]->setPaused(true);
-//}
-//
-//void AudioManager::ResumeAll()
-//{
-//	//pause all category of sounds
-//	for (int i = 0; i < CATEGORY_COUNT; i++)
-//		groups[i]->setPaused(false);
-//}
-
 void AudioManager::TogglePause()
 {
 	for (int i = 0; i < CATEGORY_COUNT; i++)
 	{
-		ErrorCheck(groups[i]->getPaused(&isPaused));
-		if (isPaused)
-			ErrorCheck(groups[i]->setPaused(false));
+		ErrorCheck(m_pGroups[i]->getPaused(&m_isChannelGroupPaused));
+		if (m_isChannelGroupPaused)
+			ErrorCheck(m_pGroups[i]->setPaused(false));
 		else
-			ErrorCheck(groups[i]->setPaused(true));
+			ErrorCheck(m_pGroups[i]->setPaused(true));
 	}
 }
-void AudioManager::Load(Category type, const std::string & path)
+bool AudioManager::isSoundPlaying(std::string path)
 {
-	if (sounds[type].find(path) != sounds[type].end())
-		return;
-	FMOD::Sound* sound;
-	 ErrorCheck(system->createSound(path.c_str(),modes[type],0,&sound));
-	sounds[type].insert(std::make_pair(path, sound));
+	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
+	if (chMap != m_Channel[SFX].end())
+	{
+		chMap->second->isPlaying(&m_isPlaying);
+		return m_isPlaying;
+	}
+	else
+		return false;
 }
 
 void AudioManager::ErrorCheck(FMOD_RESULT result) 
@@ -246,3 +229,5 @@ void AudioManager::ErrorCheck(FMOD_RESULT result)
 	}
 	return;
 }
+
+

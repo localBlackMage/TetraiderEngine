@@ -31,9 +31,14 @@ GLint & ShaderProgram::GetProgramRef()
 	return m_programID;
 }
 
-void ShaderProgram::LoadShader(std::string shaderPath, SHADER_TYPE type)
+bool ShaderProgram::operator==(const ShaderProgram& rhs) const
 {
-	
+	return rhs.m_programID == m_programID;
+}
+
+bool ShaderProgram::operator!=(const ShaderProgram& rhs) const
+{
+	return rhs.m_programID != m_programID;
 }
 
 void ShaderProgram::AttachShader(Shader& shader)
@@ -62,34 +67,4 @@ void ShaderProgram::LinkShaders()
 		glGetProgramInfoLog(m_programID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
 	}
-}
-
-GLint ShaderProgram::_GetAttributeLocation(std::string attribute)
-{
-	return glGetAttribLocation(m_programID, attribute.c_str());
-}
-
-GLint ShaderProgram::_GetUniformLocation(std::string uniform)
-{
-	return glGetUniformLocation(m_programID, uniform.c_str());
-}
-
-void ShaderProgram::AddAttribute(std::string name)
-{
-	m_attributes[name] = _GetAttributeLocation(name);
-}
-
-GLint ShaderProgram::GetAttribute(std::string name)
-{
-	return m_attributes[name];
-}
-
-void ShaderProgram::AddUniform(std::string name)
-{
-	m_uniforms[name] = _GetUniformLocation(name);
-}
-
-GLint ShaderProgram::GetUniform(std::string name)
-{
-	return m_uniforms[name];
 }

@@ -1,21 +1,18 @@
 #include "GameStateManager.h"
 #include "TetraiderAPI.h"
 
-GameStateManager::GameStateManager() : 
-	m_previousState(GameState::CURRENT_LEVEL), 
-	m_currentState(GameState::CURRENT_LEVEL), 
-	m_nextState(GameState::CURRENT_LEVEL) 
+GameStateManager::GameStateManager() :
+	m_previousState(GameState::CURRENT_LEVEL),
+	m_currentState(GameState::CURRENT_LEVEL),
+	m_nextState(GameState::CURRENT_LEVEL),
+	m_debugPause(false)
 {}
 
 GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
-
-	//start back ground music
-	T_AUDIO.PlaySong("../TetraiderEngine/Assets/SFX/bgm.mp3");
-
 	while (m_currentState != GameState::QUIT) {
-		T_LEVELS.LoadLevel();
+		TETRA_LEVELS.LoadLevel();
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;
@@ -24,21 +21,38 @@ void GameStateManager::Update() {
 
 		// Game loop
 		while (m_currentState == m_nextState) {
+			// NOTE: This condition should be before frame start
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
+				m_debugPause = !m_debugPause; 
+
 			Tetraider::FrameStart();
-			Tetraider::Update(Tetraider::GetFrameTime());
+
+			if(!m_debugPause)
+				Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
+			else
+				Tetraider::DebugMode();							// Debug mode
+
 			Tetraider::FrameEnd();
 		}
 
 		if (m_nextState != GameState::RESTART) {
 			//TODO: Unload some assets
 		}
-		else {
-			Tetraider::UnloadResources();
+		else if(m_nextState == GameState::NEXT_LEVEL) {
+			//TODO: Unload some assets
 		}
 
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 	}
+
+	Tetraider::UnloadResources();	// Unloads all resources
+}
+
+void GameStateManager::HandleEvent(Event * p_event)
+{
+	if (p_event->Type() == EventType::WINDOW_CLOSED)
+		m_nextState = GameState::QUIT;
 }
 
 void GameStateManager::SetGameState(GameState state) { m_currentState = state; }

@@ -77,10 +77,10 @@
       <UniqueIdentifier>{d08c12c4-e8eb-434a-aac0-0c039c9ef8d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Attacks">
-      <UniqueIdentifier>{9ee42b91-d4d6-4e0b-9d88-fb0914909437}</UniqueIdentifier>
+      <UniqueIdentifier>{bc832616-c99d-4a92-8ef9-da542999dd8b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Attacks">
-      <UniqueIdentifier>{ecfafb14-4674-4b8d-a084-570cf18bef67}</UniqueIdentifier>
+      <UniqueIdentifier>{c9ac6b1c-e652-47cf-97bd-8f4d7f77f894}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +207,9 @@
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>Source Files\Components\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AudioManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Attack.cpp">
       <Filter>Source Files\Attacks</Filter>
     </ClCompile>
@@ -219,8 +222,14 @@
     <ClCompile Include="Source\Projectile.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AudioManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+    <ClCompile Include="Source\Weapon.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NPCController.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\MemoryManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -386,23 +395,40 @@
     <ClInclude Include="Source\ComponentTypesNames.h">
       <Filter>Header Files\Components\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Attack.h">
+    <ClInclude Include="Source\Sorting.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RangeAttack.h">
       <Filter>Header Files\Attacks</Filter>
     </ClInclude>
     <ClInclude Include="Source\MeleeAttack.h">
       <Filter>Header Files\Attacks</Filter>
     </ClInclude>
-    <ClInclude Include="Source\RangeAttack.h">
+    <ClInclude Include="Source\Attack.h">
       <Filter>Header Files\Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Projectile.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\AudioManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Header Files\Managers</Filter>
+=======
+    <ClInclude Include="Source\Weapon.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Layers.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCController.h">
+      <Filter>Header Files\Components</Filter>
+>>>>>>> 37130207260ca2b18c8b1177ec314a70cd6b6a4d
     </ClInclude>
   </ItemGroup>
 </Project>

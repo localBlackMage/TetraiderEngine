@@ -1,5 +1,8 @@
 {
   "GAME_OBJECTS": [
+	{
+      "prefab": "P_UICamera"
+    },
     {
       "prefab": "P_Camera"
     },
@@ -12,12 +15,36 @@
       }
     },
 	{
+      "prefab": "P_Enemy",
+      "position": {
+        "x": -200,
+        "y": 150,
+        "z": 0
+      }
+    },
+	{
       "prefab": "P_ColliderTest2",
       "position": {
         "x": 300,
         "y": 20,
         "z": 0
       }
-    }
+    },
+	{
+      "prefab": "P_ColliderTest3",
+      "position": {
+        "x": -300,
+        "y": -100,
+        "z": 0
+      }
+    },
+	{
+	  "prefab": "P_Background",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+	}
   ]
 }

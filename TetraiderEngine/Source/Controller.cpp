@@ -1,7 +1,10 @@
 #include "GameObject.h"
 #include "Controller.h"
+#include "Weapon.h"
 #include "Health.h"
+#include "Transform.h"
 #include "TetraiderAPI.h"
+#include "Camera.h"
 #include <iostream>
 
 Controller::Controller() :
@@ -14,36 +17,34 @@ Controller::~Controller() {}
 void Controller::Update(float dt) {
 	Vector3D moveDir;
 
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| T_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_A) || T_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
 		moveDir.x -= 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_W) || T_INPUT.IsKeyPressed(XBOX_DPAD_UP))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_W) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_UP))
 		moveDir.y += 1;
-	if (T_INPUT.IsKeyPressed(SDL_SCANCODE_S) || T_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_S) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
 		moveDir.y -= 1;
 
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_SPACE))
-	{
-		T_AUDIO.PlaySFX("../TetraiderEngine/Assets/SFX/pew.mp3", 0.8f);
-		std::cout << "shots fired!\n";
-	}
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
-		T_AUDIO.TogglePause();
 
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || T_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)){
-		AddVelocity(Vector3D(-750, -750, 0));
-		Health* pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
-		pHealth->TakeDamage(10);
+	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_RIGHT)) {
+		m_pWeapon->UseAttack(0, m_lookDirection);
 	}
+
+	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
+		m_pWeapon->UseAttack(1, m_lookDirection);
+	}
+
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
+		TETRA_AUDIO.TogglePause();
 
 	moveDir.Normalize();
 	m_targetVelocity = moveDir * m_speed;
+	m_lookDirection = GetDirectionToMouse();
 	Agent::Update(dt);
 
 }
-
-void Controller::Serialize(json j) {
+void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 }
 
@@ -53,4 +54,29 @@ void Controller::HandleEvent(Event* pEvent) {
 
 void Controller::LateInitialize() {
 	Agent::LateInitialize();
+
+	if(!m_pWeapon) {
+		if (pGO)
+			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
+		else {
+			printf("No Game Object found. Controller component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pWeapon) {
+			printf("No Weapon component found. Controller component failed to operate.\n");
+			return;
+		}
+	}
+}
+
+Vector3D Controller::GetDirectionToMouse() {
+	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
+	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
+	Vector3D dirToMousePos = mousePos - screenSpace;
+	dirToMousePos.y *= -1;
+	dirToMousePos.Normalize();
+	return dirToMousePos;
 }

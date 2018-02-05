@@ -6,3 +6,5 @@ turned into entries within the GameObjectTags enum
 REGISTER_TAG_NAME(T_Player)
 REGISTER_TAG_NAME(T_Camera)
 REGISTER_TAG_NAME(T_Enemy)
+REGISTER_TAG_NAME(T_Projectile)
+REGISTER_TAG_NAME(T_Obstacle)

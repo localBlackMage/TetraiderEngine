@@ -7,7 +7,7 @@ Health::~Health() {}
 
 void Health::Update(float dt) {}
 
-void Health::Serialize(json j) {
+void Health::Serialize(const json& j) {
 	m_currentHealth = ParseInt(j, "startingHealth");
 	m_maxHealth = ParseInt(j, "maxHealth");
 	m_isInvincible = ParseBool(j, "isInvincible");
@@ -16,7 +16,7 @@ void Health::Serialize(json j) {
 void Health::LateInitialize() {}
 void Health::HandleEvent(Event* pEvent) {}
 
-void Health::TakeDamage(int damage) {
+void Health::TakeDamage(int damage, const Vector3D& sourceOfAttack) {
 	if (m_isInvincible || m_currentHealth == 0)
 		return;
 
@@ -25,14 +25,14 @@ void Health::TakeDamage(int damage) {
 	if (m_currentHealth <= 0) {
 		m_currentHealth = 0;
 		if (pGO->m_tag == GameObjectTag::T_Player) {
-			T_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHealthZero));
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHealthZero));
 		}
 		else if (pGO->m_tag == GameObjectTag::T_Enemy) {
-			T_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnEnemyHealthZero));
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnEnemyHealthZero));
 		}
 	}
 
-	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth)));
+	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, sourceOfAttack)));
 }
 
 void Health::Heal(int heal) {
@@ -42,13 +42,9 @@ void Health::Heal(int heal) {
 	}
 
 	if (pGO->m_tag == GameObjectTag::T_Player) {
-		T_EVENTS.BroadcastEventToSubscribers(&Event(
-			EventType::EVENT_OnPlayerHeal,
-			&HealthChangeData(m_currentHealth, m_maxHealth)
-		));
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal,&HealthChangeData(m_currentHealth, m_maxHealth, Vector3D())));
 	}
 }
 
 bool Health::IsHealthFull() { return m_currentHealth == m_maxHealth; }
 void Health::UpdgradeMaxHealth(int value) { m_maxHealth += value; }
-

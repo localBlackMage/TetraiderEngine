@@ -24,11 +24,15 @@ public:
 	Transform();
 	~Transform();
 
+	static Component* CreateInstance() { return new Transform(); }
+
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
-	virtual void Serialize(json j);
+	virtual void Serialize(const json& j);
 
 	virtual void HandleEvent(Event * p_event);
+
+	bool operator<(const Transform& other) const;
 
 	void SetPosition(Vector3D pos);
 	Vector3D GetPosition() const;

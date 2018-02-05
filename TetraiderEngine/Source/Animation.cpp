@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Sprite.h"
+#include "TetraiderAPI.h"
 #include <iostream>
 
 using  namespace JsonReader;
@@ -12,7 +13,10 @@ Animation::Animation():
 	m_vStartPos(1), 
 	m_elapsedTime(-1),
 	m_reverse(1), 
-	m_speedMultiplier(1) 
+	m_speedMultiplier(1),
+	m_isPlaying(false),
+	m_isLooping(false),
+	m_isPlayOnAwake(false)
 {}
 
 Animation::~Animation() {}
@@ -20,35 +24,32 @@ Animation::~Animation() {}
 void Animation::Update(float dt) {
 	if (m_elapsedTime > 1) {
 		++m_currentFrame;
-		if (m_currentFrame >= m_frames && m_isLooping)
+		if (m_currentFrame >= m_frames) {
+			if (!m_isLooping)
+				m_isPlaying = false;
+
 			m_currentFrame = 0;
+		}
 
 		m_elapsedTime = 0;
 	}
-
-	if (m_currentFrame == m_frames && !m_isLooping)
-		return;
 
 	m_pSprite->SetTileX(m_uStartPos);
 	m_pSprite->SetTileY(m_vStartPos);
 	m_pSprite->SetUOffset(m_uStartPos*m_currentFrame*m_reverse);
 	m_pSprite->SetVOffset(m_vStartPos*m_currentAnimation);
 
-	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
+	if (!m_isPlaying) 
+		return;
 
-	// Test code remove later
-	/*
-	if(T_INPUT.IsKeyTriggered(SDL_SCANCODE_1)) {
-		ChangeAnimation(0);
-	}
-	if (T_INPUT.IsKeyTriggered(SDL_SCANCODE_2)) {
-		ChangeAnimation(1);
-	}*/
+	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
 }
 
 void Animation::Play(int animation) {
-	if (animation != m_currentAnimation)
+	if (animation != m_currentAnimation || !m_isPlaying)
 		ChangeAnimation(animation);
+
+	m_isPlaying = true;
 }
 
 void Animation::Play(int animation, bool isReverse) {
@@ -82,7 +83,7 @@ void Animation::ChangeAnimation(int animation) {
 	m_isLooping = ParseBool(myAnimations[m_currentAnimation], "isLooping");
 }
 
-void Animation::Serialize(json j) {
+void Animation::Serialize(const json& j) {
 	m_maxFrames = 0;
 	m_currentAnimation = ParseInt(j, "defaultAnimation");
 	myAnimations = j["MY_ANIMATIONS"];
@@ -90,6 +91,7 @@ void Animation::Serialize(json j) {
 	m_animationSpeed = myAnimations[m_currentAnimation]["animationSpeed"];
 	m_isLooping = ParseBool(myAnimations[m_currentAnimation], "isLooping");
 	m_numberOfAnimations = myAnimations.size();
+	m_isPlayOnAwake = ParseBool(myAnimations[m_currentAnimation], "isPlayOnAwake");
 
 	for (int i = 0; i < m_numberOfAnimations; ++i) {
 		int frames = ParseInt(myAnimations[i], "frames");
@@ -99,6 +101,10 @@ void Animation::Serialize(json j) {
 
 	m_uStartPos = 1 / (float)m_maxFrames;
 	m_vStartPos = 1 / (float)m_numberOfAnimations;
+
+	if (m_isPlayOnAwake) {
+		Play(m_currentAnimation);
+	}
 }
 
 void Animation::LateInitialize() {

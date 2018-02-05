@@ -16,6 +16,7 @@ Creation date: 1/17/18
 #define RENDER_MANAGER_H
 
 #include "Math\MathLibs.h"
+#include "Subscriber.h"
 #include <SDL.h>
 #include <string>
 #include <map>
@@ -27,12 +28,13 @@ class Shader;
 class Sprite;
 enum DebugShape;
 
-class RenderManager
+class RenderManager : public Subscriber
 {
 private:
 	friend class DebugManager;
 
 	int m_width, m_height;
+	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
 
@@ -53,6 +55,7 @@ private:
 	void _RenderRect(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 	void _RenderCircle(const Vector3D & color, float radius, const Vector3D& position);
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
+	void _RenderCone(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& arcWidthAndRadius);
 
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
@@ -64,6 +67,7 @@ public:
 	void FrameStart();
 	void FrameEnd();
 	void Resize(int width, int height);
+	virtual void HandleEvent(Event * p_event);
 
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);

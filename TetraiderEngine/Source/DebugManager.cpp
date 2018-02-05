@@ -1,5 +1,6 @@
 #include "DebugManager.h"
 #include "TetraiderAPI.h"
+#include "GameObject.h"
 #include "Math/MathLibs.h"
 
 Vector3D DebugManager::_GetColor(DebugColor color) {
@@ -78,6 +79,17 @@ void DebugManager::DrawWireCircle(const Vector3D& pos, float diameter, DebugColo
 	);
 }
 
+void DebugManager::DrawWireCone(const Vector3D & pos, const Vector3D & rot, float arcWidth, float radius, DebugColor color)
+{
+	if (!m_isDebugModeEnabled) return;
+
+	m_debugCommands.push(new DebugCommand(
+		DebugShape::S_CONE,
+		_GetColor(color),
+		pos, rot, Vector3D(arcWidth, radius, 0.f), true)
+	);
+}
+
 void DebugManager::ClearDebugCommands()
 {
 	while (!m_debugCommands.empty()) {
@@ -85,13 +97,21 @@ void DebugManager::ClearDebugCommands()
 	}
 }
 
-void DebugManager::RenderDebugCommands(const GameObject& camera)
+void DebugManager::RenderDebugCommands()
 {
-	T_RENDERER._SetUpDebug(camera);
+	// Example Cone
+	// DrawWireCone(Vector3D(), Vector3D(0.f, 0.f, 90.f), 45.f, 200.f, DebugColor::CYAN);
+	TETRA_RENDERER._SetUpDebug(*TETRA_GAME_OBJECTS.GetCamera(1));
 	while (!m_debugCommands.empty()) {
 		DebugCommand* debugCommand = m_debugCommands.front();
-		T_RENDERER._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
+		TETRA_RENDERER._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
 		m_debugCommands.pop();
 	}
+}
+
+void DebugManager::Update()
+{
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1))
+		m_isDebugModeEnabled = !m_isDebugModeEnabled;
 }
 

@@ -1,5 +1,6 @@
 {
   "Tag": "Camera",
+  "Layer": "N/A",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -20,7 +21,17 @@
 	},
     {
       "Component": "Camera",
-      "fov": 105
-    }
+      "fov": 105,
+	  "layers": ["BG", "1", "2", "3"]
+    },
+	{
+		"Component": "Audio",
+		"audioClip": "bgm.mp3",
+		"volume": 0.6,
+		"isMute": false,
+		"isLoop": true,
+		"isPlayOnAwake": true,
+		"isBGM": true
+	}
   ]
 }

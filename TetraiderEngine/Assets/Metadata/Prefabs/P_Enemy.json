@@ -1,0 +1,134 @@
+{
+  "Tag": "Enemy",
+  "Layer": "1",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 100,
+        "y": 100,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 150,
+			"acceleration": 10,
+			"knockBackSpeed": 400
+		}
+	},
+    {
+      "Component": "Sprite",
+      "Texture": "T_enemyTest.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "hasAlpha": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 1,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 12,
+			"animationSpeed": 18,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Idle",
+			"frames": 12,
+			"animationSpeed": 18,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Death",
+			"frames": 1,
+			"animationSpeed": 18,
+			"isLooping": false,
+			"isPlayOnAwake": true
+		}]
+	},
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 50
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 50,
+		"maxHealth": 50,
+		"isInvincible": false
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
+		}
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Melee",
+				"coolDown": 0.5,
+				"baseDamage": 10,
+				"radius": 110,
+				"angle": 90,
+				"triggerAttackIn": 0.05
+			},
+			{
+				"type": "Ranged",
+				"coolDown": 0.5,
+				"baseDamage": 10,
+				"projectileSpeed": 400,
+				"instantiationOffset": 50,
+				"lifeTime": 2,
+				"projectilePrefab": "P_testProjectile"
+			}
+		]
+	}
+  ]
+}

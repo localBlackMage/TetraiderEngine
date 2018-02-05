@@ -9,11 +9,13 @@ Sprite::Sprite(std::string textureName) :
 	m_yTiling(1.0f), 
 	m_uOffset(0.f),
 	m_vOffset(0.f),
-	m_color(Vector3D()),
+	m_tintColor(Vector3D()),
+	m_saturationColor(Vector3D()),
 	m_textureName(textureName),
-	m_texture(T_RESOURCES.GetTexture(textureName)),
-	m_mesh(*T_RESOURCES.LoadMesh("quad")),
-	m_shader("")
+	m_texture(0),
+	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
+	m_shader(""),
+	m_hasAlpha(true)
 {
 }
 
@@ -21,17 +23,26 @@ Sprite::~Sprite() {}
 
 void Sprite::Update(float dt) {}
 
-void Sprite::Serialize(json j) 
+void Sprite::Serialize(const json& j)
 {
-	if (ValueExists(j, "Texture")) {
-		m_textureName = ParseString(j, "Texture");
-		m_texture = T_RESOURCES.GetTexture(m_textureName);
-	}
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");
 	m_vOffset = ParseFloat(j, "uvOffset", "v");
-	m_color = ParseColor(j, "color");
+
+	m_tintColor.x = ParseFloat(j["tint"], "r");
+	m_tintColor.y = ParseFloat(j["tint"], "g");
+	m_tintColor.z = ParseFloat(j["tint"], "b");
+	m_tintColor.w = ParseFloat(j["tint"], "a");
+
+	m_saturationColor.x = ParseFloat(j["saturation"], "r");
+	m_saturationColor.y = ParseFloat(j["saturation"], "g");
+	m_saturationColor.z = ParseFloat(j["saturation"], "b");
+	m_saturationColor.w = ParseFloat(j["saturation"], "a");
+
+	m_hasAlpha = ParseBool(j, "hasAlpha");
+	m_textureName = ParseString(j, "Texture");
+	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
 }
 
 const Mesh & Sprite::GetMesh() const {
@@ -50,7 +61,7 @@ String Sprite::GetSpriteName() const
 void Sprite::SetSprite(std::string textureName)
 {
 	m_textureName = textureName;
-	m_texture = T_RESOURCES.GetTexture(m_textureName);
+	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
 }
 
 GLuint Sprite::GetTextureBuffer() const
