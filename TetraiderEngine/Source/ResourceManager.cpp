@@ -37,19 +37,20 @@ ResourceManager::~ResourceManager()
 
 	//Release sound in each category 
 	// TODO: Double check if there are any memory leaks with this method
-	for (auto comp : m_Sounds[SFX]) {
-		if (comp.second) {
-			TETRA_AUDIO.ErrorCheck(comp.second->release());
-		}
-		m_Sounds[SFX].clear();
-	}
-
 	for (auto comp : m_Sounds[SONG]) {
 		if (comp.second) {
 			TETRA_AUDIO.ErrorCheck(comp.second->release());
 		}
-		m_Sounds[SONG].clear();
 	}
+	m_Sounds[SONG].clear();
+
+	for (auto comp : m_Sounds[SFX]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+	}
+	m_Sounds[SFX].clear();
+
 }
 
 GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurface)
