@@ -24,6 +24,7 @@ public:
 	void operator=(const GameObjectLayer & rhs);
 
 	void RenderLayer(GameObject* camera);
+	void ReSortLayer();
 	void AddToLayer(GameObject* pGO);
 	void RemoveFromLayer(GameObject* pGO);
 	void ClearLayer();
