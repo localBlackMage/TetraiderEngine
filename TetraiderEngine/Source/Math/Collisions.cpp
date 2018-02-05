@@ -301,14 +301,6 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 	for (unsigned int i = 0; i < shapeAvert.size(); ++i) { vertxA[i] = shapeA + shapeAvert[i]; }
 
 	for (unsigned int i = 0; i < vertxA.size(); ++i) {
-		if (StaticPointToStaticCircle(vertxA[i], circle, radius)) {
-			Vector3D normal = circle - vertxA[i];
-			normal.Normalize();
-			mtv.normal = normal;
-			mtv.penetration = fabsf(radius - Vector3D::Distance(vertxA[i], circle));
-			return true;
-		}
-
 		Vector3D edge = vertxA[i == vertxA.size() - 1 ? 0 : i + 1] - vertxA[i];
 		Vector3D axis = circle - vertxA[i];
 		float dot = Vector3D::Dot(axis, edge);
@@ -320,7 +312,7 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 				axis.Normalize();
 				mtv.normal = axis;
 				mtv.penetration = fabsf(radius - Vector3D::Distance(projection, circle));
-				TETRA_DEBUG.DrawLine(projection, projection + axis * 100, DebugColor::CYAN);
+				TETRA_DEBUG.DrawLine(projection, projection + axis * -50, DebugColor::CYAN);
 				return true;
 			}
 			else {
@@ -329,6 +321,15 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 				if (Vector3D::Dot(circle, axis) - Vector3D::Dot(vertxA[i], axis) > 0)
 					return false;
 			}
+		}
+
+		if (StaticPointToStaticCircle(vertxA[i], circle, radius)) {
+			Vector3D normal = circle - vertxA[i];
+			normal.Normalize();
+			mtv.normal = normal;
+			mtv.penetration = fabsf(radius - Vector3D::Distance(vertxA[i], circle));
+			TETRA_DEBUG.DrawLine(vertxA[i], vertxA[i] + normal * 50, DebugColor::CYAN);
+			return true;
 		}
 	}
 

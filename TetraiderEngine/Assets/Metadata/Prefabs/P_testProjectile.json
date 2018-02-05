@@ -63,7 +63,7 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "pew.mp3",
+		"audioClip": "pew.wav",
 		"volume": 0.8,
 		"isMute": false,
 		"isLoop": false,
