@@ -172,9 +172,9 @@ namespace JsonReader {
 	{
 		if (j.find(first) != j.end()) {
 			return Vector2D(
-				ParseFloat(j, first, "x"),
-				ParseFloat(j, first, "y"),
-				ParseFloat(j, first, "w")
+				ParseFloat(j[first], "x"),
+				ParseFloat(j[first], "y"),
+				ParseFloat(j[first], "w")
 			);
 		}
 		return Vector2D();
@@ -185,9 +185,9 @@ namespace JsonReader {
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
 				return Vector2D(
-					ParseFloat(j, first, second, "x"),
-					ParseFloat(j, first, second, "y"),
-					ParseFloat(j, first, second, "w")
+					ParseFloat(j[first][second], "x"),
+					ParseFloat(j[first][second], "y"),
+					ParseFloat(j[first][second], "w")
 				);
 			}
 		}
@@ -198,10 +198,10 @@ namespace JsonReader {
 	{
 		if (j.find(first) != j.end()) {
 			return Vector3D(
-				ParseFloat(j, first, "x"),
-				ParseFloat(j, first, "y"),
-				ParseFloat(j, first, "z"),
-				ParseFloat(j, first, "w")
+				ParseFloat(j[first], "x"),
+				ParseFloat(j[first], "y"),
+				ParseFloat(j[first], "z"),
+				ParseFloat(j[first], "w")
 			);
 		}
 		return Vector3D();
@@ -212,10 +212,10 @@ namespace JsonReader {
 		if (j.find(first) != j.end()) {
 			if (j[first].find(second) != j[first].end()) {
 				return Vector3D(
-					ParseFloat(j, first, second, "x"),
-					ParseFloat(j, first, second, "y"),
-					ParseFloat(j, first, second, "z"),
-					ParseFloat(j, first, second, "w")
+					ParseFloat(j[first][second], "x"),
+					ParseFloat(j[first][second], "y"),
+					ParseFloat(j[first][second], "z"),
+					ParseFloat(j[first][second], "w")
 				);
 			}
 		}

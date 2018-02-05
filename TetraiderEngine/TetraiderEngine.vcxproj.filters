@@ -228,7 +228,7 @@
     <ClCompile Include="Source\Audio.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NPCController.cpp">
+    <ClCompile Include="Source\ParticleEmitter.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -419,7 +419,7 @@
     <ClInclude Include="Source\Audio.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCController.h">
+    <ClInclude Include="Source\ParticleEmitter.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
