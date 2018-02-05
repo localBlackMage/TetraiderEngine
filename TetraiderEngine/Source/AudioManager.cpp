@@ -171,10 +171,10 @@ void AudioManager::PlaySong(const std::string & path)
 
 	//start playing song with 0 vol and fade in
 	currentSongPath = path;
-	//ErrorCheck(system->playSound(sound->second, NULL, true, &currentSong));
-	//ErrorCheck(currentSong->setChannelGroup(groups[SONG]));
-	//ErrorCheck(currentSong->setVolume(0.0f));
-	//ErrorCheck(currentSong->setPaused(false));
+	ErrorCheck(system->playSound(sound->second, NULL, true, &currentSong));
+	ErrorCheck(currentSong->setChannelGroup(groups[SONG]));
+	ErrorCheck(currentSong->setVolume(0.0f));
+	ErrorCheck(currentSong->setPaused(false));
 	fade = FADE_IN;
 }
 

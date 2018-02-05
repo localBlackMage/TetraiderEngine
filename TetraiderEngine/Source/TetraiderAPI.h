@@ -14,6 +14,7 @@
 #include "LevelManager.h"
 #include "DebugManager.h"
 #include "AudioManager.h"
+//#include "MemoryManager.h"
 #include "Singleton.h"
 #include <string>
 
@@ -31,6 +32,8 @@
 #define T_LEVELS Singleton<LevelManager>::GetInstance()
 #define T_DEBUG Singleton<DebugManager>::GetInstance()
 #define T_AUDIO Singleton<AudioManager>::GetInstance()
+
+//#define T_MEMORY Singleton<MemoryManager>::GetInstance()
 
 
 namespace Tetraider {
