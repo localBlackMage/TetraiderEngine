@@ -1,5 +1,6 @@
 {
   "Tag": "Enemy",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -87,9 +88,8 @@
 		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 80,
-			"height": 100
+			"type": "circle",
+			"radius": 50
 		}
 	},
 	{
@@ -115,7 +115,7 @@
 				"type": "Melee",
 				"coolDown": 0.5,
 				"baseDamage": 10,
-				"radius": 100,
+				"radius": 110,
 				"angle": 90,
 				"triggerAttackIn": 0.05
 			},

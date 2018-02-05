@@ -3,6 +3,7 @@
 #include "Body.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
+#include "Animation.h"
 #include <iostream>
 
 Agent::Agent(ComponentType _type) : 
@@ -17,6 +18,15 @@ Agent::Agent(ComponentType _type) :
 void Agent::Update(float dt) {
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
 	m_pBody->SetVelocity(m_currentVelocity);
+
+	if (m_pAnimation) {
+		if (m_currentVelocity.SquareLength() < 100.0f) {
+			m_pAnimation->Play(1);
+		}
+		else {
+			m_pAnimation->Play(0);
+		}
+	}
 }
 
 void Agent::Serialize(const json& j) {
@@ -66,6 +76,20 @@ void Agent::LateInitialize() {
 
 		if (!m_pBody) {
 			printf("No Body component found. Controller component failed to operate.\n");
+			return;
+		}
+	}
+
+	if (!m_pAnimation) {
+		if (pGO)
+			m_pAnimation = pGO->GetComponent<Animation>(ComponentType::C_Animation);
+		else {
+			//printf("No Game Object found. Controller component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pAnimation) {
+			//printf("No Body component found. Controller component failed to operate.\n");
 			return;
 		}
 	}

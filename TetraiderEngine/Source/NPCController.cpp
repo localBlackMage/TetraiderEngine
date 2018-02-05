@@ -15,8 +15,23 @@ NPCController::NPCController() :
 NPCController::~NPCController() {}
 
 void NPCController::Update(float dt) {
-	Agent::Update(dt);
+	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
+	GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
+	Transform* playerTransfrom = player->GetComponent<Transform>(ComponentType::C_Transform);
+	LineSegment2D ray(Vector2D(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y), Vector2D(playerTransfrom->GetPosition().x, playerTransfrom->GetPosition().y));
+	GameObjectTag tagsToIgnore[3];
+	tagsToIgnore[0] = T_Enemy;
+	tagsToIgnore[1] = T_Player;
+	tagsToIgnore[2] = T_Projectile;
+	if (!TETRA_PHYSICS.Raycast(ray, tagsToIgnore, 3)) {
+		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::WHITE);
+	}
+	else {
+		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
+	}
+	//---------------------------------
 
+	Agent::Update(dt);
 }
 
 void NPCController::Serialize(const json& j) {

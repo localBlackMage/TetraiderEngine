@@ -88,9 +88,8 @@
 		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 80,
-			"height": 100
+			"type": "circle",
+			"radius": 50
 		}
 	},
 	{

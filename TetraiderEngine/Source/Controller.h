@@ -17,6 +17,8 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 protected:
 	Weapon* m_pWeapon;
+private:
+	Vector3D GetDirectionToMouse();
 };
 
 #endif

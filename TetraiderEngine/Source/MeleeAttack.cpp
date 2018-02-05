@@ -7,6 +7,7 @@
 #include "Health.h"
 #include "Controller.h"
 #include "Animation.h"
+#include "Audio.h"
 
 MeleeAttack::MeleeAttack(float coolDown, int baseDamage, AttackType type, float radius, float angle, float triggerAttackIn):
 	Attack(coolDown, baseDamage, type),
@@ -15,6 +16,7 @@ MeleeAttack::MeleeAttack(float coolDown, int baseDamage, AttackType type, float 
 	m_triggerAttackIn(triggerAttackIn) {
 	// Dummy code
 	m_pSlashEffect = TETRA_GAME_OBJECTS.CreateGameObject("P_SlashTest");
+	//-----------
 }
 
 MeleeAttack::~MeleeAttack() {
@@ -45,7 +47,12 @@ bool MeleeAttack::Use(const Vector3D& direction) {
 	Run();
 	// Dummy code
 	Animation* pAnimation = m_pSlashEffect->GetComponent<Animation>(ComponentType::C_Animation);
-	pAnimation->Play(0);
+	if(pAnimation)
+		pAnimation->Play(0);
+
+	Audio* pAudio = m_pSlashEffect->GetComponent<Audio>(ComponentType::C_Audio);
+	if (pAudio)
+		pAudio->Play();
 	//---------------
 	return true;
 }

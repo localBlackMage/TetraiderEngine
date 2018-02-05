@@ -29,6 +29,22 @@
         "y": 20,
         "z": 0
       }
-    }
+    },
+	{
+      "prefab": "P_ColliderTest3",
+      "position": {
+        "x": -300,
+        "y": -100,
+        "z": 0
+      }
+    },
+	{
+	  "prefab": "P_Background",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+	}
   ]
 }

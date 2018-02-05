@@ -8,6 +8,7 @@
 // Forward declaration
 class Transform;
 class Body;
+class Animation;
 
 class Agent : public Component {
 public:
@@ -30,6 +31,7 @@ protected:
 	Vector3D m_lookDirection;
 	Transform* m_pTransform;
 	Body* m_pBody;
+	Animation* m_pAnimation;
 private:
 	Vector3D m_currentVelocity;
 };

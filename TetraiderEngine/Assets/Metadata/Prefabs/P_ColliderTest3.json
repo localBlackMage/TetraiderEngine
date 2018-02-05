@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 150,
+        "y": 75,
         "z": 0
       },
       "pivotOffset": {
@@ -25,13 +25,38 @@
 	  }
     },
 	{
+      "Component": "Sprite",
+      "Texture": "T_sandBags.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "hasAlpha": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
 		"Component": "Body",
 		"isStatic": true,
-		"mass": 1,
+		"mass": 0,
 		"SHAPE": {
 			"type": "AABB",
-			"width": 110,
-			"height": 80
+			"width": 150,
+			"height": 75
 		}
 	}
   ]

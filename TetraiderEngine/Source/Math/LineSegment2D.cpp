@@ -13,7 +13,8 @@ LineSegment2D::LineSegment2D(Vector2D Point0, Vector2D Point1) :
 	m_p0(Point0),
 	m_p1(Point1),
 	m_norm(Vector2D::Normalize(m_p0 - m_p1)),
-	m_nDotP0(Vector2D::Dot(m_p0, m_norm))
+	m_nDotP0(Vector2D::Dot(m_p0, m_norm)),
+	m_direction(Vector2D(Point1.x - Point0.x, Point1.y - Point0.y))
 { }
 
 LineSegment2D::~LineSegment2D() {}

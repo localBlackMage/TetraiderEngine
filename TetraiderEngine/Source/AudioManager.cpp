@@ -22,8 +22,6 @@ float RandomBetween(float min, float max)
 	return min + n * (max - min);
 }
 
-
-
 AudioManager::AudioManager():m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isChannelGroupPaused(false)
 {
 	//initialize
@@ -146,8 +144,6 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 	channel->setFrequency(ChangeSemitone(freq,pitch));*/
 }
 
-
-
 void AudioManager::PlaySong(const std::string & path)
 {
 	//ignore if song already playing
@@ -173,6 +169,8 @@ void AudioManager::PlaySong(const std::string & path)
 	ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
 	ErrorCheck(m_pCurrentSongChannel->setPaused(false));
 	m_fade = FADE_IN;
+
+	SetSongsVolume(0.4f); // DUMMY CODE
 }
 
 void AudioManager::StopSFXs()

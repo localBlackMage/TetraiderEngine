@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 200,
+        "y": 200,
         "z": 0
       },
       "pivotOffset": {
@@ -25,19 +25,39 @@
 	  }
     },
 	{
+      "Component": "Sprite",
+      "Texture": "T_colliderTest.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "hasAlpha": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
 		"Component": "Body",
 		"isStatic": true,
-		"mass": 1,
+		"mass": 0,
 		"SHAPE": {
 			"type": "polygon",
 			"vertices": [
 			 {
-				"x": -50,
-				"y": 100,
-				"z": 0
-			 },
-			 {
-				"x": 50,
+				"x": 20,
 				"y": 100,
 				"z": 0
 			 },
@@ -47,12 +67,12 @@
 				"z": 0
 			 },
 			 {
-				"x": 50,
+				"x": 90,
 				"y": -100,
 				"z": 0
 			 },
 			 {
-				"x": -50,
+				"x": -90,
 				"y": -100,
 				"z": 0
 			 },

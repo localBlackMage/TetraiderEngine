@@ -38,22 +38,9 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
 		TETRA_AUDIO.TogglePause();
 
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Q) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_LEFT_SHOULDER)) {
-		AddVelocity(Vector3D(-750, -750, 0));
-	}
-
-	// Get dir to mouse position| TODO: Clean this up
-	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
-	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
-	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
-	Vector3D dirToMousePos = mousePos - screenSpace;
-	dirToMousePos.y *= -1;
-	dirToMousePos.Normalize();
-
 	moveDir.Normalize();
 	m_targetVelocity = moveDir * m_speed;
-	m_lookDirection = dirToMousePos;
+	m_lookDirection = GetDirectionToMouse();
 	Agent::Update(dt);
 
 }
@@ -81,4 +68,15 @@ void Controller::LateInitialize() {
 			return;
 		}
 	}
+}
+
+Vector3D Controller::GetDirectionToMouse() {
+	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
+	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
+	Vector3D dirToMousePos = mousePos - screenSpace;
+	dirToMousePos.y *= -1;
+	dirToMousePos.Normalize();
+	return dirToMousePos;
 }
