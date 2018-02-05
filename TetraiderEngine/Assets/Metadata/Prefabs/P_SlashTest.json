@@ -57,7 +57,8 @@
 			"Name": "Slash",
 			"frames": 5,
 			"animationSpeed": 24,
-			"isLooping": false
+			"isLooping": false,
+			"isPlayOnAwake": false
 		}]
 	}
   ]

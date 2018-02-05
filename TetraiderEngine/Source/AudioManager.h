@@ -42,14 +42,13 @@ public:
 	inline FMOD_MODE* getMode() { return m_Modes; }
 	void TogglePause();
 	bool isSoundPlaying(std::string);
-	enum SoundCategory { SFX, SONG, CATEGORY_COUNT };
 private:
 
 	FMOD::System* m_pSystem;
 	FMOD::ChannelGroup* m_pMaster;
-	FMOD::ChannelGroup* m_pGroups[CATEGORY_COUNT];
-	ChannelMap m_Channel[CATEGORY_COUNT];
-	FMOD_MODE m_Modes[CATEGORY_COUNT];
+	FMOD::ChannelGroup* m_pGroups[2];
+	ChannelMap m_Channel[2];
+	FMOD_MODE m_Modes[2];
 
 	FMOD::Channel* m_pCurrentSongChannel;
 	std::string m_currentSongPath;

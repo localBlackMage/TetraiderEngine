@@ -30,7 +30,6 @@ using json = nlohmann::json;
 using namespace JsonReader;
 
 enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
-typedef std::unordered_map<std::string, FMOD::Sound*> SoundMap;
 class ResourceManager
 {
 private:
@@ -44,7 +43,7 @@ private:
 	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
 	std::map<std::string, json*> m_prefabs;
 
-	SoundMap m_Sounds[CATEGORY_COUNT];
+	std::unordered_map<std::string, FMOD::Sound*> m_Sounds[CATEGORY_COUNT];
 	
 	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
 	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha);
@@ -71,7 +70,7 @@ public:
 	void LoadSFX(const std::string& path);
 	void LoadSong(const std::string& path);
 	json* GetPrefabFile(const std::string& path);
-	SoundMap* GetSoundMap();
+	FMOD::Sound* GetSFX(const std::string& path, Sound_Category type);
 };
 
 #endif

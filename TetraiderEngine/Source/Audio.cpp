@@ -12,6 +12,12 @@ void Audio::Serialize(const json& j)
 	m_Ismute = ParseBool(j, "isMute");
 	m_isLoop = ParseBool(j, "isLoop");
 	m_isPlayOnAwake = ParseBool(j, "isPlayOnAwake");
+	m_isBGM = ParseBool(j, "isBGM");
+
+	if(m_isBGM)
+		TETRA_RESOURCES.LoadSong(m_audioClip);
+	else
+		TETRA_RESOURCES.LoadSFX(m_audioClip);
 }
 
 bool Audio::IsPlaying()
@@ -31,7 +37,10 @@ void Audio::LateInitialize()
 {
 	if (m_isPlayOnAwake)
 	{
-		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume); // TODO: Add loop to function parameters
+		if(m_isBGM)
+			TETRA_AUDIO.PlaySong(m_audioClip); //TODO: Allow volume control here
+		else
+			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume); // TODO: Add loop to function parameters
 	}
 }
 

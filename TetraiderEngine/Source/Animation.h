@@ -38,6 +38,7 @@ private:
 	float m_elapsedTime;
 	float m_speedMultiplier;
 	bool m_isPlaying;
+	bool m_isPlayOnAwake;
 	Sprite* m_pSprite;
 };
 

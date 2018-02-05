@@ -32,6 +32,7 @@ private:
 	bool m_Ismute;
 	bool m_isLoop;
 	bool m_isPlayOnAwake;
+	bool m_isBGM;
 };
 
 #endif

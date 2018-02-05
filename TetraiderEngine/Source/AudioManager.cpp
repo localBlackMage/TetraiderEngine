@@ -100,10 +100,9 @@ void AudioManager::Update(float elapsed)
 
 void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol, float maxVol, float minPitch, float maxPitch*/)
 {
-
 	// Try to find sound effect and return if not found 
-	SoundMap::iterator sound = TETRA_RESOURCES.GetSoundMap()[SFX].find(TETRA_GAME_CONFIG.SFXDir() + path);
-	if(sound == TETRA_RESOURCES.GetSoundMap()[SFX].end())
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
+	if(!sound)
 		return;
 	
 	// TODO if not found load sound
@@ -123,7 +122,7 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 	/*if (chMap == m_Channel[SFX].end())
 	{*/
 		FMOD::Channel* channel = NULL;
-		ErrorCheck(m_pSystem->playSound(sound->second, NULL, true, &channel));
+		ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
 		//save audiopath and its corresponding channel
 		m_Channel[SFX].insert(std::make_pair(path, channel));
 		//set to the channel grp it belongs
@@ -152,7 +151,7 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 void AudioManager::PlaySong(const std::string & path)
 {
 	//ignore if song already playing
-	if (m_currentSongPath ==path)
+	if (m_currentSongPath == path)
 		return;
 
 	//if song is playing stop them and set this as next song
@@ -163,13 +162,13 @@ void AudioManager::PlaySong(const std::string & path)
 		return;
 	}
 	//find song in <-> sound map
-	SoundMap::iterator sound = TETRA_RESOURCES.GetSoundMap()[SONG].find(path);
-	if (sound == TETRA_RESOURCES.GetSoundMap()[SONG].end())
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SONG);
+	if (!sound)
 		return;
 
 	//start playing song with 0 vol and fade in
 	m_currentSongPath = path;
-	ErrorCheck(m_pSystem->playSound(sound->second, NULL, true, &m_pCurrentSongChannel));
+	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
 	ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
 	ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
 	ErrorCheck(m_pCurrentSongChannel->setPaused(false));

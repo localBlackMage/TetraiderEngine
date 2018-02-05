@@ -56,19 +56,22 @@
 			"Name": "Walk",
 			"frames": 12,
 			"animationSpeed": 18,
-			"isLooping": true
+			"isLooping": true,
+			"isPlayOnAwake": true
 		},
 		{
 			"Name": "Idle",
 			"frames": 12,
 			"animationSpeed": 18,
-			"isLooping": true
+			"isLooping": true,
+			"isPlayOnAwake": true
 		},
 		{
 			"Name": "Death",
 			"frames": 1,
 			"animationSpeed": 18,
-			"isLooping": false
+			"isLooping": false,
+			"isPlayOnAwake": true
 		}]
 	},
 	{

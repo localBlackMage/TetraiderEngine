@@ -11,7 +11,9 @@ Body::Body() :
 {
 }
 
-Body::~Body() {}
+Body::~Body() {
+	delete m_pShape;
+}
 
 void Body::Update(float dt) {}
 
@@ -52,25 +54,27 @@ void Body::Serialize(const json& j) {
 
 	std::string shape = ParseString(j["SHAPE"], "type");
 
-	// TODO: if overriding avoid creating new shapes
-	if (shape == "AABB") {
-		AABB* pRect = new AABB(ParseFloat(j["SHAPE"], "width"), ParseFloat(j["SHAPE"], "height"));
-		m_pShape = pRect;
-		m_pShape->pBody = this;
-	}
-	else if (shape == "circle") {
-		Circle* pCircle = new Circle(ParseFloat(j["SHAPE"], "radius"));
-		m_pShape = pCircle;
-		m_pShape->pBody = this;
-	}
-	else if (shape == "polygon") {
-		Polygon* pPolygon = new Polygon();
-		for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
-			Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
-			pPolygon->m_vertices.push_back(vertx);
+	// TODO: Shapes will not get overriden by level
+	if (!m_pShape) {
+		if (shape == "AABB") {
+			AABB* pRect = new AABB(ParseFloat(j["SHAPE"], "width"), ParseFloat(j["SHAPE"], "height"));
+			m_pShape = pRect;
+			m_pShape->pBody = this;
 		}
-		m_pShape = pPolygon;
-		m_pShape->pBody = this;
+		else if (shape == "circle") {
+			Circle* pCircle = new Circle(ParseFloat(j["SHAPE"], "radius"));
+			m_pShape = pCircle;
+			m_pShape->pBody = this;
+		}
+		else if (shape == "polygon") {
+			Polygon* pPolygon = new Polygon();
+			for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
+				Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
+				pPolygon->m_vertices.push_back(vertx);
+			}
+			m_pShape = pPolygon;
+			m_pShape->pBody = this;
+		}
 	}
 }
 

@@ -30,7 +30,10 @@ void Weapon::Update(float dt) {
 }
 
 void Weapon::Serialize(const json& j) {
-	//TODO: This should not reallocate memory on level override
+	//TODO: Cannot override weapon component at the moment
+	if (m_Attacks.size() > 0) 
+		return;
+
 	int numberOfAttacks = j["Attacks"].size();
 
 	//TODO: Move to a factory method if gets too complex

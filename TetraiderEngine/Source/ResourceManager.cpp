@@ -37,15 +37,19 @@ ResourceManager::~ResourceManager()
 
 	//Release sound in each category 
 	// TODO: Double check if there are any memory leaks with this method
-	 SoundMap::iterator iter;
-	 for (int i = 0; i < CATEGORY_COUNT; ++i)
-	 {
-		 //ErrorCheck(m_pSystem->update());
-		 for (iter = m_Sounds[i].begin(); iter != m_Sounds[i].end(); ++iter)
-			 TETRA_AUDIO.ErrorCheck(iter->second->release());
+	for (auto comp : m_Sounds[SFX]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+		m_Sounds[SFX].clear();
+	}
 
-		 m_Sounds[i].clear();
-	 }	
+	for (auto comp : m_Sounds[SONG]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+		m_Sounds[SONG].clear();
+	}
 }
 
 GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurface)
@@ -118,22 +122,27 @@ void ResourceManager::Load(Sound_Category type, const std::string & path)
 
 	FMOD::Sound* sound;
 	TETRA_AUDIO.ErrorCheck(TETRA_AUDIO.getSystem()->createSound(path.c_str(), TETRA_AUDIO.getMode()[type], 0, &sound));
-	m_Sounds[type].insert(std::make_pair(path, sound));
+	m_Sounds[type][path] = sound;
 }
 
 void ResourceManager::LoadSFX(const std::string & path)
 {
-	Load(SFX, path);
+	Load(SFX, TETRA_GAME_CONFIG.SFXDir() + path);
 }
 
 void ResourceManager::LoadSong(const std::string & path)
 {
-	Load(SONG, path);
+	Load(SONG, TETRA_GAME_CONFIG.SFXDir() + path);
 }
 
-SoundMap* ResourceManager::GetSoundMap()
+FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category type)
 {
-	return m_Sounds;
+	FMOD::Sound* sound = m_Sounds[type][path];
+	if (sound)
+		return sound;
+
+	std::cout << "Invalid sound name." << std::endl;
+	return 0;
 }
 
 bool ResourceManager::Init()
