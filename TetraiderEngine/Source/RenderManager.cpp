@@ -15,7 +15,6 @@
 #include <iostream>
 #include <fstream>
 #include <windows.h>
-
 enum SHADER_LOCATIONS {
 	POSITION = 0,
 	TEXTURE_COORD,
@@ -47,18 +46,19 @@ RenderManager::~RenderManager()
 
 void RenderManager::_InitWindow(std::string title)
 {
-	if (AllocConsole())
-	{
-		FILE* file;
+	//if (AllocConsole())
+	//{
+	//	FILE* file;
 
-		freopen_s(&file, "CONOUT$", "wt", stdout);
-		freopen_s(&file, "CONOUT$", "wt", stderr);
-		freopen_s(&file, "CONOUT$", "wt", stdin);
+	//	freopen_s(&file, "CONOUT$", "wt", stdout);
+	//	freopen_s(&file, "CONOUT$", "wt", stderr);
+	//	freopen_s(&file, "CONOUT$", "wt", stdin);
 
-		SetConsoleTitle("Tetraider Engine");
-	}
+	//	SetConsoleTitle("Tetraider Engine");
+	//}
 
 	SDL_Init(SDL_INIT_VIDEO);
+
 	m_pWindow = SDL_CreateWindow(title.c_str(),
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,

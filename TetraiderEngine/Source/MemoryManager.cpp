@@ -21,6 +21,17 @@ Creation date: 2/1/18
 
 //MemoryManager* gMemoryManager;
 
+static void PrintPointer(const char* msg, void* ptr) {
+	printf("%s: %p\n", msg, ptr);
+}
+
+static void PrintMemoryBlock(MemoryBlock* block) {
+	PrintPointer("Next MB", block->next);
+	if (block->next)
+		PrintPointer("Next->Prev MB", block->next->prev);
+	PrintPointer("Prev MB", block->prev);
+	printf("Block Size: %d : Block Freesize: %d\n", block->size, block->freesize);
+}
 
 MemoryManager::MemoryManager():
 	m_TotalBufferSize(DEFAULT_BUFFER_SIZE_BYTE), m_pHead(nullptr) {
@@ -49,7 +60,7 @@ void* MemoryManager::Alloc(std::size_t size) {
 
 	// request failed
 	if (!current) {
-		std::cout << "MemoryManager::Alloc() FAILED - No Available Slot\n";
+		printf("MemoryManager::Alloc() FAILED - No Available Slot\n");
 		return nullptr;
 	}
 	// create a new memoryblock and insert into the list
@@ -79,6 +90,7 @@ void* MemoryManager::Alloc(std::size_t size) {
 	//		 use unordered_map<?,MemoryBlock*>
 	//						  <?,std::shared_ptr<MemoryBlock> >
 	// ? = reinterpret_case<unsigned long>
+	PrintPointer("Pointer Being Freed", ptr);
 	while(current && (current->pData != ptr)){
 		current = current->next;
 	}
@@ -90,9 +102,18 @@ void* MemoryManager::Alloc(std::size_t size) {
 
 	// remove links
 	if (current->next){
+		PrintMemoryBlock(current);
+		PrintMemoryBlock(current->next);
+
 		current->next->prev = current->prev;
+
+		PrintMemoryBlock(current);
+		PrintMemoryBlock(current->next);
 	}
 	if (current->prev){
+		PrintMemoryBlock(current);
+		PrintMemoryBlock(current->prev);
+
 		current->prev->next = current->next;
 		current->prev->freesize += current->size + current->freesize;
 	}
@@ -114,7 +135,7 @@ void* MemoryManager::Alloc(std::size_t size) {
 
  void MemoryManager::Recycle(MemoryBlock* pNode){
 	if (m_NumCachedBlock == MAX_CACHE_SIZE_NUM-1){
-		//std::cout << "CACHE IS FULL -- MAX_CACHE_SIZE_NUM: "<< MAX_CACHE_SIZE_NUM << endl;
+		//printf("CACHE IS FULL -- MAX_CACHE_SIZE_NUM: %d\n", MAX_CACHE_SIZE_NUM);
 		free(pNode);
 		return;
 	}
