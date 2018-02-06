@@ -413,10 +413,9 @@
     <ClInclude Include="Source\AudioManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Header Files\Managers</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="Source\Weapon.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -428,7 +427,6 @@
     </ClInclude>
     <ClInclude Include="Source\NPCController.h">
       <Filter>Header Files\Components</Filter>
->>>>>>> 37130207260ca2b18c8b1177ec314a70cd6b6a4d
     </ClInclude>
   </ItemGroup>
 </Project>

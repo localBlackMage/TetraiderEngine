@@ -20,11 +20,11 @@ Creation date: 2/1/18
 	const int	 MAX_CACHE_SIZE_NUM = 100;			// # of Cacheable MemoryBlocks
 	const size_t DEFAULT_BUFFER_SIZE_BYTE = 524288000;	// 5 MB = 5*1024*1024 byte
 
-	class MemoryManagerInterface {
+	/*class MemoryManagerInterface {
 	public:
 		virtual void* Alloc(std::size_t) = 0;
 		virtual void Free(void*) = 0;
-	};
+	};*/
 
 	typedef struct ListNode {
 		void *pData; 				// pointer to data block's position in m_Buffer
@@ -53,7 +53,7 @@ Creation date: 2/1/18
 
 
 
-	class MemoryManager : public MemoryManagerInterface {
+	class MemoryManager  {
 	private:
 		static void* m_Buffer;
 		const size_t m_TotalBufferSize;
@@ -63,16 +63,16 @@ Creation date: 2/1/18
 	public:
 
 		MemoryManager();
-		virtual ~MemoryManager();
+		 ~MemoryManager();
 		MemoryManager(const MemoryManager &) = delete;
 		void operator=(const MemoryManager &) = delete;
 
-		virtual void* Alloc(std::size_t size);
-		virtual void Free(void* ptr);
+		 void* Alloc(std::size_t size);
+		 void Free(void* ptr);
 		MemoryBlock* NewMemoryBlock();
 		void Recycle(MemoryBlock*);
 	};
 
-	extern MemoryManager* gMemoryManager;
+	//extern MemoryManager* gMemoryManager;
 
 #endif

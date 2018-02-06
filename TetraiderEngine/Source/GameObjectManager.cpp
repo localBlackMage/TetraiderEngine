@@ -7,8 +7,6 @@
 #include "TetraiderAPI.h"
 #include <fstream>
 #include <iostream>
-#include <conio.h>
-#include <chrono>
 
 using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
