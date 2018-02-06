@@ -120,13 +120,13 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 	/*if (chMap == m_Channel[SFX].end())
 	{*/
 		FMOD::Channel* channel = NULL;
-		ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
+		//ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
 		//save audiopath and its corresponding channel
 		m_Channel[SFX].insert(std::make_pair(path, channel));
 		//set to the channel grp it belongs
-		ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
-		ErrorCheck(channel->setVolume(volume));
-		ErrorCheck(channel->setPaused(false));
+		//ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
+		//ErrorCheck(channel->setVolume(volume));
+		//ErrorCheck(channel->setPaused(false));
 	
 		/*}*/
 	/*
@@ -164,10 +164,10 @@ void AudioManager::PlaySong(const std::string & path)
 
 	//start playing song with 0 vol and fade in
 	m_currentSongPath = path;
-	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
-	ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
-	ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
-	ErrorCheck(m_pCurrentSongChannel->setPaused(false));
+	//ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
+	//ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
+	//ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
+	//ErrorCheck(m_pCurrentSongChannel->setPaused(false));
 	m_fade = FADE_IN;
 
 	SetSongsVolume(0.4f); // DUMMY CODE

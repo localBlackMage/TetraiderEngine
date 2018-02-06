@@ -121,11 +121,11 @@
 			},
 			{
 				"type": "Ranged",
-				"coolDown": 0.3,
+				"coolDown": 0.15,
 				"baseDamage": 0,
 				"projectileSpeed": 400,
-				"instantiationOffset": 50,
-				"lifeTime": 2,
+				"instantiationOffset": 100,
+				"lifeTime": 1,
 				"projectilePrefab": "P_testProjectile"
 			}
 		]

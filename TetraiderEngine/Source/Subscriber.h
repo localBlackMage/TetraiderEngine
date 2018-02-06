@@ -44,6 +44,13 @@ public:
 	virtual void AddEventSubscriptionToSubscribeTo(std::string eventType);
 	virtual void SubscribeToEvent(std::string eventType);
 	virtual void SubscribeToEvent(EventType eventType);
+
+
+	void *operator new(std::size_t size);
+
+	void operator delete(void *ptr);
+	void* operator new[](std::size_t size);
+	void operator delete[](void* arrayPtr);
 };
 
 #endif

@@ -38,3 +38,25 @@ void Subscriber::SubscribeToEvent(EventType eventType)
 {
 	TETRA_EVENTS.Subscribe(eventType, this);
 }
+
+void* Subscriber::operator new(std::size_t size)
+{
+	//if(gMemoryManager)
+		//Create 
+
+	return TETRA_MEMORY.Alloc(size);
+}
+
+void Subscriber::operator delete(void *ptr)
+{
+	TETRA_MEMORY.Free(ptr);
+}
+void* Subscriber::operator new[](std::size_t size)
+{
+	return TETRA_MEMORY.Alloc(size);
+}
+
+void Subscriber::operator delete[](void* arrayPtr)
+{
+	TETRA_MEMORY.Free(arrayPtr);
+}

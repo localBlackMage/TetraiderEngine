@@ -240,6 +240,9 @@
     <ClCompile Include="Source\NPCController.cpp">
       <Filter>Source Files\Components\Agent</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MemoryManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Math\Vector3D.h">
@@ -411,6 +414,9 @@
       <Filter>Header Files\Attacks</Filter>
     </ClInclude>
     <ClInclude Include="Source\AudioManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MemoryManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Weapon.h">

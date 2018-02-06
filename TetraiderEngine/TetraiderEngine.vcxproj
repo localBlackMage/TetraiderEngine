@@ -53,6 +53,7 @@
     <ClCompile Include="Source\Math\Vector2D.cpp" />
     <ClCompile Include="Source\Math\Vector3D.cpp" />
     <ClCompile Include="Source\MeleeAttack.cpp" />
+    <ClCompile Include="Source\MemoryManager.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\NPCController.cpp" />
     <ClCompile Include="Source\ParticleEmitter.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Source\Math\Vector2D.h" />
     <ClInclude Include="Source\Math\Vector3D.h" />
     <ClInclude Include="Source\MeleeAttack.h" />
+    <ClInclude Include="Source\MemoryManager.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\NPCController.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
