@@ -52,9 +52,7 @@ void GameObjectLayer::RenderLayer(GameObject* camera)
 
 void GameObjectLayer::ReSortLayer()
 {
-	int i = 0;
 	Sorting::TopDownMergeSort(m_layerObjects, &LeftYGreaterThanOrEqualToRightY);
-	i = 1;
 }
 
 void GameObjectLayer::AddToLayer(GameObject * pGO)
