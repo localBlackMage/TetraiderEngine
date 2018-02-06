@@ -55,6 +55,7 @@
     <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\NPCController.cpp" />
+    <ClCompile Include="Source\ParticleEmitter.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Source\MeleeAttack.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\NPCController.h" />
+    <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\RangeAttack.h" />

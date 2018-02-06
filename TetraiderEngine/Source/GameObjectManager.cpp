@@ -13,12 +13,24 @@
 using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
 
-static bool SortTransformY(GameObject*left, GameObject*right) 
+static bool LeftYGreaterThanRightY(GameObject*left, GameObject*right) 
 {
 	Transform* tLeft = left->GetComponent<Transform>(ComponentType::C_Transform);
 	Transform* tRight = right->GetComponent<Transform>(ComponentType::C_Transform);
 
 	return tLeft->GetPosition().y > tRight->GetPosition().y;
+}
+
+static bool LeftYGreaterThanOrEqualToRightY(GameObject*left, GameObject*right)
+{
+	Transform* tLeft = left->GetComponent<Transform>(ComponentType::C_Transform);
+	Transform* tRight = right->GetComponent<Transform>(ComponentType::C_Transform);
+
+	return tLeft->GetPosition().y >= tRight->GetPosition().y;
+}
+
+static bool SortInt(int l, int r) {
+	return l <= r;
 }
 
 #pragma region GameObjectLayer
@@ -38,10 +50,15 @@ void GameObjectLayer::RenderLayer(GameObject* camera)
 	}
 }
 
+void GameObjectLayer::ReSortLayer()
+{
+	Sorting::TopDownMergeSort(m_layerObjects, &LeftYGreaterThanOrEqualToRightY);
+}
+
 void GameObjectLayer::AddToLayer(GameObject * pGO)
 {
 	m_layerObjects.push_back(pGO);
-	Sorting::InsertionSort(m_layerObjects, &SortTransformY);
+	Sorting::InsertionSort(m_layerObjects, &LeftYGreaterThanRightY);
 }
 
 void GameObjectLayer::RemoveFromLayer(GameObject * pGO)
@@ -83,6 +100,10 @@ void GameObjectManager::LateUpdate(float dt) {
 	for (auto gameObject : mGameObjects) {
 		 if (gameObject->m_isActive)
 			 gameObject->LateUpdate(dt);
+	}
+
+	for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
+		m_layers[layer].ReSortLayer();
 	}
 }
 

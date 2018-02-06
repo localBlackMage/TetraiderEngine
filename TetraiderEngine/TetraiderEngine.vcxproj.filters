@@ -82,6 +82,12 @@
     <Filter Include="Source Files\Attacks">
       <UniqueIdentifier>{c9ac6b1c-e652-47cf-97bd-8f4d7f77f894}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Agent">
+      <UniqueIdentifier>{1db286d9-5d02-469b-99ed-660eb205b04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Agent">
+      <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -174,9 +180,6 @@
     <ClCompile Include="Source\CamFollow.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Controller.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Animation.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -184,9 +187,6 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Agent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Transform.cpp">
@@ -228,8 +228,17 @@
     <ClCompile Include="Source\Audio.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NPCController.cpp">
+    <ClCompile Include="Source\ParticleEmitter.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Agent.cpp">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Controller.cpp">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NPCController.cpp">
+      <Filter>Source Files\Components\Agent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,9 +326,6 @@
     <ClInclude Include="Source\Math\Collisions.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Controller.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DebugLineMesh.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
@@ -346,9 +352,6 @@
     </ClInclude>
     <ClInclude Include="Source\TetraiderAPI.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Agent.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\CamFollow.h">
       <Filter>Header Files\Components</Filter>
@@ -419,8 +422,17 @@
     <ClInclude Include="Source\Audio.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCController.h">
+    <ClInclude Include="Source\ParticleEmitter.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Agent.h">
+      <Filter>Header Files\Components\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCController.h">
+      <Filter>Header Files\Components\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller.h">
+      <Filter>Header Files\Components\Agent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
