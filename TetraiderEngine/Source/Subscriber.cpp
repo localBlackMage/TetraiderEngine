@@ -41,9 +41,6 @@ void Subscriber::SubscribeToEvent(EventType eventType)
 
 void* Subscriber::operator new(std::size_t size)
 {
-	//if(gMemoryManager)
-		//Create 
-
 	return TETRA_MEMORY.Alloc(size);
 }
 

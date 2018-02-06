@@ -440,5 +440,8 @@
     <ClInclude Include="Source\Controller.h">
       <Filter>Header Files\Components\Agent</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MemoryManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

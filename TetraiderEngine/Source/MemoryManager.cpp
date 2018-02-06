@@ -14,10 +14,13 @@ Creation date: 2/1/18
 #include "TetraiderAPI.h"
 #include <iostream>
 
-//// temp
-//#include <conio.h>
-//#include <chrono>
-//#include <vector>
+// temp
+#include <conio.h>
+#include <chrono>
+#include <vector>
+
+//MemoryManager* gMemoryManager;
+
 
 MemoryManager::MemoryManager():
 	m_TotalBufferSize(DEFAULT_BUFFER_SIZE_BYTE), m_pHead(nullptr) {
@@ -39,33 +42,27 @@ MemoryManager::~MemoryManager() {
 }
 
 void* MemoryManager::Alloc(std::size_t size) {
-	//cout <<"myalloc\n";
 	MemoryBlock *current = m_pHead;
-	//std::cout << size << std::endl;
 	// find next available slot 
-	printf("ALLOC() CALL WITH SIZE: %ul\n", size);
 	while (current && (current->freesize < size)) {
-		if (current->freesize != 0) {
-		}
 		current = current->next;
 	}
 
+	// request failed
 	if (!current) {
 		std::cout << "MemoryManager::Alloc() FAILED - No Available Slot\n";
 		return nullptr;
 	}
 	// create a new memoryblock and insert into the list
-	//MemoryBlock tempor = NewMemoryBlock();
 	
 	MemoryBlock* temp = current->next;
-
 	current->next = NewMemoryBlock();
 	current->next->Initialize(	static_cast<unsigned char*>(current->pData) + current->size, 
 								size, 
 								current->freesize - size );
-	if (temp) {
+
+	if (temp) 
 		temp->prev = current->next;
-	}
 	current->next->next = temp;
 	current->freesize = 0;
 	current->next->prev = current;
@@ -109,10 +106,10 @@ void* MemoryManager::Alloc(std::size_t size) {
 }
 
  MemoryBlock* MemoryManager::NewMemoryBlock(){
-	if (m_NumCachedBlock == 0){ // no cached memoryblock to be reused
+	if (m_NumCachedBlock == 0) { // no cached memoryblock to be reused
 		return (MemoryBlock*)malloc(sizeof(MemoryBlock));
-	}else{									// use previously recycled memory block
-		//printf("USING CACHED NODE\n");
+	}
+	else {									// use previously recycled memory block
 		return m_Cache[--m_NumCachedBlock]; // NOTE: cacheIndex = m_NumCachedBlock-1
 	}
 }
@@ -134,6 +131,12 @@ void *MemoryManager::m_Buffer = nullptr;
 //{
 //	return gMemoryManager.Alloc(size);
 //}
+//	//if(gMemoryManager)
+//		//Create 
+//
+//	return gMemoryManager.Alloc(size);
+//}
+//
 //void operator delete(void *ptr)
 //{
 //	gMemoryManager.Free(ptr);
@@ -147,33 +150,3 @@ void *MemoryManager::m_Buffer = nullptr;
 //	gMemoryManager.Free(arrayPtr);
 //}
 
-
-/*
-int main()
-{
-	///
-	auto start = std::chrono::system_clock::now();
-	for (int i = 0; i < 5000000; ++i)
-	{
-		int *k = (int *)malloc(sizeof(int));
-		free(k);
-	}
-	auto end = std::chrono::system_clock::now();
-	std::chrono::duration<double> elapsed_seconds = end - start;
-	cout << "Benchmark OS heap allocation/deallocation:	" << elapsed_seconds.count() << endl;
-
-	start = std::chrono::system_clock::now();
-	for (int i = 0; i < 5000000; ++i)
-	{
-		int *k = new int;
-		delete k;
-	}
-	end = std::chrono::system_clock::now();
-	elapsed_seconds = end - start;
-	cout << "Benchmark custom allocation/deallocation:	" << elapsed_seconds.count() << endl;
-
-	//_getch();
-
-	return 0;
-}
-*/
