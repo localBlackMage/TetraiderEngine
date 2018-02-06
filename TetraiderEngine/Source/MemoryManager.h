@@ -49,17 +49,17 @@ Creation date: 2/1/18
 				free(current->next);
 			}
 		}
-	}MemoryBlock;
+	} MemoryBlock;
 
 
 
 	class MemoryManager  {
 	private:
-		static void* m_Buffer;
-		const size_t m_TotalBufferSize;
-		MemoryBlock* m_pHead;
-		MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];
-		int m_NumCachedBlock;
+		static void* m_Buffer;						// Block of memory where all data exists
+		const size_t m_TotalBufferSize;				// How big the buffer is in bytes
+		MemoryBlock* m_pHead;						// First MemoryBlock in the linked list
+		MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];	// Stores MemoryBlocks to be deleted, when full all will be deleted at once
+		int m_NumCachedBlock;						// Number of MemoryBlocks stored in the m_Cache
 	public:
 
 		MemoryManager();
@@ -67,12 +67,10 @@ Creation date: 2/1/18
 		MemoryManager(const MemoryManager &) = delete;
 		void operator=(const MemoryManager &) = delete;
 
-		 void* Alloc(std::size_t size);
-		 void Free(void* ptr);
+		void* Alloc(std::size_t size);
+		void Free(void* ptr);
 		MemoryBlock* NewMemoryBlock();
 		void Recycle(MemoryBlock*);
 	};
-
-	//extern MemoryManager* gMemoryManager;
 
 #endif

@@ -29,7 +29,6 @@ MemoryManager::MemoryManager():
 	m_pHead = (MemoryBlock*)malloc(sizeof(MemoryBlock));
 	m_pHead->Initialize(m_Buffer, 0, m_TotalBufferSize);
 	m_NumCachedBlock = 0;
-	//cout << m_pHead<<endl;
 }
 
 MemoryManager::~MemoryManager() {
@@ -67,7 +66,6 @@ void* MemoryManager::Alloc(std::size_t size) {
 	current->freesize = 0;
 	current->next->prev = current;
 
-	//printf("Address: %ul\n", current->next->pData);
 	return current->next->pData;
 }
 
