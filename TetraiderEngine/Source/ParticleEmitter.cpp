@@ -17,7 +17,8 @@ void ParticleEmitter::LateInitialize()
 		}
 
 		if (!m_pTransform) {
-			std::cout << "No Sprite component found. ParticleEmitter component failed to operate." << std::endl;
+			std::cout << "No Transform component found. ParticleEmitter component failed to operate." << std::endl;
+			assert(m_pTransform);
 			return;
 		}
 	}

@@ -35,6 +35,8 @@ public:
 
 	void BroadcastEvent(Event * aEvent);
 	void BroadcastEventToSubscribers(Event * aEvent);
+
+	void ClearDelayedEvents();
 };
 
 #endif

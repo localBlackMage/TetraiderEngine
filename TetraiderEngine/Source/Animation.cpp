@@ -118,6 +118,7 @@ void Animation::LateInitialize() {
 
 		if (!m_pSprite) {
 			printf("No Sprite component found. Animation component failed to operate.\n");
+			assert(m_pSprite);
 			return;
 		}
 	}

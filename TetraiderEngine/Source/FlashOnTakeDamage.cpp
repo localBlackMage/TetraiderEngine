@@ -32,6 +32,7 @@ void FlashOnTakeDamage::LateInitialize() {
 
 		if (!m_pSprite) {
 			printf("No Sprite component found. FlashOnTakeDamage component failed to operate.\n");
+			assert(m_pSprite);
 			return;
 		}
 	}

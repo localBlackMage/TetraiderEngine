@@ -28,6 +28,7 @@ void CamFollow::LateInitialize()
 
 		if (!m_pTransform) {
 			printf("No Transform component found. Camfollow component failed to operate.\n");
+			assert(m_pTransform);
 			return;
 		}
 	}
