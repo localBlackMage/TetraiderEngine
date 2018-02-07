@@ -21,6 +21,16 @@ Creation date: 2/1/18
 
 //MemoryManager* gMemoryManager;
 
+static void PrintLinkedList(MemoryBlock* node) {
+	if (!node) {
+		printf("\n\nFINISHED\n\n");
+		return;
+	}
+
+	printf("MEMORY BLOCK :: node: %p :: pData: %p :: Size: %d :: FreeSize: %d :: Next: %p :: Prev: %p\n", node, node->pData, node->size, node->freesize, node->next, node->prev);
+	PrintLinkedList(node->next);
+}
+
 static void PrintPointer(const char* msg, void* ptr) {
 	printf("%s: %p\n", msg, ptr);
 }
@@ -82,15 +92,15 @@ void* MemoryManager::Alloc(std::size_t size) {
 
  void MemoryManager::Free(void* ptr){
 	MemoryBlock *current = m_pHead->next;
-	if (!current || (current->pData==nullptr)){
+	if (!current || (current->pData == nullptr)) {
 		printf("MEMMNGR::FREE() NEVER REACH HERE!\n");
 		return;
 	}
+
 	// TODO: remove while-loop to O(1) of block node find
 	//		 use unordered_map<?,MemoryBlock*>
 	//						  <?,std::shared_ptr<MemoryBlock> >
 	// ? = reinterpret_case<unsigned long>
-	PrintPointer("Pointer Being Freed", ptr);
 	while(current && (current->pData != ptr)){
 		current = current->next;
 	}
@@ -99,27 +109,19 @@ void* MemoryManager::Alloc(std::size_t size) {
 		printf("MEMMNGR::FREE() NEVER REACH HERE --2 !!!\n");
 		return;
 	}
-
+	
 	// remove links
-	if (current->next){
-		PrintMemoryBlock(current);
-		PrintMemoryBlock(current->next);
-
+	if (current->next)
 		current->next->prev = current->prev;
-
-		PrintMemoryBlock(current);
-		PrintMemoryBlock(current->next);
-	}
-	if (current->prev){
-		PrintMemoryBlock(current);
-		PrintMemoryBlock(current->prev);
-
+	if (current->prev) {
 		current->prev->next = current->next;
 		current->prev->freesize += current->size + current->freesize;
 	}
+	current->freesize = 0;
 
 	current->next = nullptr;
 	current->prev = nullptr;
+
 	// try caching current block. If not, free.
 	Recycle(current);
 }

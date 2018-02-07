@@ -46,16 +46,16 @@ RenderManager::~RenderManager()
 
 void RenderManager::_InitWindow(std::string title)
 {
-	//if (AllocConsole())
-	//{
-	//	FILE* file;
+	if (AllocConsole())
+	{
+		FILE* file;
 
-	//	freopen_s(&file, "CONOUT$", "wt", stdout);
-	//	freopen_s(&file, "CONOUT$", "wt", stderr);
-	//	freopen_s(&file, "CONOUT$", "wt", stdin);
+		freopen_s(&file, "CONOUT$", "wt", stdout);
+		freopen_s(&file, "CONOUT$", "wt", stderr);
+		freopen_s(&file, "CONOUT$", "wt", stdin);
 
-	//	SetConsoleTitle("Tetraider Engine");
-	//}
+		SetConsoleTitle("Tetraider Engine");
+	}
 
 	SDL_Init(SDL_INIT_VIDEO);
 

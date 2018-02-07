@@ -90,8 +90,9 @@ void GameObjectManager::Update(float dt) {
 
 // Adds newly created objects to the main vector and destroys all gameobject with destroy flag = true
 void GameObjectManager::UpdateStatus() {
-	AddGameObjectsFromQueueToMainVector();
 	DestroyGameObjects();
+	AddGameObjectsFromQueueToMainVector();
+	
 }
 
 void GameObjectManager::LateUpdate(float dt) {
