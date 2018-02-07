@@ -30,6 +30,8 @@ void Health::TakeDamage(int damage, const Vector3D& sourceOfAttack) {
 		else if (pGO->m_tag == GameObjectTag::T_Enemy) {
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnEnemyHealthZero));
 		}
+
+		pGO->HandleEvent(&Event(EventType::EVENT_OnHealthZero));
 	}
 
 	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, sourceOfAttack)));

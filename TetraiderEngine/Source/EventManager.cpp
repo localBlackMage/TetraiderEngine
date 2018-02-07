@@ -10,10 +10,7 @@ EventManager::EventManager()
 
 EventManager::~EventManager()
 {
-	for (Event* aEvent : m_events) {
-		delete aEvent;
-	}
-	m_events.clear();
+	ClearDelayedEvents();
 }
 
 void EventManager::Update(double deltaTime)
@@ -36,6 +33,14 @@ void EventManager::Update(double deltaTime)
 void EventManager::AddDelayedEvent(Event * newEvent)
 {
 	m_events.push_back(newEvent);
+}
+
+void EventManager::ClearDelayedEvents()
+{
+	for (Event* aEvent : m_events) {
+		delete aEvent;
+	}
+	m_events.clear();
 }
 
 void EventManager::Subscribe(const std::string eType, Subscriber * subscriber)

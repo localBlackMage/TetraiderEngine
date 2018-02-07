@@ -35,8 +35,8 @@ void GameStateManager::Update() {
 			Tetraider::FrameEnd();
 		}
 
-		if (m_nextState != GameState::RESTART) {
-			//TODO: Unload some assets
+		if (m_nextState == GameState::RESTART) {
+			TETRA_LEVELS.UnLoadLevelForRestart();
 		}
 		else if(m_nextState == GameState::NEXT_LEVEL) {
 			//TODO: Unload some assets
@@ -53,6 +53,8 @@ void GameStateManager::HandleEvent(Event * p_event)
 {
 	if (p_event->Type() == EventType::WINDOW_CLOSED)
 		m_nextState = GameState::QUIT;
+	else if (p_event->Type() == EventType::RESTART_LEVEL)
+		m_nextState = GameState::RESTART;
 }
 
 void GameStateManager::SetGameState(GameState state) { m_currentState = state; }

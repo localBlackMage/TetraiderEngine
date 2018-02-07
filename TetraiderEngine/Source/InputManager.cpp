@@ -24,6 +24,7 @@ InputManager::InputManager()
 		printf( "ERROR: SDL_Init() with SDL_INIT_JOYSTICK flag failed!\n");
 	}
 }
+
 InputManager::~InputManager() {
 	// delete key states
 	delete m_CurrentKeyStates;
@@ -86,6 +87,10 @@ void InputManager::Update() {
 	m_CurrentButtonStates[XBOX_DPAD_DOWN] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
 	m_CurrentButtonStates[XBOX_DPAD_LEFT] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
 	m_CurrentButtonStates[XBOX_DPAD_RIGHT] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
+	if (IsKeyTriggered(SDL_SCANCODE_R)) {
+		TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
+	}
 }
 
 bool InputManager::IsKeyPressed(const SDL_Scancode scancode) {

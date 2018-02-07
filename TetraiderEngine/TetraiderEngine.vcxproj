@@ -31,6 +31,7 @@
     <ClCompile Include="Source\Controller.cpp" />
     <ClCompile Include="Source\DebugLineMesh.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
+    <ClCompile Include="Source\DestroyOnHealthZero.cpp" />
     <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\FlashOnTakeDamage.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Source\Controller.h" />
     <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
+    <ClInclude Include="Source\DestroyOnHealthZero.h" />
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\EventNames.h" />
