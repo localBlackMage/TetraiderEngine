@@ -17,7 +17,7 @@ Controller::~Controller() {}
 void Controller::Update(float dt) {
 	Vector3D moveDir;
 
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D)|| TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
 		moveDir.x -= 1;
@@ -27,15 +27,15 @@ void Controller::Update(float dt) {
 		moveDir.y -= 1;
 
 
-	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_RIGHT)) {
+	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_RIGHT) || TETRA_INPUT.IsKeyPressed(XBOX_BTN_B)) {
 		m_pWeapon->UseAttack(0, m_lookDirection);
 	}
 
-	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
+	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT) || TETRA_INPUT.IsKeyPressed(XBOX_BTN_A)) {
 		m_pWeapon->UseAttack(1, m_lookDirection);
 	}
 
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_START))
 		TETRA_AUDIO.TogglePause();
 
 	moveDir.Normalize();

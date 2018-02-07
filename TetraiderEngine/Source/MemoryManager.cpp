@@ -39,11 +39,9 @@ MemoryManager::~MemoryManager() {
 }
 
 void* MemoryManager::Alloc(std::size_t size) {
-	//cout <<"myalloc\n";
+	//printf("ALLOC() CALL WITH SIZE: %ul\n", size);
 	MemoryBlock *current = m_pHead;
-	//std::cout << size << std::endl;
 	// find next available slot 
-	printf("ALLOC() CALL WITH SIZE: %ul\n", size);
 	while (current && (current->freesize < size)) {
 		if (current->freesize != 0) {
 		}
