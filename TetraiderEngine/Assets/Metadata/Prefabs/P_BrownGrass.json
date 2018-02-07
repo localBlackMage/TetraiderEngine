@@ -1,6 +1,6 @@
 {
-  "Tag": "Obstacle",
-  "Layer": "2",
+  "Tag": "None",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 200,
-        "y": 200,
+        "x": 70,
+        "y": 70,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_colliderTest.png",
+      "Texture": "T_BrownGrass.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -48,41 +48,6 @@
         "b": 0,
         "a": 0
       }
-    },
-	{
-		"Component": "Body",
-		"isStatic": true,
-		"mass": 0,
-		"SHAPE": {
-			"type": "polygon",
-			"vertices": [
-			 {
-				"x": 90,
-				"y": 0,
-				"z": 0
-			 },
-			 {
-				"x": 90,
-				"y": -80,
-				"z": 0
-			 },
-			 {
-				"x": -90,
-				"y": -80,
-				"z": 0
-			 },
-			 {
-				"x": -90,
-				"y": 0,
-				"z": 0
-			 },
-			 {
-				"x": 25,
-				"y": 100,
-				"z": 0
-			 }
-			]
-		}
-	}
+    }
   ]
 }

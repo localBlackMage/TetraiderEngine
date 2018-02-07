@@ -1,6 +1,6 @@
 {
   "Tag": "Player",
-  "Layer": "1",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -121,11 +121,11 @@
 			},
 			{
 				"type": "Ranged",
-				"coolDown": 0.15,
+				"coolDown": 0.4,
 				"baseDamage": 0,
 				"projectileSpeed": 400,
 				"instantiationOffset": 100,
-				"lifeTime": 1,
+				"lifeTime": 1.5,
 				"projectilePrefab": "P_testProjectile"
 			}
 		]
