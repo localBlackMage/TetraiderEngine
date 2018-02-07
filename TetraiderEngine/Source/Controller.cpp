@@ -8,7 +8,7 @@
 #include <iostream>
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(false)
+	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true)
 {
 }
 
@@ -52,9 +52,9 @@ void Controller::Update(float dt) {
 	m_targetVelocity = moveDir * m_speed;
 	//cout << TETRA_INPUT.GetRightAxisX() << " " << TETRA_INPUT.GetRightAxisX() << endl;
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.x = TETRA_INPUT.GetRightAxisX();
+		m_lookDirection.x = (float)(TETRA_INPUT.GetRightAxisX());
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.y = -TETRA_INPUT.GetRightAxisY();
+		m_lookDirection.y = (float)(-TETRA_INPUT.GetRightAxisY());
 	CheckToggleMouseControl();
 	if (m_isGameControllerEnabled) {
 		m_lookDirection = GetDirectionToMouse();
