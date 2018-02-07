@@ -234,16 +234,16 @@
     <ClCompile Include="Source\Agent.cpp">
       <Filter>Source Files\Components\Agent</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Controller.cpp">
-      <Filter>Source Files\Components\Agent</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NPCController.cpp">
-      <Filter>Source Files\Components\Agent</Filter>
-    </ClCompile>
     <ClCompile Include="Source\MemoryManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\DestroyOnHealthZero.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Controller.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NPCController.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
