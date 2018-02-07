@@ -1,8 +1,6 @@
 #include "ResourceManager.h"
 #include "JsonReader.h"
 #include "TetraiderAPI.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "External\stb_image.h"
 #include <iostream>
 #include <filesystem>
 
@@ -12,63 +10,26 @@ ResourceManager::ResourceManager(){}
 
 ResourceManager::~ResourceManager() 
 {
-	for (auto comp : m_meshes) {
-		if (comp.second)
-			delete comp.second;
-	}
-	m_meshes.clear();
-
-	for (auto comp : m_textures) {
-		if (comp.second) {
-			stbi_image_free(comp.second->surface->data);
-			delete comp.second->surface;
-			delete comp.second;
-		}
-	}
-	m_textures.clear();
-
-	for (auto comp : m_prefabs) {
-		if (comp.second) {
-			delete comp.second;
-		}
-	}
-
-	m_prefabs.clear();
-
-	//Release sound in each category 
-	// TODO: Double check if there are any memory leaks with this method
-	for (auto comp : m_Sounds[SONG]) {
-		if (comp.second) {
-			TETRA_AUDIO.ErrorCheck(comp.second->release());
-		}
-	}
-	m_Sounds[SONG].clear();
-
-	for (auto comp : m_Sounds[SFX]) {
-		if (comp.second) {
-			TETRA_AUDIO.ErrorCheck(comp.second->release());
-		}
-	}
-	m_Sounds[SFX].clear();
-
+	UnloadAll();
 }
 
-GLuint ResourceManager::_CreateTextureBuffer(const STB_Surface * const stbSurface)
+#pragma region Private Methods
+
+GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurface, int alphaMode)
 {
-	GLuint textureBuffer;
-	glGenTextures(1, &textureBuffer);
-	glBindTexture(GL_TEXTURE_2D, textureBuffer);
+	GLuint textureBufferID;
+	glGenTextures(1, &textureBufferID);
+	glBindTexture(GL_TEXTURE_2D, textureBufferID);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-	glTexImage2D(GL_TEXTURE_2D, 0,
-		stbSurface->hasAlpha ? GL_RGBA : GL_RGB,
-		stbSurface->width, stbSurface->height, 0,
-		stbSurface->hasAlpha ? GL_RGBA : GL_RGB,
-		GL_UNSIGNED_BYTE, stbSurface->data);
+	glTexImage2D(GL_TEXTURE_2D, 0, alphaMode,
+		sdlSurface->w, sdlSurface->h, 0,
+		alphaMode,
+		GL_UNSIGNED_BYTE, sdlSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	return textureBuffer;
+	return textureBufferID;
 }
 
 ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha)
@@ -79,42 +40,9 @@ ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string t
 	return info;
 }
 
-SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName, bool hasAlpha)
-{
-	SurfaceTextureBuffer * stbuff = m_textures[textureName];
+#pragma endregion
 
-	if (stbuff)
-		return stbuff;
-
-	STB_Surface * surface = new STB_Surface();
-	if (surface) {
-		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir(), hasAlpha);
-
-		surface->hasAlpha = info.hasAlpha;
-		surface->data = stbi_load(info.filename.c_str(),
-			&surface->width, &surface->height,
-			&surface->channels,
-			info.hasAlpha ? STBI_rgb_alpha : STBI_rgb);
-
-		if (!surface->data) {
-			std::cerr << "Failed to read file: " << textureName << std::endl;
-			return nullptr;
-		}
-		/*surface->frameWidth = info.frameWidth / surface->width;
-		surface->frameHeight = info.frameHeight / surface->height;
-		surface->rows = info.rows;
-		surface->columns = info.cols;*/
-		GLuint bufferId = _CreateTextureBuffer(surface);
-
-		stbuff = new SurfaceTextureBuffer(surface, bufferId);
-		m_textures[textureName] = stbuff;
-		return stbuff;
-	}
-	else {
-		std::cerr << "Failed to create texture: " << textureName << std::endl;
-		return nullptr;
-	}
-}
+#pragma region Sound
 
 void ResourceManager::Load(Sound_Category type, const std::string & path)
 {
@@ -146,6 +74,8 @@ FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category typ
 	return 0;
 }
 
+#pragma endregion
+
 bool ResourceManager::Init()
 {
 	Mesh * quad = LoadMesh("quad");
@@ -168,6 +98,8 @@ bool ResourceManager::Init()
 	
 	return true;
 }
+
+#pragma region Mesh
 
 DebugLineMesh * ResourceManager::GetDebugLineMesh()
 {
@@ -208,7 +140,69 @@ void ResourceManager::UnloadMesh(const std::string& meshName)
 	}
 }
 
-SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string& textureName, bool hasAlpha)
+#pragma endregion
+
+#pragma region Texture
+
+//SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName, bool hasAlpha)
+//{
+//	SurfaceTextureBuffer * stbuff = m_textures[textureName];
+//
+//	if (stbuff)
+//		return stbuff;
+//
+//	STB_Surface * surface = new STB_Surface();
+//	if (surface) {
+//		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir(), hasAlpha);
+//
+//		surface->hasAlpha = info.hasAlpha;
+//		surface->data = stbi_load(info.filename.c_str(),
+//			&surface->width, &surface->height,
+//			&surface->channels,
+//			info.hasAlpha ? STBI_rgb_alpha : STBI_rgb);
+//
+//		if (!surface->data) {
+//			std::cerr << "Failed to read file: " << textureName << std::endl;
+//			return nullptr;
+//		}
+//		/*surface->frameWidth = info.frameWidth / surface->width;
+//		surface->frameHeight = info.frameHeight / surface->height;
+//		surface->rows = info.rows;
+//		surface->columns = info.cols;*/
+//		GLuint bufferId = _CreateTextureBuffer(surface);
+//
+//		stbuff = new SurfaceTextureBuffer(surface, bufferId);
+//		m_textures[textureName] = stbuff;
+//		return stbuff;
+//	}
+//	else {
+//		std::cerr << "Failed to create texture: " << textureName << std::endl;
+//		return nullptr;
+//	}
+//}
+
+SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
+{
+	SurfaceTextureBuffer * stbuff = m_textures[textureName];
+
+	if (stbuff)	return stbuff;
+
+	// Load image
+	SDL_Surface* loadedSurface = IMG_Load((TETRA_GAME_CONFIG.TexturesDir() + textureName).c_str());
+	if (!loadedSurface) {
+		std::cout << "Failed to load image \"" << textureName << "\" :: SDL Error : " << SDL_GetError() << std::endl;
+		return nullptr;
+	}
+	else {
+		int mode = loadedSurface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
+		stbuff = new SurfaceTextureBuffer(loadedSurface, _CreateTextureBuffer(loadedSurface, mode), mode);
+		m_textures[textureName] = stbuff;
+		return stbuff;
+	}
+}
+
+
+SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string& textureName)
 {
 	if (textureName == "") return nullptr;
 
@@ -217,13 +211,13 @@ SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string& textureNam
 	if (stbuff)
 		return stbuff;
 	else
-		return _LoadTexture(textureName, hasAlpha);
+		return _LoadTexture(textureName);
 }
 
 void ResourceManager::UnloadTexture(const std::string& textureName)
 {
 	if (m_textures[textureName]) {
-		stbi_image_free(m_textures[textureName]->surface->data);
+		SDL_FreeSurface(m_textures[textureName]->surface);
 		delete m_textures[textureName]->surface;
 		delete m_textures[textureName];
 
@@ -231,30 +225,7 @@ void ResourceManager::UnloadTexture(const std::string& textureName)
 	}
 }
 
-/*
-void ResourceManager::LoadTexturesFromFile(std::string fileName)
-{
-	try {
-		json j = JsonReader::OpenJsonFile(fileName);
-
-		if (j.is_object()) {
-			for (json::iterator it = j.begin(); it != j.end(); ++it) {
-				std::string key = it.key();
-				TextureInfo info;
-				info.frameWidth = JsonReader::ParseFloat(j, key, "frameWidth");
-				info.frameHeight = JsonReader::ParseFloat(j, key, "frameHeight");
-				info.rows = JsonReader::ParseInt(j, key, "rows");
-				info.cols = JsonReader::ParseInt(j, key, "columns");
-				info.hasAlpha = JsonReader::ParseBool(j, key, "alpha");
-				LoadTexture(key, JsonReader::ParseString(j, key, "filename"), info.hasAlpha);
-			}
-		}
-	}
-	catch (const json::parse_error& ex) {
-		std::cerr << ex.what() << std::endl;
-	}
-}
-*/
+#pragma endregion
 
 void ResourceManager::UnloadAll()
 {
@@ -266,15 +237,38 @@ void ResourceManager::UnloadAll()
 
 	for (auto comp : m_textures) {
 		if (comp.second) {
-			stbi_image_free(comp.second->surface->data);
-			delete comp.second->surface;
+			SDL_FreeSurface(comp.second->surface);
 			delete comp.second;
 		}
 	}
 	m_textures.clear();
 
-	//TODO: add sounds files here
+	for (auto comp : m_prefabs) {
+		if (comp.second) {
+			delete comp.second;
+		}
+	}
+
+	m_prefabs.clear();
+
+	//Release sound in each category 
+	// TODO: Double check if there are any memory leaks with this method
+	for (auto comp : m_Sounds[SONG]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+	}
+	m_Sounds[SONG].clear();
+
+	for (auto comp : m_Sounds[SFX]) {
+		if (comp.second) {
+			TETRA_AUDIO.ErrorCheck(comp.second->release());
+		}
+	}
+	m_Sounds[SFX].clear();
 }
+
+#pragma region Prefabs
 
 void ResourceManager::LoadPrefabFiles() {
 	std::string path = TETRA_GAME_CONFIG.PrefabsDir();
@@ -293,3 +287,5 @@ json* ResourceManager::GetPrefabFile(const std::string& path) {
 	std::cout << "Could not Get prefab json. Invalid prefab name." << std::endl;
 	return 0;
 }
+
+#pragma endregion

@@ -93,7 +93,6 @@
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\EventNames.h" />
     <ClInclude Include="Source\External\json.hpp" />
-    <ClInclude Include="Source\External\stb_image.h" />
     <ClInclude Include="Source\FlashOnTakeDamage.h" />
     <ClInclude Include="Source\FrameRateManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
@@ -132,7 +131,7 @@
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\Sorting.h" />
     <ClInclude Include="Source\Sprite.h" />
-    <ClInclude Include="Source\STBSurface.h" />
+    <ClInclude Include="Source\SurfaceTextureBuffer.h" />
     <ClInclude Include="Source\Subscriber.h" />
     <ClInclude Include="Source\SubscriberTracker.h" />
     <ClInclude Include="Source\TagNames.h" />
@@ -192,10 +191,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(ProjectDir)SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(ProjectDir)SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(LibraryPath)</LibraryPath>
@@ -215,7 +214,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)GL\lib;$(ProjectDir)SDL2\lib\x86;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -226,10 +225,11 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)GL\lib;$(ProjectDir)SDL2\lib\x86;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

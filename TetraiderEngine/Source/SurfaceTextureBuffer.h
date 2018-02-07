@@ -12,24 +12,18 @@ Creation date: 1/17/18
 
 #pragma once
 
-#ifndef STB_SURFACE_H
-#define STB_SURFACE_H
+#ifndef SURFACE_TEXTURE_BUFFER_H
+#define SURFACE_TEXTURE_BUFFER_H
 
 #include <glew.h>
-
-// Data captured by stbi_load
-struct STB_Surface {
-	unsigned char * data;
-	int width;
-	int height;
-	int channels;
-	bool hasAlpha;
-};
+#include <SDL.h>
 
 struct SurfaceTextureBuffer {
-	explicit SurfaceTextureBuffer(STB_Surface * _surface, GLuint _bufferId) :
-		surface(_surface), bufferId(_bufferId) {};
-	STB_Surface * surface;
+	explicit SurfaceTextureBuffer(SDL_Surface * _surface, GLuint _bufferId, int _alphaMode) :
+		surface(_surface), bufferId(_bufferId), alphaMode(_alphaMode){};
+
+	int alphaMode;
+	SDL_Surface * surface;
 	GLuint bufferId;
 };
 

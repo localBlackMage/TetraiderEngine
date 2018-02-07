@@ -18,7 +18,7 @@ Creation date: 1/17/18
 
 #include "Mesh.h"
 #include "DebugLineMesh.h"
-#include "STBSurface.h"
+#include "SurfaceTextureBuffer.h"
 #include <unordered_map>
 #include <utility>
 #include "fmod_errors.h"
@@ -26,10 +26,13 @@ Creation date: 1/17/18
 #include "fmod.hpp"
 #include "JsonReader.h"
 
+#include "SDL_image.h"
+
 using json = nlohmann::json;
 using namespace JsonReader;
 
 enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
+
 class ResourceManager
 {
 private:
@@ -45,10 +48,9 @@ private:
 
 	std::unordered_map<std::string, FMOD::Sound*> m_Sounds[CATEGORY_COUNT];
 	
-	GLuint _CreateTextureBuffer(const STB_Surface * const stbSurface);
+	GLuint _CreateTextureBuffer(const SDL_Surface * const sdlSurface, int alphaMode);
 	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha);
-	SurfaceTextureBuffer * _LoadTexture(std::string textureName, bool hasAlpha);
-
+	SurfaceTextureBuffer* _LoadTexture(std::string textureName);
 public:
 	ResourceManager();
 	~ResourceManager();
@@ -56,21 +58,23 @@ public:
 	void operator=(const ResourceManager &) = delete;
 
 	bool Init();
+
 	DebugLineMesh* GetDebugLineMesh();
 	Mesh * LoadMesh(const std::string& meshName);
 	Mesh * GetMesh(const std::string& meshName);
 	void UnloadMesh(const std::string& meshName);
 
-	SurfaceTextureBuffer * GetTexture(const std::string& textureName, bool hasAlpha);
+	SurfaceTextureBuffer* GetTexture(const std::string& textureName);
 	void UnloadTexture(const std::string& textureName);
 
 	void UnloadAll();
 	void LoadPrefabFiles();
+	json* GetPrefabFile(const std::string& path);
+
 	void Load(Sound_Category type, const std::string& path);
 	void LoadSFX(const std::string& path);
 	void LoadSong(const std::string& path);
-	json* GetPrefabFile(const std::string& path);
-	FMOD::Sound* GetSFX(const std::string& path, Sound_Category type);
+	FMOD::Sound* GetSFX(const std::string& path, Sound_Category type);	
 };
 
 #endif

@@ -3,7 +3,7 @@
 #define SPRITE_H
 
 #include "Component.h"
-#include "STBSurface.h"
+#include "SurfaceTextureBuffer.h"
 #include "Mesh.h"
 #include <string>
 
@@ -36,7 +36,7 @@ public:
 	virtual void SetSprite(std::string spriteName);
 
 	GLuint GetTextureBuffer() const;
-	bool TextureHasAlpha() const;
+	int GetAlphaMode() const;
 
 	float GetUOffset() const;
 	void SetUOffset(float uOffset);
