@@ -5,6 +5,8 @@
 #include <queue>
 #include "Math/MathLibs.h"
 
+#define MaxDebugCount 5012
+
 class GameObject;
 
 enum DebugShape {
@@ -19,9 +21,10 @@ struct DebugCommand {
 	Vector3D color;
 	Vector3D pos, rot, scale;
 	bool active = false;
-	DebugCommand(DebugShape _shape, Vector3D _color, Vector3D _pos, Vector3D _rot, Vector3D _scale, bool _active = false) :
-		shape(_shape), color(_color), pos(_pos), rot(_rot), scale(_scale), active(_active) {}
-
+	void SetCommand(DebugShape _shape, Vector3D _color, Vector3D _pos, Vector3D _rot, Vector3D _scale, bool _active = false) {
+		shape = _shape; color = _color; pos = _pos; rot = _rot; scale = _scale; active = _active;
+	}
+	DebugCommand() : active(false) {}
 };
 
 enum class DebugColor {
@@ -38,7 +41,8 @@ enum class DebugColor {
 class DebugManager {
 private:
 	Vector3D red, blue, green, grey, yellow, cyan, white, black;
-	std::queue<DebugCommand*> m_debugCommands;
+	int debugCommandCount;
+	DebugCommand m_debugCommands[MaxDebugCount];
 	bool m_isDebugModeEnabled;
 
 	Vector3D _GetColor(DebugColor color);
