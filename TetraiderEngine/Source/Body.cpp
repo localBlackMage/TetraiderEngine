@@ -17,6 +17,11 @@ Body::~Body() {
 
 void Body::Update(float dt) {}
 
+void Body::LateUpdate(float dt) {
+	DrawDebugShape();
+	TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_pTransform->GetPosition() + m_Velocity, DebugColor::BLUE);
+}
+
 void Body::Integrate(float dt) {
 	if (m_isStatic) {
 		DrawDebugShape();
@@ -40,9 +45,6 @@ void Body::Integrate(float dt) {
 
 	// Clear all forces
 	ClearForces();
-
-	DrawDebugShape();
-	TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_pTransform->GetPosition() + m_Velocity, DebugColor::BLUE);
 }
 
 void Body::Serialize(const json& j) {
@@ -89,6 +91,7 @@ void Body::LateInitialize() {
 
 		if (!m_pTransform) {
 			printf("No Transform component found. Body component failed to operate.\n");
+			assert(m_pTransform);
 			return;
 		}
 	}

@@ -53,6 +53,7 @@ void Projectile::LateInitialize() {
 
 		if (!m_pTransform) {
 			printf("No Transform component found. Projectile component failed to operate.\n");
+			assert(m_pTransform);
 			return;
 		}
 	}
@@ -67,6 +68,7 @@ void Projectile::LateInitialize() {
 
 		if (!m_pBody) {
 			printf("No Body component found. Projectile component failed to operate.\n");
+			assert(m_pBody);
 			return;
 		}
 	}

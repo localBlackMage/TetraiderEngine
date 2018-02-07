@@ -2,28 +2,6 @@
   "Tag": "Enemy",
   "Layer": "2",
   "COMPONENTS": [
-    {
-      "Component": "Transform",
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "scale": {
-        "x": 100,
-        "y": 100,
-        "z": 0
-      },
-      "pivotOffset": {
-        "x": 0,
-        "y": 0
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-	  }
-    },
 	{
 		"Component": "NPCController",
 		"AgentData": {
