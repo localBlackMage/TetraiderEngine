@@ -287,9 +287,6 @@
     <ClInclude Include="Source\JsonReader.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\json.hpp">
       <Filter>External Libraries</Filter>
     </ClInclude>
@@ -336,9 +333,6 @@
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mesh.h">
-      <Filter>Header Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\STBSurface.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\SubscriberTracker.h">
@@ -448,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="Source\DestroyOnHealthZero.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SurfaceTextureBuffer.h">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
