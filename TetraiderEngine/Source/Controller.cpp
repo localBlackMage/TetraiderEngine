@@ -101,7 +101,7 @@ Vector3D Controller::GetDirectionToMouse() {
 }
 
 void Controller::CheckToggleMouseControl() {
-	if (TETRA_INPUT.IsKeyTriggered(XBOX_BTN_START)) {
+	if (TETRA_INPUT.IsKeyTriggered(XBOX_BTN_X)) {
 		m_isGameControllerEnabled = !m_isGameControllerEnabled;
 		cout << "GameController Right Axis/Mouse Control Swapped\n";
 	}
