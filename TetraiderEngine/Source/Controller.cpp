@@ -8,7 +8,7 @@
 #include <iostream>
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(false)
+	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true)
 {
 }
 
@@ -22,7 +22,7 @@ void Controller::Update(float dt) {
 	if (abs(TETRA_INPUT.GetLeftAxisY()) > 5500)
 		moveDir.y -= TETRA_INPUT.GetLeftAxisY();
 
-
+	
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
@@ -54,7 +54,7 @@ void Controller::Update(float dt) {
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
 		m_lookDirection.x = TETRA_INPUT.GetRightAxisX();
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.y = -TETRA_INPUT.GetRightAxisY();
+		m_lookDirection.y = (float)-TETRA_INPUT.GetRightAxisY();
 	CheckToggleMouseControl();
 	if (m_isGameControllerEnabled) {
 		m_lookDirection = GetDirectionToMouse();
