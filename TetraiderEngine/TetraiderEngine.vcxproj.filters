@@ -335,9 +335,6 @@
     <ClInclude Include="Source\Mesh.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\STBSurface.h">
-      <Filter>Header Files\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SubscriberTracker.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
@@ -442,6 +439,9 @@
     </ClInclude>
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SurfaceTextureBuffer.h">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

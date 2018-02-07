@@ -42,7 +42,7 @@ void Sprite::Serialize(const json& j)
 
 	m_hasAlpha = ParseBool(j, "hasAlpha");
 	m_textureName = ParseString(j, "Texture");
-	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
+	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
 }
 
 const Mesh & Sprite::GetMesh() const {
@@ -61,7 +61,7 @@ String Sprite::GetSpriteName() const
 void Sprite::SetSprite(std::string textureName)
 {
 	m_textureName = textureName;
-	m_texture = TETRA_RESOURCES.GetTexture(m_textureName, m_hasAlpha);
+	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
 }
 
 GLuint Sprite::GetTextureBuffer() const
@@ -69,9 +69,9 @@ GLuint Sprite::GetTextureBuffer() const
 	return m_texture->bufferId;
 }
 
-bool Sprite::TextureHasAlpha() const
+int Sprite::GetAlphaMode() const
 {
-	return m_texture->surface->hasAlpha;
+	return m_texture->alphaMode;
 }
 
 float Sprite::GetUOffset() const

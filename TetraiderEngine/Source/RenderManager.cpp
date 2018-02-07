@@ -10,11 +10,15 @@
 #include "Camera.h"
 #include "Sprite.h"
 
+#include "SDL_image.h"
+
 #include <glew.h>
 #include <GL/gl.h>
 #include <iostream>
 #include <fstream>
 #include <windows.h>
+
+
 enum SHADER_LOCATIONS {
 	POSITION = 0,
 	TEXTURE_COORD,
@@ -66,6 +70,11 @@ void RenderManager::_InitWindow(std::string title)
 		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 
+	// Initialize PNG loading
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags)) {
+		std::cout << "SDL Image failed to initialize." << std::endl;
+	}
 
 
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
@@ -115,7 +124,7 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glUniform4f(SHADER_LOCATIONS::TINT_COLOR, tintColor[0], tintColor[1], tintColor[2], tintColor[3]);
 	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, saturationColor[0], saturationColor[1], saturationColor[2], saturationColor[3]);
 
-	if (pSpriteComp->TextureHasAlpha()) {
+	if (pSpriteComp->GetAlphaMode() == GL_RGBA) {
 		glDisable(GL_DEPTH_TEST);
 		glEnable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER, 0.4f);
