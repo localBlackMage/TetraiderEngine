@@ -284,9 +284,6 @@
     <ClInclude Include="Source\JsonReader.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\stb_image.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\json.hpp">
       <Filter>External Libraries</Filter>
     </ClInclude>

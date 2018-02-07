@@ -91,7 +91,6 @@
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\EventNames.h" />
     <ClInclude Include="Source\External\json.hpp" />
-    <ClInclude Include="Source\External\stb_image.h" />
     <ClInclude Include="Source\FlashOnTakeDamage.h" />
     <ClInclude Include="Source\FrameRateManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
