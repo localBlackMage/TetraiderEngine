@@ -15,7 +15,6 @@
 #include <iostream>
 #include <fstream>
 #include <windows.h>
-
 enum SHADER_LOCATIONS {
 	POSITION = 0,
 	TEXTURE_COORD,
@@ -59,6 +58,7 @@ void RenderManager::_InitWindow(std::string title)
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
+
 	m_pWindow = SDL_CreateWindow(title.c_str(),
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,

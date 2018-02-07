@@ -22,6 +22,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 		// Avoid friendly fire
 		if (m_isEnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
 		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Player) return;
+		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Projectile) return;
 
 		// If object has health component, deal damage before destroying itself
 		Health* pHealth = collisionData->pGO->GetComponent<Health>(ComponentType::C_Health);
@@ -52,6 +53,7 @@ void Projectile::LateInitialize() {
 
 		if (!m_pTransform) {
 			printf("No Transform component found. Projectile component failed to operate.\n");
+			assert(m_pTransform);
 			return;
 		}
 	}
@@ -66,6 +68,7 @@ void Projectile::LateInitialize() {
 
 		if (!m_pBody) {
 			printf("No Body component found. Projectile component failed to operate.\n");
+			assert(m_pBody);
 			return;
 		}
 	}

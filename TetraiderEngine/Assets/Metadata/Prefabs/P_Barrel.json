@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 200,
-        "y": 200,
+        "x": 100,
+        "y": 100,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_colliderTest.png",
+      "Texture": "T_Barrel.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -54,34 +54,29 @@
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "polygon",
-			"vertices": [
-			 {
-				"x": 90,
-				"y": 0,
-				"z": 0
-			 },
-			 {
-				"x": 90,
-				"y": -80,
-				"z": 0
-			 },
-			 {
-				"x": -90,
-				"y": -80,
-				"z": 0
-			 },
-			 {
-				"x": -90,
-				"y": 0,
-				"z": 0
-			 },
-			 {
-				"x": 25,
-				"y": 100,
-				"z": 0
-			 }
-			]
+			"type": "AABB",
+			"width": 100,
+			"height": 100
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 3,
+		"maxHealth": 3,
+		"isInvincible": false
+	},
+	{
+		"Component": "DestroyOnHealthZero",
+		"destroyIn": 0
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
 		}
 	}
   ]

@@ -1,6 +1,6 @@
 {
   "Tag": "Player",
-  "Layer": "1",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -114,18 +114,18 @@
 			{
 				"type": "Melee",
 				"coolDown": 0.4,
-				"baseDamage": 0,
+				"baseDamage": 1,
 				"radius": 160,
 				"angle": 90,
 				"triggerAttackIn": 0.05
 			},
 			{
 				"type": "Ranged",
-				"coolDown": 0.15,
-				"baseDamage": 0,
+				"coolDown": 0.4,
+				"baseDamage": 1,
 				"projectileSpeed": 400,
-				"instantiationOffset": 100,
-				"lifeTime": 1,
+				"instantiationOffset": 50,
+				"lifeTime": 1.5,
 				"projectilePrefab": "P_testProjectile"
 			}
 		]

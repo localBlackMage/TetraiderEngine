@@ -18,6 +18,8 @@ public:
 protected:
 	Weapon* m_pWeapon;
 private:
+	bool m_isGameControllerEnabled;
+	void CheckToggleMouseControl();
 	Vector3D GetDirectionToMouse();
 };
 

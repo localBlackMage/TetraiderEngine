@@ -45,6 +45,62 @@
         "y": 0,
         "z": 0
       }
+	},
+	{
+	  "prefab": "P_TreeTest",
+      "position": {
+        "x": -400,
+        "y": 150,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_GreenGrass",
+      "position": {
+        "x": -50,
+        "y": 50,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_GreenGrass",
+      "position": {
+        "x": -350,
+        "y": -18,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_BrownGrass",
+      "position": {
+        "x": 20,
+        "y": -90,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_BrownGrass",
+      "position": {
+        "x": 290,
+        "y": 160,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_Barrel",
+      "position": {
+        "x": 50,
+        "y": 260,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_OilBarrel",
+      "position": {
+        "x": -150,
+        "y": -225,
+        "z": 0
+      }
 	}
   ]
 }

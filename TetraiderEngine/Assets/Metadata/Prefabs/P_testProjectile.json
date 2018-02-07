@@ -1,6 +1,6 @@
 {
   "Tag": "Projectile",
-  "Layer": "1",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",

@@ -1,6 +1,6 @@
 {
   "Tag": "Enemy",
-  "Layer": "1",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -94,8 +94,8 @@
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 50,
-		"maxHealth": 50,
+		"startingHealth": 200,
+		"maxHealth": 200,
 		"isInvincible": false
 	},
 	{

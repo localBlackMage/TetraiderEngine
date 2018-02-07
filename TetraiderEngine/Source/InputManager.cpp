@@ -18,12 +18,15 @@ InputManager::InputManager()
 	m_CurrentButtonStates = new Uint8[XBOX_NUM_SCANCODES];
 	memset(m_PreviousKeyStates, 0, XBOX_NUM_SCANCODES * sizeof(Uint8));
 	memset(m_CurrentKeyStates, 0, XBOX_NUM_SCANCODES * sizeof(Uint8));
+	m_StickRightX, m_StickLeftX = 0;
+	m_StickRightY, m_StickLeftY = 0;
 
 	// initialize for SDL_GameController
 	if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) < 0) {
 		printf( "ERROR: SDL_Init() with SDL_INIT_JOYSTICK flag failed!\n");
 	}
 }
+
 InputManager::~InputManager() {
 	// delete key states
 	delete m_CurrentKeyStates;
@@ -86,6 +89,11 @@ void InputManager::Update() {
 	m_CurrentButtonStates[XBOX_DPAD_DOWN] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
 	m_CurrentButtonStates[XBOX_DPAD_LEFT] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
 	m_CurrentButtonStates[XBOX_DPAD_RIGHT] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+
+	m_StickLeftX = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_LEFTX);
+	m_StickLeftY = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_LEFTY);
+	m_StickRightX = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_RIGHTX);
+	m_StickRightY = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_RIGHTY);
 }
 
 bool InputManager::IsKeyPressed(const SDL_Scancode scancode) {
@@ -142,4 +150,17 @@ bool InputManager::IsKeyTriggered(const XBOX_SCANCODE btn) {
 }
 bool InputManager::IsKeyReleased(const XBOX_SCANCODE btn) {
 	return (m_CurrentButtonStates[btn] == 0 && m_PreviousButtonStates[btn] == 1);
+}
+
+Sint16 InputManager::GetLeftAxisX() {
+	return m_StickLeftX;
+}
+Sint16 InputManager::GetLeftAxisY() {
+	return m_StickLeftY;
+}
+Sint16 InputManager::GetRightAxisX() {
+	return m_StickRightX;
+}
+Sint16 InputManager::GetRightAxisY() {
+	return m_StickRightY;
 }

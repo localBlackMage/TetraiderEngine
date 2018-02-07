@@ -59,8 +59,8 @@ private:
 	Uint8  *m_CurrentButtonStates;
 	Uint8  *m_PreviousButtonStates;
 	// Axis States
-	Sint16 m_PrevLeftStickX, m_StickLeftX;
-	Sint16 m_PrevRightStickY, m_StickRightY;
+	Sint16 m_StickRightX, m_StickLeftX;
+	Sint16 m_StickRightY, m_StickLeftY;
 
 
 public:
@@ -86,6 +86,10 @@ public:
 	bool IsKeyPressed(const XBOX_SCANCODE);
 	bool IsKeyTriggered(const XBOX_SCANCODE);
 	bool IsKeyReleased(const XBOX_SCANCODE);
+	Sint16 GetLeftAxisX();
+	Sint16 GetLeftAxisY();
+	Sint16 GetRightAxisX();
+	Sint16 GetRightAxisY();
 };
 
 #endif

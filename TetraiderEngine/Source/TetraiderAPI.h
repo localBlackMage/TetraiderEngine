@@ -14,6 +14,7 @@
 #include "DebugManager.h"
 #include "AudioManager.h"
 #include "GameObjectManager.h"
+#include "MemoryManager.h"
 #include "Singleton.h"
 #include "MemoryManager.h"
 #include <string>

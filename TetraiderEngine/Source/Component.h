@@ -6,6 +6,7 @@
 #include "ComponentTypes.h"
 #include "Subscriber.h"
 #include "JsonReader.h"
+#include <assert.h> 
 
 using json = nlohmann::json;
 using namespace JsonReader;

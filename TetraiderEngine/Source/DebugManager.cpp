@@ -31,7 +31,8 @@ DebugManager::DebugManager() :
 	green(Vector3D(0, 1, 0, 1)), grey(Vector3D(.75f, .75f, .75f, 1)),
 	yellow(Vector3D(1, 1, 0, 1)), cyan(Vector3D(0, 1, 1, 1)),
 	white(Vector3D(1, 1, 1, 1)), black(Vector3D(0, 0, 0, 1)),
-	m_isDebugModeEnabled(false) 
+	m_isDebugModeEnabled(false),
+	debugCommandCount(0)
 {
 }
 
@@ -43,6 +44,11 @@ DebugManager::~DebugManager()
 void DebugManager::DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor color) {
 	if (!m_isDebugModeEnabled) return;
 
+	if (debugCommandCount >= MaxDebugCount) {
+		printf("Cannot draw anymore debug commands. Increase max limit\n");
+		return;
+	}
+
 	Vector3D ab = pB - pA;
 
 	float angle = ab.x != 0 ?
@@ -50,62 +56,89 @@ void DebugManager::DrawLine(const Vector3D& pA, const Vector3D& pB, DebugColor c
 		(ab.y / fabsf(ab.y)) * 90.f;
 	float length = ab.Length();
 
-	m_debugCommands.push(new DebugCommand(
-		DebugShape::S_LINE,
-		_GetColor(color),
-		pA, Vector3D(0, 0, angle), Vector3D(length, length, length), true)
+	m_debugCommands[debugCommandCount].SetCommand(
+		DebugShape::S_LINE, 
+		_GetColor(color), 
+		pA, 
+		Vector3D(0, 0, angle), 
+		Vector3D(length, length, length), 
+		true
 	);
+	++debugCommandCount;
 }
 
 void DebugManager::DrawWireRectangle(const Vector3D & pos, const Vector3D & rot, const Vector3D & scale, DebugColor color)
 {
 	if (!m_isDebugModeEnabled) return;
 
-	m_debugCommands.push(new DebugCommand(
-		DebugShape::S_RECT, 
-		_GetColor(color), 
-		pos, rot, scale, true)
+	if (debugCommandCount >= MaxDebugCount) {
+		printf("Cannot draw anymore debug commands. Increase max limit\n");
+		return;
+	}
+
+	m_debugCommands[debugCommandCount].SetCommand(
+		DebugShape::S_RECT,
+		_GetColor(color),
+		pos, rot, scale, true
 	);
+
+	++debugCommandCount;
 }
 
 void DebugManager::DrawWireCircle(const Vector3D& pos, float diameter, DebugColor color) {
 	if (!m_isDebugModeEnabled)
 		return;
 
-	m_debugCommands.push(new DebugCommand(
+	if (debugCommandCount >= MaxDebugCount) {
+		printf("Cannot draw anymore debug commands. Increase max limit\n");
+		return;
+	}
+
+	m_debugCommands[debugCommandCount].SetCommand(
 		DebugShape::S_CIRCLE,
-		_GetColor(color), pos, Vector3D(), 
-		Vector3D(diameter, diameter, diameter), true)
+		_GetColor(color), pos, Vector3D(),
+		Vector3D(diameter, diameter, diameter), true
 	);
+
+	++debugCommandCount;
 }
 
 void DebugManager::DrawWireCone(const Vector3D & pos, const Vector3D & rot, float arcWidth, float radius, DebugColor color)
 {
 	if (!m_isDebugModeEnabled) return;
 
-	m_debugCommands.push(new DebugCommand(
+	if (debugCommandCount >= MaxDebugCount) {
+		printf("Cannot draw anymore debug commands. Increase max limit\n");
+		return;
+	}
+
+	m_debugCommands[debugCommandCount].SetCommand(
 		DebugShape::S_CONE,
 		_GetColor(color),
-		pos, rot, Vector3D(arcWidth, radius, 0.f), true)
+		pos, rot, Vector3D(arcWidth, radius, 0.f), true
 	);
+
+	++debugCommandCount;
 }
 
 void DebugManager::ClearDebugCommands()
 {
-	while (!m_debugCommands.empty()) {
-		m_debugCommands.pop();
+	for (int i = 0; i < debugCommandCount; ++i) {
+			m_debugCommands[i].active = false;
 	}
+
+	debugCommandCount = 0;
 }
 
 void DebugManager::RenderDebugCommands()
 {
-	// Example Cone
-	// DrawWireCone(Vector3D(), Vector3D(0.f, 0.f, 90.f), 45.f, 200.f, DebugColor::CYAN);
 	TETRA_RENDERER._SetUpDebug(*TETRA_GAME_OBJECTS.GetCamera(1));
-	while (!m_debugCommands.empty()) {
-		DebugCommand* debugCommand = m_debugCommands.front();
-		TETRA_RENDERER._RenderDebugCommand(debugCommand->shape, debugCommand->color, debugCommand->pos, debugCommand->rot, debugCommand->scale);
-		m_debugCommands.pop();
+
+	int maxIndex = debugCommandCount;
+	for (int i = 0; i < maxIndex; ++i) {
+		TETRA_RENDERER._RenderDebugCommand(m_debugCommands[i].shape, m_debugCommands[i].color, m_debugCommands[i].pos, m_debugCommands[i].rot, m_debugCommands[i].scale);
+		m_debugCommands[i].active = false;
+		--debugCommandCount;
 	}
 }
 

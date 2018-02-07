@@ -35,11 +35,9 @@ void LevelManager::UnLoadLevel() {
 }
 
 void LevelManager::UnLoadLevelForRestart() {
-	// TODO: Unload all assets required for level restart
-	/*mainManager.pDebugManager->ClearDebugCommands();
-	mainManager.pGameObjectManager->DestroyAllGameObjects();
-	mainManager.pEventManager->ClearTimedEvents();
-	mainManager.pEnemyManager->Reset();*/
+	TETRA_DEBUG.ClearDebugCommands();
+	TETRA_GAME_OBJECTS.DestroyAllGameObjects();
+	TETRA_EVENTS.ClearDelayedEvents();
 }
 
 void LevelManager::ChangeLevel(int i) {
