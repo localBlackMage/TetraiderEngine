@@ -322,7 +322,8 @@ bool StaticPolygonToStaticCircle(const Vector3D& shapeA, const std::vector<Vecto
 					return false;
 			}
 		}
-
+	}
+	for (unsigned int i = 0; i < vertxA.size(); ++i) {
 		if (StaticPointToStaticCircle(vertxA[i], circle, radius)) {
 			Vector3D normal = circle - vertxA[i];
 			normal.Normalize();
