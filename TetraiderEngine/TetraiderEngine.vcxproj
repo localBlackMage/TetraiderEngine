@@ -123,6 +123,7 @@
     <ClInclude Include="Source\NPCController.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
+    <ClInclude Include="Source\ParticlesData.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\RangeAttack.h" />

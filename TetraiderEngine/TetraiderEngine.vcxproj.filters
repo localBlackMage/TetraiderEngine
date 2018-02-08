@@ -249,9 +249,6 @@
     <ClCompile Include="Source\Particle.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stamina.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Math\Vector3D.h">
@@ -455,8 +452,8 @@
     <ClInclude Include="Source\Particle.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Stamina.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\ParticlesData.h">
+      <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

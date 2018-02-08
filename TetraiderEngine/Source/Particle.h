@@ -4,12 +4,15 @@
 #define PARTICLE_H
 
 #include "Component.h"
-#include "Transform.h"
+#include "SurfaceTextureBuffer.h"
+#include "Mesh.h"
 #include "Math\MathLibs.h"
 
 class Particle : public Component {
 protected:
-	Transform* m_pTransform;
+	std::string m_textureName;
+	SurfaceTextureBuffer * m_texture;
+	Mesh& m_mesh;
 public:
 	Particle();
 	~Particle();

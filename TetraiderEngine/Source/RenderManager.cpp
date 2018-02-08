@@ -42,6 +42,21 @@ RenderManager::RenderManager(int width, int height, std::string title) :
 {
 	_InitWindow(title);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
+
+	particleTest = ParticleContainer();
+	particleTest.pCount = 0;
+	
+	for (int i = 0; i < MaxParticles; i+=4) {
+		particleTest.positions[i] = float(i);
+		particleTest.positions[i + 1] = float(i);
+		particleTest.positions[i + 2] = 0.f;
+		particleTest.positions[i + 3] = 1.f;
+
+		particleTest.colors[i] =		1.f;
+		particleTest.colors[i + 1] = 0.f;
+		particleTest.colors[i + 2] = 0.f;
+		particleTest.colors[i + 3] = 1.f;
+	}
 }
 
 RenderManager::~RenderManager() 
@@ -51,6 +66,70 @@ RenderManager::~RenderManager()
 }
 
 #pragma region Private Methods
+
+void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.positionsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
+	glBufferSubData(GL_ARRAY_BUFFER, 0, particleTest.pCount * sizeof(GLfloat) * 4, particleTest.positions);
+
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.colorsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
+	glBufferSubData(GL_ARRAY_BUFFER, 0, particleTest.pCount * sizeof(GLubyte) * 4, particleTest.colors);
+
+
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.vbo);
+	glVertexAttribPointer(
+		0, // attribute. No particular reason for 0, but must match the layout in the shader.
+		3, // size
+		GL_FLOAT, // type
+		GL_FALSE, // normalized?
+		0, // stride
+		(void*)0 // array buffer offset
+	);
+
+	// 2nd attribute buffer : positions of particles' centers
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.positionsBuffer);
+	glVertexAttribPointer(
+		1, // attribute. No particular reason for 1, but must match the layout in the shader.
+		4, // size : x + y + z + size => 4
+		GL_FLOAT, // type
+		GL_FALSE, // normalized?
+		0, // stride
+		(void*)0 // array buffer offset
+	);
+
+	// 3rd attribute buffer : particles' colors
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.colorsBuffer);
+	glVertexAttribPointer(
+		2, // attribute. No particular reason for 1, but must match the layout in the shader.
+		4, // size : r + g + b + a => 4
+		GL_UNSIGNED_BYTE, // type
+		GL_TRUE, // normalized? *** YES, this means that the unsigned char[4] will be accessible with a vec4 (floats) in the shader ***
+		0, // stride
+		(void*)0 // array buffer offset
+	);
+
+
+	// These functions are specific to glDrawArrays*Instanced*.
+	// The first parameter is the attribute buffer we're talking about.
+	// The second parameter is the "rate at which generic vertex attributes advance when rendering multiple instances"
+	// http://www.opengl.org/sdk/docs/man/xhtml/glVertexAttribDivisor.xml
+	glVertexAttribDivisor(0, 0); // particles vertices : always reuse the same 4 vertices -> 0
+	glVertexAttribDivisor(1, 1); // positions : one per quad (its center) -> 1
+	glVertexAttribDivisor(2, 1); // color : one per quad -> 1
+
+								 // Draw the particules !
+								 // This draws many times a small triangle_strip (which looks like a quad).
+								 // This is equivalent to :
+								 // for(i in ParticlesCount) : glDrawArrays(GL_TRIANGLE_STRIP, 0, 4),
+								 // but faster.
+	glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, particleTest.pCount);
+}
 
 void RenderManager::_InitWindow(std::string title)
 {
@@ -77,12 +156,35 @@ void RenderManager::_InitWindow(std::string title)
 	// Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
-		std::cout << "SDL Image failed to initialize." << std::endl;
+		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
 	}
 
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 	glViewport(0, 0, m_width, m_height);
 
+
+
+
+
+
+
+	// THIS IS ALL TEST CODE, REMOVE
+
+
+	glGenBuffers(1, &particleTest.vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(particleVBD), particleVBD, GL_STATIC_DRAW);
+
+	// The VBO containing the positions and sizes of the particles
+	glGenBuffers(1, &particleTest.positionsBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.positionsBuffer);
+	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
+	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+	
+	glGenBuffers(1, &particleTest.colorsBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest.colorsBuffer);
+	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
+	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
 }
 
 std::string RenderManager::_LoadTextFile(std::string fname)
