@@ -2,9 +2,25 @@
 #include "GameObject.h"
 #include <iostream>
 
-ParticleEmitter::ParticleEmitter() : Component(ComponentType::C_ParticleEmitter) {}
+#pragma region Private Methods
+
+void ParticleEmitter::_SpawnParticle()
+{
+
+}
+
+#pragma endregion
+
+ParticleEmitter::ParticleEmitter() :
+	Component(ComponentType::C_ParticleEmitter),
+	m_currentTime(0.f),
+	m_emissionTime(0.f),
+	m_emissionTimer(0.f)
+{}
 
 ParticleEmitter::~ParticleEmitter() {}
+
+#pragma region Component Methods
 
 void ParticleEmitter::LateInitialize()
 {
@@ -26,13 +42,28 @@ void ParticleEmitter::LateInitialize()
 
 void ParticleEmitter::Update(float dt)
 {
+	if (m_startDelay > 0.f) {
+		m_startDelay -= dt;
+		return;
+	}
+
+	if (m_currentTime < m_loopDuration) {
+		m_currentTime += dt;
+		m_emissionTimer += dt;
+
+		while (m_emissionTimer > m_emissionTime) {
+			_SpawnParticle();
+			m_emissionTimer -= m_emissionTime;
+		}
+
+		// Update Particles
+
+		if (m_looping && m_currentTime >= m_loopDuration)
+			m_currentTime = 0.f;
+	}
 }
 
-void ParticleEmitter::LateUpdate(float dt)
-{
-}
-
-void ParticleEmitter::Serialize(json j)
+void ParticleEmitter::Serialize(const json & j)
 {
 	m_loopDuration = ParseFloat(j, "loopDuration");
 	m_looping = ParseBool(j, "looping");
@@ -43,10 +74,20 @@ void ParticleEmitter::Serialize(json j)
 	m_size = ParseFloat(j, "size");
 	m_rotation = ParseFloat(j, "rotation");
 	m_color = ParseColor(j, "color");
+	m_gravityMod = ParseFloat(j, "gravity");
+	m_emissionRate = ParseInt(j, "emissionRate");
+	m_maxParticles = ParseInt(j, "max");
+	m_rotationOverTime = ParseFloat(j, "rotationOverTime");
+
+	m_emissionTime = m_loopDuration / float(m_emissionRate);
+}
+
+void ParticleEmitter::LateUpdate(float dt)
+{
 }
 
 void ParticleEmitter::HandleEvent(Event * p_event)
 {
 }
 
-
+#pragma endregion

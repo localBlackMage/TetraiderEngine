@@ -1,0 +1,45 @@
+{
+  "Tag": "Emitter",
+  "Layer": "1",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "ParticleEmitter",
+		"loopDuration": 1.0,
+		"looping": true,
+		"prewarmed": false,
+		"startDelay": 0.0,
+		"lifeTime": 1.0,
+		"speed": 1.0,
+		"size": 1.0,
+		"rotation": 0.0,
+		"color": {
+			"r": 1, "g": 0, "b": 0, "a": 1
+		},
+		"gravity": 0.0,
+		"max": 50,
+		"rotationOverTime": 0.0
+	}
+  ]
+}

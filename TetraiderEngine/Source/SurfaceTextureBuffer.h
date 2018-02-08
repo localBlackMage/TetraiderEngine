@@ -2,8 +2,8 @@
 Copyright (C) 2018 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: STBSurface.h
-Purpose: Structs for loading STB_Surfaces
+File Name: SurfaceTextureBuffer.h
+Purpose: Structs containing SDL_Surface data and an OpenGL bufferID
 Language: C++
 Project: GAM541
 Author: Holden Profit

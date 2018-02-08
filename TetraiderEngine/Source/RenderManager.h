@@ -26,6 +26,7 @@ class GameObject;
 class ShaderProgram;
 class Shader;
 class Sprite;
+class Particle;
 enum DebugShape;
 
 class RenderManager : public Subscriber
@@ -46,6 +47,7 @@ private:
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
 	void _RenderSprite(const Sprite* pSpriteComp);
+	void _RenderParticles(const Particle* pParticleComp);
 	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const GameObject& gameObject);
 	void _SetUpCamera(const GameObject& camera);

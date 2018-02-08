@@ -88,12 +88,6 @@
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External Libraries\Lua">
-      <UniqueIdentifier>{770c556a-11ad-4d6e-8bdd-5243bd67883a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External Libraries\Lua\LuaBridge">
-      <UniqueIdentifier>{3aba700d-6ffa-450c-9c8b-1fb1473a5ffb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -240,136 +234,19 @@
     <ClCompile Include="Source\Agent.cpp">
       <Filter>Source Files\Components\Agent</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Controller.cpp">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NPCController.cpp">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClCompile>
     <ClCompile Include="Source\MemoryManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\DestroyOnHealthZero.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Controller.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NPCController.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\DealDamageOnCollision.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AOEAttack.cpp">
-      <Filter>Source Files\Attacks</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lapi.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lauxlib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lbaselib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lbitlib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lcode.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lcorolib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lctype.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ldblib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ldebug.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ldo.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ldump.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lfunc.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lgc.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\linit.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\liolib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\llex.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lmathlib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lmem.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\loadlib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lobject.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lopcodes.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\loslib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lparser.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lstate.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lstring.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lstrlib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ltable.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ltablib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\ltm.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lundump.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lutf8lib.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lvm.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\Lua\lzio.c">
-      <Filter>External Libraries\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LuaScript.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\FloorPlanGenerator.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PointLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScaleByHPStamina.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ProjectileSpawner.cpp">
+    <ClCompile Include="Source\Particle.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stamina.cpp">
@@ -575,157 +452,7 @@
     <ClInclude Include="Source\SurfaceTextureBuffer.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DealDamageOnCollision.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AOEAttack.h">
-      <Filter>Header Files\Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lapi.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lauxlib.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lcode.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lctype.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\ldebug.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\ldo.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lfunc.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lgc.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\llex.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\llimits.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lmem.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lobject.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lopcodes.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lparser.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lprefix.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lstate.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lstring.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\ltable.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\ltm.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lua.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lua.hpp">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\luaconf.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lualib.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lundump.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lvm.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\lzio.h">
-      <Filter>External Libraries\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\LuaBridge.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\RefCountedObject.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\RefCountedPtr.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\CFunctions.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\ClassInfo.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Constructor.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\dump.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\FuncTraits.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Iterator.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\LuaException.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\LuaHelpers.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\LuaRef.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Namespace.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Stack.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\TypeList.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\TypeTraits.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Userdata.h">
-      <Filter>External Libraries\Lua\LuaBridge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LuaScript.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Controller.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FloorPlanGenerator.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ProjectileSpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScaleByHPStamina.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PointLight.h">
+    <ClInclude Include="Source\Particle.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stamina.h">

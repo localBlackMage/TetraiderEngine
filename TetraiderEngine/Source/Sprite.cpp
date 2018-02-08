@@ -14,8 +14,7 @@ Sprite::Sprite(std::string textureName) :
 	m_textureName(textureName),
 	m_texture(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
-	m_shader(""),
-	m_hasAlpha(true)
+	m_shader("")
 {
 }
 
@@ -44,7 +43,6 @@ void Sprite::Serialize(const json& j)
 	m_saturationColor.z = ParseFloat(j["saturation"], "b");
 	m_saturationColor.w = ParseFloat(j["saturation"], "a");
 
-	m_hasAlpha = ParseBool(j, "hasAlpha");
 	m_textureName = ParseString(j, "Texture");
 	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
 }

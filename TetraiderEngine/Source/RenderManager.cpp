@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "Sprite.h"
+#include "Particle.h"
 
 #include "SDL_image.h"
 
@@ -48,6 +49,8 @@ RenderManager::~RenderManager()
 	SDL_GL_DeleteContext(m_context);
 	SDL_Quit();
 }
+
+#pragma region Private Methods
 
 void RenderManager::_InitWindow(std::string title)
 {
@@ -107,6 +110,7 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
+	// Optimize this
 	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
 	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
 	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
@@ -146,6 +150,10 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glDrawElements(GL_TRIANGLES, 3 * pSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
+void RenderManager::_RenderParticles(const Particle * pParticleComp)
+{
+}
+
 void RenderManager::_RenderGameObject(const GameObject& gameObject)
 {
 	// Only attempt to draw if the game object has a sprite component and transform component
@@ -160,6 +168,8 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 	// set shader attributes
 	if (gameObject.HasComponent(ComponentType::C_Sprite))
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
+	else if (gameObject.HasComponent(ComponentType::C_Particle))
+		_RenderParticles(gameObject.GetComponent<Particle>(ComponentType::C_Particle));
 }
 
 void RenderManager::_SelectShaderProgram(const GameObject & gameObject)
@@ -339,6 +349,8 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 
 #pragma endregion
 
+#pragma endregion
+
 bool RenderManager::Init()
 {
 	// GLEW: get function bindings (if possible)
@@ -363,6 +375,8 @@ void RenderManager::FrameEnd()
 {
 	SDL_GL_SwapWindow(m_pWindow);
 }
+
+#pragma region Window Methods
 
 void RenderManager::Resize(int width, int height)
 {
@@ -401,6 +415,8 @@ float RenderManager::GetAspectRatio() const
 {
 	return (float)m_width / (float)m_height;
 }
+
+#pragma endregion
 
 void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& go)
 {
