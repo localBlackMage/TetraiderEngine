@@ -246,6 +246,9 @@
     <ClCompile Include="Source\NPCController.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FloorPlanGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Math\Vector3D.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="Source\SurfaceTextureBuffer.h">
       <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FloorPlanGenerator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
