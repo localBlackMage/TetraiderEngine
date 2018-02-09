@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 // small helper enum to remember directions easier
-static enum NEIGHBOR {
+enum NEIGHBOR {
 	LEFT = 0, UP, RIGHT, DOWN
 };
 
@@ -15,15 +15,15 @@ static float _Heuristic(RoomNode& a, RoomNode& b) {
 	return sqrtf(float(x * x + y * y));
 }
 
-static ReconRetValue _ReconstructPath(std::unordered_map<short, RoomNode&>& cameFrom, RoomNode& current, RoomNode& start, ReconRetValue& reconRetValue) {
+static ReconRetValue _ReconstructPath(std::unordered_map<short, RoomNode*>& cameFrom, RoomNode& current, RoomNode& start, ReconRetValue& reconRetValue) {
 	if (current == start) {
-		reconRetValue.path->push(current);
+		reconRetValue.path->push(&current);
 		return reconRetValue;
 	}
-	RoomNode* cameFromNode = &cameFrom[current.m_id];
+	RoomNode* cameFromNode = cameFrom[current.m_id];
 	if (cameFromNode) {
 		ReconRetValue reconstructedPath = _ReconstructPath(cameFrom, *cameFromNode, start, reconRetValue);
-		reconRetValue.path->push(current);
+		reconRetValue.path->push(&current);
 	}
 	else
 		reconRetValue.node = &current;
@@ -37,33 +37,33 @@ void FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal, ReconRetValue&
 	_ResetNodeDistances();
 	start.m_distance = 0;
 	std::unordered_map<short, bool> closedSet;
-	MinHeap<RoomNode&> openSet;
-	std::unordered_map<short, RoomNode&> cameFrom;
-	std::unordered_map<short, float> gScore = { {start.m_id, 0 } };
-	openSet.push(start);
+	MinHeap<RoomNode*> openSet;
+	std::unordered_map<short, RoomNode*> cameFrom;
+	std::unordered_map<short, float> gScore = { {start.m_id, 0.f } };
+	openSet.push(&start);
 	start.m_distance = _Heuristic(start, goal);
 	while (!openSet.empty()) {
-		RoomNode& current = openSet.top();
+		RoomNode* current = openSet.top();
 		openSet.pop();
 		// Found the end
 		if (start == goal) {
 			_ReconstructPath(cameFrom, goal, start, reconRetValue);
 			return;
 		}
-		closedSet[current.m_id] = true;
+		closedSet[current->m_id] = true;
 
-		float t_gScore = gScore[current.m_id] + current.m_distance;
+		float t_gScore = gScore[current->m_id] + current->m_distance;
 		for (int idx = 0; idx < 4; ++idx) {
-			if (!current.m_Neighbors[idx])	return;
+			if (!current->m_Neighbors[idx])	return;
 
-			RoomNode& neighbor = *current.m_Neighbors[idx];
-			float neighborGScore = _Heuristic(neighbor, start);
-			if (t_gScore > neighborGScore && closedSet[neighbor.m_id]) continue;
+			RoomNode* neighbor = current->m_Neighbors[idx];
+			float neighborGScore = _Heuristic(*neighbor, start);
+			if (t_gScore > neighborGScore && closedSet[neighbor->m_id]) continue;
 			// DERIVE QUEUE for nodeInHeap
 			if (t_gScore < neighborGScore || !openSet.contains(neighbor)) {
-				cameFrom[neighbor.m_id] = current;
-				gScore[neighbor.m_id] = t_gScore;
-				neighbor.m_distance = gScore[neighbor.m_id] + _Heuristic(neighbor, goal);
+				cameFrom[neighbor->m_id] = current;
+				gScore[neighbor->m_id] = t_gScore;
+				neighbor->m_distance = gScore[neighbor->m_id] + _Heuristic(*neighbor, goal);
 				openSet.push(neighbor);
 			}
 		}
@@ -138,8 +138,8 @@ void FloorPlanGenerator::_SelectNodes()
 
 	std::vector< std::pair<short, short> > chosenCoords;
 	while (!types.empty()) {
-		std::pair<short, short> coords = std::pair<short, short>(rand() % MAX_ROWS, rand() % MAX_COLS);
-		for (short pairIdx = 0; pairIdx < chosenCoords.size(); ++pairIdx)
+		std::pair<short, short> coords = std::pair<short, short>(short(rand() % MAX_ROWS), short(rand() % MAX_COLS));
+		for (unsigned int pairIdx = 0; pairIdx < chosenCoords.size(); ++pairIdx)
 			if (chosenCoords[pairIdx] == coords)	continue;
 
 		m_roomNodes[coords.first][coords.second]->m_type = (*types.end());
@@ -159,11 +159,11 @@ void FloorPlanGenerator::_ConnectSelectedNodes()
 		ReconRetValue path;
 		_A_Star(*startNode, *goalNode, path);
 		while (!path.path->empty()) {
-			RoomNode& node = path.path->top();
+			RoomNode* node = path.path->top();
 			path.path->pop();
 
-			if (node.m_type != RoomType::GOAL && node.m_type != RoomType::SPAWN && node.m_type != RoomType::INTERESTING)
-				node.m_type = RoomType::ALIVE;
+			if (node->m_type != RoomType::GOAL && node->m_type != RoomType::SPAWN && node->m_type != RoomType::INTERESTING)
+				node->m_type = RoomType::ALIVE;
 		}
 		m_selectedNodes.pop_back();
 	}
@@ -192,7 +192,7 @@ void FloorPlanGenerator::UnsetNodeNeigbors(RoomNode& node)
 void FloorPlanGenerator::GenerateFloorPlan(int seed)
 {
 	if (seed == -1)
-		srand(time(nullptr));
+		srand(int(time(nullptr)));
 	else
 		srand(seed);
 

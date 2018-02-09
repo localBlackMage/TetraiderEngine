@@ -14,8 +14,8 @@ public:
 
 	bool contains(const T&val) const
 	{
-		std::vector<T>::iterator first = this->c.cbegin();
-		std::vector<T>::iterator last = this->c.cend();
+		auto first = this->c.cbegin();
+		auto last = this->c.cend();
 		while (first != last) {
 			if (*first == val) return true;
 			++first;
@@ -23,9 +23,6 @@ public:
 		return false;
 	}
 };
-
-
-
 
 
 const float MAX_DISTANCE = 10000000.f;
@@ -77,7 +74,7 @@ struct ReconRetValue {
 	ReconRetValue() {};
 	ReconRetValue(const ReconRetValue& rhs) : node(rhs.node), path(rhs.path) {};
 	RoomNode* node;
-	MinHeap<RoomNode&>* path;
+	MinHeap<RoomNode*>* path;
 };
 
 class FloorPlanGenerator {
