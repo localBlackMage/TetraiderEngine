@@ -3,6 +3,8 @@
 #include <time.h>
 #include <vector>
 #include <unordered_map>
+#include <iostream>
+#include <algorithm>
 
 // small helper enum to remember directions easier
 enum NEIGHBOR {
@@ -10,20 +12,20 @@ enum NEIGHBOR {
 };
 
 static float _Heuristic(RoomNode& a, RoomNode& b) {
-	short x = a.m_row - b.m_row;
-	short y = a.m_col - b.m_col;
-	return sqrtf(float(x * x + y * y));
+	short x = abs(a.m_row - b.m_row);
+	short y = abs(a.m_col - b.m_col);
+	return float(std::max(x, y));
 }
 
 static ReconRetValue _ReconstructPath(std::unordered_map<short, RoomNode*>& cameFrom, RoomNode& current, RoomNode& start, ReconRetValue& reconRetValue) {
 	if (current == start) {
-		reconRetValue.path->push(&current);
+		reconRetValue.path.push(&current);
 		return reconRetValue;
 	}
 	RoomNode* cameFromNode = cameFrom[current.m_id];
 	if (cameFromNode) {
 		ReconRetValue reconstructedPath = _ReconstructPath(cameFrom, *cameFromNode, start, reconRetValue);
-		reconRetValue.path->push(&current);
+		reconRetValue.path.push(&current);
 	}
 	else
 		reconRetValue.node = &current;
@@ -37,16 +39,24 @@ void FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal, ReconRetValue&
 	_ResetNodeDistances();
 	start.m_distance = 0;
 	std::unordered_map<short, bool> closedSet;
+
 	MinHeap<RoomNode*> openSet;
+	//RoomNode* openSet[MAX_COLS * MAX_ROWS];
+	//unsigned int lastUsed = 0;
+
 	std::unordered_map<short, RoomNode*> cameFrom;
 	std::unordered_map<short, float> gScore = { {start.m_id, 0.f } };
 	openSet.push(&start);
+	//openSet[lastUsed] = &start;
+	//++lastUsed;
+
 	start.m_distance = _Heuristic(start, goal);
 	while (!openSet.empty()) {
+		// Get the top of the openset
 		RoomNode* current = openSet.top();
 		openSet.pop();
 		// Found the end
-		if (start == goal) {
+		if (*current == goal) {
 			_ReconstructPath(cameFrom, goal, start, reconRetValue);
 			return;
 		}
@@ -54,11 +64,12 @@ void FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal, ReconRetValue&
 
 		float t_gScore = gScore[current->m_id] + current->m_distance;
 		for (int idx = 0; idx < 4; ++idx) {
-			if (!current->m_Neighbors[idx])	return;
-
 			RoomNode* neighbor = current->m_Neighbors[idx];
+			if (!neighbor)
+				continue;
+
 			float neighborGScore = _Heuristic(*neighbor, start);
-			if (t_gScore > neighborGScore && closedSet[neighbor->m_id]) continue;
+			if (t_gScore >= neighborGScore && closedSet[neighbor->m_id]) continue;
 			// DERIVE QUEUE for nodeInHeap
 			if (t_gScore < neighborGScore || !openSet.contains(neighbor)) {
 				cameFrom[neighbor->m_id] = current;
@@ -74,8 +85,8 @@ void FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal, ReconRetValue&
 
 void FloorPlanGenerator::_ResetNodeDistances()
 {
-	for (short row = 0; row < 5; ++row)
-		for (short col = 0; col < 5; ++col)
+	for (short row = 0; row < MAX_ROWS; ++row)
+		for (short col = 0; col < MAX_COLS; ++col)
 			if (m_roomNodes[row][col])
 				m_roomNodes[row][col]->m_distance = MAX_DISTANCE;
 }
@@ -87,17 +98,18 @@ void FloorPlanGenerator::_ConnectNeighbors()
 	m_roomNodes[0][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[0][1];
 	m_roomNodes[0][0]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][0];
 	//Top Right
-	m_roomNodes[0][MAX_COLS]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[0][MAX_COLS - 1];
-	m_roomNodes[0][MAX_COLS]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][MAX_COLS];
+	m_roomNodes[0][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[0][MAX_COLS_IDX - 1];
+	m_roomNodes[0][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][MAX_COLS_IDX];
 	//Bottom Left
-	m_roomNodes[MAX_ROWS][0]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS - 1][0];
-	m_roomNodes[MAX_ROWS][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[MAX_ROWS][1];
+	m_roomNodes[MAX_ROWS_IDX][0]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS_IDX - 1][0];
+	m_roomNodes[MAX_ROWS_IDX][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[MAX_ROWS_IDX][1];
 	//Bottom Right
-	m_roomNodes[MAX_ROWS][MAX_COLS]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[MAX_ROWS][MAX_COLS - 1];
-	m_roomNodes[MAX_ROWS][MAX_COLS]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS - 1][MAX_COLS];
+	m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX - 1];
+	m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS_IDX - 1][MAX_COLS_IDX];
 
-	for (short row = 1; row < MAX_ROWS - 1; ++row) {
-		for (short col = 1; col < MAX_COLS - 1; ++col) {
+	// Connect all inner nodes (avoid all edges)
+	for (short row = 1; row < MAX_ROWS_IDX; ++row) {
+		for (short col = 1; col < MAX_COLS_IDX; ++col) {
 			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[row][col - 1];
 			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][col];
 			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[row][col + 1];
@@ -105,35 +117,37 @@ void FloorPlanGenerator::_ConnectNeighbors()
 		}
 	}
 
-	for (short col = 1; col < MAX_COLS - 1; ++col) {
+	// Top and bottom edges
+	for (short col = 1; col < MAX_COLS_IDX; ++col) {
 		//Top
 		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[0][col - 1];
 		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][col];
 		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[0][col + 1];
 		//Bottom
-		m_roomNodes[MAX_ROWS][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[MAX_ROWS][col - 1];
-		m_roomNodes[MAX_ROWS][col]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS - 1][col];
-		m_roomNodes[MAX_ROWS][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[MAX_ROWS][col + 1];
+		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[MAX_ROWS_IDX][col - 1];
+		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS_IDX - 1][col];
+		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[MAX_ROWS_IDX][col + 1];
 	}
 
-	for (short row = 1; row < MAX_ROWS - 1; ++row) {
+	// Left and right edges
+	for (short row = 1; row < MAX_ROWS_IDX; ++row) {
 		//Left
 		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][0];
 		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[row][1];
 		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[row + 1][0];
 		//Right
-		m_roomNodes[row][MAX_COLS]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][MAX_COLS];
-		m_roomNodes[row][MAX_COLS]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[row][MAX_COLS - 1];
-		m_roomNodes[row][MAX_COLS]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[row + 1][MAX_COLS];
+		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][MAX_COLS_IDX];
+		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[row][MAX_COLS_IDX - 1];
+		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[row + 1][MAX_COLS_IDX];
 	}
 }
 
 void FloorPlanGenerator::_SelectNodes()
 {
 	std::vector<RoomType> types;
-	types.push_back(RoomType::GOAL);
 	types.push_back(RoomType::SPAWN);
-	short numTypes = rand() % 2;
+	types.push_back(RoomType::GOAL);
+	short numTypes = rand() % 4;
 	for (short idx = 0; idx < numTypes; ++idx) types.push_back(RoomType::INTERESTING);
 
 	std::vector< std::pair<short, short> > chosenCoords;
@@ -142,7 +156,7 @@ void FloorPlanGenerator::_SelectNodes()
 		for (unsigned int pairIdx = 0; pairIdx < chosenCoords.size(); ++pairIdx)
 			if (chosenCoords[pairIdx] == coords)	continue;
 
-		m_roomNodes[coords.first][coords.second]->m_type = (*types.end());
+		m_roomNodes[coords.first][coords.second]->m_type = types.back();
 		m_selectedNodes.push_back(m_roomNodes[coords.first][coords.second]);
 		types.pop_back();
 	}
@@ -150,29 +164,28 @@ void FloorPlanGenerator::_SelectNodes()
 
 void FloorPlanGenerator::_ConnectSelectedNodes()
 {
-	RoomNode* goalNode = (*m_selectedNodes.end());
-	m_selectedNodes.pop_back();
-	RoomNode* startNode = (*m_selectedNodes.end());
+	RoomNode* startNode = m_selectedNodes.back();
 	m_selectedNodes.pop_back();
 
 	while (!m_selectedNodes.empty()) {
-		ReconRetValue path;
-		_A_Star(*startNode, *goalNode, path);
-		while (!path.path->empty()) {
-			RoomNode* node = path.path->top();
-			path.path->pop();
+		ReconRetValue reconRetVal;
+		RoomNode* node = m_selectedNodes.back();
+		m_selectedNodes.pop_back();
+		_A_Star(*startNode, *node, reconRetVal);
+		while (!reconRetVal.path.empty()) {
+			RoomNode* node = reconRetVal.path.top();
+			reconRetVal.path.pop();
 
 			if (node->m_type != RoomType::GOAL && node->m_type != RoomType::SPAWN && node->m_type != RoomType::INTERESTING)
 				node->m_type = RoomType::ALIVE;
 		}
-		m_selectedNodes.pop_back();
 	}
 }
 
 FloorPlanGenerator::~FloorPlanGenerator()
 {
-	for (short row = 0; row < 5; ++row) {
-		for (short col = 0; col < 5; ++col) {
+	for (short row = 0; row < MAX_ROWS; ++row) {
+		for (short col = 0; col < MAX_COLS; ++col) {
 			if (m_roomNodes[row][col]) {
 				UnsetNodeNeigbors(*m_roomNodes[row][col]);
 				delete m_roomNodes[row][col];
@@ -197,10 +210,44 @@ void FloorPlanGenerator::GenerateFloorPlan(int seed)
 		srand(seed);
 
 	short id = 0;
-	for (short row = 0; row < MAX_ROWS; ++row)
-		for (short col = 0; col < MAX_COLS; ++col)
+	for (short row = 0; row < MAX_ROWS; ++row) {
+		for (short col = 0; col < MAX_COLS; ++col) {
 			m_roomNodes[row][col] = new RoomNode(RoomType::DEAD, ++id, row, col);
+			UnsetNodeNeigbors(*m_roomNodes[row][col]);
+		}
+	}
 	_ConnectNeighbors();
 	_SelectNodes();
 	_ConnectSelectedNodes();
+}
+
+void FloorPlanGenerator::PrintFloorPlan()
+{
+	for (short row = 0; row < MAX_ROWS; ++row) {
+		for (short col = 0; col < MAX_COLS; ++col) {
+			std::cout << m_roomNodes[row][col]->m_type;
+		}
+		std::cout << std::endl;
+	}
+}
+
+std::ostream& operator<<(std::ostream& out, const RoomType& rt) {
+	switch (rt) {
+	case RoomType::GOAL:
+		out << "G";
+		break;
+	case RoomType::INTERESTING:
+		out << "I";
+		break;
+	case RoomType::SPAWN:
+		out << "S";
+		break;
+	case RoomType::DEAD:
+		out << " ";
+		break;
+	case RoomType::ALIVE:
+		out << "A";
+		break;
+	}
+	return out;
 }

@@ -4,6 +4,7 @@
 #define FLOOR_PLAN_GENERATOR_H
 
 #include <queue>
+#include <string>
 
 template<class T, class Container = std::vector<T>, class Compare = std::less<typename Container::value_type> >
 class MinHeap : public std::priority_queue<T, Container, Compare>
@@ -28,6 +29,8 @@ public:
 const float MAX_DISTANCE = 10000000.f;
 const short MAX_ROWS = 5;
 const short MAX_COLS = 5;
+const short MAX_ROWS_IDX = MAX_ROWS - 1;
+const short MAX_COLS_IDX = MAX_COLS - 1;
 
 enum class RoomConnections {
 	UP,
@@ -55,6 +58,8 @@ enum class RoomType {
 	GOAL, INTERESTING, SPAWN, DEAD, ALIVE
 };
 
+std::ostream& operator<<(std::ostream& out, const RoomType& rt);
+
 struct RoomNode {
 	explicit RoomNode(RoomType type, short id, short row, short col) : 
 		m_type(type), m_id(id), m_row(row), m_col(col), m_distance(MAX_DISTANCE){}
@@ -71,10 +76,10 @@ struct RoomNode {
 };
 
 struct ReconRetValue {
-	ReconRetValue() {};
+	ReconRetValue() : node(nullptr) {};
 	ReconRetValue(const ReconRetValue& rhs) : node(rhs.node), path(rhs.path) {};
 	RoomNode* node;
-	MinHeap<RoomNode*>* path;
+	MinHeap<RoomNode*> path;
 };
 
 class FloorPlanGenerator {
@@ -94,6 +99,7 @@ public:
 	
 	void UnsetNodeNeigbors(RoomNode& node);
 	void GenerateFloorPlan(int seed = -1);
+	void PrintFloorPlan();
 };
 
 #endif
