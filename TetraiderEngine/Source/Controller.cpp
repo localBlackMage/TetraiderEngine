@@ -44,6 +44,9 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_Y))
 		TETRA_AUDIO.TogglePause();
 
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_O))
+		TETRA_AUDIO.StopSongs();
+
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_R) || (TETRA_INPUT.IsKeyPressed(XBOX_BTN_START)&& TETRA_INPUT.IsKeyPressed(XBOX_BTN_BACK))) {
 		TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
 	}

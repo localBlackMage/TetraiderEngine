@@ -4,6 +4,7 @@
 #include <math.h>
 #include "TetraiderAPI.h"
 
+
 float ChangeSemitone(float frequency, float variation)
 {
 	static float semitone_ratio = pow(2.0f, 1.0f / 12.0f);
@@ -61,9 +62,9 @@ void AudioManager::Update(float elapsed)
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
 		float nextVolume = volume + elapsed / fadeTime;
-		if (nextVolume >= 1.0f)
+		if (nextVolume >= DEFAULT_VOL)
 		{
-			ErrorCheck(m_pCurrentSongChannel->setVolume(1.0f));
+			ErrorCheck(m_pCurrentSongChannel->setVolume(DEFAULT_VOL));
 			m_fade = FADE_NONE;
 		}
 		else
@@ -75,7 +76,7 @@ void AudioManager::Update(float elapsed)
 	{
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
-		float nextVolume = volume + elapsed / fadeTime;
+		float nextVolume = volume - elapsed / fadeTime;
 		if (nextVolume <= 0.0f)
 		{
 			ErrorCheck(m_pCurrentSongChannel->stop());
@@ -90,13 +91,13 @@ void AudioManager::Update(float elapsed)
 	}
 	else if (m_pCurrentSongChannel ==0&&!m_nextSongPath.empty())
 	{
-		PlaySong(m_nextSongPath);
+		PlaySong(m_nextSongPath, DEFAULT_VOL);
 		m_nextSongPath.clear();
 	}
 	ErrorCheck(m_pSystem->update());
 }
 
-void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol, float maxVol, float minPitch, float maxPitch*/)
+void AudioManager::PlaySFX(const std::string & path, float volume,bool loop/*float minVol, float maxVol, float minPitch, float maxPitch*/)
 {
 	// Try to find sound effect and return if not found 
 	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
@@ -123,6 +124,9 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 		ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
 		//save audiopath and its corresponding channel
 		m_Channel[SFX].insert(std::make_pair(path, channel));
+		
+		if(loop)
+		ErrorCheck(channel->setMode(FMOD_DEFAULT|FMOD_LOOP_NORMAL));
 		//set to the channel grp it belongs
 		ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
 		ErrorCheck(channel->setVolume(volume));
@@ -144,7 +148,34 @@ void AudioManager::PlaySFX(const std::string & path, float volume/*float minVol,
 	channel->setFrequency(ChangeSemitone(freq,pitch));*/
 }
 
-void AudioManager::PlaySong(const std::string & path)
+void AudioManager::PlaySFX(const std::string & path, float volume)
+{
+	// Try to find sound effect and return if not found 
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
+	if (!sound)
+		return;
+
+	// TODO if not found load sound
+
+	//vol and pitch calculation if needed
+	/*float vol = RandomBetween(minVol,maxVol);
+	float pitch= RandomBetween(minPitch, maxPitch);*/
+
+	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
+	//play sound with initial values
+	
+	FMOD::Channel* channel = NULL;
+	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
+	//save audiopath and its corresponding channel
+	m_Channel[SFX].insert(std::make_pair(path, channel));
+	//set to the channel grp it belongs
+	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
+	ErrorCheck(channel->setVolume(volume));
+	ErrorCheck(channel->setPaused(false));
+
+}
+
+void AudioManager::PlaySong(const std::string & path,float volume)
 {
 	//ignore if song already playing
 	if (m_currentSongPath == path)
@@ -166,17 +197,27 @@ void AudioManager::PlaySong(const std::string & path)
 	m_currentSongPath = path;
 	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
 	ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
-	ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
+	ErrorCheck(m_pCurrentSongChannel->setVolume(volume));
 	ErrorCheck(m_pCurrentSongChannel->setPaused(false));
-	m_fade = FADE_IN;
-
-	SetSongsVolume(0.4f); // DUMMY CODE
+	//m_fade = FADE_IN;
 }
 
-void AudioManager::StopSFXs()
+void AudioManager::StopAllSFXs()
 {
 	ErrorCheck(m_pGroups[SFX]->stop());
 }
+
+void AudioManager::StopSFX(std::string & path)
+{
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
+	if (!sound)
+		return;
+
+	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
+
+	chMap->second->stop();
+}
+
 
 void AudioManager::StopSongs()
 {

@@ -10,7 +10,7 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
-
+#define DEFAULT_VOL 0.5
 
 
 // NOTES
@@ -30,9 +30,11 @@ public:
 	void operator=(const AudioManager &) = delete;
 
 	void Update(float elapsed);
-	void PlaySFX(const std::string& path, float volume/*float minVol, float maxVol, float minPitch, float maxPitch*/);
-	void PlaySong(const std::string& path);
-	void StopSFXs();
+	void PlaySFX(const std::string& path, float volume,bool loop/*float minVol, float maxVol, float minPitch, float maxPitch*/);
+	void PlaySFX(const std::string& path, float volume);
+	void PlaySong(const std::string& path,float volume);
+	void StopAllSFXs();
+	void StopSFX(std::string& path);
 	void StopSongs();
 	void SetMasterVolume(float volume);
 	void SetSFXsVolume(float volume);

@@ -88,6 +88,9 @@
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\imGUI">
+      <UniqueIdentifier>{b64ab3a6-a238-4d65-b401-74e98f157b11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">

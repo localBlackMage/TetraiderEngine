@@ -1,5 +1,7 @@
 #include "InputManager.h"
 #include "TetraiderAPI.h"
+//#include "im_src\imgui_impl_sdl_gl3.h"
+//#include "im_src\imgui.h"
 #include <SDL.h>
 #include <string.h>
 #include <iostream>
@@ -38,7 +40,9 @@ InputManager::~InputManager() {
 
 void InputManager::Update() {
 	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
+	while (SDL_PollEvent(&event)) 
+	{
+		//ImGui_ImplSdlGL3_ProcessEvent(&event);
 		switch (event.type) {
 			case SDL_QUIT:
 				TETRA_EVENTS.BroadcastEvent(&Event(EventType::WINDOW_CLOSED));

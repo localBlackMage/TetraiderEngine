@@ -28,9 +28,9 @@ bool Audio::IsPlaying()
 void Audio::Play()
 {
 	if(m_Ismute)
-		TETRA_AUDIO.PlaySFX(m_audioClip, 0); // TODO: Add loop to function parameters
+		TETRA_AUDIO.PlaySFX(m_audioClip, 0, m_isLoop); // TODO: Add loop to function parameters
 	else
-		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume); // TODO: Add loop to function parameters
+		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop); // TODO: Add loop to function parameters
 }
 
 void Audio::LateInitialize()
@@ -38,14 +38,18 @@ void Audio::LateInitialize()
 	if (m_isPlayOnAwake)
 	{
 		if(m_isBGM)
-			TETRA_AUDIO.PlaySong(m_audioClip); //TODO: Allow volume control here
+			TETRA_AUDIO.PlaySong(m_audioClip,m_volume); 
 		else
-			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume); // TODO: Add loop to function parameters
+			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop); // TODO: Add loop to function parameters
 	}
 }
 
 void Audio::Stop() {
 	// Stops audio from playing completely (resets)
+	if (m_isBGM)
+		TETRA_AUDIO.StopSongs();
+	else
+		TETRA_AUDIO.StopSFX(m_audioClip);
 }
 
 void Audio::Pause() {

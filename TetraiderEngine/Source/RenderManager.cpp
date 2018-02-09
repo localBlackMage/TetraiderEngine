@@ -12,6 +12,9 @@
 
 #include "SDL_image.h"
 
+//#include "im_src\imgui.h"
+//#include "im_src\imgui_impl_sdl_gl3.h"
+
 #include <glew.h>
 #include <GL/gl.h>
 #include <iostream>
@@ -76,9 +79,18 @@ void RenderManager::_InitWindow(std::string title)
 		std::cout << "SDL Image failed to initialize." << std::endl;
 	}
 
-
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 	glViewport(0, 0, m_width, m_height);
+
+	// Setup ImGui binding
+	//ImGui_ImplSdlGL3_Init(m_pWindow);
+
+	// Setup style
+	//ImGui::StyleColorsDark();
+
+	/*bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);*/
 }
 
 std::string RenderManager::_LoadTextFile(std::string fname)
