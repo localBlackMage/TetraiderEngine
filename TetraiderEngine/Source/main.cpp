@@ -5,9 +5,9 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nShowCmd)
 {
-	FloorPlanGenerator fpg;
-	fpg.GenerateFloorPlan();
-	fpg.PrintFloorPlan();
+	//FloorPlanGenerator fpg;
+	//fpg.GenerateFloorPlan();
+	//fpg.PrintFloorPlan();
 
 	Tetraider::Initialize("../TetraiderEngine/Assets/Metadata/Config.json");
 	Tetraider::StartGameLoop();
