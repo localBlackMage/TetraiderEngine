@@ -13,12 +13,27 @@ public:
 	typedef typename
 		std::priority_queue<T, Container, Compare>::container_type::const_iterator const_iterator;
 
-	bool contains(const T&val) const
+	bool contains(const T& val) const
 	{
 		auto first = this->c.cbegin();
 		auto last = this->c.cend();
 		while (first != last) {
 			if (*first == val) return true;
+			++first;
+		}
+		return false;
+	}
+
+	// Returns true if updated successfully, false if the value wasn't in the heap
+	bool update(T& val)
+	{
+		auto first = this->c.begin();
+		auto last = this->c.end();
+		while (first != last) {
+			if (*first == val) {
+				*first = val;
+				return true;
+			}
 			++first;
 		}
 		return false;
@@ -59,24 +74,17 @@ std::ostream& operator<<(std::ostream& out, const RoomType& rt);
 
 struct RoomNode {
 	explicit RoomNode(RoomType type, short id, short row, short col) : 
-		m_type(type), m_id(id), m_row(row), m_col(col), m_distance(MAX_DISTANCE){}
+		m_type(type), m_id(id), m_row(row), m_col(col), m_cost(MAX_DISTANCE), m_parent(nullptr){}
 	short m_id, m_row, m_col;
 	RoomConnections m_ConnectionType;
 	RoomNode* m_Neighbors[4]; // 0 = left, 1 = up, 2 = right, 3 = down
 	RoomType m_type;
-	float m_distance;
+	float m_cost;
+	RoomNode* m_parent;
 
 	bool operator==(const RoomNode& rhs) { return m_id == rhs.m_id; }
-	bool operator() (const RoomNode& lhs, const RoomNode& rhs) {
-		return lhs.m_distance < rhs.m_distance;
-	}
-};
-
-struct ReconRetValue {
-	ReconRetValue() : node(nullptr) {};
-	ReconRetValue(const ReconRetValue& rhs) : node(rhs.node), path(rhs.path) {};
-	RoomNode* node;
-	MinHeap<RoomNode*> path;
+	bool operator!=(const RoomNode& rhs) { return m_id != rhs.m_id; }
+	bool operator() (const RoomNode& lhs, const RoomNode& rhs) { return lhs.m_cost < rhs.m_cost; }
 };
 
 class FloorPlanGenerator {
@@ -84,9 +92,10 @@ protected:
 	RoomNode* m_roomNodes[MAX_ROWS][MAX_COLS];
 	std::vector<RoomNode*> m_selectedNodes;
 
-	void _A_Star(RoomNode& start, RoomNode& goal, ReconRetValue& reconRetValue);
+	bool _A_Star(RoomNode& start, RoomNode& goal);
 
 	void _ResetNodeDistances();
+	void _ResetNodeParents();
 	void _ConnectNeighbors();
 	void _SelectNodes();
 	void _ConnectSelectedNodes();

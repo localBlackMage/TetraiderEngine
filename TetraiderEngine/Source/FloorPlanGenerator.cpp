@@ -11,76 +11,112 @@ enum NEIGHBOR {
 	N_LEFT = 0, N_UP, N_RIGHT, N_DOWN
 };
 
+const float WEIGHT = 1.5f;
+
+// Heuristic - this can be changed as desired, just can't exceed real distance
 static float _Heuristic(RoomNode& a, RoomNode& b) {
 	short x = abs(a.m_row - b.m_row);
 	short y = abs(a.m_col - b.m_col);
-	return float(std::max(x, y));
+	return float(x + y) * WEIGHT;
 }
 
-static ReconRetValue _ReconstructPath(std::unordered_map<short, RoomNode*>& cameFrom, RoomNode& current, RoomNode& start, ReconRetValue& reconRetValue) {
-	if (current == start) {
-		reconRetValue.path.push(&current);
-		return reconRetValue;
-	}
-	RoomNode* cameFromNode = cameFrom[current.m_id];
-	if (cameFromNode) {
-		ReconRetValue reconstructedPath = _ReconstructPath(cameFrom, *cameFromNode, start, reconRetValue);
-		reconRetValue.path.push(&current);
-	}
-	else
-		reconRetValue.node = &current;
+// Actual distance, no diagonals
+static float _Distance(RoomNode& a, RoomNode& b) {
+	short x = abs(a.m_row - b.m_row);
+	short y = abs(a.m_col - b.m_col);
+	return float(x + y);
+}
 
-	return reconRetValue;
-};
-
-void FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal, ReconRetValue& reconRetValue)
+bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 {
-	if (start == goal)	return;
+	if (start == goal)	return true;
 	_ResetNodeDistances();
-	start.m_distance = 0;
-	std::unordered_map<short, bool> closedSet;
-
+	_ResetNodeParents();
+	std::unordered_map<short, bool> closedSet; // node id -> true if this node is on the closedSet
 	MinHeap<RoomNode*> openSet;
-	//RoomNode* openSet[MAX_COLS * MAX_ROWS];
-	//unsigned int lastUsed = 0;
-
-	std::unordered_map<short, RoomNode*> cameFrom;
-	std::unordered_map<short, float> gScore = { {start.m_id, 0.f } };
 	openSet.push(&start);
-	//openSet[lastUsed] = &start;
-	//++lastUsed;
 
-	start.m_distance = _Heuristic(start, goal);
+	start.m_cost = _Heuristic(start, goal);
+
 	while (!openSet.empty()) {
-		// Get the top of the openset
-		RoomNode* current = openSet.top();
+		RoomNode* current = openSet.top(); // parent node for all neighbors
 		openSet.pop();
-		// Found the end
-		if (*current == goal) {
-			_ReconstructPath(cameFrom, goal, start, reconRetValue);
-			return;
-		}
-		closedSet[current->m_id] = true;
 
-		float t_gScore = gScore[current->m_id] + current->m_distance;
-		for (int idx = 0; idx < 4; ++idx) {
-			RoomNode* neighbor = current->m_Neighbors[idx];
-			if (!neighbor)
-				continue;
+		if (*current == goal) 
+			return true;	// Found the goal
 
-			float neighborGScore = _Heuristic(*neighbor, start);
-			if (t_gScore >= neighborGScore && closedSet[neighbor->m_id]) continue;
-			// DERIVE QUEUE for nodeInHeap
-			if (t_gScore < neighborGScore || !openSet.contains(neighbor)) {
-				cameFrom[neighbor->m_id] = current;
-				gScore[neighbor->m_id] = t_gScore;
-				neighbor->m_distance = gScore[neighbor->m_id] + _Heuristic(*neighbor, goal);
+		//Cycle through neighbors
+		for (int i = 0; i < 4; ++i) {
+			RoomNode* neighbor = current->m_Neighbors[i];	// short cut
+			if (!neighbor) 
+				continue;	// current node doesn't have a neighbor here, continue on
+			
+			float cost = _Distance(*neighbor, start) + _Heuristic(*neighbor, goal);
+			// neighbor not on open or closed sets, push to open set
+			if (!closedSet[neighbor->m_id] && openSet.contains(neighbor))
 				openSet.push(neighbor);
+			// If neighbor is on neither set and the new cost is cheaper than the current node's cost
+			else if (cost < current->m_cost && cost < neighbor->m_cost) {
+				neighbor->m_cost = cost;
+				neighbor->m_parent = current;
+				// Remove node from closedSet
+				closedSet[current->m_id] = false;
+				
+				// If the openSet contains the neighbor, simply update it, else push it to
+				if (!openSet.update(neighbor))
+					openSet.push(neighbor);
 			}
 		}
+
+		closedSet[current->m_id] = true;
 	}
+
+
+	//while (!openSet.empty()) {		
+	//	// Get the top of the openset
+	//	RoomNode* current = openSet.top();
+	//	openSet.pop();
+	//	//int lowest = 0;
+	//	//for (int i = 0; i < lastUsed; ++i)
+	//	//	if (openSet[i]->m_distance < openSet[lowest]->m_distance)	
+	//	//		lowest = i;
+	//	//RoomNode* current = openSet[lowest]; // Fill this out
+	//	//openSet[lowest] = openSet[lastUsed--];
+	//	// Found the end
+	//	if (*current == goal) {
+	//		_ReconstructPath(cameFrom, goal, start, reconRetValue);
+	//		return;
+	//	}
+	//	closedSet[current->m_id] = true;
+	//	// f(current) = g(current) + h(current)
+	//	float currentNodeScore = gScore[current->m_id] + current->m_cost;
+	//	for (int idx = 0; idx < 4; ++idx) {
+	//		RoomNode* neighbor = current->m_Neighbors[idx];
+	//		if (!neighbor)
+	//			continue;
+	//		// f(x) = g(x) + (h(x) * weight)
+	//		// g(x) = distance back to start
+	//		// h(x) = guess at distance to goal
+	//		float neighborGScore = _Distance(*neighbor, start);
+	//		float neighborScore = neighborGScore + (_Heuristic(*neighbor, goal) * 1.5f);
+	//		// If the neighbor's score is higher than the current node's score or it's on the closed set, ignore it
+	//		if (currentNodeScore <= neighborScore && closedSet[neighbor->m_id]) 
+	//			continue;
+	//		
+	//		// If the tentative G Score is less than the neighbor's G Score and the neighbor isn't in the open set
+	//		// Add the neighbor to the open set
+	//		if (currentNodeScore > neighborScore || !openSet.contains(neighbor)) {
+	//			neighbor->m_parent = current;
+	//			//cameFrom[neighbor->m_id] = current;
+	//			//gScore[neighbor->m_id] = tentative_score;
+	//			neighbor->m_cost = _Distance(*neighbor, goal);
+	//			//neighbor->m_distance = gScore[neighbor->m_id] + _Heuristic(*neighbor, goal);
+	//			openSet.push(neighbor);
+	//		}
+	//	}
+	//}
 	// Didn't find path
-	return;
+	return false;
 }
 
 void FloorPlanGenerator::_ResetNodeDistances()
@@ -88,7 +124,15 @@ void FloorPlanGenerator::_ResetNodeDistances()
 	for (short row = 0; row < MAX_ROWS; ++row)
 		for (short col = 0; col < MAX_COLS; ++col)
 			if (m_roomNodes[row][col])
-				m_roomNodes[row][col]->m_distance = MAX_DISTANCE;
+				m_roomNodes[row][col]->m_cost = MAX_DISTANCE;
+}
+
+void FloorPlanGenerator::_ResetNodeParents()
+{
+	for (short row = 0; row < MAX_ROWS; ++row)
+		for (short col = 0; col < MAX_COLS; ++col)
+			if (m_roomNodes[row][col])
+				m_roomNodes[row][col]->m_parent = nullptr;
 }
 
 void FloorPlanGenerator::_ConnectNeighbors()
@@ -168,16 +212,16 @@ void FloorPlanGenerator::_ConnectSelectedNodes()
 	m_selectedNodes.pop_back();
 
 	while (!m_selectedNodes.empty()) {
-		ReconRetValue reconRetVal;
 		RoomNode* node = m_selectedNodes.back();
 		m_selectedNodes.pop_back();
-		_A_Star(*startNode, *node, reconRetVal);
-		while (!reconRetVal.path.empty()) {
-			RoomNode* node = reconRetVal.path.top();
-			reconRetVal.path.pop();
 
-			if (node->m_type != RoomType::GOAL && node->m_type != RoomType::SPAWN && node->m_type != RoomType::INTERESTING)
-				node->m_type = RoomType::ALIVE;
+		if (_A_Star(*startNode, *node)) {
+			RoomNode* curPathNode = node;
+			while (*curPathNode != *startNode) {
+				if (curPathNode->m_type != RoomType::GOAL && curPathNode->m_type != RoomType::SPAWN && curPathNode->m_type != RoomType::INTERESTING)
+					curPathNode->m_type = RoomType::ALIVE;
+				curPathNode = curPathNode->m_parent;
+			}
 		}
 	}
 }
