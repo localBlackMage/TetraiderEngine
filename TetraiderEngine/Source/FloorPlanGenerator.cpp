@@ -8,7 +8,7 @@
 
 // small helper enum to remember directions easier
 enum NEIGHBOR {
-	LEFT = 0, UP, RIGHT, DOWN
+	N_LEFT = 0, N_UP, N_RIGHT, N_DOWN
 };
 
 static float _Heuristic(RoomNode& a, RoomNode& b) {
@@ -95,50 +95,50 @@ void FloorPlanGenerator::_ConnectNeighbors()
 {
 
 	//Top Left
-	m_roomNodes[0][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[0][1];
-	m_roomNodes[0][0]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][0];
+	m_roomNodes[0][0]->m_Neighbors[NEIGHBOR::N_RIGHT] = m_roomNodes[0][1];
+	m_roomNodes[0][0]->m_Neighbors[NEIGHBOR::N_DOWN] = m_roomNodes[1][0];
 	//Top Right
-	m_roomNodes[0][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[0][MAX_COLS_IDX - 1];
-	m_roomNodes[0][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][MAX_COLS_IDX];
+	m_roomNodes[0][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_LEFT] = m_roomNodes[0][MAX_COLS_IDX - 1];
+	m_roomNodes[0][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_DOWN] = m_roomNodes[1][MAX_COLS_IDX];
 	//Bottom Left
-	m_roomNodes[MAX_ROWS_IDX][0]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS_IDX - 1][0];
-	m_roomNodes[MAX_ROWS_IDX][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[MAX_ROWS_IDX][1];
+	m_roomNodes[MAX_ROWS_IDX][0]->m_Neighbors[NEIGHBOR::N_UP] = m_roomNodes[MAX_ROWS_IDX - 1][0];
+	m_roomNodes[MAX_ROWS_IDX][0]->m_Neighbors[NEIGHBOR::N_RIGHT] = m_roomNodes[MAX_ROWS_IDX][1];
 	//Bottom Right
-	m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX - 1];
-	m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS_IDX - 1][MAX_COLS_IDX];
+	m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_LEFT] = m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX - 1];
+	m_roomNodes[MAX_ROWS_IDX][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_UP] = m_roomNodes[MAX_ROWS_IDX - 1][MAX_COLS_IDX];
 
 	// Connect all inner nodes (avoid all edges)
 	for (short row = 1; row < MAX_ROWS_IDX; ++row) {
 		for (short col = 1; col < MAX_COLS_IDX; ++col) {
-			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[row][col - 1];
-			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][col];
-			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[row][col + 1];
-			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[row + 1][col];
+			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::N_LEFT] = m_roomNodes[row][col - 1];
+			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::N_UP] = m_roomNodes[row - 1][col];
+			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::N_RIGHT] = m_roomNodes[row][col + 1];
+			m_roomNodes[row][col]->m_Neighbors[NEIGHBOR::N_DOWN] = m_roomNodes[row + 1][col];
 		}
 	}
 
 	// Top and bottom edges
 	for (short col = 1; col < MAX_COLS_IDX; ++col) {
 		//Top
-		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[0][col - 1];
-		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[1][col];
-		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[0][col + 1];
+		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::N_LEFT] = m_roomNodes[0][col - 1];
+		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::N_DOWN] = m_roomNodes[1][col];
+		m_roomNodes[0][col]->m_Neighbors[NEIGHBOR::N_RIGHT] = m_roomNodes[0][col + 1];
 		//Bottom
-		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[MAX_ROWS_IDX][col - 1];
-		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[MAX_ROWS_IDX - 1][col];
-		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[MAX_ROWS_IDX][col + 1];
+		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::N_LEFT] = m_roomNodes[MAX_ROWS_IDX][col - 1];
+		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::N_UP] = m_roomNodes[MAX_ROWS_IDX - 1][col];
+		m_roomNodes[MAX_ROWS_IDX][col]->m_Neighbors[NEIGHBOR::N_RIGHT] = m_roomNodes[MAX_ROWS_IDX][col + 1];
 	}
 
 	// Left and right edges
 	for (short row = 1; row < MAX_ROWS_IDX; ++row) {
 		//Left
-		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][0];
-		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::RIGHT] = m_roomNodes[row][1];
-		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[row + 1][0];
+		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::N_UP] = m_roomNodes[row - 1][0];
+		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::N_RIGHT] = m_roomNodes[row][1];
+		m_roomNodes[row][0]->m_Neighbors[NEIGHBOR::N_DOWN] = m_roomNodes[row + 1][0];
 		//Right
-		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::UP] = m_roomNodes[row - 1][MAX_COLS_IDX];
-		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::LEFT] = m_roomNodes[row][MAX_COLS_IDX - 1];
-		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::DOWN] = m_roomNodes[row + 1][MAX_COLS_IDX];
+		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_UP] = m_roomNodes[row - 1][MAX_COLS_IDX];
+		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_LEFT] = m_roomNodes[row][MAX_COLS_IDX - 1];
+		m_roomNodes[row][MAX_COLS_IDX]->m_Neighbors[NEIGHBOR::N_DOWN] = m_roomNodes[row + 1][MAX_COLS_IDX];
 	}
 }
 
@@ -147,7 +147,7 @@ void FloorPlanGenerator::_SelectNodes()
 	std::vector<RoomType> types;
 	types.push_back(RoomType::SPAWN);
 	types.push_back(RoomType::GOAL);
-	short numTypes = rand() % 4;
+	short numTypes = rand() % 3 + 2;
 	for (short idx = 0; idx < numTypes; ++idx) types.push_back(RoomType::INTERESTING);
 
 	std::vector< std::pair<short, short> > chosenCoords;
@@ -178,6 +178,21 @@ void FloorPlanGenerator::_ConnectSelectedNodes()
 
 			if (node->m_type != RoomType::GOAL && node->m_type != RoomType::SPAWN && node->m_type != RoomType::INTERESTING)
 				node->m_type = RoomType::ALIVE;
+		}
+	}
+}
+
+void FloorPlanGenerator::_SetRoomConnectionTypes()
+{
+	for (short row = 0; row < MAX_ROWS; ++row) {
+		for (short col = 0; col < MAX_COLS; ++col) {
+			RoomNode* node = m_roomNodes[row][col];
+			int connection = node->m_Neighbors[NEIGHBOR::N_LEFT] ? 1 : 0 + 
+				node->m_Neighbors[NEIGHBOR::N_UP] ? 2 : 0 +
+				node->m_Neighbors[NEIGHBOR::N_RIGHT] ? 4 : 0 +
+				node->m_Neighbors[NEIGHBOR::N_DOWN] ? 8 : 0;
+
+			node->m_ConnectionType = static_cast<RoomConnections>(connection);
 		}
 	}
 }
@@ -219,6 +234,7 @@ void FloorPlanGenerator::GenerateFloorPlan(int seed)
 	_ConnectNeighbors();
 	_SelectNodes();
 	_ConnectSelectedNodes();
+	_SetRoomConnectionTypes();
 }
 
 void FloorPlanGenerator::PrintFloorPlan()

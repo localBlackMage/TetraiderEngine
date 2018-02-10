@@ -32,26 +32,23 @@ const short MAX_COLS = 5;
 const short MAX_ROWS_IDX = MAX_ROWS - 1;
 const short MAX_COLS_IDX = MAX_COLS - 1;
 
-enum class RoomConnections {
-	UP,
-	DOWN, 
-	LEFT, 
-	RIGHT,
+enum RoomConnections {
+	LEFT = 1,
+	UP = 2,
+	RIGHT = 4,
+	DOWN = 8,
 
-	UP_DOWN_LEFT, 
-	UP_DOWN_RIGHT, 
-	UP_LEFT_RIGHT, 
-	DOWN_LEFT_RIGHT,
-
-	UP_DOWN, 
-	UP_LEFT, 
-	UP_RIGHT,
-
-	DOWN_LEFT, 
-	DOWN_RIGHT,
-
-	LEFT_RIGHT,
-	ALL
+	LEFT_UP = 3,
+	LEFT_RIGHT = 5,
+	UP_RIGHT = 6,
+	LEFT_UP_RIGHT = 7,
+	LEFT_DOWN = 9,
+	UP_DOWN = 10,
+	LEFT_UP_DOWN = 11,
+	RIGHT_DOWN = 12,
+	LEFT_RIGHT_DOWN = 13,
+	UP_RIGHT_DOWN = 14,
+	ALL = 15
 };
 
 enum class RoomType {
@@ -93,6 +90,7 @@ protected:
 	void _ConnectNeighbors();
 	void _SelectNodes();
 	void _ConnectSelectedNodes();
+	void _SetRoomConnectionTypes();
 public:
 	FloorPlanGenerator() {}
 	~FloorPlanGenerator();
