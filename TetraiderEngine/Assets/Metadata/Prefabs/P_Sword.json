@@ -11,11 +11,11 @@
       },
       "scale": {
         "x": 100,
-        "y": 125,
+        "y": 100,
         "z": 0
       },
       "pivotOffset": {
-        "x": 0.9,
+        "x": 0.65,
         "y": 0
       },
       "rotation": {
@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_SlashTest.png",
+      "Texture": "T_Sword.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -48,27 +48,6 @@
         "b": 0,
         "a": 0
       }
-    },
-	{
-		"Component": "Animation",
-		"defaultAnimation": 0,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "Slash",
-			"frames": 5,
-			"animationSpeed": 32,
-			"isLooping": false,
-			"isPlayOnAwake": false
-		}]
-	},
-	{
-		"Component": "Audio",
-		"audioClip": "swordSlash.mp3",
-		"volume": 0.8,
-		"isMute": false,
-		"isLoop": false,
-		"isPlayOnAwake": false,
-		"isBGM": false
-	}
+    }
   ]
 }

@@ -174,8 +174,7 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 	m_GameObjectsQueue.clear();
 }
 
-GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	//auto start = std::chrono::system_clock::now();
+GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
 	GameObject *pGameObject = new GameObject(++m_currentId);
@@ -194,10 +193,6 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	pGameObject->LateInitialize();
 
 	AddGameObjectToQueue(pGameObject);
-
-	/*auto end = std::chrono::system_clock::now();
-	std::chrono::duration<double> elapsed_seconds = end - start;
-	cout << "Object creation time:	" << elapsed_seconds.count() << endl;*/
 	return pGameObject;
 }
 

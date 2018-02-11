@@ -16,6 +16,7 @@ private:
 	Vector3D m_pivotOffset;
 	Matrix4x4 m_transform;
 	Vector3D m_lookAt;
+	Transform* m_parent;
 	float m_angleX, m_angleY, m_angleZ;
 	bool m_is2d;
 
@@ -68,6 +69,7 @@ public:
 	float GetScaleZ() const;
 	void SetScaleZ(float scaleZ);
 	void ScaleZby(float amount);
+	void SetParent(Transform* pParent) { m_parent = pParent; }
 
 	void SetScaleUniform(float amount);
 	void SetScale(float scaleX, float scaleY);

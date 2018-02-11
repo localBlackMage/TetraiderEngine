@@ -13,30 +13,14 @@ MeleeAttack::MeleeAttack(float coolDown, int baseDamage, AttackType type, float 
 	Attack(coolDown, baseDamage, type),
 	m_radius(radius),
 	m_angle(angle),
-	m_triggerAttackIn(triggerAttackIn) {
-	// Dummy code
-	m_pSlashEffect = TETRA_GAME_OBJECTS.CreateGameObject("P_SlashTest");
-	//-----------
-}
+	m_triggerAttackIn(triggerAttackIn) {}
 
-MeleeAttack::~MeleeAttack() {
-	m_pSlashEffect->Destroy();
-}
+MeleeAttack::~MeleeAttack() {}
 
 void MeleeAttack::Update(float dt) {
 	Attack::Update(dt);
 
 	if (m_isAttacking) Run();
-
-	// Dummy code
-	Transform* pOwnerTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
-	Controller* pOwnerController = m_pOwner->pGO->GetComponent<Controller>(ComponentType::C_Controller);
-	Transform* pSlashEffectTransform = m_pSlashEffect->GetComponent<Transform>(ComponentType::C_Transform);
-	if (pOwnerTransform && pOwnerController && pSlashEffectTransform) {
-		pSlashEffectTransform->SetPosition(pOwnerTransform->GetPosition() + pOwnerController->GetLookDirection() * 75);
-		pSlashEffectTransform->SetAngleZ(atan2f(pOwnerController->GetLookDirection().y, pOwnerController->GetLookDirection().x) * 180 / PI);
-	}
-	//------------
 }
 
 // Assumes direction is normalized
@@ -45,15 +29,7 @@ bool MeleeAttack::Use(const Vector3D& direction) {
 
 	m_dirToAttackIn = direction;
 	Run();
-	// Dummy code
-	Animation* pAnimation = m_pSlashEffect->GetComponent<Animation>(ComponentType::C_Animation);
-	if(pAnimation)
-		pAnimation->Play(0);
-
-	Audio* pAudio = m_pSlashEffect->GetComponent<Audio>(ComponentType::C_Audio);
-	if (pAudio)
-		pAudio->Play();
-	//---------------
+	m_pOwner->PlayEffect();
 	return true;
 }
 

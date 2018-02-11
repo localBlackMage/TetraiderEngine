@@ -51,6 +51,9 @@ public:
 	void Div(const float divisor);
 	void Print() const;
 
+	float AngleRadians() const;
+	float AngleDegrees() const;
+
 	void Zero();
 	void Negate();
 	float SquareLength() const;

@@ -71,7 +71,7 @@ public:
 	// architecture should be implemented
 	GameObject* GetCamera(int camIndex) const { return m_pCameras[camIndex]; }
 
-	GameObject* CreateGameObject(std::string name);
+	GameObject* CreateGameObject(const std::string& name);
 	GameObjectTag GameObjectManager::FindTagWithString(std::string tag);
 	GameObject* FindObjectWithTag(GameObjectTag tag);
 	RENDER_LAYER GetLayerFromString(std::string layerName);

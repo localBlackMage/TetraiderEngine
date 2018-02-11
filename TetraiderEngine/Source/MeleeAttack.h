@@ -20,9 +20,6 @@ private:
 	float m_angle;
 	float m_triggerAttackIn;
 	Vector3D m_dirToAttackIn;
-
-	// Dummy code
-	GameObject* m_pSlashEffect;
 };
 
 #endif 

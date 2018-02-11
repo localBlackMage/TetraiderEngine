@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "TetraiderAPI.h"
 #include "Animation.h"
+#include "Camera.h"
 #include <iostream>
 
 Agent::Agent(ComponentType _type) : 
@@ -12,7 +13,8 @@ Agent::Agent(ComponentType _type) :
 	m_acceleration(0.0f), 
 	m_deceleration(0.0f), 
 	m_lookDirection(Vector3D(1, 0, 0)),
-	m_knockBackSpeed(0)
+	m_knockBackSpeed(0),
+	m_faceDirection(FaceDirection::Right)
 {};
 
 void Agent::Update(float dt) {
@@ -26,6 +28,18 @@ void Agent::Update(float dt) {
 		else {
 			m_pAnimation->Play(0);
 		}
+	}
+
+	float angle = m_lookDirection.AngleDegrees();
+	if (m_pTransform->GetScaleX() < 0) {
+		if (angle > -90 && angle < 90) {
+			pGO->HandleEvent(&Event(EVENT_FlipScaleX));
+			m_faceDirection = FaceDirection::Right;
+		}
+	}
+	else if (angle < -90 || angle > 90) {
+		pGO->HandleEvent(&Event(EVENT_FlipScaleX));
+		m_faceDirection = FaceDirection::Left;
 	}
 }
 
@@ -93,4 +107,15 @@ void Agent::LateInitialize() {
 			return;
 		}
 	}
+}
+
+Vector3D Agent::GetDirectionToMouse() {
+	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
+	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
+	Vector3D dirToMousePos = mousePos - screenSpace;
+	dirToMousePos.y *= -1;
+	dirToMousePos.Normalize();
+	return dirToMousePos;
 }

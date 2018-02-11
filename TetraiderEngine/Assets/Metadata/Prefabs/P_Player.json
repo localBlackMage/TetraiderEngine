@@ -115,7 +115,7 @@
 				"type": "Melee",
 				"coolDown": 0.4,
 				"baseDamage": 1,
-				"radius": 160,
+				"radius": 180,
 				"angle": 90,
 				"triggerAttackIn": 0.05
 			},
@@ -128,7 +128,15 @@
 				"lifeTime": 1.5,
 				"projectilePrefab": "P_testProjectile"
 			}
-		]
+		],
+		"weaponPrefab": "P_Sword",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 70,
+		"effectPrefab": "P_SlashTest"
 	}
   ]
 }

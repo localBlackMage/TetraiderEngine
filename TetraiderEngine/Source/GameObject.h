@@ -23,6 +23,7 @@ public:
 	bool m_isActive;
 	bool m_isRender;
 	bool m_isCollisionDisabled;
+	bool m_isStatic;
 	bool m_isDestroy;
 	GameObjectTag m_tag;
 
@@ -42,6 +43,7 @@ public:
 	unsigned int ID() const { return m_id; }
 	void AddComponent(Component* pComponent);
 	bool HasComponent(ComponentType type) const;
+	void SetParent(GameObject* pParent);
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {

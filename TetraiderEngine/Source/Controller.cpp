@@ -4,7 +4,6 @@
 #include "Health.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
-#include "Camera.h"
 #include <iostream>
 
 Controller::Controller() :
@@ -47,7 +46,7 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_R) || (TETRA_INPUT.IsKeyPressed(XBOX_BTN_START)&& TETRA_INPUT.IsKeyPressed(XBOX_BTN_BACK))) {
 		TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
 	}
-	
+
 	moveDir.Normalize();
 	m_targetVelocity = moveDir * m_speed;
 	//cout << TETRA_INPUT.GetRightAxisX() << " " << TETRA_INPUT.GetRightAxisX() << endl;
@@ -87,17 +86,6 @@ void Controller::LateInitialize() {
 			return;
 		}
 	}
-}
-
-Vector3D Controller::GetDirectionToMouse() {
-	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
-	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
-	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
-	Vector3D dirToMousePos = mousePos - screenSpace;
-	dirToMousePos.y *= -1;
-	dirToMousePos.Normalize();
-	return dirToMousePos;
 }
 
 void Controller::CheckToggleMouseControl() {

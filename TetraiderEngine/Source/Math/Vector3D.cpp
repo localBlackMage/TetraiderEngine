@@ -194,6 +194,14 @@ void Vector3D::Normalize()
 	Div(Length());
 }
 
+float Vector3D::AngleRadians() const {
+	return atan2f(y, x);
+}
+
+float Vector3D::AngleDegrees() const {
+	return AngleRadians() * 180 / PI;
+}
+
 #pragma region Static Methods
 float Vector3D::SquareDistance(const Vector3D& vector0, const Vector3D& vector1)
 {
