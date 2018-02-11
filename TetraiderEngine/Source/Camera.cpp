@@ -38,7 +38,7 @@ void Camera::_CalcViewMatrix()
 
 void Camera::Serialize(const json& j)
 {
-	m_isPersp = ParseBool(j, "type");
+	m_isPersp = ParseBool(j, "perspective");
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
 	std::vector<std::string> layers = j["layers"];
 

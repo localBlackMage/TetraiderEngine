@@ -96,6 +96,11 @@ bool ResourceManager::Init()
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
 	LoadPrefabFiles();
 	
+
+	// TODO: REMOVE
+	TETRA_RENDERER.INIT_PARTICLE_TEST();
+
+
 	return true;
 }
 

@@ -61,9 +61,9 @@ void Transform::LateUpdate(float dt) {
 	//Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
 	// TODO: Optimization, if pivot offset is zero do not create or multiply this component
-	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset)); 
+	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset));
 
-	m_transform = trans*rot*scal*pivotOffset;
+	m_transform = trans*rot*scale*pivotOffset;
 }
 
 void Transform::Serialize(const json& j) {

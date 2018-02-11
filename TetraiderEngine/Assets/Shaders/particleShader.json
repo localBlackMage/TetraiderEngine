@@ -1,0 +1,6 @@
+{
+  "particle": {
+    "vertex": "particleShader.vert",
+    "fragment": "particleShader.frag"
+  }
+}

@@ -17,9 +17,14 @@ Creation date: 1/17/18
 
 #include "Math\MathLibs.h"
 #include "Subscriber.h"
+#include "SurfaceTextureBuffer.h"
+#include "Mesh.h"
+#include <glew.h>
+#include <GL/gl.h>
 #include <SDL.h>
 #include <string>
 #include <map>
+#include <algorithm>
 
 class DebugManager;
 class GameObject;
@@ -29,97 +34,74 @@ class Sprite;
 class Particle;
 enum DebugShape;
 
-static const int MaxParticles = 10;
-
+static const int MaxParticles = 1000;
+static const Vector3D Gravity = Vector3D(0, -9.8f, 0.f);
 struct ParticleItem {
+	ParticleItem() : 
+		pos(Vector3D()),
+		speed(Vector3D(0, .5f, 0)),
+		r(0), g(255), b(0), a(255),
+		size(20.f), angle(0.f), weight(1.f), life(0.f), cameradistance(-1.f)
+	{}
 	Vector3D pos, speed;
 	unsigned char r, g, b, a;
 	float size, angle, weight;
 	float life;
+	float cameradistance;
+
+	bool operator<(ParticleItem& that) {
+		// Sort in reverse order : far particles drawn first.
+		return this->cameradistance > that.cameradistance;
+	}
 };
 
 struct ParticleContainer {
-	ParticleContainer() : pCount(0), lastUsedParticle(0) {}
+	explicit ParticleContainer(Mesh& _mesh) :
+		mesh(_mesh), positionsBuffer(0), colorsBuffer(0), maxLife(2.f), pCount(0), lastUsedParticle(0)
+	{}
 
 	GLuint vbo;
+	Mesh& mesh;
 	GLuint positionsBuffer;
 	GLuint colorsBuffer;
 	GLfloat positions[MaxParticles * 4];
 	GLfloat colors[MaxParticles * 4];
+
+	SurfaceTextureBuffer * m_texture;
+
+	float maxLife;
 	int pCount;
 	ParticleItem particles[MaxParticles];
 
 	int lastUsedParticle;
 	int FindUnusedParticle() {
 		for (int i = lastUsedParticle; i<MaxParticles; i++) {
-			if (particles[i].life < 0) {
+			if (particles[i].life <= 0.f) {
 				lastUsedParticle = i;
 				return i;
 			}
 		}
-
+		// Cycle around to the start of the array
 		for (int i = 0; i<lastUsedParticle; i++) {
-			if (particles[i].life < 0) {
+			if (particles[i].life <= 0.f) {
 				lastUsedParticle = i;
 				return i;
 			}
 		}
 
-		return 0; // All particles are taken, override the first one
+		return -1; // All particles are taken
 	}
-	void Update(float deltaTime) {
-		// Generate .5 new particule each millisecond,
-		// but limit this to 16 ms (60 fps), or if you have 1 long frame (1sec),
-		// newparticles will be huge and the next frame even longer.
-		int newparticles = int(deltaTime*5.f);
-		if (newparticles > int(0.016f*5.f))
-			newparticles = int(0.016f*5.f);
-
-		for (int i = 0; i<MaxParticles; i++) {
-
-			ParticleItem& p = particles[i]; // shortcut
-
-			if (p.life > 0.0f) {
-
-				// Decrease life
-				p.life -= deltaTime;
-				if (p.life > 0.0f) {
-
-					// Simulate simple physics : gravity only, no collisions
-					p.speed += glm::vec3(0.0f, -9.81f, 0.0f) * (float)deltaTime * 0.5f;
-					p.pos += p.speed * (float)delta;
-					p.cameradistance = glm::length2(p.pos - CameraPosition);
-					//ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta;
-
-					// Fill the GPU buffer
-					g_particule_position_size_data[4 * ParticlesCount + 0] = p.pos.x;
-					g_particule_position_size_data[4 * ParticlesCount + 1] = p.pos.y;
-					g_particule_position_size_data[4 * ParticlesCount + 2] = p.pos.z;
-
-					g_particule_position_size_data[4 * ParticlesCount + 3] = p.size;
-
-					g_particule_color_data[4 * ParticlesCount + 0] = p.r;
-					g_particule_color_data[4 * ParticlesCount + 1] = p.g;
-					g_particule_color_data[4 * ParticlesCount + 2] = p.b;
-					g_particule_color_data[4 * ParticlesCount + 3] = p.a;
-
-				}
-				else {
-					// Particles that just died will be put at the end of the buffer in SortParticles();
-					p.cameradistance = -1.0f;
-				}
-
-				ParticlesCount++;
-
-			}
-		}
+	void Update(float deltaTime);
+	void SortParticles() {
+		std::sort(&particles[0], &particles[MaxParticles]);
 	}
+	GLuint GetTextureBuffer() const { return m_texture->bufferId; }
 };
 
 class RenderManager : public Subscriber
 {
 private:
-	ParticleContainer particleTest;
+	ParticleContainer*particleTest;
 
 	friend class DebugManager;
 
@@ -155,6 +137,9 @@ public:
 	void operator=(const RenderManager &) = delete;
 
 	bool Init();
+
+	void INIT_PARTICLE_TEST();
+
 	void FrameStart();
 	void FrameEnd();
 	void Resize(int width, int height);
@@ -167,6 +152,7 @@ public:
 	int WindowHeight() { return m_height; }
 	float GetAspectRatio() const;
 
+	void UPDATE_PARTICLE_TEST(float deltaTime);
 	void RENDER_PARTICLES_TEST(const GameObject& camera);
 	void RenderGameObject(const GameObject& camera, const GameObject& go);
 

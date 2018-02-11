@@ -34,5 +34,5 @@ void GameConfig::LoadConfig(std::string s) {
 	// Set debug parameters
 	TETRA_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
 
-	TETRA_RENDERER.SetDebugShaderName(ParseString(gameSettings, "debugShader"));
+	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
 }
