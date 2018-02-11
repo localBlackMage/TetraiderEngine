@@ -38,7 +38,7 @@ void Controller::Update(float dt) {
 	}
 
 	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT) || TETRA_INPUT.IsKeyPressed(XBOX_BTN_LEFT_SHOULDER)) {
-		m_pWeapon->UseAttack(1, m_lookDirection);
+		//m_pWeapon->UseAttack(1, m_lookDirection);
 	}
 
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_Y))

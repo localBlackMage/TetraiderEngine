@@ -89,6 +89,9 @@ public:
 	Shader * CreateFragmentShader(std::string fragmentShaderText);
 	Shader * CreateFragmentShaderFromFile(std::string fileName);
 
+	inline SDL_Window* GetWindow() { 
+		return m_pWindow; 
+	}
 	void SelectShaderProgram(std::string programName);
 };
 

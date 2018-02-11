@@ -12,8 +12,8 @@
 
 #include "SDL_image.h"
 
-//#include "im_src\imgui.h"
-//#include "im_src\imgui_impl_sdl_gl3.h"
+#include "im_src\imgui.h"
+#include "im_src\imgui_impl_sdl_gl3.h"
 
 #include <glew.h>
 #include <GL/gl.h>
@@ -83,14 +83,15 @@ void RenderManager::_InitWindow(std::string title)
 	glViewport(0, 0, m_width, m_height);
 
 	// Setup ImGui binding
-	//ImGui_ImplSdlGL3_Init(m_pWindow);
+	ImGui_ImplSdlGL3_Init(m_pWindow);
 
 	// Setup style
-	//ImGui::StyleColorsDark();
+	ImGui::StyleColorsDark();
 
-	/*bool show_demo_window = true;
+	//dummy code
+	bool show_demo_window = true;
 	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);*/
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 }
 
 std::string RenderManager::_LoadTextFile(std::string fname)
