@@ -76,6 +76,9 @@ bool StaticCircleToStaticRect(const Vector3D &circle, float radius, const Vector
 	// Check if closest point on rectangle intersects with circle
 	if (StaticPointToStaticCircle(closestPoint, circle, radius)) {
 		Vector3D normal = closestPoint - circle;
+		if (normal.IsVectorZero()) {
+			normal = rectangle - circle;
+		}
 		normal.Normalize();
 		mtv.normal = normal;
 		mtv.penetration = fabsf(radius - Vector3D::Distance(closestPoint, circle));

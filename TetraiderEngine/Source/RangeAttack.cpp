@@ -5,8 +5,8 @@
 #include "Projectile.h"
 #include "GameObject.h"
 
-RangeAttack::RangeAttack(float coolDown, int baseDamage, AttackType type, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
-	Attack(coolDown, baseDamage, type),
+RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
+	Attack(coolDown, baseDamage, knockBackSpeed, type),
 	m_projectileSpeed(projectileSpeed),
 	m_offset(offset),
 	m_lifeTime(lifeTime),
@@ -29,7 +29,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 		isEnemyProjectile = true;
 
 	// TODO: Change base damage to take into consideration character stats
-	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile);
+	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile, m_knockBackSpeed);
 	return true;
 }
 

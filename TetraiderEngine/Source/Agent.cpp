@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "TetraiderAPI.h"
 #include "Animation.h"
+#include "Camera.h"
 #include <iostream>
 
 Agent::Agent(ComponentType _type) : 
@@ -12,7 +13,9 @@ Agent::Agent(ComponentType _type) :
 	m_acceleration(0.0f), 
 	m_deceleration(0.0f), 
 	m_lookDirection(Vector3D(1, 0, 0)),
-	m_knockBackSpeed(0)
+	m_knockBackMultiplier(1),
+	m_faceDirection(FaceDirection::Right),
+	m_isIgnoreHazards(false)
 {};
 
 void Agent::Update(float dt) {
@@ -20,24 +23,36 @@ void Agent::Update(float dt) {
 	m_pBody->SetVelocity(m_currentVelocity);
 
 	if (m_pAnimation) {
-		if (m_currentVelocity.SquareLength() < 100.0f) {
+		if (m_currentVelocity.SquareLength()  < 100.0f)
 			m_pAnimation->Play(1);
-		}
-		else {
+		else
 			m_pAnimation->Play(0);
+	}
+
+	float angle = m_lookDirection.AngleDegrees();
+	if (m_pTransform->GetScaleX() < 0) {
+		if (angle > -90 && angle < 90) {
+			pGO->HandleEvent(&Event(EVENT_FlipScaleX));
+			m_faceDirection = FaceDirection::Right;
 		}
+	}
+	else if (angle < -90 || angle > 90) {
+		pGO->HandleEvent(&Event(EVENT_FlipScaleX));
+		m_faceDirection = FaceDirection::Left;
 	}
 }
 
 void Agent::Serialize(const json& j) {
 	m_speed = ParseFloat(j, "speed");
 	m_acceleration = ParseFloat(j, "acceleration");
-	m_knockBackSpeed = ParseFloat(j, "knockBackSpeed");
+	m_knockBackMultiplier = ParseFloat(j, "knockBackMultiplier");
 }
 
 void Agent::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
+		if (collisionData->pGO->m_tag == T_Hazard) 
+			return;
 		if(collisionData->pGO->m_tag == T_Obstacle)
 			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 		else if(collisionData->pGO->m_tag == T_Enemy || collisionData->pGO->m_tag == T_Player)
@@ -45,9 +60,7 @@ void Agent::HandleEvent(Event* pEvent) {
 	}
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
 		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
-		Vector3D dirOfAttack = m_pTransform->GetPosition() - healthData->m_sourceOfAttack;
-		dirOfAttack.Normalize();
-		AddVelocity(dirOfAttack*m_knockBackSpeed);
+		AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);
 	}
 }
 
@@ -93,4 +106,15 @@ void Agent::LateInitialize() {
 			return;
 		}
 	}
+}
+
+Vector3D Agent::GetDirectionToMouse() {
+	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
+	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
+	Vector3D dirToMousePos = mousePos - screenSpace;
+	dirToMousePos.y *= -1;
+	dirToMousePos.Normalize();
+	return dirToMousePos;
 }

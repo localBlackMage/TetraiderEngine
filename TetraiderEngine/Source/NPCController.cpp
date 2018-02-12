@@ -45,17 +45,17 @@ void NPCController::HandleEvent(Event* pEvent) {
 void NPCController::LateInitialize() {
 	Agent::LateInitialize();
 
-	if(!m_pWeapon) {
+	/*if(!m_pWeapon) {
 		if (pGO)
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
 		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
+			printf("No Game Object found. NPC Controller component failed to operate.\n");
 			return;
 		}
 
 		if (!m_pWeapon) {
-			printf("No Weapon component found. Controller component failed to operate.\n");
+			printf("No Weapon component found. NPC Controller component failed to operate.\n");
 			return;
 		}
-	}
+	}*/
 }

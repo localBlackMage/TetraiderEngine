@@ -39,6 +39,7 @@ private:
 	float m_speedMultiplier;
 	bool m_isPlaying;
 	bool m_isPlayOnAwake;
+	bool m_isDisableRenderOnAnimComplete;
 	Sprite* m_pSprite;
 };
 

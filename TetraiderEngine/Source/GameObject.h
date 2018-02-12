@@ -19,10 +19,14 @@ private:
 	Component* mComponents[ComponentType::NUM_COMPONENTS];
 	unsigned int m_id;
 	unsigned short m_layer;
+	bool m_isSetToDestroy;
+	float m_destroyTimer;
+	float m_destroySetTimeStamp;
 public:
 	bool m_isActive;
 	bool m_isRender;
 	bool m_isCollisionDisabled;
+	bool m_isStatic;
 	bool m_isDestroy;
 	GameObjectTag m_tag;
 
@@ -36,12 +40,14 @@ public:
 	void LateUpdate(float dt);
 	void LateInitialize();
 	void Destroy();
+	void DestroyIn(float time);
 
 	void SetLayer(RENDER_LAYER layer) { m_layer = layer; }
 	unsigned short GetLayer() { return m_layer; }
 	unsigned int ID() const { return m_id; }
 	void AddComponent(Component* pComponent);
 	bool HasComponent(ComponentType type) const;
+	void SetParent(GameObject* pParent);
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {

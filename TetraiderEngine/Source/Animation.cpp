@@ -16,7 +16,8 @@ Animation::Animation():
 	m_speedMultiplier(1),
 	m_isPlaying(false),
 	m_isLooping(false),
-	m_isPlayOnAwake(false)
+	m_isPlayOnAwake(false),
+	m_isDisableRenderOnAnimComplete(false)
 {}
 
 Animation::~Animation() {}
@@ -25,8 +26,12 @@ void Animation::Update(float dt) {
 	if (m_elapsedTime > 1) {
 		++m_currentFrame;
 		if (m_currentFrame >= m_frames) {
-			if (!m_isLooping)
+			if (!m_isLooping) {
+				if(m_isDisableRenderOnAnimComplete)
+					pGO->m_isRender = false;
+
 				m_isPlaying = false;
+			}
 
 			m_currentFrame = 0;
 		}
@@ -73,6 +78,7 @@ void Animation::ChangeAnimation(int animation) {
 		return;
 	}
 
+	pGO->m_isRender = true;
 	m_elapsedTime = 0;
 	m_currentFrame = 0;
 	m_speedMultiplier = 1;
@@ -86,6 +92,7 @@ void Animation::ChangeAnimation(int animation) {
 void Animation::Serialize(const json& j) {
 	m_maxFrames = 0;
 	m_currentAnimation = ParseInt(j, "defaultAnimation");
+	m_isDisableRenderOnAnimComplete = ParseBool(j, "isDisableRenderOnAnimComplete");
 	myAnimations = j["MY_ANIMATIONS"];
 	m_frames = ParseInt(myAnimations[m_currentAnimation],"frames");
 	m_animationSpeed = myAnimations[m_currentAnimation]["animationSpeed"];
@@ -121,5 +128,14 @@ void Animation::LateInitialize() {
 			assert(m_pSprite);
 			return;
 		}
+	}
+
+	m_pSprite->SetTileX(m_uStartPos);
+	m_pSprite->SetTileY(m_vStartPos);
+	m_pSprite->SetUOffset(m_uStartPos*m_currentFrame*m_reverse);
+	m_pSprite->SetVOffset(m_vStartPos*m_currentAnimation);
+
+	if (!m_isPlayOnAwake && m_isDisableRenderOnAnimComplete) {
+		pGO->m_isRender = false;
 	}
 }
