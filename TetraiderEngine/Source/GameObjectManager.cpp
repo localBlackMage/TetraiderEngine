@@ -179,6 +179,7 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
 	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(++m_currentId);
+
 	SetGameObjectTag(ParseString(*j, "Tag"), pGameObject);
 	SetGameObjectLayer(ParseString(*j, "Layer"), pGameObject);
 

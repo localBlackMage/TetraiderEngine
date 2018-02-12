@@ -90,7 +90,7 @@ void* MemoryManager::Alloc(std::size_t size) {
 	return current->next->pData;
 }
 
- void MemoryManager::Free(void* ptr){
+void MemoryManager::Free(void* ptr){
 	MemoryBlock *current = m_pHead->next;
 	if (!current || (current->pData == nullptr)) {
 		printf("MEMMNGR::FREE() NEVER REACH HERE!\n");
@@ -144,32 +144,7 @@ void* MemoryManager::Alloc(std::size_t size) {
 	m_Cache[m_NumCachedBlock++] = pNode;
 }
 
-void *MemoryManager::m_Buffer = nullptr;
-
-//MemoryManager gMemoryManager;
-//
-//void *operator new(std::size_t size)
-//{
-//	return gMemoryManager.Alloc(size);
-//}
-//	//if(gMemoryManager)
-//		//Create 
-//
-//	return gMemoryManager.Alloc(size);
-//}
-//
-//void operator delete(void *ptr)
-//{
-//	gMemoryManager.Free(ptr);
-//}
-//void* operator new[](std::size_t size)
-//{
-//	return gMemoryManager.Alloc(size);
-//}
-//void operator delete[](void* arrayPtr)
-//{
-//	gMemoryManager.Free(arrayPtr);
-//}
+void* MemoryManager::m_Buffer = nullptr;
 
 GameObject* MemoryManager::GetNewGameObject(unsigned int id) {
 	if (m_GameObjectCache.empty()) {
@@ -189,3 +164,20 @@ void MemoryManager::DeleteGameObject(GameObject* ptr) {
 		m_GameObjectCache.push_back(ptr);
 	}
 }
+//
+//void* MemoryManager::operator new(std::size_t size)
+//{
+//	return TETRA_MEMORY.Alloc(size);
+//}
+//void MemoryManager::operator delete(void *ptr)
+//{
+//	TETRA_MEMORY.Free(ptr);
+//}
+//void* MemoryManager::operator new[](std::size_t size)
+//{
+//	return TETRA_MEMORY.Alloc(size);
+//}
+//void MemoryManager::operator delete[](void* arrayPtr)
+//{
+//	TETRA_MEMORY.Free(arrayPtr);
+//}
