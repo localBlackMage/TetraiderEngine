@@ -95,6 +95,14 @@
       }
 	},
 	{
+	  "prefab": "P_LavaRiver",
+      "position": {
+        "x": 250,
+        "y": -350,
+        "z": 0
+      }
+	},
+	{
 	  "prefab": "P_OilBarrel",
       "position": {
         "x": -150,

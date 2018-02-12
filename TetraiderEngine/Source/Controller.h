@@ -20,7 +20,7 @@ protected:
 private:
 	bool m_isGameControllerEnabled;
 	void CheckToggleMouseControl();
-	Vector3D GetDirectionToMouse();
+	float m_flySpeed;
 };
 
 #endif

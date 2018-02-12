@@ -26,11 +26,19 @@ void Transform::Update(float dt)
 
 void Transform::LateUpdate(float dt) 
 {
-	Matrix4x4 trans, rot, scal, pivotOffset;
-	scal = Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z);
-	rot = Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS);
-	trans = Matrix4x4::Translate(m_position);
-	pivotOffset = Matrix4x4::Translate(m_pivotOffset);
+	// TODO: optimization if game object is static save m_Transform somewhere and never calculate matrix again
+	Matrix4x4 trans;
+	if (m_parent)
+		trans = Matrix4x4::Translate(m_position + m_parent->GetPosition());
+	else
+		trans = Matrix4x4::Translate(m_position);
+	
+	Matrix4x4 scal(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
+	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
+	//Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
+
+	// TODO: Optimization, if pivot offset is zero do not create or multiply this component
+	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset)); 
 
 	m_transform = trans*rot*scal*pivotOffset;
 }
@@ -54,8 +62,15 @@ void Transform::Serialize(const json& j) {
 	m_pivotOffset.z = ParseFloat(j["pivotOffset"], "z");
 }
 
-void Transform::HandleEvent(Event * p_event)
-{
+void Transform::HandleEvent(Event * p_event) {
+	if (p_event->Type() == EVENT_FlipScaleX) {
+		m_position.x *= -1;
+		m_scale.x *= -1;
+	}
+	else if (p_event->Type() == EVENT_FlipScaleY) {
+		m_position.y *= -1;
+		m_scale.y *= -1;
+	}
 }
 
 bool Transform::operator<(const Transform & other) const
@@ -66,7 +81,10 @@ bool Transform::operator<(const Transform & other) const
 #pragma region Translation
 Vector3D Transform::GetPosition() const
 {
-	return m_position;// +(m_parentTransform ? m_parentTransform->GetPosition() : Vector3D());
+	if (m_parent)
+		return Vector3D(m_transform.Get(0, 3), m_transform.Get(1, 3), m_transform.Get(2, 3));
+	else
+		return m_position;
 }
 
 void Transform::SetPosition(Vector3D pos)

@@ -284,7 +284,7 @@ json* ResourceManager::GetPrefabFile(const std::string& path) {
 	if (file)
 		return file;
 
-	std::cout << "Could not Get prefab json. Invalid prefab name." << std::endl;
+	std::cout << "Could not Get prefab json. Invalid prefab name: " << path << std::endl;
 	return 0;
 }
 

@@ -23,22 +23,27 @@ void Projectile::HandleEvent(Event* pEvent) {
 		if (m_isEnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
 		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Player) return;
 		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Projectile) return;
+		else if (collisionData->pGO->m_tag == T_Hazard) return;
 
 		// If object has health component, deal damage before destroying itself
 		Health* pHealth = collisionData->pGO->GetComponent<Health>(ComponentType::C_Health);
-		if (pHealth) pHealth->TakeDamage(m_damage, m_pTransform->GetPosition());
+		Transform* pTrans = collisionData->pGO->GetComponent<Transform>(ComponentType::C_Transform);
+		Vector3D dirOfAttack = pTrans->GetPosition() - m_pTransform->GetPosition();
+		dirOfAttack.Normalize();
+		if (pHealth) pHealth->TakeDamage(m_damage, dirOfAttack, m_knockBackSpeed);
 
 		pGO->Destroy();
 	}
 }
 
-void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile) {
+void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile, float knockBackSpeed) {
 	m_pTransform->SetPosition(position);
 	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x)*180/PI);
 	m_damage = damage;
 	m_lifeTime = lifeTime;
 	m_isEnemyProjectile = isEnemyProjectile;
 	m_pBody->SetVelocity(speed*dir);
+	m_knockBackSpeed = knockBackSpeed;
 	m_creationLifeTime = TETRA_FRAMERATE.GetElapsedTime();
 }
 

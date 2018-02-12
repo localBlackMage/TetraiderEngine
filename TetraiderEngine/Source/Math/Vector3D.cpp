@@ -170,6 +170,10 @@ void Vector3D::Zero()
 	x = y = z = 0.0f;
 }
 
+bool Vector3D::IsVectorZero() {
+	return (fabsf(x) < EPSILON && fabsf(y) < EPSILON && fabsf(z) < EPSILON);
+}
+
 void Vector3D::Negate()
 {
 	x = -x;
@@ -192,6 +196,14 @@ void Vector3D::Normalize()
 	if (x == 0 && y == 0 && z == 0)
 		return;
 	Div(Length());
+}
+
+float Vector3D::AngleRadians() const {
+	return atan2f(y, x);
+}
+
+float Vector3D::AngleDegrees() const {
+	return AngleRadians() * 180 / PI;
 }
 
 #pragma region Static Methods
