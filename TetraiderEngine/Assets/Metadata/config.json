@@ -25,7 +25,8 @@
 		"Statics": "StaticObjects",
 		"Start": 0,
 		"Levels": [
-			{ "Name": "LVL_Gym" }
+			{ "Name": "LVL_Gym" },
+			{ "Name": "LVL_Empty" }
 		]
 	},
 	"INPUT_SETTINGS": [

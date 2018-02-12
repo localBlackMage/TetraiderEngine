@@ -19,6 +19,7 @@
 #include <fstream>
 #include <windows.h>
 
+const Vector3D Vel = Vector3D(0, -1000.f, 0);
 
 void ParticleContainer::Update(float deltaTime)
 {
@@ -43,15 +44,15 @@ void ParticleContainer::Update(float deltaTime)
 			// Decrease life
 			p.life -= deltaTime;
 			if (p.life > 0.0f) {
-				p.speed += Gravity * deltaTime * 0.5f;
-				p.speed.y = p.speed.y < -9.8f ? -9.8f : p.speed.y;
+				p.speed += Vel * deltaTime;
+				//p.speed.y = p.speed.y < -9.8f ? -9.8f : p.speed.y;
 				p.pos += p.speed * deltaTime;
-				p.pos.z = 0.5f;
-				p.cameradistance = Vector3D::SquareDistance(p.pos, TETRA_GAME_OBJECTS.GetCamera(1)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+				p.pos.z = 0.f;
+				p.cameradistance = Vector3D::SquareDistance(p.pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
-				p.r = 1;
-				p.b = 1;
-				p.g = 1;
+				p.r = 255 - (int(p.speed.y) % 255);
+				p.b = 255 - (int(p.speed.y) % 255);
+				p.g = int(p.speed.y) % 255;
 				p.a = 1;
 
 				// Fill the GPU buffer
@@ -128,8 +129,6 @@ RenderManager::~RenderManager()
 	SDL_Quit();
 }
 
-#pragma region Private Methods
-
 void RenderManager::UPDATE_PARTICLE_TEST(float deltaTime)
 {
 	particleTest->Update(deltaTime);
@@ -137,15 +136,17 @@ void RenderManager::UPDATE_PARTICLE_TEST(float deltaTime)
 
 void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 {
+
+#pragma region CameraSetup
 	SelectShaderProgram("particle");
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	glUseProgram(m_pCurrentProgram->GetProgram());
 
-	//glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
-	//glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
-	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)Matrix4x4::Identity4D());
-	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)Matrix4x4::Identity4D());
+	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
+	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
+#pragma endregion
 
+#pragma region Positions_Colors_Buffers
 	glBindBuffer(GL_ARRAY_BUFFER, particleTest->positionsBuffer);
 	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
 	glBufferSubData(GL_ARRAY_BUFFER, 0, particleTest->pCount * sizeof(GLfloat) * 4, particleTest->positions);
@@ -153,38 +154,21 @@ void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 	glBindBuffer(GL_ARRAY_BUFFER, particleTest->colorsBuffer);
 	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
 	glBufferSubData(GL_ARRAY_BUFFER, 0, particleTest->pCount * sizeof(GLubyte) * 4, particleTest->colors);
+#pragma endregion
 
-
+#pragma region Vertices
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
 	glBindBuffer(GL_ARRAY_BUFFER, particleTest->mesh.GetVertexBuffer());
-	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 0, (void*)0); // <- load it to memory
-
-
-
-
-	// 1rst attribute buffer : vertices
-	//glEnableVertexAttribArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, particleTest->vbo);
-	//glVertexAttribPointer(
-	//	SHADER_LOCATIONS::POSITION, // attribute. No particular reason for 0, but must match the layout in the shader.
-	//	3, // size
-	//	GL_FLOAT, // type
-	//	GL_FALSE, // normalized?
-	//	0, // stride
-	//	(void*)0 // array buffer offset
-	//);
-
-
-
-	//// 2nd attribute buffer : texture coords for the particles6
-	//glEnableVertexAttribArray(2);
-	//glEnableVertexAttribArray(SHADER_LOCATIONS::TEXTURE_COORD);
-	//glBindBuffer(GL_ARRAY_BUFFER, particleTest->mesh.GetTextCoordBuffer());
-	//glVertexAttribPointer(SHADER_LOCATIONS::TEXTURE_COORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
-
-
-
+	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0); // <- load it to memory
+#pragma endregion
+#pragma region Texture_Coords
+	// 2nd attribute buffer : texture coords for the particles
+	glEnableVertexAttribArray(SHADER_LOCATIONS::TEXTURE_COORD);
+	glBindBuffer(GL_ARRAY_BUFFER, particleTest->mesh.GetTextCoordBuffer());
+	glVertexAttribPointer(SHADER_LOCATIONS::TEXTURE_COORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0); // <- load it to memory
+#pragma endregion
+#pragma region Particles_Pos_Size
 	// 3rd attribute buffer : positions of particles' centers
 	glEnableVertexAttribArray(SHADER_LOCATIONS::P_POS_SIZE);
 	glBindBuffer(GL_ARRAY_BUFFER, particleTest->positionsBuffer);
@@ -196,7 +180,8 @@ void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 		0, // stride
 		(void*)0 // array buffer offset
 	);
-
+#pragma endregion
+#pragma region Particles_Colors
 	// 4th attribute buffer : particles' colors
 	glEnableVertexAttribArray(SHADER_LOCATIONS::P_COLOR);
 	glBindBuffer(GL_ARRAY_BUFFER, particleTest->colorsBuffer);
@@ -208,27 +193,31 @@ void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 		0, // stride
 		(void*)0 // array buffer offset
 	);
+#pragma endregion
 
+#pragma region Attrib_Divisors_TextureBinding
 
 	// These functions are specific to glDrawArrays*Instanced*.
 	// The first parameter is the attribute buffer we're talking about.
 	// The second parameter is the "rate at which generic vertex attributes advance when rendering multiple instances"
 	// http://www.opengl.org/sdk/docs/man/xhtml/glVertexAttribDivisor.xml
-	glVertexAttribDivisor(SHADER_LOCATIONS::POSITION, 0); // particles vertices : always reuse the same 4 vertices -> 0
-	//glVertexAttribDivisor(1, 0); // texture coords :always reuse the same 2 tex coords
+	//glVertexAttribDivisor(SHADER_LOCATIONS::POSITION, 0); // particles vertices : always reuse the same 4 vertices -> 0
+	//glVertexAttribDivisor(SHADER_LOCATIONS::TEXTURE_COORD, 0); // texture coords : always reuse the same 2 tex coords
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_SIZE, 1); // positions : one per quad (its center) -> 1
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_COLOR, 1); // color : one per quad -> 1
 
 	// select the texture to use
 	glBindTexture(GL_TEXTURE_2D, particleTest->GetTextureBuffer());
-
+#pragma endregion
 	// Draw the particules !
 	// This draws many times a small triangle_strip (which looks like a quad).
 	// This is equivalent to :
 	// for(i in ParticlesCount) : glDrawArrays(GL_TRIANGLE_STRIP, 0, 4),
 	// but faster.
-	glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 6, particleTest->pCount);
+	glDrawArraysInstanced(GL_TRIANGLES, 0, 3 * particleTest->mesh.faceCount(), particleTest->pCount);
 }
+
+#pragma region Private Methods
 
 void RenderManager::_InitWindow(std::string title)
 {
@@ -552,10 +541,10 @@ void RenderManager::INIT_PARTICLE_TEST()
 		particleTest->positions[i + 2] = 0.f;
 		particleTest->positions[i + 3] = 0.f;
 
-		particleTest->colors[i] = 0.f;
-		particleTest->colors[i + 1] = 0.f;
-		particleTest->colors[i + 2] = 0.f;
-		particleTest->colors[i + 3] = 0.f;
+		particleTest->colors[i] = 0;
+		particleTest->colors[i + 1] = 0;
+		particleTest->colors[i + 2] = 0;
+		particleTest->colors[i + 3] = 0;
 	}
 
 

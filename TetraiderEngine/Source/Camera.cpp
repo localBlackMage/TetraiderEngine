@@ -31,8 +31,7 @@ Matrix4x4 Camera::_MatrixFromCameraVectors(const Vector3D & right, const Vector3
 
 void Camera::_CalcViewMatrix()
 {
-	//Matrix4x4 rotationM = _MatrixFromCameraVectors(m_pTransform->Right(), m_pTransform->Up(), m_pTransform->Forward());
-	Matrix4x4 rotationM = _MatrixFromCameraVectors(XAXIS, YAXIS, ZAXIS * -1);
+	Matrix4x4 rotationM = _MatrixFromCameraVectors(m_pTransform->Right(), m_pTransform->Up(), m_pTransform->Forward());
 	m_viewMatrix = rotationM * Matrix4x4::Translate(-1 * m_pTransform->GetPosition());
 }
 

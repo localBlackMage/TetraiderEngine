@@ -41,10 +41,10 @@ struct ParticleItem {
 		pos(Vector3D()),
 		speed(Vector3D(0, .5f, 0)),
 		r(0), g(255), b(0), a(255),
-		size(20.f), angle(0.f), weight(1.f), life(0.f), cameradistance(-1.f)
+		size(32.f), angle(0.f), weight(1.f), life(0.f), cameradistance(-1.f)
 	{}
 	Vector3D pos, speed;
-	unsigned char r, g, b, a;
+	GLubyte r, g, b, a;
 	float size, angle, weight;
 	float life;
 	float cameradistance;
@@ -65,7 +65,7 @@ struct ParticleContainer {
 	GLuint positionsBuffer;
 	GLuint colorsBuffer;
 	GLfloat positions[MaxParticles * 4];
-	GLfloat colors[MaxParticles * 4];
+	GLubyte colors[MaxParticles * 4];
 
 	SurfaceTextureBuffer * m_texture;
 

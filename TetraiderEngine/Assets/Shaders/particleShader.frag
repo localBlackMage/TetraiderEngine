@@ -8,6 +8,6 @@ layout(location = 2) in vec2 vtexture_coord;
 out vec4 frag_color;
 
 void main(void) {
-	//frag_color = (texture(usampler, vtexture_coord) * vtint_color);
-	frag_color = vtint_color;
+	frag_color = (texture(usampler, vtexture_coord));
+	//frag_color = vtint_color;
 }
