@@ -7,7 +7,7 @@
 #include <iostream>
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true)
+	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0)
 {
 }
 
@@ -48,7 +48,15 @@ void Controller::Update(float dt) {
 	}
 
 	moveDir.Normalize();
-	m_targetVelocity = moveDir * m_speed;
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE)) {
+		m_isIgnoreHazards = true;
+		m_targetVelocity = moveDir * m_flySpeed;
+	}
+	else {
+		m_isIgnoreHazards = false;
+		m_targetVelocity = moveDir * m_speed;
+	}
+
 	//cout << TETRA_INPUT.GetRightAxisX() << " " << TETRA_INPUT.GetRightAxisX() << endl;
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
 		m_lookDirection.x = TETRA_INPUT.GetRightAxisX();
@@ -64,6 +72,7 @@ void Controller::Update(float dt) {
 }
 void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
+	m_flySpeed = ParseFloat(j, "flySpeed");
 }
 
 void Controller::HandleEvent(Event* pEvent) {

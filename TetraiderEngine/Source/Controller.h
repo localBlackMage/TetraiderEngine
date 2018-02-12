@@ -20,6 +20,7 @@ protected:
 private:
 	bool m_isGameControllerEnabled;
 	void CheckToggleMouseControl();
+	float m_flySpeed;
 };
 
 #endif

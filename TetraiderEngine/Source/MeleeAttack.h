@@ -9,7 +9,7 @@ class GameObject;
 
 class MeleeAttack : public Attack {
 public:
-	MeleeAttack(float coolDown, int baseDamage, AttackType type, float radius, float angle, float triggerAttackIn);
+	MeleeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float radius, float angle, float triggerAttackIn);
 	~MeleeAttack();
 	void Update(float dt);
 	bool Use(const Vector3D& direction);

@@ -43,7 +43,7 @@ void GameObjectLayer::operator=(const GameObjectLayer & rhs)
 void GameObjectLayer::RenderLayer(GameObject* camera)
 {
 	for (GameObject* pGO : m_layerObjects) {
-		if (pGO->m_isActive)
+		if (pGO->m_isActive && pGO->m_isRender)
 			TETRA_RENDERER.RenderGameObject(*camera, *pGO);
 	}
 }

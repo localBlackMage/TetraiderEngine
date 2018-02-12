@@ -52,6 +52,7 @@
 	{
 		"Component": "Animation",
 		"defaultAnimation": 0,
+		"isDisableRenderOnAnimComplete": true,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Slash",

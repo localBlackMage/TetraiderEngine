@@ -5,12 +5,9 @@
 #include "Math\Collisions.h"
 #include "GameObject.h"
 #include "Health.h"
-#include "Controller.h"
-#include "Animation.h"
-#include "Audio.h"
 
-MeleeAttack::MeleeAttack(float coolDown, int baseDamage, AttackType type, float radius, float angle, float triggerAttackIn):
-	Attack(coolDown, baseDamage, type),
+MeleeAttack::MeleeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float radius, float angle, float triggerAttackIn):
+	Attack(coolDown, baseDamage, knockBackSpeed, type),
 	m_radius(radius),
 	m_angle(angle),
 	m_triggerAttackIn(triggerAttackIn) {}
@@ -40,7 +37,6 @@ void MeleeAttack::Run() {
 	GameObjectTag ignoreTag = T_None;
 	if (m_pOwner->pGO->m_tag == T_Enemy) {
 		ignoreTag = T_Enemy;
-
 	}
 	// If player, just check for enemies/enviromental objects
 	else if(m_pOwner->pGO->m_tag == T_Player) {
@@ -50,16 +46,20 @@ void MeleeAttack::Run() {
 	Transform* myOwnerTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
 	Vector3D sourceOfAttack = myOwnerTransform->GetPosition();
 
-	for (unsigned int i = 0; i < TETRA_GAME_OBJECTS.mGameObjectsWithHealthComponents.size(); ++i) {
-		if (TETRA_GAME_OBJECTS.mGameObjectsWithHealthComponents[i]->m_tag == ignoreTag)
+	const std::vector<GameObject*> gameObjectsWithHealthComponents = TETRA_GAME_OBJECTS.GetObjectsWithHealthComponents();
+
+	for (unsigned int i = 0; i < gameObjectsWithHealthComponents.size(); ++i) {
+		if (gameObjectsWithHealthComponents[i]->m_tag == ignoreTag)
 			continue;
 
-		Transform* pTransform = TETRA_GAME_OBJECTS.mGameObjectsWithHealthComponents[i]->GetComponent<Transform>(ComponentType::C_Transform);
+		Transform* pTransform = gameObjectsWithHealthComponents[i]->GetComponent<Transform>(ComponentType::C_Transform);
 
 		if (IsPointInCone(pTransform->GetPosition(), sourceOfAttack, m_radius, m_dirToAttackIn, m_angle)) {
-			Health* pHealth = TETRA_GAME_OBJECTS.mGameObjectsWithHealthComponents[i]->GetComponent<Health>(ComponentType::C_Health);
+			Health* pHealth = gameObjectsWithHealthComponents[i]->GetComponent<Health>(ComponentType::C_Health);
 			// TODO: Modify attack damage to take character stats in consideration
-			pHealth->TakeDamage(m_baseDamage, sourceOfAttack);
+			Vector3D dirOfAttack = pTransform->GetPosition() - sourceOfAttack;
+			dirOfAttack.Normalize();
+			pHealth->TakeDamage(m_baseDamage, dirOfAttack, m_knockBackSpeed);
 		}
 	}
 

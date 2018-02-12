@@ -60,6 +60,7 @@ void Weapon::Serialize(const json& j) {
 			Attack* attack = new MeleeAttack(
 				ParseFloat(j["Attacks"][i], "coolDown"),
 				ParseInt(j["Attacks"][i], "baseDamage"),
+				ParseFloat(j["Attacks"][i], "knockBackSpeed"),
 				AttackType::Melee,
 				ParseFloat(j["Attacks"][i], "radius"),
 				ParseFloat(j["Attacks"][i], "angle"),
@@ -73,6 +74,7 @@ void Weapon::Serialize(const json& j) {
 			Attack* attack = new RangeAttack(
 				ParseFloat(j["Attacks"][i], "coolDown"),
 				ParseInt(j["Attacks"][i], "baseDamage"),
+				ParseFloat(j["Attacks"][i], "knockBackSpeed"),
 				AttackType::Ranged,
 				ParseFloat(j["Attacks"][i], "projectileSpeed"),
 				ParseFloat(j["Attacks"][i], "instantiationOffset"),

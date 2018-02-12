@@ -29,7 +29,7 @@
 		"AgentData": {
 			"speed": 150,
 			"acceleration": 8,
-			"knockBackSpeed": 800
+			"knockBackMultiplier": 1
 		}
 	},
     {

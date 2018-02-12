@@ -170,6 +170,10 @@ void Vector3D::Zero()
 	x = y = z = 0.0f;
 }
 
+bool Vector3D::IsVectorZero() {
+	return (fabsf(x) < EPSILON && fabsf(y) < EPSILON && fabsf(z) < EPSILON);
+}
+
 void Vector3D::Negate()
 {
 	x = -x;

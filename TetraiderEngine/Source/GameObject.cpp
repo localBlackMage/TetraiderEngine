@@ -2,13 +2,17 @@
 #include "Component.h"
 #include "Event.h"
 #include "Transform.h"
+#include "TetraiderAPI.h"
 #include <algorithm>
 
 GameObject::GameObject(unsigned int id) : 
 	m_id(id), 
 	m_isDestroy(false), m_isActive(true), 
 	m_isCollisionDisabled(false), 
-	m_isRender(true)
+	m_isRender(true),
+	m_isSetToDestroy(false),
+	m_destroyTimer(0),
+	m_destroySetTimeStamp(0)
 {
 	std::fill_n(mComponents, int(ComponentType::NUM_COMPONENTS), nullptr);
 }
@@ -29,10 +33,21 @@ void GameObject::Destroy() {
 	m_isDestroy = true;
 }
 
+void GameObject::DestroyIn(float time) {
+	m_isSetToDestroy = true;
+	m_destroySetTimeStamp = TETRA_FRAMERATE.GetElapsedTime();
+	m_destroyTimer = time;
+}
+
 void GameObject::Update(float dt) {
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
 			mComponents[i]->Update(dt);
+	}
+
+	if (m_isSetToDestroy) {
+		if (TETRA_FRAMERATE.GetElapsedTime() - m_destroySetTimeStamp > m_destroyTimer)
+			Destroy();
 	}
 }
 

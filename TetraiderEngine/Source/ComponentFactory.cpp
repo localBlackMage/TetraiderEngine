@@ -14,6 +14,7 @@
 #include "Audio.h"
 #include "NPCController.h"
 #include "DestroyOnHealthZero.h"
+#include "DealDamageOnCollision.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -30,6 +31,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Audio"] = Audio::CreateInstance;
 	m_creationFunctions["NPCController"] = NPCController::CreateInstance;
 	m_creationFunctions["DestroyOnHealthZero"] = DestroyOnHealthZero::CreateInstance;
+	m_creationFunctions["DealDamageOnCollision"] = DealDamageOnCollision::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

@@ -1,6 +1,6 @@
 {
-  "Tag": "Obstacle",
-  "Layer": "2",
+  "Tag": "Hazard",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 160,
-        "y": 160,
+        "x": 400,
+        "y": 164,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_OilBarrels.png",
+      "Texture": "T_Lava.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -50,38 +50,19 @@
       }
     },
 	{
-		"Component": "Health",
-		"startingHealth": 5,
-		"maxHealth": 5,
-		"isInvincible": false
-	},
-	{
-		"Component": "DestroyOnHealthZero",
-		"destroyIn": 0,
-		"isExplode": true,
-		"explosionRadius": 190,
-		"explosionKnockBack": 2000,
-		"explosionDamage": 5,
-		"explosionPrefab": "P_Explosion"
-	},
-	{
 		"Component": "Body",
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "circle",
-			"radius": 70
+			"type": "AABB",
+			"width": 400,
+			"height": 120
 		}
 	},
 	{
-		"Component": "FlashOnTakeDamage",
-		"decaySpeed": 4,
-		"flashColor": {
-        "r": 1,
-        "g": 1,
-        "b": 1,
-        "a": 0
-		}
+		"Component": "DealDamageOnCollision",
+		"damage": 1,
+		"knockBackSpeed": 1000
 	}
   ]
 }

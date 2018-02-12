@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AOEAttack.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="Source\CamFollow.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\Controller.cpp" />
+    <ClCompile Include="Source\DealDamageOnCollision.cpp" />
     <ClCompile Include="Source\DebugLineMesh.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DestroyOnHealthZero.cpp" />
@@ -74,6 +76,7 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AOEAttack.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
@@ -87,6 +90,7 @@
     <ClInclude Include="Source\ComponentTypes.h" />
     <ClInclude Include="Source\ComponentTypesNames.h" />
     <ClInclude Include="Source\Controller.h" />
+    <ClInclude Include="Source\DealDamageOnCollision.h" />
     <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DestroyOnHealthZero.h" />
