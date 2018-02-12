@@ -171,3 +171,21 @@ void *MemoryManager::m_Buffer = nullptr;
 //	gMemoryManager.Free(arrayPtr);
 //}
 
+GameObject* MemoryManager::GetNewGameObject(unsigned int id) {
+	if (m_GameObjectCache.empty()) {
+		return new GameObject(id);
+	}
+	else {
+		GameObject* emptyGO = m_GameObjectCache.back();
+		m_GameObjectCache.pop_back();
+		return emptyGO;
+	}
+}
+void MemoryManager::DeleteGameObject(GameObject* ptr) {
+	if (m_GameObjectCache.size() < MAX_GAMEOBJECT_CACHE) {
+		delete ptr;
+	}
+	else {
+		m_GameObjectCache.push_back(ptr);
+	}
+}

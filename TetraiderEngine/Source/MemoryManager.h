@@ -14,17 +14,20 @@ Creation date: 2/1/18
 #define MEMORYMANAGER_H
 
 #include <cstdlib>
+#include <vector>
+#include "GameObject.h"
 
 	using namespace std;
 
 	const int	 MAX_CACHE_SIZE_NUM = 100;			// # of Cacheable MemoryBlocks
 	const size_t DEFAULT_BUFFER_SIZE_BYTE = 524288000;	// 5 MB = 5*1024*1024 byte
+	const int	 MAX_GAMEOBJECT_CACHE = 50;
 
-	/*class MemoryManagerInterface {
+	class MemoryManagerInterface {
 	public:
 		virtual void* Alloc(std::size_t) = 0;
 		virtual void Free(void*) = 0;
-	};*/
+	};
 
 	typedef struct ListNode {
 		void *pData; 				// pointer to data block's position in m_Buffer
@@ -53,13 +56,14 @@ Creation date: 2/1/18
 
 
 
-	class MemoryManager  {
+	class MemoryManager :public MemoryManagerInterface {
 	private:
 		static void* m_Buffer;						// Block of memory where all data exists
 		const size_t m_TotalBufferSize;				// How big the buffer is in bytes
 		MemoryBlock* m_pHead;						// First MemoryBlock in the linked list
 		MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];	// Stores MemoryBlocks to be deleted, when full all will be deleted at once
 		int m_NumCachedBlock;						// Number of MemoryBlocks stored in the m_Cache
+		std::vector<GameObject*> m_GameObjectCache;
 	public:
 
 		MemoryManager();
@@ -71,6 +75,9 @@ Creation date: 2/1/18
 		void Free(void* ptr);
 		MemoryBlock* NewMemoryBlock();
 		void Recycle(MemoryBlock*);
+
+		GameObject* GetNewGameObject(unsigned int id);
+		void DeleteGameObject(GameObject*);
 	};
 
 #endif
