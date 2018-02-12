@@ -15,8 +15,8 @@
 #include "AudioManager.h"
 #include "GameObjectManager.h"
 #include "MemoryManager.h"
+#include "FloorPlanGenerator.h"
 #include "Singleton.h"
-#include "MemoryManager.h"
 #include <string>
 
 #define TETRA_MEMORY Singleton<MemoryManager>::GetInstance()
@@ -32,6 +32,7 @@
 #define TETRA_AUDIO Singleton<AudioManager>::GetInstance()
 #define TETRA_PHYSICS Singleton<PhysicsManager>::GetInstance()
 #define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
+#define TETRA_LEVEL_GEN Singleton<FloorPlanGenerator>::GetInstance()
 
 namespace Tetraider {
 	//! int Initialize(std::string configFileName)

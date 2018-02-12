@@ -1,4 +1,5 @@
 {
+  "ROOM_CONNECTION_TYPE": "ALL",
   "ROOM_IMAGE": "Rooms/all.png",
   "COLLIDERS": [
     {

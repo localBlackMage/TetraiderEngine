@@ -90,23 +90,28 @@ struct RoomNode {
 class FloorPlanGenerator {
 protected:
 	RoomNode* m_roomNodes[MAX_ROWS][MAX_COLS];
-	std::vector<RoomNode*> m_selectedNodes;
 
 	bool _A_Star(RoomNode& start, RoomNode& goal);
 
+	void _GenerateRoomNodes();
 	void _ResetNodeDistances();
 	void _ResetNodeParents();
 	void _ConnectNeighbors();
-	void _SelectNodes();
-	void _ConnectSelectedNodes();
+	std::vector<RoomNode*> _SelectNodes();
+	void _ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes);
 	void _SetRoomConnectionTypes();
 public:
-	FloorPlanGenerator() {}
+	FloorPlanGenerator();
 	~FloorPlanGenerator();
+	FloorPlanGenerator(const FloorPlanGenerator &) = delete;
+	void operator=(const FloorPlanGenerator &) = delete;
 	
 	void UnsetNodeNeigbors(RoomNode& node);
 	void GenerateFloorPlan(int seed = -1);
+	void ResetAllNodes();
 	void PrintFloorPlan();
+
+	RoomConnections GetRoomConnectionType(const std::string connectionType);
 };
 
 #endif
