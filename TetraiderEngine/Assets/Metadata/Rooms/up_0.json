@@ -10,6 +10,7 @@
       }
     },
   
+
     {
       "prefab": "P_Collider",
       "position": {

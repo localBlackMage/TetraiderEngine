@@ -349,6 +349,7 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 }
 
+
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
 {
 	return ROOM_CONN_STRINGS[connectionType];
@@ -366,6 +367,7 @@ void FloorPlanGenerator::LoadRoomFiles()
 		m_roomFiles[ GetRoomConnectionType( name ) ].push_back(j);
 	}
 }
+
 
 #pragma endregion
 
