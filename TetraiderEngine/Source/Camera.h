@@ -25,7 +25,7 @@ private:
 public:
 	Camera();
 	~Camera();
-	static Component* CreateInstance() { return new Camera(); }
+	//static Component* CreateInstance() { return new Camera(); }
 	virtual void LateInitialize();
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);

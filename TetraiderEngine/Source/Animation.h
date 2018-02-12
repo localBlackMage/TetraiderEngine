@@ -10,7 +10,7 @@ class Animation :public Component {
 public:
 	Animation();
 	~Animation();
-	static Component* CreateInstance() { return new Animation(); }
+	//static Component* CreateInstance() { return new Animation(); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

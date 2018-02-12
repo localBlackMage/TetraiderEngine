@@ -24,7 +24,7 @@ public:
 	Transform();
 	~Transform();
 
-	static Component* CreateInstance() { return new Transform(); }
+	//static Component* CreateInstance() { return new Transform(); }
 
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);

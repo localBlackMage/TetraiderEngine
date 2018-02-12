@@ -178,7 +178,7 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	//auto start = std::chrono::system_clock::now();
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
-	GameObject *pGameObject = new GameObject(++m_currentId);
+	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(name, ++m_currentId );
 	SetGameObjectTag(ParseString(*j, "Tag"), pGameObject);
 	SetGameObjectLayer(ParseString(*j, "Layer"), pGameObject);
 

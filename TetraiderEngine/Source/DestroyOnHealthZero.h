@@ -11,7 +11,7 @@ class DestroyOnHealthZero : public Component {
 public:
 	DestroyOnHealthZero();
 	~DestroyOnHealthZero();
-	static Component* CreateInstance() { return new DestroyOnHealthZero(); }
+	//static Component* CreateInstance() { return new DestroyOnHealthZero(); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
