@@ -38,7 +38,7 @@ private:
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
 	std::vector<GameObject*> m_pCameras;
-	std::vector<GameObject*> mGameObjectsWithHealthComponents; // TODO: Introduce a getter
+	std::vector<GameObject*> mGameObjectsWithHealthComponents;
 
 	GameObjectLayer m_layers[RENDER_LAYER::L_NUM_LAYERS];
 	std::vector<GameObject*> mGameObjects;
