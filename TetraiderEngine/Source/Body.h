@@ -14,7 +14,7 @@ class Body : public Component {
 public:
 	Body();
 	~Body();
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Body); }
+	static Component* CreateInstance() { return new Body(); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

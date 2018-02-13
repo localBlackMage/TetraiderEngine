@@ -34,10 +34,11 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["DealDamageOnCollision"] = DealDamageOnCollision::CreateInstance;
 }
 
-unsigned int ComponentFactory::CreateComponent(std::string component) {
+Component* ComponentFactory::CreateComponent(std::string component) {
 	CreationFunction* Create = m_creationFunctions[component];
+
 	if (Create)
 		return Create();
 
-	return NUM_COMPONENTS;
+	return nullptr;
 }

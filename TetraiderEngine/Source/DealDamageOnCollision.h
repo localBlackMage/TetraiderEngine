@@ -8,7 +8,7 @@ class DealDamageOnCollision : public Component {
 public:
 	DealDamageOnCollision();
 	~DealDamageOnCollision();
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_DealDamageOnCollision); }
+	static Component* CreateInstance() { return new DealDamageOnCollision(); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

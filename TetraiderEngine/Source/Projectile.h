@@ -13,7 +13,7 @@ class Projectile : public Component {
 public:
 	Projectile();
 	~Projectile() {}
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Projectile); }
+	static Component* CreateInstance() { return new Projectile(); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

@@ -13,9 +13,9 @@ public:
 	ComponentFactory();
 	~ComponentFactory() {};
 
-	unsigned int CreateComponent(std::string component);
+	Component* CreateComponent(std::string component);
 private:
-	typedef unsigned int CreationFunction();
+	typedef Component* CreationFunction();
 	std::unordered_map <std::string, CreationFunction*> m_creationFunctions;
 };
 

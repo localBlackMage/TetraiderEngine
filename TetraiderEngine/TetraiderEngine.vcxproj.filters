@@ -440,12 +440,6 @@
     <ClInclude Include="Source\Agent.h">
       <Filter>Header Files\Components\Agent</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCController.h">
-      <Filter>Header Files\Components\Agent</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Controller.h">
-      <Filter>Header Files\Components\Agent</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
@@ -463,6 +457,12 @@
     </ClInclude>
     <ClInclude Include="Source\AOEAttack.h">
       <Filter>Header Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCController.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
