@@ -18,6 +18,14 @@ Agent::Agent(ComponentType _type) :
 	m_isIgnoreHazards(false)
 {};
 
+void Agent::DeActivate() {
+	pGO = nullptr; 
+	m_pTransform = nullptr;
+	m_pAnimation = nullptr; 
+	m_pBody = nullptr; 
+	m_isIgnoreHazards = false; 
+}
+
 void Agent::Update(float dt) {
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
 	m_pBody->SetVelocity(m_currentVelocity);

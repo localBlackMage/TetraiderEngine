@@ -26,7 +26,7 @@ public:
 	~Transform();
 
 	static Component* CreateInstance() { return new Transform();  }
-
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(const json& j);

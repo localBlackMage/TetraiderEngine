@@ -10,6 +10,14 @@ DestroyOnHealthZero::~DestroyOnHealthZero() {
 		delete m_Attack;
 }
 
+void DestroyOnHealthZero::DeActivate() {
+	pGO = nullptr; 
+	delete m_Attack; 
+	m_destroyIn = 0;  
+	m_timeStamp = 0, 
+	m_isDestory = false; 
+}
+
 void DestroyOnHealthZero::Update(float dt) {
 	if (m_isDestory) {
 		if (TETRA_FRAMERATE.GetElapsedTime() - m_timeStamp >= m_destroyIn) {

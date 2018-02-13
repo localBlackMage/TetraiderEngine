@@ -9,6 +9,7 @@ public:
 	DealDamageOnCollision();
 	~DealDamageOnCollision();
 	static Component* CreateInstance() { return new DealDamageOnCollision(); }
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

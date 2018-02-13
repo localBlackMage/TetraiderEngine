@@ -11,6 +11,7 @@ public:
 	Controller();
 	~Controller();
 	static Component* CreateInstance() { return new Controller(); }
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);

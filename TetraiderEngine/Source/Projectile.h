@@ -14,6 +14,7 @@ public:
 	Projectile();
 	~Projectile() {}
 	static Component* CreateInstance() { return new Projectile(); }
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

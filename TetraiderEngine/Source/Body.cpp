@@ -15,6 +15,11 @@ Body::~Body() {
 	delete m_pShape;
 }
 
+void Body::DeActivate() {
+	pGO = nullptr; 
+	delete m_pShape; 
+}
+
 void Body::Update(float dt) {}
 
 void Body::LateUpdate(float dt) {

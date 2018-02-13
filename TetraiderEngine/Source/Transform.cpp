@@ -19,6 +19,10 @@ Transform::~Transform()
 {
 }
 
+void Transform::DeActivate() {
+	pGO = nullptr;
+}
+
 void Transform::Update(float dt) 
 {
 

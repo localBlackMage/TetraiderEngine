@@ -3,6 +3,11 @@
 
 Audio::Audio():Component(ComponentType::C_Audio) {}
 Audio::~Audio() {}
+
+void Audio::DeActivate() {
+	pGO = nullptr; 
+}
+
 void Audio::Update(float dt) {}
 
 void Audio::Serialize(const json& j)

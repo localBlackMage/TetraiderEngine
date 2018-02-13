@@ -22,6 +22,18 @@ Weapon::~Weapon() {
 	m_pEffect->Destroy();
 }
 
+void Weapon::DeActivate() {
+	for (auto attack : m_Attacks) {
+		delete attack;
+	}
+	m_Attacks.clear();
+	m_pWeapon->Destroy();
+	m_pEffect->Destroy();
+	m_pWeaponTransform = nullptr;
+	m_pEffectTransform = nullptr;
+	m_pController = nullptr;
+}
+
 void Weapon::Update(float dt) {
 	for (auto attacks : m_Attacks) {
 		attacks->Update(dt);

@@ -11,6 +11,7 @@ public:
 	NPCController();
 	~NPCController();
 	static Component* CreateInstance() { return new NPCController(); }
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);
