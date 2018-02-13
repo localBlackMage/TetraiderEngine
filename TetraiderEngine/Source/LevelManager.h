@@ -22,6 +22,7 @@ public:
 	void operator=(const LevelManager &) = delete;
 
 	void Initialize(const json& j);
+	std::vector<GameObject*> LoadRoomFile(const json& j);
 	void LoadLevel();
 	void UnLoadLevel();
 	void UnLoadLevelForRestart();

@@ -22,6 +22,25 @@ void LevelManager::Initialize(const json& j) {
 	firstLevel = currentLevel;
 }
 
+std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
+{
+	std::vector<GameObject*> createdGameObjects;
+	int gameObjectSize = j[GAME_OBJECTS].size();
+	for (int i = 0; i < gameObjectSize; i++) {
+		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
+
+		if (pGO) {
+			if (j[GAME_OBJECTS][i].find("position") != j[GAME_OBJECTS][i].end()) {
+				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+				if (pTransform) pTransform->SetPosition(ParseVector3D(j[GAME_OBJECTS][i], "position"));
+			}
+		}
+		createdGameObjects.push_back(pGO);
+	}
+
+	return createdGameObjects;
+}
+
 void LevelManager::LoadLevel() {
 	std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
 	LoadLevel(OpenJsonFile(s));

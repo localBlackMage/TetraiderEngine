@@ -1,10 +1,14 @@
 #include "FloorPlanGenerator.h"
+#include "TetraiderAPI.h"
+
+#include "GameObject.h"
+#include "Transform.h"
+
 #include <cstdlib>
 #include <time.h>
-#include <vector>
-#include <unordered_map>
 #include <iostream>
 #include <algorithm>
+#include <filesystem>
 
 static std::unordered_map<std::string, RoomConnections> ROOM_CONN_STRINGS = {
 	{ "LEFT", RoomConnections::LEFT },
@@ -100,7 +104,7 @@ void FloorPlanGenerator::_GenerateRoomNodes()
 	for (short row = 0; row < MAX_ROWS; ++row) {
 		for (short col = 0; col < MAX_COLS; ++col) {
 			m_roomNodes[row][col] = new RoomNode(RoomType::DEAD, ++id, row, col);
-			UnsetNodeNeigbors(*m_roomNodes[row][col]);
+			_UnsetNodeNeigbors(*m_roomNodes[row][col]);
 		}
 	}
 }
@@ -218,11 +222,32 @@ void FloorPlanGenerator::_ConnectSelectedNodes(std::vector<RoomNode*>& selectedN
 	}
 }
 
-void FloorPlanGenerator::_SetRoomConnectionTypes()
+void FloorPlanGenerator::_SelectivelyUnsetNodeNeighbors()
 {
+	RoomNode* node;
 	for (short row = 0; row < MAX_ROWS; ++row) {
 		for (short col = 0; col < MAX_COLS; ++col) {
-			RoomNode* node = m_roomNodes[row][col];
+			node = m_roomNodes[row][col];
+			if (node->m_type == RoomType::DEAD)
+				_UnsetNodeNeigbors(*node);
+			else {
+				node->m_Neighbors[0] = !node->m_Neighbors[0] || node->m_Neighbors[0]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[0];
+				node->m_Neighbors[1] = !node->m_Neighbors[1] || node->m_Neighbors[1]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[1];;
+				node->m_Neighbors[2] = !node->m_Neighbors[2] || node->m_Neighbors[2]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[2];;
+				node->m_Neighbors[3] = !node->m_Neighbors[3] || node->m_Neighbors[3]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[3];;
+			}
+		}
+	}
+}
+
+void FloorPlanGenerator::_SetRoomConnectionTypes()
+{
+	RoomNode* node;
+	for (short row = 0; row < MAX_ROWS; ++row) {
+		for (short col = 0; col < MAX_COLS; ++col) {
+			node = m_roomNodes[row][col];
+			if (node->m_type == RoomType::DEAD)	continue;
+
 			int connection = (node->m_Neighbors[NEIGHBOR::N_LEFT] ? 1 : 0) + 
 				(node->m_Neighbors[NEIGHBOR::N_UP] ? 2 : 0) +
 				(node->m_Neighbors[NEIGHBOR::N_RIGHT] ? 4 : 0) +
@@ -233,6 +258,13 @@ void FloorPlanGenerator::_SetRoomConnectionTypes()
 	}
 }
 
+void FloorPlanGenerator::_UnsetNodeNeigbors(RoomNode& node)
+{
+	node.m_Neighbors[0] = nullptr;
+	node.m_Neighbors[1] = nullptr;
+	node.m_Neighbors[2] = nullptr;
+	node.m_Neighbors[3] = nullptr;
+}
 #pragma endregion
 
 #pragma region FloorPlanGenerator Methods
@@ -240,7 +272,6 @@ void FloorPlanGenerator::_SetRoomConnectionTypes()
 FloorPlanGenerator::FloorPlanGenerator()
 {
 	_GenerateRoomNodes();
-	_ConnectNeighbors();
 }
 
 FloorPlanGenerator::~FloorPlanGenerator()
@@ -248,30 +279,24 @@ FloorPlanGenerator::~FloorPlanGenerator()
 	for (short row = 0; row < MAX_ROWS; ++row) {
 		for (short col = 0; col < MAX_COLS; ++col) {
 			if (m_roomNodes[row][col]) {
-				UnsetNodeNeigbors(*m_roomNodes[row][col]);
+				_UnsetNodeNeigbors(*m_roomNodes[row][col]);
 				delete m_roomNodes[row][col];
 			}
 		}
 	}
 }
 
-void FloorPlanGenerator::UnsetNodeNeigbors(RoomNode& node)
-{
-	node.m_Neighbors[0] = nullptr;
-	node.m_Neighbors[1] = nullptr;
-	node.m_Neighbors[2] = nullptr;
-	node.m_Neighbors[3] = nullptr;
-}
-
 void FloorPlanGenerator::GenerateFloorPlan(int seed)
 {
 	ResetAllNodes();
+	_ConnectNeighbors();
 	if (seed == -1)
 		srand(int(time(nullptr)));
 	else
 		srand(seed);
 	
 	_ConnectSelectedNodes(_SelectNodes());
+	_SelectivelyUnsetNodeNeighbors();
 	_SetRoomConnectionTypes();
 }
 
@@ -292,9 +317,54 @@ void FloorPlanGenerator::PrintFloorPlan()
 	}
 }
 
+void FloorPlanGenerator::GenerateLevelFromFloorPlan()
+{
+	// TODO: These are "magic numbers" - currently the width/height of each of the rooms
+	// (96x96 tiles, 12x8 tiles)
+	float x = 1152.f;
+	float xHalf = x / 2.f;
+	float xPos = xHalf;
+	float y = 768.f;
+	float yHalf = y / 2.f;
+	float yPos = yHalf;
+
+	for (short row = 0; row < MAX_ROWS; ++row) {
+		Vector3D offset = Vector3D(xPos, yPos, 0);
+		for (short col = 0; col < MAX_COLS; ++col) {
+			if (m_roomNodes[row][col]->m_type == RoomType::DEAD)	continue;
+			// TODO: Add some logic to select a room file, for now just select the first
+			json* j = m_roomFiles[m_roomNodes[row][col]->m_ConnectionType][0];
+
+			std::vector<GameObject*> createdGameObjects = TETRA_LEVELS.LoadRoomFile(*j);
+			for (GameObject* pGO : createdGameObjects) {
+				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+				if (pTransform)	pTransform->Move(offset);
+			}
+
+			xPos += x;
+		}
+		yPos += y;
+	}
+
+	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
+}
+
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
 {
 	return ROOM_CONN_STRINGS[connectionType];
+}
+
+void FloorPlanGenerator::LoadRoomFiles()
+{
+	const std::string ROOM_CONNECTION_TYPE = "ROOM_CONNECTION_TYPE";
+	std::string path = TETRA_GAME_CONFIG.RoomFilesDir();
+	for (auto &room : std::experimental::filesystem::directory_iterator(path)) {
+		json* j = new json();
+		*j = OpenJsonFile(room.path().string());
+
+		std::string name = (*j)[ROOM_CONNECTION_TYPE];
+		m_roomFiles[ GetRoomConnectionType( name ) ].push_back(j);
+	}
 }
 
 #pragma endregion

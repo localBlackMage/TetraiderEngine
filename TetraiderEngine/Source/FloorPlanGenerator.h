@@ -5,6 +5,9 @@
 
 #include <queue>
 #include <string>
+#include <unordered_map>
+#include <vector>
+#include "JsonReader.h"
 
 template<class T, class Container = std::vector<T>, class Compare = std::less<typename Container::value_type> >
 class MinHeap : public std::priority_queue<T, Container, Compare>
@@ -91,6 +94,9 @@ class FloorPlanGenerator {
 protected:
 	RoomNode* m_roomNodes[MAX_ROWS][MAX_COLS];
 
+	// TODO: Move this to LevelManager or somewhere more fitting
+	std::unordered_map<RoomConnections, std::vector<json*> > m_roomFiles;
+
 	bool _A_Star(RoomNode& start, RoomNode& goal);
 
 	void _GenerateRoomNodes();
@@ -99,19 +105,24 @@ protected:
 	void _ConnectNeighbors();
 	std::vector<RoomNode*> _SelectNodes();
 	void _ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes);
+	void _SelectivelyUnsetNodeNeighbors();
 	void _SetRoomConnectionTypes();
+	void _UnsetNodeNeigbors(RoomNode& node);
 public:
 	FloorPlanGenerator();
 	~FloorPlanGenerator();
 	FloorPlanGenerator(const FloorPlanGenerator &) = delete;
 	void operator=(const FloorPlanGenerator &) = delete;
 	
-	void UnsetNodeNeigbors(RoomNode& node);
 	void GenerateFloorPlan(int seed = -1);
 	void ResetAllNodes();
 	void PrintFloorPlan();
+	void GenerateLevelFromFloorPlan();
 
 	RoomConnections GetRoomConnectionType(const std::string connectionType);
+	
+	// TODO: Move this to LevelManager or somewhere more fitting
+	void LoadRoomFiles();
 };
 
 #endif

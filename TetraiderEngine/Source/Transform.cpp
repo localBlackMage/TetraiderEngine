@@ -91,16 +91,18 @@ Vector3D Transform::GetPosition() const
 		return m_position;
 }
 
-void Transform::SetPosition(Vector3D pos)
+void Transform::SetPosition(const Vector3D& pos)
 {
-	m_position = pos;
+	m_position.x = pos.x;
+	m_position.y = pos.y;
+	m_position.z = pos.z;
 
 	Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
 	if (pBody)
 		pBody->m_Position.Set(m_position.x, m_position.y, m_position.z);
 }
 
-void Transform::Move(Vector3D amount)
+void Transform::Move(const Vector3D& amount)
 {
 	m_position += amount;
 }

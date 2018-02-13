@@ -2,6 +2,7 @@
 	"GAME_SETTINGS": {
 		"levelFilesDir": "../TetraiderEngine/Assets/Metadata/Levels/",
 		"prefabsDir": "../TetraiderEngine/Assets/Metadata/Prefabs/",
+		"roomFilesDir": "../TetraiderEngine/Assets/Metadata/Rooms/",
 		"sfxDir": "../TetraiderEngine/Assets/SFX/",
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",

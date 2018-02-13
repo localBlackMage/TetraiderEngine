@@ -10,6 +10,8 @@ namespace Tetraider {
 		TETRA_RENDERER.LoadShaders();
 		TETRA_RESOURCES.Init();
 
+		TETRA_LEVEL_GEN.LoadRoomFiles();
+
 		return 0;
 	}
 

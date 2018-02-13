@@ -35,9 +35,9 @@ public:
 
 	bool operator<(const Transform& other) const;
 
-	void SetPosition(Vector3D pos);
+	void SetPosition(const Vector3D& pos);
 	Vector3D GetPosition() const;
-	void Move(Vector3D amount);
+	void Move(const Vector3D& amount);
 
 	void SetAngles(float angleX, float angleY, float angleZ);
 	float GetAngleX() const;
