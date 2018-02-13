@@ -32,6 +32,7 @@
 #define TETRA_AUDIO Singleton<AudioManager>::GetInstance()
 #define TETRA_PHYSICS Singleton<PhysicsManager>::GetInstance()
 #define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
+#define TETRA_LUA Singleton<LuaScript>::GetInstance()
 
 namespace Tetraider {
 	//! int Initialize(std::string configFileName)

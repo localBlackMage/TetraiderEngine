@@ -24,17 +24,13 @@ class LuaScript
 private:	
 	lua_State* m_LuaState;
 
+	
+public:
 	LuaScript();
 	~LuaScript();
-public:
 	LuaScript(const LuaScript &) = delete;
 	void operator=(const LuaScript &) = delete;
 
-	static LuaScript& GetInstance()
-	{
-		static LuaScript instance;
-		return instance;
-	}
 	void LuaInit(const char* luaFile);
 	lua_State* GetLuaState();
 
