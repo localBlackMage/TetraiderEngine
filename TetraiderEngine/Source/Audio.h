@@ -11,7 +11,7 @@ class Audio:public Component
 public:
 	Audio();
 	~Audio();
-	static Component* CreateInstance() { return new Audio(); }
+	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Audio); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

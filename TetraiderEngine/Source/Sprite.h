@@ -25,7 +25,7 @@ protected:
 public:
 	Sprite(std::string textureName = "");
 	~Sprite();
-	static Component* CreateInstance() { return new Sprite(); }
+	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Sprite); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 

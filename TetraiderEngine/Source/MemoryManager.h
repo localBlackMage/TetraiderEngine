@@ -64,6 +64,7 @@ private:
 	MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];	// Stores MemoryBlocks to be deleted, when full all will be deleted at once
 	int m_NumCachedBlock;						// Number of MemoryBlocks stored in the m_Cache
 	std::vector<GameObject*> m_GameObjectCache;
+	std::vector<Component*> m_ComponentCache[NUM_COMPONENTS];
 
 	MemoryBlock* NewMemoryBlock();
 	void Recycle(MemoryBlock*);
@@ -78,7 +79,10 @@ public:
 	void Free(void* ptr);
 	// ***********************************
 	// GameObj Factory
-	GameObject* GetNewGameObject(unsigned int);
+	GameObject* GetNewGameObject(unsigned int id);
 	void DeleteGameObject(GameObject* ptr);
+	// Component Factory
+	Component* GetNewComponent(ComponentType type);
+	void DeleteComponent(Component* ptr);
 };
 #endif

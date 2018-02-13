@@ -25,7 +25,7 @@ public:
 	Transform();
 	~Transform();
 
-	static Component* CreateInstance() { return new Transform(); }
+	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Transform); }
 
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);

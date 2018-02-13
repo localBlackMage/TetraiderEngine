@@ -186,7 +186,7 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCameras.push_back(pGameObject);
 	int size = (*j)[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
-		Component* pComponent = componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
+		Component* pComponent = TETRA_MEMORY.GetNewComponent(static_cast<ComponentType>(componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"))));
 		pGameObject->AddComponent(pComponent);
 		pComponent->Serialize((*j)[COMPONENTS][i]);
 	}

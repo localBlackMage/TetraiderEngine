@@ -20,7 +20,7 @@ GameObject::GameObject(unsigned int id) :
 GameObject::~GameObject() {
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
-			delete mComponents[i];
+			TETRA_MEMORY.DeleteComponent(mComponents[i]);
 	}
 }
 

@@ -10,7 +10,7 @@ class Controller : public Agent {
 public:
 	Controller();
 	~Controller();
-	static Component* CreateInstance() { return new Controller(); }
+	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Controller); }
 	virtual void Update(float dt);
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);

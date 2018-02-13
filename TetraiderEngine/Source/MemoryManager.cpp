@@ -12,6 +12,22 @@ Creation date: 2/1/18
 
 #include "MemoryManager.h"
 #include "TetraiderAPI.h"
+#include "Component.h"
+#include "Transform.h"
+#include "Sprite.h"
+#include "Animation.h"
+#include "Controller.h"
+#include "Body.h"
+#include "Camera.h"
+#include "CamFollow.h"
+#include "Health.h"
+#include "FlashOnTakeDamage.h"
+#include "Projectile.h"
+#include "Weapon.h"
+#include "Audio.h"
+#include "NPCController.h"
+#include "DestroyOnHealthZero.h"
+#include "DealDamageOnCollision.h"
 #include <iostream>
 
 // temp
@@ -50,9 +66,11 @@ MemoryManager::MemoryManager():
 	m_pHead = (MemoryBlock*)malloc(sizeof(MemoryBlock));
 	m_pHead->Initialize(m_Buffer, 0, m_TotalBufferSize);
 	m_NumCachedBlock = 0;
+
 }
 
 MemoryManager::~MemoryManager() {
+
 	if (m_pHead){
 		m_pHead->CleanUp();
 		free(m_pHead);
@@ -74,7 +92,6 @@ void* MemoryManager::Alloc(std::size_t size) {
 		return nullptr;
 	}
 	// create a new memoryblock and insert into the list
-	
 	MemoryBlock* temp = current->next;
 	current->next = NewMemoryBlock();
 	current->next->Initialize(	static_cast<unsigned char*>(current->pData) + current->size, 
@@ -164,7 +181,59 @@ void MemoryManager::DeleteGameObject(GameObject* ptr) {
 		m_GameObjectCache.push_back(ptr);
 	}
 }
-//
+
+Component* MemoryManager::GetNewComponent(ComponentType type) {
+	if (m_ComponentCache[type].empty()) {
+		switch (type) {
+		case C_Transform:
+			return new Transform();
+		case C_Sprite:
+			return new Sprite();
+		case C_Animation:
+			return new Animation();
+		case C_Controller:
+			return new Controller();
+		case C_Body:
+			return new Body();
+		case C_Camera:
+			return new Camera();
+		case C_CamFollow:
+			return new CamFollow();
+		case C_Health:
+			return new Health();
+		case C_FlashOnTakeDamage:
+			return new FlashOnTakeDamage();
+		case C_Projectile:
+			return new Projectile();
+		case C_Weapon:
+			return new Weapon();
+		case C_Audio:
+			return new Audio();
+		case C_NPCCONTROLLER:
+			return new NPCController();
+		case C_ParticleEmitter:
+			//return new ParticleEmitter();
+			break;
+		case C_DestroyOnHealthZero:
+			return new DestroyOnHealthZero();
+		case C_DealDamageOnCollision:
+			return new DealDamageOnCollision();
+		}
+		return nullptr;
+	}
+	else { // currently no caching for components
+		Component* emptyComp = m_ComponentCache[type].front();
+		m_ComponentCache[type].erase(m_ComponentCache[type].begin());
+		return emptyComp;
+	}
+}
+void MemoryManager::DeleteComponent(Component* ptr) {
+	
+	delete ptr;
+
+}
+/* REFERENCE OF HOW NEW DELETE IS DEFINED IN SUBSCRIBER CLASS */
+// 
 //void* MemoryManager::operator new(std::size_t size)
 //{
 //	return TETRA_MEMORY.Alloc(size);
