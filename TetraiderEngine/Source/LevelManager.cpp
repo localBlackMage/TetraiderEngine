@@ -7,7 +7,7 @@
 #include "Shape.h"
 #include <iostream>
 
-static const std::string GAME_OBJECTS = "GAME_OBJECTS";
+static const std::string GAME_OBJECTS = GAME_OBJECTS;
 
 LevelManager::LevelManager() {}
 
@@ -86,22 +86,27 @@ void LevelManager::LoadLevel(const json& j) {
 
 		// Overwrite values for transform component if they exist
 		// TODO: Scale and rotation as well
+		
+		/* 
+			These overrides should really be done within the component themselves, especially if we add any more of these. There's no good reason to bloat the LevelManager
+			with Component specific things when the Component should know how to read it's own values.	- Holden
+		*/
 		if (pGO) {
 			Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-			if (j["GAME_OBJECTS"][i].find("position") != j["GAME_OBJECTS"][i].end()) {
-				if (pTransform) pTransform->SetPosition(ParseVector3D(j["GAME_OBJECTS"][i], "position"));
+			if (j[GAME_OBJECTS][i].find("position") != j[GAME_OBJECTS][i].end()) {
+				if (pTransform) pTransform->SetPosition(ParseVector3D(j[GAME_OBJECTS][i], "position"));
 			}
-			if (j["GAME_OBJECTS"][i].find("scale") != j["GAME_OBJECTS"][i].end()) {
-				if (pTransform) pTransform->SetScale(ParseFloat(j["GAME_OBJECTS"][i]["scale"], "x"), ParseFloat(j["GAME_OBJECTS"][i]["scale"], "y"));
+			if (j[GAME_OBJECTS][i].find("scale") != j[GAME_OBJECTS][i].end()) {
+				if (pTransform) pTransform->SetScale(ParseFloat(j[GAME_OBJECTS][i]["scale"], "x"), ParseFloat(j[GAME_OBJECTS][i]["scale"], "y"));
 			}
-			if (j["GAME_OBJECTS"][i].find("shape") != j["GAME_OBJECTS"][i].end()) {
+			if (j[GAME_OBJECTS][i].find("shape") != j[GAME_OBJECTS][i].end()) {
 				Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
 
 				if (pBody->m_pShape->type == ShapeType::ST_AABB) {
-					pBody->OverrideShapeData(ParseFloat(j["GAME_OBJECTS"][i]["shape"], "width"), ParseFloat(j["GAME_OBJECTS"][i]["shape"], "height"));
+					pBody->OverrideShapeData(ParseFloat(j[GAME_OBJECTS][i]["shape"], "width"), ParseFloat(j[GAME_OBJECTS][i]["shape"], "height"));
 				}
 				else if (pBody->m_pShape->type == ShapeType::ST_Circle) {
-					pBody->OverrideShapeData(ParseFloat(j["GAME_OBJECTS"][i]["shape"], "radius"));
+					pBody->OverrideShapeData(ParseFloat(j[GAME_OBJECTS][i]["shape"], "radius"));
 				}
 			}
 		}
