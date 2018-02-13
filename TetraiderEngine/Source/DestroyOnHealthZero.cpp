@@ -4,8 +4,11 @@
 #include "Transform.h"
 #include "TetraiderAPI.h"
 
-DestroyOnHealthZero::DestroyOnHealthZero(): Component(ComponentType::C_DestroyOnHealthZero), m_destroyIn(0), m_timeStamp(0), m_isDestory(false) {}
-DestroyOnHealthZero::~DestroyOnHealthZero() {}
+DestroyOnHealthZero::DestroyOnHealthZero(): Component(ComponentType::C_DestroyOnHealthZero), m_destroyIn(0), m_timeStamp(0), m_isDestory(false), m_Attack(nullptr) {}
+DestroyOnHealthZero::~DestroyOnHealthZero() {
+	if (m_Attack)
+		delete m_Attack;
+}
 
 void DestroyOnHealthZero::Update(float dt) {
 	if (m_isDestory) {
