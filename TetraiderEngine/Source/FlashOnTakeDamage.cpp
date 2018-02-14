@@ -5,6 +5,11 @@
 FlashOnTakeDamage::FlashOnTakeDamage(): Component(ComponentType::C_FlashOnTakeDamage), m_flashTime(2.0f) {}
 FlashOnTakeDamage::~FlashOnTakeDamage() {}
 
+void FlashOnTakeDamage::DeActivate() {
+	pGO = nullptr; 
+	m_pSprite = nullptr; 
+}
+
 void FlashOnTakeDamage::Update(float dt) {
 	if (m_flashTime > 1.f)
 		return;

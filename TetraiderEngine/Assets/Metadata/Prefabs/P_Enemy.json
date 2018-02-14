@@ -29,7 +29,7 @@
 		"AgentData": {
 			"speed": 150,
 			"acceleration": 8,
-			"knockBackSpeed": 800
+			"knockBackMultiplier": 1
 		}
 	},
     {
@@ -107,28 +107,6 @@
         "b": 1,
         "a": 0
 		}
-	},
-	{
-		"Component": "Weapon",
-		"Attacks":[
-			{
-				"type": "Melee",
-				"coolDown": 0.5,
-				"baseDamage": 10,
-				"radius": 110,
-				"angle": 90,
-				"triggerAttackIn": 0.05
-			},
-			{
-				"type": "Ranged",
-				"coolDown": 0.5,
-				"baseDamage": 10,
-				"projectileSpeed": 400,
-				"instantiationOffset": 50,
-				"lifeTime": 2,
-				"projectilePrefab": "P_testProjectile"
-			}
-		]
 	}
   ]
 }

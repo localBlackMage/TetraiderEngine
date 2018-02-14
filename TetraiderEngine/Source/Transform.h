@@ -16,27 +16,30 @@ private:
 	Vector3D m_pivotOffset;
 	Matrix4x4 m_transform;
 	Vector3D m_lookAt;
+	Transform* m_parent;
 	float m_angleX, m_angleY, m_angleZ;
 	bool m_is2d;
 
 	void _UpdateLookAt();
+	void _UpdateBodyComponent();
 public:
 	Transform();
 	~Transform();
 
-	static Component* CreateInstance() { return new Transform(); }
-
+	static Component* CreateInstance() { return new Transform();  }
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(const json& j);
+	virtual void Override(const json& j);
 
 	virtual void HandleEvent(Event * p_event);
 
 	bool operator<(const Transform& other) const;
 
-	void SetPosition(Vector3D pos);
+	void SetPosition(const Vector3D& pos);
 	Vector3D GetPosition() const;
-	void Move(Vector3D amount);
+	void Move(const Vector3D& amount);
 
 	void SetAngles(float angleX, float angleY, float angleZ);
 	float GetAngleX() const;
@@ -68,6 +71,7 @@ public:
 	float GetScaleZ() const;
 	void SetScaleZ(float scaleZ);
 	void ScaleZby(float amount);
+	void SetParent(Transform* pParent) { m_parent = pParent; }
 
 	void SetScaleUniform(float amount);
 	void SetScale(float scaleX, float scaleY);

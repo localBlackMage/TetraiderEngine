@@ -15,6 +15,11 @@ Body::~Body() {
 	delete m_pShape;
 }
 
+void Body::DeActivate() {
+	pGO = nullptr; 
+	delete m_pShape; 
+}
+
 void Body::Update(float dt) {}
 
 void Body::LateUpdate(float dt) {
@@ -80,6 +85,22 @@ void Body::Serialize(const json& j) {
 	}
 }
 
+void Body::Override(const json & j)
+{
+	if (ValueExists(j, "shape")) {
+		switch (m_pShape->type) {
+		case ShapeType::ST_AABB:
+			OverrideShapeData(j["shape"]["width"], j["shape"]["height"]);
+			break;
+		case ShapeType::ST_Circle:
+			OverrideShapeData(j["shape"]["radius"]);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 void Body::LateInitialize() {
 	if (!m_pTransform) {
 		if (pGO)
@@ -134,3 +155,18 @@ void Body::DrawDebugShape() {
 
 void Body::AddForce(const Vector3D& force) { m_Forces.Add(force); }
 void Body::ClearForces() { m_Forces.Zero(); }
+
+void Body::OverrideShapeData(float width, float height) {
+	AABB* aabb = static_cast<AABB*>(m_pShape);
+	if (!aabb) return;
+	aabb->width = width;
+	aabb->height = height;
+	aabb->halfHeight = height / 2.0f;
+	aabb->halfWidth = width / 2.0f;
+}
+
+void Body::OverrideShapeData(float radius) {
+	Circle* circle = static_cast<Circle*>(m_pShape);
+	if (!circle) return;
+	circle->radius = radius;
+}

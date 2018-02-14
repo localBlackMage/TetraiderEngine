@@ -5,6 +5,10 @@
 Health::Health(): Component(ComponentType::C_Health) {}
 Health::~Health() {}
 
+void Health::DeActivate() { 
+	pGO = nullptr; 
+}
+
 void Health::Update(float dt) {}
 
 void Health::Serialize(const json& j) {
@@ -16,7 +20,7 @@ void Health::Serialize(const json& j) {
 void Health::LateInitialize() {}
 void Health::HandleEvent(Event* pEvent) {}
 
-void Health::TakeDamage(int damage, const Vector3D& sourceOfAttack) {
+void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float knockBackSpeed) {
 	if (m_isInvincible || m_currentHealth == 0)
 		return;
 
@@ -34,7 +38,7 @@ void Health::TakeDamage(int damage, const Vector3D& sourceOfAttack) {
 		pGO->HandleEvent(&Event(EventType::EVENT_OnHealthZero));
 	}
 
-	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, sourceOfAttack)));
+	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, directionOfAttack, knockBackSpeed)));
 }
 
 void Health::Heal(int heal) {
@@ -44,7 +48,7 @@ void Health::Heal(int heal) {
 	}
 
 	if (pGO->m_tag == GameObjectTag::T_Player) {
-		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal,&HealthChangeData(m_currentHealth, m_maxHealth, Vector3D())));
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal,&HealthChangeData(m_currentHealth, m_maxHealth, Vector3D(), 0)));
 	}
 }
 

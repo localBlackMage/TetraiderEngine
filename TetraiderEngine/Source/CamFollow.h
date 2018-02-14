@@ -17,6 +17,7 @@ public:
 	CamFollow();
 	~CamFollow();
 	static Component* CreateInstance() { return new CamFollow(); }
+	virtual void DeActivate();
 	virtual void LateInitialize();
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);

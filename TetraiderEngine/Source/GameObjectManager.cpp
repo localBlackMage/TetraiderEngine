@@ -43,7 +43,7 @@ void GameObjectLayer::operator=(const GameObjectLayer & rhs)
 void GameObjectLayer::RenderLayer(GameObject* camera)
 {
 	for (GameObject* pGO : m_layerObjects) {
-		if (pGO->m_isActive)
+		if (pGO->m_isActive && pGO->m_isRender)
 			TETRA_RENDERER.RenderGameObject(*camera, *pGO);
 	}
 }
@@ -136,7 +136,7 @@ void GameObjectManager::DestroyGameObjects() {
 
 			RemoveGameObjectsFromHealthList(*it);
 			TETRA_PHYSICS.RemoveGameObject(*it);
-			delete (*it);
+			TETRA_MEMORY.DeleteGameObject(*it);
 			it = mGameObjects.erase(it);
 		}
 		else {
@@ -174,11 +174,11 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 	m_GameObjectsQueue.clear();
 }
 
-GameObject* GameObjectManager::CreateGameObject(std::string name) {
-	//auto start = std::chrono::system_clock::now();
+GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
-	GameObject *pGameObject = new GameObject(++m_currentId);
+	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(++m_currentId);
+
 	SetGameObjectTag(ParseString(*j, "Tag"), pGameObject);
 	SetGameObjectLayer(ParseString(*j, "Layer"), pGameObject);
 
@@ -187,6 +187,7 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	int size = (*j)[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
 		Component* pComponent = componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
+		//Component* pComponent = TETRA_MEMORY.GetNewComponent(static_cast<ComponentType>(componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"))));
 		pGameObject->AddComponent(pComponent);
 		pComponent->Serialize((*j)[COMPONENTS][i]);
 	}
@@ -194,10 +195,6 @@ GameObject* GameObjectManager::CreateGameObject(std::string name) {
 	pGameObject->LateInitialize();
 
 	AddGameObjectToQueue(pGameObject);
-
-	/*auto end = std::chrono::system_clock::now();
-	std::chrono::duration<double> elapsed_seconds = end - start;
-	cout << "Object creation time:	" << elapsed_seconds.count() << endl;*/
 	return pGameObject;
 }
 
@@ -229,8 +226,11 @@ GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 }
 
 void GameObjectManager::HandleEvent(Event *pEvent) {
-	if (pEvent->Type() == EVENT_OnLevelInitialized) {
+	switch (pEvent->Type()) {
+	case EventType::EVENT_OnLevelInitialized:
+	case EventType::EVENT_StaticsLoaded:
 		UpdateStatus();
+		break;
 	}
 }
 

@@ -4,15 +4,19 @@
 #include "Health.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
-#include "Camera.h"
 #include <iostream>
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true)
+	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0)
 {
 }
 
 Controller::~Controller() {}
+
+void Controller::DeActivate() {
+	m_pWeapon = nullptr; 
+	Agent::DeActivate(); 
+}
 
 void Controller::Update(float dt) {
 	Vector3D moveDir;
@@ -22,7 +26,6 @@ void Controller::Update(float dt) {
 	if (abs(TETRA_INPUT.GetLeftAxisY()) > 5500)
 		moveDir.y -= TETRA_INPUT.GetLeftAxisY();
 
-	
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
@@ -50,14 +53,23 @@ void Controller::Update(float dt) {
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_R) || (TETRA_INPUT.IsKeyPressed(XBOX_BTN_START)&& TETRA_INPUT.IsKeyPressed(XBOX_BTN_BACK))) {
 		TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
 	}
-	
+
 	moveDir.Normalize();
-	m_targetVelocity = moveDir * m_speed;
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE)) {
+		m_isIgnoreHazards = true;
+		m_targetVelocity = moveDir * m_flySpeed;
+	}
+	else {
+		m_isIgnoreHazards = false;
+		m_targetVelocity = moveDir * m_speed;
+	}
+
 	//cout << TETRA_INPUT.GetRightAxisX() << " " << TETRA_INPUT.GetRightAxisX() << endl;
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.x = TETRA_INPUT.GetRightAxisX();
+		m_lookDirection.x = (float)(TETRA_INPUT.GetRightAxisX());
 	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.y = (float)-TETRA_INPUT.GetRightAxisY();
+		m_lookDirection.y = (float)(-TETRA_INPUT.GetRightAxisY());
+
 	CheckToggleMouseControl();
 	if (m_isGameControllerEnabled) {
 		m_lookDirection = GetDirectionToMouse();
@@ -65,9 +77,12 @@ void Controller::Update(float dt) {
 	m_lookDirection.Normalize();
 	Agent::Update(dt);
 
+	Vector3D pos = m_pTransform->GetPosition();
+
 }
 void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
+	m_flySpeed = ParseFloat(j, "flySpeed");
 }
 
 void Controller::HandleEvent(Event* pEvent) {
@@ -90,17 +105,6 @@ void Controller::LateInitialize() {
 			return;
 		}
 	}
-}
-
-Vector3D Controller::GetDirectionToMouse() {
-	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
-	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
-	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
-	Vector3D dirToMousePos = mousePos - screenSpace;
-	dirToMousePos.y *= -1;
-	dirToMousePos.Normalize();
-	return dirToMousePos;
 }
 
 void Controller::CheckToggleMouseControl() {

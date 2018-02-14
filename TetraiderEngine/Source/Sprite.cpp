@@ -21,6 +21,10 @@ Sprite::Sprite(std::string textureName) :
 
 Sprite::~Sprite() {}
 
+void Sprite::DeActivate() { 
+	pGO = nullptr; 
+}
+
 void Sprite::Update(float dt) {}
 
 void Sprite::Serialize(const json& j)

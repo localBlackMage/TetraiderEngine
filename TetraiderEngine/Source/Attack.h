@@ -9,13 +9,14 @@ class Weapon;
 enum class AttackType {
 	Melee,
 	Ranged,
+	AOE,
 
 	None
 };
 
 class Attack {
 public:
-	Attack(float coolDown, int baseDamage, AttackType type): m_coolDown(coolDown), m_baseDamage(baseDamage), m_type(type) {}
+	Attack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type): m_coolDown(coolDown), m_baseDamage(baseDamage), m_knockBackSpeed(knockBackSpeed), m_type(type) {}
 	virtual ~Attack() {}
 	virtual bool Use(const Vector3D& direction); // Assumes direction is normalized
 	virtual void Update(float dt);
@@ -27,6 +28,7 @@ protected:
 	AttackType m_type;
 	float m_coolDown;
 	float m_lastUsedTimeStamp;
+	float m_knockBackSpeed;
 	int m_baseDamage;
 	bool m_isOnCooldown;
 	bool m_isAttacking;

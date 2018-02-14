@@ -15,7 +15,7 @@
         "z": 0
       },
       "pivotOffset": {
-        "x": 0,
+        "x": 0.9,
         "y": 0
       },
       "rotation": {
@@ -52,11 +52,12 @@
 	{
 		"Component": "Animation",
 		"defaultAnimation": 0,
+		"isDisableRenderOnAnimComplete": true,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Slash",
 			"frames": 5,
-			"animationSpeed": 24,
+			"animationSpeed": 32,
 			"isLooping": false,
 			"isPlayOnAwake": false
 		}]

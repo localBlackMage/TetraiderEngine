@@ -13,7 +13,7 @@ Vector3D::Vector3D(const Vector3D & rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w
 
 Vector3D::Vector3D(const Vector2D & rhs) : x(rhs.x), y(rhs.y), z(0.f), w(rhs.w) { }
 
-Vector3D& Vector3D::operator=(const Vector3D rhs)
+Vector3D& Vector3D::operator=(const Vector3D& rhs)
 {
 	x = rhs.x;
 	y = rhs.y;
@@ -170,6 +170,10 @@ void Vector3D::Zero()
 	x = y = z = 0.0f;
 }
 
+bool Vector3D::IsVectorZero() {
+	return (fabsf(x) < EPSILON && fabsf(y) < EPSILON && fabsf(z) < EPSILON);
+}
+
 void Vector3D::Negate()
 {
 	x = -x;
@@ -192,6 +196,14 @@ void Vector3D::Normalize()
 	if (x == 0 && y == 0 && z == 0)
 		return;
 	Div(Length());
+}
+
+float Vector3D::AngleRadians() const {
+	return atan2f(y, x);
+}
+
+float Vector3D::AngleDegrees() const {
+	return AngleRadians() * 180 / PI;
 }
 
 #pragma region Static Methods

@@ -18,6 +18,7 @@ void GameConfig::LoadConfig(std::string s) {
 	m_sfxDir = ParseString(gameSettings, "sfxDir");
 	m_shadersDir = ParseString(gameSettings, "shadersDir");
 	m_texturesDir = ParseString(gameSettings, "texturesDir");
+	m_roomFilesDir = ParseString(gameSettings, "roomFilesDir");
 
 	// Set level parameters
 	json levelSettings = j["LEVEL_SETTINGS"];

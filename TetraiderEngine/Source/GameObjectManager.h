@@ -38,6 +38,7 @@ private:
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
 	std::vector<GameObject*> m_pCameras;
+	std::vector<GameObject*> mGameObjectsWithHealthComponents;
 
 	GameObjectLayer m_layers[RENDER_LAYER::L_NUM_LAYERS];
 	std::vector<GameObject*> mGameObjects;
@@ -65,13 +66,13 @@ public:
 	void RenderGameObjects();
 	void DestroyAllGameObjects();
 	void UpdateStatus();
-	std::vector<GameObject*> mGameObjectsWithHealthComponents; // TODO: Introduce a getter
+	const std::vector<GameObject*>& GetObjectsWithHealthComponents() {	return mGameObjectsWithHealthComponents; }
 
 	// TODO: This method is a temporary hack for getting a camera, a more thorough 
 	// architecture should be implemented
 	GameObject* GetCamera(int camIndex) const { return m_pCameras[camIndex]; }
 
-	GameObject* CreateGameObject(std::string name);
+	GameObject* CreateGameObject(const std::string& name);
 	GameObjectTag GameObjectManager::FindTagWithString(std::string tag);
 	GameObject* FindObjectWithTag(GameObjectTag tag);
 	RENDER_LAYER GetLayerFromString(std::string layerName);

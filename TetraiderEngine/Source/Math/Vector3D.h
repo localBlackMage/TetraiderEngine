@@ -27,7 +27,7 @@ public:
 	Vector3D(const float& _x, const float& _y, const float& _z, const float& _w);
 	Vector3D(const Vector3D & rhs);
 	Vector3D(const Vector2D & rhs);
-	Vector3D& operator= (Vector3D rhs);
+	Vector3D& operator= (const Vector3D& rhs);
 	~Vector3D();
 
 	void Set(float _x, float _y, float _z);
@@ -51,11 +51,15 @@ public:
 	void Div(const float divisor);
 	void Print() const;
 
+	float AngleRadians() const;
+	float AngleDegrees() const;
+
 	void Zero();
 	void Negate();
 	float SquareLength() const;
 	float Length() const;
 	void Normalize();
+	bool IsVectorZero();
 
 	static float SquareDistance(const Vector3D& vector0, const Vector3D& vector1);
 	static float Distance(const Vector3D& vector0, const Vector3D& vector1);

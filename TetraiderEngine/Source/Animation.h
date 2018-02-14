@@ -15,6 +15,7 @@ public:
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
+	virtual void DeActivate();
 	bool IsPlaying() { return m_isPlaying; }
 
 	void Play(int animation);
@@ -39,6 +40,7 @@ private:
 	float m_speedMultiplier;
 	bool m_isPlaying;
 	bool m_isPlayOnAwake;
+	bool m_isDisableRenderOnAnimComplete;
 	Sprite* m_pSprite;
 };
 

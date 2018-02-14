@@ -13,64 +13,76 @@ Creation date: 2/1/18
 #ifndef MEMORYMANAGER_H
 #define MEMORYMANAGER_H
 
+#include "GameObject.h"
+#include "ComponentTypes.h"
+
 #include <cstdlib>
+#include <vector>
 
-	using namespace std;
+using namespace std;
 
-	const int	 MAX_CACHE_SIZE_NUM = 100;			// # of Cacheable MemoryBlocks
-	const size_t DEFAULT_BUFFER_SIZE_BYTE = 524288000;	// 5 MB = 5*1024*1024 byte
+const int	 MAX_CACHE_SIZE_NUM = 100;			// # of Cacheable MemoryBlocks
+const size_t DEFAULT_BUFFER_SIZE_BYTE = 524288000;	// 5 MB = 5*1024*1024 byte
+const int	 MAX_GAMEOBJECT_CACHE = 50;
 
-	/*class MemoryManagerInterface {
-	public:
-		virtual void* Alloc(std::size_t) = 0;
-		virtual void Free(void*) = 0;
-	};*/
+class MemoryManagerInterface {
+public:
+	virtual void* Alloc(std::size_t) = 0;
+	virtual void Free(void*) = 0;
+};
 
-	typedef struct ListNode {
-		void *pData; 				// pointer to data block's position in m_Buffer
-		size_t size;				// size of this data block
-		size_t freesize;			// available memory space b/w current and next block
-		ListNode *next;				// next memoryblock
-		ListNode *prev;				// previous memoryblock
+typedef struct ListNode {
+	void *pData; 				// pointer to data block's position in m_Buffer
+	size_t size;				// size of this data block
+	size_t freesize;			// available memory space b/w current and next block
+	ListNode *next;				// next memoryblock
+	ListNode *prev;				// previous memoryblock
 
-		void Initialize(void *_ptr, size_t _size, size_t _freesize) {
-			pData = _ptr;
-			size = _size;
-			freesize = _freesize;
-			next = prev = nullptr;
+	void Initialize(void *_ptr, size_t _size, size_t _freesize) {
+		pData = _ptr;
+		size = _size;
+		freesize = _freesize;
+		next = prev = nullptr;
+	}
+
+	void CleanUp() {
+		// recursively delete blocks
+		MemoryBlock *current = this;
+		if (current->next)
+		{
+			current->next->CleanUp();
+			free(current->next);
 		}
+	}
+} MemoryBlock;
 
-		void CleanUp() {
-			// recursively delete blocks
-			MemoryBlock *current = this;
-			if (current->next)
-			{
-				current->next->CleanUp();
-				free(current->next);
-			}
-		}
-	} MemoryBlock;
+class MemoryManager :public MemoryManagerInterface {
+private:
+	static void* m_Buffer;						// Block of memory where all data exists
+	const size_t m_TotalBufferSize;				// How big the buffer is in bytes
+	MemoryBlock* m_pHead;						// First MemoryBlock in the linked list
+	MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];	// Stores MemoryBlocks to be deleted, when full all will be deleted at once
+	int m_NumCachedBlock;						// Number of MemoryBlocks stored in the m_Cache
+	std::vector<GameObject*> m_GameObjectCache;
+	std::vector<Component*> m_ComponentCache[NUM_COMPONENTS];
 
-
-
-	class MemoryManager  {
-	private:
-		static void* m_Buffer;						// Block of memory where all data exists
-		const size_t m_TotalBufferSize;				// How big the buffer is in bytes
-		MemoryBlock* m_pHead;						// First MemoryBlock in the linked list
-		MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];	// Stores MemoryBlocks to be deleted, when full all will be deleted at once
-		int m_NumCachedBlock;						// Number of MemoryBlocks stored in the m_Cache
-	public:
-
-		MemoryManager();
-		 ~MemoryManager();
-		MemoryManager(const MemoryManager &) = delete;
-		void operator=(const MemoryManager &) = delete;
-
-		void* Alloc(std::size_t size);
-		void Free(void* ptr);
-		MemoryBlock* NewMemoryBlock();
-		void Recycle(MemoryBlock*);
-	};
-
+	MemoryBlock* NewMemoryBlock();
+	void Recycle(MemoryBlock*);
+public:
+	MemoryManager();
+	~MemoryManager();
+	MemoryManager(const MemoryManager &) = delete;
+	void operator=(const MemoryManager &) = delete;
+	// operator new & delete 
+	// ***MOVE TO PRIVATE WHEN FINISHED***
+	void* Alloc(std::size_t size);
+	void Free(void* ptr);
+	// ***********************************
+	// GameObj Factory
+	GameObject* GetNewGameObject(unsigned int id);
+	void DeleteGameObject(GameObject* ptr);
+	// Component Factory
+	Component* GetNewComponent(ComponentType type);
+	void DeleteComponent(Component* ptr);
+};
 #endif

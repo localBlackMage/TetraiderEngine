@@ -16,6 +16,7 @@ private:
 	std::string m_prefabsDir;
 	std::string m_sfxDir;
 	std::string m_shadersDir;
+	std::string m_roomFilesDir;
 
 public:
 	GameConfig();
@@ -30,6 +31,7 @@ public:
 	std::string PrefabsDir() const { return m_prefabsDir; }
 	std::string SFXDir() const { return m_sfxDir; }
 	std::string ShadersDir() const { return m_shadersDir; }
+	std::string RoomFilesDir() const { return m_roomFilesDir; }
 };
 
 #endif

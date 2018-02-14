@@ -52,10 +52,11 @@
 	{
 		"Component": "Controller",
 		"AgentData": {
-			"speed": 200,
+			"speed": 800,
 			"acceleration": 10,
-			"knockBackSpeed": 0
-		}
+			"knockBackMultiplier": 1
+		},
+		"flySpeed": 400
 	},
 	{
 		"Component": "Animation",
@@ -103,7 +104,7 @@
 		"decaySpeed": 4,
 		"flashColor": {
         "r": 1,
-        "g": 0,
+        "g": 1,
         "b": 1,
         "a": 0
 		}
@@ -115,9 +116,10 @@
 				"type": "Melee",
 				"coolDown": 0.4,
 				"baseDamage": 1,
-				"radius": 160,
+				"radius": 180,
 				"angle": 90,
-				"triggerAttackIn": 0.05
+				"triggerAttackIn": 0.05,
+				"knockBackSpeed": 800
 			},
 			{
 				"type": "Ranged",
@@ -126,9 +128,18 @@
 				"projectileSpeed": 400,
 				"instantiationOffset": 50,
 				"lifeTime": 1.5,
-				"projectilePrefab": "P_testProjectile"
+				"projectilePrefab": "P_testProjectile",
+				"knockBackSpeed": 300
 			}
-		]
+		],
+		"weaponPrefab": "P_Sword",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 70,
+		"effectPrefab": "P_SlashTest"
 	}
   ]
 }

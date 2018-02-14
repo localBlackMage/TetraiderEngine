@@ -10,6 +10,7 @@ public:
 	Health();
 	~Health();
 	static Component* CreateInstance() { return new Health(); }
+	virtual void DeActivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
@@ -18,7 +19,7 @@ public:
 
 	bool IsHealthFull();
 	void UpdgradeMaxHealth(int value);
-	void TakeDamage(int damage, const Vector3D& sourceOfAttack);
+	void TakeDamage(int damage, const Vector3D& sourceOfAttack, float knockBackSpeed);
 	void Heal(int heal);
 	int GetHealth() { return m_currentHealth; }
 	void Invincibility(bool active) { m_isInvincible = active; }

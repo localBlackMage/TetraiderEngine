@@ -12,7 +12,11 @@ GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
 	while (m_currentState != GameState::QUIT) {
-		TETRA_LEVELS.LoadLevel();
+		//TETRA_LEVELS.LoadLevel();
+		TETRA_LEVEL_GEN.GenerateFloorPlan();
+		TETRA_LEVEL_GEN.PrintFloorPlan();
+		TETRA_LEVELS.LoadStaticGameObjects();
+		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;
