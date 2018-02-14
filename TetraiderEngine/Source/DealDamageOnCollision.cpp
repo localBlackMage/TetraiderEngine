@@ -16,6 +16,12 @@ void DealDamageOnCollision::Update(float dt) {
 	}
 }
 
+void DealDamageOnCollision::Deactivate() {
+	pGO = nullptr; 
+	m_isAbleToDmgPlayer = true, 
+	m_timeStampOfLastHitPlayer = 0.0f; 
+}
+
 void DealDamageOnCollision::Serialize(const json& j) {
 	m_damage = ParseInt(j, "damage");
 	m_knockBackSpeed = ParseFloat(j, "knockBackSpeed");

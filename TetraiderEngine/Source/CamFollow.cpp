@@ -11,6 +11,12 @@ CamFollow::CamFollow() :
 
 CamFollow::~CamFollow() {}
 
+void CamFollow::Deactivate() { 
+	pGO = nullptr; 
+	m_pTransform = nullptr;  
+	m_pTarget = nullptr; 
+}
+
 void CamFollow::Serialize(const json& j) {
 	m_followSpeed = ParseFloat(j, "followSpeed");
 	m_defaultTargetTag = ParseString(j, "defaultTargetTag");

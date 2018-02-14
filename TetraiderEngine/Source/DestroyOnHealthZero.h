@@ -13,7 +13,8 @@ class DestroyOnHealthZero : public Component {
 public:
 	DestroyOnHealthZero();
 	~DestroyOnHealthZero();
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_DestroyOnHealthZero); }
+	static Component* CreateInstance() { return new DestroyOnHealthZero(); }
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

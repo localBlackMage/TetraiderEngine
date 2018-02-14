@@ -132,6 +132,7 @@ void DebugManager::ClearDebugCommands()
 
 void DebugManager::RenderDebugCommands()
 {
+	GameObject* c = TETRA_GAME_OBJECTS.GetCamera(1);
 	TETRA_RENDERER._SetUpDebug(*TETRA_GAME_OBJECTS.GetCamera(1));
 
 	int maxIndex = debugCommandCount;

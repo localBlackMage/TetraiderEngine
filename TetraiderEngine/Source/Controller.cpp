@@ -13,6 +13,11 @@ Controller::Controller() :
 
 Controller::~Controller() {}
 
+void Controller::Deactivate() {
+	m_pWeapon = nullptr; 
+	Agent::Deactivate(); 
+}
+
 void Controller::Update(float dt) {
 	Vector3D moveDir;
 	//cout << (float)TETRA_INPUT.GetLeftAxisX() << " " << (float)TETRA_INPUT.GetLeftAxisY() << endl;

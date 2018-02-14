@@ -10,11 +10,12 @@ class Animation :public Component {
 public:
 	Animation();
 	~Animation();
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Animation); }
+	static Component* CreateInstance() { return new Animation(); }
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
+	virtual void Deactivate();
 	bool IsPlaying() { return m_isPlaying; }
 
 	void Play(int animation);

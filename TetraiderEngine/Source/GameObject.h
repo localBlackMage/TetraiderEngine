@@ -41,10 +41,12 @@ public:
 	void LateInitialize();
 	void Destroy();
 	void DestroyIn(float time);
+	void Deactivate();
 
 	void SetLayer(RENDER_LAYER layer) { m_layer = layer; }
 	unsigned short GetLayer() { return m_layer; }
 	unsigned int ID() const { return m_id; }
+	void SetID(unsigned int id) { m_id = id; }
 	void AddComponent(Component* pComponent);
 	bool HasComponent(ComponentType type) const;
 	void SetParent(GameObject* pParent);

@@ -34,10 +34,16 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["DealDamageOnCollision"] = DealDamageOnCollision::CreateInstance;
 }
 
-unsigned int ComponentFactory::CreateComponent(std::string component) {
+Component* ComponentFactory::CreateComponent(std::string component) {
+	// check if there's empty component stored in cache
+	Component* cachedComp = TETRA_MEMORY.GetNewComponent(component);
+	if (cachedComp) {
+		return cachedComp;
+	}
+	// no empty component available, return create new comp
 	CreationFunction* Create = m_creationFunctions[component];
 	if (Create)
 		return Create();
 
-	return NUM_COMPONENTS;
+	return nullptr;
 }

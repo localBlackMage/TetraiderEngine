@@ -22,6 +22,11 @@ Animation::Animation():
 
 Animation::~Animation() {}
 
+void Animation::Deactivate() { 
+	m_pSprite = nullptr; 
+	pGO = nullptr; 
+}
+
 void Animation::Update(float dt) {
 	if (m_elapsedTime > 1) {
 		++m_currentFrame;

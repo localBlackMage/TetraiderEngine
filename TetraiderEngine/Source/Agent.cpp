@@ -18,6 +18,14 @@ Agent::Agent(ComponentType _type) :
 	m_isIgnoreHazards(false)
 {};
 
+void Agent::Deactivate() {
+	pGO = nullptr; 
+	m_pTransform = nullptr;
+	m_pAnimation = nullptr; 
+	m_pBody = nullptr; 
+	m_isIgnoreHazards = false; 
+}
+
 void Agent::Update(float dt) {
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
 	m_pBody->SetVelocity(m_currentVelocity);
@@ -110,7 +118,7 @@ void Agent::LateInitialize() {
 
 Vector3D Agent::GetDirectionToMouse() {
 	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1); // TODO: Make this always get you the main camera
 	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
 	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
 	Vector3D dirToMousePos = mousePos - screenSpace;

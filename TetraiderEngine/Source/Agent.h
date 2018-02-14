@@ -23,6 +23,7 @@ public:
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
+	virtual void Deactivate();
 	const Vector3D& GetCurrentVelocity() { return m_currentVelocity; }
 	const Vector3D& GetTargetVelocity() { return m_targetVelocity; }
 	const Vector3D& GetLookDirection() { return m_lookDirection; }

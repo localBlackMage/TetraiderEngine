@@ -9,7 +9,8 @@ class Health : public Component {
 public:
 	Health();
 	~Health();
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Health); }
+	static Component* CreateInstance() { return new Health(); }
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

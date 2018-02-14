@@ -12,7 +12,15 @@ Body::Body() :
 }
 
 Body::~Body() {
-	delete m_pShape;
+	if(m_pShape)
+		delete m_pShape;
+}
+
+void Body::Deactivate() {
+	pGO = nullptr; 
+	if(m_pShape)
+		delete m_pShape;
+	m_pShape = nullptr;
 }
 
 void Body::Update(float dt) {}

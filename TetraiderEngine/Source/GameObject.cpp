@@ -39,6 +39,21 @@ void GameObject::DestroyIn(float time) {
 	m_destroyTimer = time;
 }
 
+void GameObject::Deactivate() {
+	m_isActive = true;
+	m_isRender = true;
+	m_destroyTimer = 0;
+	m_destroySetTimeStamp = 0;
+	m_isDestroy = false;
+	m_isSetToDestroy = false;
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i]) {
+			TETRA_MEMORY.DeleteComponent(mComponents[i]);
+			mComponents[i] = nullptr;
+		}
+	}
+}
+
 void GameObject::Update(float dt) {
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])

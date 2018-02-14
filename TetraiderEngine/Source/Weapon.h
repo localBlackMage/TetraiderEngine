@@ -12,7 +12,8 @@ class Weapon : public Component {
 public:
 	Weapon();
 	~Weapon();
-	static unsigned int CreateInstance() { return static_cast<unsigned int>(C_Weapon); }
+	static Component* CreateInstance() { return new Weapon(); }
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

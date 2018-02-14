@@ -5,6 +5,10 @@
 Health::Health(): Component(ComponentType::C_Health) {}
 Health::~Health() {}
 
+void Health::Deactivate() { 
+	pGO = nullptr; 
+}
+
 void Health::Update(float dt) {}
 
 void Health::Serialize(const json& j) {

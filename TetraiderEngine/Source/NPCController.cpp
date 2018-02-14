@@ -14,6 +14,11 @@ NPCController::NPCController() :
 
 NPCController::~NPCController() {}
 
+void NPCController::Deactivate() {
+	m_pWeapon = nullptr; 
+	Agent::Deactivate();
+}
+
 void NPCController::Update(float dt) {
 	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
 	GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);

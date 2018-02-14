@@ -14,6 +14,11 @@ Camera::Camera() :
 
 Camera::~Camera(){}
 
+void Camera::Deactivate() {
+	pGO = nullptr;
+	m_pTransform = nullptr; 
+}
+
 Matrix4x4 Camera::_MatrixFromCameraVectors(const Vector3D & right, const Vector3D & up, const Vector3D & forward)
 {
 	return Matrix4x4(
