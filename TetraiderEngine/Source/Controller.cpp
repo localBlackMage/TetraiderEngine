@@ -75,7 +75,6 @@ void Controller::Update(float dt) {
 	Agent::Update(dt);
 
 	Vector3D pos = m_pTransform->GetPosition();
-	printf("X: %f, Y: %f\n", pos.x, pos.y);
 
 }
 void Controller::Serialize(const json& j) {
