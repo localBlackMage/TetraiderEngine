@@ -9,6 +9,12 @@
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader"
 	},
+	"ROOM_SETTINGS": {
+		"cellWidth": 96,
+		"cellHeight": 96,
+		"roomWidth": 12,
+		"roomHeight": 8
+	},
 	"LEVEL_SETTINGS": {
 		"Statics": "StaticObjects",
 		"Start": 0,
