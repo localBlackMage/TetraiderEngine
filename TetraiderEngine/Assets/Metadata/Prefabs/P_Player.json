@@ -113,8 +113,17 @@
 		"Component": "Weapon",
 		"Attacks":[
 			{
+				"type": "Melee",
+				"coolDown": 0.4,
+				"baseDamage": 1,
+				"radius": 180,
+				"angle": 90,
+				"triggerAttackIn": 0.05,
+				"knockBackSpeed": 800
+			},
+			{
 				"type": "Ranged",
-				"coolDown": 2,
+				"coolDown": 0.4,
 				"baseDamage": 1,
 				"projectileSpeed": 400,
 				"instantiationOffset": 50,

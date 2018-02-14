@@ -37,12 +37,6 @@ void Weapon::DeActivate() {
 void Weapon::Update(float dt) {
 	for (auto attacks : m_Attacks) {
 		attacks->Update(dt);
-
-		// Debug
-		if (attacks->GetType() == AttackType::Melee) {
-			if(m_pController)
-				attacks->Debug(m_pController->GetLookDirection());
-		}
 	}
 
 	float angle = m_pController->GetLookDirection().AngleDegrees();
@@ -56,7 +50,15 @@ void Weapon::Update(float dt) {
 	}
 }
 
-void Weapon::LateUpdate(float dt) {}
+void Weapon::LateUpdate(float dt) {
+	for (auto attacks : m_Attacks) {
+		// Debug
+		if (attacks->GetType() == AttackType::Melee) {
+			if (m_pController)
+				attacks->Debug(m_pController->GetLookDirection());
+		}
+	}
+}
 
 void Weapon::Serialize(const json& j) {
 	//TODO: Cannot override weapon component at the moment

@@ -11,7 +11,7 @@
       },
       "scale": {
         "x": 100,
-        "y": 100,
+        "y": 80,
         "z": 0
       },
       "pivotOffset": {
@@ -21,12 +21,12 @@
       "rotation": {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": 30
 	  }
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_Barrel.png",
+      "Texture": "T_Cannon.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -58,6 +58,32 @@
 			"width": 100,
 			"height": 100
 		}
+	},
+	{
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "AABB",
+			"width": 100,
+			"height": 100
+		}
+	},
+	{
+		"Component": "ProjectileSpawner",
+		"isActive": true,
+		"direction": {
+			"x": 1,
+			"y": 0,
+			"z": 0
+		},
+		"coolDown": 2,
+		"baseDamage": 2,
+		"projectileSpeed": 500,
+		"offset": 40,
+		"lifeTime": 2,
+		"projectilePrefab": "P_testProjectile",
+		"knockBackSpeed": 500
 	}
   ]
 }

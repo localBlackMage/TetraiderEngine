@@ -29,7 +29,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 		isEnemyProjectile = true;
 
 	// TODO: Change base damage to take into consideration character stats
-	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile, m_knockBackSpeed);
+	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
 	return true;
 }
 

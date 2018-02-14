@@ -5,7 +5,7 @@
 #include "Component.h"
 #include "Math/MathLibs.h"
 
-class Weapon;
+class Transform;
 
 class ProjectileSpawner : public Component {
 public:
@@ -24,12 +24,14 @@ private:
 	bool m_isActive;
 	Vector3D m_diriection;
 	float m_coolDown;
-	float m_baseDamage;
+	int m_baseDamage;
 	float m_projectileSpeed;
 	float m_instantiationOffset;
 	float m_lifeTime;
 	std::string m_projectilePrefab;
 	float m_knockBackSpeed;
+	float m_lastFiredTimeStamp;
+	Transform* m_pTransform;
 };
 
 #endif
