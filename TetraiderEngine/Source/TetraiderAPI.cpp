@@ -36,7 +36,7 @@ namespace Tetraider {
 		TETRA_INPUT.Update();									// Update input keys
 		TETRA_DEBUG.Update();									// Toggles debug drawing if needed
 		TETRA_EVENTS.Update(deltaTime);							// Pump the event manager
-		//TETRA_AUDIO.Update(deltaTime);
+		TETRA_AUDIO.Update(deltaTime);
 		TETRA_GAME_OBJECTS.Update(deltaTime);					// Update game logic
 		TETRA_GAME_OBJECTS.UpdateStatus();						// Update status of game objects
 		TETRA_PHYSICS.Integrate(deltaTime);						// Move physics bodies
