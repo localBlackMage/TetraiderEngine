@@ -9,6 +9,11 @@
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader"
 	},
+	"WINDOW_SETTINGS": {
+		"windowTitle" : "Eggnapped!",
+		"width": 1400,
+		"height": 1000
+	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 96,
 		"cellHeight": 96,
