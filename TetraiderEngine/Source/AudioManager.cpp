@@ -234,7 +234,7 @@ void AudioManager::ResumeSound()
 {
 	m_pCurrentSongChannel->setPaused(false);
 }
-void AudioManager::ResumeSFX(std::string & path)
+void AudioManager::ResumeSFX(std::string & name)
 {
 	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
 	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
