@@ -139,3 +139,18 @@ void Body::DrawDebugShape() {
 
 void Body::AddForce(const Vector3D& force) { m_Forces.Add(force); }
 void Body::ClearForces() { m_Forces.Zero(); }
+
+void Body::OverrideShapeData(float width, float height) {
+	AABB* aabb = static_cast<AABB*>(m_pShape);
+	if (!aabb) return;
+	aabb->width = width;
+	aabb->height = height;
+	aabb->halfHeight = height / 2.0f;
+	aabb->halfWidth = width / 2.0f;
+}
+
+void Body::OverrideShapeData(float radius) {
+	Circle* circle = static_cast<Circle*>(m_pShape);
+	if (!circle) return;
+	circle->radius = radius;
+}

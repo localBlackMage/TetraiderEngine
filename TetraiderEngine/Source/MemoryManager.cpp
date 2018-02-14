@@ -228,7 +228,6 @@ Component* MemoryManager::GetNewComponent(ComponentType type) {
 	}
 }
 void MemoryManager::DeleteComponent(Component* ptr) {
-	
 	delete ptr;
 
 }

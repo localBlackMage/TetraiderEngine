@@ -3,11 +3,9 @@
 #include "TetraiderAPI.h"
 
 #include "Transform.h"
-#include "Camera.h"
-#include "Sprite.h"
+#include "Body.h"
+#include "Shape.h"
 #include <iostream>
-#include <conio.h>
-#include <chrono>
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
@@ -63,29 +61,30 @@ void LevelManager::RestartGame() {
 }
 
 void LevelManager::LoadLevel(const json& j) {
-	// TODO: Hard code this string 'GAME_OBJECTS' into a #define or something somewhere
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
 		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
 
-		// TODO: Clean up - Send JSON to the component itself for parsing via component.Override
-		// cycle through pGO's Components, call Override on each, pass json
-
 		// Overwrite values for transform component if they exist
+		// TODO: Scale and rotation as well
 		if (pGO) {
+			Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 			if (j["GAME_OBJECTS"][i].find("position") != j["GAME_OBJECTS"][i].end()) {
-				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 				if (pTransform) pTransform->SetPosition(ParseVector3D(j["GAME_OBJECTS"][i], "position"));
 			}
+			if (j["GAME_OBJECTS"][i].find("scale") != j["GAME_OBJECTS"][i].end()) {
+				if (pTransform) pTransform->SetScale(ParseFloat(j["GAME_OBJECTS"][i]["scale"], "x"), ParseFloat(j["GAME_OBJECTS"][i]["scale"], "y"));
+			}
+			if (j["GAME_OBJECTS"][i].find("shape") != j["GAME_OBJECTS"][i].end()) {
+				Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
 
-			//	Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-			//	if (pTransform)	pTransform->Serialize(j[GAME_OBJECTS][i]);
-
-			//	Camera* pCamera = pGO->GetComponent<Camera>(ComponentType::C_Camera);
-			//	if (pCamera)	pCamera->Serialize(j[GAME_OBJECTS][i]);
-
-			//	Sprite* pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
-			//	if (pSprite)	pSprite->Serialize(j[GAME_OBJECTS][i]);
+				if (pBody->m_pShape->type == ShapeType::ST_AABB) {
+					pBody->OverrideShapeData(ParseFloat(j["GAME_OBJECTS"][i]["shape"], "width"), ParseFloat(j["GAME_OBJECTS"][i]["shape"], "height"));
+				}
+				else if (pBody->m_pShape->type == ShapeType::ST_Circle) {
+					pBody->OverrideShapeData(ParseFloat(j["GAME_OBJECTS"][i]["shape"], "radius"));
+				}
+			}
 		}
 	}
 

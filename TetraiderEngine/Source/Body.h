@@ -27,6 +27,8 @@ public:
 	const Vector3D& GetPosition();
 	const Vector3D& GetPreviousPosition();
 	const Vector3D& GetVelocity();
+	void OverrideShapeData(float width, float height);
+	void OverrideShapeData(float radius);
 	bool m_isStatic;
 	float m_mass;
 	Shape* m_pShape;

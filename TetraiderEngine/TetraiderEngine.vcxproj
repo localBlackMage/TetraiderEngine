@@ -63,6 +63,7 @@
     <ClCompile Include="Source\ParticleEmitter.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
+    <ClCompile Include="Source\ProjectileSpawner.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\Projectile.h" />
+    <ClInclude Include="Source\ProjectileSpawner.h" />
     <ClInclude Include="Source\RangeAttack.h" />
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\ResourceManager.h" />

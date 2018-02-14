@@ -17,7 +17,7 @@ void DealDamageOnCollision::Update(float dt) {
 }
 
 void DealDamageOnCollision::DeActivate() {
-	pGO = nullptr; 
+	pGO = nullptr;
 	m_isAbleToDmgPlayer = true, 
 	m_timeStampOfLastHitPlayer = 0.0f; 
 }
