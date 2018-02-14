@@ -25,7 +25,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 	Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 
 	bool isEnemyProjectile = false;
-	if (m_pOwner->pGO->m_tag == T_Enemy)
+	if (m_pOwner->pGO->m_tag != T_Player)
 		isEnemyProjectile = true;
 
 	// TODO: Change base damage to take into consideration character stats
