@@ -62,6 +62,7 @@
     <ClCompile Include="Source\NPCController.cpp" />
     <ClCompile Include="Source\ParticleEmitter.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
+    <ClCompile Include="Source\PointLight.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\ProjectileSpawner.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\NPCController.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
+    <ClInclude Include="Source\PointLight.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\ProjectileSpawner.h" />
     <ClInclude Include="Source\RangeAttack.h" />
