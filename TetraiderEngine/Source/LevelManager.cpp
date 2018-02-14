@@ -15,11 +15,25 @@ LevelManager::~LevelManager() {}
 
 bool LevelManager::IsLastLevel() {return currentLevel == (maxLevel - 1); }
 
+void LevelManager::LoadStaticGameObjects()
+{
+	int gameObjectSize = staticObjects[GAME_OBJECTS].size();
+	for (int i = 0; i < gameObjectSize; i++) {
+		TETRA_GAME_OBJECTS.CreateGameObject(staticObjects[GAME_OBJECTS][i]["prefab"]);
+	}
+
+	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_StaticsLoaded));
+}
+
 void LevelManager::Initialize(const json& j) {
 	levelConfig = j;
 	maxLevel = levelConfig["Levels"].size();
 	currentLevel = levelConfig["Start"];
 	firstLevel = currentLevel;
+
+	std::string staticsFileName = levelConfig["Statics"];
+	// TODO: Find a better spot for this?
+	staticObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + staticsFileName + ".json");
 }
 
 std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
@@ -32,7 +46,7 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 		if (pGO) {
 			if (j[GAME_OBJECTS][i].find("position") != j[GAME_OBJECTS][i].end()) {
 				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-				if (pTransform) pTransform->SetPosition(ParseVector3D(j[GAME_OBJECTS][i], "position"));
+				pTransform->Override(j[GAME_OBJECTS][i]);
 			}
 		}
 		createdGameObjects.push_back(pGO);
@@ -43,7 +57,7 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 
 void LevelManager::LoadLevel() {
 	std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
-	LoadLevel(OpenJsonFile(s));
+	_LoadLevel(OpenJsonFile(s));
 }
 
 void LevelManager::UnLoadLevel() {
@@ -79,7 +93,7 @@ void LevelManager::RestartGame() {
 	ChangeLevel(firstLevel);
 }
 
-void LevelManager::LoadLevel(const json& j) {
+void LevelManager::_LoadLevel(const json& j) {
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
 		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);

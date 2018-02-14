@@ -30,6 +30,7 @@ public:
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(const json& j);
+	virtual void Override(const json& j);
 
 	virtual void HandleEvent(Event * p_event);
 

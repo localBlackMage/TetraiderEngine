@@ -10,10 +10,10 @@
 		"debugShader": "lineShader"
 	},
 	"LEVEL_SETTINGS": {
+		"Statics": "StaticObjects",
 		"Start": 0,
-		"Levels": [{
-			"Name": "LVL_Gym"
-		}
+		"Levels": [
+			{ "Name": "LVL_Gym" }
 		]
 	}
 }

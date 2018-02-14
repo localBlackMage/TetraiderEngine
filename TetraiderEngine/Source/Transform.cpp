@@ -66,6 +66,20 @@ void Transform::Serialize(const json& j) {
 	m_pivotOffset.z = ParseFloat(j["pivotOffset"], "z");
 }
 
+void Transform::Override(const json & j)
+{
+	if (ValueExists(j, "position")) {
+		m_position.x = ValueExists(j["position"], "x") ? j["position"]["x"] : m_position.x;
+		m_position.y = ValueExists(j["position"], "y") ? j["position"]["y"] : m_position.y;
+		m_position.z = ValueExists(j["position"], "z") ? j["position"]["z"] : m_position.z;
+	}
+	if (ValueExists(j, "scale")) {
+		m_scale.x = ValueExists(j["scale"], "x") ? j["scale"]["x"] : m_scale.x;
+		m_scale.y = ValueExists(j["scale"], "y") ? j["scale"]["y"] : m_scale.y;
+		m_scale.z = ValueExists(j["scale"], "z") ? j["scale"]["z"] : m_scale.z;
+	}
+}
+
 void Transform::HandleEvent(Event * p_event) {
 	if (p_event->Type() == EVENT_FlipScaleX) {
 		m_position.x *= -1;
