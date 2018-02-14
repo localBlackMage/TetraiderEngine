@@ -43,12 +43,8 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 	for (int i = 0; i < gameObjectSize; i++) {
 		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
 
-		if (pGO) {
-			if (j[GAME_OBJECTS][i].find("position") != j[GAME_OBJECTS][i].end()) {
-				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-				pTransform->Override(j[GAME_OBJECTS][i]);
-			}
-		}
+		if (pGO)
+			pGO->OverrideComponents(j[GAME_OBJECTS][i]);
 		createdGameObjects.push_back(pGO);
 	}
 
