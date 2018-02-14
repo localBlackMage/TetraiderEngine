@@ -33,14 +33,6 @@
 #define TETRA_PHYSICS Singleton<PhysicsManager>::GetInstance()
 #define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
 
-
-//Editor changes starts
-#include "ImguiHandler.h"
-
-#define TETRA_EDITOR Singleton<ImguiHandler>::GetInstance()
-//Editor changes ends
-
-
 namespace Tetraider {
 	//! int Initialize(std::string configFileName)
 	/*!

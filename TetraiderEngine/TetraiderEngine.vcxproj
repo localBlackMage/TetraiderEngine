@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ImguiHandler.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
@@ -42,11 +41,6 @@
     <ClCompile Include="Source\GameObjectManager.cpp" />
     <ClCompile Include="Source\GameStateManager.cpp" />
     <ClCompile Include="Source\Health.cpp" />
-    <ClCompile Include="Source\im_src\gl3w\GL\gl3w.c" />
-    <ClCompile Include="Source\im_src\imgui.cpp" />
-    <ClCompile Include="Source\im_src\imgui_demo.cpp" />
-    <ClCompile Include="Source\im_src\imgui_draw.cpp" />
-    <ClCompile Include="Source\im_src\imgui_impl_sdl_gl3.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\JsonReader.cpp" />
     <ClCompile Include="Source\LevelManager.cpp" />
@@ -79,7 +73,6 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\ImguiHandler.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
@@ -108,13 +101,6 @@
     <ClInclude Include="Source\GameObjectTags.h" />
     <ClInclude Include="Source\GameStateManager.h" />
     <ClInclude Include="Source\Health.h" />
-    <ClInclude Include="Source\im_src\imconfig.h" />
-    <ClInclude Include="Source\im_src\imgui.h" />
-    <ClInclude Include="Source\im_src\imgui_impl_sdl_gl3.h" />
-    <ClInclude Include="Source\im_src\imgui_internal.h" />
-    <ClInclude Include="Source\im_src\stb_rect_pack.h" />
-    <ClInclude Include="Source\im_src\stb_textedit.h" />
-    <ClInclude Include="Source\im_src\stb_truetype.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\JsonReader.h" />
     <ClInclude Include="Source\Layers.h" />

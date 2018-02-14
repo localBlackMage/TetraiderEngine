@@ -40,23 +40,8 @@ namespace Tetraider {
 		TETRA_PHYSICS.Integrate(deltaTime);						// Move physics bodies
 		TETRA_PHYSICS.ResolveCollisions();						// Resolve collisions on physics bodies
 		TETRA_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
-		
-	
-
-
 		TETRA_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
-
-
-
-																//Editor related changed
-		TETRA_EDITOR.Update();
-
-		//Editor changed ended
-
-
 		TETRA_DEBUG.RenderDebugCommands();
-
-
 
 	}
 

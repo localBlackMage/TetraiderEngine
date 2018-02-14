@@ -43,14 +43,11 @@ void InputManager::Update() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) 
 	{
-		TETRA_EDITOR.ImguiHandlerEventUpdater(event);
 		switch (event.type) {
 			case SDL_QUIT:
 				TETRA_EVENTS.BroadcastEvent(&Event(EventType::WINDOW_CLOSED));
 				break;
 		}
-
-
 	}
 
 	// Update mouse position

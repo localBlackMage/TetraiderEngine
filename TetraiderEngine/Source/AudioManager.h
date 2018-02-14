@@ -30,7 +30,7 @@ public:
 	void operator=(const AudioManager &) = delete;
 
 	void Update(float elapsed);
-	void PlaySFX(const std::string& path, float volume,bool loop/*float minVol, float maxVol, float minPitch, float maxPitch*/);
+	void PlaySFX(const std::string& path, float volume,bool loop);
 	void PlaySFX(const std::string& path, float volume);
 	void PlaySong(const std::string& path,float volume);
 	void StopAllSFXs();
@@ -43,6 +43,10 @@ public:
 	inline FMOD::System* getSystem() { return m_pSystem; }
 	inline FMOD_MODE* getMode() { return m_Modes; }
 	void TogglePause();
+	void PauseSound();
+	void PauseSFX(std::string& path);
+	void ResumeSound();
+	void ResumeSFX(std::string& path);
 	bool isSoundPlaying(std::string);
 private:
 

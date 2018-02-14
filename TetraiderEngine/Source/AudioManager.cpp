@@ -47,9 +47,7 @@ AudioManager::AudioManager():m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isCh
 
 AudioManager::~AudioManager()
 {
-	//Release system
-	//ErrorCheck(m_pSystem->run());
-	//ErrorCheck(m_pSystem->release());
+
 }
 
 void AudioManager::Update(float elapsed)
@@ -97,77 +95,22 @@ void AudioManager::Update(float elapsed)
 	ErrorCheck(m_pSystem->update());
 }
 
-void AudioManager::PlaySFX(const std::string & path, float volume,bool loop/*float minVol, float maxVol, float minPitch, float maxPitch*/)
+void AudioManager::PlaySFX(const std::string & name, float volume,bool loop)
 {
 	// Try to find sound effect and return if not found 
-	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + name, SFX);
 	if(!sound)
 		return;
 	
-	// TODO if not found load sound
-
-	//vol and pitch calculation if needed
-	/*float vol = RandomBetween(minVol,maxVol);
-	float pitch= RandomBetween(minPitch, maxPitch);*/
-
-	//check if already playing
-	/*if (isSoundPlaying(path))
-	{
-		return;
-	} */       
-
-	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
-	//play sound with initial values
-	/*if (chMap == m_Channel[SFX].end())
-	{*/
-		FMOD::Channel* channel = NULL;
-		ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
-		//save audiopath and its corresponding channel
-		m_Channel[SFX].insert(std::make_pair(path, channel));
-		
-		if(loop)
-		ErrorCheck(channel->setMode(FMOD_DEFAULT|FMOD_LOOP_NORMAL));
-		//set to the channel grp it belongs
-		ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
-		ErrorCheck(channel->setVolume(volume));
-		ErrorCheck(channel->setPaused(false));
-	
-		/*}*/
-	/*
-	else
-	{
-		//play sounds with values set on first play
-		ErrorCheck(m_pSystem->playSound(sound->second, NULL, true, &chMap->second));
-		ErrorCheck(chMap->second->setPaused(false));
-	}*/
-
-
- 	/* changing freq of sounds, if needed
-	float freq;
-	channel->getFrequency(&freq);
-	channel->setFrequency(ChangeSemitone(freq,pitch));*/
-}
-
-void AudioManager::PlaySFX(const std::string & path, float volume)
-{
-	// Try to find sound effect and return if not found 
-	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
-	if (!sound)
-		return;
-
-	// TODO if not found load sound
-
-	//vol and pitch calculation if needed
-	/*float vol = RandomBetween(minVol,maxVol);
-	float pitch= RandomBetween(minPitch, maxPitch);*/
-
-	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
-	//play sound with initial values
-	
+	//check if already playing     
+	ChannelMap::iterator chMap = m_Channel[SFX].find(name);
 	FMOD::Channel* channel = NULL;
 	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
 	//save audiopath and its corresponding channel
-	m_Channel[SFX].insert(std::make_pair(path, channel));
+	m_Channel[SFX].insert(std::make_pair(name, channel));
+		
+	if(loop)
+	ErrorCheck(channel->setMode(FMOD_DEFAULT|FMOD_LOOP_NORMAL));
 	//set to the channel grp it belongs
 	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
 	ErrorCheck(channel->setVolume(volume));
@@ -175,31 +118,54 @@ void AudioManager::PlaySFX(const std::string & path, float volume)
 
 }
 
-void AudioManager::PlaySong(const std::string & path,float volume)
+void AudioManager::PlaySFX(const std::string & name, float volume)
+{
+	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	// Try to find sound effect and return if not found 
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(soundFile, SFX);
+	if (!sound)
+		return;
+
+
+	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
+	//play sound with initial values
+	
+	FMOD::Channel* channel = NULL;
+	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
+	//save audiopath and its corresponding channel
+	m_Channel[SFX].insert(std::make_pair(soundFile, channel));
+	//set to the channel grp it belongs
+	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
+	ErrorCheck(channel->setVolume(volume));
+	ErrorCheck(channel->setPaused(false));
+
+}
+
+void AudioManager::PlaySong(const std::string & name,float volume)
 {
 	//ignore if song already playing
-	if (m_currentSongPath == path)
+	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	if (m_currentSongPath == soundFile)
 		return;
 
 	//if song is playing stop them and set this as next song
 	if (m_pCurrentSongChannel != 0)
 	{
 		StopSongs();
-		m_nextSongPath = path;
+		m_nextSongPath = soundFile;
 		return;
 	}
 	//find song in <-> sound map
-	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SONG);
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + name, SONG);
 	if (!sound)
 		return;
 
 	//start playing song with 0 vol and fade in
-	m_currentSongPath = path;
+	m_currentSongPath = soundFile;
 	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
 	ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
 	ErrorCheck(m_pCurrentSongChannel->setVolume(volume));
 	ErrorCheck(m_pCurrentSongChannel->setPaused(false));
-	//m_fade = FADE_IN;
 }
 
 void AudioManager::StopAllSFXs()
@@ -207,14 +173,14 @@ void AudioManager::StopAllSFXs()
 	ErrorCheck(m_pGroups[SFX]->stop());
 }
 
-void AudioManager::StopSFX(std::string & path)
+void AudioManager::StopSFX(std::string & name)
 {
-	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + path, SFX);
+	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(soundFile, SFX);
 	if (!sound)
 		return;
 
-	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
-
+	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
 	chMap->second->stop();
 }
 
@@ -251,9 +217,36 @@ void AudioManager::TogglePause()
 			ErrorCheck(m_pGroups[i]->setPaused(true));
 	}
 }
-bool AudioManager::isSoundPlaying(std::string path)
+void AudioManager::PauseSound()
 {
-	ChannelMap::iterator chMap = m_Channel[SFX].find(path);
+	m_pCurrentSongChannel->setPaused(true);
+}
+void AudioManager::PauseSFX(std::string & name)
+{
+	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
+	if (chMap == m_Channel[SFX].end())
+		return;
+
+		chMap->second->setPaused(true);
+}
+void AudioManager::ResumeSound()
+{
+	m_pCurrentSongChannel->setPaused(false);
+}
+void AudioManager::ResumeSFX(std::string & path)
+{
+	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
+	if (chMap == m_Channel[SFX].end())
+		return;
+
+	chMap->second->setPaused(false);
+}
+bool AudioManager::isSoundPlaying(std::string name)
+{
+	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
 	if (chMap != m_Channel[SFX].end())
 	{
 		chMap->second->isPlaying(&m_isPlaying);
