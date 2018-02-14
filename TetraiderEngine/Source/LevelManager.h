@@ -14,6 +14,7 @@ private:
 	int firstLevel;
 	json levelConfig;
 	json staticObjects;
+	bool m_isRandomlyGenerated;
 
 	void _LoadLevel(const json& j);
 public:

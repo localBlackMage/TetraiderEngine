@@ -9,7 +9,7 @@
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
-LevelManager::LevelManager() {}
+LevelManager::LevelManager(): m_isRandomlyGenerated(true) {}
 
 LevelManager::~LevelManager() {}
 
@@ -30,6 +30,7 @@ void LevelManager::Initialize(const json& j) {
 	maxLevel = levelConfig["Levels"].size();
 	currentLevel = levelConfig["Start"];
 	firstLevel = currentLevel;
+	m_isRandomlyGenerated = ParseBool(levelConfig, "isRandomGenerated");
 
 	std::string staticsFileName = levelConfig["Statics"];
 	// TODO: Find a better spot for this? - Holden
@@ -52,8 +53,17 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 }
 
 void LevelManager::LoadLevel() {
-	std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
-	_LoadLevel(OpenJsonFile(s));
+	//if(levelConfig.)
+	if (m_isRandomlyGenerated) {
+		TETRA_LEVEL_GEN.GenerateFloorPlan();
+		TETRA_LEVEL_GEN.PrintFloorPlan();
+		TETRA_LEVELS.LoadStaticGameObjects();
+		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
+	}
+	else {
+		std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
+		_LoadLevel(OpenJsonFile(s));
+	}
 }
 
 void LevelManager::UnLoadLevel() {
