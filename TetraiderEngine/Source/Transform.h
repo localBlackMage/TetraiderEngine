@@ -21,6 +21,7 @@ private:
 	bool m_is2d;
 
 	void _UpdateLookAt();
+	void _UpdateBodyComponent();
 public:
 	Transform();
 	~Transform();

@@ -195,6 +195,8 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes()
 		selectedNodes.push_back(m_roomNodes[coords.first][coords.second]);
 		types.pop_back();
 	}
+	// The Spawn node will always be the last in the list of selected nodes
+	m_spawnNode = selectedNodes.back();
 	return selectedNodes;
 }
 
@@ -305,6 +307,7 @@ void FloorPlanGenerator::ResetAllNodes()
 	for (short row = 0; row < MAX_ROWS; ++row)
 		for (short col = 0; col < MAX_COLS; ++col)
 			m_roomNodes[row][col]->m_type = RoomType::DEAD;
+	m_spawnNode = nullptr;
 }
 
 void FloorPlanGenerator::PrintFloorPlan()
@@ -323,27 +326,37 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	// (96x96 tiles, 12x8 tiles)
 	float x = 1152.f;
 	float xHalf = x / 2.f;
-	float xPos = xHalf;
 	float y = 768.f;
 	float yHalf = y / 2.f;
-	float yPos = yHalf;
 
 	for (short row = 0; row < MAX_ROWS; ++row) {
-		Vector3D offset = Vector3D(xPos, yPos, 0);
 		for (short col = 0; col < MAX_COLS; ++col) {
-			if (m_roomNodes[row][col]->m_type == RoomType::DEAD)	continue;
-			// TODO: Add some logic to select a room file, for now just select the first
-			json* j = m_roomFiles[m_roomNodes[row][col]->m_ConnectionType][0];
+			if (m_roomNodes[row][col]->m_type == RoomType::DEAD)	
+				continue;
 
+			Vector3D offset = Vector3D(col * x + xHalf, -(row * y + yHalf), 0);
+			// Set the position of each important node
+			m_roomNodes[row][col]->m_position = offset;
+
+			// TODO: Add some logic to select a room file, for now just select the first
+			//json* j = m_roomFiles[m_roomNodes[row][col]->m_ConnectionType][0];
+			json* j = m_roomFiles[RoomConnections::ALL][0];		// TODO: REMOVE DEFAULT SELECTION
+
+			// Move all game objects in this room to their designated location
 			std::vector<GameObject*> createdGameObjects = TETRA_LEVELS.LoadRoomFile(*j);
 			for (GameObject* pGO : createdGameObjects) {
 				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 				if (pTransform)	pTransform->Move(offset);
 			}
-
-			xPos += x;
 		}
-		yPos += y;
+	}
+
+	GameObject* pGO = TETRA_GAME_OBJECTS.FindObjectWithTag(GameObjectTag::T_Player);
+	if (pGO) {
+		Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+
+		if (pTransform)
+			pTransform->SetPosition(m_spawnNode->m_position);
 	}
 
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));

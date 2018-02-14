@@ -39,6 +39,14 @@ void GameObject::DestroyIn(float time) {
 	m_destroyTimer = time;
 }
 
+void GameObject::OverrideComponents(const json & j)
+{
+	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+		if (mComponents[i])
+			mComponents[i]->Override(j);
+	}
+}
+
 void GameObject::Update(float dt) {
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])

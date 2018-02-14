@@ -26,7 +26,6 @@ void Controller::Update(float dt) {
 	if (abs(TETRA_INPUT.GetLeftAxisY()) > 5500)
 		moveDir.y -= TETRA_INPUT.GetLeftAxisY();
 
-	
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
 		moveDir.x += 1;
 	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
@@ -74,6 +73,9 @@ void Controller::Update(float dt) {
 	}
 	m_lookDirection.Normalize();
 	Agent::Update(dt);
+
+	Vector3D pos = m_pTransform->GetPosition();
+	printf("X: %f, Y: %f\n", pos.x, pos.y);
 
 }
 void Controller::Serialize(const json& j) {

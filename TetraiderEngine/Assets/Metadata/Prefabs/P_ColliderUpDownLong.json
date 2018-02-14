@@ -30,7 +30,7 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "AABB",
-			"width": 96,
+			"width": 1152,
 			"height": 96
 		}
 	}

@@ -226,8 +226,11 @@ GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 }
 
 void GameObjectManager::HandleEvent(Event *pEvent) {
-	if (pEvent->Type() == EVENT_OnLevelInitialized) {
+	switch (pEvent->Type()) {
+	case EventType::EVENT_OnLevelInitialized:
+	case EventType::EVENT_StaticsLoaded:
 		UpdateStatus();
+		break;
 	}
 }
 

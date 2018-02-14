@@ -84,6 +84,7 @@ struct RoomNode {
 	RoomType m_type;
 	float m_cost;
 	RoomNode* m_parent;
+	Vector3D m_position;
 
 	bool operator==(const RoomNode& rhs) { return m_id == rhs.m_id; }
 	bool operator!=(const RoomNode& rhs) { return m_id != rhs.m_id; }
@@ -93,6 +94,7 @@ struct RoomNode {
 class FloorPlanGenerator {
 protected:
 	RoomNode* m_roomNodes[MAX_ROWS][MAX_COLS];
+	RoomNode* m_spawnNode;
 
 	// TODO: Move this to LevelManager or somewhere more fitting
 	std::unordered_map<RoomConnections, std::vector<json*> > m_roomFiles;
