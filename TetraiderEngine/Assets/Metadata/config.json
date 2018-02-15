@@ -21,7 +21,7 @@
 		"roomHeight": 8
 	},
 	"LEVEL_SETTINGS": {
-		"isRandomGenerated": true,
+		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
 		"Start": 0,
 		"Levels": [
