@@ -150,7 +150,7 @@ void MemoryManager::Free(void* ptr){
 void* MemoryManager::m_Buffer = nullptr;
 
 
-// GAMEOBJECT CACHING 
+// GAMEOBJECT RECYCLE 
 GameObject* MemoryManager::GetNewGameObject(std::string tag, unsigned int id) {
 	//return new GameObject(id);
 	if (m_GameObjectCache[tag].empty()) {
@@ -163,7 +163,7 @@ GameObject* MemoryManager::GetNewGameObject(std::string tag, unsigned int id) {
 		return emptyGO;
 	}
 }
-// GAMEOBJECT RECYCLE 
+// GAMEOBJECT CACHING 
 void MemoryManager::DeleteGameObject(GameObject* ptr) {
 	//delete ptr;
 	std::string tagName = TagNameText[ptr->m_tag];
