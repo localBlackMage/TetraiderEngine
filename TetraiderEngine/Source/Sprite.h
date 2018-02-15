@@ -26,7 +26,7 @@ public:
 	Sprite(std::string textureName = "");
 	~Sprite();
 	static Component* CreateInstance() { return new Sprite(); }
-	virtual void DeActivate();
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 

@@ -18,7 +18,7 @@ Agent::Agent(ComponentType _type) :
 	m_isIgnoreHazards(false)
 {};
 
-void Agent::DeActivate() {
+void Agent::Deactivate() {
 	pGO = nullptr; 
 	m_pTransform = nullptr;
 	m_pAnimation = nullptr; 
@@ -59,12 +59,12 @@ void Agent::Serialize(const json& j) {
 void Agent::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
-		if (collisionData->pGO->m_tag == T_Hazard) 
+		if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_Projectile)
 			return;
-		if(collisionData->pGO->m_tag == T_Obstacle)
-			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 		else if(collisionData->pGO->m_tag == T_Enemy || collisionData->pGO->m_tag == T_Player)
 			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration*0.5f);
+		else
+			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 	}
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
 		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
@@ -118,7 +118,7 @@ void Agent::LateInitialize() {
 
 Vector3D Agent::GetDirectionToMouse() {
 	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(1); // TODO: Make this always get you the main camera
 	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
 	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(m_pTransform->GetPosition());
 	Vector3D dirToMousePos = mousePos - screenSpace;

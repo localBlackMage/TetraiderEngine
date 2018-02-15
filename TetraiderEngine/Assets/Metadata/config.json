@@ -9,7 +9,19 @@
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader"
 	},
+	"WINDOW_SETTINGS": {
+		"windowTitle" : "Eggnapped!",
+		"width": 1400,
+		"height": 1000
+	},
+	"ROOM_SETTINGS": {
+		"cellWidth": 96,
+		"cellHeight": 96,
+		"roomWidth": 12,
+		"roomHeight": 8
+	},
 	"LEVEL_SETTINGS": {
+		"isRandomGenerated": true,
 		"Statics": "StaticObjects",
 		"Start": 0,
 		"Levels": [

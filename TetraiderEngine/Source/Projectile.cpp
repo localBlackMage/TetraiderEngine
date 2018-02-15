@@ -13,7 +13,7 @@ void Projectile::Update(float dt) {
 		pGO->Destroy();
 }
 
-void Projectile::DeActivate() { 
+void Projectile::Deactivate() { 
 	pGO = nullptr; 
 	m_pBody = nullptr; 
 	m_pTransform = nullptr; 
@@ -29,6 +29,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 		if (m_isEnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
 		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Player) return;
 		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Projectile) return;
+		else if (collisionData->pGO == m_pOwner) return;
 		else if (collisionData->pGO->m_tag == T_Hazard) return;
 
 		// If object has health component, deal damage before destroying itself
@@ -42,7 +43,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 	}
 }
 
-void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile, float knockBackSpeed) {
+void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile, float knockBackSpeed, GameObject* owner) {
 	m_pTransform->SetPosition(position);
 	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x)*180/PI);
 	m_damage = damage;
@@ -51,6 +52,7 @@ void Projectile::SetProperties(const Vector3D& position, int damage, float speed
 	m_pBody->SetVelocity(speed*dir);
 	m_knockBackSpeed = knockBackSpeed;
 	m_creationLifeTime = TETRA_FRAMERATE.GetElapsedTime();
+	m_pOwner = owner;
 }
 
 void Projectile::LateInitialize() {

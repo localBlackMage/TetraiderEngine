@@ -14,13 +14,20 @@ NPCController::NPCController() :
 
 NPCController::~NPCController() {}
 
-void NPCController::DeActivate() {
+void NPCController::Deactivate() {
 	m_pWeapon = nullptr; 
-	Agent::DeActivate();
+	Agent::Deactivate();
 }
 
 void NPCController::Update(float dt) {
 	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
+	
+	//---------------------------------
+
+	Agent::Update(dt);
+}
+
+void NPCController::LateUpdate(float dt) {
 	GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
 	Transform* playerTransfrom = player->GetComponent<Transform>(ComponentType::C_Transform);
 	LineSegment2D ray(Vector2D(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y), Vector2D(playerTransfrom->GetPosition().x, playerTransfrom->GetPosition().y));
@@ -34,9 +41,6 @@ void NPCController::Update(float dt) {
 	else {
 		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
 	}
-	//---------------------------------
-
-	Agent::Update(dt);
 }
 
 void NPCController::Serialize(const json& j) {

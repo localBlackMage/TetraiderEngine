@@ -14,7 +14,7 @@ Camera::Camera() :
 
 Camera::~Camera(){}
 
-void Camera::DeActivate() {
+void Camera::Deactivate() {
 	pGO = nullptr;
 	m_pTransform = nullptr; 
 }

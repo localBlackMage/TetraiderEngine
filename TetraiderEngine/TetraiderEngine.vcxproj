@@ -36,6 +36,39 @@
     <ClCompile Include="Source\DestroyOnHealthZero.cpp" />
     <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
+    <ClCompile Include="Source\External\Lua\lapi.c" />
+    <ClCompile Include="Source\External\Lua\lauxlib.c" />
+    <ClCompile Include="Source\External\Lua\lbaselib.c" />
+    <ClCompile Include="Source\External\Lua\lbitlib.c" />
+    <ClCompile Include="Source\External\Lua\lcode.c" />
+    <ClCompile Include="Source\External\Lua\lcorolib.c" />
+    <ClCompile Include="Source\External\Lua\lctype.c" />
+    <ClCompile Include="Source\External\Lua\ldblib.c" />
+    <ClCompile Include="Source\External\Lua\ldebug.c" />
+    <ClCompile Include="Source\External\Lua\ldo.c" />
+    <ClCompile Include="Source\External\Lua\ldump.c" />
+    <ClCompile Include="Source\External\Lua\lfunc.c" />
+    <ClCompile Include="Source\External\Lua\lgc.c" />
+    <ClCompile Include="Source\External\Lua\linit.c" />
+    <ClCompile Include="Source\External\Lua\liolib.c" />
+    <ClCompile Include="Source\External\Lua\llex.c" />
+    <ClCompile Include="Source\External\Lua\lmathlib.c" />
+    <ClCompile Include="Source\External\Lua\lmem.c" />
+    <ClCompile Include="Source\External\Lua\loadlib.c" />
+    <ClCompile Include="Source\External\Lua\lobject.c" />
+    <ClCompile Include="Source\External\Lua\lopcodes.c" />
+    <ClCompile Include="Source\External\Lua\loslib.c" />
+    <ClCompile Include="Source\External\Lua\lparser.c" />
+    <ClCompile Include="Source\External\Lua\lstate.c" />
+    <ClCompile Include="Source\External\Lua\lstring.c" />
+    <ClCompile Include="Source\External\Lua\lstrlib.c" />
+    <ClCompile Include="Source\External\Lua\ltable.c" />
+    <ClCompile Include="Source\External\Lua\ltablib.c" />
+    <ClCompile Include="Source\External\Lua\ltm.c" />
+    <ClCompile Include="Source\External\Lua\lundump.c" />
+    <ClCompile Include="Source\External\Lua\lutf8lib.c" />
+    <ClCompile Include="Source\External\Lua\lvm.c" />
+    <ClCompile Include="Source\External\Lua\lzio.c" />
     <ClCompile Include="Source\FlashOnTakeDamage.cpp" />
     <ClCompile Include="Source\FloorPlanGenerator.cpp" />
     <ClCompile Include="Source\FrameRateManager.cpp" />
@@ -47,6 +80,7 @@
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\JsonReader.cpp" />
     <ClCompile Include="Source\LevelManager.cpp" />
+    <ClCompile Include="Source\LuaScript.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Math\Collisions.cpp" />
     <ClCompile Include="Source\Math\LineSegment2D.cpp" />
@@ -62,6 +96,7 @@
     <ClCompile Include="Source\NPCController.cpp" />
     <ClCompile Include="Source\ParticleEmitter.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
+    <ClCompile Include="Source\PointLight.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\ProjectileSpawner.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
@@ -99,6 +134,49 @@
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\EventNames.h" />
     <ClInclude Include="Source\External\json.hpp" />
+    <ClInclude Include="Source\External\Lua\lapi.h" />
+    <ClInclude Include="Source\External\Lua\lauxlib.h" />
+    <ClInclude Include="Source\External\Lua\lcode.h" />
+    <ClInclude Include="Source\External\Lua\lctype.h" />
+    <ClInclude Include="Source\External\Lua\ldebug.h" />
+    <ClInclude Include="Source\External\Lua\ldo.h" />
+    <ClInclude Include="Source\External\Lua\lfunc.h" />
+    <ClInclude Include="Source\External\Lua\lgc.h" />
+    <ClInclude Include="Source\External\Lua\llex.h" />
+    <ClInclude Include="Source\External\Lua\llimits.h" />
+    <ClInclude Include="Source\External\Lua\lmem.h" />
+    <ClInclude Include="Source\External\Lua\lobject.h" />
+    <ClInclude Include="Source\External\Lua\lopcodes.h" />
+    <ClInclude Include="Source\External\Lua\lparser.h" />
+    <ClInclude Include="Source\External\Lua\lprefix.h" />
+    <ClInclude Include="Source\External\Lua\lstate.h" />
+    <ClInclude Include="Source\External\Lua\lstring.h" />
+    <ClInclude Include="Source\External\Lua\ltable.h" />
+    <ClInclude Include="Source\External\Lua\ltm.h" />
+    <ClInclude Include="Source\External\Lua\lua.h" />
+    <ClInclude Include="Source\External\Lua\lua.hpp" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\CFunctions.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\ClassInfo.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Constructor.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\dump.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\FuncTraits.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Iterator.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\LuaException.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\LuaHelpers.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\LuaRef.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Namespace.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Stack.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\TypeList.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\TypeTraits.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\detail\Userdata.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\LuaBridge.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\RefCountedObject.h" />
+    <ClInclude Include="Source\External\Lua\LuaBridge\RefCountedPtr.h" />
+    <ClInclude Include="Source\External\Lua\luaconf.h" />
+    <ClInclude Include="Source\External\Lua\lualib.h" />
+    <ClInclude Include="Source\External\Lua\lundump.h" />
+    <ClInclude Include="Source\External\Lua\lvm.h" />
+    <ClInclude Include="Source\External\Lua\lzio.h" />
     <ClInclude Include="Source\FlashOnTakeDamage.h" />
     <ClInclude Include="Source\FloorPlanGenerator.h" />
     <ClInclude Include="Source\FrameRateManager.h" />
@@ -112,6 +190,7 @@
     <ClInclude Include="Source\JsonReader.h" />
     <ClInclude Include="Source\Layers.h" />
     <ClInclude Include="Source\LevelManager.h" />
+    <ClInclude Include="Source\LuaScript.h" />
     <ClInclude Include="Source\Math\Collisions.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
@@ -128,6 +207,7 @@
     <ClInclude Include="Source\NPCController.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
+    <ClInclude Include="Source\PointLight.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\ProjectileSpawner.h" />
     <ClInclude Include="Source\RangeAttack.h" />
@@ -215,8 +295,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\im_src\gl3w;$(ProjectDir)Source\im_src\gl3w\GL;$(ProjectDir)Source\im_src;$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -231,10 +310,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\im_src\gl3w;$(ProjectDir)Source\im_src\gl3w\GL;$(ProjectDir)Source\im_src;$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)GL\lib;$(ProjectDir)SDL2\lib\x86;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -248,9 +325,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\im_src\gl3w;$(ProjectDir)Source\im_src\gl3w\GL;$(ProjectDir)Source\im_src;$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -266,9 +341,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\im_src\gl3w;$(ProjectDir)Source\im_src\gl3w\GL;$(ProjectDir)Source\im_src;$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

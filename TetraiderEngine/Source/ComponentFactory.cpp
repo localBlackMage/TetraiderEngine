@@ -16,6 +16,7 @@
 #include "DestroyOnHealthZero.h"
 #include "DealDamageOnCollision.h"
 #include "ProjectileSpawner.h"
+#include "PointLight.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -34,11 +35,17 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["DestroyOnHealthZero"] = DestroyOnHealthZero::CreateInstance;
 	m_creationFunctions["DealDamageOnCollision"] = DealDamageOnCollision::CreateInstance;
 	m_creationFunctions["ProjectileSpawner"] = ProjectileSpawner::CreateInstance;
+	m_creationFunctions["PointLight"] = PointLight::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {
+	// check if there's empty component stored in cache
+	Component* cachedComp = TETRA_MEMORY.GetNewComponent(component);
+	if (cachedComp) {
+		return cachedComp;
+	}
+	// no empty component available, return create new comp
 	CreationFunction* Create = m_creationFunctions[component];
-
 	if (Create)
 		return Create();
 

@@ -38,8 +38,9 @@ Transform::~Transform()
 {
 }
 
-void Transform::DeActivate() {
+void Transform::Deactivate() {
 	pGO = nullptr;
+	m_parent = nullptr;
 }
 
 void Transform::Update(float dt) 
@@ -47,8 +48,7 @@ void Transform::Update(float dt)
 
 }
 
-void Transform::LateUpdate(float dt) 
-{
+void Transform::LateUpdate(float dt) {
 	// TODO: optimization if game object is static save m_Transform somewhere and never calculate matrix again
 	Matrix4x4 trans;
 	if (m_parent)
@@ -91,6 +91,7 @@ void Transform::Override(const json & j)
 		m_position.x = ValueExists(j["position"], "x") ? j["position"]["x"] : m_position.x;
 		m_position.y = ValueExists(j["position"], "y") ? j["position"]["y"] : m_position.y;
 		m_position.z = ValueExists(j["position"], "z") ? j["position"]["z"] : m_position.z;
+		_UpdateBodyComponent();
 	}
 	if (ValueExists(j, "scale")) {
 		m_scale.x = ValueExists(j["scale"], "x") ? j["scale"]["x"] : m_scale.x;

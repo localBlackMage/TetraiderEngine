@@ -63,8 +63,8 @@ private:
 	MemoryBlock* m_pHead;						// First MemoryBlock in the linked list
 	MemoryBlock* m_Cache[MAX_CACHE_SIZE_NUM];	// Stores MemoryBlocks to be deleted, when full all will be deleted at once
 	int m_NumCachedBlock;						// Number of MemoryBlocks stored in the m_Cache
-	std::vector<GameObject*> m_GameObjectCache;
-	std::vector<Component*> m_ComponentCache[NUM_COMPONENTS];
+	std::unordered_map< std::string, std::vector<GameObject*> >m_GameObjectCache;
+	std::unordered_map< std::string, std::vector<Component*> >m_ComponentCache;
 
 	MemoryBlock* NewMemoryBlock();
 	void Recycle(MemoryBlock*);
@@ -79,10 +79,10 @@ public:
 	void Free(void* ptr);
 	// ***********************************
 	// GameObj Factory
-	GameObject* GetNewGameObject(unsigned int id);
+	GameObject* GetNewGameObject(std::string, unsigned int id);
 	void DeleteGameObject(GameObject* ptr);
 	// Component Factory
-	Component* GetNewComponent(ComponentType type);
+	Component* GetNewComponent(std::string type);
 	void DeleteComponent(Component* ptr);
 };
 #endif

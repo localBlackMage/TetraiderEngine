@@ -322,11 +322,14 @@ void FloorPlanGenerator::PrintFloorPlan()
 
 void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 {
-	// TODO: These are "magic numbers" - currently the width/height of each of the rooms
-	// (96x96 tiles, 12x8 tiles)
-	float x = 1152.f;
+	unsigned short cellWidth = TETRA_GAME_CONFIG.CellWidth();
+	unsigned short cellHeight = TETRA_GAME_CONFIG.CellHeight();
+	unsigned short roomWidth = TETRA_GAME_CONFIG.RoomWidth();
+	unsigned short roomHeight = TETRA_GAME_CONFIG.RoomHeight();
+
+	float x = float(roomWidth * cellWidth);
 	float xHalf = x / 2.f;
-	float y = 768.f;
+	float y = float(roomHeight * cellHeight);
 	float yHalf = y / 2.f;
 
 	for (short row = 0; row < MAX_ROWS; ++row) {

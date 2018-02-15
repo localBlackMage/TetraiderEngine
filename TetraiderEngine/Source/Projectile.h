@@ -14,16 +14,17 @@ public:
 	Projectile();
 	~Projectile() {}
 	static Component* CreateInstance() { return new Projectile(); }
-	virtual void DeActivate();
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
-	void SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool m_enemyProjectile, float knockBackSpeed);
+	void SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool m_enemyProjectile, float knockBackSpeed, GameObject* owner);
 private:
 	Body* m_pBody;
 	Transform* m_pTransform;
+	GameObject* m_pOwner;
 	int m_damage;
 	float m_lifeTime;
 	float m_creationLifeTime;

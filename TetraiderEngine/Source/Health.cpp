@@ -5,7 +5,7 @@
 Health::Health(): Component(ComponentType::C_Health) {}
 Health::~Health() {}
 
-void Health::DeActivate() { 
+void Health::Deactivate() { 
 	pGO = nullptr; 
 }
 

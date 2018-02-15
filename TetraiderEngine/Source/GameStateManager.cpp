@@ -12,11 +12,7 @@ GameStateManager::~GameStateManager() {}
 
 void GameStateManager::Update() {
 	while (m_currentState != GameState::QUIT) {
-		//TETRA_LEVELS.LoadLevel();
-		TETRA_LEVEL_GEN.GenerateFloorPlan();
-		TETRA_LEVEL_GEN.PrintFloorPlan();
-		TETRA_LEVELS.LoadStaticGameObjects();
-		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
+		TETRA_LEVELS.LoadLevel();
 
 		if (m_currentState == GameState::RESTART) {
 			m_currentState = m_previousState;
@@ -35,6 +31,10 @@ void GameStateManager::Update() {
 				Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
 			else
 				Tetraider::DebugMode();							// Debug mode
+
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_R)) {
+				TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
+			}
 
 			Tetraider::FrameEnd();
 		}
