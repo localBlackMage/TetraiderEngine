@@ -140,6 +140,14 @@
 		},
 		"rotationOffset": 70,
 		"effectPrefab": "P_SlashTest"
+	},
+	{
+		"Component": "Stamina",
+		"currentStamina": 50,
+		"maxStamina": 50,
+		"rechargeSpeed": 30,
+		"rechargeCoolDown": 1.5,
+		"useSpeed": 20
 	}
   ]
 }

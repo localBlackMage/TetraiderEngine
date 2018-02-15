@@ -5,6 +5,7 @@
 #include "Agent.h"
 
 class Weapon;
+class Stamina;
 
 class Controller : public Agent {
 public:
@@ -18,6 +19,7 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 protected:
 	Weapon* m_pWeapon;
+	Stamina* m_pStamina;
 private:
 	bool m_isGameControllerEnabled;
 	void CheckToggleMouseControl();

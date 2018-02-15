@@ -120,6 +120,9 @@
 	},
 	{
 	  "prefab": "P_HealthBar"	
+	},
+	{
+	  "prefab": "P_StaminaBar"	
 	}
   ]
 }

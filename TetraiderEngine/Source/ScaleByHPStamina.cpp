@@ -3,6 +3,7 @@
 #include "ScaleByHPStamina.h"
 #include "TetraiderAPI.h"
 #include "Health.h"
+#include "Stamina.h"
 
 ScaleByHPStamina::ScaleByHPStamina(): Component(ComponentType::C_ScaleByHPStamina), m_originalScale(0), m_isScaleByHealth(true) {}
 ScaleByHPStamina::~ScaleByHPStamina() {}
@@ -71,8 +72,9 @@ void ScaleByHPStamina::HandleEvent(Event* pEvent) {
 				m_pTransform->SetScaleX(((float)pHealth->GetHealth() / (float)pHealth->GetMaxHealth())*m_originalScale);
 			}
 			else {
-				StaminaChangeData* staminaData = pEvent->Data<StaminaChangeData>();
-				m_pTransform->SetScaleX((staminaData->mCurrentStamina / staminaData->mMaxStamina)*m_originalScale);
+				GameObject* pPlayer = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
+				Stamina* pStamina = pPlayer->GetComponent<Stamina>(C_Stamina);
+				m_pTransform->SetScaleX((pStamina->GetCurrentStamina() / pStamina->GetMaxStamina())*m_originalScale);
 			}
 			break;
 		}
