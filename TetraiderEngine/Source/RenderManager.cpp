@@ -40,6 +40,7 @@ RenderManager::RenderManager(int width, int height, std::string title) :
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
 	_InitWindow(title);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
 }
 
 RenderManager::~RenderManager() 

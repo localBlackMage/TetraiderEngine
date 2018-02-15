@@ -111,10 +111,18 @@ void GameObjectManager::RenderGameObjects()
 {
 	for (GameObject* cameraGO : m_pCameras) {
 		Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-		for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
+		for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS - 1; ++layer) {
 			if (cameraComp->ShouldRenderLayer(layer))
 				m_layers[layer].RenderLayer(cameraGO);
 		}
+	}
+
+	TETRA_DEBUG.RenderDebugCommands();
+
+	for (GameObject* cameraGO : m_pCameras) {
+		Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
+		if (cameraComp->ShouldRenderLayer(RENDER_LAYER::L_NUM_LAYERS - 1))
+			m_layers[RENDER_LAYER::L_NUM_LAYERS - 1].RenderLayer(cameraGO);
 	}
 }
 
@@ -141,6 +149,7 @@ void GameObjectManager::DestroyGameObjects() {
 				if (iter != m_pCameras.end())
 					m_pCameras.erase(iter);
 			}
+			(*it)->DeactivateSubscriber();
 			TETRA_PHYSICS.RemoveGameObject(*it);
 			TETRA_MEMORY.DeleteGameObject(*it);
 			it = mGameObjects.erase(it);
@@ -199,7 +208,7 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	}
 
 	pGameObject->LateInitialize();
-
+	pGameObject->ActivateSubscriber();
 	AddGameObjectToQueue(pGameObject);
 	return pGameObject;
 }

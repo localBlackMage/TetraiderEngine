@@ -22,6 +22,7 @@ public:
 	void TakeDamage(int damage, const Vector3D& sourceOfAttack, float knockBackSpeed);
 	void Heal(int heal);
 	int GetHealth() { return m_currentHealth; }
+	int GetMaxHealth() { return m_maxHealth; }
 	void Invincibility(bool active) { m_isInvincible = active; }
 private:
 	int m_currentHealth;

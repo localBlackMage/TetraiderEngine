@@ -38,7 +38,11 @@ void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float kno
 		pGO->HandleEvent(&Event(EventType::EVENT_OnHealthZero));
 	}
 
-	pGO->HandleEvent(&Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, directionOfAttack, knockBackSpeed)));
+	Event e = Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, directionOfAttack, knockBackSpeed));
+	pGO->HandleEvent(&e);
+	if (pGO->m_tag == GameObjectTag::T_Player) {
+		TETRA_EVENTS.BroadcastEventToSubscribers(&e);
+	}
 }
 
 void Health::Heal(int heal) {

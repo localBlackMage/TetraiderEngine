@@ -1,10 +1,10 @@
 {
   "GAME_OBJECTS": [
-	{
-      "prefab": "P_UICamera"
-    },
     {
       "prefab": "P_Camera"
+    },
+	{
+      "prefab": "P_UICamera"
     },
     {
       "prefab": "P_Player",
@@ -116,7 +116,10 @@
 	  	"x": -200,
 		"y": 400,
 		"z": 0
+		}	
+	},
+	{
+	  "prefab": "P_HealthBar"	
 	}
-}
   ]
 }

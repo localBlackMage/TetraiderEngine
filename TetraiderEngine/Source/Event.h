@@ -44,11 +44,17 @@ struct HealthChangeData : public EventData {
 	Vector3D m_directionOfAttack;
 };
 
+struct StaminaChangeData : public EventData {
+	StaminaChangeData(float _currentStamina, float _maxStamina) :
+		mCurrentStamina(_currentStamina), mMaxStamina(_maxStamina) {}
+	float mCurrentStamina;
+	float mMaxStamina;
+};
+
 struct FPSData : public EventData {
 	FPSData(float fps) : mFPS(fps) {}
 	float mFPS;
 };
-
 
 class Event
 {
