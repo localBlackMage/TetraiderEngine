@@ -8,6 +8,9 @@
     },
     {
       "prefab": "P_Player"
-    }
+    },
+	{
+	  "prefab": "P_HealthBar"	
+	}
   ]
 }

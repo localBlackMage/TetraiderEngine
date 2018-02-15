@@ -79,7 +79,7 @@
 		},
 		"coolDown": 2,
 		"baseDamage": 2,
-		"projectileSpeed": 500,
+		"projectileSpeed": 700,
 		"offset": 40,
 		"lifeTime": 2,
 		"projectilePrefab": "P_testProjectile",
