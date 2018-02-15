@@ -8,6 +8,12 @@
     },
     {
       "prefab": "P_Player"
-    }
+    },
+	{
+	  "prefab": "P_StaminaBar"	
+	},
+	{
+	  "prefab": "P_HealthBar"	
+	}
   ]
 }

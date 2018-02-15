@@ -2,6 +2,7 @@
 #include "Controller.h"
 #include "Weapon.h"
 #include "Health.h"
+#include "Stamina.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
 #include <iostream>
@@ -55,7 +56,7 @@ void Controller::Update(float dt) {
 	}
 
 	moveDir.Normalize();
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE)) {
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE) && m_pStamina->UseStamina(dt)) {
 		m_isIgnoreHazards = true;
 		m_targetVelocity = moveDir * m_flySpeed;
 	}
@@ -102,6 +103,20 @@ void Controller::LateInitialize() {
 
 		if (!m_pWeapon) {
 			printf("No Weapon component found. Controller component failed to operate.\n");
+			return;
+		}
+	}
+
+	if (!m_pStamina) {
+		if (pGO)
+			m_pStamina = pGO->GetComponent<Stamina>(ComponentType::C_Stamina);
+		else {
+			printf("No Game Object found. Controller component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pWeapon) {
+			printf("No Stamina component found. Controller component failed to operate.\n");
 			return;
 		}
 	}

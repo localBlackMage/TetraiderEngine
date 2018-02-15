@@ -18,6 +18,7 @@
 #include "ProjectileSpawner.h"
 #include "PointLight.h"
 #include "ScaleByHPStamina.h"
+#include "Stamina.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -38,6 +39,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["ProjectileSpawner"] = ProjectileSpawner::CreateInstance;
 	m_creationFunctions["PointLight"] = PointLight::CreateInstance;
 	m_creationFunctions["ScaleByHPStamina"] = ScaleByHPStamina::CreateInstance;
+	m_creationFunctions["Stamina"] = Stamina::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {
