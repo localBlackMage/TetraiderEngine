@@ -46,6 +46,9 @@ public:
 	virtual void SubscribeToEvent(EventType eventType);
 
 
+	void ActivateSubscriber();
+	void DeactivateSubscriber();
+
 	void *operator new(std::size_t size);
 	void operator delete(void *ptr);
 	void* operator new[](std::size_t size);

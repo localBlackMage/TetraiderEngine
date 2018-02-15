@@ -39,6 +39,16 @@ void Subscriber::SubscribeToEvent(EventType eventType)
 	TETRA_EVENTS.Subscribe(eventType, this);
 }
 
+void Subscriber::ActivateSubscriber()
+{
+	SubscriberTracker::GetInstance().AddSubscriber(this);
+}
+
+void Subscriber::DeactivateSubscriber()
+{
+	SubscriberTracker::GetInstance().RemoveSubscriber(this);
+}
+
 void* Subscriber::operator new(std::size_t size)
 {
 	return TETRA_MEMORY.Alloc(size);
