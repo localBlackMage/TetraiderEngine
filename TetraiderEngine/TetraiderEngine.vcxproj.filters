@@ -258,7 +258,6 @@
     <ClCompile Include="Source\AOEAttack.cpp">
       <Filter>Source Files\Attacks</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Source\External\Lua\lapi.c">
       <Filter>External Libraries\Lua</Filter>
     </ClCompile>
@@ -360,7 +359,7 @@
     </ClCompile>
     <ClCompile Include="Source\LuaScript.cpp">
       <Filter>Source Files\Managers</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="Source\FloorPlanGenerator.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
@@ -369,7 +368,6 @@
     </ClCompile>
     <ClCompile Include="Source\PointLight.cpp">
       <Filter>Source Files</Filter>
->>>>>>> 0774e3ce3af9797d200acb56d5c4d1860cd15281
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,7 +575,6 @@
     <ClInclude Include="Source\AOEAttack.h">
       <Filter>Header Files\Attacks</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Source\External\Lua\lapi.h">
       <Filter>External Libraries\Lua</Filter>
     </ClInclude>
@@ -712,10 +709,9 @@
     </ClInclude>
     <ClInclude Include="Source\Controller.h">
       <Filter>Header Files\Components</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="Source\FloorPlanGenerator.h">
       <Filter>Header Files\Managers</Filter>
->>>>>>> 0774e3ce3af9797d200acb56d5c4d1860cd15281
     </ClInclude>
     <ClInclude Include="Source\ProjectileSpawner.h">
       <Filter>Header Files</Filter>
