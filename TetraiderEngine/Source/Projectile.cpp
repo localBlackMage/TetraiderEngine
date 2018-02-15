@@ -13,7 +13,7 @@ void Projectile::Update(float dt) {
 		pGO->Destroy();
 }
 
-void Projectile::DeActivate() { 
+void Projectile::Deactivate() { 
 	pGO = nullptr; 
 	m_pBody = nullptr; 
 	m_pTransform = nullptr; 

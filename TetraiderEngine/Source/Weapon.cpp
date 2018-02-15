@@ -22,7 +22,7 @@ Weapon::~Weapon() {
 	m_pEffect->Destroy();
 }
 
-void Weapon::DeActivate() {
+void Weapon::Deactivate() {
 	for (auto attack : m_Attacks) {
 		delete attack;
 	}
@@ -31,6 +31,7 @@ void Weapon::DeActivate() {
 	m_pEffect->Destroy();
 	m_pWeaponTransform = nullptr;
 	m_pEffectTransform = nullptr;
+	m_pEffect = nullptr;
 	m_pController = nullptr;
 }
 

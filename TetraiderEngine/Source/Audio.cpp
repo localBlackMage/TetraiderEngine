@@ -4,7 +4,7 @@
 Audio::Audio():Component(ComponentType::C_Audio) {}
 Audio::~Audio() {}
 
-void Audio::DeActivate() {
+void Audio::Deactivate() {
 	pGO = nullptr; 
 }
 

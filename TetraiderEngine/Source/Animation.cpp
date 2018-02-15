@@ -22,7 +22,7 @@ Animation::Animation():
 
 Animation::~Animation() {}
 
-void Animation::DeActivate() { 
+void Animation::Deactivate() { 
 	m_pSprite = nullptr; 
 	pGO = nullptr; 
 }

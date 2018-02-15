@@ -14,9 +14,9 @@ NPCController::NPCController() :
 
 NPCController::~NPCController() {}
 
-void NPCController::DeActivate() {
+void NPCController::Deactivate() {
 	m_pWeapon = nullptr; 
-	Agent::DeActivate();
+	Agent::Deactivate();
 }
 
 void NPCController::Update(float dt) {

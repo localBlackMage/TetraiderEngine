@@ -21,7 +21,7 @@ Sprite::Sprite(std::string textureName) :
 
 Sprite::~Sprite() {}
 
-void Sprite::DeActivate() { 
+void Sprite::Deactivate() { 
 	pGO = nullptr; 
 }
 

@@ -39,8 +39,13 @@ ComponentFactory::ComponentFactory() {
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {
+	// check if there's empty component stored in cache
+	Component* cachedComp = TETRA_MEMORY.GetNewComponent(component);
+	if (cachedComp) {
+		return cachedComp;
+	}
+	// no empty component available, return create new comp
 	CreationFunction* Create = m_creationFunctions[component];
-
 	if (Create)
 		return Create();
 

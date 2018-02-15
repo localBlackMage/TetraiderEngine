@@ -11,7 +11,7 @@ CamFollow::CamFollow() :
 
 CamFollow::~CamFollow() {}
 
-void CamFollow::DeActivate() { 
+void CamFollow::Deactivate() { 
 	pGO = nullptr; 
 	m_pTransform = nullptr;  
 	m_pTarget = nullptr; 

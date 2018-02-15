@@ -13,9 +13,9 @@ Controller::Controller() :
 
 Controller::~Controller() {}
 
-void Controller::DeActivate() {
+void Controller::Deactivate() {
 	m_pWeapon = nullptr; 
-	Agent::DeActivate(); 
+	Agent::Deactivate(); 
 }
 
 void Controller::Update(float dt) {

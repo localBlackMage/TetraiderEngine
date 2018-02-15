@@ -15,7 +15,7 @@ public:
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
-	virtual void DeActivate();
+	virtual void Deactivate();
 	bool IsPlaying() { return m_isPlaying; }
 
 	void Play(int animation);

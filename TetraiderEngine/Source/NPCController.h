@@ -11,7 +11,7 @@ public:
 	NPCController();
 	~NPCController();
 	static Component* CreateInstance() { return new NPCController(); }
-	virtual void DeActivate();
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void LateInitialize();

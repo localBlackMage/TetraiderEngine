@@ -10,9 +10,12 @@ DestroyOnHealthZero::~DestroyOnHealthZero() {
 		delete m_Attack;
 }
 
-void DestroyOnHealthZero::DeActivate() {
+void DestroyOnHealthZero::Deactivate() {
 	pGO = nullptr; 
-	delete m_Attack; 
+	if(m_Attack)
+		delete m_Attack; 
+
+	m_Attack = nullptr;
 	m_destroyIn = 0;  
 	m_timeStamp = 0, 
 	m_isDestory = false; 

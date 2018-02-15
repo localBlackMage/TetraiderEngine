@@ -12,7 +12,7 @@ public:
 	Audio();
 	~Audio();
 	static Component* CreateInstance() { return new Audio(); }
-	virtual void DeActivate();
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();

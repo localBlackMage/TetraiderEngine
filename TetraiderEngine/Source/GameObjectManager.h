@@ -8,6 +8,7 @@
 #include "Layers.h"
 #include <string>
 #include <vector>
+#include <iostream>
 
 
 // Forward declarations

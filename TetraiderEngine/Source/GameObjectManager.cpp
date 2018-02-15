@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Sorting.h"
 #include "TetraiderAPI.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -135,6 +136,11 @@ void GameObjectManager::DestroyGameObjects() {
 				m_layers[(*it)->GetLayer()].RemoveFromLayer(*it);
 
 			RemoveGameObjectsFromHealthList(*it);
+			if ((*it)->m_tag == T_Camera) {
+				std::vector<GameObject*>::iterator iter = std::find(m_pCameras.begin(), m_pCameras.end(), (*it));
+				if (iter != m_pCameras.end())
+					m_pCameras.erase(iter);
+			}
 			TETRA_PHYSICS.RemoveGameObject(*it);
 			TETRA_MEMORY.DeleteGameObject(*it);
 			it = mGameObjects.erase(it);
@@ -177,7 +183,7 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
-	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(++m_currentId);
+	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(TagNameText[FindTagWithString(name)], ++m_currentId);
 
 	SetGameObjectTag(ParseString(*j, "Tag"), pGameObject);
 	SetGameObjectLayer(ParseString(*j, "Layer"), pGameObject);

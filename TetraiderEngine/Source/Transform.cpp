@@ -38,8 +38,9 @@ Transform::~Transform()
 {
 }
 
-void Transform::DeActivate() {
+void Transform::Deactivate() {
 	pGO = nullptr;
+	m_parent = nullptr;
 }
 
 void Transform::Update(float dt) 

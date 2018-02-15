@@ -13,21 +13,8 @@ Creation date: 2/1/18
 #include "MemoryManager.h"
 #include "TetraiderAPI.h"
 #include "Component.h"
-#include "Transform.h"
-#include "Sprite.h"
-#include "Animation.h"
-#include "Controller.h"
-#include "Body.h"
-#include "Camera.h"
-#include "CamFollow.h"
-#include "Health.h"
-#include "FlashOnTakeDamage.h"
-#include "Projectile.h"
-#include "Weapon.h"
-#include "Audio.h"
-#include "NPCController.h"
-#include "DestroyOnHealthZero.h"
-#include "DealDamageOnCollision.h"
+#include "ComponentTypes.h"
+#include "GameObjectTags.h"
 #include <iostream>
 
 // temp
@@ -70,7 +57,6 @@ MemoryManager::MemoryManager():
 }
 
 MemoryManager::~MemoryManager() {
-
 	if (m_pHead){
 		m_pHead->CleanUp();
 		free(m_pHead);
@@ -163,75 +149,61 @@ void MemoryManager::Free(void* ptr){
 
 void* MemoryManager::m_Buffer = nullptr;
 
-GameObject* MemoryManager::GetNewGameObject(unsigned int id) {
-	if (m_GameObjectCache.empty()) {
+
+// GAMEOBJECT RECYCLE 
+GameObject* MemoryManager::GetNewGameObject(std::string tag, unsigned int id) {
+	//return new GameObject(id);
+	if (m_GameObjectCache[tag].empty()) {
 		return new GameObject(id);
 	}
 	else {
-		GameObject* emptyGO = m_GameObjectCache.back();
-		m_GameObjectCache.pop_back();
+		GameObject* emptyGO = m_GameObjectCache[tag].back();
+		emptyGO->SetID(id);
+		m_GameObjectCache[tag].pop_back();
 		return emptyGO;
 	}
 }
+// GAMEOBJECT CACHING 
 void MemoryManager::DeleteGameObject(GameObject* ptr) {
-	if (m_GameObjectCache.size() < MAX_GAMEOBJECT_CACHE) {
+	//delete ptr;
+	std::string tagName = TagNameText[ptr->m_tag];
+	if (m_GameObjectCache[tagName].size() >= MAX_GAMEOBJECT_CACHE) {
 		delete ptr;
 	}
 	else {
-		m_GameObjectCache.push_back(ptr);
+		ptr->Deactivate();
+		m_GameObjectCache[tagName].push_back(ptr);
 	}
 }
 
-Component* MemoryManager::GetNewComponent(ComponentType type) {
-	if (m_ComponentCache[type].empty()) {
-		switch (type) {
-		case C_Transform:
-			return new Transform();
-		case C_Sprite:
-			return new Sprite();
-		case C_Animation:
-			return new Animation();
-		case C_Controller:
-			return new Controller();
-		case C_Body:
-			return new Body();
-		case C_Camera:
-			return new Camera();
-		case C_CamFollow:
-			return new CamFollow();
-		case C_Health:
-			return new Health();
-		case C_FlashOnTakeDamage:
-			return new FlashOnTakeDamage();
-		case C_Projectile:
-			return new Projectile();
-		case C_Weapon:
-			return new Weapon();
-		case C_Audio:
-			return new Audio();
-		case C_NPCCONTROLLER:
-			return new NPCController();
-		case C_ParticleEmitter:
-			//return new ParticleEmitter();
-			break;
-		case C_DestroyOnHealthZero:
-			return new DestroyOnHealthZero();
-		case C_DealDamageOnCollision:
-			return new DealDamageOnCollision();
-		}
-		return nullptr;
-	}
-	else { // currently no caching for components
-		Component* emptyComp = m_ComponentCache[type].front();
-		m_ComponentCache[type].erase(m_ComponentCache[type].begin());
-		return emptyComp;
-	}
+Component* MemoryManager::GetNewComponent(std::string type) {
+	return nullptr;
+
+	/****TRIED CACHING COMPONENTS TO RECYCLE -> DOESN'T QUITE WORK****/ 
+	//std::string typeName = "C_" + type;
+	//if (m_ComponentCache[typeName].empty()) {
+	//	return nullptr;
+	//}
+	//else { // get empty component from cache
+	//	Component* emptyComp = m_ComponentCache[typeName].back();
+	//	m_ComponentCache[typeName].pop_back();
+	//	return emptyComp;
+	//}
 }
 void MemoryManager::DeleteComponent(Component* ptr) {
 	delete ptr;
 
+	/****TRIED CACHING COMPONENTS TO RECYCLE -> DOESN'T QUITE WORK****/
+	//std::string typeString = ComponentTypeText[ptr->Type()];
+	//if (m_ComponentCache[typeString].size() < MAX_GAMEOBJECT_CACHE) {
+	//	ptr->Deactivate();
+	//	m_ComponentCache[typeString].push_back(ptr);
+	//}
+	//else {
+	//	delete ptr;
+	//}
 }
-/* REFERENCE OF HOW NEW DELETE IS DEFINED IN SUBSCRIBER CLASS */
+/* REFERENCE OF HOW NEW DELETE IS USED */
 // 
 //void* MemoryManager::operator new(std::size_t size)
 //{

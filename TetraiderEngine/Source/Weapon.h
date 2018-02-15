@@ -13,7 +13,7 @@ public:
 	Weapon();
 	~Weapon();
 	static Component* CreateInstance() { return new Weapon(); }
-	virtual void DeActivate();
+	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
 	virtual void LateInitialize();
