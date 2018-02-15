@@ -1,7 +1,6 @@
 #include "GameObject.h"
 #include "LevelManager.h"
 #include "TetraiderAPI.h"
-
 #include "Transform.h"
 #include "Body.h"
 #include "Shape.h"
@@ -53,7 +52,6 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 }
 
 void LevelManager::LoadLevel() {
-	//if(levelConfig.)
 	if (m_isRandomlyGenerated) {
 		TETRA_LEVEL_GEN.GenerateFloorPlan();
 		TETRA_LEVEL_GEN.PrintFloorPlan();
@@ -103,17 +101,8 @@ void LevelManager::_LoadLevel(const json& j) {
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
 		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
-
-		// Overwrite values for transform component if they exist
-		// TODO: Scale and rotation as well
 		if (pGO) {
 			pGO->OverrideComponents(j[GAME_OBJECTS][i]);
-
-			//Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-			//if (pTransform)	pTransform->Override(j[GAME_OBJECTS][i]);
-
-			//Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
-			//if (pBody)	pBody->Override(j[GAME_OBJECTS][i]);
 		}
 	}
 

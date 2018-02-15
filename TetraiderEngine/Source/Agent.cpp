@@ -59,12 +59,12 @@ void Agent::Serialize(const json& j) {
 void Agent::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
-		if (collisionData->pGO->m_tag == T_Hazard) 
+		if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_Projectile)
 			return;
-		if(collisionData->pGO->m_tag == T_Obstacle)
-			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 		else if(collisionData->pGO->m_tag == T_Enemy || collisionData->pGO->m_tag == T_Player)
 			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration*0.5f);
+		else
+			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 	}
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
 		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();

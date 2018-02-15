@@ -109,6 +109,14 @@
         "y": -225,
         "z": 0
       }
+	},
+	{
+	  "prefab": "P_ProjectileSpawner",
+	  "position": {
+	  	"x": -200,
+		"y": 400,
+		"z": 0
 	}
+}
   ]
 }
