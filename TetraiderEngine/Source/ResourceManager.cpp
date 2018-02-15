@@ -144,43 +144,6 @@ void ResourceManager::UnloadMesh(const std::string& meshName)
 
 #pragma region Texture
 
-//SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName, bool hasAlpha)
-//{
-//	SurfaceTextureBuffer * stbuff = m_textures[textureName];
-//
-//	if (stbuff)
-//		return stbuff;
-//
-//	STB_Surface * surface = new STB_Surface();
-//	if (surface) {
-//		ResourceManager::TextureInfo info = _LoadTextureInfoFile(textureName, TETRA_GAME_CONFIG.TexturesDir(), hasAlpha);
-//
-//		surface->hasAlpha = info.hasAlpha;
-//		surface->data = stbi_load(info.filename.c_str(),
-//			&surface->width, &surface->height,
-//			&surface->channels,
-//			info.hasAlpha ? STBI_rgb_alpha : STBI_rgb);
-//
-//		if (!surface->data) {
-//			std::cerr << "Failed to read file: " << textureName << std::endl;
-//			return nullptr;
-//		}
-//		/*surface->frameWidth = info.frameWidth / surface->width;
-//		surface->frameHeight = info.frameHeight / surface->height;
-//		surface->rows = info.rows;
-//		surface->columns = info.cols;*/
-//		GLuint bufferId = _CreateTextureBuffer(surface);
-//
-//		stbuff = new SurfaceTextureBuffer(surface, bufferId);
-//		m_textures[textureName] = stbuff;
-//		return stbuff;
-//	}
-//	else {
-//		std::cerr << "Failed to create texture: " << textureName << std::endl;
-//		return nullptr;
-//	}
-//}
-
 SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 {
 	SurfaceTextureBuffer * stbuff = m_textures[textureName];

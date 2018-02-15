@@ -3,18 +3,20 @@
 #define LEVEL_MANAGER_H
 
 #include "JsonReader.h"
-#include "Event.h"
 
 using json = nlohmann::json;
 
 class LevelManager
 {
 private:
-	void LoadLevel(const json& j);
 	int maxLevel;
 	int currentLevel;
 	int firstLevel;
 	json levelConfig;
+	json staticObjects;
+	bool m_isRandomlyGenerated;
+
+	void _LoadLevel(const json& j);
 public:
 	LevelManager();
 	~LevelManager();
@@ -22,6 +24,7 @@ public:
 	void operator=(const LevelManager &) = delete;
 
 	void Initialize(const json& j);
+	std::vector<GameObject*> LoadRoomFile(const json& j);
 	void LoadLevel();
 	void UnLoadLevel();
 	void UnLoadLevelForRestart();
@@ -29,12 +32,9 @@ public:
 	void NextLevel();
 	void RestartGame();
 	bool IsLastLevel();
+
+	void LoadStaticGameObjects();
 };
 
-class OnLevelInitialized : public Event {
-public:
-	OnLevelInitialized() : Event(EventType::EVENT_OnLevelInitialized) {}
-	~OnLevelInitialized() {}
-};
 
 #endif

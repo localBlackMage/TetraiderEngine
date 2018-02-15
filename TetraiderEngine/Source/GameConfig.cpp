@@ -18,6 +18,12 @@ void GameConfig::LoadConfig(std::string s) {
 	m_sfxDir = ParseString(gameSettings, "sfxDir");
 	m_shadersDir = ParseString(gameSettings, "shadersDir");
 	m_texturesDir = ParseString(gameSettings, "texturesDir");
+	m_roomFilesDir = ParseString(gameSettings, "roomFilesDir");
+
+	m_cellWidth = j["ROOM_SETTINGS"]["cellWidth"];
+	m_cellHeight = j["ROOM_SETTINGS"]["cellHeight"];
+	m_roomWidth = j["ROOM_SETTINGS"]["roomWidth"];
+	m_roomHeight = j["ROOM_SETTINGS"]["roomHeight"];
 
 	// Set level parameters
 	json levelSettings = j["LEVEL_SETTINGS"];

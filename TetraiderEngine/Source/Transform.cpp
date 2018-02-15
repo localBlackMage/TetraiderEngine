@@ -3,6 +3,25 @@
 #include "GameObject.h"
 #include <iostream>
 
+#pragma region Private Methods
+
+void Transform::_UpdateLookAt()
+{
+	m_lookAt = Matrix4x4::Rotate(GetAngleX(), Vector3D(1.0f, 0.0f, 0.0f, 0.0f)) *
+		Matrix4x4::Rotate(GetAngleY(), Vector3D(0.0f, 1.0f, 0.0f, 0.0f)) *
+		Matrix4x4::Rotate(GetAngleZ(), Vector3D(0.0f, 0.0f, 1.0f, 0.0f)) *
+		Vector3D(0.0f, 1.0f, 0.0f, 0.0f);
+}
+
+void Transform::_UpdateBodyComponent()
+{
+	Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
+	if (pBody)
+		pBody->m_Position = m_position;
+}
+
+#pragma endregion
+
 Transform::Transform() :
 	Component(ComponentType::C_Transform),
 	m_position(Vector3D()), 
@@ -29,8 +48,7 @@ void Transform::Update(float dt)
 
 }
 
-void Transform::LateUpdate(float dt) 
-{
+void Transform::LateUpdate(float dt) {
 	// TODO: optimization if game object is static save m_Transform somewhere and never calculate matrix again
 	Matrix4x4 trans;
 	if (m_parent)
@@ -67,14 +85,31 @@ void Transform::Serialize(const json& j) {
 	m_pivotOffset.z = ParseFloat(j["pivotOffset"], "z");
 }
 
+void Transform::Override(const json & j)
+{
+	if (ValueExists(j, "position")) {
+		m_position.x = ValueExists(j["position"], "x") ? j["position"]["x"] : m_position.x;
+		m_position.y = ValueExists(j["position"], "y") ? j["position"]["y"] : m_position.y;
+		m_position.z = ValueExists(j["position"], "z") ? j["position"]["z"] : m_position.z;
+		_UpdateBodyComponent();
+	}
+	if (ValueExists(j, "scale")) {
+		m_scale.x = ValueExists(j["scale"], "x") ? j["scale"]["x"] : m_scale.x;
+		m_scale.y = ValueExists(j["scale"], "y") ? j["scale"]["y"] : m_scale.y;
+		//m_scale.z = ValueExists(j["scale"], "z") ? j["scale"]["z"] : m_scale.z; // Likely not needed for our game
+	}
+}
+
 void Transform::HandleEvent(Event * p_event) {
-	if (p_event->Type() == EVENT_FlipScaleX) {
+	switch (p_event->Type()) {
+	case EventType::EVENT_FlipScaleX:
 		m_position.x *= -1;
 		m_scale.x *= -1;
-	}
-	else if (p_event->Type() == EVENT_FlipScaleY) {
+		break;
+	case EventType::EVENT_FlipScaleY:
 		m_position.y *= -1;
 		m_scale.y *= -1;
+		break;
 	}
 }
 
@@ -92,30 +127,20 @@ Vector3D Transform::GetPosition() const
 		return m_position;
 }
 
-void Transform::SetPosition(Vector3D pos)
+void Transform::SetPosition(const Vector3D& pos)
 {
 	m_position = pos;
-
-	Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
-	if (pBody)
-		pBody->m_Position.Set(m_position.x, m_position.y, m_position.z);
+	_UpdateBodyComponent();
 }
 
-void Transform::Move(Vector3D amount)
+void Transform::Move(const Vector3D& amount)
 {
 	m_position += amount;
+	_UpdateBodyComponent();
 }
 #pragma endregion
 
 #pragma region Rotate
-void Transform::_UpdateLookAt()
-{
-	m_lookAt = Matrix4x4::Rotate(GetAngleX(), Vector3D(1.0f, 0.0f, 0.0f, 0.0f)) *
-		Matrix4x4::Rotate(GetAngleY(), Vector3D(0.0f, 1.0f, 0.0f, 0.0f)) *
-		Matrix4x4::Rotate(GetAngleZ(), Vector3D(0.0f, 0.0f, 1.0f, 0.0f)) *
-		Vector3D(0.0f, 1.0f, 0.0f, 0.0f);
-}
-
 void Transform::SetAngles(float angleX, float angleY, float angleZ)
 {
 	m_angleX = angleX;

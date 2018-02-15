@@ -3,30 +3,67 @@
 #include "TetraiderAPI.h"
 
 #include "Transform.h"
-#include "Camera.h"
-#include "Sprite.h"
+#include "Body.h"
+#include "Shape.h"
 #include <iostream>
-#include <conio.h>
-#include <chrono>
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
-LevelManager::LevelManager() {}
+LevelManager::LevelManager(): m_isRandomlyGenerated(true) {}
 
 LevelManager::~LevelManager() {}
 
 bool LevelManager::IsLastLevel() {return currentLevel == (maxLevel - 1); }
+
+void LevelManager::LoadStaticGameObjects()
+{
+	int gameObjectSize = staticObjects[GAME_OBJECTS].size();
+	for (int i = 0; i < gameObjectSize; i++) {
+		TETRA_GAME_OBJECTS.CreateGameObject(staticObjects[GAME_OBJECTS][i]["prefab"]);
+	}
+
+	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_StaticsLoaded));
+}
 
 void LevelManager::Initialize(const json& j) {
 	levelConfig = j;
 	maxLevel = levelConfig["Levels"].size();
 	currentLevel = levelConfig["Start"];
 	firstLevel = currentLevel;
+	m_isRandomlyGenerated = ParseBool(levelConfig, "isRandomGenerated");
+
+	std::string staticsFileName = levelConfig["Statics"];
+	// TODO: Find a better spot for this? - Holden
+	staticObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + staticsFileName + ".json");
+}
+
+std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
+{
+	std::vector<GameObject*> createdGameObjects;
+	int gameObjectSize = j[GAME_OBJECTS].size();
+	for (int i = 0; i < gameObjectSize; i++) {
+		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
+
+		if (pGO)
+			pGO->OverrideComponents(j[GAME_OBJECTS][i]);
+		createdGameObjects.push_back(pGO);
+	}
+
+	return createdGameObjects;
 }
 
 void LevelManager::LoadLevel() {
-	std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
-	LoadLevel(OpenJsonFile(s));
+	//if(levelConfig.)
+	if (m_isRandomlyGenerated) {
+		TETRA_LEVEL_GEN.GenerateFloorPlan();
+		TETRA_LEVEL_GEN.PrintFloorPlan();
+		TETRA_LEVELS.LoadStaticGameObjects();
+		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
+	}
+	else {
+		std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
+		_LoadLevel(OpenJsonFile(s));
+	}
 }
 
 void LevelManager::UnLoadLevel() {
@@ -62,30 +99,21 @@ void LevelManager::RestartGame() {
 	ChangeLevel(firstLevel);
 }
 
-void LevelManager::LoadLevel(const json& j) {
-	// TODO: Hard code this string 'GAME_OBJECTS' into a #define or something somewhere
+void LevelManager::_LoadLevel(const json& j) {
 	int gameObjectSize = j[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
 		GameObject* pGO = TETRA_GAME_OBJECTS.CreateGameObject(j[GAME_OBJECTS][i]["prefab"]);
 
-		// TODO: Clean up - Send JSON to the component itself for parsing via component.Override
-		// cycle through pGO's Components, call Override on each, pass json
-
 		// Overwrite values for transform component if they exist
+		// TODO: Scale and rotation as well
 		if (pGO) {
-			if (j["GAME_OBJECTS"][i].find("position") != j["GAME_OBJECTS"][i].end()) {
-				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-				if (pTransform) pTransform->SetPosition(ParseVector3D(j["GAME_OBJECTS"][i], "position"));
-			}
+			pGO->OverrideComponents(j[GAME_OBJECTS][i]);
 
-			//	Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-			//	if (pTransform)	pTransform->Serialize(j[GAME_OBJECTS][i]);
+			//Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+			//if (pTransform)	pTransform->Override(j[GAME_OBJECTS][i]);
 
-			//	Camera* pCamera = pGO->GetComponent<Camera>(ComponentType::C_Camera);
-			//	if (pCamera)	pCamera->Serialize(j[GAME_OBJECTS][i]);
-
-			//	Sprite* pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
-			//	if (pSprite)	pSprite->Serialize(j[GAME_OBJECTS][i]);
+			//Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
+			//if (pBody)	pBody->Override(j[GAME_OBJECTS][i]);
 		}
 	}
 

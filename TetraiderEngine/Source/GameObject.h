@@ -8,6 +8,7 @@
 #include "GameObjectTags.h"
 #include "ComponentTypes.h"
 #include "Layers.h"
+#include "JsonReader.h"
 
 // Forward declaration
 class Event;
@@ -42,7 +43,7 @@ public:
 	void Destroy();
 	void DestroyIn(float time);
 	void Deactivate();
-
+	void OverrideComponents(const json & j);
 	void SetLayer(RENDER_LAYER layer) { m_layer = layer; }
 	unsigned short GetLayer() { return m_layer; }
 	unsigned int ID() const { return m_id; }

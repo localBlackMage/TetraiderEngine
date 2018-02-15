@@ -12,14 +12,21 @@ class Shape;
 
 class Body : public Component {
 public:
+	bool m_isStatic;
+	float m_mass;
+	Shape* m_pShape;
+	friend Transform;
+
 	Body();
 	~Body();
 	static Component* CreateInstance() { return new Body(); }
 	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
+	virtual void Override(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt);
+
 	void SetVelocity(const Vector3D& pVel);
 	void SetVelocity(float speed, float angle);
 	void Integrate(float dt);
@@ -27,10 +34,8 @@ public:
 	const Vector3D& GetPosition();
 	const Vector3D& GetPreviousPosition();
 	const Vector3D& GetVelocity();
-	bool m_isStatic;
-	float m_mass;
-	Shape* m_pShape;
-	friend Transform;
+	void OverrideShapeData(float width, float height);
+	void OverrideShapeData(float radius);
 private:
 	Transform* m_pTransform;
 	Vector3D m_Acceleration;

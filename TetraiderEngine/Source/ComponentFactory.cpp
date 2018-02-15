@@ -15,6 +15,8 @@
 #include "NPCController.h"
 #include "DestroyOnHealthZero.h"
 #include "DealDamageOnCollision.h"
+#include "ProjectileSpawner.h"
+#include "PointLight.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -32,6 +34,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["NPCController"] = NPCController::CreateInstance;
 	m_creationFunctions["DestroyOnHealthZero"] = DestroyOnHealthZero::CreateInstance;
 	m_creationFunctions["DealDamageOnCollision"] = DealDamageOnCollision::CreateInstance;
+	m_creationFunctions["ProjectileSpawner"] = ProjectileSpawner::CreateInstance;
+	m_creationFunctions["PointLight"] = PointLight::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

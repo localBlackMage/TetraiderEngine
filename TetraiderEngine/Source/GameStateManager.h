@@ -19,7 +19,6 @@ private:
 	GameState m_previousState;
 	GameState m_currentState;
 	GameState m_nextState;
-	//void UpdateGameLoop();
 	bool m_debugPause;
 public:
 	GameStateManager();
