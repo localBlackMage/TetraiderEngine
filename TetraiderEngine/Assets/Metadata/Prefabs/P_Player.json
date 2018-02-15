@@ -114,7 +114,7 @@
 		"Attacks":[
 			{
 				"type": "Melee",
-				"coolDown": 0.4,
+				"coolDown": 0.3,
 				"baseDamage": 1,
 				"radius": 180,
 				"angle": 90,

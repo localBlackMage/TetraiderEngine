@@ -47,6 +47,7 @@ void Subscriber::ActivateSubscriber()
 void Subscriber::DeactivateSubscriber()
 {
 	SubscriberTracker::GetInstance().RemoveSubscriber(this);
+	TETRA_EVENTS.UnsubscribeAll(this);
 }
 
 void* Subscriber::operator new(std::size_t size)

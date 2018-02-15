@@ -149,6 +149,7 @@ void GameObjectManager::DestroyGameObjects() {
 				if (iter != m_pCameras.end())
 					m_pCameras.erase(iter);
 			}
+
 			(*it)->DeactivateSubscriber();
 			TETRA_PHYSICS.RemoveGameObject(*it);
 			TETRA_MEMORY.DeleteGameObject(*it);
@@ -202,7 +203,6 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	int size = (*j)[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
 		Component* pComponent = componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
-		//Component* pComponent = TETRA_MEMORY.GetNewComponent(static_cast<ComponentType>(componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"))));
 		pGameObject->AddComponent(pComponent);
 		pComponent->Serialize((*j)[COMPONENTS][i]);
 	}

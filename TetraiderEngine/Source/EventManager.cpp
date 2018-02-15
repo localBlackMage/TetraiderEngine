@@ -91,6 +91,9 @@ void EventManager::BroadcastEvent(Event * aEvent)
 void EventManager::BroadcastEventToSubscribers(Event * aEvent)
 {
 	unsigned int i = 0;
-	for (i = 0; i < m_listeners[aEvent->Type()].size(); ++i)
+	for (i = 0; i < m_listeners[aEvent->Type()].size(); ++i) {
+		Subscriber* s = m_listeners[aEvent->Type()][i];
 		m_listeners[aEvent->Type()][i]->HandleEvent(aEvent);
+	}
+
 }
