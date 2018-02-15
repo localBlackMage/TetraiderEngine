@@ -57,11 +57,6 @@ MemoryManager::MemoryManager():
 }
 
 MemoryManager::~MemoryManager() {
-	for (auto goVec: m_GameObjectCache) {
-		for (auto GO : goVec.second ) {
-			delete GO;
-		}
-	}
 	if (m_pHead){
 		m_pHead->CleanUp();
 		free(m_pHead);
@@ -154,30 +149,31 @@ void MemoryManager::Free(void* ptr){
 
 void* MemoryManager::m_Buffer = nullptr;
 
+
+// GAMEOBJECT CACHING 
 GameObject* MemoryManager::GetNewGameObject(std::string tag, unsigned int id) {
-	return new GameObject(id);
-
-	//if (m_GameObjectCache[tag].empty()) {
-	//	return new GameObject(id);
-	//}
-	//else {
-	//	GameObject* emptyGO = m_GameObjectCache[tag].back();
-	//	emptyGO->SetID(id);
-	//	m_GameObjectCache[tag].pop_back();
-	//	return emptyGO;
-	//}
+	//return new GameObject(id);
+	if (m_GameObjectCache[tag].empty()) {
+		return new GameObject(id);
+	}
+	else {
+		GameObject* emptyGO = m_GameObjectCache[tag].back();
+		emptyGO->SetID(id);
+		m_GameObjectCache[tag].pop_back();
+		return emptyGO;
+	}
 }
+// GAMEOBJECT RECYCLE 
 void MemoryManager::DeleteGameObject(GameObject* ptr) {
-	delete ptr;
-
-	//std::string tagName = TagNameText[ptr->m_tag];
-	//if (m_GameObjectCache[tagName].size() >= MAX_GAMEOBJECT_CACHE) {
-	//	delete ptr;
-	//}
-	//else {
-	//	ptr->Deactivate();
-	//	m_GameObjectCache[tagName].push_back(ptr);
-	//}
+	//delete ptr;
+	std::string tagName = TagNameText[ptr->m_tag];
+	if (m_GameObjectCache[tagName].size() >= MAX_GAMEOBJECT_CACHE) {
+		delete ptr;
+	}
+	else {
+		ptr->Deactivate();
+		m_GameObjectCache[tagName].push_back(ptr);
+	}
 }
 
 Component* MemoryManager::GetNewComponent(std::string type) {
