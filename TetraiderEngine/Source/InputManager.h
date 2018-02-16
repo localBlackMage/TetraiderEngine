@@ -44,6 +44,54 @@ enum XBOX_SCANCODE {
 	XBOX_NUM_SCANCODES
 };
 
+enum class InputCommands {
+	Command_Move,
+	Command_Aim,
+	Command_Fly,
+	Command_MeleeAttack,
+	Command_RangeAttack,
+	Command_RestartLevel,
+	Command_DebugPause,
+	Command_ToggleDebug,
+	Command_StopMusic,
+	Command_PauseGame,
+
+	Command_NUM
+};
+
+enum CommandType {
+	CommandType_Button,
+	CommandType_Axis,
+	CommandType_MouseBtn,
+	CommandType_MousePosOrJoystick,
+
+	CommandType_NUM
+};
+
+enum JoystickAnalogueType {
+	JoystickAnalogue_Right,
+	JoystickAnalogue_Left,
+
+	JoystickAnalogue_NUM
+};
+
+enum InputEventType {
+	InputEventType_BroadcastAll,
+	InputEventType_BroadcastToSubscribers,
+
+	InputEventType_NUM
+};
+
+struct CommandInfo {
+	InputCommands m_InputCommand;
+	CommandType m_type;
+	SDL_Scancode m_keyboardKeyPositive;
+	SDL_Scancode m_keyboardKeyNegative;
+	JoystickAnalogueType m_analogue;
+	MOUSEBTN m_mouseBtn;
+	XBOX_SCANCODE m_xboxKey;
+};
+
 class InputManager
 {
 private:
@@ -61,7 +109,6 @@ private:
 	// Axis States
 	Sint16 m_StickRightX, m_StickLeftX;
 	Sint16 m_StickRightY, m_StickLeftY;
-
 
 public:
 	InputManager();

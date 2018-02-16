@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Sorting.h"
 #include "TetraiderAPI.h"
+#include <conio.h>
+#include <chrono>
 
 #include <fstream>
 #include <iostream>

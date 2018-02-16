@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <iostream>
 
-#define MIN_FRAME_TIME 0.01666666666666666666666666666667f
+#define MIN_FRAME_TIME 0.016667f
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 	m_secondCounter(0.f)

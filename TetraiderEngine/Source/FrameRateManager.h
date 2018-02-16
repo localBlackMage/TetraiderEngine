@@ -28,7 +28,6 @@ public:
 	~FrameRateManager();
 	FrameRateManager(const FrameRateManager &) = delete;
 	void operator=(const FrameRateManager &) = delete;
-
 	void SetMaxFrameRate(unsigned int maxFrameRate = 60);
 	void FrameStart();
 	void FrameEnd();
