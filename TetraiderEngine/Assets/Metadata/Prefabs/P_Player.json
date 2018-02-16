@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_playerTest.png",
+      "Texture": "T_Rio.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -60,27 +60,13 @@
 	},
 	{
 		"Component": "Animation",
-		"defaultAnimation": 1,
+		"defaultAnimation": 0,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Walk",
 			"frames": 12,
 			"animationSpeed": 18,
 			"isLooping": true,
-			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Idle",
-			"frames": 12,
-			"animationSpeed": 18,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Death",
-			"frames": 1,
-			"animationSpeed": 18,
-			"isLooping": false,
 			"isPlayOnAwake": true
 		}]
 	},

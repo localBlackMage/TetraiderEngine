@@ -32,7 +32,7 @@ void Agent::Update(float dt) {
 
 	if (m_pAnimation) {
 		if (m_currentVelocity.SquareLength()  < 100.0f)
-			m_pAnimation->Play(1);
+			m_pAnimation->Play(0);
 		else
 			m_pAnimation->Play(0);
 	}
