@@ -1,0 +1,24 @@
+{
+  "GAME_OBJECTS": 
+  [
+    {
+      "prefab": "P_UICamera"
+    },
+    {
+      "prefab": "P_Button",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "prefab": "P_Cursor",
+      "position": {
+        "x": 100,
+        "y": 100,
+        "z": 0
+      }
+    }
+  ]
+}
