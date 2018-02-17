@@ -19,8 +19,8 @@ void main() {
 		0, 0, 1, 0,
 		p_pos_size.x, p_pos_size.y, p_pos_size.z, 1
 	);
+
 	gl_Position = persp_matrix * view_matrix * modelMatrix * position;
-	
 	vtexture_coord = texture_coord;
 	
 	vtint_color = p_color;

@@ -9,7 +9,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "Sprite.h"
-#include "Particle.h"
+#include "ParticleEmitter.h"
 
 #include "SDL_image.h"
 
@@ -19,85 +19,131 @@
 #include <fstream>
 #include <windows.h>
 
+/*
+static const int MaxParticles = 1000;
+static const Vector3D Gravity = Vector3D(0, -9.8f, 0.f);
 const Vector3D Vel = Vector3D(0, -1000.f, 0);
+struct ParticleItem {
+	ParticleItem() :
+		pos(Vector3D()),
+		speed(Vector3D(0, .5f, 0)),
+		r(0), g(255), b(0), a(255),
+		size(32.f), angle(0.f), weight(1.f), life(0.f), cameradistance(-1.f)
+	{}
+	Vector3D pos, speed;
+	GLubyte r, g, b, a;
+	float size, angle, weight;
+	float life;
+	float cameradistance;
 
-void ParticleContainer::Update(float deltaTime)
-{
-	int newparticles = 1;
-
-	for (int i = 0; i < newparticles; ++i) {
-		int idx = FindUnusedParticle();
-		if (idx > -1) {
-			particles[idx].life = maxLife;
-			particles[idx].pos.Set(0, 0, 0);
-			particles[idx].speed.Set(0, .5f, 0);
-		}
+	bool operator<(ParticleItem& that) {
+		// Sort in reverse order : far particles drawn first.
+		return this->cameradistance > that.cameradistance;
 	}
-
-	pCount = 0;
-	for (int i = 0; i<MaxParticles; i++) {
-
-		ParticleItem& p = particles[i]; 
-
-		if (p.life > 0.0f) {
-
-			// Decrease life
-			p.life -= deltaTime;
-			if (p.life > 0.0f) {
-				p.speed += Vel * deltaTime;
-				//p.speed.y = p.speed.y < -9.8f ? -9.8f : p.speed.y;
-				p.pos += p.speed * deltaTime;
-				p.pos.z = 0.f;
-				p.cameradistance = Vector3D::SquareDistance(p.pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
-
-				p.r = 255 - (int(p.speed.y) % 255);
-				p.b = 255 - (int(p.speed.y) % 255);
-				p.g = int(p.speed.y) % 255;
-				p.a = 1;
-
-				// Fill the GPU buffer
-				positions[4 * pCount] = p.pos.x;
-				positions[4 * pCount + 1] = p.pos.y;
-				positions[4 * pCount + 2] = p.pos.z;
-
-				positions[4 * pCount + 3] = p.size;
-
-				colors[4 * pCount + 0] = p.r;
-				colors[4 * pCount + 1] = p.g;
-				colors[4 * pCount + 2] = p.b;
-				colors[4 * pCount + 3] = p.a;
-
-			}
-			else {
-				// Particles that just died will be put at the end of the buffer in SortParticles();
-				p.cameradistance = -1.0f;
-			}
-			++pCount;
-		}
-	}
-}
-
-
-
-
-
-enum SHADER_LOCATIONS {
-	POSITION = 0,
-	TEXTURE_COORD,
-	P_POS_SIZE,
-	P_COLOR,
-
-	PERSP_MATRIX = 10,
-	VIEW_MATRIX,
-	MODEL_MATRIX,
-	NORMAL_MATRIX,
-
-	TINT_COLOR = 20,
-	SATURATION_COLOR,
-	FRAME_OFFSET,
-	FRAME_SIZE,
-	TILE
 };
+
+struct ParticleContainer {
+	explicit ParticleContainer(Mesh& _mesh) :
+		mesh(_mesh), positionsBuffer(0), colorsBuffer(0), maxLife(2.f), pCount(0), lastUsedParticle(0)
+	{}
+
+	Mesh& mesh;
+	GLuint positionsBuffer;
+	GLuint colorsBuffer;
+	GLfloat positions[MaxParticles * 4];
+	GLubyte colors[MaxParticles * 4];
+
+	SurfaceTextureBuffer * m_texture;
+
+	float maxLife;
+	int pCount;
+	ParticleItem particles[MaxParticles];
+
+	int lastUsedParticle;
+
+	int FindUnusedParticle() {
+		for (int i = lastUsedParticle; i<MaxParticles; i++) {
+			if (particles[i].life <= 0.f) {
+				lastUsedParticle = i;
+				return i;
+			}
+		}
+		// Cycle around to the start of the array
+		for (int i = 0; i<lastUsedParticle; i++) {
+			if (particles[i].life <= 0.f) {
+				lastUsedParticle = i;
+				return i;
+			}
+		}
+
+		return -1; // All particles are taken
+	}
+	
+	void Update(float deltaTime)
+	{
+		int newparticles = 1;
+
+		for (int i = 0; i < newparticles; ++i) {
+			int idx = FindUnusedParticle();
+			if (idx > -1) {
+				particles[idx].life = maxLife;
+				particles[idx].pos.Set(0, 0, 0);
+				particles[idx].speed.Set(0, .5f, 0);
+			}
+		}
+
+		pCount = 0;
+		for (int i = 0; i<MaxParticles; i++) {
+
+			ParticleItem& p = particles[i];
+
+			if (p.life > 0.0f) {
+
+				// Decrease life
+				p.life -= deltaTime;
+				if (p.life > 0.0f) {
+					p.speed += Vel * deltaTime;
+					//p.speed.y = p.speed.y < -9.8f ? -9.8f : p.speed.y;
+					p.pos += p.speed * deltaTime;
+					p.pos.z = 0.f;
+					p.cameradistance = Vector3D::SquareDistance(p.pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+
+					p.r = 255 - (int(p.speed.y) % 255);
+					p.b = 255 - (int(p.speed.y) % 255);
+					p.g = int(p.speed.y) % 255;
+					p.a = 255;
+
+					// Fill the GPU buffer
+					positions[4 * pCount] = p.pos.x;
+					positions[4 * pCount + 1] = p.pos.y;
+					positions[4 * pCount + 2] = p.pos.z;
+
+					positions[4 * pCount + 3] = p.size;
+
+					colors[4 * pCount + 0] = p.r;
+					colors[4 * pCount + 1] = p.g;
+					colors[4 * pCount + 2] = p.b;
+					colors[4 * pCount + 3] = p.a;
+
+				}
+				else {
+					// Particles that just died will be put at the end of the buffer in SortParticles();
+					p.cameradistance = -1.0f;
+				}
+				++pCount;
+			}
+		}
+	}
+
+	void SortParticles() {
+		std::sort(&particles[0], &particles[MaxParticles]);
+	}
+	GLuint GetTextureBuffer() const { return m_texture->bufferId; }
+};
+*/
+
+
+
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
@@ -105,38 +151,23 @@ RenderManager::RenderManager(int width, int height, std::string title) :
 {
 	_InitWindow(title);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
-
-	particleTest = ParticleContainer();
-	particleTest.pCount = 0;
-	
-	for (int i = 0; i < MaxParticles; i+=4) {
-		particleTest.positions[i] = float(i);
-		particleTest.positions[i + 1] = float(i);
-		particleTest.positions[i + 2] = 0.f;
-		particleTest.positions[i + 3] = 1.f;
-
-		particleTest.colors[i] =		1.f;
-		particleTest.colors[i + 1] = 0.f;
-		particleTest.colors[i + 2] = 0.f;
-		particleTest.colors[i + 3] = 1.f;
-	}
 }
 
 RenderManager::~RenderManager() 
 {
-	delete particleTest; // REMOVE THIS
+	//delete particleTest; // REMOVE THIS
 	SDL_GL_DeleteContext(m_context);
 	SDL_Quit();
 }
 
 void RenderManager::UPDATE_PARTICLE_TEST(float deltaTime)
 {
-	particleTest->Update(deltaTime);
+	//particleTest->Update(deltaTime);
 }
 
 void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 {
-
+	/*
 #pragma region CameraSetup
 	SelectShaderProgram("particle");
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
@@ -206,6 +237,13 @@ void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_SIZE, 1); // positions : one per quad (its center) -> 1
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_COLOR, 1); // color : one per quad -> 1
 
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.4f);
+	glEnable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// select the texture to use
 	glBindTexture(GL_TEXTURE_2D, particleTest->GetTextureBuffer());
 #pragma endregion
@@ -215,6 +253,7 @@ void RenderManager::RENDER_PARTICLES_TEST(const GameObject& camera)
 	// for(i in ParticlesCount) : glDrawArrays(GL_TRIANGLE_STRIP, 0, 4),
 	// but faster.
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 3 * particleTest->mesh.faceCount(), particleTest->pCount);
+	*/
 }
 
 #pragma region Private Methods
@@ -271,7 +310,7 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 
 bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
-	return gameObject.HasComponent(ComponentType::C_Sprite);
+	return gameObject.HasComponent(ComponentType::C_Sprite) || gameObject.HasComponent(ComponentType::C_ParticleEmitter);
 }
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
@@ -295,18 +334,10 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glUniform4f(SHADER_LOCATIONS::TINT_COLOR, tintColor[0], tintColor[1], tintColor[2], tintColor[3]);
 	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, saturationColor[0], saturationColor[1], saturationColor[2], saturationColor[3]);
 
-	if (pSpriteComp->GetAlphaMode() == GL_RGBA) {
-		glDisable(GL_DEPTH_TEST);
-		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.4f);
-		glEnable(GL_BLEND);
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-	else {
-		glDisable(GL_ALPHA_TEST);
-		glEnable(GL_DEPTH_TEST);
-	}
+	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
+		_EnableAlphaTest();
+	else
+		_EnableDepthTest();
 
 	// select the texture to use
 	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
@@ -316,8 +347,29 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glDrawElements(GL_TRIANGLES, 3 * pSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
-void RenderManager::_RenderParticles(const Particle * pParticleComp)
+void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterComp)
 {
+	pParticleEmitterComp->BindBufferDatas();
+
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, pParticleEmitterComp->GetMesh().GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+
+	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pParticleEmitterComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+
+	_BindVertexAttribute(SHADER_LOCATIONS::P_POS_SIZE, pParticleEmitterComp->GetPositions(), 4, GL_FLOAT, GL_FALSE, 0, 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::P_COLOR, pParticleEmitterComp->GetColors(), 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
+
+
+	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_SIZE, 1); // positions : one per quad (its center) -> 1
+	glVertexAttribDivisor(SHADER_LOCATIONS::P_COLOR, 1); // color : one per quad -> 1
+
+	if (pParticleEmitterComp->GetAlphaMode() == GL_RGBA)
+		_EnableAlphaTest();
+	else
+		_EnableDepthTest();
+
+	glBindTexture(GL_TEXTURE_2D, pParticleEmitterComp->GetTextureBuffer());
+
+	glDrawArraysInstanced(GL_TRIANGLES, 0, 3 * pParticleEmitterComp->GetMesh().faceCount(), pParticleEmitterComp->LiveParticles());
 }
 
 void RenderManager::_RenderGameObject(const GameObject& gameObject)
@@ -334,8 +386,8 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 	// set shader attributes
 	if (gameObject.HasComponent(ComponentType::C_Sprite))
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
-	else if (gameObject.HasComponent(ComponentType::C_Particle))
-		_RenderParticles(gameObject.GetComponent<Particle>(ComponentType::C_Particle));
+	else if (gameObject.HasComponent(ComponentType::C_ParticleEmitter))
+		_RenderParticles(gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter));
 }
 
 void RenderManager::_SelectShaderProgram(const GameObject & gameObject)
@@ -344,6 +396,8 @@ void RenderManager::_SelectShaderProgram(const GameObject & gameObject)
 
 	if (gameObject.HasComponent(ComponentType::C_Sprite))
 		shader = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite)->Shader();
+	else if (gameObject.HasComponent(ComponentType::C_ParticleEmitter))
+		shader = "particle";	// TODO: Un-hard code this
 
 	SelectShaderProgram(shader == "" ? "default" : shader);
 }
@@ -513,7 +567,30 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
 
+void RenderManager::_EnableAlphaTest()
+{
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.4f);
+	glEnable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void RenderManager::_EnableDepthTest()
+{
+	glDisable(GL_ALPHA_TEST);
+	glEnable(GL_DEPTH_TEST);
+}
+
 #pragma endregion
+
+void RenderManager::_BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride, int offset)
+{
+	glEnableVertexAttribArray(location);
+	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+	glVertexAttribPointer(location, size, type, normalized, stride, (void*)offset);
+}
 
 #pragma endregion
 
@@ -530,47 +607,47 @@ bool RenderManager::Init()
 
 void RenderManager::INIT_PARTICLE_TEST()
 {
-	Mesh& mesh = *TETRA_RESOURCES.LoadMesh("quad");
-	particleTest = new ParticleContainer(mesh);
-	particleTest->m_texture = TETRA_RESOURCES.GetTexture("T_Particle.png");
-	particleTest->pCount = 0;
+	//Mesh& mesh = *TETRA_RESOURCES.LoadMesh("quad");
+	//particleTest = new ParticleContainer(mesh);
+	//particleTest->m_texture = TETRA_RESOURCES.GetTexture("T_Particle.png");
+	//particleTest->pCount = 0;
 
-	for (int i = 0; i < MaxParticles; i += 4) {
-		particleTest->positions[i] = 0.f;
-		particleTest->positions[i + 1] = 0.f;
-		particleTest->positions[i + 2] = 0.f;
-		particleTest->positions[i + 3] = 0.f;
+	//for (int i = 0; i < MaxParticles; i += 4) {
+	//	particleTest->positions[i] = 0.f;
+	//	particleTest->positions[i + 1] = 0.f;
+	//	particleTest->positions[i + 2] = 0.f;
+	//	particleTest->positions[i + 3] = 0.f;
 
-		particleTest->colors[i] = 0;
-		particleTest->colors[i + 1] = 0;
-		particleTest->colors[i + 2] = 0;
-		particleTest->colors[i + 3] = 0;
-	}
-
-
-
-	GLfloat g_vertex_buffer_data[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		-0.5f, 0.5f, 0.0f,
-		0.5f, 0.5f, 0.0f,
-	};
-
-	glGenBuffers(1, &particleTest->vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, particleTest->vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	//	particleTest->colors[i] = 0;
+	//	particleTest->colors[i + 1] = 0;
+	//	particleTest->colors[i + 2] = 0;
+	//	particleTest->colors[i + 3] = 0;
+	//}
 
 
-	// The VBO containing the positions and sizes of the particles
-	glGenBuffers(1, &particleTest->positionsBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, particleTest->positionsBuffer);
-	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
-	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
 
-	glGenBuffers(1, &particleTest->colorsBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, particleTest->colorsBuffer);
-	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
-	glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
+	////GLfloat g_vertex_buffer_data[] = {
+	////	-0.5f, -0.5f, 0.0f,
+	////	0.5f, -0.5f, 0.0f,
+	////	-0.5f, 0.5f, 0.0f,
+	////	0.5f, 0.5f, 0.0f,
+	////};
+
+	////glGenBuffers(1, &particleTest->vbo);
+	////glBindBuffer(GL_ARRAY_BUFFER, particleTest->vbo);
+	////glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+
+	//// The VBO containing the positions and sizes of the particles
+	//glGenBuffers(1, &particleTest->positionsBuffer);
+	//glBindBuffer(GL_ARRAY_BUFFER, particleTest->positionsBuffer);
+	//// Initialize with empty (NULL) buffer : it will be updated later, each frame.
+	//glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+
+	//glGenBuffers(1, &particleTest->colorsBuffer);
+	//glBindBuffer(GL_ARRAY_BUFFER, particleTest->colorsBuffer);
+	//// Initialize with empty (NULL) buffer : it will be updated later, each frame.
+	//glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
 }
 
 void RenderManager::FrameStart()
@@ -634,6 +711,15 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 	_SelectShaderProgram(go);
 	_SetUpCamera(camera);
 	_RenderGameObject(go);
+}
+
+GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
+{
+	GLuint bufferId;
+	glGenBuffers(1, &bufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STREAM_DRAW);
+	return bufferId;
 }
 
 #pragma region Shaders

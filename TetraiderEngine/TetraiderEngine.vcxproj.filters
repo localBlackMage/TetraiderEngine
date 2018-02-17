@@ -5,22 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{e940ce22-07c2-414f-a828-84a98b3b5658}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math\Vector">
-      <UniqueIdentifier>{7cb21f73-075a-4b6e-8e31-5fd4423b85ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math\Matrix">
-      <UniqueIdentifier>{8e81bf07-ee7e-422b-80ce-790bb0732590}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Math">
       <UniqueIdentifier>{5afa5e69-7bd8-4b79-af6e-4113777358a4}</UniqueIdentifier>
@@ -31,44 +18,23 @@
     <Filter Include="Source Files\Math\Vector">
       <UniqueIdentifier>{11b98312-189f-47e9-a1a5-5dc282721ec5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Managers">
-      <UniqueIdentifier>{06ccda4e-6f1e-42fd-8ec4-ffaba1113c59}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{4ae565c8-33b8-415a-9277-089eff1f278d}</UniqueIdentifier>
     </Filter>
     <Filter Include="External Libraries">
       <UniqueIdentifier>{e30e2385-76ab-413e-8445-76a17b8b6fa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Utility">
-      <UniqueIdentifier>{5a502b37-fc48-4c2b-b3ff-8d4bdf31a5f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{4cdcf74a-41cf-44e0-bb28-aab3948ee9c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{8e938e7a-9dd2-42ea-8db1-bb6fef224bd3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{cc11ef81-e092-48d9-972a-ebf27491c68f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Rendering">
-      <UniqueIdentifier>{80bbbe93-f1f6-433b-a031-ce6f0b8e8b73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Rendering">
       <UniqueIdentifier>{85e74455-4a57-42e9-b111-40779270da80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Events">
-      <UniqueIdentifier>{b9353b5b-1726-4b65-9b76-593c34a21971}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{ece808c0-b832-435b-958e-3cf46d5fecbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Base">
-      <UniqueIdentifier>{d8735028-3640-4f3e-b2ea-e558670fbec4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Rendering\Shaders">
-      <UniqueIdentifier>{bbea58ba-7e19-4f43-85e6-cb5c33282541}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Rendering\Shaders">
       <UniqueIdentifier>{ef2b9fe1-0d95-4562-a637-a4dd4abf36d5}</UniqueIdentifier>
@@ -76,14 +42,8 @@
     <Filter Include="Source Files\Components\Base">
       <UniqueIdentifier>{d08c12c4-e8eb-434a-aac0-0c039c9ef8d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Attacks">
-      <UniqueIdentifier>{bc832616-c99d-4a92-8ef9-da542999dd8b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Attacks">
       <UniqueIdentifier>{c9ac6b1c-e652-47cf-97bd-8f4d7f77f894}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Agent">
-      <UniqueIdentifier>{1db286d9-5d02-469b-99ed-660eb205b04b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
@@ -246,214 +206,241 @@
     <ClCompile Include="Source\DestroyOnHealthZero.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Particle.cpp">
+    <ClCompile Include="Source\DealDamageOnCollision.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProjectileSpawner.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PointLight.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScaleByHPStamina.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AOEAttack.cpp">
+      <Filter>Source Files\Attacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FloorPlanGenerator.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Math\Vector3D.h">
-      <Filter>Header Files\Math\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vector2D.h">
-      <Filter>Header Files\Math\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Matrix4x4.h">
-      <Filter>Header Files\Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Matrix2x2.h">
-      <Filter>Header Files\Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Matrix3x3.h">
-      <Filter>Header Files\Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\LineSegment2D.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\MathDefs.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FrameRateManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjectManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\InputManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\RenderManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ResourceManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\JsonReader.h">
-      <Filter>Header Files\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\json.hpp">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ShaderProgram.h">
-      <Filter>Header Files\Rendering\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Header Files\Rendering\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Transform.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LevelManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sprite.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DebugManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Body.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PhysicsManager.h">
+    <ClInclude Include="Source\MemoryManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Collisions.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DebugLineMesh.h">
-      <Filter>Header Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Header Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SubscriberTracker.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Subscriber.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Event.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EventManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EventNames.h">
-      <Filter>Header Files\Events</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\TetraiderAPI.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CamFollow.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FlashOnTakeDamage.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Health.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\MathFunctions.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameConfig.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentTypes.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TagNames.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjectTags.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentFactory.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\MathLibs.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Singleton.h">
-      <Filter>Header Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ComponentTypesNames.h">
-      <Filter>Header Files\Components\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sorting.h">
-      <Filter>Header Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Projectile.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\RangeAttack.h">
-      <Filter>Header Files\Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MeleeAttack.h">
-      <Filter>Header Files\Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Attack.h">
-      <Filter>Header Files\Attacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AudioManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MemoryManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Weapon.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\JsonReader.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Layers.h">
-      <Filter>Header Files\Utility</Filter>
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\Singleton.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ParticleEmitter.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\Sorting.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Agent.h">
-      <Filter>Header Files\Components\Agent</Filter>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Source Files\Rendering\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCController.h">
-      <Filter>Header Files\Components\Agent</Filter>
+    <ClInclude Include="Source\ShaderProgram.h">
+      <Filter>Source Files\Rendering\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Controller.h">
-      <Filter>Header Files\Components\Agent</Filter>
+    <ClInclude Include="Source\DebugLineMesh.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MemoryManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DestroyOnHealthZero.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\SurfaceTextureBuffer.h">
-      <Filter>Header Files\Rendering</Filter>
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Particle.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="Source\Math\Collisions.h">
+      <Filter>Source Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ParticlesData.h">
-      <Filter>Header Files\Rendering</Filter>
+    <ClInclude Include="Source\Math\LineSegment2D.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\MathDefs.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\MathFunctions.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\MathLibs.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector2D.h">
+      <Filter>Source Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Vector3D.h">
+      <Filter>Source Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Matrix2x2.h">
+      <Filter>Source Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Matrix3x3.h">
+      <Filter>Source Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math\Matrix4x4.h">
+      <Filter>Source Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AudioManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DebugManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EventManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FrameRateManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameConfig.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjectManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MemoryManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysicsManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ResourceManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EventNames.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Subscriber.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SubscriberTracker.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Attack.h">
+      <Filter>Source Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeleeAttack.h">
+      <Filter>Source Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RangeAttack.h">
+      <Filter>Source Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Body.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CamFollow.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DealDamageOnCollision.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DestroyOnHealthZero.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FlashOnTakeDamage.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Health.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleEmitter.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Weapon.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentFactory.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTypes.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ComponentTypesNames.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjectTags.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TagNames.h">
+      <Filter>Source Files\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Agent.h">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller.h">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCController.h">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ProjectileSpawner.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PointLight.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScaleByHPStamina.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AOEAttack.h">
+      <Filter>Source Files\Attacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FloorPlanGenerator.h">
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,77 +31,35 @@ class GameObject;
 class ShaderProgram;
 class Shader;
 class Sprite;
-class Particle;
+class ParticleEmitter;
 enum DebugShape;
 
-static const int MaxParticles = 1000;
-static const Vector3D Gravity = Vector3D(0, -9.8f, 0.f);
-struct ParticleItem {
-	ParticleItem() : 
-		pos(Vector3D()),
-		speed(Vector3D(0, .5f, 0)),
-		r(0), g(255), b(0), a(255),
-		size(32.f), angle(0.f), weight(1.f), life(0.f), cameradistance(-1.f)
-	{}
-	Vector3D pos, speed;
-	GLubyte r, g, b, a;
-	float size, angle, weight;
-	float life;
-	float cameradistance;
+//struct ParticleItem;
+//struct ParticleContainer;
 
-	bool operator<(ParticleItem& that) {
-		// Sort in reverse order : far particles drawn first.
-		return this->cameradistance > that.cameradistance;
-	}
+enum SHADER_LOCATIONS {
+	POSITION = 0,
+	TEXTURE_COORD,
+	P_POS_SIZE,
+	P_COLOR,
+
+	PERSP_MATRIX = 10,
+	VIEW_MATRIX,
+	MODEL_MATRIX,
+	NORMAL_MATRIX,
+
+	TINT_COLOR = 20,
+	SATURATION_COLOR,
+	FRAME_OFFSET,
+	FRAME_SIZE,
+	TILE
 };
 
-struct ParticleContainer {
-	explicit ParticleContainer(Mesh& _mesh) :
-		mesh(_mesh), positionsBuffer(0), colorsBuffer(0), maxLife(2.f), pCount(0), lastUsedParticle(0)
-	{}
-
-	GLuint vbo;
-	Mesh& mesh;
-	GLuint positionsBuffer;
-	GLuint colorsBuffer;
-	GLfloat positions[MaxParticles * 4];
-	GLubyte colors[MaxParticles * 4];
-
-	SurfaceTextureBuffer * m_texture;
-
-	float maxLife;
-	int pCount;
-	ParticleItem particles[MaxParticles];
-
-	int lastUsedParticle;
-	int FindUnusedParticle() {
-		for (int i = lastUsedParticle; i<MaxParticles; i++) {
-			if (particles[i].life <= 0.f) {
-				lastUsedParticle = i;
-				return i;
-			}
-		}
-		// Cycle around to the start of the array
-		for (int i = 0; i<lastUsedParticle; i++) {
-			if (particles[i].life <= 0.f) {
-				lastUsedParticle = i;
-				return i;
-			}
-		}
-
-		return -1; // All particles are taken
-	}
-	void Update(float deltaTime);
-	void SortParticles() {
-		std::sort(&particles[0], &particles[MaxParticles]);
-	}
-	GLuint GetTextureBuffer() const { return m_texture->bufferId; }
-};
 
 class RenderManager : public Subscriber
 {
 private:
-	ParticleContainer*particleTest;
+	//ParticleContainer* particleTest;
 
 	friend class DebugManager;
 
@@ -118,7 +76,7 @@ private:
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
 	void _RenderSprite(const Sprite* pSpriteComp);
-	void _RenderParticles(const Particle* pParticleComp);
+	void _RenderParticles(const ParticleEmitter * pParticleEmitterComp);
 	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const GameObject& gameObject);
 	void _SetUpCamera(const GameObject& camera);
@@ -129,7 +87,10 @@ private:
 	void _RenderCircle(const Vector3D & color, float radius, const Vector3D& position);
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 	void _RenderCone(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& arcWidthAndRadius);
-
+	
+	void _EnableAlphaTest();
+	void _EnableDepthTest();
+	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
 	~RenderManager();
@@ -151,10 +112,22 @@ public:
 	int WindowWidth() { return m_width; }
 	int WindowHeight() { return m_height; }
 	float GetAspectRatio() const;
+	inline SDL_Window* GetWindow() { return m_pWindow; }
+
 
 	void UPDATE_PARTICLE_TEST(float deltaTime);
 	void RENDER_PARTICLES_TEST(const GameObject& camera);
 	void RenderGameObject(const GameObject& camera, const GameObject& go);
+
+	GLuint GenerateStreamingVBO(unsigned int size);
+	template <typename BufferType>
+	void BindBufferData(const GLuint& bufferID, BufferType& bufferData, unsigned int size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+		glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STREAM_DRAW); // Buffer orphaning
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, bufferData);
+	}
+
 
 	void LoadShaders();
 	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }
@@ -167,9 +140,6 @@ public:
 	Shader * CreateFragmentShader(std::string fragmentShaderText);
 	Shader * CreateFragmentShaderFromFile(std::string fileName);
 
-	inline SDL_Window* GetWindow() { 
-		return m_pWindow; 
-	}
 	void SelectShaderProgram(std::string programName);
 };
 

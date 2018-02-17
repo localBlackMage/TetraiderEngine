@@ -1,12 +1,125 @@
+#include "TetraiderAPI.h"
 #include "ParticleEmitter.h"
 #include "GameObject.h"
 #include <iostream>
+#include <cstdlib>
 
 #pragma region Private Methods
 
+int ParticleEmitter::_FindUnusedParticle()
+{
+	for (int i = m_lastUsedParticle; i<m_maxParticles; i++) {
+		if (m_particles[i].m_life <= 0.f) {
+			m_lastUsedParticle = i;
+			return i;
+		}
+	}
+	// Cycle around to the start of the array
+	for (int i = 0; i<m_lastUsedParticle; i++) {
+		if (m_particles[i].m_life <= 0.f) {
+			m_lastUsedParticle = i;
+			return i;
+		}
+	}
+
+	return -1; // All particles are taken
+}
+
 void ParticleEmitter::_SpawnParticle()
 {
+	int idx = _FindUnusedParticle();
+	if (idx > -1) {
+		m_particles[idx].m_life = m_lifeTime;
+		m_particles[idx].m_pos.Set(0, 0, 0);			// TODO: Update these
+		float HI = 250.f;
+		float LO = -HI;
+		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
+		m_particles[idx].m_velocity.Set( x, 100.f, 0);		// TODO: Update these
+	}
+}
 
+void ParticleEmitter::_UpdateParticles(float deltaTime)
+{
+	const Vector3D Vel = Vector3D(0, 100.f, 0);
+	const Vector3D Gravity = Vector3D(0, -98.f * m_gravityMod, 0);
+	m_liveParticleCount = 0;
+	for (int i = 0; i<m_maxParticles; i++) {
+
+		Particle& p = m_particles[i];
+
+		if (p.m_life > 0.0f) {
+
+			// Decrease life
+			p.m_life -= deltaTime;
+			if (p.m_life > 0.0f) {
+				// TODO: Remove this random update stuff
+				//p.m_velocity += Gravity * deltaTime;
+
+				//p.m_velocity = Vel;
+				//p.m_velocity.y = p.m_velocity.y < -9.8f ? -9.8f : p.m_velocity.y;
+				p.m_velocity += Gravity * deltaTime;
+				p.m_pos += p.m_velocity * deltaTime;
+				p.m_pos.z = 0.f;
+
+				p.m_scale = m_size;
+				// end random stuff
+
+
+				// TODO: decide on a better way to get a camera
+				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+
+				// TODO: Random stuff to change color, remove
+				p.m_color.r = 255 - (int(p.m_life) % 255);
+				p.m_color.b = 255 - (int(p.m_life) % 255);
+				p.m_color.g = int(p.m_life) % 255;
+				p.m_color.a = 255;
+				// end random stuff
+
+				// Fill the GPU buffer
+				m_positionsScales[4 * m_liveParticleCount] = p.m_pos.x;
+				m_positionsScales[4 * m_liveParticleCount + 1] = p.m_pos.y;
+				m_positionsScales[4 * m_liveParticleCount + 2] = p.m_pos.z;
+
+				m_positionsScales[4 * m_liveParticleCount + 3] = p.m_scale;
+
+				m_colors[4 * m_liveParticleCount + 0] = p.m_color.r;
+				m_colors[4 * m_liveParticleCount + 1] = p.m_color.g;
+				m_colors[4 * m_liveParticleCount + 2] = p.m_color.b;
+				m_colors[4 * m_liveParticleCount + 3] = p.m_color.a;
+
+			}
+			else {
+				// Particles that just died will be put at the end of the buffer in SortParticles();
+				p.m_cameraDistance = -1.0f;
+			}
+			++m_liveParticleCount;
+		}
+	}
+}
+
+void ParticleEmitter::_AllocateParticleArrays()
+{
+	m_particles = (Particle*)TETRA_MEMORY.Alloc(sizeof(Particle) * m_maxParticles);			//(Particle*)malloc(sizeof(Particle) * m_maxParticles);
+	m_positionsScales = (GLfloat*)TETRA_MEMORY.Alloc(sizeof(GLfloat) * m_maxParticles * 4); //(GLfloat*)malloc(sizeof(GLfloat) * m_maxParticles * 4);
+	m_colors = (GLubyte*)TETRA_MEMORY.Alloc(sizeof(GLubyte) * m_maxParticles * 4);			//(GLubyte*)malloc(sizeof(GLubyte) * m_maxParticles * 4);
+
+	for (int i = 0; i < m_maxParticles; i += 4) {
+		m_positionsScales[i] = 0.f;
+		m_positionsScales[i + 1] = 0.f;
+		m_positionsScales[i + 2] = 0.f;
+		m_positionsScales[i + 3] = 0.f;
+
+		m_colors[i] = 0;
+		m_colors[i + 1] = 0;
+		m_colors[i + 2] = 0;
+		m_colors[i + 3] = 0;
+	}
+}
+
+void ParticleEmitter::_AllocateVBOs()
+{
+	m_positionsScalesBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 4 * sizeof(GLfloat));
+	m_colorsBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 4 * sizeof(GLubyte));
 }
 
 #pragma endregion
@@ -15,10 +128,16 @@ ParticleEmitter::ParticleEmitter() :
 	Component(ComponentType::C_ParticleEmitter),
 	m_currentTime(0.f),
 	m_emissionTime(0.f),
-	m_emissionTimer(0.f)
+	m_emissionTimer(0.f),
+	m_mesh(*TETRA_RESOURCES.LoadMesh("quad"))
 {}
 
-ParticleEmitter::~ParticleEmitter() {}
+ParticleEmitter::~ParticleEmitter() 
+{
+	TETRA_MEMORY.Free(m_particles);			//free(m_particles);
+	TETRA_MEMORY.Free(m_positionsScales);	//free(m_positionsScales);
+	TETRA_MEMORY.Free(m_colors);			//free(m_colors);
+}
 
 #pragma region Component Methods
 
@@ -56,11 +175,26 @@ void ParticleEmitter::Update(float dt)
 			m_emissionTimer -= m_emissionTime;
 		}
 
-		// Update Particles
+		_UpdateParticles(dt);
 
 		if (m_looping && m_currentTime >= m_loopDuration)
 			m_currentTime = 0.f;
 	}
+}
+
+
+void ParticleEmitter::LateUpdate(float dt)
+{
+}
+
+void ParticleEmitter::Deactivate()
+{
+	pGO = nullptr;
+	m_pTransform = nullptr;
+
+	TETRA_MEMORY.Free(m_particles);
+	TETRA_MEMORY.Free(m_positionsScales);
+	TETRA_MEMORY.Free(m_colors);
 }
 
 void ParticleEmitter::Serialize(const json & j)
@@ -78,16 +212,31 @@ void ParticleEmitter::Serialize(const json & j)
 	m_emissionRate = ParseInt(j, "emissionRate");
 	m_maxParticles = ParseInt(j, "max");
 	m_rotationOverTime = ParseFloat(j, "rotationOverTime");
+	std::string textureName = ParseString(j, "particleTexture");
 
+	m_texture = TETRA_RESOURCES.GetTexture(textureName);
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
+
+	_AllocateParticleArrays();
+	_AllocateVBOs();
+	m_liveParticleCount = 0;
 }
 
-void ParticleEmitter::LateUpdate(float dt)
+void ParticleEmitter::Override(const json & j)
 {
+	// TODO: Find way to release previous VBOs
+	_AllocateParticleArrays();
+	_AllocateVBOs();
 }
 
 void ParticleEmitter::HandleEvent(Event * p_event)
 {
+}
+
+void ParticleEmitter::BindBufferDatas() const
+{
+	TETRA_RENDERER.BindBufferData(m_positionsScalesBuffer, m_positionsScales, m_liveParticleCount * sizeof(GLfloat) * 4);
+	TETRA_RENDERER.BindBufferData(m_colorsBuffer, m_colors, m_liveParticleCount * sizeof(GLubyte) * 4);
 }
 
 #pragma endregion

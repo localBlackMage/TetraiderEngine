@@ -98,7 +98,7 @@ bool ResourceManager::Init()
 	
 
 	// TODO: REMOVE
-	TETRA_RENDERER.INIT_PARTICLE_TEST();
+	//TETRA_RENDERER.INIT_PARTICLE_TEST();
 
 
 	return true;

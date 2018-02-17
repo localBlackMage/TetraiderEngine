@@ -7,10 +7,10 @@
 
 void Transform::_UpdateLookAt()
 {
-	m_lookAt = Matrix4x4::Rotate(GetAngleX(), Vector3D(1.0f, 0.0f, 0.0f, 0.0f)) *
-		Matrix4x4::Rotate(GetAngleY(), Vector3D(0.0f, 1.0f, 0.0f, 0.0f)) *
-		Matrix4x4::Rotate(GetAngleZ(), Vector3D(0.0f, 0.0f, 1.0f, 0.0f)) *
-		Vector3D(0.0f, 1.0f, 0.0f, 0.0f);
+	m_lookAt = Matrix4x4::Rotate(GetAngleX(), XAXIS) *
+		Matrix4x4::Rotate(GetAngleY(), YAXIS) *
+		Matrix4x4::Rotate(GetAngleZ(), ZAXIS) *
+		YAXIS;
 }
 
 void Transform::_UpdateBodyComponent()
@@ -56,7 +56,7 @@ void Transform::LateUpdate(float dt) {
 	else
 		trans = Matrix4x4::Translate(m_position);
 	
-	Matrix4x4 scal(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
+	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
 	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
 	//Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
@@ -83,6 +83,8 @@ void Transform::Serialize(const json& j) {
 	m_pivotOffset.x = ParseFloat(j["pivotOffset"], "x");
 	m_pivotOffset.y = ParseFloat(j["pivotOffset"], "y");
 	m_pivotOffset.z = ParseFloat(j["pivotOffset"], "z");
+
+	_UpdateLookAt();
 }
 
 void Transform::Override(const json & j)
@@ -98,6 +100,8 @@ void Transform::Override(const json & j)
 		m_scale.y = ValueExists(j["scale"], "y") ? j["scale"]["y"] : m_scale.y;
 		//m_scale.z = ValueExists(j["scale"], "z") ? j["scale"]["z"] : m_scale.z; // Likely not needed for our game
 	}
+
+	_UpdateLookAt();
 }
 
 void Transform::HandleEvent(Event * p_event) {

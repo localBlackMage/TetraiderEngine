@@ -5,10 +5,41 @@
 
 #include "Component.h"
 #include "Transform.h"
+#include "SurfaceTextureBuffer.h"
+#include "Mesh.h"
 #include "Math\MathLibs.h"
+#include <glew.h>
 #include <string>
 
 class GameObject;
+
+struct Color {
+	explicit Color() : r(0), g(0), b(0), a(0) {}
+	GLubyte r, g, b, a;
+};
+
+struct Particle {
+	Vector3D m_pos, m_velocity;
+	Color m_color;
+	float m_scale, m_weight;
+	float m_life;
+	float m_cameraDistance;
+
+	explicit Particle() :
+		m_pos(Vector3D()),
+		m_velocity(Vector3D()),
+		m_color(Color()),
+		m_scale(0.f),
+		m_weight(0.f),
+		m_life(0.f),
+		m_cameraDistance(-1.f)
+	{}
+
+	bool operator<(Particle& that) {
+		// Sort in reverse order : far particles drawn first.
+		return this->m_cameraDistance > that.m_cameraDistance;
+	}
+};
 
 class ParticleEmitter : public Component {
 protected:
@@ -30,13 +61,30 @@ protected:
 
 	// Emitter Run Properties
 	Transform* m_pTransform;	// Parent GO is required to have a Transform for an emitter
-	std::string m_particlePrefab;
-	GameObject* m_pParticle;
 	float m_currentTime;		// Current time (t) within this loop
 	float m_emissionTime;		// How long to wait to spawn the next particle
 	float m_emissionTimer;		// How long since the last particle was spawned
 
+	// Particle Configuration Properties
+	SurfaceTextureBuffer * m_texture;
+
+	// Particle Manager Properties
+	Particle* m_particles;
+	Mesh& m_mesh;
+	GLuint m_positionsScalesBuffer;			// OpenGL Buffer where positions and sizes are to be streamed
+	GLuint m_colorsBuffer;					// OpenGL Buffer where colors are to be streamed
+
+	GLfloat* m_positionsScales;// [m_maxParticles * 4];	// Array of positions and sizes (xyz pos, w is uniform scale)
+	GLubyte* m_colors;// [m_maxParticles * 4];			// Array of Colors split up into it's components
+	int m_liveParticleCount;				// Indicates how many particles are currently alive, set each Update loop
+	int m_lastUsedParticle;					// An index into m_particles, represents the index of the last used particle
+
+	int _FindUnusedParticle();
 	void _SpawnParticle();
+	void _SortParticles() { std::sort(&m_particles[0], &m_particles[m_maxParticles]); }
+	void _UpdateParticles(float deltaTime);
+	void _AllocateParticleArrays();
+	void _AllocateVBOs();
 public:
 	ParticleEmitter();
 	~ParticleEmitter();
@@ -44,10 +92,23 @@ public:
 	static Component* CreateInstance() { return new ParticleEmitter(); }
 
 	virtual void Update(float dt);
-	virtual void Serialize(const json& j);
-	virtual void LateInitialize();
 	virtual void LateUpdate(float dt);
+	virtual void Deactivate();
+	virtual void Serialize(const json& j);
+	virtual void Override(const json& j);
+	virtual void LateInitialize();
 	virtual void HandleEvent(Event* pEvent);
+
+	const Mesh& GetMesh() const { return m_mesh; };
+	void SetMesh(Mesh& mesh) { m_mesh = mesh; }
+
+	GLuint GetTextureBuffer() const { return m_texture->bufferId; }
+	int GetAlphaMode() const { return m_texture->alphaMode; }
+	void BindBufferDatas() const;
+	GLuint GetPositions() const { return m_positionsScalesBuffer; }
+	GLuint GetColors() const { return m_colorsBuffer; }
+
+	int LiveParticles() const { return m_liveParticleCount; }
 };
 
 #endif

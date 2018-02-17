@@ -43,7 +43,7 @@ void Sprite::Serialize(const json& j)
 	m_saturationColor.z = j["saturation"]["b"];
 	m_saturationColor.w = j["saturation"]["a"];
 
-	m_shader = ParseString(j, "shader");
+	m_shader = ValueExists(j, "shader") ?  j["shader"] : "default";
 
 	m_textureName = ParseString(j, "Texture");
 	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);

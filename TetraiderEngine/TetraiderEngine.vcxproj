@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AOEAttack.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Agent.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
@@ -29,12 +30,14 @@
     <ClCompile Include="Source\CamFollow.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\Controller.cpp" />
+    <ClCompile Include="Source\DealDamageOnCollision.cpp" />
     <ClCompile Include="Source\DebugLineMesh.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DestroyOnHealthZero.cpp" />
     <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\FlashOnTakeDamage.cpp" />
+    <ClCompile Include="Source\FloorPlanGenerator.cpp" />
     <ClCompile Include="Source\FrameRateManager.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -57,13 +60,15 @@
     <ClCompile Include="Source\MemoryManager.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\NPCController.cpp" />
-    <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\ParticleEmitter.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
+    <ClCompile Include="Source\PointLight.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
+    <ClCompile Include="Source\ProjectileSpawner.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
+    <ClCompile Include="Source\ScaleByHPStamina.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
@@ -75,6 +80,7 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AOEAttack.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
     <ClInclude Include="Source\Animation.h" />
@@ -88,6 +94,7 @@
     <ClInclude Include="Source\ComponentTypes.h" />
     <ClInclude Include="Source\ComponentTypesNames.h" />
     <ClInclude Include="Source\Controller.h" />
+    <ClInclude Include="Source\DealDamageOnCollision.h" />
     <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DestroyOnHealthZero.h" />
@@ -96,6 +103,7 @@
     <ClInclude Include="Source\EventNames.h" />
     <ClInclude Include="Source\External\json.hpp" />
     <ClInclude Include="Source\FlashOnTakeDamage.h" />
+    <ClInclude Include="Source\FloorPlanGenerator.h" />
     <ClInclude Include="Source\FrameRateManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />
@@ -121,14 +129,15 @@
     <ClInclude Include="Source\MemoryManager.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\NPCController.h" />
-    <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
-    <ClInclude Include="Source\ParticlesData.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
+    <ClInclude Include="Source\PointLight.h" />
     <ClInclude Include="Source\Projectile.h" />
+    <ClInclude Include="Source\ProjectileSpawner.h" />
     <ClInclude Include="Source\RangeAttack.h" />
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\ResourceManager.h" />
+    <ClInclude Include="Source\ScaleByHPStamina.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Shape.h" />

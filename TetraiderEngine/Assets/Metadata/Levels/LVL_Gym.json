@@ -15,6 +15,9 @@
       }
     },
 	{
+		"prefab": "P_ParticleTest"
+    },
+	{
       "prefab": "P_Enemy",
       "position": {
         "x": -200,
