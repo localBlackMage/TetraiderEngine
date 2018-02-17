@@ -56,6 +56,7 @@ private:
 	void HandleEvent(Event *pEvent);
 
 	void _InsertGameObjectIntoList(GameObject* pGO);
+	GameObject* m_pPlayerReference;
 public:
 	GameObjectManager();
 	~GameObjectManager();
@@ -68,6 +69,7 @@ public:
 	void DestroyAllGameObjects();
 	void UpdateStatus();
 	const std::vector<GameObject*>& GetObjectsWithHealthComponents() {	return mGameObjectsWithHealthComponents; }
+	const GameObject* GetPlayer() { return m_pPlayerReference; }
 
 	// TODO: This method is a temporary hack for getting a camera, a more thorough 
 	// architecture should be implemented

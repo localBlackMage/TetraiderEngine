@@ -8,7 +8,9 @@
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
-LevelManager::LevelManager(): m_isRandomlyGenerated(true) {}
+LevelManager::LevelManager(): m_isRandomlyGenerated(true) {
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_RESTART, this);
+}
 
 LevelManager::~LevelManager() {}
 
@@ -107,4 +109,13 @@ void LevelManager::_LoadLevel(const json& j) {
 	}
 
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
+}
+
+void LevelManager::HandleEvent(Event* pEvent) {
+	switch (pEvent->Type()) {
+		case EVENT_INPUT_RESTART:
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isTrigger) TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
+			break;
+	}
 }

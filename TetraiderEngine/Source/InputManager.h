@@ -15,6 +15,12 @@ Creation date: 1/17/18
 #define INPUT_MANAGER_H
 
 #include "SDL_keycode.h"
+#include <vector>
+#include "JsonReader.h"
+#include "Event.h"
+#include "Subscriber.h"
+
+using json = nlohmann::json;
 
 #define MAX_CONTROLLERS 4
 
@@ -44,55 +50,61 @@ enum XBOX_SCANCODE {
 	XBOX_NUM_SCANCODES
 };
 
-enum class InputCommands {
-	Command_Move,
-	Command_Aim,
-	Command_Fly,
-	Command_MeleeAttack,
-	Command_RangeAttack,
-	Command_RestartLevel,
-	Command_DebugPause,
-	Command_ToggleDebug,
-	Command_StopMusic,
-	Command_PauseGame,
+enum InputType {
+	InputType_Button,
+	InputType_Axis,
+	InputType_MousePosOrJoystick,
 
-	Command_NUM
-};
-
-enum CommandType {
-	CommandType_Button,
-	CommandType_Axis,
-	CommandType_MouseBtn,
-	CommandType_MousePosOrJoystick,
-
-	CommandType_NUM
+	InputType_NUM
 };
 
 enum JoystickAnalogueType {
-	JoystickAnalogue_Right,
 	JoystickAnalogue_Left,
+	JoystickAnalogue_Right,
 
 	JoystickAnalogue_NUM
 };
 
-enum InputEventType {
-	InputEventType_BroadcastAll,
-	InputEventType_BroadcastToSubscribers,
-
-	InputEventType_NUM
-};
-
-struct CommandInfo {
-	InputCommands m_InputCommand;
-	CommandType m_type;
-	SDL_Scancode m_keyboardKeyPositive;
-	SDL_Scancode m_keyboardKeyNegative;
+struct InputCommandInfo {
+	InputCommandInfo(EventType _event,
+		InputType _inputType,
+		bool _isMouse,
+		bool _isJoystick,
+		SDL_Scancode _keyboardKey,
+		SDL_Scancode _keyboardPosX,
+		SDL_Scancode _keyboardNegX,
+		SDL_Scancode _keyboardPosY,
+		SDL_Scancode _keyboardNegY,
+		JoystickAnalogueType _analogue,
+		MOUSEBTN _mouseBtn,
+		XBOX_SCANCODE _xboxKey) :
+		m_event(_event),
+		m_inputType(_inputType),
+		m_isMouse(_isMouse),
+		m_isJoystick(_isJoystick),
+		m_keyboardKey(_keyboardKey),
+		m_keyboardKeyPosX(_keyboardPosX),
+		m_keyboardKeyNegX(_keyboardNegX),
+		m_keyboardKeyPosY(_keyboardPosY),
+		m_keyboardKeyNegY(_keyboardNegY),
+		m_analogue(_analogue),
+		m_mouseBtn(_mouseBtn),
+		m_xboxKey(_xboxKey) {}
+	EventType m_event;
+	InputType m_inputType;
+	bool m_isMouse;
+	bool m_isJoystick;
+	SDL_Scancode m_keyboardKey;
+	SDL_Scancode m_keyboardKeyPosX;
+	SDL_Scancode m_keyboardKeyNegX;
+	SDL_Scancode m_keyboardKeyPosY;
+	SDL_Scancode m_keyboardKeyNegY;
 	JoystickAnalogueType m_analogue;
 	MOUSEBTN m_mouseBtn;
 	XBOX_SCANCODE m_xboxKey;
 };
 
-class InputManager
+class InputManager: public Subscriber
 {
 private:
 	// keyboard state
@@ -103,6 +115,7 @@ private:
 	bool m_PrevRightMouse, m_RightMouse;
 	int m_MousePosX, m_MousePosY;
 	int m_MousePosRelX, m_MousePosRelY;
+	bool m_isJoystickControlsActive;
 	// Game controller States
 	Uint8  *m_CurrentButtonStates;
 	Uint8  *m_PreviousButtonStates;
@@ -110,6 +123,9 @@ private:
 	Sint16 m_StickRightX, m_StickLeftX;
 	Sint16 m_StickRightY, m_StickLeftY;
 
+	std::vector<InputCommandInfo*> m_inputCommands;
+
+	void FireEvents();
 public:
 	InputManager();
 	~InputManager();
@@ -117,6 +133,8 @@ public:
 	void operator=(const InputManager &) = delete;
 
 	void Update();
+	void HandleEvent(Event* pEvent);
+	void Initialize(const json& j);
 	// Keyboard Input
 	bool IsKeyPressed(const SDL_Scancode);
 	bool IsKeyTriggered(const SDL_Scancode);

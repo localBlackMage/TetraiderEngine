@@ -27,5 +27,80 @@
 		"Levels": [
 			{ "Name": "LVL_Gym" }
 		]
-	}
+	},
+	"INPUT_SETTINGS": [
+		{
+			"Name": "Move",
+			"EventType": 0,
+			"InputType": 1,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKeyPosX": 7,
+			"KeyBoardKeyNegX": 4,
+			"KeyBoardKeyPosY": 26,
+			"KeyBoardKeyNegY": 22,
+			"AnalogueStick": 0
+		},
+		{
+			"Name": "Aim",
+			"EventType": 1,
+			"InputType": 2,
+			"isJoystick": true,
+			"AnalogueStick": 1
+		},
+		{
+			"Name": "Fly",
+			"EventType": 2,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 44,
+			"XboxKey": 0
+		},
+		{
+			"Name": "Melee",
+			"EventType": 3,
+			"InputType": 0,
+			"isMouse": true,
+			"isJoystick": true,
+			"MouseBtn": 0,
+			"XboxKey": 10
+		},
+		{
+			"Name": "Range",
+			"EventType": 4,
+			"InputType": 0,
+			"isMouse": true,
+			"isJoystick": true,
+			"MouseBtn": 1,
+			"XboxKey": 9
+		},
+		{
+			"Name": "Restart",
+			"EventType": 5,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 21,
+			"XboxKey": 4
+		},
+		{
+			"Name": "PauseMusic",
+			"EventType": 6,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 19,
+			"XboxKey": 3
+		},
+		{
+			"Name": "ToggleJoystick",
+			"EventType": 7,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 60,
+			"XboxKey": 2
+		}
+	]
 }

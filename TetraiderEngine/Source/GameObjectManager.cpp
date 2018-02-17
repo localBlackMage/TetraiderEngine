@@ -215,14 +215,6 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	return pGameObject;
 }
 
-/*Component* GameObjectManager::AddComponentToGameObject(GameObject* pGO, json j) {
-	Component* pComponent = componentFactory.CreateComponent(ParseString(j, "Component"));
-	pGO->AddComponent(pComponent);
-	pComponent->Serialize(j);
-	pComponent->LateInitialize();
-	return pComponent;
-}*/
-
 void GameObjectManager::SetGameObjectTag(std::string tag, GameObject* pGO) {
 	pGO->m_tag = FindTagWithString(tag);
 }
@@ -245,6 +237,9 @@ GameObjectTag GameObjectManager::FindTagWithString(std::string tag) {
 void GameObjectManager::HandleEvent(Event *pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnLevelInitialized:
+		UpdateStatus();
+		m_pPlayerReference = FindObjectWithTag(T_Player);
+		break;
 	case EventType::EVENT_StaticsLoaded:
 		UpdateStatus();
 		break;

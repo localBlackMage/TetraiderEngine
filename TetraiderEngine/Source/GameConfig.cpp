@@ -28,6 +28,8 @@ void GameConfig::LoadConfig(std::string s) {
 	// Set level parameters
 	json levelSettings = j["LEVEL_SETTINGS"];
 	TETRA_LEVELS.Initialize(levelSettings);
+	json inputSettings = j["INPUT_SETTINGS"];
+	TETRA_INPUT.Initialize(inputSettings);
 
 	// Set debug parameters
 	TETRA_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));

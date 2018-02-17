@@ -3,10 +3,11 @@
 #define LEVEL_MANAGER_H
 
 #include "JsonReader.h"
+#include "Subscriber.h"
 
 using json = nlohmann::json;
 
-class LevelManager
+class LevelManager: public Subscriber
 {
 private:
 	int maxLevel;
@@ -31,6 +32,7 @@ public:
 	void ChangeLevel(int i);
 	void NextLevel();
 	void RestartGame();
+	void HandleEvent(Event* pEvent);
 	bool IsLastLevel();
 
 	void LoadStaticGameObjects();

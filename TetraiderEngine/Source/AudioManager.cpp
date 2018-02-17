@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "Event.h"
 #include "TetraiderAPI.h"
 
 
@@ -43,6 +44,8 @@ AudioManager::AudioManager():m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isCh
 
 	// seed value for SFx
 	srand(0);
+
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEMUSIC, this);
 }
 
 AudioManager::~AudioManager()
@@ -262,6 +265,15 @@ void AudioManager::ErrorCheck(FMOD_RESULT result)
 		std::cout << FMOD_ErrorString(result) << std::endl;
 	}
 	return;
+}
+
+void AudioManager::HandleEvent(Event* pEvent) {
+	switch (pEvent->Type()) {
+		case EVENT_INPUT_PAUSEMUSIC:
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if(pButtonData->m_isTrigger) TogglePause();
+			break;
+	}
 }
 
 

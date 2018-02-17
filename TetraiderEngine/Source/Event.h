@@ -56,6 +56,18 @@ struct FPSData : public EventData {
 	float mFPS;
 };
 
+struct InputButtonData : public EventData {
+	InputButtonData(bool _isPressed, bool _isTrigger, bool _isReleased) : m_isPressed(_isPressed), m_isTrigger(_isTrigger), m_isReleased(_isReleased) {}
+	bool m_isPressed;
+	bool m_isTrigger;
+	bool m_isReleased;
+};
+
+struct InputAxisData : public EventData {
+	InputAxisData(const Vector3D& dir) : m_dir(dir) {}
+	Vector3D m_dir;
+};
+
 class Event
 {
 protected:

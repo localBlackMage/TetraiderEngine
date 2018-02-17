@@ -6,10 +6,13 @@
 #include <iostream>
 
 #include "TetraiderAPI.h"
+#include "Agent.h"
+
+#define JoystickDeadZone 5500
 
 InputManager::InputManager()
 	:	m_PrevLeftMouse(false), m_LeftMouse(false), 
-		m_PrevRightMouse(false), m_RightMouse(false) {
+		m_PrevRightMouse(false), m_RightMouse(false), m_isJoystickControlsActive(false) {
 	// initialize keyboard states
 	m_PreviousKeyStates = new Uint8[SDL_NUM_SCANCODES];
 	m_CurrentKeyStates = new Uint8[SDL_NUM_SCANCODES];
@@ -27,6 +30,8 @@ InputManager::InputManager()
 	if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) < 0) {
 		printf( "ERROR: SDL_Init() with SDL_INIT_JOYSTICK flag failed!\n");
 	}
+
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_TOGGLEJOYSTICK, this);
 }
 
 InputManager::~InputManager() {
@@ -36,6 +41,32 @@ InputManager::~InputManager() {
 	//SDL_GameControllerClose(mGameController);
 	delete m_CurrentButtonStates;
 	delete m_PreviousButtonStates;
+
+	for (auto command : m_inputCommands) {
+		delete command;
+	}
+
+	m_inputCommands.clear();
+}
+
+void InputManager::Initialize(const json& j) {
+	int size = j.size();
+	for (int i = 0; i < size; ++i) {
+		m_inputCommands.push_back(new InputCommandInfo(
+			static_cast<EventType>(ParseInt(j[i], "EventType")),
+			static_cast<InputType>(ParseInt(j[i], "InputType")),
+			ParseBool(j[i], "isMouse"),
+			ParseBool(j[i], "isJoystick"),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKey")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyPosX")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegX")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyPosY")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegY")),
+			static_cast<JoystickAnalogueType>(ParseInt(j[i], "AnalogueStick")),
+			static_cast<MOUSEBTN>(ParseInt(j[i], "MouseBtn")),
+			static_cast<XBOX_SCANCODE>(ParseInt(j[i], "XboxKey"))
+		));
+	}
 }
 
 void InputManager::Update() {
@@ -75,7 +106,7 @@ void InputManager::Update() {
 	// update CurrentKeyStates (only copy what is fetched)
 	memcpy(m_CurrentKeyStates, currentKeyStates, fetchedNum * sizeof(Uint8));
 
-	// update CurrentButtonStates
+	// update CurrentButtonStates // TODO Optimization: Ignore all this if joystick is not connected
 	SDL_GameController *GameController;
 	GameController = SDL_GameControllerOpen(0);
 	m_CurrentButtonStates[XBOX_BTN_A] = SDL_GameControllerGetButton(GameController, SDL_CONTROLLER_BUTTON_A);
@@ -98,6 +129,88 @@ void InputManager::Update() {
 	m_StickLeftY = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_LEFTY);
 	m_StickRightX = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_RIGHTX);
 	m_StickRightY = SDL_GameControllerGetAxis(GameController, SDL_CONTROLLER_AXIS_RIGHTY);
+
+	FireEvents();
+}
+
+void InputManager::FireEvents() {
+	for (auto command : m_inputCommands) {
+		switch (command->m_inputType) {
+			case InputType_Button: {
+				bool isTrigger = false, isRelease = false, isPressed = false;
+				if (command->m_isJoystick && command->m_isMouse) {
+					isTrigger = (IsMouseButtonTriggered(command->m_mouseBtn) || IsKeyTriggered(command->m_xboxKey));
+					isRelease = (IsMouseButtonReleased(command->m_mouseBtn) || IsKeyReleased(command->m_xboxKey));
+					isPressed = (IsMouseButtonPressed(command->m_mouseBtn) || IsKeyPressed(command->m_xboxKey));
+				}
+				else if (command->m_isJoystick) {
+					isTrigger = (IsKeyTriggered(command->m_keyboardKey) || IsKeyTriggered(command->m_xboxKey));
+					isRelease = (IsKeyReleased(command->m_keyboardKey) || IsKeyReleased(command->m_xboxKey));
+					isPressed = (IsKeyPressed(command->m_keyboardKey) || IsKeyPressed(command->m_xboxKey));
+				}
+				else if (command->m_isMouse) {
+					isTrigger = IsMouseButtonTriggered(command->m_mouseBtn);
+					isRelease = IsMouseButtonReleased(command->m_mouseBtn);
+					isPressed = IsMouseButtonPressed(command->m_mouseBtn);
+				}
+				else {
+					isTrigger = IsKeyTriggered(command->m_keyboardKey);
+					isRelease = IsKeyReleased(command->m_keyboardKey);
+					isPressed = IsKeyPressed(command->m_keyboardKey);
+				}
+				if (isTrigger || isRelease || isPressed) {
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputButtonData(isPressed, isTrigger, isRelease)));
+				}
+				break;
+			}
+			case InputType_Axis: {
+				float xAxis = 0, yAxis = 0;
+
+				if (command->m_isJoystick && command->m_analogue == JoystickAnalogue_Left) {
+					if (abs(GetLeftAxisX()) > JoystickDeadZone)  xAxis += GetLeftAxisX();
+					if (abs(GetLeftAxisY()) > JoystickDeadZone) yAxis -= GetLeftAxisY();
+				}
+				else if(command->m_isJoystick) {
+					if (abs(GetRightAxisX()) > JoystickDeadZone) xAxis += GetRightAxisX();
+					if (abs(GetRightAxisY()) > JoystickDeadZone) yAxis -= GetRightAxisX();
+				}
+
+				if (IsKeyPressed(command->m_keyboardKeyPosX)) xAxis += 1;
+				if (IsKeyPressed(command->m_keyboardKeyNegX)) xAxis -= 1;
+				if (IsKeyPressed(command->m_keyboardKeyPosY)) yAxis += 1;
+				if (IsKeyPressed(command->m_keyboardKeyNegY)) yAxis -= 1;
+
+				Vector3D axisDir(xAxis, yAxis, 0);
+				axisDir.Normalize();
+				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(axisDir)));
+				break;
+			}
+			// This case is unique for our game regarding mouse (Check else statement below)
+			case InputType_MousePosOrJoystick: {
+				if (command->m_isJoystick && m_isJoystickControlsActive) {
+					float xAxis = 0, yAxis = 0;
+
+					if (command->m_analogue == JoystickAnalogue_Left) {
+						if (abs(GetLeftAxisX()) > JoystickDeadZone) xAxis += GetLeftAxisX();
+						if (abs(GetLeftAxisY()) > JoystickDeadZone) yAxis -= GetLeftAxisY();
+					}
+					else if (command->m_isJoystick) {
+						if (abs(GetRightAxisX()) > JoystickDeadZone) xAxis += GetRightAxisX();
+						if (abs(GetRightAxisY()) > JoystickDeadZone) yAxis -= GetRightAxisY();
+					}
+
+					Vector3D axisDir(xAxis, yAxis, 0);
+					axisDir.Normalize();
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(axisDir)));
+				}
+				else {
+					// This is the hardcoded part:
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
+				}
+				break;
+			}
+		}
+	}
 }
 
 bool InputManager::IsKeyPressed(const SDL_Scancode scancode) {
@@ -154,6 +267,16 @@ bool InputManager::IsKeyTriggered(const XBOX_SCANCODE btn) {
 }
 bool InputManager::IsKeyReleased(const XBOX_SCANCODE btn) {
 	return (m_CurrentButtonStates[btn] == 0 && m_PreviousButtonStates[btn] == 1);
+}
+
+void InputManager::HandleEvent(Event* pEvent) {
+	switch (pEvent->Type()) {
+		case EVENT_INPUT_TOGGLEJOYSTICK: {
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isTrigger) m_isJoystickControlsActive = !m_isJoystickControlsActive;
+			break;
+		}
+	}
 }
 
 Sint16 InputManager::GetLeftAxisX() {

@@ -67,13 +67,13 @@ void ScaleByHPStamina::HandleEvent(Event* pEvent) {
 		}
 		case EventType::EVENT_OnLevelInitialized: {
 			if (m_isScaleByHealth) {
-				GameObject* pPlayer = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
-				Health* pHealth = pPlayer->GetComponent<Health>(C_Health);
+				const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
+				const Health* pHealth = pPlayer->GetComponent<Health>(C_Health);
 				m_pTransform->SetScaleX(((float)pHealth->GetHealth() / (float)pHealth->GetMaxHealth())*m_originalScale);
 			}
 			else {
-				GameObject* pPlayer = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
-				Stamina* pStamina = pPlayer->GetComponent<Stamina>(C_Stamina);
+				const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
+				const Stamina* pStamina = pPlayer->GetComponent<Stamina>(C_Stamina);
 				m_pTransform->SetScaleX((pStamina->GetCurrentStamina() / pStamina->GetMaxStamina())*m_originalScale);
 			}
 			break;

@@ -22,7 +22,6 @@ protected:
 	Stamina* m_pStamina;
 private:
 	bool m_isGameControllerEnabled;
-	void CheckToggleMouseControl();
 	float m_flySpeed;
 };
 

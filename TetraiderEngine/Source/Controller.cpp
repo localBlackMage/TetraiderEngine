@@ -20,66 +20,7 @@ void Controller::Deactivate() {
 }
 
 void Controller::Update(float dt) {
-	Vector3D moveDir;
-	//cout << (float)TETRA_INPUT.GetLeftAxisX() << " " << (float)TETRA_INPUT.GetLeftAxisY() << endl;
-	if (abs(TETRA_INPUT.GetLeftAxisX()) > 5500)
-		moveDir.x += TETRA_INPUT.GetLeftAxisX();
-	if (abs(TETRA_INPUT.GetLeftAxisY()) > 5500)
-		moveDir.y -= TETRA_INPUT.GetLeftAxisY();
-
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_D) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_RIGHT))
-		moveDir.x += 1;
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_A) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_LEFT))
-		moveDir.x -= 1;
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_W) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_UP))
-		moveDir.y += 1;
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_S) || TETRA_INPUT.IsKeyPressed(XBOX_DPAD_DOWN))
-		moveDir.y -= 1;
-
-
-	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_RIGHT) || TETRA_INPUT.IsKeyPressed(XBOX_BTN_RIGHT_SHOULDER)) {
-		m_pWeapon->UseAttack(0, m_lookDirection);
-	}
-
-	if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT) || TETRA_INPUT.IsKeyPressed(XBOX_BTN_LEFT_SHOULDER)) {
-		m_pWeapon->UseAttack(1, m_lookDirection);
-	}
-
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P) || TETRA_INPUT.IsKeyTriggered(XBOX_BTN_Y))
-		TETRA_AUDIO.TogglePause();
-
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_O))
-		TETRA_AUDIO.StopSongs();
-
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_R) || (TETRA_INPUT.IsKeyPressed(XBOX_BTN_START)&& TETRA_INPUT.IsKeyPressed(XBOX_BTN_BACK))) {
-		TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
-	}
-
-	moveDir.Normalize();
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_SPACE) && m_pStamina->UseStamina(dt)) {
-		m_isIgnoreHazards = true;
-		m_targetVelocity = moveDir * m_flySpeed;
-	}
-	else {
-		m_isIgnoreHazards = false;
-		m_targetVelocity = moveDir * m_speed;
-	}
-
-	//cout << TETRA_INPUT.GetRightAxisX() << " " << TETRA_INPUT.GetRightAxisX() << endl;
-	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.x = (float)(TETRA_INPUT.GetRightAxisX());
-	if (abs(TETRA_INPUT.GetRightAxisX()) > 5500)
-		m_lookDirection.y = (float)(-TETRA_INPUT.GetRightAxisY());
-
-	CheckToggleMouseControl();
-	if (m_isGameControllerEnabled) {
-		m_lookDirection = GetDirectionToMouse();
-	}
-	m_lookDirection.Normalize();
 	Agent::Update(dt);
-
-	Vector3D pos = m_pTransform->GetPosition();
-
 }
 void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
@@ -88,6 +29,38 @@ void Controller::Serialize(const json& j) {
 
 void Controller::HandleEvent(Event* pEvent) {
 	Agent::HandleEvent(pEvent);
+
+	switch (pEvent->Type()) {
+		case EVENT_INPUT_MOVE: {
+			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
+			if(!m_isIgnoreHazards) m_targetVelocity = pAxisData->m_dir*m_speed;
+			else m_targetVelocity = pAxisData->m_dir*m_flySpeed;
+		break;
+		}
+		case EVENT_INPUT_AIM: {
+			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
+			if(!pAxisData->m_dir.IsVectorZero())
+				m_lookDirection = pAxisData->m_dir;
+			break;
+		}
+		case EVENT_INPUT_FLY: {
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime()))
+				m_isIgnoreHazards = true;
+			else if (pButtonData->m_isReleased)
+				m_isIgnoreHazards = false;
+			break;
+		}
+		case EVENT_INPUT_MELEE: {
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isPressed) m_pWeapon->UseAttack(0, m_lookDirection);
+			break;
+		}
+		case EVENT_INPUT_RANGE: {
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isPressed) m_pWeapon->UseAttack(1, m_lookDirection);
+		}
+	}
 }
 
 void Controller::LateInitialize() {
@@ -120,11 +93,10 @@ void Controller::LateInitialize() {
 			return;
 		}
 	}
-}
 
-void Controller::CheckToggleMouseControl() {
-	if (TETRA_INPUT.IsKeyTriggered(XBOX_BTN_X)) {
-		m_isGameControllerEnabled = !m_isGameControllerEnabled;
-		cout << "GameController Right Axis/Mouse Control Swapped\n";
-	}
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_MOVE, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_AIM, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_FLY, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_MELEE, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_RANGE, this);
 }

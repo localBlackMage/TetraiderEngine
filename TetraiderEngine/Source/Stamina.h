@@ -19,8 +19,8 @@ public:
 	bool IsStaminaEmpty() { return m_isEmpty; }
 	bool IsStaminaFull() { return m_isFull; }
 	bool UseStamina(float dt);
-	float GetCurrentStamina() { return m_currentStamina; }
-	float GetMaxStamina() { return m_maxStamina; }
+	float GetCurrentStamina() const { return m_currentStamina; }
+	float GetMaxStamina() const { return m_maxStamina; }
 private:
 	float m_currentStamina;
 	float m_maxStamina;

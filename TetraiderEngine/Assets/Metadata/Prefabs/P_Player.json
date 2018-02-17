@@ -109,7 +109,7 @@
 			},
 			{
 				"type": "Ranged",
-				"coolDown": 2,
+				"coolDown": 0.6,
 				"baseDamage": 1,
 				"projectileSpeed": 600,
 				"instantiationOffset": 50,

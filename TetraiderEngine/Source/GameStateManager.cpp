@@ -32,10 +32,6 @@ void GameStateManager::Update() {
 			else
 				Tetraider::DebugMode();							// Debug mode
 
-			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_R)) {
-				TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
-			}
-
 			Tetraider::FrameEnd();
 		}
 

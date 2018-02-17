@@ -10,6 +10,7 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
+#include "Subscriber.h"
 #define DEFAULT_VOL 0.5
 
 
@@ -21,7 +22,7 @@
 typedef std::map<std::string, FMOD::Channel*> ChannelMap;
 
 
-class AudioManager
+class AudioManager: public Subscriber
 {
 public:
 	AudioManager();
@@ -47,6 +48,7 @@ public:
 	void PauseSFX(std::string& path);
 	void ResumeSound();
 	void ResumeSFX(std::string& path);
+	void HandleEvent(Event* pEvent);
 	bool isSoundPlaying(std::string);
 private:
 
