@@ -59,6 +59,7 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_RANGE: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed) m_pWeapon->UseAttack(1, m_lookDirection);
+			break;
 		}
 	}
 }
