@@ -43,12 +43,8 @@ namespace Tetraider {
 		TETRA_PHYSICS.ResolveCollisions();						// Resolve collisions on physics bodies
 		TETRA_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
 
-		//TETRA_RENDERER.UPDATE_PARTICLE_TEST(deltaTime);
-
 		TETRA_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
-		//TETRA_DEBUG.RenderDebugCommands();
-
-		//TETRA_RENDERER.RENDER_PARTICLES_TEST(*TETRA_GAME_OBJECTS.GetCamera(0));
+		TETRA_DEBUG.RenderDebugCommands();
 	}
 
 	void FrameEnd()
