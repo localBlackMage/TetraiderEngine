@@ -35,20 +35,17 @@ void Controller::HandleEvent(Event* pEvent) {
 			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
 			if(!m_isIgnoreHazards) m_targetVelocity = pAxisData->m_dir*m_speed;
 			else m_targetVelocity = pAxisData->m_dir*m_flySpeed;
-		break;
+			break;
 		}
 		case EVENT_INPUT_AIM: {
 			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
-			if(!pAxisData->m_dir.IsVectorZero())
-				m_lookDirection = pAxisData->m_dir;
+			if(!pAxisData->m_dir.IsVectorZero()) m_lookDirection = pAxisData->m_dir;
 			break;
 		}
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime()))
-				m_isIgnoreHazards = true;
-			else if (pButtonData->m_isReleased)
-				m_isIgnoreHazards = false;
+			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) m_isIgnoreHazards = true;
+			else if (pButtonData->m_isReleased) m_isIgnoreHazards = false;
 			break;
 		}
 		case EVENT_INPUT_MELEE: {
