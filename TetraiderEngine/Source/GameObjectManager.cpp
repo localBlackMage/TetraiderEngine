@@ -30,10 +30,6 @@ static bool LeftYGreaterThanOrEqualToRightY(GameObject*left, GameObject*right)
 	return tLeft->GetPosition().y >= tRight->GetPosition().y;
 }
 
-static bool SortInt(int l, int r) {
-	return l <= r;
-}
-
 #pragma region GameObjectLayer
 
 GameObjectLayer::GameObjectLayer(const GameObjectLayer & rhs) : m_layerObjects(rhs.m_layerObjects) {}
@@ -111,9 +107,10 @@ void GameObjectManager::LateUpdate(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	for (GameObject* cameraGO : m_pCameras) {
-		Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-		for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS - 1; ++layer) {
+	// Render all layers but UI
+	for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS - 1; ++layer) {
+		for (GameObject* cameraGO : m_pCameras) {
+			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
 			if (cameraComp->ShouldRenderLayer(layer))
 				m_layers[layer].RenderLayer(cameraGO);
 		}
@@ -121,10 +118,11 @@ void GameObjectManager::RenderGameObjects()
 
 	TETRA_DEBUG.RenderDebugCommands();
 
+	// Render UI
 	for (GameObject* cameraGO : m_pCameras) {
 		Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-		if (cameraComp->ShouldRenderLayer(RENDER_LAYER::L_NUM_LAYERS - 1))
-			m_layers[RENDER_LAYER::L_NUM_LAYERS - 1].RenderLayer(cameraGO);
+		if (cameraComp->ShouldRenderLayer(RENDER_LAYER::L_UI))
+			m_layers[RENDER_LAYER::L_UI].RenderLayer(cameraGO);
 	}
 }
 
