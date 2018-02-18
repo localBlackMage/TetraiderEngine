@@ -72,7 +72,7 @@
 		{
 			"Name": "Idle",
 			"frames": 2,
-			"animationSpeed": 4,
+			"animationSpeed": 3,
 			"isLooping": true,
 			"isPlayOnAwake": true
 		},
