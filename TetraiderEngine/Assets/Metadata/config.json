@@ -32,7 +32,7 @@
 	"INPUT_SETTINGS": [
 		{
 			"Name": "Move",
-			"EventType": 0,
+			"EventType": 1,
 			"InputType": 1,
 			"isMouse": false,
 			"isJoystick": true,
@@ -44,14 +44,14 @@
 		},
 		{
 			"Name": "Aim",
-			"EventType": 1,
+			"EventType": 2,
 			"InputType": 2,
 			"isJoystick": true,
 			"AnalogueStick": 1
 		},
 		{
 			"Name": "Fly",
-			"EventType": 2,
+			"EventType": 3,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
@@ -60,7 +60,7 @@
 		},
 		{
 			"Name": "Melee",
-			"EventType": 3,
+			"EventType": 4,
 			"InputType": 0,
 			"isMouse": true,
 			"isJoystick": true,
@@ -69,7 +69,7 @@
 		},
 		{
 			"Name": "Range",
-			"EventType": 4,
+			"EventType": 5,
 			"InputType": 0,
 			"isMouse": true,
 			"isJoystick": true,
@@ -78,7 +78,7 @@
 		},
 		{
 			"Name": "Restart",
-			"EventType": 5,
+			"EventType": 6,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
@@ -87,7 +87,7 @@
 		},
 		{
 			"Name": "PauseMusic",
-			"EventType": 6,
+			"EventType": 7,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
@@ -96,7 +96,7 @@
 		},
 		{
 			"Name": "ToggleJoystick",
-			"EventType": 7,
+			"EventType": 8,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
