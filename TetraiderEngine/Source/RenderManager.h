@@ -34,9 +34,6 @@ class Sprite;
 class ParticleEmitter;
 enum DebugShape;
 
-//struct ParticleItem;
-//struct ParticleContainer;
-
 enum SHADER_LOCATIONS {
 	POSITION = 0,
 	TEXTURE_COORD,
@@ -59,8 +56,6 @@ enum SHADER_LOCATIONS {
 class RenderManager : public Subscriber
 {
 private:
-	//ParticleContainer* particleTest;
-
 	friend class DebugManager;
 
 	int m_width, m_height;
@@ -99,8 +94,6 @@ public:
 
 	bool Init();
 
-	void INIT_PARTICLE_TEST();
-
 	void FrameStart();
 	void FrameEnd();
 	void Resize(int width, int height);
@@ -114,9 +107,6 @@ public:
 	float GetAspectRatio() const;
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 
-
-	void UPDATE_PARTICLE_TEST(float deltaTime);
-	void RENDER_PARTICLES_TEST(const GameObject& camera);
 	void RenderGameObject(const GameObject& camera, const GameObject& go);
 
 	GLuint GenerateStreamingVBO(unsigned int size);
