@@ -45,7 +45,7 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) m_isIgnoreHazards = true;
-			else if (pButtonData->m_isReleased) m_isIgnoreHazards = false;
+			else m_isIgnoreHazards = false;
 			break;
 		}
 		case EVENT_INPUT_MELEE: {
