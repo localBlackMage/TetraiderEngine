@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 100,
+        "x": 120,
+        "y": 120,
         "z": 0
       },
       "pivotOffset": {
@@ -60,14 +60,28 @@
 	},
 	{
 		"Component": "Animation",
-		"defaultAnimation": 0,
+		"defaultAnimation": 1,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Walk",
-			"frames": 12,
-			"animationSpeed": 18,
+			"frames": 10,
+			"animationSpeed": 16,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 2,
+			"animationSpeed": 4,
 			"isLooping": true,
 			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Fly",
+			"frames": 8,
+			"animationSpeed": 14,
+			"isLooping": true,
+			"isPlayOnAwake": false
 		}]
 	},
 	{

@@ -31,10 +31,13 @@ void Agent::Update(float dt) {
 	m_pBody->SetVelocity(m_currentVelocity);
 
 	if (m_pAnimation) {
-		if (m_currentVelocity.SquareLength()  < 100.0f)
+		if (m_currentVelocity.SquareLength()  < 200.0f)
+			m_pAnimation->Play(1);
+		else if(m_currentVelocity.SquareLength() && !m_isIgnoreHazards)
 			m_pAnimation->Play(0);
 		else
-			m_pAnimation->Play(0);
+			m_pAnimation->Play(2);
+
 	}
 
 	float angle = m_lookDirection.AngleDegrees();
