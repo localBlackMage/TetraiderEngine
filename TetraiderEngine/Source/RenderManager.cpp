@@ -456,10 +456,10 @@ GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 void RenderManager::LoadShaders()
 {
 	std::string shaderDir = TETRA_GAME_CONFIG.ShadersDir();
-
+	// TODO: Update these
 	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
-	LoadShaderProgram(shaderDir, "defaultShader.json"); // TODO: Move this
-	LoadShaderProgram(shaderDir, "particleShader.json"); // TODO: Move this
+	LoadShaderProgram(shaderDir, "defaultShader.json");
+	LoadShaderProgram(shaderDir, "particleShader.json");
 }
 
 void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)
