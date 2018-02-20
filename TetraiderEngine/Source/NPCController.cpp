@@ -22,16 +22,13 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	Agent::Update(dt);
-	// Test code for state machine
-
+	// Test code for state machine -------------------------------------------
 	// Change of state
 	if (m_currentState != m_previousState) {
 		// RunLuaScript(m_luaScripts[m_previousState] + "OnExit");
 		std::cout << m_luaScripts[m_previousState] + "OnExit() called" << std::endl;
 		// RunLuaScript(m_luaScripts[m_currentState] + "OnEnter");
 		std::cout << m_luaScripts[m_currentState] + "OnEnter() called" << std::endl;
-
 		std::cout << m_luaScripts[m_currentState] + "Update() being called every frame" << std::endl;
 		m_previousState = m_currentState;
 	}
@@ -44,6 +41,9 @@ void NPCController::Update(float dt) {
 		if (m_currentState == NUM_NPC_STATES)
 			m_currentState = NPC_State_Idle;
 	}
+	//-------------------------------------------------------------------------
+
+	Agent::Update(dt);
 }
 
 void NPCController::LateUpdate(float dt) {
@@ -93,4 +93,10 @@ void NPCController::LateInitialize() {
 			return;
 		}
 	}*/
+}
+
+float NPCController::GetSquareDistanceToPlayer() {
+	const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
+	const Transform* pPlayerTransform = pPlayer->GetComponent<Transform>(C_Transform);
+	return Vector3D::SquareDistance(pPlayerTransform->GetPosition(), m_pTransform->GetPosition());
 }

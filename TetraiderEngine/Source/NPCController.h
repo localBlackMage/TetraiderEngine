@@ -21,6 +21,7 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 protected:
 	Weapon* m_pWeapon;
+	float GetSquareDistanceToPlayer();
 private:
 	std::unordered_map<NPCState, std::string> m_luaScripts;
 	NPCState m_currentState;
