@@ -129,6 +129,8 @@
     <ClInclude Include="Source\MemoryManager.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\NPCController.h" />
+    <ClInclude Include="Source\NPCState.h" />
+    <ClInclude Include="Source\NPCStateNames.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\PointLight.h" />

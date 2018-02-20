@@ -3,6 +3,8 @@
 #define NPCCONTROLLER_H
 
 #include "Agent.h"
+#include <unordered_map>
+#include "NPCState.h"
 
 class Weapon;
 
@@ -19,6 +21,10 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 protected:
 	Weapon* m_pWeapon;
+private:
+	std::unordered_map<NPCState, std::string> m_luaScripts;
+	NPCState m_currentState;
+	NPCState m_previousState;
 };
 
 #endif

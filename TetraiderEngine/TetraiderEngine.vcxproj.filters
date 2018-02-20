@@ -448,5 +448,11 @@
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\NPCState.h">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCStateNames.h">
+      <Filter>Source Files\Components\Agent</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

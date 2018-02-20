@@ -8,7 +8,9 @@
 #include <iostream>
 
 NPCController::NPCController() :
-	Agent(ComponentType::C_NPCCONTROLLER)
+	Agent(ComponentType::C_NPCCONTROLLER),
+	m_currentState(NPC_State_Idle),
+	m_previousState(NPC_State_Idle)
 {
 }
 
@@ -20,14 +22,32 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
-	
-	//---------------------------------
-
 	Agent::Update(dt);
+	// Test code for state machine
+
+	// Change of state
+	if (m_currentState != m_previousState) {
+		// RunLuaScript(m_luaScripts[m_previousState] + "OnExit");
+		std::cout << m_luaScripts[m_previousState] + "OnExit() called" << std::endl;
+		// RunLuaScript(m_luaScripts[m_currentState] + "OnEnter");
+		std::cout << m_luaScripts[m_currentState] + "OnEnter() called" << std::endl;
+
+		std::cout << m_luaScripts[m_currentState] + "Update() being called every frame" << std::endl;
+		m_previousState = m_currentState;
+	}
+	
+	// RunLuaScript(m_luaScripts[m_currentState] + "Update");
+	//std::cout << m_luaScripts[m_currentState] + "Update() called" << std::endl;
+
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Y)) {
+		m_currentState = static_cast<NPCState>((int)m_currentState + 1);
+		if (m_currentState == NUM_NPC_STATES)
+			m_currentState = NPC_State_Idle;
+	}
 }
 
 void NPCController::LateUpdate(float dt) {
+	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
 	GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
 	Transform* playerTransfrom = player->GetComponent<Transform>(ComponentType::C_Transform);
 	LineSegment2D ray(Vector2D(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y), Vector2D(playerTransfrom->GetPosition().x, playerTransfrom->GetPosition().y));
@@ -41,10 +61,16 @@ void NPCController::LateUpdate(float dt) {
 	else {
 		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
 	}
+	//---------------------------------
 }
 
 void NPCController::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
+	int size = j["luaScripts"].size();
+
+	for (int i = 0; i < size; ++i) {
+		m_luaScripts[static_cast<NPCState>(ParseInt(j["luaScripts"][i], "state"))] = ParseString(j["luaScripts"][i], "luaScript");
+	}
 }
 
 void NPCController::HandleEvent(Event* pEvent) {

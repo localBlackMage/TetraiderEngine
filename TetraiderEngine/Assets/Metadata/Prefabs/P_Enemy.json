@@ -30,7 +30,25 @@
 			"speed": 150,
 			"acceleration": 8,
 			"knockBackMultiplier": 1
-		}
+		},
+		"luaScripts": [
+			{
+				"state": 0,
+				"luaScript": "IdleBehavior"
+			},
+			{
+				"state": 1,
+				"luaScript": "EngageBehavior"
+			},
+			{
+				"state": 2,
+				"luaScript": "AttackBehavior"
+			},
+			{
+				"state": 3,
+				"luaScript": "RetreatBehavior"
+			}
+		]
 	},
     {
       "Component": "Sprite",
