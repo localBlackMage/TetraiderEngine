@@ -59,8 +59,9 @@
               "height": 30
           }
       },
-      {
-          "Component": "FollowCursor"
-      }
+	  {
+		"Component":"FollowCursor"
+	  }
+      
       ]
   }

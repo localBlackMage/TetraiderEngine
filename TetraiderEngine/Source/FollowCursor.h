@@ -11,10 +11,11 @@ private:
 public:
 	FollowCursor();
 	~FollowCursor();
-
+	static Component* CreateInstance() { return new FollowCursor(); }
 	// Inherited via Component
     void Update(float dt);
 	void Serialize(const json & j);
+	void LateInitialize();
 	//----end pure virtual fn
 
 	void HandleEvent(Event* pEvent);
