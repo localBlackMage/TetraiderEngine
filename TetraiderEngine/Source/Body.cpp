@@ -121,9 +121,9 @@ void Body::LateInitialize() {
 	}
 }
 
-const Vector3D& Body::GetPosition() { return m_Position; }
-const Vector3D& Body::GetPreviousPosition() { return m_PrevPosition; }
-const Vector3D& Body::GetVelocity() { return m_Velocity; }
+const Vector3D& Body::GetPosition() const { return m_Position; }
+const Vector3D& Body::GetPreviousPosition() const { return m_PrevPosition; }
+const Vector3D& Body::GetVelocity() const { return m_Velocity; }
 
 void Body::SetVelocity(const Vector3D& vel) { m_Velocity.Set(vel.x, vel.y, vel.z); }
 

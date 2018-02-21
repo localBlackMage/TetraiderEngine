@@ -454,5 +454,8 @@
     <ClInclude Include="Source\NPCStateNames.h">
       <Filter>Source Files\Components\Agent</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MyArray.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -128,6 +128,7 @@
     <ClInclude Include="Source\MeleeAttack.h" />
     <ClInclude Include="Source\MemoryManager.h" />
     <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\MyArray.h" />
     <ClInclude Include="Source\NPCController.h" />
     <ClInclude Include="Source\NPCState.h" />
     <ClInclude Include="Source\NPCStateNames.h" />

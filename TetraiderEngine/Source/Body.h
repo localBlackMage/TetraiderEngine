@@ -31,9 +31,9 @@ public:
 	void SetVelocity(float speed, float angle);
 	void Integrate(float dt);
 	void AddForce(const Vector3D& force);
-	const Vector3D& GetPosition();
-	const Vector3D& GetPreviousPosition();
-	const Vector3D& GetVelocity();
+	const Vector3D& GetPosition() const;
+	const Vector3D& GetPreviousPosition() const;
+	const Vector3D& GetVelocity() const;
 	void OverrideShapeData(float width, float height);
 	void OverrideShapeData(float radius);
 private:
