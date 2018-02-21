@@ -15,7 +15,12 @@
       }
     },
 	{
-		"prefab": "P_ParticleTest"
+		"prefab": "P_ParticleTest",
+		"position": {
+			"x": 100,
+			"y": 20,
+			"z": 0
+		}
     },
 	{
       "prefab": "P_Enemy",

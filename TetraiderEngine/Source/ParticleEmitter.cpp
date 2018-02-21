@@ -30,11 +30,11 @@ void ParticleEmitter::_SpawnParticle()
 	int idx = _FindUnusedParticle();
 	if (idx > -1) {
 		m_particles[idx].m_life = m_lifeTime;
-		m_particles[idx].m_pos.Set(0, 0, 0);			// TODO: Update these
+		m_particles[idx].m_pos = m_pTransform->GetPosition();			// TODO: Update these
 		float HI = 250.f;
 		float LO = -HI;
 		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
-		m_particles[idx].m_velocity.Set( x, 100.f, 0);		// TODO: Update these
+		m_particles[idx].m_velocity = m_pTransform->LookAt() * m_speed;		// TODO: Update these
 	}
 }
 
@@ -52,28 +52,20 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 			// Decrease life
 			p.m_life -= deltaTime;
 			if (p.m_life > 0.0f) {
-				// TODO: Remove this random update stuff
-				//p.m_velocity += Gravity * deltaTime;
-
-				//p.m_velocity = Vel;
-				//p.m_velocity.y = p.m_velocity.y < -9.8f ? -9.8f : p.m_velocity.y;
 				p.m_velocity += Gravity * deltaTime;
 				p.m_pos += p.m_velocity * deltaTime;
 				p.m_pos.z = 0.f;
 
 				p.m_scale = m_size;
-				// end random stuff
 
 
 				// TODO: decide on a better way to get a camera
 				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
-				// TODO: Random stuff to change color, remove
-				p.m_color.r = 255 - (int(p.m_life) % 255);
-				p.m_color.b = 255 - (int(p.m_life) % 255);
-				p.m_color.g = int(p.m_life) % 255;
-				p.m_color.a = 255;
-				// end random stuff
+				p.m_color.r = m_color.r;
+				p.m_color.g = m_color.g;
+				p.m_color.b = m_color.b;
+				p.m_color.a = m_color.a;
 
 				// Fill the GPU buffer
 				m_positionsScales[4 * m_liveParticleCount] = p.m_pos.x;
@@ -207,7 +199,11 @@ void ParticleEmitter::Serialize(const json & j)
 	m_speed = ParseFloat(j, "speed");
 	m_size = ParseFloat(j, "size");
 	m_rotation = ParseFloat(j, "rotation");
-	m_color = ParseColor(j, "color");
+	Vector3D color = ParseColor(j, "color");
+	m_color.r = int(color.x * 255.f);
+	m_color.g = int(color.y * 255.f);
+	m_color.b = int(color.z * 255.f);
+	m_color.a = int(color.w * 255.f);
 	m_gravityMod = ParseFloat(j, "gravity");
 	m_emissionRate = ParseInt(j, "emissionRate");
 	m_maxParticles = ParseInt(j, "max");

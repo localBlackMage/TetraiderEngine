@@ -21,6 +21,7 @@ private:
 
 	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 	unsigned short m_roomWidth, m_roomHeight;	// Room dimensions in cells (ex. 12x8)
+	unsigned short m_roomsX, m_roomsY;			// Number of rooms in the x and y directions on the grid
 
 public:
 	GameConfig();
@@ -41,6 +42,8 @@ public:
 	unsigned short CellHeight() const { return m_cellHeight; }
 	unsigned short RoomWidth() const { return m_roomWidth; }
 	unsigned short RoomHeight() const { return m_roomHeight; }
+	unsigned int LevelWidth() const { return int(m_cellWidth) * int(m_roomWidth) * int(m_roomsX); }
+	unsigned int LevelHeight() const { return int(m_cellHeight) * int(m_roomHeight) * int(m_roomsY); }
 };
 
 #endif

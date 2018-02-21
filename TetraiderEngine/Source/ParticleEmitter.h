@@ -52,7 +52,7 @@ protected:
 	float m_speed;				// Speed of a particle in the starting direction
 	float m_size;				// X and Y scale of a particle
 	float m_rotation;			// Z-Axis rotation of a particle at start
-	Vector3D m_color;			// Color of a particle at start
+	Color m_color;			// Color of a particle at start
 	float m_gravityMod;			// Scales gravity applied to particles
 	int m_emissionRate;			// How many particles to emit over the duration of a single loop
 	int m_maxParticles;			// Max number of particles allowed at once - emission will halt temporarily if this number is met

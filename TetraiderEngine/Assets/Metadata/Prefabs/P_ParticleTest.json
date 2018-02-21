@@ -1,6 +1,6 @@
 {
   "Tag": "Particle",
-  "Layer": "1",
+  "Layer": "3",
   "COMPONENTS": [
     {
 		"Component": "Transform",
@@ -10,7 +10,7 @@
 			"z": 0
 		},
 		"scale": {
-			"x": 0,
+			"x": 1,
 			"y": 0,
 			"z": 0
 		},
@@ -21,29 +21,29 @@
 		"rotation": {
 			"x": 0,
 			"y": 0,
-			"z": 0
+			"z": 45
 		}
     },
 	{
 		"Component": "ParticleEmitter",
 		
-		"loopDuration": 2.0,
+		"loopDuration": 4.0,
 		"looping": true,
 		"prewarmed": false,
 		"startDelay": 0,
-		"lifeTime": 1.0,
-		"speed": 100.0,
-		"size": 32.0,
+		"lifeTime": 4.0,
+		"speed": 80.0,
+		"size": 20.0,
 		"rotation": 0,
 		"color": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
+			"r": 0.6196,
+			"g": 0.9686,
+			"b": 0.9451,
 			"a": 1
 		},
-		"gravity": 1.0,
-		"emissionRate": 100,
-		"max": 100,
+		"gravity": 1.5,
+		"emissionRate": 50,
+		"max": 200,
 		"rotationOverTime": 0,
 		"particleTexture": "T_Particle.png"
     }
