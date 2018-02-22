@@ -54,10 +54,24 @@
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 32,
-			"height": 32
+			"type": "circle",
+			"radius": 20
 		}
+	},
+	{
+		"Component": "Collectible",
+		"isHealth": false,
+		"isEgg": true,
+		"value": 1
+	},
+	{
+		"Component": "WaveMovement",
+		"isModifyXPos": false,
+		"isModifyYPos": true,
+		"isAbsoluteValue": true,
+		"frequency": 2,
+		"phaseShift": 0,
+		"amplitude": 10
 	}
   ]
 }
