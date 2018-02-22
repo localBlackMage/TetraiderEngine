@@ -16,6 +16,8 @@ Mesh::~Mesh()
 	m_faces.clear();
 }
 
+#pragma region Add Triangle
+
 void Mesh::AddTriangle(Vector3D p1, Vector3D p2, Vector3D p3)
 {
 	unsigned int idx0 = m_vertices.size(), 
@@ -77,6 +79,8 @@ void Mesh::AddTriangle(float p1x, float p1y, float p1z, float uv1u, float uv1v, 
 		Vector3D(p3x, p3y, p3z), TexCoords(uv3u, uv3v), c3
 	);
 }
+
+#pragma endregion
 
 void Mesh::FinishMesh()
 {

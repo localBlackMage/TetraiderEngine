@@ -86,6 +86,9 @@ private:
 	void _EnableAlphaTest();
 	void _EnableDepthTest();
 	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
+	void _BindUniform2(SHADER_LOCATIONS location, const Vector3D& values);
+	void _BindUniform2(SHADER_LOCATIONS location, float val1, float val2);
+	void _BindUniform4(SHADER_LOCATIONS location, const Vector3D& values);
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
 	~RenderManager();

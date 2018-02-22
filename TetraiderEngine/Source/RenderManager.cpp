@@ -89,24 +89,16 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
-	// Optimize this
-	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
-	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetVertexBuffer());
-	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
-
-	glEnableVertexAttribArray(SHADER_LOCATIONS::TEXTURE_COORD);
-	glBindBuffer(GL_ARRAY_BUFFER, pSpriteComp->GetMesh().GetTextCoordBuffer());
-	glVertexAttribPointer(SHADER_LOCATIONS::TEXTURE_COORD, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0); // <- load it to memory
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, pSpriteComp->GetMesh().GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pSpriteComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
 
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
 	//glUniform2f(SHADER_LOCATIONS::TILE, 1, 1); // pSpriteComp->TileX(), pSpriteComp->TileY());
 
-	Vector3D tintColor = pSpriteComp->GetTintColor();
-	Vector3D saturationColor = pSpriteComp->GetSaturationColor();
-	glUniform4f(SHADER_LOCATIONS::TINT_COLOR, tintColor[0], tintColor[1], tintColor[2], tintColor[3]);
-	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, saturationColor[0], saturationColor[1], saturationColor[2], saturationColor[3]);
+	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
+	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
 		_EnableAlphaTest();
@@ -364,6 +356,21 @@ void RenderManager::_BindVertexAttribute(SHADER_LOCATIONS location, GLuint buffe
 	glEnableVertexAttribArray(location);
 	glBindBuffer(GL_ARRAY_BUFFER, bufferID);
 	glVertexAttribPointer(location, size, type, normalized, stride, (void*)offset);
+}
+
+void RenderManager::_BindUniform2(SHADER_LOCATIONS location, const Vector3D& values)
+{
+	glUniform2f(location, values[0], values[1]);
+}
+
+void RenderManager::_BindUniform2(SHADER_LOCATIONS location, float val1, float val2)
+{
+	glUniform2f(location, val1, val2);
+}
+
+void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& values)
+{
+	glUniform4f(location, values[0], values[1], values[2], values[3]);
 }
 
 #pragma endregion

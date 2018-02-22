@@ -74,8 +74,8 @@ protected:
 	GLuint m_positionsScalesBuffer;			// OpenGL Buffer where positions and sizes are to be streamed
 	GLuint m_colorsBuffer;					// OpenGL Buffer where colors are to be streamed
 
-	GLfloat* m_positionsScales;// [m_maxParticles * 4];	// Array of positions and sizes (xyz pos, w is uniform scale)
-	GLubyte* m_colors;// [m_maxParticles * 4];			// Array of Colors split up into it's components
+	GLfloat* m_positionsScales;				// Array of positions and sizes (xyz pos, w is uniform scale)
+	GLubyte* m_colors;						// Array of Colors split up into it's components
 	int m_liveParticleCount;				// Indicates how many particles are currently alive, set each Update loop
 	int m_lastUsedParticle;					// An index into m_particles, represents the index of the last used particle
 

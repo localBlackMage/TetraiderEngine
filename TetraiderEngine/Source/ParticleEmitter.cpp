@@ -40,7 +40,6 @@ void ParticleEmitter::_SpawnParticle()
 
 void ParticleEmitter::_UpdateParticles(float deltaTime)
 {
-	const Vector3D Vel = Vector3D(0, 100.f, 0);
 	const Vector3D Gravity = Vector3D(0, -98.f * m_gravityMod, 0);
 	m_liveParticleCount = 0;
 	for (int i = 0; i<m_maxParticles; i++) {
@@ -58,7 +57,6 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 
 				p.m_scale = m_size;
 
-
 				// TODO: decide on a better way to get a camera
 				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
@@ -68,7 +66,7 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 				p.m_color.a = m_color.a;
 
 				// Fill the GPU buffer
-				m_positionsScales[4 * m_liveParticleCount] = p.m_pos.x;
+				m_positionsScales[4 * m_liveParticleCount + 0] = p.m_pos.x;
 				m_positionsScales[4 * m_liveParticleCount + 1] = p.m_pos.y;
 				m_positionsScales[4 * m_liveParticleCount + 2] = p.m_pos.z;
 
@@ -91,6 +89,10 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 
 void ParticleEmitter::_AllocateParticleArrays()
 {
+	if (m_particles)		TETRA_MEMORY.Free(m_particles);
+	if (m_positionsScales)	TETRA_MEMORY.Free(m_positionsScales);
+	if (m_colors)			TETRA_MEMORY.Free(m_colors);
+
 	m_particles = (Particle*)TETRA_MEMORY.Alloc(sizeof(Particle) * m_maxParticles);			//(Particle*)malloc(sizeof(Particle) * m_maxParticles);
 	m_positionsScales = (GLfloat*)TETRA_MEMORY.Alloc(sizeof(GLfloat) * m_maxParticles * 4); //(GLfloat*)malloc(sizeof(GLfloat) * m_maxParticles * 4);
 	m_colors = (GLubyte*)TETRA_MEMORY.Alloc(sizeof(GLubyte) * m_maxParticles * 4);			//(GLubyte*)malloc(sizeof(GLubyte) * m_maxParticles * 4);
