@@ -84,7 +84,7 @@
 		"lifeTime": 2,
 		"projectilePrefab": "P_testProjectile",
 		"knockBackSpeed": 500,
-		"timeOffset": 0
+		"timeOffset": 0.7
 	}
   ]
 }

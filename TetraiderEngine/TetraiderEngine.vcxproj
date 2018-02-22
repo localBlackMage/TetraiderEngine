@@ -72,6 +72,7 @@
     <ClCompile Include="Source\ScaleByHPStamina.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
     <ClCompile Include="Source\Subscriber.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\Sorting.h" />
+    <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />
     <ClInclude Include="Source\SurfaceTextureBuffer.h" />

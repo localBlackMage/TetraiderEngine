@@ -34,12 +34,17 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_MOVE: {
 			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
 			if(!m_isIgnoreHazards) m_targetVelocity = pAxisData->m_dir*m_speed;
-			else m_targetVelocity = pAxisData->m_dir*m_flySpeed;
+			else {
+				m_targetVelocity = pAxisData->m_dir*m_flySpeed;
+				m_lookDirection = pAxisData->m_dir;
+			}
 			break;
 		}
 		case EVENT_INPUT_AIM: {
-			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
-			if(!pAxisData->m_dir.IsVectorZero()) m_lookDirection = pAxisData->m_dir;
+			if (!m_isIgnoreHazards) {
+				InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
+				if (!pAxisData->m_dir.IsVectorZero()) m_lookDirection = pAxisData->m_dir;
+			}
 			break;
 		}
 		case EVENT_INPUT_FLY: {

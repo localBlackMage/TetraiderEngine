@@ -18,6 +18,7 @@ public:
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
+	void ChangeInitialPos(const Vector3D& pos) { m_initialPos = pos; }
 private:
 	Transform* m_pTransform;
 	bool m_isModifyXPos;
@@ -26,7 +27,7 @@ private:
 	float m_amplitude;
 	float m_frequency;
 	float m_phaseShift;
-	Vector3D m_pInitialPos;
+	Vector3D m_initialPos;
 };
 
 #endif

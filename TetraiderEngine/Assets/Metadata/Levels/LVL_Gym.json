@@ -144,6 +144,14 @@
 		}	
 	},
 	{
+	  "prefab": "P_ProjectileSpawner02",
+	  "position": {
+	  	"x": -200,
+		"y": 500,
+		"z": 0
+		}	
+	},
+	{
 	  "prefab": "P_HealthBar"	
 	},
 	{
@@ -151,14 +159,6 @@
 	},
 	{
 		"prefab": "P_TextTest"
-	},
-	{
-		"prefab": "P_HealthPickUp",
-		"position": {
-	  	"x": 200,
-		"y": 300,
-		"z": 0
-		}	
 	}
   ]
 }

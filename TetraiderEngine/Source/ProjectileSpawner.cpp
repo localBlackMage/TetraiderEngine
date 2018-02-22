@@ -8,6 +8,7 @@ ProjectileSpawner::ProjectileSpawner(): Component(ComponentType::C_ProjectileSpa
 ProjectileSpawner::~ProjectileSpawner() {}
 
 void ProjectileSpawner::DeActivate() {
+	pGO = nullptr;
 }
 
 void ProjectileSpawner::Update(float dt) {
@@ -35,6 +36,7 @@ void ProjectileSpawner::Serialize(const json& j) {
 	m_lifeTime = ParseFloat(j, "lifeTime");
 	m_projectilePrefab = ParseString(j, "projectilePrefab");
 	m_knockBackSpeed = ParseFloat(j, "knockBackSpeed");
+	m_timeOffset = ParseFloat(j, "timeOffset");
 }
 
 void ProjectileSpawner::LateInitialize() {
@@ -54,4 +56,8 @@ void ProjectileSpawner::LateInitialize() {
 	}
 }
 
-void ProjectileSpawner::HandleEvent(Event* pEvent) {}
+void ProjectileSpawner::HandleEvent(Event* pEvent) {
+	if (pEvent->Type() == EVENT_OnLevelInitialized) {
+		m_lastFiredTimeStamp = TETRA_FRAMERATE.GetElapsedTime() + m_timeOffset;
+	}
+}
