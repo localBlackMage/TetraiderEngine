@@ -10,7 +10,7 @@ Subscriber::Subscriber()
 
 Subscriber::~Subscriber()
 {
-	SubscriberTracker::GetInstance().RemoveSubscriber(this);
+	DeactivateSubscriber();
 }
 
 void Subscriber::_AddSubscriberToTracker()

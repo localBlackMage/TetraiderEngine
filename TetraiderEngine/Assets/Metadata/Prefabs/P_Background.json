@@ -28,8 +28,8 @@
       "Component": "Sprite",
       "Texture": "T_Background.png",
       "tiling": {
-        "x": 50,
-        "y": 50
+        "x": 60,
+        "y": 60
       },
       "uvOffset": {
         "u": 0,

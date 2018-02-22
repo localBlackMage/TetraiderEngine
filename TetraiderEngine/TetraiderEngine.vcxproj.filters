@@ -236,6 +236,9 @@
     <ClCompile Include="Source\WaveMovement.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SpawnOnHealthZero.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -473,6 +476,9 @@
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\WaveMovement.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpawnOnHealthZero.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

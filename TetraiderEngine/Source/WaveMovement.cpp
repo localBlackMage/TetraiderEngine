@@ -19,15 +19,15 @@ void WaveMovement::Update(float dt) {
 		value = fabsf(value);
 
 	if (m_isModifyXPos && !m_isModifyYPos) {
-		Vector3D newPos(m_pInitialPos.x + value, m_pInitialPos.y, m_pInitialPos.z);
+		Vector3D newPos(m_initialPos.x + value, m_initialPos.y, m_initialPos.z);
 		m_pTransform->SetPosition(newPos);
 	}
 	else if (m_isModifyYPos && !m_isModifyXPos) {
-		Vector3D newPos(m_pInitialPos.x, m_pInitialPos.y + value, m_pInitialPos.z);
+		Vector3D newPos(m_initialPos.x, m_initialPos.y + value, m_initialPos.z);
 		m_pTransform->SetPosition(newPos);
 	}
 	else {
-		Vector3D newPos(m_pInitialPos.x + value, m_pInitialPos.y + value, m_pInitialPos.z);
+		Vector3D newPos(m_initialPos.x + value, m_initialPos.y + value, m_initialPos.z);
 		m_pTransform->SetPosition(newPos);
 	}
 
@@ -61,5 +61,5 @@ void WaveMovement::LateInitialize() {
 
 void WaveMovement::HandleEvent(Event* pEvent) {
 	if(pEvent->Type() == EVENT_OnLevelInitialized)
-		m_pInitialPos = m_pTransform->GetPosition();
+		m_initialPos = m_pTransform->GetPosition();
 }
