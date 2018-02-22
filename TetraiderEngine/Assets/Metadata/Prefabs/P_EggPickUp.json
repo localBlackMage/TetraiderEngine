@@ -1,0 +1,76 @@
+{
+  "Tag": "None",
+  "Layer": "1",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 32,
+        "y": 32,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+      "Component": "Sprite",
+      "Texture": "T_egg.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 16
+		}
+	},
+	{
+		"Component": "Collectible",
+		"isHealth": false,
+		"isEgg": true,
+		"value": 1
+	},
+	{
+		"Component": "WaveMovement",
+		"isModifyXPos": false,
+		"isModifyYPos": true,
+		"isAbsoluteValue": true,
+		"frequency": 2,
+		"phaseShift": 0,
+		"amplitude": 10
+	}
+  ]
+}
