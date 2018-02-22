@@ -28,8 +28,8 @@
       "Component": "Sprite",
       "Texture": "T_Sand.png",
       "tiling": {
-        "x": 10,
-        "y": 10
+        "x": 2,
+        "y": 2
       },
       "uvOffset": {
         "u": 0,

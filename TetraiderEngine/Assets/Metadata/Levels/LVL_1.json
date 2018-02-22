@@ -233,6 +233,64 @@
 	  "y":500,
 	  "z":0
 	  }
+	},
+	{
+	  "prefab": "P_Background2",
+      "position": {
+        "x": 0,
+        "y": 1400,
+        "z": 0
+      },
+	  "scale":{
+	  "x":200,
+	  "y":200,
+	  "z":0
+	  }
+	},
+	{
+	  "prefab": "P_Background2",
+      "position": {
+        "x": 0,
+        "y": 1950,
+        "z": 0
+      },
+	  "scale":{
+	  "x":900,
+	  "y":900,
+	  "z":0
+	  }
+	},
+	{
+	  "prefab": "P_ProjectileSpawner",
+	  "position": {
+	  	"x": -350,
+		"y": 1600,
+		"z": 0
+		}	
+	},
+	{
+	  "prefab": "P_ProjectileSpawner",
+	  "position": {
+	  	"x": -350,
+		"y": 1750,
+		"z": 0
+		}	
+	},
+	{
+	  "prefab": "P_ProjectileSpawner",
+	  "position": {
+	  	"x": -350,
+		"y": 1900,
+		"z": 0
+		}	
+	},
+	{
+	  "prefab": "P_LavaRiver",
+      "position": {
+        "x": 0,
+        "y": 875,
+        "z": 0
+      }
 	}
   ]
 }

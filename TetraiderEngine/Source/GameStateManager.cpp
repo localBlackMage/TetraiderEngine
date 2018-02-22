@@ -40,8 +40,8 @@ void GameStateManager::Update() {
 		}
 		else if(m_nextState == GameState::NEXT_LEVEL) {
 			//TODO: Unload some assets
+			std::cout << "in next level\n";
 		}
-
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 	}

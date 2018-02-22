@@ -55,8 +55,7 @@
           "mass": 0,
           "SHAPE": {
               "type": "circle",
-              "width": 70,
-              "height": 30
+              "radius": 30
           }
       },
 	  {

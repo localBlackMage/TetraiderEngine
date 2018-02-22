@@ -43,12 +43,12 @@ void FollowCursor::LateInitialize() {
 
 void FollowCursor::HandleEvent(Event * pEvent)
 {
-	/*if ()
+	
+	if (pEvent->Type() == EVENT_OnCollide && TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT))
 	{
-
-	}*/
-	//if (pEvent->Type == EventType::EVENT_MOUSEBTN_PRESSED)
-	//{
-	//	//load next game state
-	//}
+		std::cout << "Button Pressed\n";
+		//load next game state
+		//TETRA_GAME_STATE.SetGameState
+		TETRA_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
+	}
 }
