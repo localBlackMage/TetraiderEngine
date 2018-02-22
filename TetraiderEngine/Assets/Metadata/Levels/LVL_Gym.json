@@ -3,7 +3,7 @@
     {
       "prefab": "P_Camera"
     },
-	{
+	  {
       "prefab": "P_UICamera"
     },
     {
@@ -138,8 +138,8 @@
 	{
 	  "prefab": "P_ProjectileSpawner",
 	  "position": {
-	  	"x": -200,
-		"y": 400,
+	  	"x": -400,
+		"y": 300,
 		"z": 0
 		}	
 	},
