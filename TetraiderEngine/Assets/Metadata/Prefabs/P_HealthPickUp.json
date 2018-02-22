@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_egg.png",
+      "Texture": "T_HealthPack.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -59,9 +59,9 @@
 	},
 	{
 		"Component": "Collectible",
-		"isHealth": false,
-		"isEgg": true,
-		"value": 1
+		"isHealth": true,
+		"isEgg": false,
+		"value": 20
 	},
 	{
 		"Component": "WaveMovement",

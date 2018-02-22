@@ -15,7 +15,7 @@
       }
     },
 	{
-      "prefab": "P_EggPickup",
+      "prefab": "P_EggPickUp",
       "position": {
         "x": -100,
         "y": 0,
