@@ -1,6 +1,6 @@
 {
   "Tag": "None",
-  "Layer": "BG",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 20000,
-        "y": 20000,
+        "x": 32,
+        "y": 32,
         "z": 0
       },
       "pivotOffset": {
@@ -24,18 +24,17 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_Background.png",
+      "Texture": "T_HealthPack.png",
       "tiling": {
-        "x": 50,
-        "y": 50
+        "x": 1,
+        "y": 1
       },
       "uvOffset": {
         "u": 0,
         "v": 0
       },
-      "hasAlpha": false,
       "tint": {
         "r": 1,
         "g": 1,
@@ -48,6 +47,30 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 16
+		}
+	},
+	{
+		"Component": "Collectible",
+		"isHealth": true,
+		"isEgg": false,
+		"value": 20
+	},
+	{
+		"Component": "WaveMovement",
+		"isModifyXPos": false,
+		"isModifyYPos": true,
+		"isAbsoluteValue": true,
+		"frequency": 4,
+		"phaseShift": 0,
+		"amplitude": 20
+	}
   ]
 }

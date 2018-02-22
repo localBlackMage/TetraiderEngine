@@ -28,6 +28,7 @@
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CamFollow.cpp" />
+    <ClCompile Include="Source\Collectible.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\Controller.cpp" />
     <ClCompile Include="Source\DealDamageOnCollision.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Source\TetraiderAPI.cpp" />
     <ClCompile Include="Source\Text.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\WaveMovement.cpp" />
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +92,7 @@
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CamFollow.h" />
+    <ClInclude Include="Source\Collectible.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentFactory.h" />
     <ClInclude Include="Source\ComponentTypes.h" />
@@ -156,6 +159,7 @@
     <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Text.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\WaveMovement.h" />
     <ClInclude Include="Source\Weapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

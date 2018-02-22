@@ -68,6 +68,11 @@ struct InputAxisData : public EventData {
 	Vector3D m_dir;
 };
 
+struct CollectibleData : public EventData {
+	CollectibleData(int value) : m_value(value) {}
+	int m_value;
+};
+
 class Event
 {
 protected:

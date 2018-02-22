@@ -151,6 +151,14 @@
 	},
 	{
 		"prefab": "P_TextTest"
+	},
+	{
+		"prefab": "P_HealthPickUp",
+		"position": {
+	  	"x": 200,
+		"y": 300,
+		"z": 0
+		}	
 	}
   ]
 }

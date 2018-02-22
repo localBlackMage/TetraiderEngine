@@ -1,4 +1,5 @@
 #include "MathFunctions.h"
+#include <cmath>
 
 Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t) {
 	return Vector3D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t), Lerp(vectorA.z, vectorB.z, t), Lerp(vectorA.w, vectorB.w, t));
@@ -15,4 +16,12 @@ float Lerp(float valueA, float valueB, float t) {
 		t = 0;
 
 	return valueA*(1-t) + (t)* valueB;
+}
+
+float SinWave(float amplitude, float frequency, float phaseShift, float time) {
+	return amplitude*sinf(frequency*time + phaseShift);
+}
+
+float CosWave(float amplitude, float frequency, float phaseShift, float time) {
+	return amplitude*cosf(frequency*time + phaseShift);
 }

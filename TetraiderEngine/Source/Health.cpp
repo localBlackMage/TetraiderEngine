@@ -18,7 +18,15 @@ void Health::Serialize(const json& j) {
 }
 
 void Health::LateInitialize() {}
-void Health::HandleEvent(Event* pEvent) {}
+void Health::HandleEvent(Event* pEvent) {
+	switch (pEvent->Type()) {
+		case EVENT_HealthCollected: {
+			CollectibleData* pData = pEvent->Data<CollectibleData>();
+			Heal(pData->m_value);
+			break;
+		}
+	}
+}
 
 void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float knockBackSpeed) {
 	if (m_isInvincible || m_currentHealth == 0)
