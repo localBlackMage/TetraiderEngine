@@ -18,6 +18,7 @@ void FollowCursor::Update(float dt)
 	mouse.x = (float)TETRA_INPUT.MousePosX() - (float)(TETRA_RENDERER.WindowWidth() / 2);
 	mouse.y = -(float)TETRA_INPUT.MousePosY() + (float)(TETRA_RENDERER.WindowHeight() / 2);
 	m_pTransform->SetPosition(mouse);
+	
 }
 
 void FollowCursor::Serialize(const json & j)
@@ -44,11 +45,11 @@ void FollowCursor::LateInitialize() {
 void FollowCursor::HandleEvent(Event * pEvent)
 {
 	
-	if (pEvent->Type() == EVENT_OnCollide && TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT))
+	if (pEvent->Type() == EVENT_OnCollide && TETRA_INPUT.IsMouseButtonTriggered(MOUSEBTN::MOUSE_BTN_LEFT))
 	{
 		std::cout << "Button Pressed\n";
 		//load next game state
 		//TETRA_GAME_STATE.SetGameState
-		TETRA_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
+		TETRA_LEVELS.NextLevel();
 	}
 }
