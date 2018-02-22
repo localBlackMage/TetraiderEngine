@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Sprite.h"
 #include "ParticleEmitter.h"
+#include "Text.h"
 
 #include "SDL_image.h"
 #include <iostream>
@@ -84,7 +85,7 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 
 bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
-	return gameObject.HasComponent(ComponentType::C_Sprite) || gameObject.HasComponent(ComponentType::C_ParticleEmitter);
+	return gameObject.HasComponent(ComponentType::C_Sprite) || gameObject.HasComponent(ComponentType::C_ParticleEmitter) || gameObject.HasComponent(ComponentType::C_Text);
 }
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
@@ -138,6 +139,56 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 3 * pParticleEmitterComp->GetMesh().faceCount(), pParticleEmitterComp->LiveParticles());
 }
 
+void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTransformComp)
+{
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, pTextComp->GetMesh().GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pTextComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+
+	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pTextComp->FrameWidth(), pTextComp->FrameHeight());
+
+	glUniform4f(SHADER_LOCATIONS::TINT_COLOR, 1.f, 1.f, 1.f, 1.f);
+	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, 0.f, 0.f, 0.f, 0.f);
+
+	if (pTextComp->GetAlphaMode() == GL_RGBA)
+		_EnableAlphaTest();
+	else
+		_EnableDepthTest();
+
+	// select the texture to use
+	glBindTexture(GL_TEXTURE_2D, pTextComp->GetTextureBuffer());
+
+
+	std::vector< std::vector<TexCoords> > textureOffsets = pTextComp->GetTextureOffsets();
+	ParagraphAndColors letterData = pTextComp->GetLetterData();
+
+	int x = 0, y = 0;
+	Matrix4x4 M, N;
+	int triCount = 3 * pTextComp->GetMesh().faceCount();
+	const GLuint faceBuffer = pTextComp->GetMesh().GetFaceBuffer();
+	const float xScale = pTransformComp->GetScaleX();
+	const float yScale = pTransformComp->GetScaleY();
+
+	for (Sentence letterRow : letterData.first) {
+		for (Letter letter : letterRow) {
+			M = pTransformComp->GetTransformAfterOffset(Vector3D(xScale * x, yScale * y, 0));
+			N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+			glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+			glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
+
+			TexCoords texOff = textureOffsets[letter.first][letter.second];
+			glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, texOff.v, texOff.u);
+
+			// draw the mesh
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
+			glDrawElements(GL_TRIANGLES, triCount, GL_UNSIGNED_INT, 0);
+
+			++x;
+		}
+		--y;
+		x = 0;
+	}
+}
+
 void RenderManager::_RenderGameObject(const GameObject& gameObject)
 {
 	// Only attempt to draw if the game object has a sprite component and transform component
@@ -154,6 +205,8 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
 	else if (gameObject.HasComponent(ComponentType::C_ParticleEmitter))
 		_RenderParticles(gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter));
+	else if (gameObject.HasComponent(ComponentType::C_Text))
+		_RenderText(gameObject.GetComponent<Text>(ComponentType::C_Text), gameObject.GetComponent<Transform>(ComponentType::C_Transform));
 }
 
 void RenderManager::_SelectShaderProgram(const GameObject & gameObject)

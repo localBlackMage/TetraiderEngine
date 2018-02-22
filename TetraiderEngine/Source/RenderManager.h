@@ -32,6 +32,8 @@ class ShaderProgram;
 class Shader;
 class Sprite;
 class ParticleEmitter;
+class Text;
+class Transform;
 enum DebugShape;
 
 enum SHADER_LOCATIONS {
@@ -72,6 +74,7 @@ private:
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
 	void _RenderSprite(const Sprite* pSpriteComp);
 	void _RenderParticles(const ParticleEmitter * pParticleEmitterComp);
+	void _RenderText(const Text* pTextComp, const Transform* pTransformComp);
 	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const GameObject& gameObject);
 	void _SetUpCamera(const GameObject& camera);

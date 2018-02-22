@@ -227,6 +227,9 @@
     <ClCompile Include="Source\Stamina.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Text.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -456,6 +459,9 @@
     </ClInclude>
     <ClInclude Include="Source\MyArray.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Text.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

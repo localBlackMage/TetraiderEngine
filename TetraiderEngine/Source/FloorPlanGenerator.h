@@ -88,7 +88,7 @@ struct RoomNode {
 
 	bool operator==(const RoomNode& rhs) { return m_id == rhs.m_id; }
 	bool operator!=(const RoomNode& rhs) { return m_id != rhs.m_id; }
-	bool operator() (const RoomNode& lhs, const RoomNode& rhs) { return lhs.m_cost < rhs.m_cost; }
+	bool operator() (const RoomNode& lhs, const RoomNode& rhs);
 };
 
 class FloorPlanGenerator {

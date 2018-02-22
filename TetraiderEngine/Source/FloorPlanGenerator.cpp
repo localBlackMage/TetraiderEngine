@@ -405,3 +405,8 @@ std::ostream& operator<<(std::ostream& out, const RoomType& rt) {
 	}
 	return out;
 }
+
+bool RoomNode::operator()(const RoomNode & lhs, const RoomNode & rhs)
+{
+	return lhs.m_cost < rhs.m_cost;
+}

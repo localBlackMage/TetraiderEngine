@@ -306,4 +306,21 @@ Matrix4x4 Transform::GetTransform() const
 {
 	return m_transform;
 }
+Matrix4x4 Transform::GetTransformAfterOffset(const Vector3D & offset) const
+{
+	Matrix4x4 trans;
+	if (m_parent)
+		trans = Matrix4x4::Translate(m_position + offset + m_parent->GetPosition());
+	else
+		trans = Matrix4x4::Translate(m_position + offset);
+
+	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
+	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
+													   //Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
+
+													   // TODO: Optimization, if pivot offset is zero do not create or multiply this component
+	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset));
+
+	return trans*rot*scale*pivotOffset;
+}
 #pragma endregion

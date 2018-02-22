@@ -1,0 +1,35 @@
+{
+  "Tag": "Obstacle",
+  "Layer": "UI",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 400,
+        "y": 360,
+        "z": 0
+      },
+      "scale": {
+        "x": 24,
+        "y": 24,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "Text",
+		"rows": 6,
+		"cols": 16,
+		"font": "baseFont.png",
+		"text": "Test\nMessage"
+	}
+  ]
+}

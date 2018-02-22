@@ -1,7 +1,11 @@
 #include "ComponentFactory.h"
 #include "Component.h"
 #include "Transform.h"
+
 #include "Sprite.h"
+#include "ParticleEmitter.h"
+#include "Text.h"
+
 #include "Animation.h"
 #include "Controller.h"
 #include "Body.h"
@@ -19,11 +23,14 @@
 #include "PointLight.h"
 #include "ScaleByHPStamina.h"
 #include "Stamina.h"
-#include "ParticleEmitter.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
+
 	m_creationFunctions["Sprite"] = Sprite::CreateInstance;
+	m_creationFunctions["ParticleEmitter"] = ParticleEmitter::CreateInstance;
+	m_creationFunctions["Text"] = Text::CreateInstance;
+	
 	m_creationFunctions["Animation"] = Animation::CreateInstance;
 	m_creationFunctions["Controller"] = Controller::CreateInstance;
 	m_creationFunctions["Body"] = Body::CreateInstance;
@@ -41,7 +48,6 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["PointLight"] = PointLight::CreateInstance;
 	m_creationFunctions["ScaleByHPStamina"] = ScaleByHPStamina::CreateInstance;
 	m_creationFunctions["Stamina"] = Stamina::CreateInstance;
-	m_creationFunctions["ParticleEmitter"] = ParticleEmitter::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

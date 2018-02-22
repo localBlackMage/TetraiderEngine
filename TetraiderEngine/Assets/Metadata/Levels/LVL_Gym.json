@@ -131,6 +131,9 @@
 	},
 	{
 	  "prefab": "P_StaminaBar"	
+	},
+	{
+		"prefab": "P_TextTest"
 	}
   ]
 }

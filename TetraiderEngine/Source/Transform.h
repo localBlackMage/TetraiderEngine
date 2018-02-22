@@ -80,6 +80,7 @@ public:
 	Vector3D GetScaleVector() const;
 
 	Matrix4x4 GetTransform() const;
+	Matrix4x4 GetTransformAfterOffset(const Vector3D& offset) const;
 	friend Body;
 };
 
