@@ -31,6 +31,7 @@ private:
 	std::string m_projectilePrefab;
 	float m_knockBackSpeed;
 	float m_lastFiredTimeStamp;
+	float m_timeOffset;
 	Transform* m_pTransform;
 };
 
