@@ -45,7 +45,7 @@ void FollowCursor::LateInitialize() {
 void FollowCursor::HandleEvent(Event * pEvent)
 {
 	
-	if (pEvent->Type() == EVENT_OnCollide && TETRA_INPUT.IsMouseButtonTriggered(MOUSEBTN::MOUSE_BTN_LEFT))
+	if (pEvent->Type() == EVENT_OnCollide && TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT))
 	{
 		std::cout << "Button Pressed\n";
 		//load next game state

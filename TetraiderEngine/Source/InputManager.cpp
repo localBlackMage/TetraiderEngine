@@ -205,7 +205,8 @@ void InputManager::FireEvents() {
 				}
 				else {
 					// This is the hardcoded part:
-					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
+					if(TETRA_GAME_OBJECTS.GetPlayer())
+						TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
 				}
 				break;
 			}

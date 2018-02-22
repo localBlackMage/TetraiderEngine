@@ -39,8 +39,7 @@ void GameStateManager::Update() {
 			TETRA_LEVELS.UnLoadLevelForRestart();
 		}
 		else if(m_nextState == GameState::NEXT_LEVEL) {
-			//TODO: Unload some assets
-			std::cout << "in next level\n";
+			TETRA_LEVELS.UnLoadLevel();
 		}
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
@@ -52,9 +51,9 @@ void GameStateManager::Update() {
 void GameStateManager::HandleEvent(Event * p_event)
 {
 	if (p_event->Type() == EventType::WINDOW_CLOSED)
-		m_nextState = GameState::QUIT;
+		SetGameState(GameState::QUIT);
 	else if (p_event->Type() == EventType::RESTART_LEVEL)
-		m_nextState = GameState::RESTART;
+		SetGameState(GameState::RESTART);
 }
 
-void GameStateManager::SetGameState(GameState state) { m_currentState = state; }
+void GameStateManager::SetGameState(GameState state) { m_nextState = state; }
