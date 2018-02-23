@@ -89,9 +89,7 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 
 void ParticleEmitter::_AllocateParticleArrays()
 {
-	if (m_particles)		TETRA_MEMORY.Free(m_particles);
-	if (m_positionsScales)	TETRA_MEMORY.Free(m_positionsScales);
-	if (m_colors)			TETRA_MEMORY.Free(m_colors);
+	_DeallocateParticleArrays();
 
 	m_particles = (Particle*)TETRA_MEMORY.Alloc(sizeof(Particle) * m_maxParticles);			//(Particle*)malloc(sizeof(Particle) * m_maxParticles);
 	m_positionsScales = (GLfloat*)TETRA_MEMORY.Alloc(sizeof(GLfloat) * m_maxParticles * 4); //(GLfloat*)malloc(sizeof(GLfloat) * m_maxParticles * 4);
@@ -110,6 +108,13 @@ void ParticleEmitter::_AllocateParticleArrays()
 	}
 }
 
+void ParticleEmitter::_DeallocateParticleArrays()
+{
+	if (m_particles)		TETRA_MEMORY.Free(m_particles);
+	if (m_positionsScales)	TETRA_MEMORY.Free(m_positionsScales);
+	if (m_colors)			TETRA_MEMORY.Free(m_colors);
+}
+
 void ParticleEmitter::_AllocateVBOs()
 {
 	m_positionsScalesBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 4 * sizeof(GLfloat));
@@ -123,14 +128,13 @@ ParticleEmitter::ParticleEmitter() :
 	m_currentTime(0.f),
 	m_emissionTime(0.f),
 	m_emissionTimer(0.f),
+	m_liveParticleCount(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad"))
 {}
 
 ParticleEmitter::~ParticleEmitter() 
 {
-	TETRA_MEMORY.Free(m_particles);			//free(m_particles);
-	TETRA_MEMORY.Free(m_positionsScales);	//free(m_positionsScales);
-	TETRA_MEMORY.Free(m_colors);			//free(m_colors);
+	_DeallocateParticleArrays();
 }
 
 #pragma region Component Methods
@@ -176,7 +180,6 @@ void ParticleEmitter::Update(float dt)
 	}
 }
 
-
 void ParticleEmitter::LateUpdate(float dt)
 {
 }
@@ -186,9 +189,7 @@ void ParticleEmitter::Deactivate()
 	pGO = nullptr;
 	m_pTransform = nullptr;
 
-	TETRA_MEMORY.Free(m_particles);
-	TETRA_MEMORY.Free(m_positionsScales);
-	TETRA_MEMORY.Free(m_colors);
+	_DeallocateParticleArrays();
 }
 
 void ParticleEmitter::Serialize(const json & j)
@@ -215,8 +216,8 @@ void ParticleEmitter::Serialize(const json & j)
 	m_texture = TETRA_RESOURCES.GetTexture(textureName);
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
-	_AllocateParticleArrays();
-	_AllocateVBOs();
+	//_AllocateParticleArrays();
+	//_AllocateVBOs();
 	m_liveParticleCount = 0;
 }
 

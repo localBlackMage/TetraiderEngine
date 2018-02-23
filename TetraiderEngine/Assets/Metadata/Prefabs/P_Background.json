@@ -26,16 +26,15 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_Background.png",
+      "Texture": "T_TileSample.png",
       "tiling": {
-        "x": 60,
-        "y": 60
+        "x": 100,
+        "y": 100
       },
       "uvOffset": {
         "u": 0,
         "v": 0
       },
-      "hasAlpha": false,
       "tint": {
         "r": 1,
         "g": 1,

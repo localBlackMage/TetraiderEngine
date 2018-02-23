@@ -75,6 +75,12 @@ void Text::Update(float dt)
 
 void Text::Serialize(const json & j)
 {
+	m_textHeight = j["letterHeight"];
+	m_textWidth = j["letterWidth"];
+
+	m_pivotOffset = ParseVector3D(j, "pivotOffset");
+	m_tintColor = ParseColor(j, "tint");
+
 	m_rows = j["rows"];
 	m_cols = j["cols"];
 

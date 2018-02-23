@@ -25,6 +25,11 @@ protected:
 	Colors m_colors;
 	std::string m_text;
 	Mesh& m_mesh;
+	
+	Vector3D m_tintColor;
+	Vector3D m_pivotOffset;
+	float m_textHeight;
+	float m_textWidth;
 
 	float m_rows, m_cols;
 	float m_frameHeight, m_frameWidth;
@@ -49,8 +54,17 @@ public:
 	void SetText(std::string newText);
 	std::string GetText() const;
 
+	Vector3D GetOffset() const { return m_pivotOffset; }
+	void GetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
+
 	GLuint GetTextureBuffer() const;
 	int GetAlphaMode() const;
+
+	Vector3D GetTintColor() const { return m_tintColor; }
+	void SetTintColor(const Vector3D& tintColor) { m_tintColor = tintColor; }
+
+	float GetLetterHeight() const { return m_textHeight; }
+	float GetLetterWidth() const { return m_textWidth; }
 
 	float FrameHeight() const { return m_frameHeight; }
 	float FrameWidth() const { return m_frameWidth; }

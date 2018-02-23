@@ -26,6 +26,18 @@
     },
 	{
 		"Component": "Text",
+		"letterHeight": 48,
+		"letterWidth": 24,
+		"pivotOffset": {
+			"x": 0,
+			"y": 0
+		},
+		"tint": {
+			"r": 1,
+			"g": 0,
+			"b": 1,
+			"a": 1
+		},
 		"rows": 6,
 		"cols": 16,
 		"font": "baseFont.png",

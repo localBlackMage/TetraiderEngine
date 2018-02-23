@@ -84,6 +84,7 @@ protected:
 	void _SortParticles() { std::sort(&m_particles[0], &m_particles[m_maxParticles]); }
 	void _UpdateParticles(float deltaTime);
 	void _AllocateParticleArrays();
+	void _DeallocateParticleArrays();
 	void _AllocateVBOs();
 public:
 	ParticleEmitter();
