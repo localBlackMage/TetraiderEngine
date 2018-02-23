@@ -48,6 +48,9 @@
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\AIComponent">
+      <UniqueIdentifier>{ecda41e7-0b7f-47c3-a492-7dbe37f83be6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -472,12 +475,6 @@
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCState.h">
-      <Filter>Source Files\Components\Agent</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\NPCStateNames.h">
-      <Filter>Source Files\Components\Agent</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MyArray.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
@@ -504,6 +501,15 @@
     </ClInclude>
     <ClInclude Include="Source\EggCounter.h">
       <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCStateNames.h">
+      <Filter>Source Files\Components\AIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPCState.h">
+      <Filter>Source Files\Components\AIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIComponent.h">
+      <Filter>Source Files\Components\AIComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

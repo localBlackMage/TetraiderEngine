@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Button.h" />
+    <ClInclude Include="Source\AIComponent.h" />
     <ClInclude Include="Source\AOEAttack.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
