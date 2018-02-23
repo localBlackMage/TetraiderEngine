@@ -239,10 +239,7 @@ void RenderManager::_SetUpDebug(const GameObject& camera)
 {
 	SelectShaderProgram(m_debugShaderName);
 	_SetUpCamera(camera);
-	
-	glEnableVertexAttribArray(SHADER_LOCATIONS::POSITION);
-	glBindBuffer(GL_ARRAY_BUFFER, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer());
-	glVertexAttribPointer(SHADER_LOCATIONS::POSITION, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0); // <- load it to memory
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 }
 
 void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)

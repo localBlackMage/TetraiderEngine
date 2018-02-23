@@ -12,6 +12,7 @@ enum RENDER_LAYER {
 	L_TWO,
 	L_TREE,
 	L_UI,
+	L_UI_ONE,
 	L_NUM_LAYERS,
 	L_NOT_RENDERED
 };
@@ -22,7 +23,8 @@ static std::unordered_map<std::string, RENDER_LAYER> RENDER_LAYER_STRINGS = {
 	{ "1", RENDER_LAYER::L_ONE },
 	{ "2", RENDER_LAYER::L_TWO },
 	{ "3", RENDER_LAYER::L_TREE },
-	{ "UI", RENDER_LAYER::L_UI }
+	{ "UI", RENDER_LAYER::L_UI },
+	{ "UI_1", RENDER_LAYER::L_UI_ONE }
 };
 
 #endif
