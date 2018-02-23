@@ -4,7 +4,9 @@
 
 #include "Agent.h"
 #include <unordered_map>
-#include "NPCState.h"
+#include "AI_State.h"
+#include "AI_StateTypes.h"
+#include "AI_StateFactory.h"
 
 class Weapon;
 
@@ -23,9 +25,10 @@ protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
 private:
-	std::unordered_map<NPCState, std::string> m_luaScripts;
-	NPCState m_currentState;
-	NPCState m_previousState;
+	AIStateFactory AIStateFactory;
+	std::unordered_map<AIStateType, AI_State*> m_AIStates;
+	AIStateType m_currentState;
+	AIStateType m_previousState;
 };
 
 #endif

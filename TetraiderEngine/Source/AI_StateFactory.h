@@ -10,35 +10,25 @@ Author: Hyoyup Chung
 Creation date: 2/22/18
 - End Header --------------------------------------------------------*/
 #pragma once
-#ifndef AI_STATE_H
-#define AI_STATE_H
+#ifndef AI_STATE_FACTORY_H
+#define AI_STATE_FACTORY_H
 
-#include "AIStateTypes.h"
-#include "Subscriber.h"
-#include "JsonReader.h"
-#include "Agent.h"
-#include <assert.h>
-
-using json = nlohmann::json;
-using namespace JsonReader;
+//#include "AI_State.h"
+#include <string>
+#include <unordered_map>
 
 // forward declaration
-class Agent;
-class Event;
+class AI_State;
 
-class AIState: public Subscriber{
-protected:
-	AIStateType m_StateType;
+class AIStateFactory{
 public:
-	AIState(AIStateType _type): m_StateType(_type){};
-	virtual ~AIState(){};
-	AIStateType StateType() const {return m_StateType;}
+	AIStateFactory();
+	~AIStateFactory(){};
 
-	virtual void OnEnter() = 0;
-	virtual void OnUpdate() = 0;
-	virtual void OnExit() = 0;
-
-	Agent *pNPCComp;
+	AI_State* CreateState(std::string state);
+private:
+	typedef AI_State* CreationFunction();
+	std::unordered_map <std::string, CreationFunction*> m_CreationFunctions;
 };
 
 #endif

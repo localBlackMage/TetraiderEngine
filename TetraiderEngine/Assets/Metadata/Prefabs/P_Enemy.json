@@ -31,22 +31,18 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"luaScripts": [
+		"AIStates": [
 			{
-				"state": 0,
-				"luaScript": "IdleBehavior"
+				"AIStateType": "NPC_State_Idle"
 			},
 			{
-				"state": 1,
-				"luaScript": "EngageBehavior"
+				"AIStateType": "NPC_State_Engage"
 			},
 			{
-				"state": 2,
-				"luaScript": "AttackBehavior"
+				"AIStateType": "NPC_State_Attack"
 			},
 			{
-				"state": 3,
-				"luaScript": "RetreatBehavior"
+				"AIStateType": "NPC_State_Retreat"
 			}
 		]
 	},

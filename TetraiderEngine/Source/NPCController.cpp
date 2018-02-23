@@ -25,11 +25,9 @@ void NPCController::Update(float dt) {
 	// Test code for state machine -------------------------------------------
 	// Change of state
 	if (m_currentState != m_previousState) {
-		// RunLuaScript(m_luaScripts[m_previousState] + "OnExit");
-		std::cout << m_luaScripts[m_previousState] + "OnExit() called" << std::endl;
-		// RunLuaScript(m_luaScripts[m_currentState] + "OnEnter");
-		std::cout << m_luaScripts[m_currentState] + "OnEnter() called" << std::endl;
-		std::cout << m_luaScripts[m_currentState] + "Update() being called every frame" << std::endl;
+		m_AIStates[m_previousState]->OnExit();
+		m_AIStates[m_currentState]->OnEnter();
+		m_AIStates[m_currentState]->OnUpdate();
 		m_previousState = m_currentState;
 	}
 	
@@ -37,9 +35,10 @@ void NPCController::Update(float dt) {
 	//std::cout << m_luaScripts[m_currentState] + "Update() called" << std::endl;
 
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Y)) {
-		m_currentState = static_cast<NPCState>((int)m_currentState + 1);
-		if (m_currentState == NUM_NPC_STATES)
+		m_currentState = static_cast<AIStateType>((int)m_currentState + 1);
+		if (m_currentState == NUM_AI_STATES)
 			m_currentState = NPC_State_Idle;
+		std::cout << "State changed from " << m_previousState << " to " << m_currentState << std::endl;
 	}
 	//-------------------------------------------------------------------------
 
@@ -66,10 +65,11 @@ void NPCController::LateUpdate(float dt) {
 
 void NPCController::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
-	int size = j["luaScripts"].size();
+	int size = j["AIStates"].size();
 
 	for (int i = 0; i < size; ++i) {
-		m_luaScripts[static_cast<NPCState>(ParseInt(j["luaScripts"][i], "state"))] = ParseString(j["luaScripts"][i], "luaScript");
+		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
+		m_AIStates[newState->StateType()] = newState;
 	}
 }
 

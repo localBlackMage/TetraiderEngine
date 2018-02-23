@@ -48,8 +48,11 @@
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\AIComponent">
+    <Filter Include="Source Files\Components\FiniteStateMachines">
       <UniqueIdentifier>{ecda41e7-0b7f-47c3-a492-7dbe37f83be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\FiniteStateMachines\AI_Base">
+      <UniqueIdentifier>{067fc15f-b220-47c9-84b3-6ed6fccfca25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +248,7 @@
     <ClCompile Include="Source\FollowCursor.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Source\Button.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -253,6 +257,22 @@
     </ClCompile>
     <ClCompile Include="Source\EggCounter.cpp">
       <Filter>Source Files\Components</Filter>
+=======
+    <ClCompile Include="Source\AI_StateFactory.cpp">
+      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Attack.cpp">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Engage.cpp">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Idle.cpp">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Retreat.cpp">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+>>>>>>> Basic AI Setup
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -504,12 +524,30 @@
     </ClInclude>
     <ClInclude Include="Source\NPCStateNames.h">
       <Filter>Source Files\Components\AIComponent</Filter>
+       </ClInclude>
+    <ClInclude Include="Source\AI_Attack.h">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCState.h">
-      <Filter>Source Files\Components\AIComponent</Filter>
+    <ClInclude Include="Source\AI_Engage.h">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AIComponent.h">
-      <Filter>Source Files\Components\AIComponent</Filter>
+    <ClInclude Include="Source\AI_Idle.h">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_Retreat.h">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_State.h">
+      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_StateFactory.h">
+      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_StateTypeNames.h">
+      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_StateTypes.h">
+      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
