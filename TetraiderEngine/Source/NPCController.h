@@ -24,11 +24,21 @@ public:
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
+	bool IsArrivedAtDestination();
+	bool IsPlayerWithinDistance();
+	bool IsPlayerOutOfSight();
+	void SetDestinationToRandomPointInZone();
+	void StopMoving();
 private:
 	AIStateFactory AIStateFactory;
 	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];
 	NPC_CONTROLLER_AI m_currentState;
 	NPC_CONTROLLER_AI m_previousState;
+	float m_detectionRadius;
+	float m_outOfSightRadius;
+	float m_zoneWidth;
+	float m_zoneHeight;
+	Vector3D startingPoint;
 };
 
 #endif

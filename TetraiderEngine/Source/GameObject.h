@@ -51,6 +51,7 @@ public:
 	void AddComponent(Component* pComponent);
 	bool HasComponent(ComponentType type) const;
 	void SetParent(GameObject* pParent);
+	void SetActive(bool active);
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {
