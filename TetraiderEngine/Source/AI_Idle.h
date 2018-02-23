@@ -27,6 +27,8 @@ public:
 	virtual void OnExit();
 
 private:
+	int idleDuration; // in seconds
+	float idledSoFar;
 };
 
 #endif

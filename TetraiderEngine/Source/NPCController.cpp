@@ -27,7 +27,6 @@ void NPCController::Update(float dt) {
 	if (m_currentState != m_previousState) {
 		m_AIStates[m_previousState]->OnExit();
 		m_AIStates[m_currentState]->OnEnter();
-		m_AIStates[m_currentState]->OnUpdate();
 		m_previousState = m_currentState;
 	}
 	
@@ -66,13 +65,12 @@ void NPCController::LateUpdate(float dt) {
 void NPCController::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 	int definedSize = j["AIStates"].size();
-	if (definedSize != NPC_NUM_BEHAVIOR) {
-		std::cout << "INVALID DEFINITION OF AI BEHAVIOR: PROVIDE CORRECT AIStates in json!\n";
-	}
-
-	for (unsigned int i = 0; i < NPC_NUM_BEHAVIOR; ++i) {
+	//if (definedSize != NPC_NUM_BEHAVIOR) {
+	//	std::cout << "INVALID DEFINITION OF AI BEHAVIOR: PROVIDE CORRECT AIStates in json!\n";
+	//}
+	for (int i = 0; i < definedSize; ++i) {
 		//AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
-		m_AIStates[i] = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
+		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 	}
 }
 

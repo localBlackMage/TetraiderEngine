@@ -1,5 +1,6 @@
 #include "MathFunctions.h"
 #include <cmath>
+#include <ctime>
 #include <stdlib.h>
 
 Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t) {
@@ -28,11 +29,11 @@ float CosWave(float amplitude, float frequency, float phaseShift, float time) {
 }
 
 float RandomFloat(float min, float max) {
-	srand(TETRA_FRAMERATE.GetElapsedTime());
+	srand(static_cast<unsigned int> (time(0)));
 	return static_cast<float>(rand()) / max + min;
 }
 
 int RandomInt(int min, int max) {
-	srand(TETRA_FRAMERATE.GetElapsedTime());
+	srand(static_cast<unsigned int> (time(0)));
 	return rand() / max + min;
 }
