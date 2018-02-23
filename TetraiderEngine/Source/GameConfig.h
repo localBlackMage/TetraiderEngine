@@ -18,6 +18,9 @@ private:
 	std::string m_sfxDir;
 	std::string m_shadersDir;
 	std::string m_roomFilesDir;
+	
+	//TODO option to enable sounds at the start
+	bool soundsMute;
 
 	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 	unsigned short m_roomWidth, m_roomHeight;	// Room dimensions in cells (ex. 12x8)

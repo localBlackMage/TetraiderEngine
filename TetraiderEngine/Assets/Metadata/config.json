@@ -23,7 +23,7 @@
 	"LEVEL_SETTINGS": {
 		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
-		"Start": 2,
+		"Start": 1,
 		"Levels": [
 			{ "Name": "LVL_Empty" },
 			{ "Name": "LVL_Menu" },
