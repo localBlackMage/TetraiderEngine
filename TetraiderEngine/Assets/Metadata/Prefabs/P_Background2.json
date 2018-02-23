@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 20000,
-        "y": 20000,
+        "x": 1500,
+        "y": 1500,
         "z": 0
       },
       "pivotOffset": {
@@ -26,15 +26,16 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_TileSample.png",
+      "Texture": "T_Sand.png",
       "tiling": {
-        "x": 75,
-        "y": 75
+        "x": 2,
+        "y": 2
       },
       "uvOffset": {
         "u": 0,
         "v": 0
       },
+      "hasAlpha": false,
       "tint": {
         "r": 1,
         "g": 1,

@@ -4,7 +4,7 @@
 #include "TetraiderAPI.h"
 #include "Projectile.h"
 
-ProjectileSpawner::ProjectileSpawner(): Component(ComponentType::C_ProjectileSpawner), m_diriection(Vector3D()), m_isActive(true), m_lastFiredTimeStamp(0) {}
+ProjectileSpawner::ProjectileSpawner(): Component(ComponentType::C_ProjectileSpawner), m_diriection(Vector3D()), m_isActive(true), m_timeFromLastFire(0) {}
 ProjectileSpawner::~ProjectileSpawner() {}
 
 void ProjectileSpawner::DeActivate() {
@@ -12,14 +12,17 @@ void ProjectileSpawner::DeActivate() {
 }
 
 void ProjectileSpawner::Update(float dt) {
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	if (m_isActive) {
-		if (TETRA_FRAMERATE.GetElapsedTime() - m_lastFiredTimeStamp > m_coolDown) {
+		m_timeFromLastFire += dt;
+		if (m_timeFromLastFire > m_coolDown) {
 			Vector3D instantiatePos = m_pTransform->GetPosition() + m_instantiationOffset*m_diriection;
 			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab);
 			Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 			bool isEnemyProjectile = true;
 			pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, m_diriection, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, pGO);
-			m_lastFiredTimeStamp = TETRA_FRAMERATE.GetElapsedTime();
+			m_timeFromLastFire = 0;
 		}
 	}
 }
@@ -58,6 +61,6 @@ void ProjectileSpawner::LateInitialize() {
 
 void ProjectileSpawner::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
-		m_lastFiredTimeStamp = TETRA_FRAMERATE.GetElapsedTime() + m_timeOffset;
+		m_timeFromLastFire = m_timeOffset;
 	}
 }

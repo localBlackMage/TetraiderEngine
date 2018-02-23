@@ -20,6 +20,7 @@ void Controller::Deactivate() {
 }
 
 void Controller::Update(float dt) {
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
 	Agent::Update(dt);
 }
 void Controller::Serialize(const json& j) {
@@ -28,6 +29,8 @@ void Controller::Serialize(const json& j) {
 }
 
 void Controller::HandleEvent(Event* pEvent) {
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	Agent::HandleEvent(pEvent);
 
 	switch (pEvent->Type()) {

@@ -166,9 +166,8 @@ GameObject* MemoryManager::GetNewGameObject(std::string tag, unsigned int id) {
 
 // GAMEOBJECT CACHING 
 void MemoryManager::DeleteGameObject(GameObject* ptr) {
-	delete ptr; 
-	return;
-
+	//delete ptr; 
+	
 	std::string tagName = TagNameText[ptr->m_tag];
 	if (m_GameObjectCache[tagName].size() >= MAX_GAMEOBJECT_CACHE) {
 		delete ptr;

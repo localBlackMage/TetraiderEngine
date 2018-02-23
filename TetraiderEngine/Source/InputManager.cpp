@@ -70,7 +70,6 @@ void InputManager::Initialize(const json& j) {
 }
 
 void InputManager::Update() {
-
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) 
 	{
@@ -205,7 +204,8 @@ void InputManager::FireEvents() {
 				}
 				else {
 					// This is the hardcoded part:
-					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
+					if(TETRA_GAME_OBJECTS.GetPlayer())
+						TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
 				}
 				break;
 			}

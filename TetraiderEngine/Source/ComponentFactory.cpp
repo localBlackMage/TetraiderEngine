@@ -26,6 +26,7 @@
 #include "Collectible.h"
 #include "WaveMovement.h"
 #include "SpawnOnHealthZero.h"
+#include "FollowCursor.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -52,6 +53,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Collectible"] = Collectible::CreateInstance;
 	m_creationFunctions["WaveMovement"] = WaveMovement::CreateInstance;
 	m_creationFunctions["SpawnOnHealthZero"] = SpawnOnHealthZero::CreateInstance;
+	m_creationFunctions["FollowCursor"] = FollowCursor::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

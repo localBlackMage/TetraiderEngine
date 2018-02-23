@@ -10,8 +10,11 @@ void Stamina::Deactivate() {
 }
 
 void Stamina::Update(float dt) {
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	if (!m_isFull) {
-		if (TETRA_FRAMERATE.GetElapsedTime() - m_lastUsedTimeStamp > m_rechargeCoolDown) {
+		m_timeFromLastUsed += dt;
+		if (m_timeFromLastUsed > m_rechargeCoolDown) {
 			m_isEmpty = false;
 			m_currentStamina += m_rechargeSpeed*dt;
 			if (m_currentStamina > m_maxStamina) {
@@ -40,7 +43,7 @@ void Stamina::LateInitialize() {}
 void Stamina::HandleEvent(Event* pEvent) {}
 
 bool Stamina::UseStamina(float dt) {
-	m_lastUsedTimeStamp = TETRA_FRAMERATE.GetElapsedTime();
+	m_timeFromLastUsed = 0;
 	if (m_isEmpty) {
 		return false;
 	}

@@ -27,7 +27,7 @@ public:
 protected:
 	AttackType m_type;
 	float m_coolDown;
-	float m_lastUsedTimeStamp;
+	float m_timeFromLastUsed;
 	float m_knockBackSpeed;
 	int m_baseDamage;
 	bool m_isOnCooldown;

@@ -27,7 +27,7 @@ private:
 	float m_useSpeed;
 	float m_rechargeSpeed;
 	float m_rechargeCoolDown;
-	float m_lastUsedTimeStamp;
+	float m_timeFromLastUsed;
 	bool m_isEmpty;
 	bool m_isFull;
 };

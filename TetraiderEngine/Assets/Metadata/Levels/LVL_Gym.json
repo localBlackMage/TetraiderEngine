@@ -3,7 +3,7 @@
     {
       "prefab": "P_Camera"
     },
-	{
+	  {
       "prefab": "P_UICamera"
     },
     {
@@ -30,7 +30,6 @@
         "z": 0
       }
     },
-	
 	{
 		"prefab": "P_ParticleTest",
 		"position": {
@@ -138,15 +137,15 @@
 	{
 	  "prefab": "P_ProjectileSpawner",
 	  "position": {
-	  	"x": -200,
-		"y": 400,
+	  	"x": -400,
+		"y": 300,
 		"z": 0
 		}	
 	},
 	{
 	  "prefab": "P_ProjectileSpawner02",
 	  "position": {
-	  	"x": -200,
+	  	"x": -400,
 		"y": 500,
 		"z": 0
 		}	

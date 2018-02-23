@@ -6,7 +6,9 @@ GameStateManager::GameStateManager() :
 	m_currentState(GameState::CURRENT_LEVEL),
 	m_nextState(GameState::CURRENT_LEVEL),
 	m_debugPause(false)
-{}
+{
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+}
 
 GameStateManager::~GameStateManager() {}
 
@@ -27,10 +29,8 @@ void GameStateManager::Update() {
 
 			Tetraider::FrameStart();
 
-			if(!m_debugPause)
-				Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
-			else
-				Tetraider::DebugMode();							// Debug mode
+			if(!m_debugPause) Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
+			else Tetraider::DebugMode();									// Debug mode
 
 			Tetraider::FrameEnd();
 		}
@@ -39,9 +39,8 @@ void GameStateManager::Update() {
 			TETRA_LEVELS.UnLoadLevelForRestart();
 		}
 		else if(m_nextState == GameState::NEXT_LEVEL) {
-			//TODO: Unload some assets
+			TETRA_LEVELS.UnLoadLevel();
 		}
-
 		m_previousState = m_currentState;
 		m_currentState = m_nextState;
 	}
@@ -49,12 +48,22 @@ void GameStateManager::Update() {
 	Tetraider::UnloadResources();	// Unloads all resources
 }
 
-void GameStateManager::HandleEvent(Event * p_event)
-{
-	if (p_event->Type() == EventType::WINDOW_CLOSED)
-		m_nextState = GameState::QUIT;
-	else if (p_event->Type() == EventType::RESTART_LEVEL)
-		m_nextState = GameState::RESTART;
+void GameStateManager::HandleEvent(Event * p_event) {
+	switch (p_event->Type()) {
+		case WINDOW_CLOSED: {
+			SetGameState(GameState::QUIT);
+			break;
+		}
+		case RESTART_LEVEL: {
+			SetGameState(GameState::RESTART);
+			break;
+		}
+		case EVENT_INPUT_PAUSEGAME: {
+			InputButtonData* pData = p_event->Data<InputButtonData>();
+			if(pData->m_isTrigger) PauseGame(!m_isGamePaused);
+			break;
+		}
+	}
 }
 
-void GameStateManager::SetGameState(GameState state) { m_currentState = state; }
+void GameStateManager::SetGameState(GameState state) { m_nextState = state; }

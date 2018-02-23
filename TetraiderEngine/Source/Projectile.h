@@ -27,7 +27,7 @@ private:
 	GameObject* m_pOwner;
 	int m_damage;
 	float m_lifeTime;
-	float m_creationLifeTime;
+	float m_currentLifeTime;
 	float m_knockBackSpeed;
 	bool m_isEnemyProjectile;
 };

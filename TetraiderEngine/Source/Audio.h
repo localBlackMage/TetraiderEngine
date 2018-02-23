@@ -27,6 +27,8 @@ public:
 	void SetVolume(float volume) { m_volume = volume; }
 	void Loop(bool active) { m_isLoop = active; }
 	void Mute(bool active) { m_Ismute = active; }
+	int getFadeState() { return fadeState; }
+	void setFadeState(int fade) { fadeState = fade; }
 private:
 	std::string m_audioClip;
 	float m_volume;
@@ -34,6 +36,8 @@ private:
 	bool m_isLoop;
 	bool m_isPlayOnAwake;
 	bool m_isBGM;
+	int fadeState;
+	//0-none, 1-fade in, 2-fade out.
 };
 
 #endif

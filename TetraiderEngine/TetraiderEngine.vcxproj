@@ -39,6 +39,7 @@
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\FlashOnTakeDamage.cpp" />
     <ClCompile Include="Source\FloorPlanGenerator.cpp" />
+    <ClCompile Include="Source\FollowCursor.cpp" />
     <ClCompile Include="Source\FrameRateManager.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\External\json.hpp" />
     <ClInclude Include="Source\FlashOnTakeDamage.h" />
     <ClInclude Include="Source\FloorPlanGenerator.h" />
+    <ClInclude Include="Source\FollowCursor.h" />
     <ClInclude Include="Source\FrameRateManager.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameObject.h" />

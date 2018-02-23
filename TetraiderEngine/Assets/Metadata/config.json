@@ -23,10 +23,11 @@
 	"LEVEL_SETTINGS": {
 		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
-		"Start": 0,
+		"Start": 2,
 		"Levels": [
-			{ "Name": "LVL_Gym" },
-			{ "Name": "LVL_Empty" }
+			{ "Name": "LVL_Empty" },
+			{ "Name": "LVL_Menu" },
+			{ "Name": "LVL_Gym" }
 		]
 	},
 	"INPUT_SETTINGS": [
@@ -91,8 +92,8 @@
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
-			"KeyBoardKey": 19,
-			"XboxKey": 3
+			"KeyBoardKey": 16,
+			"XboxKey": 11
 		},
 		{
 			"Name": "ToggleJoystick",
@@ -102,6 +103,15 @@
 			"isJoystick": true,
 			"KeyBoardKey": 60,
 			"XboxKey": 2
+		},
+		{
+			"Name": "PauseGame",
+			"EventType": 9,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 19,
+			"XboxKey": 6
 		}
 	]
 }
