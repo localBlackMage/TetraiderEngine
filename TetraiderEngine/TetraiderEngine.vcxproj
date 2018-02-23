@@ -93,17 +93,14 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AIComponent.h" />
-=======
     <ClInclude Include="Source\AI_Attack.h" />
     <ClInclude Include="Source\AI_Engage.h" />
     <ClInclude Include="Source\AI_Idle.h" />
     <ClInclude Include="Source\AI_Retreat.h" />
     <ClInclude Include="Source\AI_State.h" />
     <ClInclude Include="Source\AI_StateFactory.h" />
->>>>>>> Basic AI Setup
     <ClInclude Include="Source\AOEAttack.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />

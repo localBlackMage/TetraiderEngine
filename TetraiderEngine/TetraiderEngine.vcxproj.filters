@@ -248,7 +248,6 @@
     <ClCompile Include="Source\FollowCursor.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Source\Button.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -257,7 +256,7 @@
     </ClCompile>
     <ClCompile Include="Source\EggCounter.cpp">
       <Filter>Source Files\Components</Filter>
-=======
+      </ClCompile>
     <ClCompile Include="Source\AI_StateFactory.cpp">
       <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
     </ClCompile>
@@ -272,7 +271,6 @@
     </ClCompile>
     <ClCompile Include="Source\AI_Retreat.cpp">
       <Filter>Source Files\Components\FiniteStateMachines</Filter>
->>>>>>> Basic AI Setup
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
