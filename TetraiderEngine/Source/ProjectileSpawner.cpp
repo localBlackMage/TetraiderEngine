@@ -21,7 +21,7 @@ void ProjectileSpawner::Update(float dt) {
 			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab);
 			Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 			bool isEnemyProjectile = true;
-			pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, m_diriection, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, pGO);
+			pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, m_diriection, m_lifeTime, m_knockBackSpeed, pGO);
 			m_timeFromLastFire = 0;
 		}
 	}

@@ -158,6 +158,12 @@
 	},
 	{
 		"prefab": "P_TextTest"
+	},
+	{
+		"prefab": "P_LevelStatus"
+	},
+	{
+		"prefab": "P_EggUI"
 	}
   ]
 }

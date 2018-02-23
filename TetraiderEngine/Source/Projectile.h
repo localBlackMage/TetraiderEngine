@@ -9,6 +9,12 @@ class Body;
 class Transform;
 class Event;
 
+enum class ProjectileType {
+	EnemyProjectile,
+	PlayerProjectile,
+	Neutral
+};
+
 class Projectile : public Component {
 public:
 	Projectile();
@@ -21,10 +27,12 @@ public:
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
 	void SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool m_enemyProjectile, float knockBackSpeed, GameObject* owner);
+	void SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, float knockBackSpeed, GameObject* owner);
 private:
 	Body* m_pBody;
 	Transform* m_pTransform;
 	GameObject* m_pOwner;
+	ProjectileType m_projectileType;
 	int m_damage;
 	float m_lifeTime;
 	float m_currentLifeTime;

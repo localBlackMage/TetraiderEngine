@@ -75,6 +75,9 @@ void NPCController::Serialize(const json& j) {
 
 void NPCController::HandleEvent(Event* pEvent) {
 	Agent::HandleEvent(pEvent);
+
+	if(pEvent->Type() == EVENT_OnLevelInitialized)
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
 }
 
 void NPCController::LateInitialize() {

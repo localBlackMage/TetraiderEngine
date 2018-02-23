@@ -5,13 +5,13 @@
     {
       "Component": "Transform",
       "position": {
-        "x": 0,
-        "y": 0,
+        "x": -560,
+        "y": 300,
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 33.333,
+        "x": 20,
+        "y": 20,
         "z": 0
       },
       "pivotOffset": {
@@ -24,12 +24,12 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "buttons.png",
+      "Texture": "T_Egg.png",
       "tiling": {
         "x": 1,
-        "y": 0.333
+        "y": 1
       },
       "uvOffset": {
         "u": 0,
@@ -50,25 +50,14 @@
       }
     },
 	{
-		"Component": "Body",
-		"isStatic": false,
-		"mass": 0,
-		"SHAPE": {
-			"type": "AABB",
-			"width": 100,
-			"height": 33.333
-		}
-  },
-  {
-    "Component": "Button",
-    "level"    : 2
-  },
-  {
+		"Component": "EggCounter"
+	},
+	{
 		"Component": "Text",
 		"letterHeight": 20,
-		"letterWidth": 20,
+		"letterWidth": 15,
 		"pivotOffset": {
-			"x": -30,
+			"x": 25,
 			"y": 0
 		},
 		"tint": {
@@ -80,7 +69,7 @@
 		"rows": 6,
 		"cols": 16,
 		"font": "baseFont.png",
-		"text": "Play"
+		"text": "0/0"
 	}
-	]
+  ]
 }

@@ -361,8 +361,6 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 		if (pTransform)
 			pTransform->SetPosition(m_spawnNode->m_position);
 	}
-
-	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 }
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)

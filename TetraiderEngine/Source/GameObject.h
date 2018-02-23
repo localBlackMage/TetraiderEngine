@@ -14,7 +14,7 @@
 class Event;
 class Component;
 
-class GameObject : public Subscriber 
+class GameObject 
 {
 private:
 	Component* mComponents[ComponentType::NUM_COMPONENTS];

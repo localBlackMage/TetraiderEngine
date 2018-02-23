@@ -50,7 +50,7 @@
     },
 	{
 		"Component": "Body",
-		"isStatic": false,
+		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
