@@ -10,7 +10,11 @@
 NPCController::NPCController() :
 	Agent(ComponentType::C_NPCCONTROLLER),
 	m_currentState(NPC_IDLE),
-	m_previousState(NPC_IDLE)
+	m_previousState(NPC_IDLE),
+	m_detectionRadius(0.0f),
+	m_outOfSightRadius(0.0f),
+	m_zoneWidth(0.0f),
+	m_zoneHeight(0.0f)
 {
 }
 
@@ -22,7 +26,6 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	// Test code for state machine -------------------------------------------
 	// Change of state
 	if (m_currentState != m_previousState) {
 		m_AIStates[m_previousState]->OnExit();
@@ -32,21 +35,29 @@ void NPCController::Update(float dt) {
 	
 	// Update with currentState
 	m_AIStates[m_currentState]->OnUpdate();
-	
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Y)) {
-		m_currentState = static_cast<NPC_CONTROLLER_AI>((int)m_currentState + 1);
-		if (m_currentState == NUM_AI_STATES)
-			m_currentState = NPC_IDLE;
-		std::cout << "State changed from " << m_previousState << " to " << m_currentState << std::endl;
+
+	// Move to destination
+	if (!IsArrivedAtDestination()) {
+		Vector3D dirToTarget = m_targetDestination - m_pTransform->GetPosition();
+		dirToTarget.Normalize();
+		m_targetVelocity = dirToTarget*m_speed;
 	}
-	//-------------------------------------------------------------------------
+	else {
+		m_targetVelocity = Vector3D(0,0,0);
+	}
 
 	Agent::Update(dt);
 }
 
 void NPCController::LateUpdate(float dt) {
+	if (TETRA_DEBUG.IsDebugModeOn()) {
+		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius, DebugColor::RED);
+		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_outOfSightRadius, DebugColor::YELLOW);
+		TETRA_DEBUG.DrawWireRectangle(startingPoint, Vector3D(), Vector3D(m_zoneWidth, m_zoneHeight, 0), DebugColor::WHITE);
+	}
+
 	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
-	GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
+	/*GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
 	Transform* playerTransfrom = player->GetComponent<Transform>(ComponentType::C_Transform);
 	LineSegment2D ray(Vector2D(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y), Vector2D(playerTransfrom->GetPosition().x, playerTransfrom->GetPosition().y));
 	GameObjectTag tagsToIgnore[3];
@@ -58,7 +69,7 @@ void NPCController::LateUpdate(float dt) {
 	}
 	else {
 		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
-	}
+	}*/
 	//---------------------------------
 }
 
@@ -72,13 +83,21 @@ void NPCController::Serialize(const json& j) {
 	for (unsigned int i = 0; i < NPC_NUM_BEHAVIOR; ++i) {
 		m_AIStates[i] = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 	}
+
+	m_detectionRadius = ParseFloat(j, "detectionRadius");
+	m_outOfSightRadius = ParseFloat(j, "outOfSightRadius");
+	m_zoneWidth = ParseFloat(j, "zoneWidth");
+	m_zoneHeight = ParseFloat(j, "zoneHeight");
 }
 
 void NPCController::HandleEvent(Event* pEvent) {
 	Agent::HandleEvent(pEvent);
 
-	if(pEvent->Type() == EVENT_OnLevelInitialized)
+	if (pEvent->Type() == EVENT_OnLevelInitialized) {
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
+		startingPoint = m_pTransform->GetPosition();
+		m_targetDestination = startingPoint;
+	}
 }
 
 void NPCController::LateInitialize() {
@@ -103,4 +122,24 @@ float NPCController::GetSquareDistanceToPlayer() {
 	const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
 	const Transform* pPlayerTransform = pPlayer->GetComponent<Transform>(C_Transform);
 	return Vector3D::SquareDistance(pPlayerTransform->GetPosition(), m_pTransform->GetPosition());
+}
+
+bool NPCController::IsArrivedAtDestination() {
+	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_targetDestination) < 100.0f;
+}
+
+bool NPCController::IsPlayerWithinDistance() {
+	return GetSquareDistanceToPlayer() < m_detectionRadius;
+}
+
+bool NPCController::IsPlayerOutOfSight() {
+	return GetSquareDistanceToPlayer() > m_outOfSightRadius;
+}
+
+void NPCController::StopMoving() {
+	m_targetDestination = m_pTransform->GetPosition();
+}
+
+void NPCController::SetDestinationToRandomPointInZone() {
+
 }

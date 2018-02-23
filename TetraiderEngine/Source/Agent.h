@@ -38,6 +38,7 @@ protected:
 	float m_knockBackMultiplier;
 	Vector3D m_targetVelocity;
 	Vector3D m_lookDirection;
+	Vector3D m_targetDestination;
 	Transform* m_pTransform;
 	Body* m_pBody;
 	Animation* m_pAnimation;
