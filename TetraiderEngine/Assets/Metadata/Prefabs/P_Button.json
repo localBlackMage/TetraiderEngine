@@ -62,6 +62,25 @@
   {
     "Component": "Button",
     "level"    : 2
-  }
+  },
+  {
+		"Component": "Text",
+		"letterHeight": 24,
+		"letterWidth": 24,
+		"pivotOffset": {
+			"x": 0,
+			"y": 0
+		},
+		"tint": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"rows": 6,
+		"cols": 16,
+		"font": "baseFont.png",
+		"text": "Play"
+	}
 	]
 }

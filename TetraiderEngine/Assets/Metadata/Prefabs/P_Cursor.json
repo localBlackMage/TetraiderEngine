@@ -59,9 +59,7 @@
           }
       },
 	  {
-		"Component":"FollowCursor"
-				
+		"Component":"FollowCursor"		
 	  }
-      
-      ]
+   ]
   }

@@ -1,6 +1,9 @@
 #include "Button.h"
 #include "TetraiderAPI.h"
 #include "Sprite.h"
+
+
+
 Button::Button() :Component(ComponentType::C_Button) 
 {
 }
@@ -18,7 +21,8 @@ void Button::Serialize(const json & j)
 
 void Button::LateInitialize()
 {
-	if (!m_pSprite) {
+	if (!m_pSprite) 
+	{
 		if (pGO)
 			m_pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
 		else {
@@ -43,6 +47,7 @@ void Button::HandleEvent(Event* pEvent)
 
 		TETRA_LEVELS.ChangeLevel(m_levelNumber);
 		//TETRA_LEVELS.NextLevel();
+
 	}
 	else if (pEvent->Type() == EVENT_OnCollide)
 	{

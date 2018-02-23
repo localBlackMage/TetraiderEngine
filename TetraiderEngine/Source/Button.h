@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-
+#include "Text.h"
 class Sprite;
 
 class Button :public Component
@@ -9,6 +9,7 @@ private:
 	std::string Text;
 	Sprite* m_pSprite;
 	int m_levelNumber;
+	//Text* m_pText;
 public:
 	Button();
 	~Button();
