@@ -30,7 +30,6 @@
         "z": 0
       }
     },
-	
 	{
 		"prefab": "P_ParticleTest",
 		"position": {
@@ -146,7 +145,7 @@
 	{
 	  "prefab": "P_ProjectileSpawner02",
 	  "position": {
-	  	"x": -200,
+	  	"x": -400,
 		"y": 500,
 		"z": 0
 		}	

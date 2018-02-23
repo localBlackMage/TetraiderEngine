@@ -70,7 +70,6 @@ void InputManager::Initialize(const json& j) {
 }
 
 void InputManager::Update() {
-
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) 
 	{

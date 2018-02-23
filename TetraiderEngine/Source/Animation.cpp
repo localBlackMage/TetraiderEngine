@@ -28,6 +28,8 @@ void Animation::Deactivate() {
 }
 
 void Animation::Update(float dt) {
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	if (m_elapsedTime > 1) {
 		++m_currentFrame;
 		if (m_currentFrame >= m_frames) {

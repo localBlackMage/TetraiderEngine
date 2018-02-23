@@ -31,7 +31,7 @@ bool MeleeAttack::Use(const Vector3D& direction) {
 }
 
 void MeleeAttack::Run() {
-	if (TETRA_FRAMERATE.GetElapsedTime() - m_lastUsedTimeStamp < m_triggerAttackIn) return;
+	if (m_timeFromLastUsed < m_triggerAttackIn) return;
 
 	// If enemy, just check for the player/enviromental objects
 	GameObjectTag ignoreTag = T_None;

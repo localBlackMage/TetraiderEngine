@@ -6,10 +6,13 @@
 #include "Health.h"
 #include "TetraiderAPI.h"
 
-Projectile::Projectile() : Component(C_Projectile) {}
+Projectile::Projectile() : Component(C_Projectile), m_currentLifeTime(0) {}
 
 void Projectile::Update(float dt) {
-	if (TETRA_FRAMERATE.GetElapsedTime() - m_creationLifeTime > m_lifeTime)
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
+	m_currentLifeTime += dt;
+	if (m_currentLifeTime > m_lifeTime)
 		pGO->Destroy();
 }
 
@@ -51,7 +54,6 @@ void Projectile::SetProperties(const Vector3D& position, int damage, float speed
 	m_isEnemyProjectile = isEnemyProjectile;
 	m_pBody->SetVelocity(speed*dir);
 	m_knockBackSpeed = knockBackSpeed;
-	m_creationLifeTime = TETRA_FRAMERATE.GetElapsedTime();
 	m_pOwner = owner;
 }
 

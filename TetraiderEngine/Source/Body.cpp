@@ -36,6 +36,8 @@ void Body::Integrate(float dt) {
 		return;
 	}
 
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	// Update previous position
 	m_PrevPosition.Set(m_Position.x, m_Position.y, m_Position.z);
 
