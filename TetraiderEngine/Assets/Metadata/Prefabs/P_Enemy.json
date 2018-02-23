@@ -33,15 +33,16 @@
 		},
 		"AIStates": [
 			{
+				"name": "idleBehavior",
 				"AIStateType": "NPC_State_Idle"
 			},
-			{
+			{	"name": "engageBehavior",
 				"AIStateType": "NPC_State_Engage"
 			},
-			{
+			{	"name": "attackBehavior",
 				"AIStateType": "NPC_State_Attack"
 			},
-			{
+			{	"name": "retreatBehavior",
 				"AIStateType": "NPC_State_Retreat"
 			}
 		]

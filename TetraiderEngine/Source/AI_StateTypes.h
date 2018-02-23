@@ -20,4 +20,14 @@ static const char* StateText[] =
 };
 #undef REGISTER_STATE
 
+enum NPC_CONTROLLER_AI {
+	NPC_IDLE,
+	NPC_ENGAGE,
+	NPC_ATTACK,
+	NPC_RETREAT,
+
+	NPC_NUM_BEHAVIOR
+};
+
+
 #endif

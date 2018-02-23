@@ -9,8 +9,8 @@
 
 NPCController::NPCController() :
 	Agent(ComponentType::C_NPCCONTROLLER),
-	m_currentState(NPC_State_Idle),
-	m_previousState(NPC_State_Idle)
+	m_currentState(NPC_IDLE),
+	m_previousState(NPC_IDLE)
 {
 }
 
@@ -31,13 +31,13 @@ void NPCController::Update(float dt) {
 		m_previousState = m_currentState;
 	}
 	
-	// RunLuaScript(m_luaScripts[m_currentState] + "Update");
-	//std::cout << m_luaScripts[m_currentState] + "Update() called" << std::endl;
-
+	// Update with currentState
+	m_AIStates[m_currentState]->OnUpdate();
+	
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Y)) {
-		m_currentState = static_cast<AIStateType>((int)m_currentState + 1);
+		m_currentState = static_cast<NPC_CONTROLLER_AI>((int)m_currentState + 1);
 		if (m_currentState == NUM_AI_STATES)
-			m_currentState = NPC_State_Idle;
+			m_currentState = NPC_IDLE;
 		std::cout << "State changed from " << m_previousState << " to " << m_currentState << std::endl;
 	}
 	//-------------------------------------------------------------------------
@@ -65,11 +65,14 @@ void NPCController::LateUpdate(float dt) {
 
 void NPCController::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
-	int size = j["AIStates"].size();
+	int definedSize = j["AIStates"].size();
+	if (definedSize != NPC_NUM_BEHAVIOR) {
+		std::cout << "INVALID DEFINITION OF AI BEHAVIOR: PROVIDE CORRECT AIStates in json!\n";
+	}
 
-	for (int i = 0; i < size; ++i) {
-		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
-		m_AIStates[newState->StateType()] = newState;
+	for (unsigned int i = 0; i < NPC_NUM_BEHAVIOR; ++i) {
+		//AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
+		m_AIStates[i] = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 	}
 }
 

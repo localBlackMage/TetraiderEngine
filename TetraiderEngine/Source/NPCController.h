@@ -26,9 +26,9 @@ protected:
 	float GetSquareDistanceToPlayer();
 private:
 	AIStateFactory AIStateFactory;
-	std::unordered_map<AIStateType, AI_State*> m_AIStates;
-	AIStateType m_currentState;
-	AIStateType m_previousState;
+	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];
+	NPC_CONTROLLER_AI m_currentState;
+	NPC_CONTROLLER_AI m_previousState;
 };
 
 #endif
