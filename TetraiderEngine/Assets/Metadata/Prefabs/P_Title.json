@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 25,
-          "y": 25,
+          "x": 200,
+          "y": 30,
           "z": 0
         },
         "pivotOffset": {
@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_Feather2.png",
+        "Texture": "T_EggnappedTitle.png",
         "tiling": {
           "x": 1,
           "y": 1
@@ -48,18 +48,6 @@
           "b": 0,
           "a": 0
         }
-      },
-      {
-          "Component": "Body",
-          "isStatic": false,
-          "mass": 0,
-          "SHAPE": {
-              "type": "circle",
-              "radius": 10
-          }
-      },
-	  {
-		"Component":"FollowCursor"		
-	  }
-   ]
-  }
+      }
+    ]
+}

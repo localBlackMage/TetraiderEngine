@@ -17,6 +17,7 @@ void Button::Update(float dt)
 void Button::Serialize(const json & j)
 {
 	m_levelNumber = ParseInt(j, "level");
+	isQuit = ParseBool(j, "quit");
 }
 
 void Button::LateInitialize()
@@ -47,7 +48,12 @@ void Button::HandleEvent(Event* pEvent)
 			m_pSprite->SetVOffset(0.6666f);
 		}
 		else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
-			TETRA_LEVELS.ChangeLevel(m_levelNumber);
+			if (isQuit)
+			{
+				TETRA_GAME_STATE.SetGameState(GameState::QUIT);
+			}
+			else
+				TETRA_LEVELS.ChangeLevel(m_levelNumber);
 		}
 	}
 }
