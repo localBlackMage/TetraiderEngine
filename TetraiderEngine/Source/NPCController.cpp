@@ -14,7 +14,8 @@ NPCController::NPCController() :
 	m_detectionRadius(0.0f),
 	m_outOfSightRadius(0.0f),
 	m_zoneWidth(0.0f),
-	m_zoneHeight(0.0f)
+	m_zoneHeight(0.0f),
+	m_arrivedAtDestination(true)
 {
 }
 
@@ -37,12 +38,13 @@ void NPCController::Update(float dt) {
 	m_AIStates[m_currentState]->OnUpdate();
 
 	// Move to destination
-	if (!IsArrivedAtDestination()) {
+	if (!m_arrivedAtDestination && !IsArrivedAtDestination()) {
 		Vector3D dirToTarget = m_targetDestination - m_pTransform->GetPosition();
 		dirToTarget.Normalize();
 		m_targetVelocity = dirToTarget*m_speed;
 	}
 	else {
+		m_arrivedAtDestination = true;
 		m_targetVelocity = Vector3D(0,0,0);
 	}
 
@@ -138,6 +140,11 @@ bool NPCController::IsPlayerOutOfSight() {
 
 void NPCController::StopMoving() {
 	m_targetDestination = m_pTransform->GetPosition();
+}
+
+void NPCController::SetTargetDestination(const Vector3D& pos) {
+	m_arrivedAtDestination = false;
+	m_targetDestination = pos;
 }
 
 void NPCController::SetDestinationToRandomPointInZone() {
