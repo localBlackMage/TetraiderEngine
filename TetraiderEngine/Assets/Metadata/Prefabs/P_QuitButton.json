@@ -66,10 +66,10 @@
     },
     {
           "Component": "Text",
-          "letterHeight": 20,
-          "letterWidth": 20,
+          "letterHeight": 12,
+          "letterWidth": 12,
           "pivotOffset": {
-              "x": -30,
+              "x": -17,
               "y": 0
           },
           "tint": {
