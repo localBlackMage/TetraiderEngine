@@ -30,6 +30,7 @@ protected:
 	bool IsArrivedAtDestination();
 	bool IsPlayerWithinDistance();
 	bool IsPlayerOutOfSight();
+	bool IsInAttackRange();
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
@@ -46,6 +47,7 @@ private:
 	float m_outOfSightRadius;
 	float m_zoneWidth;
 	float m_zoneHeight;
+	float m_attackRange;
 	Vector3D m_startingPoint;
 	Vector3D m_targetDestination;
 	bool m_arrivedAtDestination;

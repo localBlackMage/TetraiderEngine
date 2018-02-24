@@ -91,6 +91,7 @@ void NPCController::Serialize(const json& j) {
 	m_outOfSightRadius = ParseFloat(j, "outOfSightRadius");
 	m_zoneWidth = ParseFloat(j, "zoneWidth");
 	m_zoneHeight = ParseFloat(j, "zoneHeight");
+	m_attackRange = ParseFloat(j, "attackRange");
 }
 
 void NPCController::HandleEvent(Event* pEvent) {
@@ -195,4 +196,8 @@ void NPCController::MoveAroundPlayer() {
 
 bool NPCController::UseAttack(int attack) {
 	return m_pWeapon->UseAttack(attack, m_lookDirection);
+}
+
+bool NPCController::IsInAttackRange() {
+	return GetSquareDistanceToPlayer() < m_attackRange*m_attackRange;
 }

@@ -35,6 +35,7 @@
 		"outOfSightRadius": 1100,
 		"zoneWidth": 500,
 		"zoneHeight": 500,
+		"attackRange": 220,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -130,6 +131,28 @@
         "b": 1,
         "a": 0
 		}
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Melee",
+				"coolDown": 0.3,
+				"baseDamage": 1,
+				"radius": 180,
+				"angle": 90,
+				"triggerAttackIn": 0.05,
+				"knockBackSpeed": 800
+			}
+		],
+		"weaponPrefab": "P_Sword",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 70,
+		"effectPrefab": "P_SlashTest"
 	}
   ]
 }

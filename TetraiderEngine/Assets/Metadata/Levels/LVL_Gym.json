@@ -39,9 +39,17 @@
 		}
     },
 	{
-      "prefab": "P_Enemy",
+      "prefab": "P_EnemyMelee",
       "position": {
         "x": -900,
+        "y": 150,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_EnemyRanged",
+      "position": {
+        "x": 900,
         "y": 150,
         "z": 0
       }
