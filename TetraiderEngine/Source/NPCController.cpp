@@ -193,7 +193,9 @@ void NPCController::MoveToPlayer() {
 void NPCController::MoveAroundPlayer() {
 	float angleOffset;
 
-	if (RollDie(0.85f)) angleOffset = RandomFloat(-90, 90);
+	if (GetSquareDistanceToPlayer() < 250.0f) {
+		angleOffset = RandomFloat(-90, 90);
+	}
 	else {
 		angleOffset = RandomFloat(90, 180);
 		if (RollDie(0.5)) angleOffset *= -1;
