@@ -31,6 +31,9 @@ protected:
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
+	void LookInDirectionOfMovement();
+	void LookAtPlayer();
+	void LookAtPlayer(float offsetAngle);
 	bool RollDie(float probability);
 
 private:
@@ -45,6 +48,8 @@ private:
 	Vector3D m_startingPoint;
 	Vector3D m_targetDestination;
 	bool m_arrivedAtDestination;
+
+	const Transform* m_pPlayerTransform;
 };
 
 #endif
