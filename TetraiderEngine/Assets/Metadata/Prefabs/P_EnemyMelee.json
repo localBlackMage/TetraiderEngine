@@ -1,0 +1,162 @@
+{
+  "Tag": "Enemy",
+  "Layer": "2",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 100,
+        "y": 100,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 150,
+			"acceleration": 8,
+			"knockBackMultiplier": 1
+		},
+		"detectionRadius": 400,
+		"outOfSightRadius": 600,
+		"zoneWidth": 500,
+		"zoneHeight": 500,
+		"attackRange": 220,
+		"AIStates": [
+			{
+				"name": "idleBehavior",
+				"behaviorIndex": 0,
+				"AIStateType": "NPC_State_Idle"
+			},
+			{	"name": "engageBehavior",
+				"behaviorIndex": 1,
+				"AIStateType": "NPC_State_Engage"
+			},
+			{	"name": "attackBehavior",
+				"behaviorIndex": 2,				
+				"AIStateType": "NPC_State_Attack"
+			},
+			{	"name": "retreatBehavior",
+				"behaviorIndex": 3,
+				"AIStateType": "NPC_State_Retreat"
+			},
+			{	"name": "moveToRandomPointInZoneBehavior",
+				"behaviorIndex": 4,
+				"AIStateType": "NPC_State_MoveToRandomPointInZone"
+			}
+		]
+	},
+    {
+      "Component": "Sprite",
+      "Texture": "T_enemyTest.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "hasAlpha": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 1,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 12,
+			"animationSpeed": 18,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Idle",
+			"frames": 12,
+			"animationSpeed": 18,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Death",
+			"frames": 1,
+			"animationSpeed": 18,
+			"isLooping": false,
+			"isPlayOnAwake": true
+		}]
+	},
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 50
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 200,
+		"maxHealth": 200,
+		"isInvincible": false
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
+		}
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Melee",
+				"coolDown": 0.3,
+				"baseDamage": 1,
+				"radius": 180,
+				"angle": 90,
+				"triggerAttackIn": 0.05,
+				"knockBackSpeed": 800
+			}
+		],
+		"weaponPrefab": "P_Sword",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 70,
+		"effectPrefab": "P_SlashTest"
+	}
+  ]
+}

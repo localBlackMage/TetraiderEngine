@@ -10,7 +10,7 @@
 #include "Animation.h"
 #include "Audio.h"
 
-Weapon::Weapon(): Component(C_Weapon) {}
+Weapon::Weapon(): Component(C_Weapon), m_pEffect(nullptr) {}
 
 Weapon::~Weapon() {
 	for (auto attack : m_Attacks) {
@@ -19,16 +19,17 @@ Weapon::~Weapon() {
 
 	m_Attacks.clear();
 	m_pWeapon->Destroy();
-	m_pEffect->Destroy();
+	if(m_pEffect) m_pEffect->Destroy();
 }
 
 void Weapon::Deactivate() {
 	for (auto attack : m_Attacks) {
 		delete attack;
 	}
+
 	m_Attacks.clear();
 	m_pWeapon->Destroy();
-	m_pEffect->Destroy();
+	if (m_pEffect) m_pEffect->Destroy();
 	m_pWeaponTransform = nullptr;
 	m_pEffectTransform = nullptr;
 	m_pEffect = nullptr;
@@ -43,11 +44,11 @@ void Weapon::Update(float dt) {
 	float angle = m_pController->GetLookDirection().AngleDegrees();
 	if (m_pController->GetFaceDirection() == FaceDirection::Left) {
 		m_pWeaponTransform->SetAngleZ(180 - angle*-1 - m_rotationOffset*swingDir);
-		m_pEffectTransform->SetAngleZ(180 - angle*-1);
+		if(m_pEffect) m_pEffectTransform->SetAngleZ(180 - angle*-1);
 	}
 	else {
 		m_pWeaponTransform->SetAngleZ(angle - m_rotationOffset*swingDir);
-		m_pEffectTransform->SetAngleZ(angle);
+		if (m_pEffect) m_pEffectTransform->SetAngleZ(angle);
 	}
 }
 
@@ -111,16 +112,18 @@ void Weapon::Serialize(const json& j) {
 	m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(ComponentType::C_Transform);
 	m_pWeaponTransform->SetPosition(m_weaponOffset);
 
-	std::string m_effectPrefab = ParseString(j, "effectPrefab");
-	m_pEffect = TETRA_GAME_OBJECTS.CreateGameObject(m_effectPrefab);
-	if (m_pEffect) {
-		m_pEffectTransform = m_pEffect->GetComponent<Transform>(ComponentType::C_Transform);
+	if (ValueExists(j, "effectPrefab")) {
+		std::string m_effectPrefab = ParseString(j, "effectPrefab");
+		m_pEffect = TETRA_GAME_OBJECTS.CreateGameObject(m_effectPrefab);
+		if (m_pEffect) {
+			m_pEffectTransform = m_pEffect->GetComponent<Transform>(ComponentType::C_Transform);
+		}
 	}
 }
 
 void Weapon::LateInitialize() {
 	m_pWeapon->SetParent(pGO);
-	m_pEffect->SetParent(pGO);
+	if(m_pEffect) m_pEffect->SetParent(pGO);
 
 	if (!m_pController) {
 		m_pController = pGO->GetComponent<Controller>(ComponentType::C_Controller);
@@ -138,20 +141,22 @@ void Weapon::LateInitialize() {
 void Weapon::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_FlipScaleX) {
 		m_pWeapon->HandleEvent(pEvent);
-		m_pEffect->HandleEvent(pEvent);
+		if(m_pEffect) m_pEffect->HandleEvent(pEvent);
 	}
 }
 
 void Weapon::PlayEffect() {
-	Animation* pAnimation = m_pEffect->GetComponent<Animation>(ComponentType::C_Animation);
-	if (pAnimation)
-		pAnimation->Play(0, true);
+	if (m_pEffect) {
+		Animation* pAnimation = m_pEffect->GetComponent<Animation>(ComponentType::C_Animation);
+		if (pAnimation)
+			pAnimation->Play(0, true);
 
-	Swing();
+		Swing();
 
-	Audio* pAudio = m_pEffect->GetComponent<Audio>(ComponentType::C_Audio);
-	if (pAudio)
-		pAudio->Play();
+		Audio* pAudio = m_pEffect->GetComponent<Audio>(ComponentType::C_Audio);
+		if (pAudio)
+			pAudio->Play();
+	}
 }
 
 // Assumes direction to be normalized

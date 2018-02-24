@@ -31,10 +31,11 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 400,
-		"outOfSightRadius": 600,
+		"detectionRadius": 800,
+		"outOfSightRadius": 1100,
 		"zoneWidth": 500,
 		"zoneHeight": 500,
+		"attackRange": 800,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -52,10 +53,6 @@
 			{	"name": "retreatBehavior",
 				"behaviorIndex": 3,
 				"AIStateType": "NPC_State_Retreat"
-			},
-			{	"name": "moveToRandomPointInZoneBehavior",
-				"behaviorIndex": 4,
-				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}
 		]
 	},
@@ -134,6 +131,28 @@
         "b": 1,
         "a": 0
 		}
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Ranged",
+				"coolDown": 0.6,
+				"baseDamage": 1,
+				"projectileSpeed": 600,
+				"instantiationOffset": 50,
+				"lifeTime": 1.5,
+				"projectilePrefab": "P_testProjectile",
+				"knockBackSpeed": 300
+			}
+		],
+		"weaponPrefab": "P_Gun",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 0
 	}
   ]
 }
