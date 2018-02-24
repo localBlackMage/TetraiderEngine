@@ -36,7 +36,7 @@ void NPCController::Update(float dt) {
 		m_AIStates[m_previousState]->OnExit();
 		m_AIStates[m_currentState]->OnEnter();
 		m_previousState = m_currentState;
-		std::cout << "statechanged\n";
+		//std::cout << "statechanged\n";
 	}
 	
 	// Update with currentState

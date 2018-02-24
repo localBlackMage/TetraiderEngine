@@ -11,11 +11,17 @@ AI_Attack::~AI_Attack(){
 }
 
 void AI_Attack::OnEnter(){
-
+	attackCounter = 0;
+	attackLimit = 2;
 }
 
 void AI_Attack::OnUpdate(float dt){
-
+	if (attackCounter > 2) {
+		pAgent->ChangeState(NPC_IDLE);
+	}
+	if (pAgent->UseAttack(0)) {
+		attackCounter++;
+	}
 }
 
 void AI_Attack::OnExit(){

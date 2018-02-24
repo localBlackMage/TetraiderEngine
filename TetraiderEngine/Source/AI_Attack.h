@@ -26,6 +26,8 @@ public:
 	virtual void OnExit();
 
 private:
+	int attackCounter;
+	int attackLimit;
 };
 
 #endif

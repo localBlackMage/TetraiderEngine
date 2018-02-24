@@ -3,29 +3,54 @@
 #include "TetraiderAPI.h"
 
 AI_Engage::AI_Engage()
-: AI_State(NPC_State_Engage) {
+	: AI_State(NPC_State_Engage) {
 
 }
 
-AI_Engage::~AI_Engage(){
+AI_Engage::~AI_Engage() {
 }
 
-void AI_Engage::OnEnter(){
+void AI_Engage::OnEnter() {
 	pAgent->LookAtPlayer();
 	pAgent->MoveAroundPlayer();
+	tryTimeDuration = 7;
+	engageTimer = RandomInt(15, 20);
+	triedMovingSoFar = 0.0f;
+	sinceEngage = 0.0f;
 }
 
-void AI_Engage::OnUpdate(float dt){
+void AI_Engage::OnUpdate(float dt) {
+	// always face player on engage
+	pAgent->LookAtPlayer();
+	// if this engage has gone too long, just go attack!
+	if (sinceEngage > engageTimer) {
+		pAgent->ChangeState(NPC_ATTACK);
+		return;
+	}
+	// if this move has taken too much, change destination
+	if (triedMovingSoFar > tryTimeDuration){
+		pAgent->MoveAroundPlayer();
+		triedMovingSoFar = 0.0f;
+		return;
+	}
+	// if player is out of sight, go back to idle
 	if (pAgent->IsPlayerOutOfSight()) {
 		pAgent->ChangeState(NPC_IDLE);
+		return;
 	}
-	pAgent->LookAtPlayer();
-	//if (pAgent->) {
-	//	pAgent->ChangeState(NPC_ATTACK);
-	//}
+	// if player is in attack range, attack!
+	if (pAgent->IsInAttackRange()) {
+		pAgent->ChangeState(NPC_ATTACK);
+		return;
+	}
+	// if next destination reached, pick another destination
 	if (pAgent->IsArrivedAtDestination()) {
 		pAgent->MoveAroundPlayer();
+		triedMovingSoFar = 0.0f;
+		return;
 	}
+	triedMovingSoFar += dt;
+	sinceEngage += dt;
 }
 
 void AI_Engage::OnExit(){

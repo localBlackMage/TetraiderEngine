@@ -27,6 +27,10 @@ public:
 	virtual void OnExit();
 
 private:
+	int tryTimeDuration; // in seconds
+	int engageTimer;
+	float triedMovingSoFar;
+	float sinceEngage;
 };
 
 #endif
