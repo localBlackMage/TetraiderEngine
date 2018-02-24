@@ -36,6 +36,7 @@ public:
 	void LookInDirectionOfMovement();
 	void LookAtPlayer();
 	void LookAtPlayer(float offsetAngle);
+	void SetSpeedMultiplier(float speedMultiplier) { m_speedMultiplier = speedMultiplier; }
 	bool RollDie(float probability);
 protected:
 	Weapon* m_pWeapon;
@@ -51,6 +52,7 @@ private:
 	float m_zoneWidth;
 	float m_zoneHeight;
 	float m_attackRange;
+	float m_speedMultiplier;
 	Vector3D m_startingPoint;
 	Vector3D m_targetDestination;
 	bool m_arrivedAtDestination;
