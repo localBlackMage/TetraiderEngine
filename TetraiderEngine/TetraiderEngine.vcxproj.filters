@@ -272,12 +272,11 @@
     <ClCompile Include="Source\AI_Retreat.cpp">
       <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClCompile>
-
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp">
-
+	  <Filter>Source Files\Components\FiniteStateMachines</Filter>
+	</ClCompile>
     <ClCompile Include="Source\PauseMenu.cpp">
       <Filter>Source Files\Components</Filter>
-
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -551,14 +550,14 @@
     <ClInclude Include="Source\AI_StateTypes.h">
       <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AIComponent.h" />
-<<<<<<< HEAD
+    <ClInclude Include="Source\AIComponent.h">
+	  <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
+	</ClInclude>
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h">
       <Filter>Source Files\Components\FiniteStateMachines</Filter>
-=======
+	</ClInclude>
     <ClInclude Include="Source\PauseMenu.h">
       <Filter>Source Files\Components</Filter>
->>>>>>> Menu system complete
     </ClInclude>
   </ItemGroup>
 </Project>

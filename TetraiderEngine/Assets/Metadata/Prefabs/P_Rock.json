@@ -53,29 +53,13 @@
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "polygon",
-			"vertices": [
-			 {
-				"x": 48,
-				"y": 0,
-				"z": 0
-			 },
-			 {
-				"x": 48,
-				"y": 48,
-				"z": 0
-			 },
-			 {
-				"x": -48,
-				"y": 48,
-				"z": 0
-			 },
-			 {
-				"x": -48,
-				"y": 0,
-				"z": 0
-			 }
-			]
+			"type": "AABB",
+			"width": 96,
+			"height": 60,
+			"offset": {
+				"x": 0,
+				"y": -15
+			}
 		}
 	}
   ]
