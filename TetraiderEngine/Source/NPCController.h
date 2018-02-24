@@ -21,12 +21,10 @@ public:
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
+
 	void ChangeState(NPC_CONTROLLER_AI);
-protected:
-	Weapon* m_pWeapon;
-	float GetSquareDistanceToPlayer();
 	bool IsArrivedAtDestination();
-	bool IsPlayerWithinDistance();
+	bool IsPlayerInSight();
 	bool IsPlayerOutOfSight();
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
@@ -35,6 +33,9 @@ protected:
 	void LookAtPlayer();
 	void LookAtPlayer(float offsetAngle);
 	bool RollDie(float probability);
+protected:
+	Weapon* m_pWeapon;
+	float GetSquareDistanceToPlayer();
 
 private:
 	AIStateFactory AIStateFactory;

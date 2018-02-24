@@ -7,12 +7,14 @@
 #include "AI_Engage.h"
 #include "AI_Attack.h"
 #include "AI_Retreat.h"
+#include "AI_MoveToRandomPointInZone.h"
 
 AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_Idle]] = AI_Idle::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Engage]] = AI_Engage::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Attack]] = AI_Attack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Retreat]] = AI_Retreat::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_MoveToRandomPointInZone]] = AI_MoveToRandomPointInZone::CreateInstance;
 }
 
 AI_State* AIStateFactory::CreateState(std::string state){

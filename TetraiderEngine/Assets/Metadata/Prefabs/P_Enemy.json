@@ -31,8 +31,8 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 800,
-		"outOfSightRadius": 1100,
+		"detectionRadius": 400,
+		"outOfSightRadius": 600,
 		"zoneWidth": 500,
 		"zoneHeight": 500,
 		"AIStates": [

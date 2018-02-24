@@ -22,7 +22,8 @@ void AI_Idle::OnEnter(){
 }
 
 void AI_Idle::OnUpdate(float dt){
-	if (!pAgent->IsPlayerOutOfSight) {
+	if (pAgent->IsPlayerInSight()) {
+		pAgent->StopMoving();
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}

@@ -20,7 +20,10 @@ NPCController::NPCController() :
 {
 }
 
-NPCController::~NPCController() {}
+NPCController::~NPCController() {
+	for (auto comp : m_AIStates)
+		delete comp;
+}
 
 void NPCController::Deactivate() {
 	m_pWeapon = nullptr; 
@@ -55,8 +58,8 @@ void NPCController::Update(float dt) {
 
 void NPCController::LateUpdate(float dt) {
 	if (TETRA_DEBUG.IsDebugModeOn()) {
-		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius, DebugColor::RED);
-		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_outOfSightRadius, DebugColor::YELLOW);
+		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius*2.0f, DebugColor::RED);
+		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_outOfSightRadius*2.0f, DebugColor::YELLOW);
 		TETRA_DEBUG.DrawWireRectangle(m_startingPoint, Vector3D(), Vector3D(m_zoneWidth, m_zoneHeight, 0), DebugColor::WHITE);
 	}
 
@@ -127,15 +130,15 @@ float NPCController::GetSquareDistanceToPlayer() {
 }
 
 bool NPCController::IsArrivedAtDestination() {
-	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_targetDestination) < 100.0f;
+	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_targetDestination) < 150.0f;
 }
 
-bool NPCController::IsPlayerWithinDistance() {
-	return GetSquareDistanceToPlayer() < m_detectionRadius;
+bool NPCController::IsPlayerInSight() {
+	return GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius;
 }
 
 bool NPCController::IsPlayerOutOfSight() {
-	return GetSquareDistanceToPlayer() > m_outOfSightRadius;
+	return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
 }
 
 void NPCController::StopMoving() {
