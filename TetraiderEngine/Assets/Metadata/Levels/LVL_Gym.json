@@ -79,6 +79,22 @@
       }
 	},
 	{
+		"prefab": "P_Lavacracks",
+		"position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+	},
+	{
+		"prefab": "P_Lavacracks",
+		"position": {
+        "x": -650,
+        "y": -200,
+        "z": 0
+      }
+	},
+	{
 	  "prefab": "P_TreeTest",
       "position": {
         "x": -400,
