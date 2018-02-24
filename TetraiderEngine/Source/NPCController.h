@@ -29,6 +29,7 @@ protected:
 	bool IsPlayerOutOfSight();
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
+	void SetTargetDestination(const Vector3D& pos);
 private:
 	AIStateFactory AIStateFactory;
 	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];
@@ -39,6 +40,8 @@ private:
 	float m_zoneWidth;
 	float m_zoneHeight;
 	Vector3D startingPoint;
+	Vector3D m_targetDestination;
+	bool m_arrivedAtDestination;
 };
 
 #endif
