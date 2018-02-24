@@ -36,6 +36,7 @@ void NPCController::Update(float dt) {
 		m_AIStates[m_previousState]->OnExit();
 		m_AIStates[m_currentState]->OnEnter();
 		m_previousState = m_currentState;
+		std::cout << "statechanged\n";
 	}
 	
 	// Update with currentState
@@ -192,8 +193,11 @@ void NPCController::MoveToPlayer() {
 void NPCController::MoveAroundPlayer() {
 	float angleOffset;
 
-	if (RollDie(0.8f)) angleOffset = RandomFloat(-90, 90);
-	else angleOffset = RandomFloat(-180, 180);
+	if (RollDie(0.85f)) angleOffset = RandomFloat(-90, 90);
+	else {
+		angleOffset = RandomFloat(90, 180);
+		if (RollDie(0.5)) angleOffset *= -1;
+	}
 	
 	float angle = m_lookDirection.AngleDegrees() + angleOffset;
 	if (angle > 180.0f)	angle -= 360;
