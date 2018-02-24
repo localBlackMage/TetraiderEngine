@@ -122,8 +122,8 @@
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 200,
-		"maxHealth": 200,
+		"startingHealth": 40,
+		"maxHealth": 40,
 		"isInvincible": false
 	},
 	{
@@ -142,7 +142,7 @@
 			{
 				"type": "Melee",
 				"coolDown": 0.6,
-				"baseDamage": 1,
+				"baseDamage": 5,
 				"radius": 180,
 				"angle": 90,
 				"triggerAttackIn": 0.05,

@@ -1,6 +1,7 @@
 #include "EventManager.h"
 #include "SubscriberTracker.h"
 #include "Subscriber.h"
+#include "TetraiderAPI.h"
 #include <utility>
 #include <algorithm>
 #include <iostream>
@@ -15,6 +16,8 @@ EventManager::~EventManager()
 
 void EventManager::Update(double deltaTime)
 {
+	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	unsigned int i = 0;
 	for (i = 0; i < m_events.size(); ++i) {
 		m_events[i]->DecrementTime(deltaTime);

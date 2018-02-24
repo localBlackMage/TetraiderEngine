@@ -32,7 +32,7 @@ void Controller::Serialize(const json& j) {
 }
 
 void Controller::HandleEvent(Event* pEvent) {
-	if (TETRA_GAME_STATE.IsGamePaused()) return;
+	if (TETRA_GAME_STATE.IsGamePaused() || m_isDead) return;
 
 	Agent::HandleEvent(pEvent);
 

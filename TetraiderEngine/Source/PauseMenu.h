@@ -1,5 +1,8 @@
 #pragma once
 #include "Component.h"
+
+class Text;
+
 class PauseMenu :public Component
 {
 public:
@@ -13,6 +16,8 @@ public:
 private:
 	std::vector<GameObject*> m_objects;
 	std::string m_prefabName;
+	Text* m_pText;
 	bool isActive;
+	bool isLevelOver;
 };
 
