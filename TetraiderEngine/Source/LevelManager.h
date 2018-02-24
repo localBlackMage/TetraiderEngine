@@ -34,7 +34,7 @@ public:
 	void RestartGame();
 	void HandleEvent(Event* pEvent);
 	bool IsLastLevel();
-
+	int GetCurrentLevel();
 	void LoadStaticGameObjects();
 };
 

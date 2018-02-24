@@ -17,7 +17,7 @@
     {
       "Component": "Camera",
       "fov": 105,
-	  "layers": ["UI", "UI_1"]
+	  "layers": ["UI", "UI_1", "UI_2"]
     }
   ]
 }

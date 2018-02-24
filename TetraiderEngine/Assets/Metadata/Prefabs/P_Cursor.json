@@ -1,6 +1,6 @@
 {
     "Tag": "UI",
-    "Layer": "UI",
+    "Layer": "UI_2",
     "COMPONENTS": [
       {
         "Component": "Transform",
@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 25,
-          "y": 25,
+          "x": 40,
+          "y": 40,
           "z": 0
         },
         "pivotOffset": {
@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_Cursor.png",
+        "Texture": "T_Feather2.png",
         "tiling": {
           "x": 1,
           "y": 1

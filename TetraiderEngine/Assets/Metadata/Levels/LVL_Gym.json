@@ -55,6 +55,14 @@
       }
     },
 	{
+      "prefab": "P_Rock",
+      "position": {
+        "x": -200,
+        "y": 0,
+        "z": 0
+      }
+    },
+	{
       "prefab": "P_ColliderTest2",
       "position": {
         "x": 300,
@@ -188,6 +196,14 @@
 	},
 	{
 		"prefab": "P_EggUI"
-	}
+  },
+  {
+    "prefab": "P_PauseMenu",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
   ]
 }
