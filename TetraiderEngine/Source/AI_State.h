@@ -16,30 +16,30 @@ Creation date: 2/22/18
 #include "AI_StateTypes.h"
 #include "Subscriber.h"
 #include "JsonReader.h"
-#include "Agent.h"
+#include "NPCController.h"
 #include <assert.h>
 
 using json = nlohmann::json;
 using namespace JsonReader;
 
 // forward declaration
-class Agent;
+class NPCController;
 class Event;
 
 class AI_State: public Subscriber{
 protected:
 	AIStateType m_StateType;
 public:
-	AI_State(AIStateType _type): m_StateType(_type){};
-	virtual ~AI_State(){};
+	AI_State(AIStateType _type): m_StateType(_type){}
+	virtual ~AI_State(){}
 
 	virtual void OnEnter() = 0;
-	virtual void OnUpdate() = 0;
+	virtual void OnUpdate(float dt) = 0;
 	virtual void OnExit() = 0;
 
 	AIStateType StateType() const { return m_StateType; }
 
-	Agent *pAgent;
+	NPCController *pAgent;
 };
 
 #endif

@@ -256,7 +256,7 @@
     </ClCompile>
     <ClCompile Include="Source\EggCounter.cpp">
       <Filter>Source Files\Components</Filter>
-      </ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\AI_StateFactory.cpp">
       <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
     </ClCompile>
@@ -270,6 +270,9 @@
       <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI_Retreat.cpp">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp">
       <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClCompile>
   </ItemGroup>
@@ -520,9 +523,6 @@
     <ClInclude Include="Source\EggCounter.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NPCStateNames.h">
-      <Filter>Source Files\Components\AIComponent</Filter>
-       </ClInclude>
     <ClInclude Include="Source\AI_Attack.h">
       <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClInclude>
@@ -546,6 +546,10 @@
     </ClInclude>
     <ClInclude Include="Source\AI_StateTypes.h">
       <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIComponent.h" />
+    <ClInclude Include="Source\AI_MoveToRandomPointInZone.h">
+      <Filter>Source Files\Components\FiniteStateMachines</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

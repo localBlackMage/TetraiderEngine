@@ -52,6 +52,10 @@
 			{	"name": "retreatBehavior",
 				"behaviorIndex": 3,
 				"AIStateType": "NPC_State_Retreat"
+			},
+			{	"name": "moveToRandomPointInZoneBehavior",
+				"behaviorIndex": 4,
+				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}
 		]
 	},

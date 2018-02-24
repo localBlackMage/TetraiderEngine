@@ -36,7 +36,7 @@ void NPCController::Update(float dt) {
 	}
 	
 	// Update with currentState
-	m_AIStates[m_currentState]->OnUpdate();
+	m_AIStates[m_currentState]->OnUpdate(dt);
 
 	// Move to destination
 	if (!m_arrivedAtDestination && !IsArrivedAtDestination()) {
@@ -49,6 +49,7 @@ void NPCController::Update(float dt) {
 		m_targetVelocity = Vector3D(0,0,0);
 	}
 
+	
 	Agent::Update(dt);
 }
 
@@ -83,8 +84,9 @@ void NPCController::Serialize(const json& j) {
 	//	std::cout << "INVALID DEFINITION OF AI BEHAVIOR: PROVIDE CORRECT AIStates in json!\n";
 	//}
 	for (int i = 0; i < definedSize; ++i) {
-		//AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
-		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
+		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
+		newState->pAgent = this;
+		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = newState;
 	}
 
 	m_detectionRadius = ParseFloat(j, "detectionRadius");
@@ -156,4 +158,9 @@ void NPCController::SetDestinationToRandomPointInZone() {
 	float x = RandomFloat(m_startingPoint.x - m_zoneWidth/2.0f, m_startingPoint.x + m_zoneWidth / 2.0f);
 	float y = RandomFloat(m_startingPoint.y - m_zoneHeight / 2.0f, m_startingPoint.y + m_zoneHeight / 2.0f);
 	SetTargetDestination(Vector3D(x, y, 0));
+}
+
+void NPCController::ChangeState(NPC_CONTROLLER_AI newState) {
+	m_previousState = m_currentState;
+	m_currentState = newState;
 }

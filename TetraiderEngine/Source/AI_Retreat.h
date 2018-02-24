@@ -23,7 +23,7 @@ public:
 	static AI_State* CreateInstance() { return new AI_Retreat(); }
 
 	virtual void OnEnter();
-	virtual void OnUpdate();
+	virtual void OnUpdate(float);
 	virtual void OnExit();
 
 private:

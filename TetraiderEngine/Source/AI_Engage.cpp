@@ -8,14 +8,13 @@ AI_Engage::AI_Engage()
 }
 
 AI_Engage::~AI_Engage(){
-	pAgent = nullptr;
 }
 
 void AI_Engage::OnEnter(){
 
 }
 
-void AI_Engage::OnUpdate(){
+void AI_Engage::OnUpdate(float dt){
 
 }
 

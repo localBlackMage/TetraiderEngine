@@ -21,6 +21,7 @@ public:
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
+	void ChangeState(NPC_CONTROLLER_AI);
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
@@ -31,6 +32,7 @@ protected:
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
 	bool RollDie(float probability);
+
 private:
 	AIStateFactory AIStateFactory;
 	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];

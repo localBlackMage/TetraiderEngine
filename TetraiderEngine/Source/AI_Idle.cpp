@@ -13,23 +13,25 @@ AI_Idle::AI_Idle()
 }
 
 AI_Idle::~AI_Idle(){
-	pAgent = nullptr;
 }
 
 void AI_Idle::OnEnter(){
-	idleDuration = RandomInt(1, 3); // reset idleTime
+	// reset idle data
+	idleDuration = RandomInt(1, 3); 
 	idledSoFar = 0.0f;
 }
 
-void AI_Idle::OnUpdate(){
+void AI_Idle::OnUpdate(float dt){
+	if (!pAgent->IsPlayerOutOfSight) {
+		pAgent->ChangeState(NPC_ENGAGE);
+		return;
+	}
 	if (idledSoFar < idleDuration) {
-		idledSoFar += TETRA_FRAMERATE.GetFrameTime();
+		idledSoFar += dt;
 	}
 	else {
-
+		pAgent->ChangeState(NPC_MOVETORANDOMPOINTINZONE);
 	}
-	std::cout << RandomInt(1, 10) << endl;
-	//std::cout << RandomFloat(0.1, 10) << endl;
 }
 
 void AI_Idle::OnExit(){

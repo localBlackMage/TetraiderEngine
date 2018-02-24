@@ -8,14 +8,13 @@ AI_Attack::AI_Attack()
 }
 
 AI_Attack::~AI_Attack(){
-	pAgent = nullptr;
 }
 
 void AI_Attack::OnEnter(){
 
 }
 
-void AI_Attack::OnUpdate(){
+void AI_Attack::OnUpdate(float dt){
 
 }
 

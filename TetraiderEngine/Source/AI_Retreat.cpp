@@ -8,14 +8,13 @@ AI_Retreat::AI_Retreat()
 }
 
 AI_Retreat::~AI_Retreat(){
-	pAgent = nullptr;
 }
 
 void AI_Retreat::OnEnter(){
 
 }
 
-void AI_Retreat::OnUpdate(){
+void AI_Retreat::OnUpdate(float dt){
 
 }
 
