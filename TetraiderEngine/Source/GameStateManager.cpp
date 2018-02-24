@@ -2,7 +2,6 @@
 #include "TetraiderAPI.h"
 
 GameStateManager::GameStateManager() :
-	m_previousState(GameState::CURRENT_LEVEL),
 	m_currentState(GameState::CURRENT_LEVEL),
 	m_nextState(GameState::CURRENT_LEVEL),
 	m_debugPause(false)
@@ -17,10 +16,8 @@ void GameStateManager::Update() {
 	while (m_currentState != GameState::QUIT) {
 		TETRA_LEVELS.LoadLevel();
 
-		if (m_currentState == GameState::RESTART) {
-			m_currentState = m_previousState;
-			m_nextState = m_previousState;
-		}
+		m_currentState = GameState::CURRENT_LEVEL;
+		m_nextState = GameState::CURRENT_LEVEL;
 
 		// Game loop
 		while (m_currentState == m_nextState) {
@@ -42,7 +39,7 @@ void GameStateManager::Update() {
 		else if(m_nextState == GameState::NEXT_LEVEL) {
 			TETRA_LEVELS.UnLoadLevel();
 		}
-		m_previousState = m_currentState;
+
 		m_currentState = m_nextState;
 	}
 
@@ -71,4 +68,7 @@ void GameStateManager::HandleEvent(Event * p_event) {
 	}
 }
 
-void GameStateManager::SetGameState(GameState state) { m_nextState = state; }
+void GameStateManager::SetGameState(GameState state) { 
+	m_nextState = state; 
+	PauseGame(false);
+}

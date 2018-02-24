@@ -1,6 +1,6 @@
 {
-  "Tag": "Obstacle",
-  "Layer": "2",
+  "Tag": "None",
+  "Layer": "BG",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 96,
-        "y": 96,
+        "x": 300,
+        "y": 300,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_Rock.png",
+      "Texture": "T_CracksRed.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -47,20 +47,6 @@
         "b": 0,
         "a": 0
       }
-    },
-	{
-		"Component": "Body",
-		"isStatic": true,
-		"mass": 0,
-		"SHAPE": {
-			"type": "AABB",
-			"width": 96,
-			"height": 60,
-			"offset": {
-				"x": 0,
-				"y": -15
-			}
-		}
-	}
+    }
   ]
 }

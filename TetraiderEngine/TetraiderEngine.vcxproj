@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
+    <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
     <ClCompile Include="Source\AI_Engage.cpp" />
@@ -95,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
+    <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AIComponent.h" />
     <ClInclude Include="Source\AI_Attack.h" />

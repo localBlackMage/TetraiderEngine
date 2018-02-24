@@ -19,6 +19,20 @@
         "y": 100,
         "z": 0
       }
+    },
+    {
+      "prefab":"P_QuitButton",
+      "position":{
+        "x":0,
+        "y":-66.66
+      }
+    },
+    {
+      "prefab":"P_Title",
+      "position":{
+        "x":0,
+        "y":100
+      }
     }
   ]
 }

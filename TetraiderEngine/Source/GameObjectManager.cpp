@@ -119,10 +119,12 @@ void GameObjectManager::RenderGameObjects()
 	TETRA_DEBUG.RenderDebugCommands();
 
 	// Render UI
-	for (GameObject* cameraGO : m_pCameras) {
-		Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-		if (cameraComp->ShouldRenderLayer(RENDER_LAYER::L_UI))
-			m_layers[RENDER_LAYER::L_UI].RenderLayer(cameraGO);
+	for (unsigned int layer = L_UI; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
+		for (GameObject* cameraGO : m_pCameras) {
+			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
+			if (cameraComp->ShouldRenderLayer(layer))
+				m_layers[layer].RenderLayer(cameraGO);
+		}
 	}
 }
 

@@ -57,8 +57,8 @@
 	{
       "prefab": "P_Rock",
       "position": {
-        "x": -200,
-        "y": 0,
+        "x": -450,
+        "y": -30,
         "z": 0
       }
     },
@@ -83,6 +83,22 @@
       "position": {
         "x": 0,
         "y": 0,
+        "z": 0
+      }
+	},
+	{
+		"prefab": "P_Lavacracks",
+		"position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+	},
+	{
+		"prefab": "P_Lavacracks",
+		"position": {
+        "x": -650,
+        "y": -200,
         "z": 0
       }
 	},
@@ -180,6 +196,14 @@
 	},
 	{
 		"prefab": "P_EggUI"
-	}
+  },
+  {
+    "prefab": "P_PauseMenu",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
   ]
 }

@@ -117,5 +117,5 @@ void GameObject::SetParent(GameObject* pParent) {
 void GameObject::SetActive(bool active) {
 	m_isActive = active;
 	m_isRender = active;
-	m_isCollisionDisabled = active;
+	m_isCollisionDisabled = !active;
 }
