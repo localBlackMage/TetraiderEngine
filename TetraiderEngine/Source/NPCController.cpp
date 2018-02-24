@@ -16,7 +16,8 @@ NPCController::NPCController() :
 	m_outOfSightRadius(0.0f),
 	m_zoneWidth(0.0f),
 	m_zoneHeight(0.0f),
-	m_arrivedAtDestination(true)
+	m_arrivedAtDestination(true),
+	m_speedMultiplier(1.0f)
 {
 }
 
@@ -36,7 +37,6 @@ void NPCController::Update(float dt) {
 		m_AIStates[m_previousState]->OnExit();
 		m_AIStates[m_currentState]->OnEnter();
 		m_previousState = m_currentState;
-		//std::cout << "statechanged\n";
 	}
 	
 	// Update with currentState
@@ -46,14 +46,13 @@ void NPCController::Update(float dt) {
 	if (!m_arrivedAtDestination && !IsArrivedAtDestination()) {
 		Vector3D dirToTarget = m_targetDestination - m_pTransform->GetPosition();
 		dirToTarget.Normalize();
-		m_targetVelocity = dirToTarget*m_speed;
+		m_targetVelocity = dirToTarget*m_speed*m_speedMultiplier;
 	}
 	else {
 		m_arrivedAtDestination = true;
 		m_targetVelocity = Vector3D(0,0,0);
 	}
 
-	
 	Agent::Update(dt);
 }
 
