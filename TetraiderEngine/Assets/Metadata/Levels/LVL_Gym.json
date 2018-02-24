@@ -47,6 +47,14 @@
       }
     },
 	{
+      "prefab": "P_Rock",
+      "position": {
+        "x": -200,
+        "y": 0,
+        "z": 0
+      }
+    },
+	{
       "prefab": "P_ColliderTest2",
       "position": {
         "x": 300,
