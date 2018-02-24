@@ -21,6 +21,9 @@ public:
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
+	void MoveToPlayer();
+	void MoveAroundPlayer();
+	bool UseAttack(int attack);
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
