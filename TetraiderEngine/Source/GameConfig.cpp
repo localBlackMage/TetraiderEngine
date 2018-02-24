@@ -19,6 +19,10 @@ void GameConfig::LoadConfig(std::string s) {
 	m_shadersDir = ParseString(gameSettings, "shadersDir");
 	m_texturesDir = ParseString(gameSettings, "texturesDir");
 	m_roomFilesDir = ParseString(gameSettings, "roomFilesDir");
+	if (ParseBool(gameSettings, "enableWindowsCursor"))
+		TETRA_RENDERER.EnableWindowsCursor();
+	else
+		TETRA_RENDERER.DisableWindowsCursor();
 
 	//set mute
 	m_soundsMute = ParseBool(gameSettings,"soundsMute");

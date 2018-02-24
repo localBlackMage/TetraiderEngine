@@ -56,7 +56,8 @@
 			"acceleration": 10,
 			"knockBackMultiplier": 1
 		},
-		"flySpeed": 400
+		"flySpeed": 400,
+		"featherParticlePrefab": "P_FeatherParticleEmitter"
 	},
 	{
 		"Component": "Animation",

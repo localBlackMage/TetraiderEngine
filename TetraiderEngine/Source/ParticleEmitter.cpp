@@ -112,16 +112,19 @@ void ParticleEmitter::_AllocateParticleArrays()
 	m_positionsScales = (GLfloat*)TETRA_MEMORY.Alloc(sizeof(GLfloat) * m_maxParticles * 4); //(GLfloat*)malloc(sizeof(GLfloat) * m_maxParticles * 4);
 	m_colors = (GLubyte*)TETRA_MEMORY.Alloc(sizeof(GLubyte) * m_maxParticles * 4);			//(GLubyte*)malloc(sizeof(GLubyte) * m_maxParticles * 4);
 
-	for (int i = 0; i < m_maxParticles; i += 4) {
-		m_positionsScales[i] = 0.f;
-		m_positionsScales[i + 1] = 0.f;
-		m_positionsScales[i + 2] = 0.f;
-		m_positionsScales[i + 3] = 0.f;
+	for (int i = 0; i < m_maxParticles; ++i) {
+		m_particles[i].m_life = -1.f;
 
-		m_colors[i] = 0;
-		m_colors[i + 1] = 0;
-		m_colors[i + 2] = 0;
-		m_colors[i + 3] = 0;
+		int i4 = i * 4;
+		m_positionsScales[i4] = 0.f;
+		m_positionsScales[i4 + 1] = 0.f;
+		m_positionsScales[i4 + 2] = 0.f;
+		m_positionsScales[i4 + 3] = 0.f;
+
+		m_colors[i4] = 0;
+		m_colors[i4 + 1] = 0;
+		m_colors[i4 + 2] = 0;
+		m_colors[i4 + 3] = 0;
 	}
 }
 
@@ -142,6 +145,7 @@ void ParticleEmitter::_AllocateVBOs()
 
 ParticleEmitter::ParticleEmitter() :
 	Component(ComponentType::C_ParticleEmitter),
+	m_active(true),
 	m_currentTime(0.f),
 	m_emissionTime(0.f),
 	m_emissionTimer(0.f),
@@ -185,9 +189,11 @@ void ParticleEmitter::Update(float dt)
 		m_currentTime += dt;
 		m_emissionTimer += dt;
 
-		while (m_emissionTimer > m_emissionTime) {
-			_SpawnParticle();
-			m_emissionTimer -= m_emissionTime;
+		if (m_active) {
+			while (m_emissionTimer > m_emissionTime) {
+				_SpawnParticle();
+				m_emissionTimer -= m_emissionTime;
+			}
 		}
 
 		_UpdateParticles(dt);
@@ -240,16 +246,16 @@ void ParticleEmitter::Serialize(const json & j)
 	m_texture = TETRA_RESOURCES.GetTexture(textureName);
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
-	//_AllocateParticleArrays();
-	//_AllocateVBOs();
+	_AllocateParticleArrays();
+	_AllocateVBOs();
 	m_liveParticleCount = 0;
 }
 
 void ParticleEmitter::Override(const json & j)
 {
 	// TODO: Find way to release previous VBOs
-	_AllocateParticleArrays();
-	_AllocateVBOs();
+	//_AllocateParticleArrays();
+	//_AllocateVBOs();
 }
 
 void ParticleEmitter::HandleEvent(Event * p_event)

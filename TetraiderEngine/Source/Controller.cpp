@@ -4,6 +4,7 @@
 #include "Health.h"
 #include "Stamina.h"
 #include "Transform.h"
+#include "ParticleEmitter.h"
 #include "TetraiderAPI.h"
 #include <iostream>
 
@@ -26,6 +27,8 @@ void Controller::Update(float dt) {
 void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 	m_flySpeed = ParseFloat(j, "flySpeed");
+	m_pParticleEmitterGO = TETRA_GAME_OBJECTS.CreateGameObject(ParseString(j, "featherParticlePrefab"));
+	m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
 }
 
 void Controller::HandleEvent(Event* pEvent) {
@@ -52,8 +55,14 @@ void Controller::HandleEvent(Event* pEvent) {
 		}
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) m_isIgnoreHazards = true;
-			else m_isIgnoreHazards = false;
+			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) {
+				m_isIgnoreHazards = true;
+				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
+			}
+			else {
+				m_isIgnoreHazards = false;
+				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+			}
 			break;
 		}
 		case EVENT_INPUT_MELEE: {
@@ -71,7 +80,9 @@ void Controller::HandleEvent(Event* pEvent) {
 
 void Controller::LateInitialize() {
 	Agent::LateInitialize();
-
+	if (m_pParticleEmitterGO) {
+		m_pParticleEmitterGO->SetParent(pGO);
+	}
 	if(!m_pWeapon) {
 		if (pGO)
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);

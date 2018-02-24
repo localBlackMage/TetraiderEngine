@@ -59,9 +59,11 @@ protected:
 	int m_emissionRate;			// How many particles to emit over the duration of a single loop
 	int m_maxParticles;			// Max number of particles allowed at once - emission will halt temporarily if this number is met
 	float m_rotationOverTime;	// Speed at which a particle will rotate during it's lifetime
+	bool m_randomEmission;		// Whether or not the Emitter should "randomly" emit new particles
 
 
 	// Emitter Run Properties
+	bool m_active;				// Determines whether or not this emitter will run
 	Transform* m_pTransform;	// Parent GO is required to have a Transform for an emitter
 	float m_currentTime;		// Current time (t) within this loop
 	float m_emissionTime;		// How long to wait to spawn the next particle
@@ -112,6 +114,9 @@ public:
 	GLuint GetColors() const { return m_colorsBuffer; }
 
 	int LiveParticles() const { return m_liveParticleCount; }
+
+	void ActivateParticles() { m_active = true; }
+	void DeactivateParticles() { m_active = false; }
 };
 
 #endif

@@ -9,6 +9,7 @@
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
 		"soundsMute":true
+		"enableWindowsCursor": false
 	},
 	"WINDOW_SETTINGS": {
 		"windowTitle" : "Eggnapped!",

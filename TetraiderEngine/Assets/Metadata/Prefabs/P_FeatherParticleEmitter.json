@@ -1,0 +1,57 @@
+{
+  "Tag": "Particle",
+  "Layer": "3",
+  "COMPONENTS": [
+    {
+		"Component": "Transform",
+		"position": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"scale": {
+			"x": 1,
+			"y": 0,
+			"z": 0
+		},
+		"pivotOffset": {
+			"x": 0,
+			"y": 0
+		},
+		"rotation": {
+			"x": 0,
+			"y": 0,
+			"z": 80
+		}
+    },
+	{
+		"Component": "ParticleEmitter",
+		
+		"loopDuration": 2.0,
+		"looping": true,
+		"prewarmed": false,
+		"startDelay": 0,
+		"lifeTime": 1.0,
+		"speed": 40.0,
+		"size": 20.0,
+		"rotation": 0,
+		"colorStart": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"colorEnd": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"gravity": 0.6,
+		"emissionRate": 7,
+		"max": 20,
+		"rotationOverTime": 0,
+		"particleTexture": "T_Feather.png"
+    }
+  ]
+}

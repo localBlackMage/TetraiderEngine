@@ -70,5 +70,5 @@ unsigned int GetPascalEntry(unsigned short degree, unsigned short index)
 float Bernstein(unsigned short d, float t, unsigned short i) {
 	float dci = float(GetPascalEntry(d, i));
 
-	return std::powf((float(i) - t), float(d - i)) * std::pow(t, i) * dci;
+	return std::powf((float(i) - t), float(d - i)) * std::powf(t, i) * dci;
 }

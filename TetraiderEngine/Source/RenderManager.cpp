@@ -27,7 +27,7 @@ RenderManager::RenderManager(int width, int height, std::string title) :
 
 RenderManager::~RenderManager() 
 {
-	SDL_ShowCursor(SDL_ENABLE);
+	EnableWindowsCursor();
 	SDL_GL_DeleteContext(m_context);
 	SDL_Quit();
 }
@@ -64,8 +64,6 @@ void RenderManager::_InitWindow(std::string title)
 
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 	glViewport(0, 0, m_width, m_height);
-
-	SDL_ShowCursor(SDL_DISABLE);
 }
 
 std::string RenderManager::_LoadTextFile(std::string fname)
@@ -471,6 +469,16 @@ void RenderManager::HandleEvent(Event * p_event)
 		int fps = (int)p_event->Data<FPSData>()->mFPS;
 		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
 	}
+}
+
+void RenderManager::EnableWindowsCursor()
+{
+	SDL_ShowCursor(SDL_ENABLE);
+}
+
+void RenderManager::DisableWindowsCursor()
+{
+	SDL_ShowCursor(SDL_DISABLE);
 }
 
 void RenderManager::SetWindowWidth(int width)

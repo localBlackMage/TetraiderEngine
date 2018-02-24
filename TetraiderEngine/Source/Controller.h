@@ -6,6 +6,7 @@
 
 class Weapon;
 class Stamina;
+class ParticleEmitter;
 
 class Controller : public Agent {
 public:
@@ -20,6 +21,7 @@ public:
 protected:
 	Weapon* m_pWeapon;
 	Stamina* m_pStamina;
+	GameObject* m_pParticleEmitterGO;
 private:
 	bool m_isGameControllerEnabled;
 	float m_flySpeed;

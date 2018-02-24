@@ -105,6 +105,8 @@ public:
 	void Resize(int width, int height);
 	virtual void HandleEvent(Event * p_event);
 
+	void EnableWindowsCursor();
+	void DisableWindowsCursor();
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
 	void SetWindowTitle(std::string title);
