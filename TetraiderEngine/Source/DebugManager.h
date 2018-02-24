@@ -62,6 +62,7 @@ public:
 
 	void ClearDebugCommands();
 	void RenderDebugCommands();
+	bool IsDebugModeOn() { return m_isDebugModeEnabled; }
 };
 
 #endif

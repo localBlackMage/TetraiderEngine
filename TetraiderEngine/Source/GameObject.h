@@ -14,7 +14,7 @@
 class Event;
 class Component;
 
-class GameObject : public Subscriber 
+class GameObject 
 {
 private:
 	Component* mComponents[ComponentType::NUM_COMPONENTS];
@@ -51,6 +51,7 @@ public:
 	void AddComponent(Component* pComponent);
 	bool HasComponent(ComponentType type) const;
 	void SetParent(GameObject* pParent);
+	void SetActive(bool active);
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {

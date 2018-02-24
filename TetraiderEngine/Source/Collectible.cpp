@@ -27,7 +27,7 @@ void Collectible::HandleEvent(Event* pEvent) {
 			if (pData->pGO->m_tag != T_Player) return;
 
 			if (m_isEgg) {
-				pData->pGO->HandleEvent(&Event(EVENT_EggCollected, &CollectibleData(m_value)));
+				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EggCollected, &CollectibleData(m_value)));
 				pGO->Destroy();
 			}
 			else if (m_isHealthPickUp) {

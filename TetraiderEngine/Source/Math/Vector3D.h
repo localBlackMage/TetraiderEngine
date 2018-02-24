@@ -66,6 +66,7 @@ public:
 	static Vector3D Normalize(const Vector3D& vector);
 	static float Dot(const Vector3D& vector0, const Vector3D& vector1);
 	static Vector3D Cross(const Vector3D& vector0, const Vector3D& vector1);
+	static Vector3D VectorFromAngleDegrees(float degrees);
 	static Vector3D AngleRadians(float radians, Vector3D& axis);
 	static Vector3D AngleDegrees(float degrees, Vector3D& axis);
 };

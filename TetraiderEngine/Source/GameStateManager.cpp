@@ -8,6 +8,7 @@ GameStateManager::GameStateManager() :
 	m_debugPause(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+	TETRA_EVENTS.Subscribe(EVENT_LevelComplete, this);
 }
 
 GameStateManager::~GameStateManager() {}
@@ -61,6 +62,10 @@ void GameStateManager::HandleEvent(Event * p_event) {
 		case EVENT_INPUT_PAUSEGAME: {
 			InputButtonData* pData = p_event->Data<InputButtonData>();
 			if(pData->m_isTrigger) PauseGame(!m_isGamePaused);
+			break;
+		}
+		case EVENT_LevelComplete: {
+			SetGameState(GameState::RESTART);
 			break;
 		}
 	}

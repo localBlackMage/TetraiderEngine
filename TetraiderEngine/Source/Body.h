@@ -39,10 +39,12 @@ public:
 private:
 	Transform* m_pTransform;
 	Vector3D m_Acceleration;
-	Vector3D m_Position; 
+	Vector3D m_Position;
+	Vector3D m_PositionWithOffset;
 	Vector3D m_Velocity;
 	Vector3D m_PrevPosition;
 	Vector3D m_Forces;
+	Vector3D m_positionOffset;
 	float m_massInv;
 	void DrawDebugShape();
 	void ClearForces();

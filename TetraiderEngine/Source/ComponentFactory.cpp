@@ -28,6 +28,8 @@
 #include "SpawnOnHealthZero.h"
 #include "FollowCursor.h"
 #include "Button.h"
+#include "LevelStatus.h"
+#include "EggCounter.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -56,6 +58,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["SpawnOnHealthZero"] = SpawnOnHealthZero::CreateInstance;
 	m_creationFunctions["FollowCursor"] = FollowCursor::CreateInstance;
 	m_creationFunctions["Button"] = Button::CreateInstance;
+	m_creationFunctions["LevelStatus"] = LevelStatus::CreateInstance;
+	m_creationFunctions["EggCounter"] = EggCounter::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

@@ -29,9 +29,9 @@ void Projectile::HandleEvent(Event* pEvent) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
 
 		// Avoid friendly fire
-		if (m_isEnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
-		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Player) return;
-		else if (!m_isEnemyProjectile && collisionData->pGO->m_tag == T_Projectile) return;
+		if (m_projectileType == ProjectileType::EnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
+		else if (m_projectileType == ProjectileType::PlayerProjectile && collisionData->pGO->m_tag == T_Player) return;
+		else if (collisionData->pGO->m_tag == T_Projectile) return;
 		else if (collisionData->pGO == m_pOwner) return;
 		else if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_None) return;
 
@@ -51,7 +51,21 @@ void Projectile::SetProperties(const Vector3D& position, int damage, float speed
 	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x)*180/PI);
 	m_damage = damage;
 	m_lifeTime = lifeTime;
-	m_isEnemyProjectile = isEnemyProjectile;
+	if (isEnemyProjectile)
+		m_projectileType = ProjectileType::EnemyProjectile;
+	else
+		m_projectileType = ProjectileType::PlayerProjectile;
+	m_pBody->SetVelocity(speed*dir);
+	m_knockBackSpeed = knockBackSpeed;
+	m_pOwner = owner;
+}
+
+void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, float knockBackSpeed, GameObject* owner) {
+	m_pTransform->SetPosition(position);
+	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x) * 180 / PI);
+	m_damage = damage;
+	m_lifeTime = lifeTime;
+	m_projectileType = ProjectileType::Neutral;
 	m_pBody->SetVelocity(speed*dir);
 	m_knockBackSpeed = knockBackSpeed;
 	m_pOwner = owner;

@@ -113,3 +113,9 @@ void GameObject::SetParent(GameObject* pParent) {
 			myTransform->SetParent(parentTransform);
 	}
 }
+
+void GameObject::SetActive(bool active) {
+	m_isActive = active;
+	m_isRender = active;
+	m_isCollisionDisabled = active;
+}

@@ -31,22 +31,31 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"luaScripts": [
+		"detectionRadius": 400,
+		"outOfSightRadius": 600,
+		"zoneWidth": 500,
+		"zoneHeight": 500,
+		"AIStates": [
 			{
-				"state": 0,
-				"luaScript": "IdleBehavior"
+				"name": "idleBehavior",
+				"behaviorIndex": 0,
+				"AIStateType": "NPC_State_Idle"
 			},
-			{
-				"state": 1,
-				"luaScript": "EngageBehavior"
+			{	"name": "engageBehavior",
+				"behaviorIndex": 1,
+				"AIStateType": "NPC_State_Engage"
 			},
-			{
-				"state": 2,
-				"luaScript": "AttackBehavior"
+			{	"name": "attackBehavior",
+				"behaviorIndex": 2,				
+				"AIStateType": "NPC_State_Attack"
 			},
-			{
-				"state": 3,
-				"luaScript": "RetreatBehavior"
+			{	"name": "retreatBehavior",
+				"behaviorIndex": 3,
+				"AIStateType": "NPC_State_Retreat"
+			},
+			{	"name": "moveToRandomPointInZoneBehavior",
+				"behaviorIndex": 4,
+				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}
 		]
 	},

@@ -107,11 +107,11 @@ void Transform::Override(const json & j)
 void Transform::HandleEvent(Event * p_event) {
 	switch (p_event->Type()) {
 	case EventType::EVENT_FlipScaleX:
-		m_position.x *= -1;
+		if(m_parent) m_position.x *= -1;
 		m_scale.x *= -1;
 		break;
 	case EventType::EVENT_FlipScaleY:
-		m_position.y *= -1;
+		if (m_parent) m_position.y *= -1;
 		m_scale.y *= -1;
 		break;
 	}

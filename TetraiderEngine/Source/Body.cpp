@@ -32,6 +32,7 @@ void Body::LateUpdate(float dt) {
 
 void Body::Integrate(float dt) {
 	if (m_isStatic) {
+		m_PositionWithOffset = m_positionOffset + m_pTransform->m_position;
 		DrawDebugShape();
 		return;
 	}
@@ -52,7 +53,7 @@ void Body::Integrate(float dt) {
 
 	// Update transform positions
 	m_pTransform->m_position = m_Position;
-
+	m_PositionWithOffset = m_positionOffset + m_Position;
 	// Clear all forces
 	ClearForces();
 }
@@ -65,6 +66,10 @@ void Body::Serialize(const json& j) {
 	else m_massInv = 1 / m_mass;
 
 	std::string shape = ParseString(j["SHAPE"], "type");
+	if (ValueExists(j["SHAPE"], "offset")) {
+		m_positionOffset.x = ParseFloat(j["SHAPE"]["offset"], "x");
+		m_positionOffset.y = ParseFloat(j["SHAPE"]["offset"], "y");
+	}
 
 	// TODO: Shapes will not get overriden by level
 	if (!m_pShape) {
@@ -123,7 +128,7 @@ void Body::LateInitialize() {
 	}
 }
 
-const Vector3D& Body::GetPosition() const { return m_Position; }
+const Vector3D& Body::GetPosition() const { return m_PositionWithOffset; }
 const Vector3D& Body::GetPreviousPosition() const { return m_PrevPosition; }
 const Vector3D& Body::GetVelocity() const { return m_Velocity; }
 

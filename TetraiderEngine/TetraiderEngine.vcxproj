@@ -19,7 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
     <ClCompile Include="Source\Button.cpp" />
+    <ClCompile Include="Source\AI_Attack.cpp" />
+    <ClCompile Include="Source\AI_Engage.cpp" />
+    <ClCompile Include="Source\AI_Idle.cpp" />
+    <ClCompile Include="Source\AI_Retreat.cpp" />
+    <ClCompile Include="Source\AI_StateFactory.cpp" />
     <ClCompile Include="Source\AOEAttack.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Agent.cpp" />
@@ -36,6 +42,7 @@
     <ClCompile Include="Source\DebugLineMesh.cpp" />
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DestroyOnHealthZero.cpp" />
+    <ClCompile Include="Source\EggCounter.cpp" />
     <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\FlashOnTakeDamage.cpp" />
@@ -50,6 +57,7 @@
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\JsonReader.cpp" />
     <ClCompile Include="Source\LevelManager.cpp" />
+    <ClCompile Include="Source\LevelStatus.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Math\Collisions.cpp" />
     <ClCompile Include="Source\Math\LineSegment2D.cpp" />
@@ -86,7 +94,15 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
     <ClInclude Include="Source\Button.h" />
+    <ClInclude Include="Source\AIComponent.h" />
+    <ClInclude Include="Source\AI_Attack.h" />
+    <ClInclude Include="Source\AI_Engage.h" />
+    <ClInclude Include="Source\AI_Idle.h" />
+    <ClInclude Include="Source\AI_Retreat.h" />
+    <ClInclude Include="Source\AI_State.h" />
+    <ClInclude Include="Source\AI_StateFactory.h" />
     <ClInclude Include="Source\AOEAttack.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Agent.h" />
@@ -106,6 +122,7 @@
     <ClInclude Include="Source\DebugLineMesh.h" />
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DestroyOnHealthZero.h" />
+    <ClInclude Include="Source\EggCounter.h" />
     <ClInclude Include="Source\Event.h" />
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\EventNames.h" />
@@ -124,6 +141,7 @@
     <ClInclude Include="Source\JsonReader.h" />
     <ClInclude Include="Source\Layers.h" />
     <ClInclude Include="Source\LevelManager.h" />
+    <ClInclude Include="Source\LevelStatus.h" />
     <ClInclude Include="Source\Math\Collisions.h" />
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
@@ -139,8 +157,8 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MyArray.h" />
     <ClInclude Include="Source\NPCController.h" />
-    <ClInclude Include="Source\NPCState.h" />
-    <ClInclude Include="Source\NPCStateNames.h" />
+    <ClInclude Include="Source\AI_StateTypes.h" />
+    <ClInclude Include="Source\AI_StateTypeNames.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\PointLight.h" />

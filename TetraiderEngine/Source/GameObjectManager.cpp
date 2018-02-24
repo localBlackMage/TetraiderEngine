@@ -150,7 +150,6 @@ void GameObjectManager::DestroyGameObjects() {
 					m_pCameras.erase(iter);
 			}
 
-			(*it)->DeactivateSubscriber();
 			TETRA_PHYSICS.RemoveGameObject(*it);
 			TETRA_MEMORY.DeleteGameObject(*it);
 			it = mGameObjects.erase(it);
@@ -208,7 +207,6 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	}
 
 	pGameObject->LateInitialize();
-	pGameObject->ActivateSubscriber();
 	AddGameObjectToQueue(pGameObject);
 	return pGameObject;
 }

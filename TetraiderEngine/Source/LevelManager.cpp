@@ -64,6 +64,8 @@ void LevelManager::LoadLevel() {
 		std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
 		_LoadLevel(OpenJsonFile(s));
 	}
+
+	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 }
 
 void LevelManager::UnLoadLevel() {
@@ -107,8 +109,6 @@ void LevelManager::_LoadLevel(const json& j) {
 			pGO->OverrideComponents(j[GAME_OBJECTS][i]);
 		}
 	}
-
-	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 }
 
 void LevelManager::HandleEvent(Event* pEvent) {

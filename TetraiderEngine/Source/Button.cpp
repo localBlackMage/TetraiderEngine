@@ -40,19 +40,15 @@ void Button::LateInitialize()
 
 void Button::HandleEvent(Event* pEvent)
 {
-	if (pEvent->Type() == EVENT_OnCollide && TETRA_INPUT.IsMouseButtonTriggered(MOUSEBTN::MOUSE_BTN_LEFT))
+	if (pEvent->Type() == EVENT_OnCollide)
 	{
-		//std::cout << "Button Released\n";
-		m_pSprite->SetVOffset(0.66666);
-
-		TETRA_LEVELS.ChangeLevel(m_levelNumber);
-		//TETRA_LEVELS.NextLevel();
-
-	}
-	else if (pEvent->Type() == EVENT_OnCollide)
-	{
-		//m_pSprite->SetUOffset(0);
-		m_pSprite->SetVOffset(0.3333);
+		m_pSprite->SetVOffset(0.3333f);
+		if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
+			m_pSprite->SetVOffset(0.6666f);
+		}
+		else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
+			TETRA_LEVELS.ChangeLevel(m_levelNumber);
+		}
 	}
 }
 
