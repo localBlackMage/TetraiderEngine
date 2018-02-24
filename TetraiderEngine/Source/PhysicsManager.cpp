@@ -28,8 +28,10 @@ PhysicsManager::~PhysicsManager() {
 void PhysicsManager::Integrate(float dt) {
 	int size = m_gameObjects.size();
 	for (int i = 0; i < size; ++i) {
-		Body* c = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
-		c->Integrate(dt);
+		if (m_gameObjects[i]->m_isActive) {
+			Body* c = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
+			c->Integrate(dt);
+		}
 	}
 }
 

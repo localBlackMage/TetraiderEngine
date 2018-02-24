@@ -7,15 +7,16 @@
 #include "Camera.h"
 #include <iostream>
 
-Agent::Agent(ComponentType _type) : 
-	Component(_type), 
-	m_speed(0.0f), 
-	m_acceleration(0.0f), 
-	m_deceleration(0.0f), 
+Agent::Agent(ComponentType _type) :
+	Component(_type),
+	m_speed(0.0f),
+	m_acceleration(0.0f),
+	m_deceleration(0.0f),
 	m_lookDirection(Vector3D(1, 0, 0)),
 	m_knockBackMultiplier(1),
 	m_faceDirection(FaceDirection::Right),
-	m_isIgnoreHazards(false)
+	m_isIgnoreHazards(false),
+	m_isDead(false)
 {};
 
 void Agent::Deactivate() {
@@ -27,6 +28,9 @@ void Agent::Deactivate() {
 }
 
 void Agent::Update(float dt) {
+	if (m_isDead)
+		return;
+
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
 	m_pBody->SetVelocity(m_currentVelocity);
 
@@ -72,6 +76,13 @@ void Agent::HandleEvent(Event* pEvent) {
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
 		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
 		AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);
+	}
+	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
+		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
+		if (healthData->mCurrentHealth == 0) {
+			m_pBody->SetVelocity(Vector3D(0,0,0));
+			m_isDead = true;
+		}
 	}
 }
 

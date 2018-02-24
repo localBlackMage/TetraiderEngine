@@ -36,6 +36,7 @@ protected:
 	float m_acceleration;
 	float m_deceleration;
 	float m_knockBackMultiplier;
+	bool m_isDead;
 	Vector3D m_targetVelocity;
 	Vector3D m_lookDirection;
 	Transform* m_pTransform;

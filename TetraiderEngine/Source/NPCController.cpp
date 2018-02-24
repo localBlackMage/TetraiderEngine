@@ -19,6 +19,7 @@ NPCController::NPCController() :
 	m_arrivedAtDestination(true),
 	m_speedMultiplier(1.0f)
 {
+	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 }
 
 NPCController::~NPCController() {
@@ -109,6 +110,10 @@ void NPCController::HandleEvent(Event* pEvent) {
 		m_startingPoint = m_pTransform->GetPosition();
 		m_targetDestination = m_startingPoint;
 	}
+	else if (pEvent->Type() == EVENT_OnPlayerHealthZero) {
+		m_currentState = NPC_IDLE;
+		m_isPlayerDead = true;
+	}
 }
 
 void NPCController::LateInitialize() {
@@ -134,14 +139,20 @@ float NPCController::GetSquareDistanceToPlayer() {
 }
 
 bool NPCController::IsArrivedAtDestination() {
-	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_targetDestination) < 150.0f;
+	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_targetDestination) < 200.0f;
 }
 
 bool NPCController::IsPlayerInSight() {
+	if (m_isPlayerDead)
+		return false;
+
 	return GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius;
 }
 
 bool NPCController::IsPlayerOutOfSight() {
+	if (m_isPlayerDead) 
+		return true;
+
 	return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
 }
 
@@ -191,6 +202,9 @@ void NPCController::MoveToPlayer() {
 }
 
 void NPCController::GoToPositionAroundPlayer() {
+	if(m_isPlayerDead)
+		SetTargetDestination(m_pTransform->GetPosition());
+
 	float angleOffset;
 
 	if (GetSquareDistanceToPlayer() > 250.0f) {
@@ -215,5 +229,8 @@ bool NPCController::UseAttack(int attack) {
 }
 
 bool NPCController::IsInAttackRange() {
+	if (m_isPlayerDead)
+		return false;
+
 	return GetSquareDistanceToPlayer() < m_attackRange*m_attackRange;
 }

@@ -7,7 +7,8 @@ class FollowCursor : public Component
 {
 private:
 	Transform * m_pTransform;
-	Body* m_pBody;
+	bool m_isDisableRenderOnPause;
+	bool m_isLevelOver;
 public:
 	FollowCursor();
 	~FollowCursor();

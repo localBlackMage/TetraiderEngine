@@ -56,7 +56,7 @@ private:
 	Vector3D m_startingPoint;
 	Vector3D m_targetDestination;
 	bool m_arrivedAtDestination;
-
+	bool m_isPlayerDead;
 	const Transform* m_pPlayerTransform;
 };
 

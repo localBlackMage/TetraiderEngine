@@ -63,6 +63,9 @@
       }
     },
 	{
+      "prefab": "P_InGameCursor"
+    },
+	{
       "prefab": "P_ColliderTest2",
       "position": {
         "x": 300,

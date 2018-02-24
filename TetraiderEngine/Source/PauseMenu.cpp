@@ -1,10 +1,12 @@
 #include "PauseMenu.h"
 #include "TetraiderAPI.h"
 #include "Transform.h"
+#include "Text.h"
 
 PauseMenu::PauseMenu():Component(ComponentType::C_PauseMenu)
 {
 	isActive = false;
+	isLevelOver = false;
 }
 
 PauseMenu::~PauseMenu(){}
@@ -38,6 +40,8 @@ void PauseMenu::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME)
 	{
+		if (isLevelOver) return;
+
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
 		if (pData->m_isTrigger) {
 			isActive = !isActive;
@@ -47,18 +51,68 @@ void PauseMenu::HandleEvent(Event * pEvent)
 			}
 			pGO->m_isRender = isActive;
 		}
-		/*pObject = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Pause);
-		pObject->SetActive(!TETRA_GAME_STATE.IsGamePaused());*/
+
+		if (m_pText) {
+			m_pText->SetText("PAUSED");
+			m_pText->SetOffset(Vector3D(-130, 200, 0));
+		}
+	}
+	else if (pEvent->Type() == EVENT_LevelComplete) {
+		isLevelOver = true;
+		isActive = true;
+		for (auto gameObjects : m_objects)
+		{
+			gameObjects->SetActive(isActive);
+		}
+		pGO->m_isRender = isActive;
+
+		if (m_pText) {
+			m_pText->SetText("YOU WIN");
+			m_pText->SetOffset(Vector3D(-160, 200, 0));
+		}
+	}
+	else if (pEvent->Type() == EVENT_LevelInComplete) {
+		isLevelOver = true;
+		isActive = true;
+
+		for (auto gameObjects : m_objects) {
+			gameObjects->SetActive(isActive);
+		}
+
+		pGO->m_isRender = isActive;
+
+		if (m_pText) {
+			m_pText->SetText("YOU LOSE");
+			m_pText->SetOffset(Vector3D(-180, 200, 0));
+		}
 	}
 }
 
 void PauseMenu::LateInitialize()
 {
-	for (auto gameObjects : m_objects)
-	{
+	for (auto gameObjects : m_objects) {
 		gameObjects->SetActive(isActive);
 	}
-	pGO->m_isRender = isActive;
+
+	if (!m_pText) {
+		if (pGO)
+			m_pText = pGO->GetComponent<Text>(ComponentType::C_Text);
+		else {
+			//printf("No Game Object found. EggCounter component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pText) {
+			//printf("No Text component found. EggCounter component failed to operate.\n");
+			//assert(m_pText);
+			return;
+		}
+	}
+
+	pGO->m_isRender = false;
+
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+	TETRA_EVENTS.Subscribe(EVENT_LevelComplete , this);
+	TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
 }
 
