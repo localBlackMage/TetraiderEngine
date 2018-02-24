@@ -33,10 +33,10 @@ void Body::LateUpdate(float dt) {
 void Body::Integrate(float dt) {
 	if (m_isStatic) {
 		m_PositionWithOffset = m_positionOffset + m_pTransform->m_position;
-		DrawDebugShape();
 		return;
 	}
 
+	m_PositionWithOffset = m_positionOffset + m_pTransform->m_position;
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 
 	// Update previous position

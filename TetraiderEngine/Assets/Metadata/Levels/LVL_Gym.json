@@ -180,6 +180,14 @@
 	},
 	{
 		"prefab": "P_EggUI"
-	}
+  },
+  {
+    "prefab": "P_PauseMenu",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
   ]
 }

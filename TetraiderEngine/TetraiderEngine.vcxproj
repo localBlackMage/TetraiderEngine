@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
+=======
+    <ClCompile Include="Source\PauseMenu.cpp" />
+>>>>>>> Menu system complete
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
     <ClCompile Include="Source\AI_Engage.cpp" />
@@ -94,7 +98,11 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
+=======
+    <ClInclude Include="Source\PauseMenu.h" />
+>>>>>>> Menu system complete
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AIComponent.h" />
     <ClInclude Include="Source\AI_Attack.h" />

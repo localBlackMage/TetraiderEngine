@@ -6,6 +6,8 @@
 
 Button::Button() :Component(ComponentType::C_Button) 
 {
+	isQuit = false;
+	isRestart = false;
 }
 Button::~Button() {}
 
@@ -18,6 +20,7 @@ void Button::Serialize(const json & j)
 {
 	m_levelNumber = ParseInt(j, "level");
 	isQuit = ParseBool(j, "quit");
+	isRestart = ParseBool(j,"restart");
 }
 
 void Button::LateInitialize()
@@ -43,17 +46,22 @@ void Button::HandleEvent(Event* pEvent)
 {
 	if (pEvent->Type() == EVENT_OnCollide)
 	{
-		m_pSprite->SetVOffset(0.3333f);
-		if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
-			m_pSprite->SetVOffset(0.6666f);
-		}
-		else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
-			if (isQuit)
-			{
-				TETRA_GAME_STATE.SetGameState(GameState::QUIT);
+		OnCollideData* pData = pEvent->Data<OnCollideData>();
+		if (pData->pGO->m_tag == T_UI) {
+			m_pSprite->SetVOffset(0.3333f);
+			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
+				m_pSprite->SetVOffset(0.6666f);
 			}
-			else
-				TETRA_LEVELS.ChangeLevel(m_levelNumber);
+			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
+				if (isQuit) {
+					TETRA_EVENTS.BroadcastEvent(&Event(WINDOW_CLOSED));
+				}
+				else if (isRestart) {
+					TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
+				}
+				else
+					TETRA_LEVELS.ChangeLevel(m_levelNumber);
+			}
 		}
 	}
 }

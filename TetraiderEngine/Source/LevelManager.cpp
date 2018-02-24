@@ -16,6 +16,11 @@ LevelManager::~LevelManager() {}
 
 bool LevelManager::IsLastLevel() {return currentLevel == (maxLevel - 1); }
 
+int LevelManager::GetCurrentLevel()
+{
+	return currentLevel;
+}
+
 void LevelManager::LoadStaticGameObjects()
 {
 	int gameObjectSize = staticObjects[GAME_OBJECTS].size();

@@ -10,6 +10,7 @@ private:
 	Sprite* m_pSprite;
 	int m_levelNumber;
 	bool isQuit;
+	bool isRestart;
 	//Text* m_pText;
 public:
 	Button();
