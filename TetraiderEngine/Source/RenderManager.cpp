@@ -27,6 +27,7 @@ RenderManager::RenderManager(int width, int height, std::string title) :
 
 RenderManager::~RenderManager() 
 {
+	SDL_ShowCursor(SDL_ENABLE);
 	SDL_GL_DeleteContext(m_context);
 	SDL_Quit();
 }
@@ -63,6 +64,8 @@ void RenderManager::_InitWindow(std::string title)
 
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 	glViewport(0, 0, m_width, m_height);
+
+	SDL_ShowCursor(SDL_DISABLE);
 }
 
 std::string RenderManager::_LoadTextFile(std::string fname)
