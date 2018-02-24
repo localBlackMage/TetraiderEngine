@@ -29,11 +29,9 @@ float CosWave(float amplitude, float frequency, float phaseShift, float time) {
 }
 
 float RandomFloat(float min, float max) {
-	srand(static_cast<unsigned int> (time(0)));
-	return static_cast<float>(rand()) / max + min;
+	return static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max-min) + min;
 }
 
 int RandomInt(int min, int max) {
-	srand(static_cast<unsigned int> (time(0)));
-	return rand() / max + min;
+	return rand() % (max-min) + min;
 }

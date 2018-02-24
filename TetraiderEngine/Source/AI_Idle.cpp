@@ -4,6 +4,7 @@
 #include "Math\MathFunctions.h"
 
 #include <stdlib.h> // rand()
+#include <iostream>
 
 AI_Idle::AI_Idle()
 : AI_State(NPC_State_Idle) {
@@ -27,6 +28,8 @@ void AI_Idle::OnUpdate(){
 	else {
 
 	}
+	std::cout << RandomInt(1, 10) << endl;
+	//std::cout << RandomFloat(0.1, 10) << endl;
 }
 
 void AI_Idle::OnExit(){
