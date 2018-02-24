@@ -147,6 +147,11 @@ void NPCController::SetTargetDestination(const Vector3D& pos) {
 	m_targetDestination = pos;
 }
 
+// Assumes probability is between 0 and 1
+bool NPCController::RollDie(float probability) {
+	return false;
+}
+
 void NPCController::SetDestinationToRandomPointInZone() {
 
 }

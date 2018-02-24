@@ -30,6 +30,7 @@ protected:
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
+	bool RollDie(float probability);
 private:
 	AIStateFactory AIStateFactory;
 	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];
