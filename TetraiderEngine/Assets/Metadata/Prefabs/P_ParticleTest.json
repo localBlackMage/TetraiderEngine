@@ -21,7 +21,7 @@
 		"rotation": {
 			"x": 0,
 			"y": 0,
-			"z": 45
+			"z": 80
 		}
     },
 	{
@@ -31,21 +31,27 @@
 		"looping": true,
 		"prewarmed": false,
 		"startDelay": 0,
-		"lifeTime": 4.0,
-		"speed": 80.0,
+		"lifeTime": 1.0,
+		"speed": 40.0,
 		"size": 20.0,
 		"rotation": 0,
-		"color": {
-			"r": 0.6196,
-			"g": 0.9686,
-			"b": 0.9451,
+		"colorStart": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
 			"a": 1
 		},
-		"gravity": 1.5,
-		"emissionRate": 50,
-		"max": 200,
+		"colorEnd": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"gravity": 0.6,
+		"emissionRate": 5,
+		"max": 20,
 		"rotationOverTime": 0,
-		"particleTexture": "T_Particle.png"
+		"particleTexture": "T_Feather.png"
     }
   ]
 }

@@ -6,6 +6,22 @@
 
 #pragma region Private Methods
 
+static Color Lerp(const Color& colorA, const Color& colorB, float t)
+{
+	if (t > 1)
+		t = 1;
+	else if (t < 0)
+		t = 0;
+	float tMinus = 1.f - t;
+
+	return Color(
+		int(colorA.r * tMinus + t * colorB.r),
+		int(colorA.g * tMinus + t * colorB.g),
+		int(colorA.b * tMinus + t * colorB.b),
+		int(colorA.a * tMinus + t * colorB.a)
+	);
+}
+
 int ParticleEmitter::_FindUnusedParticle()
 {
 	for (int i = m_lastUsedParticle; i<m_maxParticles; i++) {
@@ -60,10 +76,11 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 				// TODO: decide on a better way to get a camera
 				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
-				p.m_color.r = m_color.r;
-				p.m_color.g = m_color.g;
-				p.m_color.b = m_color.b;
-				p.m_color.a = m_color.a;
+				Color color = Lerp(m_colorStart, m_colorEnd, m_lifeTime - p.m_life);
+				p.m_color.r = color.r;
+				p.m_color.g = color.g;
+				p.m_color.b = color.b;
+				p.m_color.a = color.a;
 
 				// Fill the GPU buffer
 				m_positionsScales[4 * m_liveParticleCount + 0] = p.m_pos.x;
@@ -202,11 +219,18 @@ void ParticleEmitter::Serialize(const json & j)
 	m_speed = ParseFloat(j, "speed");
 	m_size = ParseFloat(j, "size");
 	m_rotation = ParseFloat(j, "rotation");
-	Vector3D color = ParseColor(j, "color");
-	m_color.r = int(color.x * 255.f);
-	m_color.g = int(color.y * 255.f);
-	m_color.b = int(color.z * 255.f);
-	m_color.a = int(color.w * 255.f);
+
+	Vector3D colorStart = ParseColor(j, "colorStart");
+	m_colorStart.r = int(colorStart.x * 255.f);
+	m_colorStart.g = int(colorStart.y * 255.f);
+	m_colorStart.b = int(colorStart.z * 255.f);
+	m_colorStart.a = int(colorStart.w * 255.f);
+	Vector3D colorEnd = ParseColor(j, "colorEnd");
+	m_colorEnd.r = int(colorEnd.x * 255.f);
+	m_colorEnd.g = int(colorEnd.y * 255.f);
+	m_colorEnd.b = int(colorEnd.z * 255.f);
+	m_colorEnd.a = int(colorEnd.w * 255.f);
+
 	m_gravityMod = ParseFloat(j, "gravity");
 	m_emissionRate = ParseInt(j, "emissionRate");
 	m_maxParticles = ParseInt(j, "max");

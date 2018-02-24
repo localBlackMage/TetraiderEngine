@@ -17,7 +17,7 @@ float Lerp(float valueA, float valueB, float t) {
 	else if (t < 0)
 		t = 0;
 
-	return valueA*(1-t) + (t)* valueB;
+	return valueA*(1.f-t) + (t)* valueB;
 }
 
 float SinWave(float amplitude, float frequency, float phaseShift, float time) {
