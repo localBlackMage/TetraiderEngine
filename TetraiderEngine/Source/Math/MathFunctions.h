@@ -12,5 +12,6 @@ float CosWave(float amplitude, float frequency, float phaseShift, float time);
 float RandomFloat(float min, float max);
 int RandomInt(int min, int max);
 
+unsigned int GetPascalEntry(unsigned short degree, unsigned short index);
 
 #endif
