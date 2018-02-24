@@ -190,10 +190,10 @@ void NPCController::MoveToPlayer() {
 	SetTargetDestination(m_pPlayerTransform->GetPosition());
 }
 
-void NPCController::MoveAroundPlayer() {
+void NPCController::GoToPositionAroundPlayer() {
 	float angleOffset;
 
-	if (GetSquareDistanceToPlayer() < 250.0f) {
+	if (GetSquareDistanceToPlayer() > 250.0f) {
 		angleOffset = RandomFloat(-90, 90);
 	}
 	else {

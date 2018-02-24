@@ -12,7 +12,7 @@ AI_Engage::~AI_Engage() {
 
 void AI_Engage::OnEnter() {
 	pAgent->LookAtPlayer();
-	pAgent->MoveAroundPlayer();
+	pAgent->GoToPositionAroundPlayer();
 	tryTimeDuration = 5;
 	minimumEngage = 3;
 	engageTimer = RandomInt(minimumEngage, 10);
@@ -30,7 +30,7 @@ void AI_Engage::OnUpdate(float dt) {
 	}
 	// if this move has taken too much, change destination
 	if (triedMovingSoFar > tryTimeDuration){
-		pAgent->MoveAroundPlayer();
+		pAgent->GoToPositionAroundPlayer();
 		triedMovingSoFar = 0.0f;
 		return;
 	}
@@ -46,7 +46,7 @@ void AI_Engage::OnUpdate(float dt) {
 	}
 	// if next destination reached, pick another destination
 	if (pAgent->IsArrivedAtDestination()) {
-		pAgent->MoveAroundPlayer();
+		pAgent->GoToPositionAroundPlayer();
 		triedMovingSoFar = 0.0f;
 		return;
 	}
