@@ -55,6 +55,11 @@ AudioManager::~AudioManager()
 
 void AudioManager::Update(float elapsed)
 {
+
+	if (TETRA_GAME_CONFIG.GetsoundsMute())
+	{
+		SetMasterVolume(0.0);
+	}
 	//in sec
 	const float fadeTime = 1.0f;
 

@@ -20,7 +20,7 @@ private:
 	std::string m_roomFilesDir;
 	
 	//TODO option to enable sounds at the start
-	bool soundsMute;
+	bool m_soundsMute;
 
 	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 	unsigned short m_roomWidth, m_roomHeight;	// Room dimensions in cells (ex. 12x8)
@@ -41,6 +41,7 @@ public:
 	std::string ShadersDir() const { return m_shadersDir; }
 	std::string RoomFilesDir() const { return m_roomFilesDir; }
 
+	bool GetsoundsMute(){ return m_soundsMute; }
 	unsigned short CellWidth() const { return m_cellWidth; }
 	unsigned short CellHeight() const { return m_cellHeight; }
 	unsigned short RoomWidth() const { return m_roomWidth; }

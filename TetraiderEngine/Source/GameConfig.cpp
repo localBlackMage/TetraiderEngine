@@ -20,6 +20,9 @@ void GameConfig::LoadConfig(std::string s) {
 	m_texturesDir = ParseString(gameSettings, "texturesDir");
 	m_roomFilesDir = ParseString(gameSettings, "roomFilesDir");
 
+	//set mute
+	m_soundsMute = ParseBool(gameSettings,"soundsMute");
+
 	m_cellWidth = j["ROOM_SETTINGS"]["cellWidth"];
 	m_cellHeight = j["ROOM_SETTINGS"]["cellHeight"];
 	m_roomWidth = j["ROOM_SETTINGS"]["roomWidth"];
