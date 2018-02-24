@@ -23,6 +23,9 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 
 	void ChangeState(NPC_CONTROLLER_AI);
+	void MoveToPlayer();
+	void MoveAroundPlayer();
+	bool UseAttack(int attack);
 	bool IsArrivedAtDestination();
 	bool IsPlayerInSight();
 	bool IsPlayerOutOfSight();

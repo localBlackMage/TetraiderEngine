@@ -61,6 +61,9 @@ void NPCController::LateUpdate(float dt) {
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius*2.0f, DebugColor::RED);
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_outOfSightRadius*2.0f, DebugColor::YELLOW);
 		TETRA_DEBUG.DrawWireRectangle(m_startingPoint, Vector3D(), Vector3D(m_zoneWidth, m_zoneHeight, 0), DebugColor::WHITE);
+		if (!m_arrivedAtDestination) {
+			TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_targetDestination, DebugColor::CYAN);
+		}
 	}
 
 	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
@@ -110,19 +113,19 @@ void NPCController::HandleEvent(Event* pEvent) {
 void NPCController::LateInitialize() {
 	Agent::LateInitialize();
 
-	/*if(!m_pWeapon) {
+	if(!m_pWeapon) {
 		if (pGO)
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
 		else {
-			printf("No Game Object found. NPC Controller component failed to operate.\n");
+		//	printf("No Game Object found. NPC Controller component failed to operate.\n");
 			return;
 		}
 
 		if (!m_pWeapon) {
-			printf("No Weapon component found. NPC Controller component failed to operate.\n");
+		//	printf("No Weapon component found. NPC Controller component failed to operate.\n");
 			return;
 		}
-	}*/
+	}
 }
 
 float NPCController::GetSquareDistanceToPlayer() {
@@ -180,4 +183,27 @@ void NPCController::LookAtPlayer(float offsetAngleDegrees) {
 	m_lookDirection.Normalize();
 	float angle = m_lookDirection.AngleDegrees() + offsetAngleDegrees;
 	m_lookDirection = Vector3D::VectorFromAngleDegrees(angle);
+}
+
+void NPCController::MoveToPlayer() {
+	SetTargetDestination(m_pPlayerTransform->GetPosition());
+}
+
+void NPCController::MoveAroundPlayer() {
+	float angleOffset;
+
+	if (RollDie(0.8f)) angleOffset = RandomFloat(-90, 90);
+	else angleOffset = RandomFloat(-180, 180);
+	
+	float angle = m_lookDirection.AngleDegrees() + angleOffset;
+	if (angle > 180.0f)	angle -= 360;
+	else if (angle < -180) angle += 360;
+
+	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
+	float magnitude = RandomFloat(m_detectionRadius / 2.0f, m_detectionRadius);
+	SetTargetDestination(dir*magnitude + m_pTransform->GetPosition());
+}
+
+bool NPCController::UseAttack(int attack) {
+	return m_pWeapon->UseAttack(attack, m_lookDirection);
 }
