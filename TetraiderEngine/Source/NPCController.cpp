@@ -204,7 +204,7 @@ void NPCController::MoveAroundPlayer() {
 	else if (angle < -180) angle += 360;
 
 	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
-	float magnitude = RandomFloat(m_detectionRadius / 2.0f, m_detectionRadius);
+	float magnitude = RandomFloat(m_detectionRadius / 4.0f, m_detectionRadius*3.0f/4.0f);
 	SetTargetDestination(dir*magnitude + m_pTransform->GetPosition());
 }
 

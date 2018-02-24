@@ -16,6 +16,7 @@ void AI_Attack::OnEnter(){
 }
 
 void AI_Attack::OnUpdate(float dt){
+	pAgent->LookAtPlayer();
 	if (attackCounter > 2) {
 		pAgent->ChangeState(NPC_IDLE);
 	}

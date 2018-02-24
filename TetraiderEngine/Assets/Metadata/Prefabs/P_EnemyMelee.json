@@ -35,7 +35,7 @@
 		"outOfSightRadius": 600,
 		"zoneWidth": 500,
 		"zoneHeight": 500,
-		"attackRange": 220,
+		"attackRange": 250,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -141,7 +141,7 @@
 		"Attacks":[
 			{
 				"type": "Melee",
-				"coolDown": 0.3,
+				"coolDown": 0.6,
 				"baseDamage": 1,
 				"radius": 180,
 				"angle": 90,

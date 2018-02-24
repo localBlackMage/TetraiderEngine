@@ -29,8 +29,10 @@ public:
 private:
 	int tryTimeDuration; // in seconds
 	int engageTimer;
+	int minimumEngage;
 	float triedMovingSoFar;
 	float sinceEngage;
+	
 };
 
 #endif

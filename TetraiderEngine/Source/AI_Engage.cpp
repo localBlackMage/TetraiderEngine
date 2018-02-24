@@ -13,8 +13,9 @@ AI_Engage::~AI_Engage() {
 void AI_Engage::OnEnter() {
 	pAgent->LookAtPlayer();
 	pAgent->MoveAroundPlayer();
-	tryTimeDuration = 7;
-	engageTimer = RandomInt(15, 20);
+	tryTimeDuration = 5;
+	minimumEngage = 3;
+	engageTimer = RandomInt(minimumEngage, 10);
 	triedMovingSoFar = 0.0f;
 	sinceEngage = 0.0f;
 }
@@ -39,7 +40,7 @@ void AI_Engage::OnUpdate(float dt) {
 		return;
 	}
 	// if player is in attack range, attack!
-	if (pAgent->IsInAttackRange()) {
+	if (pAgent->IsInAttackRange() && minimumEngage < sinceEngage) {
 		pAgent->ChangeState(NPC_ATTACK);
 		return;
 	}
