@@ -116,7 +116,7 @@
 			{
 				"type": "Melee",
 				"coolDown": 0.3,
-				"baseDamage": 1,
+				"baseDamage": 10,
 				"radius": 180,
 				"angle": 90,
 				"triggerAttackIn": 0.05,
@@ -125,7 +125,7 @@
 			{
 				"type": "Ranged",
 				"coolDown": 0.6,
-				"baseDamage": 1,
+				"baseDamage": 4,
 				"projectileSpeed": 600,
 				"instantiationOffset": 50,
 				"lifeTime": 1.5,

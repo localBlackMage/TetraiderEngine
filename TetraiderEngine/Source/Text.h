@@ -56,6 +56,7 @@ public:
 
 	Vector3D GetOffset() const { return m_pivotOffset; }
 	void GetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
+	void SetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
 
 	GLuint GetTextureBuffer() const;
 	int GetAlphaMode() const;

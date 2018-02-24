@@ -22,6 +22,7 @@ private:
 	GameState m_nextState;
 	bool m_debugPause;
 	bool m_isGamePaused;
+	bool m_isLevelOver;
 
 	void SetGameState(GameState);
 public:

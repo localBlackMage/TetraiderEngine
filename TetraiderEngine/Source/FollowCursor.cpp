@@ -2,7 +2,8 @@
 #include "Body.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
-FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor) {}
+
+FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false) {}
 FollowCursor::~FollowCursor() {}
 
 Vector3D mouse;
@@ -16,6 +17,14 @@ void FollowCursor::Update(float dt)
 
 void FollowCursor::Serialize(const json & j)
 {
+	if (ValueExists(j, "isDisableRenderOnPause")) {
+		m_isDisableRenderOnPause = ParseBool(j, "isDisableRenderOnPause");
+		if (m_isDisableRenderOnPause) {
+			TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+			TETRA_EVENTS.Subscribe(EVENT_LevelComplete, this);
+			TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+		}
+	}
 }
 
 void FollowCursor::LateInitialize() {
@@ -37,4 +46,19 @@ void FollowCursor::LateInitialize() {
 
 void FollowCursor::HandleEvent(Event * pEvent)
 {	
+	if (m_isDisableRenderOnPause) {
+		if (pEvent->Type() == EVENT_INPUT_PAUSEGAME && !m_isLevelOver) {
+			InputButtonData* pData = pEvent->Data<InputButtonData>();
+			if(pData->m_isTrigger)
+				pGO->m_isRender = !pGO->m_isRender;
+		}
+		else if (pEvent->Type() == EVENT_LevelComplete) {
+			pGO->m_isRender = false;
+			m_isLevelOver = true;
+		}
+		else if (pEvent->Type() == EVENT_LevelInComplete) {
+			pGO->m_isRender = false;
+			m_isLevelOver = true;
+		}
+	}
 }

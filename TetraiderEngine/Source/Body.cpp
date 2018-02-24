@@ -35,7 +35,7 @@ void Body::Integrate(float dt) {
 		m_PositionWithOffset = m_positionOffset + m_pTransform->m_position;
 		return;
 	}
-
+	
 	m_PositionWithOffset = m_positionOffset + m_pTransform->m_position;
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 

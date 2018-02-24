@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "LevelStatus.h"
 #include "TetraiderAPI.h"
+#include "Transform.h"
 
 LevelStatus::LevelStatus(): Component(ComponentType::C_LevelStatus), m_eggsToCollect(3), m_enemiesInLevel(0) {}
 LevelStatus::~LevelStatus() {}
@@ -17,6 +18,7 @@ void LevelStatus::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_EnemySpawned, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnEnemyHealthZero, this);
 	TETRA_EVENTS.Subscribe(EVENT_EggCollected, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 }
 
 void LevelStatus::HandleEvent(Event* pEvent) {
@@ -49,6 +51,10 @@ void LevelStatus::HandleEvent(Event* pEvent) {
 				TETRA_EVENTS.AddDelayedEvent(pEvent);
 			}
 			break;
+		}
+		case EVENT_OnPlayerHealthZero: {
+			Event* pEvent = new Event(EVENT_LevelInComplete, 3.0f);
+			TETRA_EVENTS.AddDelayedEvent(pEvent);
 		}
 	}
 }
