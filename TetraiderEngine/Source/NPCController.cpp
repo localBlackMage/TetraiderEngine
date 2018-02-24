@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "TetraiderAPI.h"
 #include "Camera.h"
+#include "Math\MathFunctions.h"
 #include <iostream>
 
 NPCController::NPCController() :
@@ -55,7 +56,7 @@ void NPCController::LateUpdate(float dt) {
 	if (TETRA_DEBUG.IsDebugModeOn()) {
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius, DebugColor::RED);
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_outOfSightRadius, DebugColor::YELLOW);
-		TETRA_DEBUG.DrawWireRectangle(startingPoint, Vector3D(), Vector3D(m_zoneWidth, m_zoneHeight, 0), DebugColor::WHITE);
+		TETRA_DEBUG.DrawWireRectangle(m_startingPoint, Vector3D(), Vector3D(m_zoneWidth, m_zoneHeight, 0), DebugColor::WHITE);
 	}
 
 	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
@@ -97,8 +98,8 @@ void NPCController::HandleEvent(Event* pEvent) {
 
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
-		startingPoint = m_pTransform->GetPosition();
-		m_targetDestination = startingPoint;
+		m_startingPoint = m_pTransform->GetPosition();
+		m_targetDestination = m_startingPoint;
 	}
 }
 
@@ -147,11 +148,12 @@ void NPCController::SetTargetDestination(const Vector3D& pos) {
 	m_targetDestination = pos;
 }
 
-// Assumes probability is between 0 and 1
 bool NPCController::RollDie(float probability) {
-	return false;
+	return RandomFloat(0,1) < probability;
 }
 
 void NPCController::SetDestinationToRandomPointInZone() {
-
+	float x = RandomFloat(m_startingPoint.x - m_zoneWidth/2.0f, m_startingPoint.x + m_zoneWidth / 2.0f);
+	float y = RandomFloat(m_startingPoint.y - m_zoneHeight / 2.0f, m_startingPoint.y + m_zoneHeight / 2.0f);
+	SetTargetDestination(Vector3D(x, y, 0));
 }

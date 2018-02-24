@@ -40,7 +40,7 @@ private:
 	float m_outOfSightRadius;
 	float m_zoneWidth;
 	float m_zoneHeight;
-	Vector3D startingPoint;
+	Vector3D m_startingPoint;
 	Vector3D m_targetDestination;
 	bool m_arrivedAtDestination;
 };
