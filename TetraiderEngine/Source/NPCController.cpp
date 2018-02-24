@@ -79,11 +79,8 @@ void NPCController::LateUpdate(float dt) {
 void NPCController::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 	int definedSize = j["AIStates"].size();
-	//if (definedSize != NPC_NUM_BEHAVIOR) {
-	//	std::cout << "INVALID DEFINITION OF AI BEHAVIOR: PROVIDE CORRECT AIStates in json!\n";
-	//}
+
 	for (int i = 0; i < definedSize; ++i) {
-		//AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 	}
 
@@ -98,6 +95,7 @@ void NPCController::HandleEvent(Event* pEvent) {
 
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
+		m_pPlayerTransform = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform);
 		m_startingPoint = m_pTransform->GetPosition();
 		m_targetDestination = m_startingPoint;
 	}
@@ -122,9 +120,7 @@ void NPCController::LateInitialize() {
 }
 
 float NPCController::GetSquareDistanceToPlayer() {
-	const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
-	const Transform* pPlayerTransform = pPlayer->GetComponent<Transform>(C_Transform);
-	return Vector3D::SquareDistance(pPlayerTransform->GetPosition(), m_pTransform->GetPosition());
+	return Vector3D::SquareDistance(m_pPlayerTransform->GetPosition(), m_pTransform->GetPosition());
 }
 
 bool NPCController::IsArrivedAtDestination() {
@@ -156,4 +152,21 @@ void NPCController::SetDestinationToRandomPointInZone() {
 	float x = RandomFloat(m_startingPoint.x - m_zoneWidth/2.0f, m_startingPoint.x + m_zoneWidth / 2.0f);
 	float y = RandomFloat(m_startingPoint.y - m_zoneHeight / 2.0f, m_startingPoint.y + m_zoneHeight / 2.0f);
 	SetTargetDestination(Vector3D(x, y, 0));
+}
+
+void NPCController::LookInDirectionOfMovement() {
+	m_lookDirection = GetCurrentVelocity();
+	m_lookDirection.Normalize();
+}
+
+void NPCController::LookAtPlayer() {
+	m_lookDirection = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
+	m_lookDirection.Normalize();
+}
+
+void NPCController::LookAtPlayer(float offsetAngleDegrees) {
+	m_lookDirection = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
+	m_lookDirection.Normalize();
+	float angle = m_lookDirection.AngleDegrees() + offsetAngleDegrees;
+	m_lookDirection = Vector3D::VectorFromAngleDegrees(angle);
 }

@@ -253,6 +253,13 @@ Vector3D Vector3D::AngleDegrees(float degrees, Vector3D& axis)
 {
 	return AngleRadians(degrees * DEG_TO_RAD, axis);
 }
+
+Vector3D Vector3D::VectorFromAngleDegrees(float degrees)
+{
+	float rad = degrees*DEG_TO_RAD;
+	return Vector3D(cosf(rad), sinf(rad), 0);
+}
+
 #pragma endregion
 
 Vector3D operator*(const float scalar, const Vector3D& other)

@@ -28,8 +28,6 @@ void AI_Idle::OnUpdate(){
 	else {
 
 	}
-	std::cout << RandomInt(1, 10) << endl;
-	//std::cout << RandomFloat(0.1, 10) << endl;
 }
 
 void AI_Idle::OnExit(){
