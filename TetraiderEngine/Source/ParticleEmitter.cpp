@@ -53,12 +53,15 @@ void ParticleEmitter::_SpawnParticle()
 		m_particles[idx].m_velocity = m_pTransform->LookAt() * m_speed;		// TODO: Update these
 		
 		switch (m_textureSelection) {
-			case P_TextureSelection::CYCLE:
 			case P_TextureSelection::RANDOM:
+				m_particles[idx].m_texCoords.u = float(RandomInt(0, m_cols + 1)) * m_frameWidth;
+				m_particles[idx].m_texCoords.v = float(RandomInt(0, m_rows + 1)) * m_frameHeight;
+				break;
+			case P_TextureSelection::CYCLE:
 			case P_TextureSelection::SINGLE:
 			default:
-				m_particles[idx].m_texCoordU = 0.f;
-				m_particles[idx].m_texCoordV = 0.f;
+				m_particles[idx].m_texCoords.u = 0.f;
+				m_particles[idx].m_texCoords.v = 0.f;
 		}
 	}
 }
@@ -103,6 +106,8 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 				m_colors[4 * m_liveParticleCount + 2] = p.m_color.b;
 				m_colors[4 * m_liveParticleCount + 3] = p.m_color.a;
 
+				m_textureCoords[2 * m_liveParticleCount + 0] = p.m_texCoords[0];
+				m_textureCoords[2 * m_liveParticleCount + 1] = p.m_texCoords[1];
 			}
 			else {
 				// Particles that just died will be put at the end of the buffer in SortParticles();
@@ -120,9 +125,13 @@ void ParticleEmitter::_AllocateParticleArrays()
 	m_particles = (Particle*)TETRA_MEMORY.Alloc(sizeof(Particle) * m_maxParticles);			//(Particle*)malloc(sizeof(Particle) * m_maxParticles);
 	m_positionsScales = (GLfloat*)TETRA_MEMORY.Alloc(sizeof(GLfloat) * m_maxParticles * 4); //(GLfloat*)malloc(sizeof(GLfloat) * m_maxParticles * 4);
 	m_colors = (GLubyte*)TETRA_MEMORY.Alloc(sizeof(GLubyte) * m_maxParticles * 4);			//(GLubyte*)malloc(sizeof(GLubyte) * m_maxParticles * 4);
+	m_textureCoords = (GLfloat*)TETRA_MEMORY.Alloc(sizeof(GLfloat) * m_maxParticles * 2);	//(GLfloat*)malloc(sizeof(GLfloat) * m_maxParticles * 2);
 
 	for (int i = 0; i < m_maxParticles; ++i) {
 		m_particles[i].m_life = -1.f;
+
+		m_particles[i].m_texCoords.u = m_frameWidth / m_texture->surface->w;
+		m_particles[i].m_texCoords.v = m_frameHeight / m_texture->surface->h;
 
 		int i4 = i * 4;
 		m_positionsScales[i4] = 0.f;
@@ -134,6 +143,9 @@ void ParticleEmitter::_AllocateParticleArrays()
 		m_colors[i4 + 1] = 0;
 		m_colors[i4 + 2] = 0;
 		m_colors[i4 + 3] = 0;
+
+		m_textureCoords[i * 2 + 0] = 0.f;
+		m_textureCoords[i * 2 + 1] = 0.f;
 	}
 }
 
@@ -233,6 +245,7 @@ void ParticleEmitter::Serialize(const json & j)
 	m_prewarmed = ParseBool(j, "prewarmed");
 	m_startDelay = ParseFloat(j, "startDelay");
 	m_lifeTime = ParseFloat(j, "lifeTime");
+	m_animationSpeed = ParseFloat(j, "animationSpeed");
 	m_speed = ParseFloat(j, "speed");
 	m_size = ParseFloat(j, "size");
 	m_rotation = ParseFloat(j, "rotation");
@@ -259,8 +272,10 @@ void ParticleEmitter::Serialize(const json & j)
 	m_cols = ParseFloat(j, "cols");
 	m_frameHeight = ParseFloat(j, "frameHeight");
 	m_frameWidth = ParseFloat(j, "frameWidth");
-	if (m_rows != 0.f && m_frameHeight == 0.f)	m_rows = m_texture->surface->h / m_rows;
-	if (m_cols != 0.f && m_frameWidth == 0.f)	m_cols = m_texture->surface->w / m_cols;
+	if (m_rows != 0.f && m_frameHeight == 0.f)	m_frameHeight = (m_texture->surface->h / m_rows) / m_texture->surface->h;
+	else										m_frameHeight = 1.f;
+	if (m_cols != 0.f && m_frameWidth == 0.f)	m_frameWidth = (m_texture->surface->w / m_cols) / m_texture->surface->w;
+	else										m_frameWidth = 1.f;
 
 	std::string textureSelection = ParseString(j, "textureSelection");
 	if (textureSelection == "sequence")			m_textureSelection = P_TextureSelection::CYCLE;
@@ -286,6 +301,7 @@ void ParticleEmitter::BindBufferDatas() const
 {
 	TETRA_RENDERER.BindBufferData(m_positionsScalesBuffer, m_positionsScales, m_liveParticleCount * sizeof(GLfloat) * 4);
 	TETRA_RENDERER.BindBufferData(m_colorsBuffer, m_colors, m_liveParticleCount * sizeof(GLubyte) * 4);
+	TETRA_RENDERER.BindBufferData(m_textureCoordsBuffer, m_textureCoords, m_liveParticleCount * sizeof(GLfloat) * 2);
 }
 
 #pragma endregion

@@ -97,8 +97,6 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
-	//glUniform2f(SHADER_LOCATIONS::TILE, 1, 1); // pSpriteComp->TileX(), pSpriteComp->TileY());
-
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
@@ -123,12 +121,15 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 
 	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pParticleEmitterComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
 
+	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pParticleEmitterComp->FrameWidth(), pParticleEmitterComp->FrameHeight());
+
 	_BindVertexAttribute(SHADER_LOCATIONS::P_POS_SIZE, pParticleEmitterComp->GetPositions(), 4, GL_FLOAT, GL_FALSE, 0, 0);
 	_BindVertexAttribute(SHADER_LOCATIONS::P_COLOR, pParticleEmitterComp->GetColors(), 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::P_TEXTURE_COORD, pParticleEmitterComp->GetTextureCoords(), 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-
-	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_SIZE, 1); // positions : one per quad (its center) -> 1
-	glVertexAttribDivisor(SHADER_LOCATIONS::P_COLOR, 1); // color : one per quad -> 1
+	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_SIZE, 1);			// positions : one per quad (its center) -> 1
+	glVertexAttribDivisor(SHADER_LOCATIONS::P_COLOR, 1);			// color : one per quad -> 1
+	glVertexAttribDivisor(SHADER_LOCATIONS::P_TEXTURE_COORD, 1);	// texture coordinates : one per quad -> 1
 
 	if (pParticleEmitterComp->GetAlphaMode() == GL_RGBA)
 		_EnableAlphaTest();
@@ -391,7 +392,7 @@ void RenderManager::_EnableAlphaTest()
 {
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.4f);
+	glAlphaFunc(GL_GREATER, 0.01f);
 	glEnable(GL_BLEND);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

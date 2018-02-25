@@ -24,8 +24,9 @@ struct Particle {
 	Color m_color;
 	float m_scale, m_weight;
 	float m_life;
+	float m_animationTime;
 	float m_cameraDistance;
-	float m_texCoordU, m_texCoordV;
+	TexCoords m_texCoords;
 
 	explicit Particle() :
 		m_pos(Vector3D()),
@@ -34,9 +35,9 @@ struct Particle {
 		m_scale(0.f),
 		m_weight(0.f),
 		m_life(0.f),
+		m_animationTime(0.f),
 		m_cameraDistance(-1.f),
-		m_texCoordU(0.f),
-		m_texCoordV(0.f)
+		m_texCoords(TexCoords(0.f, 0.f))
 	{}
 
 	bool operator<(Particle& that) {
@@ -57,6 +58,7 @@ protected:
 	bool m_prewarmed;			// Starts the Emitter as though it had completed a cycle of emission
 	float m_startDelay;			// How long the emitter will wait to emit in seconds
 	float m_lifeTime;			// How long a particle will live in seconds
+	float m_animationSpeed;		// How long until a particle cycles to the next frame
 	float m_speed;				// Speed of a particle in the starting direction
 	float m_size;				// X and Y scale of a particle
 	float m_rotation;			// Z-Axis rotation of a particle at start
@@ -83,7 +85,7 @@ protected:
 	float m_frameHeight, m_frameWidth;
 
 	// Particle Manager Properties
-	Particle* m_particles;
+	Particle* m_particles;					// Array of all existing Particles managed by this Emitter
 	Mesh& m_mesh;
 	GLuint m_positionsScalesBuffer;			// OpenGL Buffer where positions and sizes are to be streamed
 	GLuint m_colorsBuffer;					// OpenGL Buffer where colors are to be streamed
@@ -124,11 +126,15 @@ public:
 	void BindBufferDatas() const;
 	GLuint GetPositions() const { return m_positionsScalesBuffer; }
 	GLuint GetColors() const { return m_colorsBuffer; }
+	GLuint GetTextureCoords() const { return m_textureCoordsBuffer; }
 
 	int LiveParticles() const { return m_liveParticleCount; }
 
 	void ActivateParticles() { m_active = true; }
 	void DeactivateParticles() { m_active = false; }
+
+	float FrameWidth() const { return m_frameWidth; }
+	float FrameHeight() const { return m_frameHeight; }
 };
 
 #endif

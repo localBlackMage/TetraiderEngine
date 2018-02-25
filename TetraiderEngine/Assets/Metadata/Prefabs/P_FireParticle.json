@@ -1,0 +1,72 @@
+{
+  "Tag": "Particle",
+  "Layer": "3",
+  "COMPONENTS": [
+    {
+		"Component": "Transform",
+		"position": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"scale": {
+			"x": 1,
+			"y": 0,
+			"z": 0
+		},
+		"pivotOffset": {
+			"x": 0,
+			"y": 0
+		},
+		"rotation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		}
+    },
+	{
+		"Component": "ParticleEmitter",
+		
+		"loopDuration": 4.0,
+		"looping": true,
+		"prewarmed": false,
+		"startDelay": 0,
+		"lifeTime": 4.0,
+		"speed": 80.0,
+		"size": 64.0,
+		"rotation": 0,
+		"colorStart": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"colorEnd": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"gravity": 0,
+		"emissionRate": 5,
+		"max": 100,
+		"rotationOverTime": 0,
+		"particleTexture": "T_FireParticles.png",
+		"textureSelection": "random",
+		"animationSpeed": 0.1,
+		"rows": 1,
+		"cols": 3
+    },
+	
+	{
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "AABB",
+			"width": 64,
+			"height": 64
+		}
+	}
+  ]
+}

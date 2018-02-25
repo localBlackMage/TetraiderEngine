@@ -31,7 +31,7 @@
       }
     },
 	{
-		"prefab": "P_ParticleTest",
+		"prefab": "P_FireParticle",
 		"position": {
 			"x": 100,
 			"y": 20,
