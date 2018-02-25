@@ -51,6 +51,15 @@ void ParticleEmitter::_SpawnParticle()
 		float LO = -HI;
 		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
 		m_particles[idx].m_velocity = m_pTransform->LookAt() * m_speed;		// TODO: Update these
+		
+		switch (m_textureSelection) {
+			case P_TextureSelection::CYCLE:
+			case P_TextureSelection::RANDOM:
+			case P_TextureSelection::SINGLE:
+			default:
+				m_particles[idx].m_texCoordU = 0.f;
+				m_particles[idx].m_texCoordV = 0.f;
+		}
 	}
 }
 
@@ -133,12 +142,14 @@ void ParticleEmitter::_DeallocateParticleArrays()
 	if (m_particles)		TETRA_MEMORY.Free(m_particles);
 	if (m_positionsScales)	TETRA_MEMORY.Free(m_positionsScales);
 	if (m_colors)			TETRA_MEMORY.Free(m_colors);
+	if (m_textureCoords)	TETRA_MEMORY.Free(m_textureCoords);
 }
 
 void ParticleEmitter::_AllocateVBOs()
 {
 	m_positionsScalesBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 4 * sizeof(GLfloat));
 	m_colorsBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 4 * sizeof(GLubyte));
+	m_textureCoordsBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 2 * sizeof(GLfloat));
 }
 
 #pragma endregion
@@ -241,9 +252,21 @@ void ParticleEmitter::Serialize(const json & j)
 	m_emissionRate = ParseInt(j, "emissionRate");
 	m_maxParticles = ParseInt(j, "max");
 	m_rotationOverTime = ParseFloat(j, "rotationOverTime");
-	std::string textureName = ParseString(j, "particleTexture");
 
+	std::string textureName = ParseString(j, "particleTexture");
 	m_texture = TETRA_RESOURCES.GetTexture(textureName);
+	m_rows = ParseFloat(j, "rows");
+	m_cols = ParseFloat(j, "cols");
+	m_frameHeight = ParseFloat(j, "frameHeight");
+	m_frameWidth = ParseFloat(j, "frameWidth");
+	if (m_rows != 0.f && m_frameHeight == 0.f)	m_rows = m_texture->surface->h / m_rows;
+	if (m_cols != 0.f && m_frameWidth == 0.f)	m_cols = m_texture->surface->w / m_cols;
+
+	std::string textureSelection = ParseString(j, "textureSelection");
+	if (textureSelection == "sequence")			m_textureSelection = P_TextureSelection::CYCLE;
+	else if (textureSelection == "random")		m_textureSelection = P_TextureSelection::RANDOM;
+	else										m_textureSelection = P_TextureSelection::SINGLE;
+
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
 	_AllocateParticleArrays();
@@ -253,9 +276,6 @@ void ParticleEmitter::Serialize(const json & j)
 
 void ParticleEmitter::Override(const json & j)
 {
-	// TODO: Find way to release previous VBOs
-	//_AllocateParticleArrays();
-	//_AllocateVBOs();
 }
 
 void ParticleEmitter::HandleEvent(Event * p_event)

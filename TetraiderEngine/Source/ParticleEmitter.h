@@ -25,6 +25,7 @@ struct Particle {
 	float m_scale, m_weight;
 	float m_life;
 	float m_cameraDistance;
+	float m_texCoordU, m_texCoordV;
 
 	explicit Particle() :
 		m_pos(Vector3D()),
@@ -33,13 +34,19 @@ struct Particle {
 		m_scale(0.f),
 		m_weight(0.f),
 		m_life(0.f),
-		m_cameraDistance(-1.f)
+		m_cameraDistance(-1.f),
+		m_texCoordU(0.f),
+		m_texCoordV(0.f)
 	{}
 
 	bool operator<(Particle& that) {
 		// Sort in reverse order : far particles drawn first.
 		return this->m_cameraDistance > that.m_cameraDistance;
 	}
+};
+
+enum class P_TextureSelection {
+	CYCLE, RANDOM, SINGLE
 };
 
 class ParticleEmitter : public Component {
@@ -60,6 +67,7 @@ protected:
 	int m_maxParticles;			// Max number of particles allowed at once - emission will halt temporarily if this number is met
 	float m_rotationOverTime;	// Speed at which a particle will rotate during it's lifetime
 	bool m_randomEmission;		// Whether or not the Emitter should "randomly" emit new particles
+	P_TextureSelection m_textureSelection;	// Whether or not particles should cycle through the available particle frames or choose one somehow
 
 
 	// Emitter Run Properties
@@ -71,15 +79,19 @@ protected:
 
 	// Particle Configuration Properties
 	SurfaceTextureBuffer * m_texture;
+	float m_rows, m_cols;
+	float m_frameHeight, m_frameWidth;
 
 	// Particle Manager Properties
 	Particle* m_particles;
 	Mesh& m_mesh;
 	GLuint m_positionsScalesBuffer;			// OpenGL Buffer where positions and sizes are to be streamed
 	GLuint m_colorsBuffer;					// OpenGL Buffer where colors are to be streamed
+	GLuint m_textureCoordsBuffer;			// OpenGL Buffer where texture coords are to be streamed
 
 	GLfloat* m_positionsScales;				// Array of positions and sizes (xyz pos, w is uniform scale)
 	GLubyte* m_colors;						// Array of Colors split up into it's components
+	GLfloat* m_textureCoords;				// Array of texture coords
 	int m_liveParticleCount;				// Indicates how many particles are currently alive, set each Update loop
 	int m_lastUsedParticle;					// An index into m_particles, represents the index of the last used particle
 
