@@ -33,6 +33,7 @@ public:
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
+	void SetPositionBehindPlayer(float distance);
 	void LookInDirectionOfMovement();
 	void LookAtPlayer();
 	void LookAtPlayer(float offsetAngle);

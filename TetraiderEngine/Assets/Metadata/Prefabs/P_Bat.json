@@ -1,6 +1,6 @@
 {
-  "Tag": "Hazard",
-  "Layer": "1",
+  "Tag": "Enemy",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 400,
-        "y": 164,
+        "x": 50,
+        "y": 50,
         "z": 0
       },
       "pivotOffset": {
@@ -25,8 +25,23 @@
 	  }
     },
 	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 150,
+			"acceleration": 8,
+			"knockBackMultiplier": 1
+		},
+		"detectionRadius": 400,
+		"outOfSightRadius": 600,
+		"zoneWidth": 250,
+		"zoneHeight": 250,
+		"attackRange": 250,
+		"AIStates": [
+		]
+	},
+    {
       "Component": "Sprite",
-      "Texture": "T_Lava.png",
+      "Texture": "T_Fish.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -51,18 +66,33 @@
     },
 	{
 		"Component": "Body",
-		"isStatic": true,
+		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 400,
-			"height": 120
+			"type": "circle",
+			"radius": 25
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 20,
+		"maxHealth": 20,
+		"isInvincible": false
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
 		}
 	},
 	{
 		"Component": "DealDamageOnCollision",
-		"damage": 5,
-		"knockBackSpeed": 1000
+		"damage": 2,
+		"knockBackSpeed": 600
 	}
   ]
 }

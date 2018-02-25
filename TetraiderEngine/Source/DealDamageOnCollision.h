@@ -21,7 +21,7 @@ private:
 
 	bool m_isAbleToDmgPlayer; // Dummy, applies for player only at the moment
 	float m_hitCoolDown; // Dummy, applies for player only at the moment
-	float m_timeStampOfLastHitPlayer; // Dummy, applies for player only at the moment
+	float m_timeFromLastHit; // Dummy, applies for player only at the moment
 };
 
 #endif
