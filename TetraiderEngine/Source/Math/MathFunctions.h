@@ -4,6 +4,10 @@
 #include "Vector3D.h"
 #include "Vector2D.h"
 
+struct Point {
+	float x, y;
+};
+
 Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t);
 Vector2D Lerp(const Vector2D& vectorA, const Vector2D& vectorB, float t);
 float Lerp(float valueA, float valueB, float t);

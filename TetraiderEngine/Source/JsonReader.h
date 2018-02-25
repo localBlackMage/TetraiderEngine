@@ -26,6 +26,8 @@ using json = nlohmann::json;
 namespace JsonReader {
 	typedef std::string String;
 
+	std::vector<Point> ParsePoints(const json& j, const String&);
+
 	float ParseFloat(const json& j, const String&);
 	float ParseFloat(const json& j, const String&, const String&);
 	float ParseFloat(const json& j, const String&, const String&, const String&);
