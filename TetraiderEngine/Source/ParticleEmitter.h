@@ -50,14 +50,11 @@ enum class P_TextureSelection {
 	CYCLE, RANDOM, SINGLE
 };
 
-struct InterpolationItem {
-	float start, end;					
+struct InterpolationItem {			
 	ControlPoints points;	// Control Points for bezier curve interpolation between start and end
 	float amplitude;		// How much of an offset to give the result from the curve
 
 	void Serialize(const json& j, const std::string& item) {
-		start = ParseFloat(j, item, "start");
-		end = ParseFloat(j, item, "end");
 		points = ParsePoints(j, item, "points");
 		amplitude = ParseFloat(j, item, "amplitude");
 	}
