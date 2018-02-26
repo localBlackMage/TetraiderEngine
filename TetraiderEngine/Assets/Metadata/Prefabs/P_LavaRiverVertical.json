@@ -1,6 +1,6 @@
 {
-  "Tag": "Obstacle",
-  "Layer": "2",
+  "Tag": "Hazard",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 120,
-        "y": 120,
+        "x": 384,
+        "y": 157.6,
         "z": 0
       },
       "pivotOffset": {
@@ -21,12 +21,12 @@
       "rotation": {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": 90
 	  }
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_ExplodingRock.png",
+      "Texture": "T_Lava.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -50,38 +50,19 @@
       }
     },
 	{
-		"Component": "Health",
-		"startingHealth": 25,
-		"maxHealth": 25,
-		"isInvincible": false
-	},
-	{
-		"Component": "DestroyOnHealthZero",
-		"destroyIn": 0,
-		"isExplode": true,
-		"explosionRadius": 190,
-		"explosionKnockBack": 2000,
-		"explosionDamage": 5,
-		"explosionPrefab": "P_Explosion"
-	},
-	{
 		"Component": "Body",
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "circle",
-			"radius": 60
+			"type": "AABB",
+			"width": 130,
+			"height": 384
 		}
 	},
 	{
-		"Component": "FlashOnTakeDamage",
-		"decaySpeed": 4,
-		"flashColor": {
-        "r": 1,
-        "g": 1,
-        "b": 1,
-        "a": 0
-		}
+		"Component": "DealDamageOnCollision",
+		"damage": 5,
+		"knockBackSpeed": 1000
 	}
   ]
 }

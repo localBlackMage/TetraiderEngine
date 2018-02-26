@@ -81,7 +81,7 @@
 		"baseDamage": 2,
 		"projectileSpeed": 500,
 		"offset": 40,
-		"lifeTime": 2,
+		"lifeTime": 3,
 		"projectilePrefab": "P_testProjectile",
 		"knockBackSpeed": 500,
 		"timeOffset": 0

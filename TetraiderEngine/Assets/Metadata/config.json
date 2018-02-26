@@ -25,11 +25,12 @@
 	"LEVEL_SETTINGS": {
 		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
-		"Start": 1,
+		"Start": 3,
 		"Levels": [
 			{ "Name": "LVL_Empty" },
 			{ "Name": "LVL_Menu" },
-			{ "Name": "LVL_Gym" }
+			{ "Name": "LVL_Gym" },
+			{ "Name": "LVL_Prototype"}
 		]
 	},
 	"INPUT_SETTINGS": [

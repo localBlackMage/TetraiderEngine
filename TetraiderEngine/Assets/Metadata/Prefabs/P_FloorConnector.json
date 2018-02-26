@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 180,
-        "y": 180,
+        "x": 256,
+        "y": 256,
         "z": 0
       },
       "pivotOffset": {
@@ -26,10 +26,10 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_CracksRed.png",
+      "Texture": "T_BackgroundGrey.png",
       "tiling": {
-        "x": 1,
-        "y": 1
+        "x": 1.5,
+        "y": 1.5
       },
       "uvOffset": {
         "u": 0,

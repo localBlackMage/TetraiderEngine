@@ -52,11 +52,11 @@
 	{
 		"Component": "Controller",
 		"AgentData": {
-			"speed": 200,
+			"speed": 300,
 			"acceleration": 10,
 			"knockBackMultiplier": 1
 		},
-		"flySpeed": 400,
+		"flySpeed": 550,
 		"featherParticlePrefab": "P_FeatherParticleEmitter"
 	},
 	{
@@ -91,7 +91,7 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 50
+			"radius": 45
 		}
 	},
 	{
