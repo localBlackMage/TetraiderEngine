@@ -70,6 +70,7 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 {
 	const Vector3D Gravity = Vector3D(0, -98.f * m_gravityMod, 0);
 	m_liveParticleCount = 0;
+	float t = 0.f;
 	for (int i = 0; i<m_maxParticles; i++) {
 
 		Particle& p = m_particles[i];
@@ -79,16 +80,21 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 			// Decrease life
 			p.m_life -= deltaTime;
 			if (p.m_life > 0.0f) {
-				p.m_velocity += Gravity * deltaTime;
+				t = 1.f - (p.m_life / m_lifeTime);
+				Vector3D velocityOffset = Vector3D(
+					BezierInterpolation(m_velocityX.points, t) * m_velocityX.amplitude,
+					BezierInterpolation(m_velocityY.points, t) * m_velocityY.amplitude,
+					0.f);
+				p.m_velocity = (velocityOffset * m_speed) + Gravity;
 				p.m_pos += p.m_velocity * deltaTime;
 				p.m_pos.z = 0.f;
 
-				p.m_scale = m_size;
+				p.m_scale = BezierInterpolation(m_scale.points, t) * m_scale.amplitude;
 
 				// TODO: decide on a better way to get a camera
 				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
-				Color color = Lerp(m_colorStart, m_colorEnd, m_lifeTime - p.m_life);
+				Color color = Lerp(m_colorStart, m_colorEnd, t);
 				p.m_color.r = color.r;
 				p.m_color.g = color.g;
 				p.m_color.b = color.b;
@@ -247,15 +253,19 @@ void ParticleEmitter::Serialize(const json & j)
 	m_lifeTime = ParseFloat(j, "lifeTime");
 	m_animationSpeed = ParseFloat(j, "animationSpeed");
 	m_speed = ParseFloat(j, "speed");
-	m_size = ParseFloat(j, "size");
+
+	m_velocityX.Serialize(j, "velocityX");
+	m_velocityY.Serialize(j, "velocityY");
+	m_scale.Serialize(j, "scale");
+
 	m_rotation = ParseFloat(j, "rotation");
 
-	Vector3D colorStart = ParseColor(j, "colorStart");
+	Vector3D colorStart = ParseColor(j, "color", "start");
 	m_colorStart.r = int(colorStart.x * 255.f);
 	m_colorStart.g = int(colorStart.y * 255.f);
 	m_colorStart.b = int(colorStart.z * 255.f);
 	m_colorStart.a = int(colorStart.w * 255.f);
-	Vector3D colorEnd = ParseColor(j, "colorEnd");
+	Vector3D colorEnd = ParseColor(j, "color", "end");
 	m_colorEnd.r = int(colorEnd.x * 255.f);
 	m_colorEnd.g = int(colorEnd.y * 255.f);
 	m_colorEnd.b = int(colorEnd.z * 255.f);

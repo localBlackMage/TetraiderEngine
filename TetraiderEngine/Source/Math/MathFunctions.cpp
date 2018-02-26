@@ -67,8 +67,20 @@ unsigned int GetPascalEntry(unsigned short degree, unsigned short index)
 	return pascalTriangle[degree][index];
 }
 
-float Bernstein(unsigned short d, float t, unsigned short i) {
+static float BernsteinFormula(const unsigned short& d, const float& t, const float& tPow, const unsigned short& i) {
 	float dci = float(GetPascalEntry(d, i));
+	return std::powf((1.f - t), float(d - i)) * tPow * dci;
+}
 
-	return std::powf((float(i) - t), float(d - i)) * std::powf(t, i) * dci;
+float BezierInterpolation(const std::vector<Point>& points, const float& t) {
+	if (points.size() == 0)	return 0.f;
+
+	unsigned short d = points.size() - 1;
+	float tPow = 1.f;
+	float returnValue = points[0].y * BernsteinFormula(d, t, tPow, 0);
+	for (unsigned short i = 1; i < points.size(); i++) {
+		tPow *= t;
+		returnValue += points[i].y * BernsteinFormula(d, t, tPow, i);
+	}
+	return returnValue;
 }

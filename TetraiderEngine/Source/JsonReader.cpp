@@ -6,6 +6,38 @@
 #include <iostream>
 
 namespace JsonReader {
+	std::vector<Point> ParsePoints(const json & j, const String & first)
+	{
+		std::vector<Point> points;
+		if (j.find(first) != j.end()) {
+			int size = j[first].size();
+			for (int i = 0; i < size; ++i) {
+				Point p;
+				p.x = j[first][i]["x"];
+				p.y = j[first][i]["y"];
+				points.push_back(p);
+			}
+		}
+		return points;
+	}
+
+	std::vector<Point> ParsePoints(const json & j, const String & first, const String & second)
+	{
+		std::vector<Point> points;
+		if (j.find(first) != j.end()) {
+			if (j[first].find(second) != j[first].end()) {
+				int size = j[first][second].size();
+				for (int i = 0; i < size; ++i) {
+					Point p;
+					p.x = j[first][second][i]["x"];
+					p.y = j[first][second][i]["y"];
+					points.push_back(p);
+				}
+			}
+		}
+		return points;
+	}
+
 	float ParseFloat(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())
