@@ -40,6 +40,14 @@
       }
     },
     {
+      "prefab": "P_FireParticleEmitter",
+      "position": {
+        "x": 100,
+        "y": 20,
+        "z": 0
+      }
+    },
+    {
       "prefab": "P_EnemyMelee",
       "position": {
         "x": -900,
