@@ -48,11 +48,14 @@
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\FiniteStateMachines">
+    <Filter Include="Source Files\FiniteStateMachines">
       <UniqueIdentifier>{ecda41e7-0b7f-47c3-a492-7dbe37f83be6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\FiniteStateMachines\AI_Base">
+    <Filter Include="Source Files\AI_Base">
       <UniqueIdentifier>{067fc15f-b220-47c9-84b3-6ed6fccfca25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FiniteStateMachines\Base">
+      <UniqueIdentifier>{9fd2e68d-45f5-4e7d-b143-fc62870265c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -257,26 +260,35 @@
     <ClCompile Include="Source\EggCounter.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_StateFactory.cpp">
-      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_Attack.cpp">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_Engage.cpp">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_Idle.cpp">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_Retreat.cpp">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp">
-	  <Filter>Source Files\Components\FiniteStateMachines</Filter>
-	</ClCompile>
     <ClCompile Include="Source\PauseMenu.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Attack.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Engage.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Idle.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_Retreat.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_StateFactory.cpp">
+      <Filter>Source Files\FiniteStateMachines\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_WalkTowardPlayer.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_DashingAttack.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_DashingEngage.cpp">
+      <Filter>Source Files\FiniteStateMachines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,38 +538,44 @@
     <ClInclude Include="Source\EggCounter.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_Attack.h">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_Engage.h">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_Idle.h">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_Retreat.h">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_State.h">
-      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_StateFactory.h">
-      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_StateTypeNames.h">
-      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_StateTypes.h">
-      <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AIComponent.h">
-	  <Filter>Source Files\Components\FiniteStateMachines\AI_Base</Filter>
-	</ClInclude>
-    <ClInclude Include="Source\AI_MoveToRandomPointInZone.h">
-      <Filter>Source Files\Components\FiniteStateMachines</Filter>
-	</ClInclude>
     <ClInclude Include="Source\PauseMenu.h">
       <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_Attack.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_Engage.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_Idle.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_MoveToRandomPointInZone.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_Retreat.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_StateTypes.h">
+      <Filter>Source Files\FiniteStateMachines\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_StateTypeNames.h">
+      <Filter>Source Files\FiniteStateMachines\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_StateFactory.h">
+      <Filter>Source Files\FiniteStateMachines\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_State.h">
+      <Filter>Source Files\FiniteStateMachines\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_WalkTowardPlayer.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_DashingAttack.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_DashingEngage.h">
+      <Filter>Source Files\FiniteStateMachines</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
