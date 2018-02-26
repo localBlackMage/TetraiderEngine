@@ -1,10 +1,13 @@
 #include "FrameRateManager.h"
 #include "TetraiderAPI.h"
 #include <SDL.h>
+#include <chrono>
 #include <stdint.h>
 #include <iostream>
 
 #define MIN_FRAME_TIME 0.016667f
+
+typedef std::chrono::high_resolution_clock Time;
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 	m_secondCounter(0.f)

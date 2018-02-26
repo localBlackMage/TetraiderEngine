@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI_DashingAttack.cpp" />
+    <ClCompile Include="Source\AI_DashingEngage.cpp" />
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
+    <ClCompile Include="Source\AI_WalkTowardPlayer.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
@@ -95,10 +98,12 @@
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI_DashingAttack.h" />
+    <ClInclude Include="Source\AI_DashingEngage.h" />
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
+    <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
     <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
-    <ClInclude Include="Source\AIComponent.h" />
     <ClInclude Include="Source\AI_Attack.h" />
     <ClInclude Include="Source\AI_Engage.h" />
     <ClInclude Include="Source\AI_Idle.h" />

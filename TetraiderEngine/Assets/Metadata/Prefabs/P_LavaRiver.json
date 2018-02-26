@@ -61,7 +61,7 @@
 	},
 	{
 		"Component": "DealDamageOnCollision",
-		"damage": 1,
+		"damage": 5,
 		"knockBackSpeed": 1000
 	}
   ]

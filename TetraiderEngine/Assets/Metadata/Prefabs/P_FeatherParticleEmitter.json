@@ -24,34 +24,78 @@
 			"z": 80
 		}
     },
-	{
-		"Component": "ParticleEmitter",
-		
-		"loopDuration": 2.0,
-		"looping": true,
-		"prewarmed": false,
-		"startDelay": 0,
-		"lifeTime": 1.0,
-		"speed": 40.0,
-		"size": 20.0,
-		"rotation": 0,
-		"colorStart": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"colorEnd": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"gravity": 0.6,
-		"emissionRate": 7,
-		"max": 20,
-		"rotationOverTime": 0,
-		"particleTexture": "T_Feather.png"
+    {
+      "Component": "ParticleEmitter",
+
+      "loopDuration": 2.0,
+      "looping": true,
+      "prewarmed": false,
+      "startDelay": 0,
+      "lifeTime": 1.0,
+      "speed": 40.0,
+      "velocityX": {
+        "amplitude": 0.0,
+        "points": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      "velocityY": {
+        "amplitude": 1.0,
+        "points": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      "scale": {
+        "amplitude": 20.0,
+        "points": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      "rotation": 0,
+      "color": {
+        "start": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "end": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "gravity": 0.6,
+      "emissionRate": 7,
+      "max": 20,
+      "rotationOverTime": 0,
+      "particleTexture": "T_Feather.png",
+      "textureSelection": "single",
+      "animationSpeed": 0,
+      "rows": 1,
+      "cols": 1
     }
   ]
 }

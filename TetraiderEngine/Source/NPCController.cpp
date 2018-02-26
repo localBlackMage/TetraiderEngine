@@ -35,13 +35,19 @@ void NPCController::Deactivate() {
 void NPCController::Update(float dt) {
 	// Change of state
 	if (m_currentState != m_previousState) {
-		m_AIStates[m_previousState]->OnExit();
-		m_AIStates[m_currentState]->OnEnter();
-		m_previousState = m_currentState;
+		if (m_AIStates[m_currentState]) {
+			m_AIStates[m_previousState]->OnExit();
+			m_AIStates[m_currentState]->OnEnter();
+			m_previousState = m_currentState;
+		}
+		else {
+			m_currentState = m_previousState;
+		}
 	}
 	
 	// Update with currentState
-	m_AIStates[m_currentState]->OnUpdate(dt);
+	if(m_AIStates[m_currentState])
+		m_AIStates[m_currentState]->OnUpdate(dt);
 
 	// Move to destination
 	if (!m_arrivedAtDestination && !IsArrivedAtDestination()) {
@@ -194,6 +200,9 @@ void NPCController::LookAtPlayer(float offsetAngleDegrees) {
 	m_lookDirection = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
 	m_lookDirection.Normalize();
 	float angle = m_lookDirection.AngleDegrees() + offsetAngleDegrees;
+	if (angle > 180.0f)	angle -= 360;
+	else if (angle < -180) angle += 360;
+
 	m_lookDirection = Vector3D::VectorFromAngleDegrees(angle);
 }
 
@@ -233,4 +242,13 @@ bool NPCController::IsInAttackRange() {
 		return false;
 
 	return GetSquareDistanceToPlayer() < m_attackRange*m_attackRange;
+}
+
+void NPCController::SetPositionBehindPlayer(float distance) {
+	if (m_isPlayerDead)
+		SetTargetDestination(m_pTransform->GetPosition());
+
+	Vector3D dirToPlayer = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
+	dirToPlayer.Normalize();
+	SetTargetDestination(dirToPlayer*distance + m_pPlayerTransform->GetPosition());
 }

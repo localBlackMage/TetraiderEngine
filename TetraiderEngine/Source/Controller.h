@@ -15,6 +15,7 @@ public:
 	static Component* CreateInstance() { return new Controller(); }
 	virtual void Deactivate();
 	virtual void Update(float dt);
+	virtual void LateUpdate(float dt);
 	virtual void LateInitialize();
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);

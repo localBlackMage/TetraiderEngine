@@ -24,6 +24,9 @@ void Controller::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 	Agent::Update(dt);
 }
+
+void Controller::LateUpdate(float dt) {}
+
 void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 	m_flySpeed = ParseFloat(j, "flySpeed");
@@ -32,7 +35,16 @@ void Controller::Serialize(const json& j) {
 }
 
 void Controller::HandleEvent(Event* pEvent) {
-	if (TETRA_GAME_STATE.IsGamePaused() || m_isDead) return;
+	if (m_isDead) return;
+
+	if (TETRA_GAME_STATE.IsGamePaused()) {
+		if (pEvent->Type() == EVENT_INPUT_FLY) {
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isPressed) m_isIgnoreHazards = true;
+			else m_isIgnoreHazards = false;
+		}
+		return;
+	}
 
 	Agent::HandleEvent(pEvent);
 
