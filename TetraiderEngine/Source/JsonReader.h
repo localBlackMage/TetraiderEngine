@@ -23,10 +23,13 @@ Creation date: 10/29/17
 
 using json = nlohmann::json;
 
+typedef std::vector<Point> ControlPoints;
+
 namespace JsonReader {
 	typedef std::string String;
 
 	std::vector<Point> ParsePoints(const json& j, const String&);
+	std::vector<Point> ParsePoints(const json& j, const String&, const String&);
 
 	float ParseFloat(const json& j, const String&);
 	float ParseFloat(const json& j, const String&, const String&);

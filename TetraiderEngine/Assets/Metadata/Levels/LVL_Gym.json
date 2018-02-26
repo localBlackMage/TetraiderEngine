@@ -3,7 +3,7 @@
     {
       "prefab": "P_Camera"
     },
-	  {
+    {
       "prefab": "P_UICamera"
     },
     {
@@ -14,7 +14,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_EggPickUp",
       "position": {
         "x": -100,
@@ -22,7 +22,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_MeatPickup",
       "position": {
         "x": -200,
@@ -30,15 +30,16 @@
         "z": 0
       }
     },
-	{
-		"prefab": "P_FireParticle",
-		"position": {
-			"x": 100,
-			"y": 20,
-			"z": 0
-		}
+
+    {
+      "prefab": "P_ParticleTest",
+      "position": {
+        "x": 60,
+        "y": 20,
+        "z": 0
+      }
     },
-	{
+    {
       "prefab": "P_EnemyMelee",
       "position": {
         "x": -900,
@@ -46,7 +47,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_EnemyMelee",
       "position": {
         "x": -900,
@@ -54,7 +55,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_EnemyRanged",
       "position": {
         "x": 900,
@@ -62,7 +63,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_Bat",
       "position": {
         "x": 900,
@@ -70,7 +71,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_Rock",
       "position": {
         "x": -450,
@@ -78,10 +79,10 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_InGameCursor"
     },
-	{
+    {
       "prefab": "P_ColliderTest2",
       "position": {
         "x": 300,
@@ -89,7 +90,7 @@
         "z": 0
       }
     },
-	{
+    {
       "prefab": "P_ColliderTest3",
       "position": {
         "x": -300,
@@ -97,132 +98,132 @@
         "z": 0
       }
     },
-	{
-	  "prefab": "P_Background",
+    {
+      "prefab": "P_Background",
       "position": {
         "x": 0,
         "y": 0,
         "z": 0
       }
-	},
-	{
-		"prefab": "P_Lavacracks",
-		"position": {
+    },
+    {
+      "prefab": "P_Lavacracks",
+      "position": {
         "x": 0,
         "y": 0,
         "z": 0
       }
-	},
-	{
-		"prefab": "P_Lavacracks",
-		"position": {
+    },
+    {
+      "prefab": "P_Lavacracks",
+      "position": {
         "x": -650,
         "y": -200,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_TreeTest",
+    },
+    {
+      "prefab": "P_TreeTest",
       "position": {
         "x": -400,
         "y": 150,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_GreenGrass",
+    },
+    {
+      "prefab": "P_GreenGrass",
       "position": {
         "x": -50,
         "y": 50,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_GreenGrass",
+    },
+    {
+      "prefab": "P_GreenGrass",
       "position": {
         "x": -350,
         "y": -18,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_BrownGrass",
+    },
+    {
+      "prefab": "P_BrownGrass",
       "position": {
         "x": 20,
         "y": -90,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_BrownGrass",
+    },
+    {
+      "prefab": "P_BrownGrass",
       "position": {
         "x": 290,
         "y": 160,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_Barrel",
+    },
+    {
+      "prefab": "P_Barrel",
       "position": {
         "x": 50,
         "y": 260,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_LavaRiver",
+    },
+    {
+      "prefab": "P_LavaRiver",
       "position": {
         "x": 250,
         "y": -350,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_ExplodingRock",
+    },
+    {
+      "prefab": "P_ExplodingRock",
       "position": {
         "x": -150,
         "y": -225,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_ProjectileSpawner",
-	  "position": {
-	  	"x": -400,
-		"y": 300,
-		"z": 0
-		}	
-	},
-	{
-	  "prefab": "P_ProjectileSpawner02",
-	  "position": {
-	  	"x": -400,
-		"y": 500,
-		"z": 0
-		}	
-	},
-	{
-	  "prefab": "P_HealthBar"	
-	},
-	{
-	  "prefab": "P_StaminaBar"	
-	},
-	{
-		"prefab": "P_TextTest"
-	},
-	{
-		"prefab": "P_LevelStatus"
-	},
-	{
-		"prefab": "P_EggUI"
-  },
-  {
-    "prefab": "P_PauseMenu",
-    "position": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+    },
+    {
+      "prefab": "P_ProjectileSpawner",
+      "position": {
+        "x": -400,
+        "y": 300,
+        "z": 0
+      }
+    },
+    {
+      "prefab": "P_ProjectileSpawner02",
+      "position": {
+        "x": -400,
+        "y": 500,
+        "z": 0
+      }
+    },
+    {
+      "prefab": "P_HealthBar"
+    },
+    {
+      "prefab": "P_StaminaBar"
+    },
+    {
+      "prefab": "P_TextTest"
+    },
+    {
+      "prefab": "P_LevelStatus"
+    },
+    {
+      "prefab": "P_EggUI"
+    },
+    {
+      "prefab": "P_PauseMenu",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
     }
-  }
   ]
 }
