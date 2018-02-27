@@ -36,6 +36,7 @@ public:
 	bool IsLastLevel();
 	int GetCurrentLevel();
 	void LoadStaticGameObjects();
+	void ActivateRandomGeneration(bool isActive) {	m_isRandomlyGenerated = isActive; }
 };
 
 
