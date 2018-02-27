@@ -89,6 +89,7 @@
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
+    <ClCompile Include="Source\StraightLineMovement.cpp" />
     <ClCompile Include="Source\Subscriber.cpp" />
     <ClCompile Include="Source\SubscriberTracker.cpp" />
     <ClCompile Include="Source\TetraiderAPI.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />
+    <ClInclude Include="Source\StraightLineMovement.h" />
     <ClInclude Include="Source\SurfaceTextureBuffer.h" />
     <ClInclude Include="Source\Subscriber.h" />
     <ClInclude Include="Source\SubscriberTracker.h" />

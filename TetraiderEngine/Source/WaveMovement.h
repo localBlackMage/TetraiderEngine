@@ -3,7 +3,7 @@
 #define WAVEMOVEMENT_H
 
 #include "Component.h"
-#include "Math\Vector3D.h"
+#include "Math\MathLibs.h"
 
 class Transform;
 

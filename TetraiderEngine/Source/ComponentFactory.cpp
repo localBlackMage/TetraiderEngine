@@ -5,11 +5,11 @@
 #include "Sprite.h"
 #include "ParticleEmitter.h"
 #include "Text.h"
-
 #include "Animation.h"
+#include "Camera.h"
+
 #include "Controller.h"
 #include "Body.h"
-#include "Camera.h"
 #include "CamFollow.h"
 #include "Health.h"
 #include "FlashOnTakeDamage.h"
@@ -25,6 +25,7 @@
 #include "Stamina.h"
 #include "Collectible.h"
 #include "WaveMovement.h"
+#include "StraightLineMovement.h"
 #include "SpawnOnHealthZero.h"
 #include "FollowCursor.h"
 #include "Button.h"
@@ -56,6 +57,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Stamina"] = Stamina::CreateInstance;
 	m_creationFunctions["Collectible"] = Collectible::CreateInstance;
 	m_creationFunctions["WaveMovement"] = WaveMovement::CreateInstance;
+	m_creationFunctions["StraightLineMovement"] = StraightLineMovement::CreateInstance;
 	m_creationFunctions["SpawnOnHealthZero"] = SpawnOnHealthZero::CreateInstance;
 	m_creationFunctions["FollowCursor"] = FollowCursor::CreateInstance;
 	m_creationFunctions["Button"] = Button::CreateInstance;

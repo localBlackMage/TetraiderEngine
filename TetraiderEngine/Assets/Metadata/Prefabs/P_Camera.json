@@ -23,7 +23,7 @@
             "Component": "Camera",
             "perspective": false,
             "fov": 105,
-            "layers": ["BG", "1", "2", "3"]
+            "layers": ["BG", "BG_1", "BG_2", "1", "2", "3"]
         }
     ]
 }
