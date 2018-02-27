@@ -11,7 +11,7 @@
       },
       "scale": {
         "x": 100,
-        "y": 80,
+        "y": 100,
         "z": 0
       },
       "pivotOffset": {
@@ -21,7 +21,7 @@
       "rotation": {
         "x": 0,
         "y": 0,
-        "z": 30
+        "z": 0
 	  }
     },
 	{
@@ -80,7 +80,7 @@
 		"coolDown": 1,
 		"baseDamage": 2,
 		"projectileSpeed": 500,
-		"offset": 40,
+		"offset": 70,
 		"lifeTime": 3,
 		"projectilePrefab": "P_testProjectile",
 		"knockBackSpeed": 500,
