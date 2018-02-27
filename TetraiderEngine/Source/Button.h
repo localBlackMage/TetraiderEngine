@@ -11,6 +11,7 @@ private:
 	int m_levelNumber;
 	bool isQuit;
 	bool isRestart;
+	bool isRandomGenerated;
 	//Text* m_pText;
 public:
 	Button();
