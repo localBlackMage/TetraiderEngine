@@ -32,10 +32,10 @@
 			"knockBackMultiplier": 1
 		},
 		"detectionRadius": 400,
-		"outOfSightRadius": 600,
-		"zoneWidth": 500,
-		"zoneHeight": 500,
-		"attackRange": 800,
+		"outOfSightRadius": 500,
+		"zoneWidth": 350,
+		"zoneHeight": 325,
+		"attackRange": 500,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -157,6 +157,10 @@
 			"z": 0
 		},
 		"rotationOffset": 0
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"prefab": "P_EggPickUp"
 	}
   ]
 }

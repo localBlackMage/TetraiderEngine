@@ -32,9 +32,9 @@
 			"knockBackMultiplier": 1
 		},
 		"detectionRadius": 400,
-		"outOfSightRadius": 600,
-		"zoneWidth": 500,
-		"zoneHeight": 500,
+		"outOfSightRadius": 500,
+		"zoneWidth": 350,
+		"zoneHeight": 350,
 		"attackRange": 250,
 		"AIStates": [
 			{
@@ -142,7 +142,7 @@
 			{
 				"type": "Melee",
 				"coolDown": 0.6,
-				"baseDamage": 5,
+				"baseDamage": 10,
 				"radius": 180,
 				"angle": 90,
 				"triggerAttackIn": 0.05,

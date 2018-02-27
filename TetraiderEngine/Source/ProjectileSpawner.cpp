@@ -13,16 +13,24 @@ void ProjectileSpawner::DeActivate() {
 
 void ProjectileSpawner::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
-
+	//TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), 2000, DebugColor::GREY);
 	if (m_isActive) {
 		m_timeFromLastFire += dt;
 		if (m_timeFromLastFire > m_coolDown) {
+			m_timeFromLastFire = 0;
+
+			/*
+			const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
+			const Transform* pPlayerTransform = pPlayer->GetComponent<Transform>(C_Transform);
+			// If player is 800 pixels away do not fire
+
+			if (Vector3D::SquareDistance(pPlayerTransform->GetPosition(), m_pTransform->GetPosition()) > 640000) return;*/
+
 			Vector3D instantiatePos = m_pTransform->GetPosition() + m_instantiationOffset*m_diriection;
 			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab);
 			Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 			bool isEnemyProjectile = true;
 			pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, m_diriection, m_lifeTime, m_knockBackSpeed, pGO);
-			m_timeFromLastFire = 0;
 		}
 	}
 }

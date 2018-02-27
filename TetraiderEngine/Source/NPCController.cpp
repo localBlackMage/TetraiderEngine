@@ -33,6 +33,7 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
+	return;
 	// Change of state
 	if (m_currentState != m_previousState) {
 		if (m_AIStates[m_currentState]) {

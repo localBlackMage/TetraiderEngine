@@ -51,17 +51,17 @@
     },
 	{
 		"Component": "Health",
-		"startingHealth": 25,
-		"maxHealth": 25,
+		"startingHealth": 15,
+		"maxHealth": 15,
 		"isInvincible": false
 	},
 	{
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
 		"isExplode": true,
-		"explosionRadius": 190,
+		"explosionRadius": 250,
 		"explosionKnockBack": 2000,
-		"explosionDamage": 5,
+		"explosionDamage": 40,
 		"explosionPrefab": "P_Explosion"
 	},
 	{
