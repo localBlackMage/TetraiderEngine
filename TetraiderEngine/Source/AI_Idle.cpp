@@ -8,7 +8,7 @@
 
 AI_Idle::AI_Idle()
 : AI_State(NPC_State_Idle) {
-	idleDuration = RandomInt(1, 3); // get 1 - 3 sec
+	idleDuration = RandomFloat(1, 3); // get 1 - 3 sec
 	idledSoFar = 0.0f;
 }
 
@@ -41,5 +41,8 @@ void AI_Idle::OnExit(){
 
 
 void AI_Idle::HandleEvent(Event* pEvent) {
-
+	switch (pEvent->Type()) {
+	case EventType::EVENT_OnTakeDamage:
+		pAgent->ChangeState(NPC_ENGAGE);
+	}
 }

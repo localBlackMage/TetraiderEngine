@@ -44,7 +44,11 @@
       },
       { "name": "NPC_ENGAGE",
         "behaviorIndex": 1,
-        "AIStateType": "NPC_State_WalkTowardPlayer"
+        "AIStateType": "NPC_State_WalkTowardPlayerEngage"
+      },
+      { "name": "attackBehavior",
+        "behaviorIndex": 2,       
+        "AIStateType": "NPC_State_WalkTowardPlayerAttack"
       },
       {
         "name": "NPC_MOVETORANDOMPOINTINZONE",

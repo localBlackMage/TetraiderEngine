@@ -39,5 +39,9 @@ void AI_MoveToRandomPointInZone::OnExit(){
 }
 
 void AI_MoveToRandomPointInZone::HandleEvent(Event* pEvent) {
+	switch (pEvent->Type()) {
+	case EventType::EVENT_OnTakeDamage:
+		pAgent->ChangeState(NPC_ENGAGE);
+	}
 
 }

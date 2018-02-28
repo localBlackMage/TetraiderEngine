@@ -11,7 +11,6 @@ AI_DashingAttack::~AI_DashingAttack(){
 }
 
 void AI_DashingAttack::OnEnter(){	
-	pAgent->LookAtPlayer();
 	pAgent->SetPositionBehindPlayer(300.0f);
 	pAgent->SetSpeedMultiplier(4.5f);
 	triedSofar = 0.0f;

@@ -24,7 +24,8 @@
     <ClCompile Include="Source\AI_DashingStunned.cpp" />
     <ClCompile Include="Source\AI_IdleForDuration.cpp" />
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
-    <ClCompile Include="Source\AI_WalkTowardPlayer.cpp" />
+    <ClCompile Include="Source\AI_WalkTowardPlayerAttack.cpp" />
+    <ClCompile Include="Source\AI_WalkTowardPlayerEngage.cpp" />
     <ClCompile Include="Source\FollowCamera.cpp" />
     <ClCompile Include="Source\Microphone.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
@@ -111,7 +112,8 @@
     <ClInclude Include="Source\AI_DashingStunned.h" />
     <ClInclude Include="Source\AI_IdleForDuration.h" />
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
-    <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
+    <ClInclude Include="Source\AI_WalkTowardPlayerAttack.h" />
+    <ClInclude Include="Source\AI_WalkTowardPlayerEngage.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\FollowCamera.h" />
     <ClInclude Include="Source\Microphone.h" />
