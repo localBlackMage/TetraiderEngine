@@ -104,6 +104,8 @@ protected:
 	int m_liveParticleCount;					// Indicates how many particles are currently alive, set each Update loop
 	int m_lastUsedParticle;						// An index into m_particles, represents the index of the last used particle
 
+	std::string m_shader;
+
 	int _FindUnusedParticle();
 	void _SpawnParticle();
 	void _SortParticles() { std::sort(&m_particles[0], &m_particles[m_maxParticles]); }
@@ -142,6 +144,8 @@ public:
 
 	float FrameWidth() const { return m_frameWidth; }
 	float FrameHeight() const { return m_frameHeight; }
+
+	std::string Shader() const { return m_shader; }
 };
 
 #endif

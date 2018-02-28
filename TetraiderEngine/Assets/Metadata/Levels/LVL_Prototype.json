@@ -66,6 +66,15 @@
         "z": 0
       }
     },
+	
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -200,
+			"y": 0,
+			"z": 0
+		}
+	},
 	{
       "prefab": "P_EnemyBat",
       "position": {

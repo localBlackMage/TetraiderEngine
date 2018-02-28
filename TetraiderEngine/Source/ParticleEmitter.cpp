@@ -294,6 +294,8 @@ void ParticleEmitter::Serialize(const json & j)
 
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
+	m_shader = ValueExists(j, "shader") ? j["shader"] : "particle";
+
 	_AllocateParticleArrays();
 	_AllocateVBOs();
 	m_liveParticleCount = 0;

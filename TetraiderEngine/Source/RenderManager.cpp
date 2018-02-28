@@ -6,6 +6,7 @@
 #include "Shader.h"
 
 #include "GameObject.h"
+#include "Component.h"
 #include "Transform.h"
 #include "Camera.h"
 #include "Sprite.h"
@@ -199,29 +200,41 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
 		return;
 
-	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
-	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
-	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-	glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
-
 	// set shader attributes
-	if (gameObject.HasComponent(ComponentType::C_Sprite))
-		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
-	else if (gameObject.HasComponent(ComponentType::C_ParticleEmitter))
+	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
+		_BindGameObjectTransform(gameObject);
 		_RenderParticles(gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter));
+	}
+
+	if (gameObject.HasComponent(ComponentType::C_Sprite)) {
+		const Sprite* pSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
+		if (pSpriteComp->HasPosOffset())
+			_BindGameObjectTransformWithOffset(gameObject, pSpriteComp->GetPosOffset());
+		else 
+			_BindGameObjectTransform(gameObject);
+
+		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
+	}
 	
-	if (gameObject.HasComponent(ComponentType::C_Text))
+	if (gameObject.HasComponent(ComponentType::C_Text)) {
+		_BindGameObjectTransform(gameObject);
 		_RenderText(gameObject.GetComponent<Text>(ComponentType::C_Text), gameObject.GetComponent<Transform>(ComponentType::C_Transform));
+	}
 }
 
-void RenderManager::_SelectShaderProgram(const GameObject & gameObject)
+void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 {
 	std::string shader = "";
 
-	if (gameObject.HasComponent(ComponentType::C_Sprite))
-		shader = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite)->Shader();
-	else if (gameObject.HasComponent(ComponentType::C_ParticleEmitter))
-		shader = "particle";	// TODO: Un-hard code this
+	switch (renderingComponent->Type()) {
+		case ComponentType::C_ParticleEmitter:
+			shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
+			break;
+		case ComponentType::C_Sprite:
+		default:
+			shader = static_cast<const Sprite*>(renderingComponent)->Shader();
+			break;
+	}
 
 	SelectShaderProgram(shader == "" ? "default" : shader);
 }
@@ -406,6 +419,24 @@ void RenderManager::_EnableDepthTest()
 
 #pragma endregion
 
+#pragma region Binds
+
+void RenderManager::_BindGameObjectTransform(const GameObject & gameObject)
+{
+	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
+	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+	glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
+}
+
+void RenderManager::_BindGameObjectTransformWithOffset(const GameObject & gameObject, const Vector3D & offset)
+{
+	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransformAfterOffset(offset);
+	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+	glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
+}
+
 void RenderManager::_BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride, int offset)
 {
 	glEnableVertexAttribArray(location);
@@ -427,6 +458,8 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 {
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
 }
+
+#pragma endregion
 
 #pragma endregion
 
@@ -518,11 +551,43 @@ float RenderManager::GetAspectRatio() const
 
 #pragma endregion
 
-void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& go)
+void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject)
 {
-	_SelectShaderProgram(go);
-	_SetUpCamera(camera);
-	_RenderGameObject(go);
+	//_RenderGameObject(go);
+
+
+	// Only attempt to draw if the game object has a sprite component and transform component
+	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
+		return;
+
+	// set shader attributes
+	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
+		const ParticleEmitter* cpParticleEmitterComp = gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
+		_SelectShaderProgram(cpParticleEmitterComp);
+		_SetUpCamera(camera);
+		_BindGameObjectTransform(gameObject);
+		_RenderParticles(cpParticleEmitterComp);
+	}
+
+	if (gameObject.HasComponent(ComponentType::C_Sprite)) {
+		const Sprite* cpSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
+		_SelectShaderProgram(cpSpriteComp);
+		_SetUpCamera(camera);
+		if (cpSpriteComp->HasPosOffset())
+			_BindGameObjectTransformWithOffset(gameObject, cpSpriteComp->GetPosOffset());
+		else
+			_BindGameObjectTransform(gameObject);
+
+		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
+	}
+
+	if (gameObject.HasComponent(ComponentType::C_Text)) {
+		const Text* cpTextComp = gameObject.GetComponent<Text>(ComponentType::C_Text);
+		_SelectShaderProgram(cpTextComp);
+		_SetUpCamera(camera);
+		_BindGameObjectTransform(gameObject);
+		_RenderText(cpTextComp, gameObject.GetComponent<Transform>(ComponentType::C_Transform));
+	}
 }
 
 GLuint RenderManager::GenerateStreamingVBO(unsigned int size)

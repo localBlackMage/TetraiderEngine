@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "SurfaceTextureBuffer.h"
 #include "Mesh.h"
+#include "Math\MathLibs.h"
 #include <string>
 
 class Sprite : public Component 
@@ -20,6 +21,8 @@ protected:
 	SurfaceTextureBuffer * m_texture;
 	Mesh& m_mesh;
 	std::string m_shader;
+
+	Vector3D m_posOffset;
 
 public:
 	Sprite(std::string textureName = "");
@@ -57,6 +60,9 @@ public:
 
 	Vector3D GetSaturationColor() const { return m_saturationColor; }
 	void SetSaturationColor(const Vector3D& saturationColor) { m_saturationColor = saturationColor; }
+
+	bool HasPosOffset() const { return m_posOffset.x != 0.f || m_posOffset.y != 0.f; }
+	const Vector3D& GetPosOffset() const { return m_posOffset; }
 };
 
 #endif

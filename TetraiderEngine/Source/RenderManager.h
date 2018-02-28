@@ -30,6 +30,8 @@ class DebugManager;
 class GameObject;
 class ShaderProgram;
 class Shader;
+
+class Component;
 class Sprite;
 class ParticleEmitter;
 class Text;
@@ -77,7 +79,7 @@ private:
 	void _RenderParticles(const ParticleEmitter * pParticleEmitterComp);
 	void _RenderText(const Text* pTextComp, const Transform* pTransformComp);
 	void _RenderGameObject(const GameObject& gameObject);
-	void _SelectShaderProgram(const GameObject& gameObject);
+	void _SelectShaderProgram(const Component* renderingComponent);
 	void _SetUpCamera(const GameObject& camera);
 
 	void _SetUpDebug(const GameObject& camera);
@@ -89,6 +91,8 @@ private:
 	
 	void _EnableAlphaTest();
 	void _EnableDepthTest();
+	void _BindGameObjectTransform(const GameObject& gameObject);
+	void _BindGameObjectTransformWithOffset(const GameObject& gameObject, const Vector3D& offset);
 	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
 	void _BindUniform2(SHADER_LOCATIONS location, const Vector3D& values);
 	void _BindUniform2(SHADER_LOCATIONS location, float val1, float val2);

@@ -14,7 +14,8 @@ Sprite::Sprite(std::string textureName) :
 	m_textureName(textureName),
 	m_texture(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
-	m_shader("")
+	m_shader(""),
+	m_posOffset(Vector3D())
 {
 }
 
@@ -44,6 +45,8 @@ void Sprite::Serialize(const json& j)
 	m_saturationColor.w = j["saturation"]["a"];
 
 	m_shader = ValueExists(j, "shader") ?  j["shader"] : "default";
+
+	m_posOffset = ParseVector3D(j, "posOffset");
 
 	m_textureName = ParseString(j, "Texture");
 	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
