@@ -41,6 +41,7 @@ public:
 	float GetAspect() const;
 	Matrix4x4 GetViewMatrix() const { return m_viewMatrix; };
 	Matrix4x4 GetCameraMatrix() const { return m_cameraMatrix; };
+	void ZoomCamera(float newZoom) { m_zoom = newZoom; }
 };
 
 #endif
