@@ -42,6 +42,7 @@ void Audio::Play()
 
 void Audio::LateInitialize()
 {
+	return;
 	if (m_isPlayOnAwake)
 	{
 		if (m_isBGM)
