@@ -12,7 +12,7 @@
 		"enableWindowsCursor": false
 	},
 	"WINDOW_SETTINGS": {
-		"windowTitle" : "Eggnapped!",
+		"title" : "Eggnapped",
 		"width": 1400,
 		"height": 1000
 	},

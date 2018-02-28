@@ -44,7 +44,6 @@ namespace Tetraider {
 		TETRA_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
 
 		TETRA_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
-		TETRA_DEBUG.RenderDebugCommands();
 	}
 
 	void FrameEnd()

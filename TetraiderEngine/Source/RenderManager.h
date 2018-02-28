@@ -110,6 +110,7 @@ public:
 	void DisableWindowsCursor();
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
+	void SetWindowDimensions(int width, int height);
 	void SetWindowTitle(std::string title);
 	int WindowWidth() { return m_width; }
 	int WindowHeight() { return m_height; }

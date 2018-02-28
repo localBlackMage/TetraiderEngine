@@ -26,6 +26,7 @@ private:
 	unsigned short m_roomWidth, m_roomHeight;	// Room dimensions in cells (ex. 12x8)
 	unsigned short m_roomsX, m_roomsY;			// Number of rooms in the x and y directions on the grid
 
+	int m_screenWidth, m_screenHeight;
 public:
 	GameConfig();
 	~GameConfig();

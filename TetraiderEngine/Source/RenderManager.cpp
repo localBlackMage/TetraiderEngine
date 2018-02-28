@@ -486,12 +486,23 @@ void RenderManager::SetWindowWidth(int width)
 {
 	m_width = width;
 	glViewport(0, 0, width, m_height);
+	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 }
 
 void RenderManager::SetWindowHeight(int height)
 {
 	m_height = height;
 	glViewport(0, 0, m_width, height);
+
+	SDL_SetWindowSize(m_pWindow, m_width, m_height);
+}
+
+void RenderManager::SetWindowDimensions(int width, int height)
+{
+	m_width = width;
+	m_height = height;
+	glViewport(0, 0, width, height);
+	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 }
 
 void RenderManager::SetWindowTitle(std::string title)

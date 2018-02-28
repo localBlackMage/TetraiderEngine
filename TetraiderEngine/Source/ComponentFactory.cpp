@@ -11,6 +11,7 @@
 #include "Controller.h"
 #include "Body.h"
 #include "CamFollow.h"
+#include "ScreenWrap.h"
 #include "Health.h"
 #include "FlashOnTakeDamage.h"
 #include "Projectile.h"
@@ -43,6 +44,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Body"] = Body::CreateInstance;
 	m_creationFunctions["Camera"] = Camera::CreateInstance;
 	m_creationFunctions["CamFollow"] = CamFollow::CreateInstance;
+	m_creationFunctions["ScreenWrap"] = ScreenWrap::CreateInstance;
 	m_creationFunctions["Health"] = Health::CreateInstance;
 	m_creationFunctions["FlashOnTakeDamage"] = FlashOnTakeDamage::CreateInstance;
 	m_creationFunctions["Projectile"] = Projectile::CreateInstance;
