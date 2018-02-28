@@ -162,8 +162,6 @@ bool NPCController::IsPlayerInSight() {
 	if (m_isPlayerDead)
 		return false;
 
-	
-
 	if (GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius) {
 		LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
 		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3);
