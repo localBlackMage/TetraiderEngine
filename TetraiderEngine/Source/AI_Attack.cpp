@@ -25,7 +25,7 @@ void AI_Attack::OnUpdate(float dt){
 }
 
 void AI_Attack::OnExit(){
-	
+	pAgent->SetSpeedMultiplier(1.0f);
 }
 
 void AI_Attack::HandleEvent(Event* pEvent) {

@@ -28,7 +28,7 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 
 private:
-	int tryTimeDuration; // in seconds
+	float tryTimeDuration; // in seconds
 	int engageTimer;
 	int minimumEngage;
 	float triedMovingSoFar;

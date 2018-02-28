@@ -11,7 +11,7 @@ AI_DashingAttack::~AI_DashingAttack(){
 }
 
 void AI_DashingAttack::OnEnter(){	
-	pAgent->SetPositionBehindPlayer(300.0f);
+	pAgent->SetPositionBehindPlayer(175.0f);
 	pAgent->SetSpeedMultiplier(4.5f);
 	triedSofar = 0.0f;
 	tryTime = 1.5f;
@@ -19,14 +19,14 @@ void AI_DashingAttack::OnEnter(){
 
 void AI_DashingAttack::OnUpdate(float dt){
 	if (triedSofar > tryTime) {
-		pAgent->ChangeState(NPC_IDLE);
+		pAgent->ChangeState(NPC_ENGAGE);
 	}
 	else {
 		triedSofar += dt;
 	}
-	if (pAgent->IsArrivedAtDestination()){
-		pAgent->ChangeState(NPC_IDLE);
-	}
+	//if (pAgent->IsArrivedAtDestination()){
+	//	pAgent->ChangeState(NPC_ENGAGE);
+	//}
 }
 
 void AI_DashingAttack::OnExit(){
@@ -38,5 +38,12 @@ void AI_DashingAttack::HandleEvent(Event* pEvent) {
 		case EventType::EVENT_ForceKnockBack:
 			pAgent->SetVelocityToZero();
 			pAgent->ChangeState(NPC_STUNNED);
+			break;
+		case EventType::EVENT_OnCollide:
+			OnCollideData * pData = pEvent->Data<OnCollideData>();
+			if (pData->pGO->m_tag==T_Obstacle) {
+				pAgent->ChangeState(NPC_ENGAGE);
+			}
+			break;
 	}
 }

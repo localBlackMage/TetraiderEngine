@@ -13,6 +13,7 @@ AI_WalkTowardPlayerEngage::~AI_WalkTowardPlayerEngage() {
 void AI_WalkTowardPlayerEngage::OnEnter() {
 	idleDuration = 4.0f;
 	idledSoFar = 0.0f;
+	pAgent->SetSpeedMultiplier(2.0f);
 }
 
 void AI_WalkTowardPlayerEngage::OnUpdate(float dt) {
