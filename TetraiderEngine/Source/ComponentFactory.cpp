@@ -36,6 +36,7 @@
 #include "LevelStatus.h"
 #include "EggCounter.h"
 #include "PauseMenu.h"
+#include "Microphone.h"
 
 ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
@@ -72,6 +73,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["LevelStatus"] = LevelStatus::CreateInstance;
 	m_creationFunctions["EggCounter"] = EggCounter::CreateInstance;
 	m_creationFunctions["PauseMenu"] = PauseMenu::CreateInstance;
+	m_creationFunctions["Microphone"] = Microphone::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

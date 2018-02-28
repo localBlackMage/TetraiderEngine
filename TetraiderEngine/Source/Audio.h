@@ -34,6 +34,7 @@ private:
 	float m_volume;
 	bool m_Ismute;
 	bool m_isLoop;
+	bool m_is3D;
 	bool m_isPlayOnAwake;
 	bool m_isBGM;
 	int fadeState;

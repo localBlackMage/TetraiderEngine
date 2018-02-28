@@ -35,7 +35,6 @@
         "u": 0,
         "v": 0
       },
-      "hasAlpha": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -68,7 +67,8 @@
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
-		"isBGM": false
+		"isBGM": false,
+		"is3D":true
 	}
   ]
 }

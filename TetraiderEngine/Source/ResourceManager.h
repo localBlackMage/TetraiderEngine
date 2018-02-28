@@ -74,7 +74,8 @@ public:
 	void Load(Sound_Category type, const std::string& path);
 	void LoadSFX(const std::string& path);
 	void LoadSong(const std::string& path);
-	FMOD::Sound* GetSFX(const std::string& path, Sound_Category type);	
+	FMOD::Sound* GetSFX(const std::string& path, Sound_Category type);
+	//void Set3DListener();
 };
 
 #endif
