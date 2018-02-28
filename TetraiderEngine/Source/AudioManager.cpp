@@ -130,7 +130,6 @@ void AudioManager::PlaySFX(const std::string & name, float volume, bool loop, bo
 	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
 	ErrorCheck(channel->setVolume(volume));
 	ErrorCheck(channel->setPaused(false));
-
 }
 
 void AudioManager::PlaySFX(const std::string & name, float volume)

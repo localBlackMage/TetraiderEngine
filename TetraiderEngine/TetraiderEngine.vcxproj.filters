@@ -75,6 +75,9 @@
     <Filter Include="Source Files\Components\Movement">
       <UniqueIdentifier>{f20af27b-80c8-4467-a507-769e80868309}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Audio">
+      <UniqueIdentifier>{1b3579bb-f79b-4dc9-afc1-2a2382d33f70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -197,9 +200,6 @@
     <ClCompile Include="Source\Projectile.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Agent.cpp">
       <Filter>Source Files\Components\Agent</Filter>
     </ClCompile>
@@ -236,9 +236,6 @@
     <ClCompile Include="Source\Collectible.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WaveMovement.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SpawnOnHealthZero.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -249,9 +246,6 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\EggCounter.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PauseMenu.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI_Attack.cpp">
@@ -271,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="Source\AI_StateFactory.cpp">
       <Filter>Source Files\FiniteStateMachine\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_WalkTowardPlayer.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI_DashingAttack.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
@@ -302,9 +299,6 @@
     <ClCompile Include="Source\PointLight.cpp">
       <Filter>Source Files\Components\Rendering\Lights</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StraightLineMovement.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Button.cpp">
       <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
@@ -323,17 +317,23 @@
     <ClCompile Include="Source\AI_DashingStunned.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Microphone.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AI_IdleForDuration.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_WalkTowardPlayerAttack.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClCompile Include="Source\StraightLineMovement.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_WalkTowardPlayerEngage.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClCompile Include="Source\Microphone.cpp">
+      <Filter>Source Files\Components\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Source Files\Components\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WaveMovement.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PauseMenu.cpp">
+      <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,9 +460,6 @@
     <ClInclude Include="Source\RangeAttack.h">
       <Filter>Source Files\Attacks</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CamFollow.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
@@ -541,9 +538,6 @@
     <ClInclude Include="Source\Collectible.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WaveMovement.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SpawnOnHealthZero.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
@@ -554,9 +548,6 @@
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\EggCounter.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PauseMenu.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_Attack.h">
@@ -585,6 +576,9 @@
     </ClInclude>
     <ClInclude Include="Source\AI_State.h">
       <Filter>Source Files\FiniteStateMachine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_WalkTowardPlayer.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_DashingAttack.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
@@ -619,9 +613,6 @@
     <ClInclude Include="Source\Color.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StraightLineMovement.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Button.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
@@ -640,17 +631,23 @@
     <ClInclude Include="Source\AI_DashingStunned.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Microphone.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AI_IdleForDuration.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_WalkTowardPlayerAttack.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClInclude Include="Source\StraightLineMovement.h">
+      <Filter>Source Files\Components\Movement</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_WalkTowardPlayerEngage.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClInclude Include="Source\Microphone.h">
+      <Filter>Source Files\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Source Files\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WaveMovement.h">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PauseMenu.h">
+      <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

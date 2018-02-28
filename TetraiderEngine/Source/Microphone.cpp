@@ -18,7 +18,8 @@ void Microphone::Update(float dt)
 {
 	//const Vector3D tempPos, tempVel;
 	//tempPos = ;
-	TETRA_AUDIO.Set3dListener(m_pObjTrans->GetPosition()/*, m_pBody->GetVelocity()*/ );
+	Vector3D pos = m_pObjTrans->GetPosition();
+	TETRA_AUDIO.Set3dListener(pos/*, m_pBody->GetVelocity()*/ );
 }
 
 void Microphone::Serialize(const json & j)
