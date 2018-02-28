@@ -246,6 +246,14 @@
       }
     },
 	{
+      "prefab": "P_RockBig",
+      "position": {
+        "x": 0,
+        "y": -300,
+        "z": 0
+      }
+    },
+	{
       "prefab": "P_Rock",
       "position": {
         "x": 575,
@@ -282,6 +290,14 @@
       "position": {
         "x": 1500,
         "y": 1400,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Rock",
+      "position": {
+        "x": -300,
+        "y": -200,
         "z": 0
       }
     },
@@ -506,12 +522,47 @@
       "prefab": "P_EggUI"
     },
     {
-      "prefab": "P_PauseMenu",
+      "prefab": "P_PauseMenu"
+    },
+	{
+      "prefab": "P_BarrelWithEgg",
       "position": {
-        "x": 0,
-        "y": 0,
+        "x": 1000,
+        "y": -720,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Barrel",
+      "position": {
+        "x": 1000,
+        "y": -820,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Barrel",
+      "position": {
+        "x": -400,
+        "y": 300,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Barrel",
+      "position": {
+        "x": -500,
+        "y": 300,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_EggPickUp",
+      "position": {
+        "x": 2100,
+        "y": 300,
         "z": 0
       }
     }
-  ]
+	]
 }

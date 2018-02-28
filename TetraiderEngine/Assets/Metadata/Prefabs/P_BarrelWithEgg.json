@@ -77,6 +77,10 @@
         "b": 1,
         "a": 0
 		}
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"prefab": "P_EggPickUp"
 	}
   ]
 }
