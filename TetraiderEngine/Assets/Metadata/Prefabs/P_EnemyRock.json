@@ -84,21 +84,21 @@
     },
 	{
 		"Component": "Animation",
-		"defaultAnimation": 1,
+		"defaultAnimation": 0,
 		"MY_ANIMATIONS":[
-		{
-			"Name": "ChargeAttack",
-			"frames": 5,
-			"animationSpeed": 8,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		},
 		{
 			"Name": "Walk",
 			"frames": 1,
 			"animationSpeed": 16,
 			"isLooping": true,
 			"isPlayOnAwake": false
+		},
+		{
+			"Name": "ChargeAttack",
+			"frames": 5,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
 		}
 		]
 	},

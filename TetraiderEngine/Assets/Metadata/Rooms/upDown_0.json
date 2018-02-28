@@ -8,7 +8,7 @@
 	{
 		"prefab": "P_ColliderLeftRightLong",
 		"position": {
-		    "x": -528,
+		    "x": -704,
 			"y": 0,
 			"z": 0
 		}
@@ -16,7 +16,7 @@
 	{
 		"prefab": "P_ColliderLeftRightLong",
 		"position": {
-		    "x": 528,
+		    "x": 704,
 			"y": 0,
 			"z": 0
 		}
@@ -26,16 +26,16 @@
 	{
 		"prefab": "P_ColliderUpDownShort",
 		"position": {
-		    "x": 360,
-			"y": 336,
+		    "x": 448,
+			"y": 448,
 			"z": 0
 		}
 	},
 	{
 		"prefab": "P_ColliderUpDownShort",
 		"position": {
-		    "x": -360,
-			"y": 336,
+		    "x": -448,
+			"y": 448,
 			"z": 0
 		}
 	},
@@ -43,16 +43,16 @@
 	{
 		"prefab": "P_ColliderUpDownShort",
 		"position": {
-		    "x": 360,
-			"y": -336,
+		    "x": 448,
+			"y": -448,
 			"z": 0
 		}
 	},
 	{
 		"prefab": "P_ColliderUpDownShort",
 		"position": {
-		    "x": -360,
-			"y": -336,
+		    "x": -448,
+			"y": -448,
 			"z": 0
 		}
 	}

@@ -16,7 +16,8 @@ Agent::Agent(ComponentType _type) :
 	m_knockBackMultiplier(1),
 	m_faceDirection(FaceDirection::Right),
 	m_isIgnoreHazards(false),
-	m_isDead(false)
+	m_isDead(false),
+	m_isControlAnimationOnVelocity(true)
 {};
 
 void Agent::Deactivate() {
@@ -34,7 +35,7 @@ void Agent::Update(float dt) {
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
 	m_pBody->SetVelocity(m_currentVelocity);
 
-	if (m_pAnimation) {
+	if (m_pAnimation && m_isControlAnimationOnVelocity) {
 		if (m_currentVelocity.SquareLength()  < 200.0f)
 			m_pAnimation->Play(1);
 		else if(m_currentVelocity.SquareLength() && !m_isIgnoreHazards)

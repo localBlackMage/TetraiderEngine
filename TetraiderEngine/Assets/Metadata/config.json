@@ -17,10 +17,10 @@
 		"height": 1000
 	},
 	"ROOM_SETTINGS": {
-		"cellWidth": 96,
-		"cellHeight": 96,
+		"cellWidth": 128,
+		"cellHeight": 64,
 		"roomWidth": 12,
-		"roomHeight": 8
+		"roomHeight": 16
 	},
 	"LEVEL_SETTINGS": {
 		"isRandomGenerated": false,

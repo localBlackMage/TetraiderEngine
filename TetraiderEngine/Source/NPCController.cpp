@@ -3,6 +3,7 @@
 #include "Weapon.h"
 #include "Health.h"
 #include "Transform.h"
+#include "Animation.h"
 #include "TetraiderAPI.h"
 #include "Camera.h"
 #include "Math\MathFunctions.h"
@@ -33,7 +34,6 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	return;
 	// Change of state
 	if (m_currentState != m_previousState) {
 		if (m_AIStates[m_currentState]) {
@@ -230,7 +230,7 @@ void NPCController::GoToPositionAroundPlayer() {
 	else if (angle < -180) angle += 360;
 
 	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
-	float magnitude = RandomFloat(m_detectionRadius / 4.0f, m_detectionRadius*3.0f/4.0f);
+	float magnitude = RandomFloat(100, sqrtf(GetSquareDistanceToPlayer()));
 	SetTargetDestination(dir*magnitude + m_pTransform->GetPosition());
 }
 
@@ -252,4 +252,13 @@ void NPCController::SetPositionBehindPlayer(float distance) {
 	Vector3D dirToPlayer = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
 	dirToPlayer.Normalize();
 	SetTargetDestination(dirToPlayer*distance + m_pPlayerTransform->GetPosition());
+}
+
+void NPCController::PlayAnimation(int animation) {
+	m_isControlAnimationOnVelocity = false;
+	m_pAnimation->Play(animation);
+}
+
+bool NPCController::IsTooFarFromStartingPoint() {
+	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_startingPoint) > 1000000;
 }
