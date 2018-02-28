@@ -27,7 +27,7 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 150,
+			"speed": 125,
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
