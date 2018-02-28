@@ -13,6 +13,7 @@ AI_DashingStunned::~AI_DashingStunned(){
 void AI_DashingStunned::OnEnter(){	
 	triedSofar = 0.0f;
 	tryTime = 2.0f;
+	pAgent->PlayAnimation(2);
 }
 
 void AI_DashingStunned::OnUpdate(float dt){
@@ -25,7 +26,7 @@ void AI_DashingStunned::OnUpdate(float dt){
 }
 
 void AI_DashingStunned::OnExit(){
-	
+	pAgent->PlayAnimation(0);
 }
 
 void AI_DashingStunned::HandleEvent(Event* pEvent) {

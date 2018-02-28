@@ -61,7 +61,7 @@
     {
       "prefab": "P_Player",
       "position": {
-        "x": -300,
+        "x": -400,
         "y": 0,
         "z": 0
       }
@@ -70,8 +70,33 @@
 	{
 		"prefab": "P_FireLight",
 		"position": {
-			"x": -200,
-			"y": 0,
+			"x": -600,
+			"y": 170,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -600,
+			"y": -150,
+			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 950,
+			"y": 190,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 950,
+			"y": -170,
 			"z": 0
 		}
 	},
@@ -299,6 +324,54 @@
       "position": {
         "x": 1500,
         "y": 1400,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_RockBig",
+      "position": {
+        "x": 2000,
+        "y": 725,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Rock",
+      "position": {
+        "x": 2080,
+        "y": 760,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_RockBig",
+      "position": {
+        "x": 2000,
+        "y": -300,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_RockBig",
+      "position": {
+        "x": 1950,
+        "y": 300,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Rock",
+      "position": {
+        "x": 2080,
+        "y": -260,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_RockBig",
+      "position": {
+        "x": 2065,
+        "y": -660,
         "z": 0
       }
     },
@@ -562,6 +635,22 @@
       "position": {
         "x": -500,
         "y": 300,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Barrel",
+      "position": {
+        "x": 1000,
+        "y": 1350,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_Barrel",
+      "position": {
+        "x": 1100,
+        "y": 1350,
         "z": 0
       }
     },

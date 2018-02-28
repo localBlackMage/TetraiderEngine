@@ -31,8 +31,8 @@
 			"acceleration": 10,
 			"knockBackMultiplier": 0
 		},
-		"detectionRadius": 450,
-		"outOfSightRadius": 500,
+		"detectionRadius": 500,
+		"outOfSightRadius": 650,
 		"zoneWidth": 500,
 		"zoneHeight": 500,
 		"attackRange": 250,
@@ -104,6 +104,13 @@
 			"animationSpeed": 8,
 			"isLooping": true,
 			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Stun",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": false
 		}
 		]
 	},
@@ -118,8 +125,8 @@
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 60,
-		"maxHealth": 60,
+		"startingHealth": 150,
+		"maxHealth": 150,
 		"isInvincible": false
 	},
 	{

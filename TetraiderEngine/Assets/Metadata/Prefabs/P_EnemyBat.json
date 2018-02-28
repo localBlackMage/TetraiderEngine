@@ -87,6 +87,26 @@
       }
     },
 	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 1,
+			"animationSpeed": 16,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Sleep",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
 		"Component": "Body",
 		"isStatic": false,
 		"mass": 0,
