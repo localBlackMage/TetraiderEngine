@@ -14,9 +14,9 @@ void AI_Engage::OnEnter() {
 	pAgent->LookAtPlayer();
 	pAgent->GoToPositionAroundPlayer();
 	pAgent->SetSpeedMultiplier(1.3f);
-	tryTimeDuration = RandomFloat(1.9f,3.9f);
+	tryTimeDuration = RandomFloat(1.0f, 2.2f);
 	minimumEngage = 2;
-	engageTimer = RandomInt(minimumEngage, 5);
+	engageTimer = RandomFloat(minimumEngage, 4);
 	triedMovingSoFar = 0.0f;
 	sinceEngage = 0.0f;
 }
