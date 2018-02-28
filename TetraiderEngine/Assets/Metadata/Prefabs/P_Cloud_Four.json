@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_Cloud_1.png",
+      "Texture": "T_Cloud_2.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -50,7 +50,7 @@
     },
 	{
 		"Component": "StraightLineMovement",
-		"speed": 100.0,
+		"speed": 150.0,
 		"direction": {
 			"x": 1, "y": 0, "z": 0
 		}

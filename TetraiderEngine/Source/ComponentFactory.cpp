@@ -12,6 +12,9 @@
 #include "Body.h"
 #include "CamFollow.h"
 #include "ScreenWrap.h"
+#include "SizeToScreen.h"
+#include "FollowCamera.h"
+#include "SnapToCamera.h"
 #include "Health.h"
 #include "FlashOnTakeDamage.h"
 #include "Projectile.h"
@@ -45,6 +48,9 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Camera"] = Camera::CreateInstance;
 	m_creationFunctions["CamFollow"] = CamFollow::CreateInstance;
 	m_creationFunctions["ScreenWrap"] = ScreenWrap::CreateInstance;
+	m_creationFunctions["SizeToScreen"] = SizeToScreen::CreateInstance;
+	m_creationFunctions["FollowCamera"] = FollowCamera::CreateInstance;
+	m_creationFunctions["SnapToCamera"] = SnapToCamera::CreateInstance;
 	m_creationFunctions["Health"] = Health::CreateInstance;
 	m_creationFunctions["FlashOnTakeDamage"] = FlashOnTakeDamage::CreateInstance;
 	m_creationFunctions["Projectile"] = Projectile::CreateInstance;

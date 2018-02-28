@@ -3,16 +3,16 @@
     "Layer": "N/A",
     "COMPONENTS": [
         {
-          "Component": "Transform",
-          "position": {
-	        "z": 1
-        },
-          "scale": {},
-          "pivotOffset": {},
-          "rotation": {
-        "x": -90
-        },
-        "2D": false
+			"Component": "Transform",
+			"position": {
+				"z": 1
+			},
+			"scale": {},
+			"pivotOffset": {},
+			"rotation": {
+				"x": -90
+			},
+			"2D": false
         },
         {
             "Component": "CamFollow",

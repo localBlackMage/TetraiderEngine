@@ -23,6 +23,7 @@
     <ClCompile Include="Source\AI_DashingEngage.cpp" />
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayer.cpp" />
+    <ClCompile Include="Source\FollowCamera.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
@@ -87,6 +88,8 @@
     <ClCompile Include="Source\ScreenWrap.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\SizeToScreen.cpp" />
+    <ClCompile Include="Source\SnapToCamera.cpp" />
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
@@ -105,6 +108,7 @@
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
     <ClInclude Include="Source\Color.h" />
+    <ClInclude Include="Source\FollowCamera.h" />
     <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AI_Attack.h" />
@@ -183,6 +187,8 @@
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Singleton.h" />
+    <ClInclude Include="Source\SizeToScreen.h" />
+    <ClInclude Include="Source\SnapToCamera.h" />
     <ClInclude Include="Source\Sorting.h" />
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />

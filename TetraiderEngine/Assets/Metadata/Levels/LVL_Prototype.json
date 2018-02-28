@@ -9,10 +9,54 @@
 	{
 		"prefab": "P_Cloud_One",
 		"position": {
-			"x": 0,
+			"x": 500,
 			"y": 400,
 			"z": 0
 		}
+	},
+	{
+		"prefab": "P_Cloud_Two",
+		"position": {
+			"x": 300,
+			"y": 200,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_Cloud_Three",
+		"position": {
+			"x": 100,
+			"y": 50,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_Cloud_Four",
+		"position": {
+			"x": -250,
+			"y": -150,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_Cloud_One",
+		"position": {
+			"x": -400,
+			"y": -400,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_Cloud_Two",
+		"position": {
+			"x": -600,
+			"y": -500,
+			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_SunsetBG"
 	},
     {
       "prefab": "P_Player",

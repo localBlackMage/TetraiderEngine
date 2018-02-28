@@ -25,18 +25,18 @@ void ScreenWrap::Serialize(const json& j) {
 void ScreenWrap::LateInitialize()
 {
 	if (!m_pTransform) {
-		assert(pGO, "No Game Object found. ScreenWrap component failed to operate.");
+		assert(pGO && "No Game Object found. ScreenWrap component failed to operate.");
 		m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-		assert(m_pTransform, "No Transform component found. ScreenWrap component failed to operate.\n");
+		assert(m_pTransform && "No Transform component found. ScreenWrap component failed to operate.\n");
 	}
 
 	if (!m_pCameraTransform) {
 		GameObject* pPrimaryCamera = TETRA_GAME_OBJECTS.GetPrimaryCamera();
-		assert(pPrimaryCamera, "No primary Camera found. ScreenWrap component failed to operate.");
+		assert(pPrimaryCamera && "No primary Camera found. ScreenWrap component failed to operate.");
 		m_pCameraTransform = pPrimaryCamera->GetComponent<Transform>(ComponentType::C_Transform);
-		assert(m_pCameraTransform, "No primary Camera Transform component found. ScreenWrap component failed to operate.");
+		assert(m_pCameraTransform && "No primary Camera Transform component found. ScreenWrap component failed to operate.");
 		m_pCamera = pPrimaryCamera->GetComponent<Camera>(ComponentType::C_Camera);
-		assert(m_pCamera, "No primary Camera component component found. ScreenWrap component failed to operate.");
+		assert(m_pCamera && "No primary Camera component component found. ScreenWrap component failed to operate.");
 	}
 }
 

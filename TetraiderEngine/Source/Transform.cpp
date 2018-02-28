@@ -24,6 +24,7 @@ void Transform::_UpdateBodyComponent()
 
 Transform::Transform() :
 	Component(ComponentType::C_Transform),
+	m_prevPosition(Vector3D()),
 	m_position(Vector3D()), 
 	m_scale(Vector3D()), 
 	m_transform(Matrix4x4()), 
@@ -45,7 +46,7 @@ void Transform::Deactivate() {
 
 void Transform::Update(float dt) 
 {
-
+	m_prevPosition = m_position;
 }
 
 void Transform::LateUpdate(float dt) {

@@ -72,6 +72,9 @@
     <Filter Include="Source Files\Components\Rendering\Lights">
       <UniqueIdentifier>{5da15059-b532-4b92-86e5-3a0df7f97f27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Movement">
+      <UniqueIdentifier>{f20af27b-80c8-4467-a507-769e80868309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -242,9 +245,6 @@
     <ClCompile Include="Source\FollowCursor.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Button.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\LevelStatus.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -308,8 +308,20 @@
     <ClCompile Include="Source\StraightLineMovement.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Button.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FollowCamera.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
     <ClCompile Include="Source\ScreenWrap.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SizeToScreen.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SnapToCamera.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,9 +538,6 @@
     <ClInclude Include="Source\FollowCursor.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Button.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\LevelStatus.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
@@ -604,8 +613,20 @@
     <ClInclude Include="Source\StraightLineMovement.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Button.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FollowCamera.h">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClInclude>
     <ClInclude Include="Source\ScreenWrap.h">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SizeToScreen.h">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SnapToCamera.h">
+      <Filter>Source Files\Components\Movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
