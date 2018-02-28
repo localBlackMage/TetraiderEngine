@@ -25,13 +25,11 @@ void AI_WalkTowardPlayer::OnUpdate(float dt){
 		idledSoFar += dt;
 	}
 	if (pAgent->IsPlayerOutOfSight()) {
-		pAgent->StopMoving();
-		pAgent->ChangeState(NPC_IDLE);
+		pAgent->ChangeState(NPC_STUNNED);
 	}
 }
 
 void AI_WalkTowardPlayer::OnExit(){
-	pAgent->GoToStartingPoint();
 }
 
 void AI_WalkTowardPlayer::HandleEvent(Event* pEvent) {

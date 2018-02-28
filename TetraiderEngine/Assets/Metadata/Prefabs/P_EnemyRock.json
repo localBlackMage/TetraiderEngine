@@ -56,7 +56,7 @@
         "AIStateType": "NPC_State_MoveToRandomPointInZone"
       },
       {
-        "name": "StunnedState",
+        "name": "StunnedBehavior",
         "behaviorIndex": 5,
         "AIStateType": "NPC_State_DashingStunned"
       }      

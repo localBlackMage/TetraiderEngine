@@ -11,6 +11,7 @@
 #include <math.h>
 #include <iostream>
 #include "Subscriber.h"
+#include "Math\Vector3D.h"
 #define DEFAULT_VOL 0.5
 
 
@@ -22,7 +23,7 @@
 typedef std::map<std::string, FMOD::Channel*> ChannelMap;
 
 
-class AudioManager: public Subscriber
+class AudioManager : public Subscriber
 {
 public:
 	AudioManager();
@@ -31,9 +32,9 @@ public:
 	void operator=(const AudioManager &) = delete;
 
 	void Update(float elapsed);
-	void PlaySFX(const std::string& path, float volume,bool loop);
+	void PlaySFX(const std::string& path, float volume, bool loop, bool is3D, Vector3D SourcePos);
 	void PlaySFX(const std::string& path, float volume);
-	void PlaySong(const std::string& path,float volume);
+	void PlaySong(const std::string& path, float volume);
 	void StopAllSFXs();
 	void StopSFX(std::string& path);
 	void StopSongs();
@@ -50,8 +51,10 @@ public:
 	void ResumeSFX(std::string& path);
 	void HandleEvent(Event* pEvent);
 	bool isSoundPlaying(std::string);
-private:
+	FMOD_VECTOR AudioManager::VectorToFmod(const Vector3D& SourcePos);
+	void Set3dListener(const Vector3D& SourcePos/*, const Vector3D& vel*/);
 
+private:
 	FMOD::System* m_pSystem;
 	FMOD::ChannelGroup* m_pMaster;
 	FMOD::ChannelGroup* m_pGroups[2];
@@ -64,10 +67,11 @@ private:
 	std::string m_currentSfxPath;
 	std::string m_nextSfxPath;
 
-	enum FadeState{FADE_NONE,FADE_IN,FADE_OUT};
+	enum FadeState { FADE_NONE, FADE_IN, FADE_OUT };
 	FadeState m_fade;
 	bool m_isChannelGroupPaused;
 	bool m_isPlaying;
+	//GameObject* m_pCameraObj;
 };
 
 

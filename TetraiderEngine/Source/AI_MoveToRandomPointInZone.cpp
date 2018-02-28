@@ -13,7 +13,7 @@ AI_MoveToRandomPointInZone::~AI_MoveToRandomPointInZone(){
 void AI_MoveToRandomPointInZone::OnEnter(){
 	pAgent->SetDestinationToRandomPointInZone();
 	triedSofar = 0.0f;
-	tryTime = 2.0f;
+	tryTime = 1.5f;
 }
 
 void AI_MoveToRandomPointInZone::OnUpdate(float dt){

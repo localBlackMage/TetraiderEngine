@@ -38,13 +38,22 @@
 		"attackRange": 250,
 		"AIStates": [
       {
-        "name": "idleBehavior",
+        "name": "NPC_IDLE",
         "behaviorIndex": 0,
         "AIStateType": "NPC_State_Idle"
       },
-      { "name": "engageBehavior",
+      { "name": "NPC_ENGAGE",
         "behaviorIndex": 1,
         "AIStateType": "NPC_State_WalkTowardPlayer"
+      },
+      {
+        "name": "NPC_MOVETORANDOMPOINTINZONE",
+        "behaviorIndex": 4,
+        "AIStateType": "NPC_State_Idle"
+      },
+      { "name": "NPC_STUNNED",
+        "behaviorIndex": 5,
+        "AIStateType": "NPC_State_IdleForDuration"
       }
     ]
 	},

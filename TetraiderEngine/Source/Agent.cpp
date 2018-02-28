@@ -82,8 +82,8 @@ void Agent::HandleEvent(Event* pEvent) {
 		}
 		else if (healthData->mIsForceKnockBack) {
 			if (m_knockBackMultiplier == 0) {
-				AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
 				pGO->HandleEvent(&Event(EVENT_ForceKnockBack));
+				AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
 			}
 			else {
 				AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);

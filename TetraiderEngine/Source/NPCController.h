@@ -7,6 +7,7 @@
 #include "AI_State.h"
 #include "AI_StateTypes.h"
 #include "AI_StateFactory.h"
+#include "GameObjectTags.h"
 
 class Weapon;
 
@@ -63,6 +64,7 @@ private:
 	bool m_arrivedAtDestination;
 	bool m_isPlayerDead;
 	const Transform* m_pPlayerTransform;
+	GameObjectTag m_tagsToIgnore[3];
 };
 
 #endif

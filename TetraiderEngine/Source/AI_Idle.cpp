@@ -17,7 +17,7 @@ AI_Idle::~AI_Idle(){
 
 void AI_Idle::OnEnter(){
 	// reset idle data
-	idleDuration = RandomInt(1, 3); 
+	idleDuration = RandomFloat(1, 3); 
 	idledSoFar = 0.0f;
 }
 

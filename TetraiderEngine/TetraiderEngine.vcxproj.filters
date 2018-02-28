@@ -326,6 +326,12 @@
     <ClCompile Include="Source\AI_DashingStunned.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Microphone.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_IdleForDuration.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -632,6 +638,12 @@
       <Filter>Source Files\Components\Movement</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_DashingStunned.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Microphone.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_IdleForDuration.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
   </ItemGroup>

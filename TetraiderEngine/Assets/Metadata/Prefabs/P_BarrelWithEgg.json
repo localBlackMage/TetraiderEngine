@@ -1,5 +1,5 @@
 {
-  "Tag": "Projectile",
+  "Tag": "Obstacle",
   "Layer": "2",
   "COMPONENTS": [
     {
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 40,
-        "y": 35,
+        "x": 100,
+        "y": 100,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_projectileTest.png",
+      "Texture": "T_Barrel.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -50,25 +50,37 @@
     },
 	{
 		"Component": "Body",
-		"isStatic": false,
+		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "circle",
-			"radius": 20
+			"type": "AABB",
+			"width": 100,
+			"height": 100
 		}
 	},
 	{
-		"Component": "Projectile"		
+		"Component": "Health",
+		"startingHealth": 15,
+		"maxHealth": 15,
+		"isInvincible": false
 	},
 	{
-		"Component": "Audio",
-		"audioClip": "pew.wav",
-		"volume": 0.8,
-		"isMute": false,
-		"isLoop": false,
-		"isPlayOnAwake": true,
-		"isBGM": false,
-		"is3D":true
+		"Component": "DestroyOnHealthZero",
+		"destroyIn": 0
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
+		}
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"prefab": "P_EggPickUp"
 	}
   ]
 }
