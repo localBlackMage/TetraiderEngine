@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 100,
+        "x": 128,
+        "y": 128,
         "z": 0
       },
       "pivotOffset": {
@@ -31,8 +31,8 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 400,
-		"outOfSightRadius": 500,
+		"detectionRadius": 500,
+		"outOfSightRadius": 650,
 		"zoneWidth": 350,
 		"zoneHeight": 350,
 		"attackRange": 250,
@@ -62,7 +62,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_enemyTest.png",
+      "Texture": "T_BipedMonster.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -85,32 +85,6 @@
         "a": 0
       }
     },
-	{
-		"Component": "Animation",
-		"defaultAnimation": 1,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "Walk",
-			"frames": 12,
-			"animationSpeed": 18,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Idle",
-			"frames": 12,
-			"animationSpeed": 18,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Death",
-			"frames": 1,
-			"animationSpeed": 18,
-			"isLooping": false,
-			"isPlayOnAwake": true
-		}]
-	},
 	{
 		"Component": "Body",
 		"isStatic": false,

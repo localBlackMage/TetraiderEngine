@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 50,
-        "y": 50,
+        "x": 60,
+        "y": 60,
         "z": 0
       },
       "pivotOffset": {
@@ -27,7 +27,7 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 300,
+			"speed": 150,
 			"acceleration": 20,
 			"knockBackMultiplier": 1
 		},

@@ -58,7 +58,14 @@ void Camera::LateInitialize()
 
 void Camera::Update(float dt)
 {
-
+	// Test code
+	if (m_primary) {
+		if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_X))
+			m_zoom -= 0.1f;
+		
+		if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Z))
+			m_zoom += 0.1f;
+	}
 }
 
 void Camera::LateUpdate(float dt)
