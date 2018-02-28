@@ -121,6 +121,8 @@ void NPCController::HandleEvent(Event* pEvent) {
 		m_currentState = NPC_IDLE;
 		m_isPlayerDead = true;
 	}
+
+	// m_AIStates[m_currentState]->HandleEvent(pEvent);
 }
 
 void NPCController::LateInitialize() {

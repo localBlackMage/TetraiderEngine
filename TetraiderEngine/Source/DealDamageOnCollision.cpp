@@ -28,6 +28,7 @@ void DealDamageOnCollision::Deactivate() {
 void DealDamageOnCollision::Serialize(const json& j) {
 	m_damage = ParseInt(j, "damage");
 	m_knockBackSpeed = ParseFloat(j, "knockBackSpeed");
+	m_isForceKnockBack = ParseBool(j, "isForceKnockBack");
 }
 
 void DealDamageOnCollision::LateInitialize() {}
@@ -57,7 +58,7 @@ void DealDamageOnCollision::HandleEvent(Event* pEvent) {
 
 			Health* pHealth = collisionData->pGO->GetComponent<Health>(C_Health);
 			if (pHealth) {
-				pHealth->TakeDamage(m_damage, collisionData->mtv.normal*-1, m_knockBackSpeed);
+				pHealth->TakeDamage(m_damage, collisionData->mtv.normal*-1, m_knockBackSpeed, m_isForceKnockBack);
 			}
 		}
 	}
@@ -72,7 +73,7 @@ void DealDamageOnCollision::HandleEvent(Event* pEvent) {
 				m_isAbleToDmgPlayer = false;
 				Health* pHealth = collisionData->pGO->GetComponent<Health>(C_Health);
 				if (pHealth) {
-					pHealth->TakeDamage(m_damage, collisionData->mtv.normal*-1, m_knockBackSpeed);
+					pHealth->TakeDamage(m_damage, collisionData->mtv.normal*-1, m_knockBackSpeed, m_isForceKnockBack);
 				}
 			}
 		}

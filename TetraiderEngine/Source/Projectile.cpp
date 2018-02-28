@@ -40,7 +40,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 		Transform* pTrans = collisionData->pGO->GetComponent<Transform>(ComponentType::C_Transform);
 		Vector3D dirOfAttack = pTrans->GetPosition() - m_pTransform->GetPosition();
 		dirOfAttack.Normalize();
-		if (pHealth) pHealth->TakeDamage(m_damage, dirOfAttack, m_knockBackSpeed);
+		if (pHealth) pHealth->TakeDamage(m_damage, dirOfAttack, m_knockBackSpeed, false);
 
 		pGO->Destroy();
 	}

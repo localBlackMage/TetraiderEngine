@@ -19,7 +19,7 @@ public:
 
 	bool IsHealthFull();
 	void UpdgradeMaxHealth(int value);
-	void TakeDamage(int damage, const Vector3D& sourceOfAttack, float knockBackSpeed);
+	void TakeDamage(int damage, const Vector3D& sourceOfAttack, float knockBackSpeed, bool isForceKnockBack);
 	void Heal(int heal);
 	int GetHealth() const { return m_currentHealth; }
 	int GetMaxHealth() const { return m_maxHealth; }

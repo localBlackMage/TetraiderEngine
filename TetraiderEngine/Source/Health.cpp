@@ -28,7 +28,7 @@ void Health::HandleEvent(Event* pEvent) {
 	}
 }
 
-void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float knockBackSpeed) {
+void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float knockBackSpeed, bool isForceKnockBack) {
 	if (m_isInvincible || m_currentHealth == 0)
 		return;
 
@@ -50,7 +50,7 @@ void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float kno
 		pGO->HandleEvent(&Event(EventType::EVENT_OnHealthZero));
 	}
 
-	Event e = Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, directionOfAttack, knockBackSpeed));
+	Event e = Event(EventType::EVENT_OnTakeDamage, &HealthChangeData(m_currentHealth, m_maxHealth, directionOfAttack, knockBackSpeed, isForceKnockBack));
 	pGO->HandleEvent(&e);
 	if (pGO->m_tag == GameObjectTag::T_Player) {
 		TETRA_EVENTS.BroadcastEventToSubscribers(&e);
@@ -64,7 +64,7 @@ void Health::Heal(int heal) {
 	}
 
 	if (pGO->m_tag == GameObjectTag::T_Player) {
-		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal,&HealthChangeData(m_currentHealth, m_maxHealth, Vector3D(), 0)));
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal,&HealthChangeData(m_currentHealth, m_maxHealth, Vector3D(), 0, false)));
 	}
 }
 
