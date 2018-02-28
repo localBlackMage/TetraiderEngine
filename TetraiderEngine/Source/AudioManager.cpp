@@ -4,7 +4,7 @@
 #include <math.h>
 #include "Event.h"
 #include "TetraiderAPI.h"
-
+#include "Transform.h"
 
 float ChangeSemitone(float frequency, float variation)
 {
@@ -24,27 +24,26 @@ float RandomBetween(float min, float max)
 	return min + n * (max - min);
 }
 
-AudioManager::AudioManager():m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isChannelGroupPaused(false)
+AudioManager::AudioManager() :m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isChannelGroupPaused(false)
 {
 	//initialize
 	ErrorCheck(FMOD::System_Create(&m_pSystem));
-	ErrorCheck(m_pSystem->init(100,FMOD_INIT_NORMAL,0));
+	ErrorCheck(m_pSystem->init(100, FMOD_INIT_NORMAL, 0));
 
 	//create channel grp for each type of sound category
 	ErrorCheck(m_pSystem->getMasterChannelGroup(&m_pMaster));
 	for (int i = 0; i < CATEGORY_COUNT; i++)
 	{
-		ErrorCheck(m_pSystem->createChannelGroup(0,&m_pGroups[i]));
+		ErrorCheck(m_pSystem->createChannelGroup(0, &m_pGroups[i]));
 		ErrorCheck(m_pMaster->addGroup(m_pGroups[i]));
 	}
 
 	//setup modes for each category
-	m_Modes[SFX] = FMOD_DEFAULT ;
-	m_Modes[SONG] = FMOD_DEFAULT | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL;
+	m_Modes[SFX] = FMOD_DEFAULT /*|FMOD_3D*/;
+	m_Modes[SONG] = FMOD_DEFAULT | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL /*| FMOD_3D*/;
 
 	// seed value for SFx
 	srand(0);
-
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEMUSIC, this);
 }
 
@@ -78,7 +77,7 @@ void AudioManager::Update(float elapsed)
 			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
-	else if (m_pCurrentSongChannel !=0/*&& m_fade==FADE_OUT*/)
+	else if (m_pCurrentSongChannel != 0/*&& m_fade==FADE_OUT*/)
 	{
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
@@ -95,7 +94,7 @@ void AudioManager::Update(float elapsed)
 			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
-	else if (m_pCurrentSongChannel ==0&&!m_nextSongPath.empty())
+	else if (m_pCurrentSongChannel == 0 && !m_nextSongPath.empty())
 	{
 		PlaySong(m_nextSongPath, DEFAULT_VOL);
 		m_nextSongPath.clear();
@@ -103,22 +102,30 @@ void AudioManager::Update(float elapsed)
 	ErrorCheck(m_pSystem->update());
 }
 
-void AudioManager::PlaySFX(const std::string & name, float volume,bool loop)
+void AudioManager::PlaySFX(const std::string & name, float volume, bool loop, bool is3D, Vector3D SourcePos)
 {
 	// Try to find sound effect and return if not found 
 	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + name, SFX);
-	if(!sound)
+	if (!sound)
 		return;
-	
+
 	//check if already playing     
 	ChannelMap::iterator chMap = m_Channel[SFX].find(name);
 	FMOD::Channel* channel = NULL;
 	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
 	//save audiopath and its corresponding channel
 	m_Channel[SFX].insert(std::make_pair(name, channel));
-		
-	if(loop)
-	ErrorCheck(channel->setMode(FMOD_DEFAULT|FMOD_LOOP_NORMAL));
+
+	if (loop)
+		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_LOOP_NORMAL));
+	else if (is3D)
+	{
+		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_3D));
+		FMOD_VECTOR position = VectorToFmod(SourcePos);
+		ErrorCheck(channel->set3DAttributes(&position, NULL));
+
+		channel->set3DMinMaxDistance(5.0f, 100000.0f);
+	}
 	//set to the channel grp it belongs
 	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
 	ErrorCheck(channel->setVolume(volume));
@@ -134,10 +141,9 @@ void AudioManager::PlaySFX(const std::string & name, float volume)
 	if (!sound)
 		return;
 
-
 	ChannelMap::iterator chMap = m_Channel[SFX].find(soundFile);
 	//play sound with initial values
-	
+
 	FMOD::Channel* channel = NULL;
 	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &channel));
 	//save audiopath and its corresponding channel
@@ -149,7 +155,7 @@ void AudioManager::PlaySFX(const std::string & name, float volume)
 
 }
 
-void AudioManager::PlaySong(const std::string & name,float volume)
+void AudioManager::PlaySong(const std::string & name, float volume)
 {
 	//ignore if song already playing
 	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
@@ -236,7 +242,7 @@ void AudioManager::PauseSFX(std::string & name)
 	if (chMap == m_Channel[SFX].end())
 		return;
 
-		chMap->second->setPaused(true);
+	chMap->second->setPaused(true);
 }
 void AudioManager::ResumeSound()
 {
@@ -264,7 +270,7 @@ bool AudioManager::isSoundPlaying(std::string name)
 		return false;
 }
 
-void AudioManager::ErrorCheck(FMOD_RESULT result) 
+void AudioManager::ErrorCheck(FMOD_RESULT result)
 {
 	if (result != FMOD_OK) {
 		std::cout << FMOD_ErrorString(result) << std::endl;
@@ -274,11 +280,35 @@ void AudioManager::ErrorCheck(FMOD_RESULT result)
 
 void AudioManager::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
-		case EVENT_INPUT_PAUSEMUSIC:
-			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if(pButtonData->m_isTrigger) TogglePause();
-			break;
+	case EVENT_INPUT_PAUSEMUSIC:
+		InputButtonData * pButtonData = pEvent->Data<InputButtonData>();
+		if (pButtonData->m_isTrigger) TogglePause();
+		break;
 	}
 }
+
+FMOD_VECTOR AudioManager::VectorToFmod(const Vector3D& SourcePos) {
+	FMOD_VECTOR fVec;
+	fVec.x = SourcePos.x;
+	fVec.y = SourcePos.y;
+	fVec.z = SourcePos.z;
+	return fVec;
+}
+
+void AudioManager::Set3dListener(const Vector3D & SourcePos/*, const Vector3D& vel*/)
+{
+	FMOD_VECTOR position = VectorToFmod(SourcePos);
+	//FMOD_VECTOR velocity = VectorToFmod(vel);
+	m_pSystem->set3DListenerAttributes(0, &position, 0 /*&velocity*/, 0, 0);
+}
+
+//void AudioManager::Set3dListener()
+//{
+//    Transform* pTrans;
+//	pTrans = m_pCameraObj->GetComponent<Transform>(ComponentType::C_Transform);
+//	FMOD_VECTOR position = VectorToFmod(pTrans->GetPosition());
+//	m_pSystem->set3DListenerAttributes(0, &position, 0, 0, 0);
+//}
+
 
 

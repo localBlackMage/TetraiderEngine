@@ -24,6 +24,7 @@
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayer.cpp" />
     <ClCompile Include="Source\FollowCamera.cpp" />
+    <ClCompile Include="Source\Microphone.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\FollowCamera.h" />
+    <ClInclude Include="Source\Microphone.h" />
     <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AI_Attack.h" />
