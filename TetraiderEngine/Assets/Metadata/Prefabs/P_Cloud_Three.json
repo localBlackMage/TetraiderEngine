@@ -50,7 +50,7 @@
     },
 	{
 		"Component": "StraightLineMovement",
-		"speed": 100.0,
+		"speed": 200.0,
 		"direction": {
 			"x": 1, "y": 0, "z": 0
 		}

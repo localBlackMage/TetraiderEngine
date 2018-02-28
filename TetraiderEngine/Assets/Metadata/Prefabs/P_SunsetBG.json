@@ -1,6 +1,6 @@
 {
-  "Tag": "Obstacle",
-  "Layer": "BG_1",
+  "Tag": "None",
+  "Layer": "BG_2",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 512,
-        "y": 256,
+        "x": 1,
+        "y": 1,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_Cloud_1.png",
+      "Texture": "T_SunsetBackground.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -49,18 +49,10 @@
       }
     },
 	{
-		"Component": "StraightLineMovement",
-		"speed": 100.0,
-		"direction": {
-			"x": 1, "y": 0, "z": 0
-		}
+		"Component": "SnapToCamera"
 	},
 	{
-		"Component": "ScreenWrap",
-		"xAllowance": 300.0
-	},
-	{
-		"Component": "FollowCamera"
+		"Component": "SizeToScreen"
 	}
   ]
 }
