@@ -30,6 +30,8 @@ public:
 	bool IsPlayerInSight();
 	bool IsPlayerOutOfSight();
 	bool IsInAttackRange();
+	bool IsTooFarFromStartingPoint();
+	void PlayAnimation(int animation);
 	void SetDestinationToRandomPointInZone();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);

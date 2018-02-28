@@ -44,6 +44,7 @@ protected:
 	Animation* m_pAnimation;
 	FaceDirection m_faceDirection;
 	bool m_isIgnoreHazards;
+	bool m_isControlAnimationOnVelocity;
 private:
 	Vector3D m_currentVelocity;
 };

@@ -57,6 +57,21 @@
     <Filter Include="Source Files\FiniteStateMachines\Base">
       <UniqueIdentifier>{9fd2e68d-45f5-4e7d-b143-fc62870265c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Rendering">
+      <UniqueIdentifier>{b551e53c-0ea7-41a0-ad3e-e91f4448a92b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Physics">
+      <UniqueIdentifier>{49cb5f88-a1b8-4f19-bb23-985e48ba1ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\UI">
+      <UniqueIdentifier>{34d3bb44-0a13-48ab-ac8c-ba3fe4c1bc4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Weapons">
+      <UniqueIdentifier>{286076f6-549c-4c09-876f-7a7d70037f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Rendering\Lights">
+      <UniqueIdentifier>{5da15059-b532-4b92-86e5-3a0df7f97f27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Math\Vector3D.cpp">
@@ -149,15 +164,6 @@
     <ClCompile Include="Source\CamFollow.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Animation.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Body.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Transform.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -165,9 +171,6 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Health.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sprite.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\ComponentFactory.cpp">
@@ -191,13 +194,7 @@
     <ClCompile Include="Source\Projectile.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Weapon.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ParticleEmitter.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Agent.cpp">
@@ -221,9 +218,6 @@
     <ClCompile Include="Source\ProjectileSpawner.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PointLight.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ScaleByHPStamina.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -234,9 +228,6 @@
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stamina.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Text.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Collectible.cpp">
@@ -289,6 +280,36 @@
     </ClCompile>
     <ClCompile Include="Source\AI_DashingEngage.cpp">
       <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleEmitter.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sprite.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Body.cpp">
+      <Filter>Source Files\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Text.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Weapon.cpp">
+      <Filter>Source Files\Components\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PointLight.cpp">
+      <Filter>Source Files\Components\Rendering\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StraightLineMovement.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScreenWrap.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,16 +436,7 @@
     <ClInclude Include="Source\RangeAttack.h">
       <Filter>Source Files\Attacks</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Audio.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Body.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\CamFollow.h">
@@ -442,19 +454,10 @@
     <ClInclude Include="Source\Health.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ParticleEmitter.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Projectile.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sprite.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Transform.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Weapon.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component.h">
@@ -490,9 +493,6 @@
     <ClInclude Include="Source\ProjectileSpawner.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PointLight.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ScaleByHPStamina.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
@@ -513,9 +513,6 @@
     </ClInclude>
     <ClInclude Include="Source\MyArray.h">
       <Filter>Source Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Text.h">
-      <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Collectible.h">
       <Filter>Source Files\Components</Filter>
@@ -576,6 +573,39 @@
     </ClInclude>
     <ClInclude Include="Source\AI_DashingEngage.h">
       <Filter>Source Files\FiniteStateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleEmitter.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Body.h">
+      <Filter>Source Files\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Text.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Weapon.h">
+      <Filter>Source Files\Components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PointLight.h">
+      <Filter>Source Files\Components\Rendering\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Color.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StraightLineMovement.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScreenWrap.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

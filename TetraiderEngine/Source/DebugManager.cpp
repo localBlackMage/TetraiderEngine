@@ -130,9 +130,9 @@ void DebugManager::ClearDebugCommands()
 	debugCommandCount = 0;
 }
 
-void DebugManager::RenderDebugCommands()
+void DebugManager::RenderDebugCommands(GameObject* pCamera)
 {
-	TETRA_RENDERER._SetUpDebug(*TETRA_GAME_OBJECTS.GetCamera(0));
+	TETRA_RENDERER._SetUpDebug(*pCamera);
 
 	int maxIndex = debugCommandCount;
 	for (int i = 0; i < maxIndex; ++i) {

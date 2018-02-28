@@ -84,11 +84,13 @@
     <ClCompile Include="Source\RenderManager.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\ScaleByHPStamina.cpp" />
+    <ClCompile Include="Source\ScreenWrap.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
+    <ClCompile Include="Source\StraightLineMovement.cpp" />
     <ClCompile Include="Source\Subscriber.cpp" />
     <ClCompile Include="Source\SubscriberTracker.cpp" />
     <ClCompile Include="Source\TetraiderAPI.cpp" />
@@ -102,6 +104,7 @@
     <ClInclude Include="Source\AI_DashingEngage.h" />
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
+    <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AI_Attack.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="Source\RenderManager.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\ScaleByHPStamina.h" />
+    <ClInclude Include="Source\ScreenWrap.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Shape.h" />
@@ -183,6 +187,7 @@
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />
+    <ClInclude Include="Source\StraightLineMovement.h" />
     <ClInclude Include="Source\SurfaceTextureBuffer.h" />
     <ClInclude Include="Source\Subscriber.h" />
     <ClInclude Include="Source\SubscriberTracker.h" />

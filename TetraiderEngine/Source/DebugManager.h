@@ -61,7 +61,7 @@ public:
 	void DrawWireCone(const Vector3D& pos, const Vector3D& rot, float arcWidth, float radius, DebugColor color);
 
 	void ClearDebugCommands();
-	void RenderDebugCommands();
+	void RenderDebugCommands(GameObject* pCamera);
 	bool IsDebugModeOn() { return m_isDebugModeEnabled; }
 };
 

@@ -14,6 +14,18 @@
 	},
 	{
 	  "prefab": "P_HealthBar"	
-	}
+	},
+	{
+      "prefab": "P_InGameCursor"
+    },
+	 {
+      "prefab": "P_LevelStatus"
+    },
+    {
+      "prefab": "P_EggUI"
+    },
+    {
+      "prefab": "P_PauseMenu"
+    }
   ]
 }

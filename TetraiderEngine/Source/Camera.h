@@ -16,6 +16,7 @@ private:
 
 	float m_fov, m_aspectRatio;
 	unsigned int m_screenWidth, m_screenHeight;
+	float m_zoom;
 	Matrix4x4 m_viewMatrix, m_cameraMatrix;
 	bool m_isPersp;
 	bool m_layersToRender[RENDER_LAYER::L_NUM_LAYERS];
@@ -40,6 +41,7 @@ public:
 	float GetAspect() const;
 	Matrix4x4 GetViewMatrix() const { return m_viewMatrix; };
 	Matrix4x4 GetCameraMatrix() const { return m_cameraMatrix; };
+	void ZoomCamera(float newZoom) { m_zoom = newZoom; }
 };
 
 #endif

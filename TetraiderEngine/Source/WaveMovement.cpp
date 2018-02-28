@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "WaveMovement.h"
-#include "Math\MathFunctions.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
 

@@ -47,8 +47,8 @@ void LevelStatus::HandleEvent(Event* pEvent) {
 			m_enemiesInLevel -= 1;
 			if (m_enemiesInLevel < 0) m_enemiesInLevel = 0;
 			if (m_enemiesInLevel == 0) {
-				Event* pEvent = new Event(EVENT_LevelComplete, 3.0f);
-				TETRA_EVENTS.AddDelayedEvent(pEvent);
+				//Event* pEvent = new Event(EVENT_LevelComplete, 3.0f);
+				//TETRA_EVENTS.AddDelayedEvent(pEvent);
 			}
 			break;
 		}

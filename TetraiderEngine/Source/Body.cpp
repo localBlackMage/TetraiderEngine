@@ -58,6 +58,7 @@ void Body::Integrate(float dt) {
 	ClearForces();
 }
 
+
 void Body::Serialize(const json& j) {
 	m_isStatic = ParseBool(j, "isStatic");
 	m_mass = ParseFloat(j, "mass");

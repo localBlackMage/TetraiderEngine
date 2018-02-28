@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 50,
-        "y": 50,
+        "x": 150,
+        "y": 150,
         "z": 0
       },
       "pivotOffset": {
@@ -27,14 +27,14 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 220,
-			"acceleration": 2,
+			"speed": 150,
+			"acceleration": 20,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 400,
-		"outOfSightRadius": 600,
-		"zoneWidth": 250,
-		"zoneHeight": 250,
+		"detectionRadius": 450,
+		"outOfSightRadius": 500,
+		"zoneWidth": 500,
+		"zoneHeight": 500,
 		"attackRange": 250,
 		"AIStates": [
       {
@@ -44,17 +44,22 @@
       },
       { "name": "engageBehavior",
         "behaviorIndex": 1,
-        "AIStateType": "NPC_State_WalkTowardPlayer"
-      },  
-      { "name": "moveToRandomPointInZoneBehavior",
+        "AIStateType": "NPC_State_DashingEngage"
+      },
+      { "name": "attackBehavior",
+        "behaviorIndex": 2,       
+        "AIStateType": "NPC_State_DashingAttack"
+      },
+      {
+        "name": "moveToRandomPointInZoneBehavior",
         "behaviorIndex": 4,
-        "AIStateType": "NPC_State_MoveToRandomPointInZone"
+        "AIStateType": "NPC_State_Idle"
       }
     ]
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_Fish.png",
+      "Texture": "T_RockEnemyAnim.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -78,18 +83,38 @@
       }
     },
 	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 1,
+			"animationSpeed": 16,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "ChargeAttack",
+			"frames": 5,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
 		"Component": "Body",
 		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 25
+			"radius": 55
 		}
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 30,
-		"maxHealth": 30,
+		"startingHealth": 60,
+		"maxHealth": 60,
 		"isInvincible": false
 	},
 	{
@@ -104,8 +129,12 @@
 	},
 	{
 		"Component": "DealDamageOnCollision",
-		"damage": 2,
+		"damage": 8,
 		"knockBackSpeed": 600
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"prefab": "P_MeatPickup"
 	}
   ]
 }

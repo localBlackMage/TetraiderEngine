@@ -343,7 +343,6 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 			// TODO: Add some logic to select a room file, for now just select the first
 			json* j = m_roomFiles[m_roomNodes[row][col]->m_ConnectionType][0];
-			//json* j = m_roomFiles[RoomConnections::ALL][0];		// TODO: REMOVE DEFAULT SELECTION
 
 			// Move all game objects in this room to their designated location
 			std::vector<GameObject*> createdGameObjects = TETRA_LEVELS.LoadRoomFile(*j);

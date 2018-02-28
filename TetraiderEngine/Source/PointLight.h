@@ -3,6 +3,8 @@
 #define POINT_LIGHT_H
 
 #include "Component.h"
+#include "Color.h"
+
 class Transform;
 class GameObject;
 
@@ -10,8 +12,8 @@ class PointLight : public Component
 {
 private:
 	Transform * m_pTransform;
-	unsigned char m_color[4]; // r, g, b, a;
-	unsigned short m_distance;
+	Color m_color;
+	float m_distance;
 
 
 public:
@@ -28,11 +30,12 @@ public:
 	virtual void HandleEvent(Event* pEvent) {};
 
 	Vector3D GetPosition() const;
-	unsigned char Red() const { return m_color[0]; }
-	unsigned char Blue() const { return m_color[1]; }
-	unsigned char Green() const { return m_color[2]; }
-	unsigned char Alpha() const { return m_color[3]; }
-	unsigned short Distance() const { return m_distance; }
+	GLubyte Red() const { return m_color[0]; }
+	GLubyte Green() const { return m_color[1]; }
+	GLubyte Blue() const { return m_color[2]; }
+	GLubyte Alpha() const { return m_color[3]; }
+	Color GetColor() const { return m_color; }
+	float Distance() const { return m_distance; }
 };
 
 #endif

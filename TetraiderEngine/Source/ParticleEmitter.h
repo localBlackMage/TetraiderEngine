@@ -7,17 +7,12 @@
 #include "Transform.h"
 #include "SurfaceTextureBuffer.h"
 #include "Mesh.h"
+#include "Color.h"
 #include "Math\MathLibs.h"
 #include <glew.h>
 #include <string>
 
 class GameObject;
-
-struct Color {
-	Color() : r(0), g(0), b(0), a(0) {}
-	Color(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a) : r(_r), g(_g), b(_b), a(_a) {}
-	GLubyte r, g, b, a;
-};
 
 struct Particle {
 	Vector3D m_pos, m_velocity;
