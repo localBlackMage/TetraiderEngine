@@ -11,18 +11,31 @@ AI_DashingEngage::~AI_DashingEngage() {
 
 void AI_DashingEngage::OnEnter() {
 	sinceEngage = 0.0f;
-	engageTimer = 1.5f;
-	pAgent->LookAtPlayer();
+	engageTimer = 2.0f;
 	pAgent->StopMoving();
 	//play pre-dashing animation!
-	pAgent->PlayAnimation(1); // shaking
 }
 
 void AI_DashingEngage::OnUpdate(float dt) {
 	// always face player on engage
+	pAgent->LookAtPlayer();
+	if (pAgent->IsPlayerOutOfSight()) {
+		pAgent->StopMoving();
+		pAgent->ChangeState(NPC_IDLE);
+		return;
+	}
+
 	if (sinceEngage > engageTimer) {
 		pAgent->ChangeState(NPC_ATTACK);
 		return;
+	}
+	else if (sinceEngage < 0.4f) {
+		pAgent->PlayAnimation(0); 
+		pAgent->MoveToPlayer();
+	}
+	else {
+		pAgent->PlayAnimation(1); // shaking
+		pAgent->StopMoving();
 	}
 
 	sinceEngage += dt;

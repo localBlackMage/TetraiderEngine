@@ -31,6 +31,7 @@ void AI_WalkTowardPlayerAttack::OnUpdate(float dt){
 }
 
 void AI_WalkTowardPlayerAttack::OnExit(){
+	pAgent->SetSpeedMultiplier(1.0f);
 }
 
 void AI_WalkTowardPlayerAttack::HandleEvent(Event* pEvent) {

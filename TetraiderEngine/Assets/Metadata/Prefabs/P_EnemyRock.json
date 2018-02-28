@@ -32,31 +32,31 @@
 			"knockBackMultiplier": 0
 		},
 		"detectionRadius": 500,
-		"outOfSightRadius": 650,
+		"outOfSightRadius": 750,
 		"zoneWidth": 500,
 		"zoneHeight": 500,
 		"attackRange": 250,
 		"AIStates": [
       {
-        "name": "idleBehavior",
+        "name": "NPC_IDLE",
         "behaviorIndex": 0,
         "AIStateType": "NPC_State_Idle"
       },
-      { "name": "engageBehavior",
+      { "name": "NPC_ENGAGE",
         "behaviorIndex": 1,
         "AIStateType": "NPC_State_DashingEngage"
       },
-      { "name": "attackBehavior",
+      { "name": "NPC_ATTACK",
         "behaviorIndex": 2,       
         "AIStateType": "NPC_State_DashingAttack"
       },
       {
-        "name": "moveToRandomPointInZoneBehavior",
+        "name": "NPC_MOVETORANDOMPOINTINZONE",
         "behaviorIndex": 4,
         "AIStateType": "NPC_State_MoveToRandomPointInZone"
       },
       {
-        "name": "StunnedBehavior",
+        "name": "NPC_STUNNED",
         "behaviorIndex": 5,
         "AIStateType": "NPC_State_DashingStunned"
       }      
