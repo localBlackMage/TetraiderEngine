@@ -22,7 +22,8 @@
         {
             "Component": "Camera",
             "perspective": false,
-			"zoom": 1.5,
+			"zoom": 1.25,
+			"primary": true,
             "fov": 105,
             "layers": ["BG", "BG_1", "BG_2", "1", "2", "3", "DEBUG"]
         }

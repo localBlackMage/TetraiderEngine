@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 128,
-        "y": 128,
+        "x": 512,
+        "y": 256,
         "z": 0
       },
       "pivotOffset": {
@@ -50,10 +50,14 @@
     },
 	{
 		"Component": "StraightLineMovement",
-		"speed": 60.0,
+		"speed": 100.0,
 		"direction": {
 			"x": 1, "y": 0, "z": 0
 		}
+	},
+	{
+		"Component": "ScreenWrap",
+		"xAllowance": 300.0
 	}
   ]
 }

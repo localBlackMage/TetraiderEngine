@@ -7,7 +7,7 @@
 Camera::Camera() :
 	Component(ComponentType::C_Camera),
 	m_fov(105.f), m_aspectRatio(1.f), m_screenWidth(1), m_screenHeight(1),
-	m_viewMatrix(Matrix4x4()), m_cameraMatrix(Matrix4x4()), m_isPersp(false)
+	m_viewMatrix(Matrix4x4()), m_cameraMatrix(Matrix4x4()), m_primary(false), m_isPersp(false)
 {
 	std::fill_n(m_layersToRender, int(RENDER_LAYER::L_NUM_LAYERS), false);
 }
@@ -37,6 +37,7 @@ void Camera::_CalcViewMatrix()
 
 void Camera::Serialize(const json& j)
 {
+	m_primary = ParseBool(j, "primary");
 	m_zoom = ValueExists(j, "zoom") ? j["zoom"] : 1.f;
 	m_isPersp = ParseBool(j, "perspective");
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
@@ -50,6 +51,9 @@ void Camera::Serialize(const json& j)
 void Camera::LateInitialize()
 {
 	m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+
+	if (m_primary)
+		TETRA_GAME_OBJECTS.SetPrimaryCamera(pGO);
 }
 
 void Camera::Update(float dt)

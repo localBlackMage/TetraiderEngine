@@ -39,6 +39,7 @@ private:
 	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
 	std::vector<GameObject*> m_pCameras;
+	GameObject* m_pPrimaryCamera;
 	std::vector<GameObject*> mGameObjectsWithHealthComponents;
 
 	GameObjectLayer m_layers[RENDER_LAYER::L_NUM_LAYERS];
@@ -74,6 +75,8 @@ public:
 	// TODO: This method is a temporary hack for getting a camera, a more thorough 
 	// architecture should be implemented
 	GameObject* GetCamera(int camIndex) const { return m_pCameras[camIndex]; }
+	void SetPrimaryCamera(GameObject* pCameraGO) { m_pPrimaryCamera = pCameraGO; }
+	GameObject* GetPrimaryCamera() const { return m_pPrimaryCamera; }
 
 	GameObject* CreateGameObject(const std::string& name);
 	GameObjectTag GameObjectManager::FindTagWithString(std::string tag);
