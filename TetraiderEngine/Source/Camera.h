@@ -16,6 +16,7 @@ private:
 
 	float m_fov, m_aspectRatio;
 	unsigned int m_screenWidth, m_screenHeight;
+	float m_zoom;
 	Matrix4x4 m_viewMatrix, m_cameraMatrix;
 	bool m_isPersp;
 	bool m_layersToRender[RENDER_LAYER::L_NUM_LAYERS];

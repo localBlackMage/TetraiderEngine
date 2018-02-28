@@ -37,6 +37,7 @@ void Camera::_CalcViewMatrix()
 
 void Camera::Serialize(const json& j)
 {
+	m_zoom = ValueExists(j, "zoom") ? j["zoom"] : 1.f;
 	m_isPersp = ParseBool(j, "perspective");
 	m_fov = ValueExists(j, "fov") ? ParseFloat(j, "fov") : m_fov;
 	std::vector<std::string> layers = j["layers"];
@@ -64,7 +65,7 @@ void Camera::LateUpdate(float dt)
 	_CalcViewMatrix();
 	m_cameraMatrix = m_isPersp ? 
 		Matrix4x4::Perspective(m_fov, m_aspectRatio, 1.f) : 
-		Matrix4x4::Orthographic(m_screenWidth, m_screenHeight, 0.1f);
+		Matrix4x4::Orthographic(m_screenWidth * m_zoom, m_screenHeight * m_zoom, 0.1f);
 }
 
 bool Camera::ShouldRenderLayer(RENDER_LAYER layer) const
