@@ -29,7 +29,7 @@
 		"AgentData": {
 			"speed": 150,
 			"acceleration": 20,
-			"knockBackMultiplier": 1
+			"knockBackMultiplier": 0
 		},
 		"detectionRadius": 450,
 		"outOfSightRadius": 500,

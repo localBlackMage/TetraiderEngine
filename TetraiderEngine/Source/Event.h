@@ -36,11 +36,12 @@ struct OnCollideData : public EventData {
 };
 
 struct HealthChangeData : public EventData {
-	HealthChangeData(int _currentHealth, int _maxHealth, const Vector3D& sourceOfAttack, float knockBackSpeed) :
-		mCurrentHealth(_currentHealth), mMaxHealth(_maxHealth), m_directionOfAttack(sourceOfAttack), mknockBackSpeed(knockBackSpeed){}
+	HealthChangeData(int _currentHealth, int _maxHealth, const Vector3D& sourceOfAttack, float knockBackSpeed, bool isForceKnockBack) :
+		mCurrentHealth(_currentHealth), mMaxHealth(_maxHealth), m_directionOfAttack(sourceOfAttack), mknockBackSpeed(knockBackSpeed), mIsForceKnockBack(isForceKnockBack) {}
 	int mCurrentHealth;
 	int mMaxHealth;
 	float mknockBackSpeed;
+	bool mIsForceKnockBack;
 	Vector3D m_directionOfAttack;
 };
 
