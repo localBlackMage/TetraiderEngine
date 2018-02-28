@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\AI_DashingAttack.cpp" />
     <ClCompile Include="Source\AI_DashingEngage.cpp" />
+    <ClCompile Include="Source\AI_DashingStunned.cpp" />
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayer.cpp" />
     <ClCompile Include="Source\FollowCamera.cpp" />
@@ -105,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="Source\AI_DashingAttack.h" />
     <ClInclude Include="Source\AI_DashingEngage.h" />
+    <ClInclude Include="Source\AI_DashingStunned.h" />
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
     <ClInclude Include="Source\Color.h" />

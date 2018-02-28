@@ -11,6 +11,7 @@
 #include "AI_WalkTowardPlayer.h"
 #include "AI_DashingAttack.h"
 #include "AI_DashingEngage.h"
+#include "AI_DashingStunned.h"
 
 AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_Idle]] = AI_Idle::CreateInstance;
@@ -21,6 +22,7 @@ AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_WalkTowardPlayer]] = AI_WalkTowardPlayer::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_DashingAttack]] = AI_DashingAttack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_DashingEngage]] = AI_DashingEngage::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_DashingStunned]] = AI_DashingStunned::CreateInstance;
 
 }
 

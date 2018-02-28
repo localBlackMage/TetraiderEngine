@@ -28,7 +28,7 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 
 private:
-	int engageTimer;
+	float engageTimer;
 	float sinceEngage;
 	
 };

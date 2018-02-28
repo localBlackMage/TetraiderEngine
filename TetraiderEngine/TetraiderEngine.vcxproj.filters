@@ -323,6 +323,9 @@
     <ClCompile Include="Source\SnapToCamera.cpp">
       <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AI_DashingStunned.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -627,6 +630,9 @@
     </ClInclude>
     <ClInclude Include="Source\SnapToCamera.h">
       <Filter>Source Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_DashingStunned.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

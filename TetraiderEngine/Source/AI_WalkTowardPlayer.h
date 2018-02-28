@@ -27,7 +27,7 @@ public:
 	virtual void HandleEvent(Event* pEvent);
 
 private:
-	int idleDuration; // in seconds
+	float idleDuration; // in seconds
 	float idledSoFar;
 };
 

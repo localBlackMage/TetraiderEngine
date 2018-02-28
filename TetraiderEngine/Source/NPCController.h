@@ -34,6 +34,7 @@ public:
 	bool IsTooFarFromStartingPoint();
 	void PlayAnimation(int animation);
 	void SetDestinationToRandomPointInZone();
+	void SetVelocityToZero();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
 	void SetPositionBehindPlayer(float distance);

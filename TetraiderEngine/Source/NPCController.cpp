@@ -96,6 +96,9 @@ void NPCController::Serialize(const json& j) {
 	int definedSize = j["AIStates"].size();
 
 	for (int i = 0; i < definedSize; ++i) {
+		if (ParseString((j)["AIStates"][i], "AIStateType") == "AI_DashingEngage")
+			m_isControlAnimationOnVelocity = false;
+
 		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 		newState->pAgent = this;
 		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = newState;
@@ -122,7 +125,8 @@ void NPCController::HandleEvent(Event* pEvent) {
 		m_isPlayerDead = true;
 	}
 
-	// m_AIStates[m_currentState]->HandleEvent(pEvent);
+	if(m_AIStates[m_currentState])
+		m_AIStates[m_currentState]->HandleEvent(pEvent);
 }
 
 void NPCController::LateInitialize() {
@@ -167,6 +171,7 @@ bool NPCController::IsPlayerOutOfSight() {
 
 void NPCController::StopMoving() {
 	m_targetDestination = m_pTransform->GetPosition();
+	m_arrivedAtDestination = true;
 }
 
 void NPCController::SetTargetDestination(const Vector3D& pos) {
@@ -182,6 +187,11 @@ void NPCController::SetDestinationToRandomPointInZone() {
 	float x = RandomFloat(m_startingPoint.x - m_zoneWidth/2.0f, m_startingPoint.x + m_zoneWidth / 2.0f);
 	float y = RandomFloat(m_startingPoint.y - m_zoneHeight / 2.0f, m_startingPoint.y + m_zoneHeight / 2.0f);
 	SetTargetDestination(Vector3D(x, y, 0));
+}
+
+void NPCController::SetVelocityToZero() {
+	m_currentVelocity = Vector3D(0, 0, 0);
+	m_arrivedAtDestination = true;
 }
 
 void NPCController::ChangeState(NPC_CONTROLLER_AI newState) {
