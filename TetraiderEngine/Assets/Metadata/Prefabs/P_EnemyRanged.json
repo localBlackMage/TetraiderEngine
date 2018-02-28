@@ -34,7 +34,7 @@
 		"detectionRadius": 400,
 		"outOfSightRadius": 500,
 		"zoneWidth": 350,
-		"zoneHeight": 325,
+		"zoneHeight": 320,
 		"attackRange": 500,
 		"AIStates": [
 			{
@@ -91,7 +91,7 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 40
+			"radius": 35
 		}
 	},
 	{
