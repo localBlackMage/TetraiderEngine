@@ -80,14 +80,12 @@ void Agent::HandleEvent(Event* pEvent) {
 			m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			m_isDead = true;
 		}
-		else if (healthData->mIsForceKnockBack) {
-			if (m_knockBackMultiplier == 0) {
-				pGO->HandleEvent(&Event(EVENT_ForceKnockBack));
-				AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
-			}
-			else {
-				AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);
-			}
+		else if (healthData->mIsForceKnockBack && m_knockBackMultiplier == 0) {
+			pGO->HandleEvent(&Event(EVENT_ForceKnockBack));
+			AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
+		}
+		else {
+			AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);
 		}
 	}
 }
