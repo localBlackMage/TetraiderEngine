@@ -21,9 +21,12 @@
   <ItemGroup>
     <ClCompile Include="Source\AI_DashingAttack.cpp" />
     <ClCompile Include="Source\AI_DashingEngage.cpp" />
+    <ClCompile Include="Source\AI_DashingStunned.cpp" />
+    <ClCompile Include="Source\AI_IdleForDuration.cpp" />
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayer.cpp" />
     <ClCompile Include="Source\FollowCamera.cpp" />
+    <ClCompile Include="Source\Microphone.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
@@ -105,10 +108,13 @@
   <ItemGroup>
     <ClInclude Include="Source\AI_DashingAttack.h" />
     <ClInclude Include="Source\AI_DashingEngage.h" />
+    <ClInclude Include="Source\AI_DashingStunned.h" />
+    <ClInclude Include="Source\AI_IdleForDuration.h" />
     <ClInclude Include="Source\AI_MoveToRandomPointInZone.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayer.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\FollowCamera.h" />
+    <ClInclude Include="Source\Microphone.h" />
     <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AI_Attack.h" />

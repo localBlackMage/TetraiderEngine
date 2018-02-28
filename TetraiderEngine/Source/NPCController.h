@@ -7,6 +7,7 @@
 #include "AI_State.h"
 #include "AI_StateTypes.h"
 #include "AI_StateFactory.h"
+#include "GameObjectTags.h"
 
 class Weapon;
 
@@ -25,6 +26,7 @@ public:
 	void ChangeState(NPC_CONTROLLER_AI);
 	void MoveToPlayer();
 	void GoToPositionAroundPlayer();
+	void GoToStartingPoint();
 	bool UseAttack(int attack);
 	bool IsArrivedAtDestination();
 	bool IsPlayerInSight();
@@ -33,6 +35,7 @@ public:
 	bool IsTooFarFromStartingPoint();
 	void PlayAnimation(int animation);
 	void SetDestinationToRandomPointInZone();
+	void SetVelocityToZero();
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
 	void SetPositionBehindPlayer(float distance);
@@ -61,6 +64,7 @@ private:
 	bool m_arrivedAtDestination;
 	bool m_isPlayerDead;
 	const Transform* m_pPlayerTransform;
+	GameObjectTag m_tagsToIgnore[3];
 };
 
 #endif

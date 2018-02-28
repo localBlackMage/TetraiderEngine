@@ -11,7 +11,7 @@ AI_WalkTowardPlayer::~AI_WalkTowardPlayer(){
 }
 
 void AI_WalkTowardPlayer::OnEnter(){
-	idleDuration = RandomInt(1, 3); // get 1 - 3 sec
+	idleDuration = RandomFloat(0.5f, 0.9f); 
 	idledSoFar = 0.0f;
 	
 }
@@ -25,11 +25,13 @@ void AI_WalkTowardPlayer::OnUpdate(float dt){
 		idledSoFar += dt;
 	}
 	if (pAgent->IsPlayerOutOfSight()) {
-		pAgent->StopMoving();
-		pAgent->ChangeState(NPC_IDLE);
+		pAgent->ChangeState(NPC_STUNNED);
 	}
 }
 
 void AI_WalkTowardPlayer::OnExit(){
-	
+}
+
+void AI_WalkTowardPlayer::HandleEvent(Event* pEvent) {
+
 }

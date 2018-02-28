@@ -18,7 +18,7 @@ public:
 private:
 	int m_damage;
 	float m_knockBackSpeed;
-
+	bool m_isForceKnockBack;
 	bool m_isAbleToDmgPlayer; // Dummy, applies for player only at the moment
 	float m_hitCoolDown; // Dummy, applies for player only at the moment
 	float m_timeFromLastHit; // Dummy, applies for player only at the moment

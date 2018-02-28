@@ -11,13 +11,14 @@ AI_DashingEngage::~AI_DashingEngage() {
 
 void AI_DashingEngage::OnEnter() {
 	sinceEngage = 0.0f;
-	engageTimer = 3;
+	engageTimer = 1.5f;
+	//play pre-dashing animation!
+	pAgent->PlayAnimation(1); // shaking
 }
 
 void AI_DashingEngage::OnUpdate(float dt) {
 	// always face player on engage
 	pAgent->LookAtPlayer();
-	// if this engage has gone too long, just go attack!
 	if (sinceEngage > engageTimer) {
 		pAgent->ChangeState(NPC_ATTACK);
 		return;
@@ -27,5 +28,9 @@ void AI_DashingEngage::OnUpdate(float dt) {
 }
 
 void AI_DashingEngage::OnExit(){
-	
+	pAgent->PlayAnimation(0);
+}
+
+void AI_DashingEngage::HandleEvent(Event* pEvent) {
+
 }

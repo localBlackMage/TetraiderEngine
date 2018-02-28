@@ -21,6 +21,9 @@ NPCController::NPCController() :
 	m_speedMultiplier(1.0f)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
+	m_tagsToIgnore[0] = T_Enemy;
+	m_tagsToIgnore[1] = T_Player;
+	m_tagsToIgnore[2] = T_Projectile;
 }
 
 NPCController::~NPCController() {
@@ -96,6 +99,9 @@ void NPCController::Serialize(const json& j) {
 	int definedSize = j["AIStates"].size();
 
 	for (int i = 0; i < definedSize; ++i) {
+		if (ParseString((j)["AIStates"][i], "AIStateType") == "AI_DashingEngage")
+			m_isControlAnimationOnVelocity = false;
+
 		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
 		newState->pAgent = this;
 		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = newState;
@@ -121,6 +127,9 @@ void NPCController::HandleEvent(Event* pEvent) {
 		m_currentState = NPC_IDLE;
 		m_isPlayerDead = true;
 	}
+
+	if(m_AIStates[m_currentState])
+		m_AIStates[m_currentState]->HandleEvent(pEvent);
 }
 
 void NPCController::LateInitialize() {
@@ -153,18 +162,29 @@ bool NPCController::IsPlayerInSight() {
 	if (m_isPlayerDead)
 		return false;
 
-	return GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius;
+	
+
+	if (GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius) {
+		LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
+		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3);
+	}
+	else return false;
 }
 
 bool NPCController::IsPlayerOutOfSight() {
 	if (m_isPlayerDead) 
 		return true;
 
-	return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
+	LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3)) {
+		return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
+	}
+	else return true;
 }
 
 void NPCController::StopMoving() {
 	m_targetDestination = m_pTransform->GetPosition();
+	m_arrivedAtDestination = true;
 }
 
 void NPCController::SetTargetDestination(const Vector3D& pos) {
@@ -180,6 +200,11 @@ void NPCController::SetDestinationToRandomPointInZone() {
 	float x = RandomFloat(m_startingPoint.x - m_zoneWidth/2.0f, m_startingPoint.x + m_zoneWidth / 2.0f);
 	float y = RandomFloat(m_startingPoint.y - m_zoneHeight / 2.0f, m_startingPoint.y + m_zoneHeight / 2.0f);
 	SetTargetDestination(Vector3D(x, y, 0));
+}
+
+void NPCController::SetVelocityToZero() {
+	m_currentVelocity = Vector3D(0, 0, 0);
+	m_arrivedAtDestination = true;
 }
 
 void NPCController::ChangeState(NPC_CONTROLLER_AI newState) {
@@ -261,4 +286,8 @@ void NPCController::PlayAnimation(int animation) {
 
 bool NPCController::IsTooFarFromStartingPoint() {
 	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_startingPoint) > 1000000;
+}
+
+void NPCController::GoToStartingPoint() {
+	SetTargetDestination(m_startingPoint);
 }

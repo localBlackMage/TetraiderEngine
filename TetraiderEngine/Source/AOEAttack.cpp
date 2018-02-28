@@ -29,7 +29,7 @@ bool AOEAttack::Use(const Vector3D& position) {
 			Health* pHealth = gameObjectsWithHealthComponents[i]->GetComponent<Health>(ComponentType::C_Health);
 			Vector3D dirOfAttack = pTransform->GetPosition() - position;
 			dirOfAttack.Normalize();
-			pHealth->TakeDamage(m_baseDamage, dirOfAttack, m_knockBackSpeed);
+			pHealth->TakeDamage(m_baseDamage, dirOfAttack, m_knockBackSpeed, false);
 		}
 	}
 

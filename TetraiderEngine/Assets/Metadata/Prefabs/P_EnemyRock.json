@@ -28,8 +28,8 @@
 		"Component": "NPCController",
 		"AgentData": {
 			"speed": 150,
-			"acceleration": 20,
-			"knockBackMultiplier": 1
+			"acceleration": 10,
+			"knockBackMultiplier": 0
 		},
 		"detectionRadius": 450,
 		"outOfSightRadius": 500,
@@ -53,8 +53,13 @@
       {
         "name": "moveToRandomPointInZoneBehavior",
         "behaviorIndex": 4,
-        "AIStateType": "NPC_State_Idle"
-      }
+        "AIStateType": "NPC_State_MoveToRandomPointInZone"
+      },
+      {
+        "name": "StunnedBehavior",
+        "behaviorIndex": 5,
+        "AIStateType": "NPC_State_DashingStunned"
+      }      
     ]
 	},
     {

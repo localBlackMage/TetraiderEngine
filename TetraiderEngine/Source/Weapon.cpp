@@ -18,7 +18,7 @@ Weapon::~Weapon() {
 	}
 
 	m_Attacks.clear();
-	m_pWeapon->Destroy();
+	if(m_pWeapon) m_pWeapon->Destroy();
 	if(m_pEffect) m_pEffect->Destroy();
 }
 
@@ -28,7 +28,7 @@ void Weapon::Deactivate() {
 	}
 
 	m_Attacks.clear();
-	m_pWeapon->Destroy();
+	if (m_pWeapon) m_pWeapon->Destroy();
 	if (m_pEffect) m_pEffect->Destroy();
 	m_pWeaponTransform = nullptr;
 	m_pEffectTransform = nullptr;
@@ -43,11 +43,11 @@ void Weapon::Update(float dt) {
 
 	float angle = m_pController->GetLookDirection().AngleDegrees();
 	if (m_pController->GetFaceDirection() == FaceDirection::Left) {
-		m_pWeaponTransform->SetAngleZ(180 - angle*-1 - m_rotationOffset*swingDir);
+		if (m_pWeapon) m_pWeaponTransform->SetAngleZ(180 - angle*-1 - m_rotationOffset*swingDir);
 		if(m_pEffect) m_pEffectTransform->SetAngleZ(180 - angle*-1);
 	}
 	else {
-		m_pWeaponTransform->SetAngleZ(angle - m_rotationOffset*swingDir);
+		if(m_pWeapon) m_pWeaponTransform->SetAngleZ(angle - m_rotationOffset*swingDir);
 		if (m_pEffect) m_pEffectTransform->SetAngleZ(angle);
 	}
 }
@@ -104,13 +104,15 @@ void Weapon::Serialize(const json& j) {
 	}
 
 	m_weaponPrefab = ParseString(j, "weaponPrefab");
-	m_pWeapon = TETRA_GAME_OBJECTS.CreateGameObject(m_weaponPrefab);
-	m_weaponOffset.x = ParseFloat(j["weaponOffset"], "x");
-	m_weaponOffset.y = ParseFloat(j["weaponOffset"], "y");
-	m_weaponOffset.z = ParseFloat(j["weaponOffset"], "z");
+	if (m_weaponPrefab != "") {
+		m_pWeapon = TETRA_GAME_OBJECTS.CreateGameObject(m_weaponPrefab);
+		m_weaponOffset.x = ParseFloat(j["weaponOffset"], "x");
+		m_weaponOffset.y = ParseFloat(j["weaponOffset"], "y");
+		m_weaponOffset.z = ParseFloat(j["weaponOffset"], "z");
 
-	m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(ComponentType::C_Transform);
-	m_pWeaponTransform->SetPosition(m_weaponOffset);
+		m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(ComponentType::C_Transform);
+		m_pWeaponTransform->SetPosition(m_weaponOffset);
+	}
 
 	if (ValueExists(j, "effectPrefab")) {
 		std::string m_effectPrefab = ParseString(j, "effectPrefab");
@@ -122,7 +124,7 @@ void Weapon::Serialize(const json& j) {
 }
 
 void Weapon::LateInitialize() {
-	m_pWeapon->SetParent(pGO);
+	if(m_pWeapon) m_pWeapon->SetParent(pGO);
 	if(m_pEffect) m_pEffect->SetParent(pGO);
 
 	if (!m_pController) {
@@ -140,7 +142,7 @@ void Weapon::LateInitialize() {
 
 void Weapon::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_FlipScaleX) {
-		m_pWeapon->HandleEvent(pEvent);
+		if(m_pWeapon) m_pWeapon->HandleEvent(pEvent);
 		if(m_pEffect) m_pEffect->HandleEvent(pEvent);
 	}
 }

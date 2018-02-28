@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "JsonReader.h"
 #include "TetraiderAPI.h"
+#include "Transform.h"
 #include <iostream>
 #include <filesystem>
 

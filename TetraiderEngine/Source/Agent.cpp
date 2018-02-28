@@ -76,13 +76,18 @@ void Agent::HandleEvent(Event* pEvent) {
 	}
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
 		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
-		AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);
-	}
-	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
-		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
 		if (healthData->mCurrentHealth == 0) {
-			m_pBody->SetVelocity(Vector3D(0,0,0));
+			m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			m_isDead = true;
+		}
+		else if (healthData->mIsForceKnockBack) {
+			if (m_knockBackMultiplier == 0) {
+				pGO->HandleEvent(&Event(EVENT_ForceKnockBack));
+				AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
+			}
+			else {
+				AddVelocity(healthData->m_directionOfAttack*m_knockBackMultiplier*healthData->mknockBackSpeed);
+			}
 		}
 	}
 }
