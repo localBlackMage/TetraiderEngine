@@ -38,3 +38,8 @@ void AI_Idle::OnUpdate(float dt){
 void AI_Idle::OnExit(){
 	
 }
+
+
+void AI_Idle::HandleEvent(Event* pEvent) {
+
+}

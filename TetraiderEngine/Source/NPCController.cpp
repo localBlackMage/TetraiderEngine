@@ -262,3 +262,7 @@ void NPCController::PlayAnimation(int animation) {
 bool NPCController::IsTooFarFromStartingPoint() {
 	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_startingPoint) > 1000000;
 }
+
+void NPCController::GoToStartingPoint() {
+	SetTargetDestination(m_startingPoint);
+}

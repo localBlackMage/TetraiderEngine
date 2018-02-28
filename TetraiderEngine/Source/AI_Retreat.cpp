@@ -21,3 +21,8 @@ void AI_Retreat::OnUpdate(float dt){
 void AI_Retreat::OnExit(){
 	
 }
+
+
+void AI_Retreat::HandleEvent(Event* pEvent) {
+
+}

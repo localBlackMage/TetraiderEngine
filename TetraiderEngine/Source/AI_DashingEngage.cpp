@@ -11,7 +11,7 @@ AI_DashingEngage::~AI_DashingEngage() {
 
 void AI_DashingEngage::OnEnter() {
 	sinceEngage = 0.0f;
-	engageTimer = 3;
+	engageTimer = 3.0f;
 	//play pre-dashing animation!
 }
 
@@ -28,4 +28,8 @@ void AI_DashingEngage::OnUpdate(float dt) {
 
 void AI_DashingEngage::OnExit(){
 	
+}
+
+void AI_DashingEngage::HandleEvent(Event* pEvent) {
+
 }

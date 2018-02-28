@@ -25,6 +25,7 @@ public:
 	virtual void OnEnter();
 	virtual void OnUpdate(float);
 	virtual void OnExit();
+	virtual void HandleEvent(Event* pEvent);
 
 private:
 	int idleDuration; // in seconds

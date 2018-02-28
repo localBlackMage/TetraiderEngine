@@ -16,6 +16,7 @@ void AI_DashingAttack::OnEnter(){
 }
 
 void AI_DashingAttack::OnUpdate(float dt){
+
 	if (pAgent->IsArrivedAtDestination()){
 		pAgent->ChangeState(NPC_ENGAGE);
 	}
@@ -23,4 +24,8 @@ void AI_DashingAttack::OnUpdate(float dt){
 
 void AI_DashingAttack::OnExit(){
 	
+}
+
+void AI_DashingAttack::HandleEvent(Event* pEvent) {
+
 }

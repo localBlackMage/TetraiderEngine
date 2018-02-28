@@ -28,3 +28,7 @@ void AI_Attack::OnUpdate(float dt){
 void AI_Attack::OnExit(){
 	
 }
+
+void AI_Attack::HandleEvent(Event* pEvent) {
+
+}

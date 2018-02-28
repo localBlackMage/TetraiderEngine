@@ -12,9 +12,17 @@ AI_MoveToRandomPointInZone::~AI_MoveToRandomPointInZone(){
 
 void AI_MoveToRandomPointInZone::OnEnter(){
 	pAgent->SetDestinationToRandomPointInZone();
+	triedSofar = 0.0f;
+	tryTime = 2.0f;
 }
 
 void AI_MoveToRandomPointInZone::OnUpdate(float dt){
+	if (triedSofar > tryTime) {
+		pAgent->ChangeState(NPC_IDLE);
+	}
+	else {
+		triedSofar += dt;
+	}
 	pAgent->LookInDirectionOfMovement();
 	if (pAgent->IsPlayerInSight()) {
 		pAgent->StopMoving();
@@ -28,4 +36,8 @@ void AI_MoveToRandomPointInZone::OnUpdate(float dt){
 
 void AI_MoveToRandomPointInZone::OnExit(){
 	
+}
+
+void AI_MoveToRandomPointInZone::HandleEvent(Event* pEvent) {
+
 }

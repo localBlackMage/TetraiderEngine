@@ -25,6 +25,7 @@ public:
 	void ChangeState(NPC_CONTROLLER_AI);
 	void MoveToPlayer();
 	void GoToPositionAroundPlayer();
+	void GoToStartingPoint();
 	bool UseAttack(int attack);
 	bool IsArrivedAtDestination();
 	bool IsPlayerInSight();

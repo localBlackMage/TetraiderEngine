@@ -17,6 +17,7 @@ Creation date: 2/22/18
 #include "Subscriber.h"
 #include "JsonReader.h"
 #include "NPCController.h"
+#include "Event.h"
 #include <assert.h>
 
 using json = nlohmann::json;
@@ -36,6 +37,7 @@ public:
 	virtual void OnEnter() = 0;
 	virtual void OnUpdate(float dt) = 0;
 	virtual void OnExit() = 0;
+	virtual void HandleEvent(Event* pEvent) = 0;
 
 	AIStateType StateType() const { return m_StateType; }
 

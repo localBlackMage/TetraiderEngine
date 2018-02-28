@@ -57,3 +57,8 @@ void AI_Engage::OnUpdate(float dt) {
 void AI_Engage::OnExit(){
 	
 }
+
+
+void AI_Engage::HandleEvent(Event* pEvent) {
+
+}

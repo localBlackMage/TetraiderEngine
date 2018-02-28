@@ -45,10 +45,6 @@
       { "name": "engageBehavior",
         "behaviorIndex": 1,
         "AIStateType": "NPC_State_WalkTowardPlayer"
-      },  
-      { "name": "moveToRandomPointInZoneBehavior",
-        "behaviorIndex": 4,
-        "AIStateType": "NPC_State_MoveToRandomPointInZone"
       }
     ]
 	},

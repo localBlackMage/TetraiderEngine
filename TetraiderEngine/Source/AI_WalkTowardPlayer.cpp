@@ -11,7 +11,7 @@ AI_WalkTowardPlayer::~AI_WalkTowardPlayer(){
 }
 
 void AI_WalkTowardPlayer::OnEnter(){
-	idleDuration = RandomInt(1, 3); // get 1 - 3 sec
+	idleDuration = RandomFloat(0.5f, 0.9f); 
 	idledSoFar = 0.0f;
 	
 }
@@ -31,5 +31,9 @@ void AI_WalkTowardPlayer::OnUpdate(float dt){
 }
 
 void AI_WalkTowardPlayer::OnExit(){
-	
+	pAgent->GoToStartingPoint();
+}
+
+void AI_WalkTowardPlayer::HandleEvent(Event* pEvent) {
+
 }
