@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "DestroyOnHealthZero.h"
 #include "AOEAttack.h"
+#include "Audio.h"
 #include "Transform.h"
 #include "TetraiderAPI.h"
 
@@ -30,6 +31,8 @@ void DestroyOnHealthZero::Update(float dt) {
 				Transform* pExplosion = pExplosionGO->GetComponent<Transform>(C_Transform);
 				Transform* pTransform = pGO->GetComponent<Transform>(C_Transform);
 				pExplosion->SetPosition(pTransform->GetPosition());
+				Audio* pAudio = pExplosionGO->GetComponent<Audio>(C_Audio);
+				pAudio->Play();
 				m_Attack->Use(pTransform->GetPosition());
 			}
 
