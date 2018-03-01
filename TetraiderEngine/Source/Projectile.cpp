@@ -59,6 +59,10 @@ void Projectile::SetProperties(const Vector3D& position, int damage, float speed
 	m_pBody->SetVelocity(speed*dir);
 	m_knockBackSpeed = knockBackSpeed;
 	m_pOwner = owner;
+
+	Audio* m_pAudio = pGO->GetComponent<Audio>(C_Audio);
+	if (m_pAudio)
+		m_pAudio->Play();
 }
 
 void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, float knockBackSpeed, GameObject* owner) {

@@ -65,7 +65,7 @@
 	{
 		"Component": "Audio",
 		"audioClip": "swordSlash.mp3",
-		"volume": 0.8,
+		"volume": 0.04,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": false,

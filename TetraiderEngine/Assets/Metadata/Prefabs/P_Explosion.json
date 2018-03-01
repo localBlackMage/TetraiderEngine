@@ -65,7 +65,7 @@
 	{
 		"Component": "Audio",
 		"audioClip": "explosion.mp3",
-		"volume": 1,
+		"volume": 0.1,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,

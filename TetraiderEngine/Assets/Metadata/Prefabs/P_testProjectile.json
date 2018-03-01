@@ -63,7 +63,7 @@
 	{
 		"Component": "Audio",
 		"audioClip": "pew.wav",
-		"volume": 0.8,
+		"volume": 0.1,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
