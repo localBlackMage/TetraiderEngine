@@ -176,7 +176,7 @@
       "prefab": "P_InGameCursor"
     },
     {
-	  "prefab": "P_Floor",
+	  "prefab": "P_Floor_TEST",
       "position": {
         "x": 0,
         "y": 0,
