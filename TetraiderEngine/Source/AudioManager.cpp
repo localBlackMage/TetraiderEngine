@@ -64,7 +64,7 @@ void AudioManager::Update(float elapsed)
 	//in sec
 	const float fadeTime = 1.0f;
 
-	if (m_pCurrentSongChannel != 0 /*&& m_fade == FADE_IN*/)
+	if (m_pCurrentSongChannel != 0 && m_fade == FADE_IN)
 	{
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
@@ -79,7 +79,7 @@ void AudioManager::Update(float elapsed)
 			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
-	else if (m_pCurrentSongChannel != 0/*&& m_fade==FADE_OUT*/)
+	else if (m_pCurrentSongChannel != 0&& m_fade==FADE_OUT)
 	{
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
