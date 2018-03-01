@@ -88,6 +88,8 @@ void Text::Serialize(const json & j)
 	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
 
 	SetFont(JsonReader::ValueExists(j, "font") ? j["font"] : m_fontName);
+
+	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
 }
 
 const Mesh & Text::GetMesh() const

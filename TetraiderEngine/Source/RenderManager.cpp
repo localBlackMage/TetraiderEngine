@@ -231,8 +231,10 @@ void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 			shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
 			break;
 		case ComponentType::C_Sprite:
-		default:
 			shader = static_cast<const Sprite*>(renderingComponent)->Shader();
+			break;
+		case ComponentType::C_Text:
+			shader = static_cast<const Text*>(renderingComponent)->Shader();
 			break;
 	}
 

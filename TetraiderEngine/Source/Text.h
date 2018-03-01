@@ -50,6 +50,8 @@ public:
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
 
+	std::string Shader() const { return m_shader; }
+
 	virtual void SetFont(std::string fontName);
 	void SetText(std::string newText);
 	std::string GetText() const;
