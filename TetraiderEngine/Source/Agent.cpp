@@ -1,6 +1,7 @@
 
 #include <Stdafx.h>
 
+
 Agent::Agent(ComponentType _type) :
 	Component(_type),
 	m_speed(0.0f),
@@ -59,6 +60,9 @@ void Agent::Serialize(const json& j) {
 }
 
 void Agent::HandleEvent(Event* pEvent) {
+
+	
+
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
 		if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_Projectile)

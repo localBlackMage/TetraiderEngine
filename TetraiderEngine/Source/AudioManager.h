@@ -53,7 +53,8 @@ public:
 	bool isSoundPlaying(std::string);
 	FMOD_VECTOR AudioManager::VectorToFmod(const Vector3D& SourcePos);
 	void Set3dListener(const Vector3D& SourcePos/*, const Vector3D& vel*/);
-
+	void SetFadeTime(float time);
+	FMOD::Channel* getSongChannel() { return m_pCurrentSongChannel; }
 private:
 	FMOD::System* m_pSystem;
 	FMOD::ChannelGroup* m_pMaster;
@@ -64,13 +65,15 @@ private:
 	FMOD::Channel* m_pCurrentSongChannel;
 	std::string m_currentSongPath;
 	std::string m_nextSongPath;
-	std::string m_currentSfxPath;
-	std::string m_nextSfxPath;
+	/*std::string m_currentSfxPath;
+	std::string m_nextSfxPath;*/
 
 	enum FadeState { FADE_NONE, FADE_IN, FADE_OUT };
 	FadeState m_fade;
 	bool m_isChannelGroupPaused;
 	bool m_isPlaying;
+	float m_musicVol;
+	float m_fadeTime;
 	//GameObject* m_pCameraObj;
 };
 

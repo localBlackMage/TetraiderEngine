@@ -1,3 +1,4 @@
+
 //#include "GameObject.h"
 //#include "Controller.h"
 //#include "Weapon.h"
@@ -9,6 +10,7 @@
 //#include <iostream>
 
 #include <Stdafx.h>
+
 
 Controller::Controller() :
 	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0)
@@ -39,6 +41,11 @@ void Controller::Serialize(const json& j) {
 void Controller::HandleEvent(Event* pEvent) {
 	if (m_isDead) return;
 
+	if (pEvent->Type() == EventType::EVENT_OnLevelInitialized)
+	{
+		Audio* pAudio = pGO->GetComponent<Audio>(ComponentType::C_Audio);
+		pAudio->Play();
+	}
 	if (TETRA_GAME_STATE.IsGamePaused()) {
 		if (pEvent->Type() == EVENT_INPUT_FLY) {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();

@@ -44,6 +44,8 @@ AudioManager::AudioManager() :m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isC
 	m_Modes[SFX] = FMOD_DEFAULT /*|FMOD_3D*/;
 	m_Modes[SONG] = FMOD_DEFAULT | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL /*| FMOD_3D*/;
 
+	//init fade time
+	m_fadeTime = 100.0f;
 	// seed value for SFx
 	srand(0);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEMUSIC, this);
@@ -56,22 +58,22 @@ AudioManager::~AudioManager()
 
 void AudioManager::Update(float elapsed)
 {
-
+	float vol;
+	m_pCurrentSongChannel->getVolume(&vol);
+	std::cout << "Music volume :" << vol << "\n";
 	if (TETRA_GAME_CONFIG.GetsoundsMute())
 	{
 		SetMasterVolume(0.0);
 	}
-	//in sec
-	const float fadeTime = 1.0f;
 
 	if (m_pCurrentSongChannel != 0 && m_fade == FADE_IN)
 	{
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
-		float nextVolume = volume + elapsed / fadeTime;
-		if (nextVolume >= DEFAULT_VOL)
+		float nextVolume = volume + elapsed / m_fadeTime;
+		if (nextVolume >= m_musicVol)
 		{
-			ErrorCheck(m_pCurrentSongChannel->setVolume(DEFAULT_VOL));
+			ErrorCheck(m_pCurrentSongChannel->setVolume(m_musicVol));
 			m_fade = FADE_NONE;
 		}
 		else
@@ -79,11 +81,11 @@ void AudioManager::Update(float elapsed)
 			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
-	else if (m_pCurrentSongChannel != 0&& m_fade==FADE_OUT)
+	else if (m_pCurrentSongChannel != 0 && m_fade==FADE_OUT)
 	{
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
-		float nextVolume = volume - elapsed / fadeTime;
+		float nextVolume = volume - elapsed / m_fadeTime;
 		if (nextVolume <= 0.0f)
 		{
 			ErrorCheck(m_pCurrentSongChannel->stop());
@@ -98,7 +100,7 @@ void AudioManager::Update(float elapsed)
 	}
 	else if (m_pCurrentSongChannel == 0 && !m_nextSongPath.empty())
 	{
-		PlaySong(m_nextSongPath, DEFAULT_VOL);
+		PlaySong(m_nextSongPath, m_musicVol);
 		m_nextSongPath.clear();
 	}
 	ErrorCheck(m_pSystem->update());
@@ -158,6 +160,9 @@ void AudioManager::PlaySFX(const std::string & name, float volume)
 
 void AudioManager::PlaySong(const std::string & name, float volume)
 {
+	//store music volume
+	m_musicVol = volume;
+
 	//ignore if song already playing
 	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
 	if (m_currentSongPath == soundFile)
@@ -179,8 +184,9 @@ void AudioManager::PlaySong(const std::string & name, float volume)
 	m_currentSongPath = soundFile;
 	ErrorCheck(m_pSystem->playSound(sound, NULL, true, &m_pCurrentSongChannel));
 	ErrorCheck(m_pCurrentSongChannel->setChannelGroup(m_pGroups[SONG]));
-	ErrorCheck(m_pCurrentSongChannel->setVolume(volume));
+	ErrorCheck(m_pCurrentSongChannel->setVolume(0.0f));
 	ErrorCheck(m_pCurrentSongChannel->setPaused(false));
+	m_fade = FADE_IN;
 }
 
 void AudioManager::StopAllSFXs()
@@ -301,6 +307,11 @@ void AudioManager::Set3dListener(const Vector3D & SourcePos/*, const Vector3D& v
 	FMOD_VECTOR position = VectorToFmod(SourcePos);
 	//FMOD_VECTOR velocity = VectorToFmod(vel);
 	m_pSystem->set3DListenerAttributes(0, &position, 0 /*&velocity*/, 0, 0);
+}
+
+void AudioManager::SetFadeTime(float time)
+{
+	m_fadeTime = time;
 }
 
 //void AudioManager::Set3dListener()

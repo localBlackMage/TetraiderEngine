@@ -153,7 +153,7 @@
 	{
 		"Component": "Audio",
 		"audioClip": "bgm.mp3",
-		"volume": 0,
+		"volume": 0.05,
 		"isMute": false,
 		"isLoop": true,
 		"isPlayOnAwake": true,
