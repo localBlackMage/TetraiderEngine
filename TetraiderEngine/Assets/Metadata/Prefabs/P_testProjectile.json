@@ -62,13 +62,13 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "pew.wav",
-		"volume": 0.1,
+		"audioClip": "pew.mp3",
+		"volume": 0.05,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
 		"isBGM": false,
-		"is3D":true
+		"is3D":false
 	}
   ]
 }
