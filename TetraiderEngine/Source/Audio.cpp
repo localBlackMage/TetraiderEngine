@@ -11,7 +11,13 @@ void Audio::Deactivate() {
 	pGO = nullptr;
 }
 
-void Audio::Update(float dt) {}
+void Audio::Update(float dt) 
+{
+	if (m_Ismute && m_isBGM)
+	{
+		TETRA_AUDIO.MuteMusic();
+	}
+}
 
 void Audio::Serialize(const json& j)
 {
@@ -36,14 +42,11 @@ bool Audio::IsPlaying()
 
 void Audio::Play()
 {
+	//temp fix
 	if (m_isBGM)
 	{
-		TETRA_AUDIO.PlaySong(m_audioClip, m_volume);
-		
+		TETRA_AUDIO.PlaySong(m_audioClip, m_volume);	
 	}
-		
-
-	//temp fix
 	else if (m_Ismute)
 		TETRA_AUDIO.PlaySFX(m_audioClip, 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 	else
@@ -53,6 +56,7 @@ void Audio::Play()
 void Audio::LateInitialize()
 {
 	return;
+	//fix late initialize
 	/*if (m_isPlayOnAwake)
 	{
 		if (m_isBGM)
@@ -62,7 +66,8 @@ void Audio::LateInitialize()
 	}*/
 }
 
-void Audio::Stop() {
+void Audio::Stop() 
+{
 	// Stops audio from playing completely (resets)
 	if (m_isBGM)
 		TETRA_AUDIO.StopSongs();
@@ -85,3 +90,4 @@ void Audio::Resume()
 	else
 		TETRA_AUDIO.ResumeSFX(m_audioClip);
 }
+

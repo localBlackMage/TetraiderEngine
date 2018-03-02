@@ -38,6 +38,8 @@ public:
 	void StopAllSFXs();
 	void StopSFX(std::string& path);
 	void StopSongs();
+	void MuteAllSFX();
+	void UnmuteAllSFX();
 	void SetMasterVolume(float volume);
 	void SetSFXsVolume(float volume);
 	void SetSongsVolume(float volume);
@@ -51,10 +53,14 @@ public:
 	void ResumeSFX(std::string& path);
 	void HandleEvent(Event* pEvent);
 	bool isSoundPlaying(std::string);
+	void ToggleMuteSounds();
+	void MuteMusic();
+	void ResumeMusic();
 	FMOD_VECTOR AudioManager::VectorToFmod(const Vector3D& SourcePos);
 	void Set3dListener(const Vector3D& SourcePos/*, const Vector3D& vel*/);
 	void SetFadeTime(float time);
 	FMOD::Channel* getSongChannel() { return m_pCurrentSongChannel; }
+	enum FadeState { FADE_NONE, FADE_IN, FADE_OUT };
 private:
 	FMOD::System* m_pSystem;
 	FMOD::ChannelGroup* m_pMaster;
@@ -68,9 +74,9 @@ private:
 	/*std::string m_currentSfxPath;
 	std::string m_nextSfxPath;*/
 
-	enum FadeState { FADE_NONE, FADE_IN, FADE_OUT };
 	FadeState m_fade;
 	bool m_isChannelGroupPaused;
+	bool m_isChannelGroupMute;
 	bool m_isPlaying;
 	float m_musicVol;
 	float m_fadeTime;

@@ -61,6 +61,25 @@ void AudioManager::Update(float elapsed)
 	float vol;
 	m_pCurrentSongChannel->getVolume(&vol);
 	std::cout << "Music volume :" << vol << "\n";
+
+	//TEST part
+	if(TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_K))
+	{
+		MuteMusic();
+	}
+	else if(TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_L))
+	{
+		ResumeMusic();
+	}
+	else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_O))
+	{
+		MuteAllSFX();
+	}
+	else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
+	{
+		UnmuteAllSFX();
+	}
+
 	if (TETRA_GAME_CONFIG.GetsoundsMute())
 	{
 		SetMasterVolume(0.0);
@@ -213,6 +232,16 @@ void AudioManager::StopSongs()
 	m_nextSongPath.clear();
 }
 
+void AudioManager::MuteAllSFX()
+{
+	ErrorCheck(m_pGroups[SFX]->setMute(true));
+}
+
+void AudioManager::UnmuteAllSFX()
+{
+	ErrorCheck(m_pGroups[SFX]->setMute(false));
+}
+
 void AudioManager::SetMasterVolume(float volume)
 {
 	ErrorCheck(m_pMaster->setVolume(volume));
@@ -277,6 +306,28 @@ bool AudioManager::isSoundPlaying(std::string name)
 		return false;
 }
 
+void AudioManager::ToggleMuteSounds()
+{
+	for (int i = 0; i < CATEGORY_COUNT; i++)
+	{
+		ErrorCheck(m_pGroups[i]->getMute(&m_isChannelGroupMute));
+		if (m_isChannelGroupMute)
+			ErrorCheck(m_pGroups[i]->setMute(false));
+		else
+			ErrorCheck(m_pGroups[i]->setMute(true));
+	}
+}
+
+void AudioManager::MuteMusic()
+{
+	m_pCurrentSongChannel->setMute(true);
+}
+
+void AudioManager::ResumeMusic()
+{
+	m_pCurrentSongChannel->setMute(false);
+}
+
 void AudioManager::ErrorCheck(FMOD_RESULT result)
 {
 	if (result != FMOD_OK) {
@@ -293,6 +344,8 @@ void AudioManager::HandleEvent(Event* pEvent) {
 		break;
 	}
 }
+
+
 
 FMOD_VECTOR AudioManager::VectorToFmod(const Vector3D& SourcePos) {
 	FMOD_VECTOR fVec;
