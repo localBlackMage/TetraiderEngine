@@ -16,6 +16,8 @@
 #include "GameObjectManager.h"
 #include "MemoryManager.h"
 #include "FloorPlanGenerator.h"
+#include "ImguiManager.h"
+#include "LevelEditor.h"
 #include "Singleton.h"
 #include <string>
 
@@ -34,6 +36,8 @@
 #define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
 #define TETRA_LUA Singleton<LuaScript>::GetInstance()
 #define TETRA_LEVEL_GEN Singleton<FloorPlanGenerator>::GetInstance()
+#define TETRA_IMGUI Singleton<ImguiManager>::GetInstance()
+#define TETRA_EDITOR Singleton<LevelEditor>::GetInstance()
 
 namespace Tetraider {
 	//! int Initialize(std::string configFileName)
@@ -89,6 +93,7 @@ namespace Tetraider {
 	void LoadPrefabs(std::string filePath);
 
 	void DebugMode();
+	void LevelEditorMode(float deltaTime);
 }
 
 #endif

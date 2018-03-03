@@ -9,6 +9,7 @@ private:
 	std::string Text;
 	Sprite* m_pSprite;
 	int m_levelNumber;
+	bool isLooadLevelEditor;
 	bool isQuit;
 	bool isRestart;
 	bool isRandomGenerated;

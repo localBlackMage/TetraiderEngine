@@ -103,22 +103,24 @@ void Weapon::Serialize(const json& j) {
 		}
 	}
 
-	m_weaponPrefab = ParseString(j, "weaponPrefab");
-	if (m_weaponPrefab != "") {
-		m_pWeapon = TETRA_GAME_OBJECTS.CreateGameObject(m_weaponPrefab);
-		m_weaponOffset.x = ParseFloat(j["weaponOffset"], "x");
-		m_weaponOffset.y = ParseFloat(j["weaponOffset"], "y");
-		m_weaponOffset.z = ParseFloat(j["weaponOffset"], "z");
+	if (!TETRA_GAME_STATE.IsEditorMode()) {
+		m_weaponPrefab = ParseString(j, "weaponPrefab");
+		if (m_weaponPrefab != "") {
+			m_pWeapon = TETRA_GAME_OBJECTS.CreateGameObject(m_weaponPrefab);
+			m_weaponOffset.x = ParseFloat(j["weaponOffset"], "x");
+			m_weaponOffset.y = ParseFloat(j["weaponOffset"], "y");
+			m_weaponOffset.z = ParseFloat(j["weaponOffset"], "z");
 
-		m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(ComponentType::C_Transform);
-		m_pWeaponTransform->SetPosition(m_weaponOffset);
-	}
+			m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(ComponentType::C_Transform);
+			m_pWeaponTransform->SetPosition(m_weaponOffset);
+		}
 
-	if (ValueExists(j, "effectPrefab")) {
-		std::string m_effectPrefab = ParseString(j, "effectPrefab");
-		m_pEffect = TETRA_GAME_OBJECTS.CreateGameObject(m_effectPrefab);
-		if (m_pEffect) {
-			m_pEffectTransform = m_pEffect->GetComponent<Transform>(ComponentType::C_Transform);
+		if (ValueExists(j, "effectPrefab")) {
+			std::string m_effectPrefab = ParseString(j, "effectPrefab");
+			m_pEffect = TETRA_GAME_OBJECTS.CreateGameObject(m_effectPrefab);
+			if (m_pEffect) {
+				m_pEffectTransform = m_pEffect->GetComponent<Transform>(ComponentType::C_Transform);
+			}
 		}
 	}
 }

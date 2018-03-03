@@ -30,6 +30,7 @@ public:
 	void UnLoadLevel();
 	void UnLoadLevelForRestart();
 	void ChangeLevel(int i);
+	void LoadLevelEditor(int i);
 	void NextLevel();
 	void RestartGame();
 	void HandleEvent(Event* pEvent);

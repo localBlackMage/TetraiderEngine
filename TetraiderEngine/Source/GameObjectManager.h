@@ -66,6 +66,8 @@ public:
 
 	void Update(float dt);
 	void LateUpdate(float dt);
+	void UpdateForLevelEditor(float dt);
+	void LateUpdateForLevelEditor(float dt);
 	void RenderGameObjects();
 	void DestroyAllGameObjects();
 	void UpdateStatus();

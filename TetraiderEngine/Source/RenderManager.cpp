@@ -479,7 +479,7 @@ bool RenderManager::Init()
 void RenderManager::FrameStart()
 {
 	// clear frame buffer and z-buffer
-	glClearColor(0.0f, 0.0f, 0.0f, 1);
+	glClearColor(0.2f, 0.2f, 0.2f, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearDepth(1);
 	glClear(GL_DEPTH_BUFFER_BIT);

@@ -100,7 +100,7 @@ float Camera::GetAspect() const
 }
 
 Vector3D Camera::TransformPointToScreenSpace(const Vector3D& worldCoordinates) {
-	Matrix4x4 viewPerspectiveMatrix = Matrix4x4::Orthographic(m_screenWidth, m_screenHeight, 0.1f)*GetViewMatrix(); // TODO: talk to moodie
+	Matrix4x4 viewPerspectiveMatrix = Matrix4x4::Orthographic((float)m_screenWidth, (float)m_screenHeight, 0.1f)*GetViewMatrix(); // TODO: talk to moodie
 	// Transform point to clipping coordinates
 	Vector3D result = viewPerspectiveMatrix*worldCoordinates;
 	result.x = ((result.x / result.w) + 1.f) / 2.0f * m_screenWidth;

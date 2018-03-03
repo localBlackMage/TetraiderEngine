@@ -22,6 +22,7 @@ void Button::Serialize(const json & j)
 	isQuit = ParseBool(j, "quit");
 	isRestart = ParseBool(j,"restart");
 	isRandomGenerated = ParseBool(j, "isRandomGenerated");
+	isLooadLevelEditor = ParseBool(j, "isLoadLevelEditor");
 }
 
 void Button::LateInitialize()
@@ -59,6 +60,9 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (isRestart) {
 					TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
+				}
+				else if (isLooadLevelEditor) {
+					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);
 				}
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(isRandomGenerated);

@@ -5,6 +5,7 @@
 #include "Subscriber.h"
 
 class LevelManager;
+class LevelEditor;
 
 enum class GameState {
 	QUIT,
@@ -23,12 +24,13 @@ private:
 	bool m_debugPause;
 	bool m_isGamePaused;
 	bool m_isLevelOver;
+	bool m_isLevelEditorMode;
 
 	void SetGameState(GameState);
 public:
 	GameStateManager();
 	~GameStateManager();
-	friend LevelManager;
+	friend class LevelManager;
 	GameStateManager(const GameStateManager &) = delete;
 	void operator=(const GameStateManager &) = delete;
 	void Update();
@@ -36,6 +38,7 @@ public:
 	bool IsDebugPause() { return m_debugPause; }
 	void PauseGame(bool active) {  m_isGamePaused = active; }
 	bool IsGamePaused() { return m_isGamePaused; }
+	bool IsEditorMode() { return m_isLevelEditorMode; }
 };
 
 #endif

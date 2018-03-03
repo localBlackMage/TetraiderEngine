@@ -239,7 +239,14 @@ void ResourceManager::LoadPrefabFiles() {
 	for (auto &p : fs::directory_iterator(path)) {
 		json* j = new json();
 		*j = OpenJsonFile(p.path().string());
-		m_prefabs[p.path().filename().string()] = j;
+		std::string s = p.path().filename().string();
+		m_prefabs[s] = j;
+		s.pop_back();
+		s.pop_back();
+		s.pop_back();
+		s.pop_back();
+		s.pop_back();
+		m_prefabStrings.push_back(s);
 	}
 }
 

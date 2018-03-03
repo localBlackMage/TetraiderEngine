@@ -75,7 +75,7 @@ static float BernsteinFormula(const unsigned short& d, const float& t, const flo
 float BezierInterpolation(const std::vector<Point>& points, const float& t) {
 	if (points.size() == 0)	return 0.f;
 
-	unsigned short d = points.size() - 1;
+	unsigned short d = (unsigned short)points.size() - 1;
 	float tPow = 1.f;
 	float returnValue = points[0].y * BernsteinFormula(d, t, tPow, 0);
 	for (unsigned short i = 1; i < points.size(); i++) {

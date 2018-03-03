@@ -1,0 +1,10 @@
+{
+  "GAME_OBJECTS": [
+    {
+      "prefab": "P_Camera"
+    },
+	{
+      "prefab": "P_UICamera"
+    }
+  ]
+}

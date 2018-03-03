@@ -4,7 +4,8 @@
 GameStateManager::GameStateManager() :
 	m_currentState(GameState::CURRENT_LEVEL),
 	m_nextState(GameState::CURRENT_LEVEL),
-	m_debugPause(false)
+	m_debugPause(false),
+	m_isLevelEditorMode(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
 	TETRA_EVENTS.Subscribe(EVENT_LevelComplete, this);
@@ -28,8 +29,9 @@ void GameStateManager::Update() {
 
 			Tetraider::FrameStart();
 
-			if(!m_debugPause) Tetraider::Update(Tetraider::GetFrameTime());	// Game loop
-			else Tetraider::DebugMode();									// Debug mode
+			if (m_isLevelEditorMode) Tetraider::LevelEditorMode(Tetraider::GetFrameTime()); // Level editor mode
+			else if(!m_debugPause) Tetraider::Update(Tetraider::GetFrameTime());			// Game loop
+			else Tetraider::DebugMode();													// Debug mode
 
 			Tetraider::FrameEnd();
 		}

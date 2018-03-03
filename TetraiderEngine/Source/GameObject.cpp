@@ -119,3 +119,30 @@ void GameObject::SetActive(bool active) {
 	m_isRender = active;
 	m_isCollisionDisabled = !active;
 }
+
+void GameObject::UpdateForLevelEditor(float dt) {
+	if (mComponents[ComponentType::C_Transform])
+		mComponents[ComponentType::C_Transform]->Update(dt);
+	if (mComponents[ComponentType::C_Sprite])
+		mComponents[ComponentType::C_Sprite]->Update(dt);
+	if (mComponents[ComponentType::C_Body])
+		mComponents[ComponentType::C_Body]->Update(dt);
+	if (mComponents[ComponentType::C_Camera])
+		mComponents[ComponentType::C_Camera]->Update(dt);
+
+	if (m_isSetToDestroy) {
+		if (TETRA_FRAMERATE.GetElapsedTime() - m_destroySetTimeStamp > m_destroyTimer)
+			Destroy();
+	}
+}
+
+void GameObject::LateUpdateForLevelEditor(float dt) {
+	if (mComponents[ComponentType::C_Transform])
+		mComponents[ComponentType::C_Transform]->LateUpdate(dt);
+	if (mComponents[ComponentType::C_Sprite])
+		mComponents[ComponentType::C_Sprite]->LateUpdate(dt);
+	if (mComponents[ComponentType::C_Body])
+		mComponents[ComponentType::C_Body]->LateUpdate(dt);
+	if (mComponents[ComponentType::C_Camera])
+		mComponents[ComponentType::C_Camera]->LateUpdate(dt);
+}

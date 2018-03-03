@@ -31,11 +31,16 @@ public:
 	void SetVelocity(float speed, float angle);
 	void Integrate(float dt);
 	void AddForce(const Vector3D& force);
+	float GetWidth();
+	float GetHeight();
+	float GetRadius();
 	const Vector3D& GetPosition() const;
 	const Vector3D& GetPreviousPosition() const;
 	const Vector3D& GetVelocity() const;
 	void OverrideShapeData(float width, float height);
 	void OverrideShapeData(float radius);
+	void SetOffset(float x, float y);
+	const Vector3D& GetPositionOffset() { return m_positionOffset; }
 private:
 	Transform* m_pTransform;
 	Vector3D m_Acceleration;

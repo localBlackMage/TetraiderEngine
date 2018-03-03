@@ -96,6 +96,13 @@ void LevelManager::ChangeLevel(int i) {
 		currentLevel = i;
 		TETRA_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
 	}
+
+	TETRA_GAME_STATE.m_isLevelEditorMode = false;
+}
+
+void LevelManager::LoadLevelEditor(int i) {
+	ChangeLevel(i);
+	TETRA_GAME_STATE.m_isLevelEditorMode = true;
 }
 
 void LevelManager::NextLevel() {

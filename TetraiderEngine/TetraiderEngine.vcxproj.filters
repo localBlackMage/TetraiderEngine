@@ -48,9 +48,6 @@
     <Filter Include="Source Files\Components\Agent">
       <UniqueIdentifier>{78a3f263-653d-4465-a751-b9d1117b5176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\AI_Base">
-      <UniqueIdentifier>{067fc15f-b220-47c9-84b3-6ed6fccfca25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Components\Rendering">
       <UniqueIdentifier>{b551e53c-0ea7-41a0-ad3e-e91f4448a92b}</UniqueIdentifier>
     </Filter>
@@ -77,6 +74,9 @@
     </Filter>
     <Filter Include="Source Files\Components\Audio">
       <UniqueIdentifier>{1b3579bb-f79b-4dc9-afc1-2a2382d33f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Imgui">
+      <UniqueIdentifier>{b3c58e10-68a8-470e-811b-5d23e0353519}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +337,24 @@
     </ClCompile>
     <ClCompile Include="Source\AI_WalkTowardPlayerAttack.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImguiManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui.cpp">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_demo.cpp">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_draw.cpp">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_impl_sdl_gl3.cpp">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelEditor.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -654,6 +672,33 @@
     </ClInclude>
     <ClInclude Include="Source\AI_WalkTowardPlayerEngage.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImguiManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\imconfig.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\imgui.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\imgui_impl_sdl_gl3.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\imgui_internal.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\stb_rect_pack.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\stb_textedit.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Imgui\stb_truetype.h">
+      <Filter>Source Files\Utility\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelEditor.h">
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,7 +7,8 @@
 
 Body::Body() :
 	Component(ComponentType::C_Body),
-	m_isStatic(false)
+	m_isStatic(false),
+	m_positionOffset(Vector3D())
 {
 }
 
@@ -28,6 +29,9 @@ void Body::Update(float dt) {}
 void Body::LateUpdate(float dt) {
 	DrawDebugShape();
 	TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_pTransform->GetPosition() + m_Velocity, DebugColor::BLUE);
+	if (TETRA_GAME_STATE.IsEditorMode()) {
+		m_PositionWithOffset = m_positionOffset + m_pTransform->m_position;
+	}
 }
 
 void Body::Integrate(float dt) {
@@ -180,4 +184,27 @@ void Body::OverrideShapeData(float radius) {
 	Circle* circle = static_cast<Circle*>(m_pShape);
 	if (!circle) return;
 	circle->radius = radius;
+}
+
+float Body::GetWidth() {
+	AABB* aabb = static_cast<AABB*>(m_pShape);
+	if (!aabb) return 0.0f;
+	return aabb->width;
+}
+
+float Body::GetHeight() {
+	AABB* aabb = static_cast<AABB*>(m_pShape);
+	if (!aabb) return 0.0f;
+	return aabb->height;
+}
+
+float Body::GetRadius() {
+	Circle* circle = static_cast<Circle*>(m_pShape);
+	if (!circle) return 0.0f;
+	return circle->radius;
+}
+
+void Body::SetOffset(float x, float y) {
+	m_positionOffset.x = x;
+	m_positionOffset.y = y;
 }

@@ -53,8 +53,8 @@ public:
 	static Matrix4x4 Scale(const float scaleX, const float scaleY, const float scaleZ);
 	static Matrix4x4 Perspective(const float fov, const float aspect, const float near, const float far);
 	static Matrix4x4 Perspective(const float fov, const float aspect, const float near);
-	static Matrix4x4 Orthographic(const int width, const int height, const float near, const float far);
-	static Matrix4x4 Orthographic(const int width, const int height, const float near);
+	static Matrix4x4 Orthographic(const float width, const float height, const float near, const float far);
+	static Matrix4x4 Orthographic(const float width, const float height, const float near);
 
 	operator float*();
 	bool operator== (const  Matrix4x4& other) const;

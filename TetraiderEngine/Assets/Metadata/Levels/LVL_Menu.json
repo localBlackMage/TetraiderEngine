@@ -27,11 +27,18 @@
         "y":-25
       }
     },
+	{
+	  "prefab": "P_ButtonLevelEditor",
+	  "position": {
+        "x":0,
+        "y":-100
+      }
+	},
     {
       "prefab":"P_QuitButton",
       "position":{
         "x":0,
-        "y":-100
+        "y":-175
       }
     },
     {

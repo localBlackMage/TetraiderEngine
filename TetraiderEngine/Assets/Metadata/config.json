@@ -27,7 +27,7 @@
 		"Statics": "StaticObjects",
 		"Start": 1,
 		"Levels": [
-			{ "Name": "LVL_Empty" },
+			{ "Name": "LVL_Editor" },
 			{ "Name": "LVL_Menu" },
 			{ "Name": "LVL_Prototype" },
 			{ "Name": "LVL_Gym"}

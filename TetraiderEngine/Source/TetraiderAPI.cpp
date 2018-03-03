@@ -9,8 +9,9 @@ namespace Tetraider {
 		TETRA_RENDERER.Init();
 		TETRA_RENDERER.LoadShaders();
 		TETRA_RESOURCES.Init();
-
+		TETRA_IMGUI.Initialize();
 		TETRA_LEVEL_GEN.LoadRoomFiles();
+		TETRA_EDITOR.Initialize();
 
 		return 0;
 	}
@@ -29,6 +30,7 @@ namespace Tetraider {
 	{
 		TETRA_FRAMERATE.FrameStart();
 		TETRA_RENDERER.FrameStart();
+		TETRA_IMGUI.FrameStart();
 	}
 
 	void Update(float deltaTime)
@@ -44,10 +46,12 @@ namespace Tetraider {
 		TETRA_GAME_OBJECTS.LateUpdate(deltaTime);				// Update game logic that occurs after physics
 
 		TETRA_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
+		TETRA_IMGUI.Update();									// Update all Imgui commands
 	}
 
 	void FrameEnd()
 	{
+		TETRA_IMGUI.FrameEnd();									// Render Imgui commands
 		TETRA_RENDERER.FrameEnd();								// Swap window buffer
 		TETRA_FRAMERATE.FrameEnd();								// Lock FPS 
 		// TODO: Clean up GameObjects
@@ -70,6 +74,19 @@ namespace Tetraider {
 			else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
 				break;
 		}
+	}
+
+	void LevelEditorMode(float deltaTime) 
+	{
+		TETRA_INPUT.Update();									// Update input keys
+		TETRA_DEBUG.Update();									// Toggles debug drawing if needed
+		TETRA_EVENTS.Update(deltaTime);							// Pump the event manager
+		TETRA_GAME_OBJECTS.UpdateForLevelEditor(deltaTime);		// Update game logic
+		TETRA_GAME_OBJECTS.UpdateStatus();						// Update status of game objects
+		TETRA_GAME_OBJECTS.LateUpdateForLevelEditor(deltaTime);	// Update game logic that occurs after physics
+		TETRA_GAME_OBJECTS.RenderGameObjects();					// Render all game objects
+		TETRA_EDITOR.Update(deltaTime);							// Update level editor
+		//TETRA_IMGUI.Update();									// Update all Imgui commands
 	}
 
 	Mesh * CreateMesh(std::string meshName)

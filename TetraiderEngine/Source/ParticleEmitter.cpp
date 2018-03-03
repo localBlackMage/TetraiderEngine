@@ -54,8 +54,8 @@ void ParticleEmitter::_SpawnParticle()
 		
 		switch (m_textureSelection) {
 			case P_TextureSelection::RANDOM:
-				m_particles[idx].m_texCoords.u = float(RandomInt(0, m_cols + 1)) * m_frameWidth;
-				m_particles[idx].m_texCoords.v = float(RandomInt(0, m_rows + 1)) * m_frameHeight;
+				m_particles[idx].m_texCoords.u = float(RandomInt(0, (int)(m_cols + 1))) * m_frameWidth;
+				m_particles[idx].m_texCoords.v = float(RandomInt(0, (int)(m_rows + 1))) * m_frameHeight;
 				break;
 			case P_TextureSelection::CYCLE:
 			case P_TextureSelection::SINGLE:

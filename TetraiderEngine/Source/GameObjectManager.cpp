@@ -105,6 +105,24 @@ void GameObjectManager::LateUpdate(float dt) {
 	}
 }
 
+void GameObjectManager::UpdateForLevelEditor(float dt) {
+	for (auto gameObject : mGameObjects) {
+		if (gameObject->m_isActive)
+			gameObject->UpdateForLevelEditor(dt);
+	}
+}
+
+void GameObjectManager::LateUpdateForLevelEditor(float dt) {
+	for (auto gameObject : mGameObjects) {
+		if (gameObject->m_isActive)
+			gameObject->LateUpdateForLevelEditor(dt);
+	}
+
+	for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
+		m_layers[layer].ReSortLayer();
+	}
+}
+
 void GameObjectManager::RenderGameObjects()
 {
 	// Render all layers but UI

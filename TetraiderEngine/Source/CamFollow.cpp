@@ -52,8 +52,10 @@ void CamFollow::LateUpdate(float dt) {
 void CamFollow::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
 		m_pTarget = TETRA_GAME_OBJECTS.FindObjectWithTag(TETRA_GAME_OBJECTS.FindTagWithString(m_defaultTargetTag));
-		Transform* targetTransform = m_pTarget->GetComponent<Transform>(ComponentType::C_Transform);
-		float z = m_pTransform->GetPosition().z;
-		m_pTransform->SetPosition(Vector3D(targetTransform->GetPosition().x, targetTransform->GetPosition().y, z));
+		if (m_pTarget) {
+			Transform* targetTransform = m_pTarget->GetComponent<Transform>(ComponentType::C_Transform);
+			float z = m_pTransform->GetPosition().z;
+			m_pTransform->SetPosition(Vector3D(targetTransform->GetPosition().x, targetTransform->GetPosition().y, z));
+		}
 	}
 }

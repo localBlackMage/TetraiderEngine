@@ -45,6 +45,7 @@ private:
 	std::unordered_map<std::string, Mesh*> m_meshes;
 	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
 	std::map<std::string, json*> m_prefabs;
+	std::vector<std::string> m_prefabStrings;
 
 	std::unordered_map<std::string, FMOD::Sound*> m_Sounds[CATEGORY_COUNT];
 	
@@ -70,6 +71,7 @@ public:
 	void UnloadAll();
 	void LoadPrefabFiles();
 	json* GetPrefabFile(const std::string& path);
+	const std::vector<std::string>& GetPrefabStrings() { return m_prefabStrings; }
 
 	void Load(Sound_Category type, const std::string& path);
 	void LoadSFX(const std::string& path);
