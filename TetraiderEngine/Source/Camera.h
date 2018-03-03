@@ -45,6 +45,7 @@ public:
 	void ZoomCamera(float newZoom) { m_zoom = newZoom; }
 	float ViewWidth() const { return m_screenWidth * m_zoom; }
 	float ViewHeight() const { return m_screenHeight * m_zoom; }
+	float GetZoom() { return m_zoom; }
 };
 
 #endif

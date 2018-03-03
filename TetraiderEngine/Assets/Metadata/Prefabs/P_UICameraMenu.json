@@ -20,7 +20,7 @@
 	  "perspective": false,
 	  "zoom": 1,
 	  "primary": false,
-	  "layers": ["UI", "UI_1", "UI_2"]
+	  "layers": ["UI", "UI_1", "UI_2", "DEBUG"]
     }
   ]
 }

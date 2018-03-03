@@ -92,7 +92,7 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 				p.m_scale = BezierInterpolation(m_scale.points, t) * m_scale.amplitude;
 
 				// TODO: decide on a better way to get a camera
-				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetCamera(0)->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
 				Color color = Lerp(m_colorStart, m_colorEnd, t);
 				p.m_color.r = color.r;

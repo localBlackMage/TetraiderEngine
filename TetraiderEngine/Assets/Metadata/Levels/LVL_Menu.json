@@ -2,7 +2,7 @@
   "GAME_OBJECTS": 
   [
     {
-      "prefab": "P_UICamera"
+      "prefab": "P_UICameraMenu"
     },
     {
       "prefab": "P_Button",
