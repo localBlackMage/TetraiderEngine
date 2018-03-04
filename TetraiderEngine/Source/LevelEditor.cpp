@@ -37,6 +37,7 @@ void LevelEditor::Update(float dt) {
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_DELETE)) {
 		DeleteInstance();
 	}
+
 }
 
 void LevelEditor::UpdateMenuBar() {
