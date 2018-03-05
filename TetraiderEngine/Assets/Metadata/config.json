@@ -29,8 +29,7 @@
 		"Levels": [
 			{ "Name": "LVL_Editor" },
 			{ "Name": "LVL_Menu" },
-			{ "Name": "LVL_Prototype" },
-			{ "Name": "LVL_Gym"}
+			{ "Name": "LVL_Prototype" }
 		]
 	},
 	"INPUT_SETTINGS": [

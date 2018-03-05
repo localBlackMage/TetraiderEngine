@@ -1,0 +1,52 @@
+{
+  "ROOM_CONNECTION_TYPE": "RIGHT",
+  "GAME_OBJECTS": [
+    {
+      "prefab": "P_RightBG"
+    },
+	
+	{
+		"prefab": "P_ColliderLeftRightLong",
+		"position": {
+		    "x": -704,
+			"y": 0,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_ColliderUpDownLong",
+		"position": {
+		    "x": 0,
+			"y": 448,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_ColliderUpDownLong",
+		"position": {
+		    "x": 0,
+			"y": -448,
+			"z": 0
+		}
+	},
+	
+
+	
+	{
+		"prefab": "P_ColliderLeftRightShort",
+		"position": {
+		    "x": 704,
+			"y": 320,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_ColliderLeftRightShort",
+		"position": {
+		    "x": 704,
+			"y": -320,
+			"z": 0
+		}
+	}
+  ]
+}

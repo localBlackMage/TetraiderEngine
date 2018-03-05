@@ -372,11 +372,13 @@ void FloorPlanGenerator::LoadRoomFiles()
 	const std::string ROOM_CONNECTION_TYPE = "ROOM_CONNECTION_TYPE";
 	std::string path = TETRA_GAME_CONFIG.RoomFilesDir();
 	for (auto &room : std::experimental::filesystem::directory_iterator(path)) {
-		json* j = new json();
-		*j = OpenJsonFile(room.path().string());
+		if (room.path().has_extension()) {
+			json* j = new json();
+			*j = OpenJsonFile(room.path().string());
 
-		std::string name = (*j)[ROOM_CONNECTION_TYPE];
-		m_roomFiles[ GetRoomConnectionType( name ) ].push_back(j);
+			std::string name = (*j)[ROOM_CONNECTION_TYPE];
+			m_roomFiles[GetRoomConnectionType(name)].push_back(j);
+		}
 	}
 }
 

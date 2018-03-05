@@ -113,6 +113,11 @@ void Body::Override(const json & j)
 		default:
 			break;
 		}
+
+		if (ValueExists(j["shape"], "offset")) {
+			m_positionOffset.x = ValueExists(j["shape"]["offset"], "x") ? j["shape"]["offset"]["x"] : m_positionOffset.x;
+			m_positionOffset.x = ValueExists(j["shape"]["offset"], "y") ? j["shape"]["offset"]["y"] : m_positionOffset.y;
+		}
 	}
 }
 

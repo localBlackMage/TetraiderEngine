@@ -101,6 +101,9 @@ void Transform::Override(const json & j)
 		m_scale.y = ValueExists(j["scale"], "y") ? j["scale"]["y"] : m_scale.y;
 		//m_scale.z = ValueExists(j["scale"], "z") ? j["scale"]["z"] : m_scale.z; // Likely not needed for our game
 	}
+	if (ValueExists(j, "rotation")) {
+		m_angleZ = ValueExists(j["rotation"], "z") ? j["rotation"]["z"] : m_angleZ;
+	}
 
 	_UpdateLookAt();
 }
