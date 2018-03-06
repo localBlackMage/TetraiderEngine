@@ -14,7 +14,6 @@ struct Color {
 		return *(&r + idx);
 	}
 
-
 	GLubyte& operator[] (const int& idx) {
 		return *(&r + idx);
 	}

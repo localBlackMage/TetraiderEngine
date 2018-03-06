@@ -9,7 +9,7 @@ layout(location = 4) in vec2 p_texture_coord;
 layout(location = 10) uniform mat4 persp_matrix;
 layout(location = 11) uniform mat4 view_matrix;
 
-layout(location = 23) uniform vec2 frame_size;
+layout(location = 33) uniform vec2 frame_size;
 
 
 layout(location = 0) out vec4 vtint_color;
