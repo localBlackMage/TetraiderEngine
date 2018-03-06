@@ -26,7 +26,9 @@ public:
 	void Resume();
 	void SetVolume(float volume) { m_volume = volume; }
 	void Loop(bool active) { m_isLoop = active; }
-	void Mute(bool active) { m_Ismute = active; }
+	void ToggleMuteAll(); /*{ m_Ismute = active; }*/
+	void Mute();
+	void UnMute();
 	int getFadeState() { return fadeState; }
 	void setFadeState(int fade) { fadeState = fade; }
 private:

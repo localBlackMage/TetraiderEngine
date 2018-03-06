@@ -91,3 +91,20 @@ void Audio::Resume()
 		TETRA_AUDIO.ResumeSFX(m_audioClip);
 }
 
+void Audio::ToggleMuteAll()
+{
+	TETRA_AUDIO.ToggleMuteSounds();
+}
+
+void Audio::Mute()
+{
+	if (m_isBGM)
+		TETRA_AUDIO.MuteMusic();
+}
+
+void Audio::UnMute()
+{
+	if (m_isBGM)
+		TETRA_AUDIO.ResumeMusic();
+}
+

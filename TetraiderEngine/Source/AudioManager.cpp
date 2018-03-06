@@ -143,11 +143,18 @@ void AudioManager::PlaySFX(const std::string & name, float volume, bool loop, bo
 		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_LOOP_NORMAL));
 	else if (is3D)
 	{
-		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_3D));
+		FMOD_VECTOR curve[3] =
+		{
+			{ 0.0f,  1.0f, 0.0f },
+		{ 2.0f,  0.2f, 0.0f },
+		{ 15.0f, 0.0f, 0.0f }
+		};
+		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_3D| FMOD_3D_LINEARSQUAREROLLOFF));
 		FMOD_VECTOR position = VectorToFmod(SourcePos);
 		ErrorCheck(channel->set3DAttributes(&position, NULL));
-
-		channel->set3DMinMaxDistance(5.0f, 100000.0f);
+		//ErrorCheck(sound->set3DCustomRolloff(curve,3));
+		
+		channel->set3DMinMaxDistance(20.0f, 900.0f);
 	}
 	//set to the channel grp it belongs
 	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
