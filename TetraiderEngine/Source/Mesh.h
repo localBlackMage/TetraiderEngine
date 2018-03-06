@@ -15,10 +15,10 @@ Creation date: 1/17/18
 #ifndef MESH_H
 #define MESH_H
 
-#include "Math/MathLibs.h"
-#include <glew.h>
-#include <GL/gl.h>
-#include <vector>
+//#include "Math/MathLibs.h"
+//#include <glew.h>
+//#include <GL/gl.h>
+//#include <vector>
 
 struct Face {
 	unsigned int index[3];

@@ -2,10 +2,10 @@
 #ifndef EGG_COUNTER_H
 #define EGG_COUNTER_H
 
-#include "Component.h"
-#include "Math/MathLibs.h"
-
-class Text;
+//#include "Component.h"
+//#include "Math/MathLibs.h"
+//
+//class Text;
 
 class EggCounter : public Component {
 public:

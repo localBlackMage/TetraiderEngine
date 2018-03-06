@@ -1,8 +1,10 @@
-#include "PhysicsManager.h"
-#include "GameObject.h"
-#include "ComponentTypes.h"
-#include "Body.h"
-#include "TetraiderAPI.h"
+//#include "PhysicsManager.h"
+//#include "GameObject.h"
+//#include "ComponentTypes.h"
+//#include "Body.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 PhysicsManager::PhysicsManager(): m_isSpatialParitioning(false) {
 	CollisionFunctions[ST_Circle][ST_Circle] = StaticCircleToStaticCircle;
@@ -319,31 +321,31 @@ bool StaticAABBToStaticAABB(const Body& pBodyA, const Body& pBodyB, MTV* p_mtv) 
 }
 
 bool StaticPolygonToStaticPolygon(const Body& pBodyA, const Body& pBodyB, MTV* p_mtv) {
-	Polygon* pPoly1 = static_cast<Polygon*>(pBodyA.m_pShape);
-	Polygon* pPoly2 = static_cast<Polygon*>(pBodyB.m_pShape);
+	PolygonShape* pPoly1 = static_cast<PolygonShape*>(pBodyA.m_pShape);
+	PolygonShape* pPoly2 = static_cast<PolygonShape*>(pBodyB.m_pShape);
 	return SeperatingAxisTheorom::SAT(pBodyA.GetPosition(), pPoly1->m_vertices, pBodyB.GetPosition(), pPoly2->m_vertices, *p_mtv);
 }
 
 bool StaticPolygonToStaticAABB(const Body& pBodyA, const Body& pBodyB, MTV* p_mtv) {
-	Polygon* pPoly = static_cast<Polygon*>(pBodyA.m_pShape);
+	PolygonShape* pPoly = static_cast<PolygonShape*>(pBodyA.m_pShape);
 	AABB *pRect = static_cast<AABB*>(pBodyB.m_pShape);
 	return StaticPolygonToStaticAABB(pBodyA.GetPosition(), pPoly->m_vertices, pBodyB.GetPosition(), pRect->halfWidth, pRect->halfHeight, *p_mtv);
 }
 
 bool StaticAABBToStaticPolygon(const Body& pBodyA, const Body& pBodyB, MTV* p_mtv) {
-	Polygon* pPoly = static_cast<Polygon*>(pBodyB.m_pShape);
+	PolygonShape* pPoly = static_cast<PolygonShape*>(pBodyB.m_pShape);
 	AABB *pRect = static_cast<AABB*>(pBodyA.m_pShape);
 	return StaticPolygonToStaticAABB(pBodyB.GetPosition(), pPoly->m_vertices, pBodyA.GetPosition(), pRect->halfWidth, pRect->halfHeight, *p_mtv);;
 }
 
 bool StaticPolygonToStaticCircle(const Body& pBodyA, const Body& pBodyB, MTV* p_mtv) {
-	Polygon* pPoly = static_cast<Polygon*>(pBodyA.m_pShape);
+	PolygonShape* pPoly = static_cast<PolygonShape*>(pBodyA.m_pShape);
 	Circle *pCircle = static_cast<Circle*>(pBodyB.m_pShape);
 	return StaticPolygonToStaticCircle(pBodyA.GetPosition(), pPoly->m_vertices, pBodyB.GetPosition(), pCircle->radius, *p_mtv);
 }
 
 bool StaticCircleToStaticPolygon(const Body& pBodyA, const Body& pBodyB, MTV* p_mtv) {
-	Polygon* pPoly = static_cast<Polygon*>(pBodyB.m_pShape);
+	PolygonShape* pPoly = static_cast<PolygonShape*>(pBodyB.m_pShape);
 	Circle *pCircle = static_cast<Circle*>(pBodyA.m_pShape);
 	return StaticPolygonToStaticCircle(pBodyB.GetPosition(), pPoly->m_vertices, pBodyA.GetPosition(), pCircle->radius, *p_mtv);
 }
@@ -359,6 +361,6 @@ bool RayCastToCircle(const LineSegment2D& ray, const Body& pBody) {
 }
 
 bool RayCastToPolygon(const LineSegment2D& ray, const Body& pBody) {
-	Polygon* pPoly = static_cast<Polygon*>(pBody.m_pShape);
+	PolygonShape* pPoly = static_cast<PolygonShape*>(pBody.m_pShape);
 	return StaticPolygonToRay(pBody.GetPosition(), pPoly->m_vertices, ray);
 }

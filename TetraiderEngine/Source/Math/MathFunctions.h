@@ -1,9 +1,9 @@
 #ifndef MATH_FUNCTIONS_H
 #define MATH_FUNCTIONS_H
 
-#include "Vector3D.h"
-#include "Vector2D.h"
-#include <vector>
+//#include "Vector3D.h"
+//#include "Vector2D.h"
+//#include <vector>
 
 struct Point {
 	float x, y;

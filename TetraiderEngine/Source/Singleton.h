@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 // stored deleter for singleton
 template <typename T>
 class Singleton_Deleter

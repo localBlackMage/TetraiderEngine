@@ -1,8 +1,10 @@
-#include "GameObject.h"
-#include "SnapToCamera.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include "Math/MathLibs.h"
+//#include "GameObject.h"
+//#include "SnapToCamera.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include "Math/MathLibs.h"
+
+#include <Stdafx.h>
 
 SnapToCamera::SnapToCamera() :
 	Component(ComponentType::C_SnapToCamera)

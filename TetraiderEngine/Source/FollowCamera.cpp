@@ -1,8 +1,10 @@
-#include "GameObject.h"
-#include "FollowCamera.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include "Math/MathLibs.h"
+//#include "GameObject.h"
+//#include "FollowCamera.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include "Math/MathLibs.h"
+
+#include <Stdafx.h>
 
 FollowCamera::FollowCamera() :
 	Component(ComponentType::C_FollowCamera)

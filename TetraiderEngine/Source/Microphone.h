@@ -1,8 +1,8 @@
 #pragma once
 #include "Component.h"
 
-class Transform;
-class Body;
+//class Transform;
+//class Body;
 class Microphone : public Component
 {
 public:

@@ -1,9 +1,11 @@
-#include "GameObject.h"
-#include "DealDamageOnCollision.h"
-#include "Health.h"
-#include "TetraiderAPI.h"
-#include "Controller.h"
-#include "NPCController.h"
+//#include "GameObject.h"
+//#include "DealDamageOnCollision.h"
+//#include "Health.h"
+//#include "TetraiderAPI.h"
+//#include "Controller.h"
+//#include "NPCController.h"
+
+#include <Stdafx.h>
 
 DealDamageOnCollision::DealDamageOnCollision(): Component(ComponentType::C_DealDamageOnCollision), m_hitCoolDown(0.15f), m_isAbleToDmgPlayer(true), m_timeFromLastHit(0.0f) {}
 DealDamageOnCollision::~DealDamageOnCollision() {}

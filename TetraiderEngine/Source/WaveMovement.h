@@ -2,10 +2,10 @@
 #ifndef WAVEMOVEMENT_H
 #define WAVEMOVEMENT_H
 
-#include "Component.h"
-#include "Math\MathLibs.h"
-
-class Transform;
+//#include "Component.h"
+//#include "Math\MathLibs.h"
+//
+//class Transform;
 
 class WaveMovement : public Component {
 public:

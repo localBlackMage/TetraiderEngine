@@ -1,7 +1,9 @@
-#include "Sprite.h"
-#include "TetraiderAPI.h"
+//#include "Sprite.h"
+//#include "TetraiderAPI.h"
+//
+//using namespace JsonReader;
 
-using namespace JsonReader;
+#include <Stdafx.h>
 
 Sprite::Sprite(std::string textureName) :
 	Component(ComponentType::C_Sprite),

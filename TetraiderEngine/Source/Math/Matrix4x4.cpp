@@ -1,8 +1,10 @@
-#include "Matrix4x4.h"
-#include "Matrix3x3.h"
-#include "MathDefs.h"
-#include <math.h>
-#include <iostream>
+//#include "Matrix4x4.h"
+//#include "Matrix3x3.h"
+//#include "MathDefs.h"
+//#include <math.h>
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Matrix4x4::Matrix4x4() {
 	m_matrix[0][0] = 0;
@@ -392,22 +394,22 @@ Matrix4x4 Matrix4x4::Scale(const float scaleX, const float scaleY, const float s
 	);
 }
 
-Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const float near, const float far)
+Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const float nearVal, const float farVal)
 {
-	float xymax = near * tanf(fov * PI / 360.0f);
+	float xymax = nearVal * tanf(fov * PI / 360.0f);
 	float ymin = -xymax;
 	float xmin = -xymax;
 
 	float width = xymax - xmin;
 	float height = xymax - ymin;
 	 
-	float depth = near - far;
-	float q = (near + far) / depth;
-	float qn = (2 * far * near) / depth;
+	float depth = nearVal - farVal;
+	float q = (nearVal + farVal) / depth;
+	float qn = (2 * farVal * nearVal) / depth;
 
-	float w = (2 * near) / width;
+	float w = (2 * nearVal) / width;
 	w = w / aspect;
-	float h = (2 * near) / height;
+	float h = (2 * nearVal) / height;
 
 	return Matrix4x4(
 		w, 0,  0, 0,
@@ -417,17 +419,17 @@ Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const floa
 	);
 }
 
-Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const float near)
+Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const float nearVal)
 {
-	return Perspective(fov, aspect, near, 1000.0f);
+	return Perspective(fov, aspect, nearVal, 1000.0f);
 }
 
-Matrix4x4 Matrix4x4::Orthographic(const float width, const float height, const float near, const float far)
+Matrix4x4 Matrix4x4::Orthographic(const float width, const float height, const float nearVal, const float farVal)
 {
 	float w = 2.0f / width,
 		h = 2.0f / height,
-		nf = -2.0f / (far - near),
-		tnf = -((far + near) / (far - near));
+		nf = -2.0f / (farVal - nearVal),
+		tnf = -((farVal + nearVal) / (farVal - nearVal));
 
 	return Matrix4x4(
 		w, 0, 0, 0,
@@ -437,9 +439,9 @@ Matrix4x4 Matrix4x4::Orthographic(const float width, const float height, const f
 	);
 }
 
-Matrix4x4 Matrix4x4::Orthographic(const float width, const float height, const float near)
+Matrix4x4 Matrix4x4::Orthographic(const float width, const float height, const float nearVal)
 {
-	return Orthographic(width, height, near, 1000.0f);
+	return Orthographic(width, height, nearVal, 1000.0f);
 }
 #pragma endregion
 

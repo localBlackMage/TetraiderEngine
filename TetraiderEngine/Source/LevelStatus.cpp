@@ -1,7 +1,9 @@
-#include "GameObject.h"
-#include "LevelStatus.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
+//#include "GameObject.h"
+//#include "LevelStatus.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+
+#include <Stdafx.h>
 
 LevelStatus::LevelStatus(): Component(ComponentType::C_LevelStatus), m_eggsToCollect(3), m_enemiesInLevel(0) {}
 LevelStatus::~LevelStatus() {}

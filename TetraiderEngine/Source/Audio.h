@@ -2,9 +2,9 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include "Component.h"
-#include "TetraiderAPI.h"
-#include <vector>
+//#include "Component.h"
+//#include "TetraiderAPI.h"
+//#include <vector>
 
 class Audio:public Component
 {

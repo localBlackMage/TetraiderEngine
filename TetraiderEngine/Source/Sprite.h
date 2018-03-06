@@ -2,11 +2,11 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "Component.h"
-#include "SurfaceTextureBuffer.h"
-#include "Mesh.h"
-#include "Math\MathLibs.h"
-#include <string>
+//#include "Component.h"
+//#include "SurfaceTextureBuffer.h"
+//#include "Mesh.h"
+//#include "Math\MathLibs.h"
+//#include <string>
 
 class Sprite : public Component 
 {

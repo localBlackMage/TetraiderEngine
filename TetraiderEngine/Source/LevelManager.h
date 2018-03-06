@@ -2,10 +2,10 @@
 #ifndef LEVEL_MANAGER_H
 #define LEVEL_MANAGER_H
 
-#include "JsonReader.h"
-#include "Subscriber.h"
-
-using json = nlohmann::json;
+//#include "JsonReader.h"
+//#include "Subscriber.h"
+//
+//using json = nlohmann::json;
 
 class LevelManager: public Subscriber
 {

@@ -1,10 +1,12 @@
-#include "MathFunctions.h"
-#include <cmath>
-#include <ctime>
-#include <math.h>
-#include <stdlib.h>
-#include <unordered_map>
-#include <vector>
+//#include "MathFunctions.h"
+//#include <cmath>
+//#include <ctime>
+//#include <math.h>
+//#include <stdlib.h>
+//#include <unordered_map>
+//#include <vector>
+
+#include <Stdafx.h>
 
 std::unordered_map<unsigned short, std::vector<unsigned int> > pascalTriangle;
 

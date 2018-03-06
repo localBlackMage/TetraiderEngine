@@ -1,10 +1,12 @@
-#include "GameObject.h"
-#include "Animation.h"
-#include "Sprite.h"
-#include "TetraiderAPI.h"
-#include <iostream>
+//#include "GameObject.h"
+//#include "Animation.h"
+//#include "Sprite.h"
+//#include "TetraiderAPI.h"
+//#include <iostream>
+//
+//using  namespace JsonReader;
 
-using  namespace JsonReader;
+#include <Stdafx.h>
 
 Animation::Animation(): 
 	Component(ComponentType::C_Animation), 

@@ -1,7 +1,9 @@
-#include "Matrix3x3.h"
-#include "MathDefs.h"
-#include <math.h>
-#include <iostream>
+//#include "Matrix3x3.h"
+//#include "MathDefs.h"
+//#include <math.h>
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Matrix3x3::Matrix3x3() {}
 

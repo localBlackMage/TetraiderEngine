@@ -1,9 +1,11 @@
-#include "ImguiManager.h"
-#include "SDL_events.h"
-#include "External\Imgui\imgui.h"
-#include "External\Imgui\imgui_impl_sdl_gl3.h"
-#include "TetraiderAPI.h"
-#include <iostream>
+//#include "ImguiManager.h"
+//#include "SDL_events.h"
+//#include "External\Imgui\imgui.h"
+//#include "External\Imgui\imgui_impl_sdl_gl3.h"
+//#include "TetraiderAPI.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 ImguiManager::ImguiManager() {}
 

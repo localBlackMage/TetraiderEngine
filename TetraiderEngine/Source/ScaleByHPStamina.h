@@ -2,11 +2,11 @@
 #ifndef SCALE_BY_HP_STAMINA_H
 #define SCALE_BY_HP_STAMINA_H
 
-class Sprite;
-class Transform;
-
-#include "Component.h"
-#include "Math/MathLibs.h"
+//class Sprite;
+//class Transform;
+//
+//#include "Component.h"
+//#include "Math/MathLibs.h"
 
 class ScaleByHPStamina : public Component {
 public:

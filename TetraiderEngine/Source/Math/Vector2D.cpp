@@ -1,7 +1,9 @@
-#include "Vector2D.h"
-#include "MathDefs.h"
-#include <math.h>
-#include <iostream>
+//#include "Vector2D.h"
+//#include "MathDefs.h"
+//#include <math.h>
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Vector2D::Vector2D() : x(0.f), y(0.f), w(1.f) { }
 

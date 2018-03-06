@@ -1,8 +1,10 @@
-#include "ScreenWrap.h"
-#include "Transform.h"
-#include "Camera.h"
-#include "TetraiderAPI.h"
-#include "Math/MathLibs.h"
+//#include "ScreenWrap.h"
+//#include "Transform.h"
+//#include "Camera.h"
+//#include "TetraiderAPI.h"
+//#include "Math/MathLibs.h"
+
+#include <Stdafx.h>
 
 ScreenWrap::ScreenWrap() :
 	Component(ComponentType::C_ScreenWrap),

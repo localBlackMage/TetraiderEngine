@@ -26,10 +26,30 @@
     <ClCompile Include="Source\AI_MoveToRandomPointInZone.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayerAttack.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayerEngage.cpp" />
-    <ClCompile Include="Source\External\Imgui\imgui.cpp" />
-    <ClCompile Include="Source\External\Imgui\imgui_demo.cpp" />
-    <ClCompile Include="Source\External\Imgui\imgui_draw.cpp" />
-    <ClCompile Include="Source\External\Imgui\imgui_impl_sdl_gl3.cpp" />
+    <ClCompile Include="Source\External\Imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_impl_sdl_gl3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Source\FollowCamera.cpp" />
     <ClCompile Include="Source\ImguiManager.cpp" />
     <ClCompile Include="Source\LevelEditor.cpp" />
@@ -103,7 +123,12 @@
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
-    <ClCompile Include="Source\Stdafx.cpp" />
+    <ClCompile Include="Source\Stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Source\StraightLineMovement.cpp" />
     <ClCompile Include="Source\Subscriber.cpp" />
     <ClCompile Include="Source\SubscriberTracker.cpp" />
@@ -186,7 +211,6 @@
     <ClInclude Include="Source\Math\LineSegment2D.h" />
     <ClInclude Include="Source\Math\MathDefs.h" />
     <ClInclude Include="Source\Math\MathFunctions.h" />
-    <ClInclude Include="Source\Math\MathLibs.h" />
     <ClInclude Include="Source\Math\Matrix2x2.h" />
     <ClInclude Include="Source\Math\Matrix3x3.h" />
     <ClInclude Include="Source\Math\Matrix4x4.h" />
@@ -305,9 +329,10 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)GL\lib;$(ProjectDir)SDL2\lib\x86;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -322,7 +347,9 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)GL\lib;$(ProjectDir)SDL2\lib\x86;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -337,6 +364,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -353,6 +383,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)GL\include;$(ProjectDir)SDL2\include;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\inc;$(ProjectDir)FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

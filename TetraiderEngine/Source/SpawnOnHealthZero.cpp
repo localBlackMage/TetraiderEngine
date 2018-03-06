@@ -1,8 +1,10 @@
-#include "GameObject.h"
-#include "SpawnOnHealthZero.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include "WaveMovement.h"
+//#include "GameObject.h"
+//#include "SpawnOnHealthZero.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include "WaveMovement.h"
+
+#include <Stdafx.h>
 
 SpawnOnHealthZero::SpawnOnHealthZero(): Component(ComponentType::C_SpawnOnHealthZero) {}
 SpawnOnHealthZero::~SpawnOnHealthZero() {}

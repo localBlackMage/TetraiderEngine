@@ -1,8 +1,10 @@
-#include "SizeToScreen.h"
-#include "Transform.h"
-#include "Camera.h"
-#include "TetraiderAPI.h"
-#include "Math/MathLibs.h"
+//#include "SizeToScreen.h"
+//#include "Transform.h"
+//#include "Camera.h"
+//#include "TetraiderAPI.h"
+//#include "Math/MathLibs.h"
+
+#include <Stdafx.h>
 
 SizeToScreen::SizeToScreen() :
 	Component(ComponentType::C_SizeToScreen)

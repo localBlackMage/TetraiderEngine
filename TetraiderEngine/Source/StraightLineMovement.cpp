@@ -1,7 +1,9 @@
-#include "GameObject.h"
-#include "StraightLineMovement.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "StraightLineMovement.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 StraightLineMovement::StraightLineMovement(): Component(ComponentType::C_StraightLineMovement) {}
 StraightLineMovement::~StraightLineMovement() {}

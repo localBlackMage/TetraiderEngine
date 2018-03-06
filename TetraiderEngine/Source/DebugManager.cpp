@@ -1,7 +1,9 @@
-#include "DebugManager.h"
-#include "TetraiderAPI.h"
-#include "GameObject.h"
-#include "Math/MathLibs.h"
+//#include "DebugManager.h"
+//#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "Math/MathLibs.h"
+
+#include <Stdafx.h>
 
 Vector3D DebugManager::_GetColor(DebugColor color) {
 	switch (color) {

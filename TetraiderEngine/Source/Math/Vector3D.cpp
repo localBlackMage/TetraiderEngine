@@ -1,7 +1,9 @@
-#include "Vector3D.h"
-#include "MathDefs.h"
-#include <math.h>
-#include <iostream>
+//#include "Vector3D.h"
+//#include "MathDefs.h"
+//#include <math.h>
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Vector3D::Vector3D() : x(0.f), y(0.f), z(0.f), w(1.f) { }
 

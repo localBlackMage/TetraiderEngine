@@ -1,7 +1,9 @@
-#include "Matrix2x2.h"
-#include "MathDefs.h"
-#include <math.h>
-#include <iostream>
+//#include "Matrix2x2.h"
+//#include "MathDefs.h"
+//#include <math.h>
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Matrix2x2::Matrix2x2() {}
 

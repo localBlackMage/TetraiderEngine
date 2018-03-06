@@ -1,8 +1,10 @@
-#include "GameObject.h"
-#include "Transform.h"
-#include "ProjectileSpawner.h"
-#include "TetraiderAPI.h"
-#include "Projectile.h"
+//#include "GameObject.h"
+//#include "Transform.h"
+//#include "ProjectileSpawner.h"
+//#include "TetraiderAPI.h"
+//#include "Projectile.h"
+
+#include <Stdafx.h>
 
 ProjectileSpawner::ProjectileSpawner(): Component(ComponentType::C_ProjectileSpawner), m_diriection(Vector3D()), m_isActive(true), m_timeFromLastFire(0) {}
 ProjectileSpawner::~ProjectileSpawner() {}

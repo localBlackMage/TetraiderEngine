@@ -1,9 +1,11 @@
-#include "GameObject.h"
-#include "Body.h"
-#include "Transform.h"
-#include "Shape.h"
-#include "TetraiderAPI.h"
-#include <iostream>
+//#include "GameObject.h"
+//#include "Body.h"
+//#include "Transform.h"
+//#include "Shape.h"
+//#include "TetraiderAPI.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Body::Body() :
 	Component(ComponentType::C_Body),
@@ -89,7 +91,7 @@ void Body::Serialize(const json& j) {
 			m_pShape->pBody = this;
 		}
 		else if (shape == "polygon") {
-			Polygon* pPolygon = new Polygon();
+			PolygonShape* pPolygon = new PolygonShape();
 			for (unsigned int i = 0; i < j["SHAPE"]["vertices"].size(); ++i) {
 				Vector3D vertx(ParseFloat(j["SHAPE"]["vertices"][i], "x"), ParseFloat(j["SHAPE"]["vertices"][i], "y"), ParseFloat(j["SHAPE"]["vertices"][i], "z"));
 				pPolygon->m_vertices.push_back(vertx);
@@ -162,7 +164,7 @@ void Body::DrawDebugShape() {
 			break;
 		}
 		case ST_POLYGON: {
-			Polygon* pPoly = static_cast<Polygon*>(m_pShape);
+			PolygonShape* pPoly = static_cast<PolygonShape*>(m_pShape);
 			for (unsigned int i = 0; i < pPoly->m_vertices.size(); ++i) {
 				Vector3D pointA = pPoly->m_vertices[i] + GetPosition();
 				Vector3D pointB = pPoly->m_vertices[i == pPoly->m_vertices.size() - 1 ? 0: i+1] + GetPosition();

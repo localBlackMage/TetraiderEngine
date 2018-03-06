@@ -2,9 +2,9 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "Component.h"
-
-class Sprite;
+//#include "Component.h"
+//
+//class Sprite;
 
 class Animation :public Component {
 public:

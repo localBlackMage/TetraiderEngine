@@ -2,8 +2,8 @@
 #ifndef COLLECTIBLE_H
 #define COLLECTIBLE_H
 
-#include "Component.h"
-#include "Math\Vector3D.h"
+//#include "Component.h"
+//#include "Math\Vector3D.h"
 
 class Collectible : public Component {
 public:

@@ -1,10 +1,12 @@
-#include "AudioManager.h"
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
-#include "Event.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
+//#include "AudioManager.h"
+//#include <stdlib.h>
+//#include <time.h>
+//#include <math.h>
+//#include "Event.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+
+#include <Stdafx.h>
 
 float ChangeSemitone(float frequency, float variation)
 {

@@ -2,10 +2,10 @@
 #ifndef TEXT_COMPONENT_H
 #define TEXT_COMPONENT_H
 
-#include "Component.h"
-#include "SurfaceTextureBuffer.h"
-#include "Mesh.h"
-#include <string>
+//#include "Component.h"
+//#include "SurfaceTextureBuffer.h"
+//#include "Mesh.h"
+//#include <string>
 
 typedef std::pair<int, int> Letter;
 typedef std::vector< Letter > Sentence;

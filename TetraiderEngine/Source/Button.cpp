@@ -1,8 +1,8 @@
-#include "Button.h"
-#include "TetraiderAPI.h"
-#include "Sprite.h"
+//#include "Button.h"
+//#include "TetraiderAPI.h"
+//#include "Sprite.h"
 
-
+#include <Stdafx.h>
 
 Button::Button() :Component(ComponentType::C_Button) 
 {

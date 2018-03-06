@@ -3,8 +3,8 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS
 
-#include <vector>
-#include "Vector3D.h"
+//#include <vector>
+//#include "Vector3D.h"
 
 class LineSegment2D;
 

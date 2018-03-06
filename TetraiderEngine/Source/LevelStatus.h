@@ -2,7 +2,7 @@
 #ifndef LEVEL_STATUS_H
 #define LEVEL_STATUS_H
 
-#include "Component.h"
+//#include "Component.h"
 
 class LevelStatus : public Component {
 public:

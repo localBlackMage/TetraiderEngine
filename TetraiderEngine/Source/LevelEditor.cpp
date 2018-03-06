@@ -1,11 +1,13 @@
-#include "LevelEditor.h"
-#include "External\Imgui\imgui.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
-#include "Body.h"
-#include <iostream>
-#include <fstream>
-#include <filesystem>
+//#include "LevelEditor.h"
+//#include "External\Imgui\imgui.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+//#include "Body.h"
+//#include <iostream>
+//#include <fstream>
+//#include <filesystem>
+
+#include <Stdafx.h>
 
 LevelEditor::LevelEditor() :
 	m_currentRoomType(""),

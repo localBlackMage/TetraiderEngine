@@ -2,7 +2,7 @@
 #ifndef DEAL_DAMAGE_ON_COLLISION_H
 #define DEAL_DAMAGE_ON_COLLISION_H
 
-#include "Component.h"
+//#include "Component.h"
 
 class DealDamageOnCollision : public Component {
 public:

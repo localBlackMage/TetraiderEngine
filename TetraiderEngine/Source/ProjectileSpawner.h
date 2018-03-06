@@ -2,10 +2,10 @@
 #ifndef PROJECTILE_SPAWNER_H
 #define PROJECTILE_SPAWNER_H
 
-#include "Component.h"
-#include "Math/MathLibs.h"
-
-class Transform;
+//#include "Component.h"
+//#include "Math/MathLibs.h"
+//
+//class Transform;
 
 class ProjectileSpawner : public Component {
 public:

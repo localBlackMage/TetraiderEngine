@@ -2,12 +2,12 @@
 #ifndef DESTROY_ONHEALTH_ZERO_H
 #define DESTROY_ONHEALTH_ZERO_H
 
-class Sprite;
-
-#include "Component.h"
-#include "Math/MathLibs.h"
-
-class Attack;
+//class Sprite;
+//
+//#include "Component.h"
+//#include "Math/MathLibs.h"
+//
+//class Attack;
 
 class DestroyOnHealthZero : public Component {
 public:

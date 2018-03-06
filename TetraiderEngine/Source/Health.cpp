@@ -1,6 +1,8 @@
-#include "GameObject.h"
-#include "Health.h"
-#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "Health.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 Health::Health(): Component(ComponentType::C_Health) {}
 Health::~Health() {}

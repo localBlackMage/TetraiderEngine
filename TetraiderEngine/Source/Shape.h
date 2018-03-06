@@ -4,9 +4,6 @@
 
 class Body;
 
-#include "Math/MathLibs.h"
-#include <vector>
-
 enum ShapeType {
 	ST_Circle,
 	ST_AABB,
@@ -43,10 +40,10 @@ public:
 private:
 };
 
-class Polygon : public Shape {
+class PolygonShape : public Shape {
 public:
-	Polygon() : Shape(ST_POLYGON) {}
-	virtual ~Polygon() {}
+	PolygonShape() : Shape(ST_POLYGON) {}
+	virtual ~PolygonShape() {}
 	std::vector<Vector3D> m_vertices;
 private:
 };

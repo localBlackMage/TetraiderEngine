@@ -31,5 +31,4 @@ public:
 	bool IsDebugModeOn() { return m_isDebugModeEnabled; }
 };
 
-#undef MaxDebugCount;
 #endif

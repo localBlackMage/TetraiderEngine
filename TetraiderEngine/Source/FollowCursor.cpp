@@ -1,7 +1,9 @@
-#include "FollowCursor.h"
-#include "Body.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
+//#include "FollowCursor.h"
+//#include "Body.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false) {}
 FollowCursor::~FollowCursor() {}

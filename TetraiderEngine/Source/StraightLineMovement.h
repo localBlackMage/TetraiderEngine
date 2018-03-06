@@ -2,10 +2,10 @@
 #ifndef STRAIGHT_LINE_MOVEMENT_H
 #define STRAIGHT_LINE_MOVEMENT_H
 
-#include "Component.h"
-#include "Math\MathLibs.h"
-
-class Transform;
+//#include "Component.h"
+//#include "Math\MathLibs.h"
+//
+//class Transform;
 
 class StraightLineMovement : public Component {
 private:

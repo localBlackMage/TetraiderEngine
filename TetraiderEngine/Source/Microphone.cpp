@@ -1,8 +1,10 @@
-#include "Microphone.h"
-#include "GameObject.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
-#include "Body.h"
+//#include "Microphone.h"
+//#include "GameObject.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+//#include "Body.h"
+
+#include <Stdafx.h>
 
 Microphone::Microphone():Component(ComponentType::C_Microphone)
 {

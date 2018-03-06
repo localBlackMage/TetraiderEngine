@@ -1,7 +1,7 @@
-#include "GameConfig.h"
-#include "TetraiderAPI.h"
+//#include "GameConfig.h"
+//#include "TetraiderAPI.h"
 
-using namespace JsonReader;
+#include <Stdafx.h>
 
 #define GAME_SETTINGS "GAME_SETTINGS"
 #define ROOM_SETTINGS "ROOM_SETTINGS"

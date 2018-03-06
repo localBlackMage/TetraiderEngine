@@ -1,8 +1,10 @@
-#include "Collisions.h"
-#include "Vector3D.h"
-#include "LineSegment2D.h"
-#include "../TetraiderAPI.h"
-#include <math.h>
+//#include "Collisions.h"
+//#include "Vector3D.h"
+//#include "LineSegment2D.h"
+//#include "../TetraiderAPI.h"
+//#include <math.h>
+
+#include <Stdafx.h>
 
 #define EPSILON 0.0001
 

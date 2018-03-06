@@ -1,6 +1,8 @@
-#include "GameObject.h"
-#include "FlashOnTakeDamage.h"
-#include "Sprite.h"
+//#include "GameObject.h"
+//#include "FlashOnTakeDamage.h"
+//#include "Sprite.h"
+
+#include <Stdafx.h>
 
 FlashOnTakeDamage::FlashOnTakeDamage(): Component(ComponentType::C_FlashOnTakeDamage), m_flashTime(2.0f) {}
 FlashOnTakeDamage::~FlashOnTakeDamage() {}

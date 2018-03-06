@@ -12,7 +12,7 @@
 //#include <glew.h>
 //#include <string>
 
-class GameObject;
+//class GameObject;
 
 struct Particle {
 	Vector3D m_pos, m_velocity;

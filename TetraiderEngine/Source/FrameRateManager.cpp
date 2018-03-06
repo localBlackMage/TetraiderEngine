@@ -1,9 +1,11 @@
-#include "FrameRateManager.h"
-#include "TetraiderAPI.h"
-#include <SDL.h>
-#include <chrono>
-#include <stdint.h>
-#include <iostream>
+//#include "FrameRateManager.h"
+//#include "TetraiderAPI.h"
+//#include <SDL.h>
+//#include <chrono>
+//#include <stdint.h>
+//#include <iostream>
+
+#include <Stdafx.h>
 
 #define MIN_FRAME_TIME 0.016667f
 

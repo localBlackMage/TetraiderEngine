@@ -1,7 +1,9 @@
-#include "GameObject.h"
-#include "EggCounter.h"
-#include "TetraiderAPI.h"
-#include "Text.h"
+//#include "GameObject.h"
+//#include "EggCounter.h"
+//#include "TetraiderAPI.h"
+//#include "Text.h"
+
+#include <Stdafx.h>
 
 EggCounter::EggCounter(): Component(ComponentType::C_EggCounter), m_eggsCollected(0), m_eggsToCollect(3) {}
 EggCounter::~EggCounter() {}

@@ -1,9 +1,4 @@
-#ifndef JSON_READER_CPP
-#define JSON_READER_CPP
-
-#include "JsonReader.h"
-#include <fstream>
-#include <iostream>
+#include <Stdafx.h>
 
 namespace JsonReader {
 	std::vector<Point> ParsePoints(const json & j, const String & first)
@@ -328,4 +323,3 @@ namespace JsonReader {
 
 }
 
-#endif

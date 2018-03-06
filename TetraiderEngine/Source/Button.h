@@ -1,7 +1,7 @@
 #pragma once
-#include "Component.h"
-#include "Text.h"
-class Sprite;
+//#include "Component.h"
+//#include "Text.h"
+//class Sprite;
 
 class Button :public Component
 {

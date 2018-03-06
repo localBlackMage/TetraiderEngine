@@ -1,7 +1,9 @@
-#include "GameObject.h"
-#include "WaveMovement.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "WaveMovement.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 WaveMovement::WaveMovement(): Component(ComponentType::C_WaveMovement) {}
 WaveMovement::~WaveMovement() {}

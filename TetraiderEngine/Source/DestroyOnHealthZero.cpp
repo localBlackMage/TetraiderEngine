@@ -1,9 +1,11 @@
-#include "GameObject.h"
-#include "DestroyOnHealthZero.h"
-#include "AOEAttack.h"
-#include "Audio.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "DestroyOnHealthZero.h"
+//#include "AOEAttack.h"
+//#include "Audio.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 DestroyOnHealthZero::DestroyOnHealthZero(): Component(ComponentType::C_DestroyOnHealthZero), m_destroyIn(0), m_timeStamp(0), m_isDestory(false), m_Attack(nullptr) {}
 DestroyOnHealthZero::~DestroyOnHealthZero() {

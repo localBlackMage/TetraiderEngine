@@ -2,12 +2,12 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include "Component.h"
-#include "Math\Vector3D.h"
-
-class Body;
-class Transform;
-class Event;
+//#include "Component.h"
+//#include "Math\Vector3D.h"
+//
+//class Body;
+//class Transform;
+//class Event;
 
 enum class ProjectileType {
 	EnemyProjectile,

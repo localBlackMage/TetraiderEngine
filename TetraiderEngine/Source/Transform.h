@@ -3,8 +3,8 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-#include "Component.h"
-#include "Math\MathLibs.h"
+//#include "Component.h"
+//#include "Math\MathLibs.h"
 
 //Forward declaration
 class Body;

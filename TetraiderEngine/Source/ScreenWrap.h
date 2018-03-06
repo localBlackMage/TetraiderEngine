@@ -2,9 +2,9 @@
 #ifndef SCREEN_WRAP_H
 #define SCREEN_WRAP_H
 
-#include "Component.h"
-class Transform;
-class Camera;
+//#include "Component.h"
+//class Transform;
+//class Camera;
 
 class ScreenWrap : public Component
 {

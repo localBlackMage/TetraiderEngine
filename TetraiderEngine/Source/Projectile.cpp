@@ -1,11 +1,13 @@
-#include "Projectile.h"
-#include "Transform.h"
-#include "Body.h"
-#include "GameObject.h"
-#include "Event.h"
-#include "Health.h"
-#include "TetraiderAPI.h"
-#include "Audio.h"
+//#include "Projectile.h"
+//#include "Transform.h"
+//#include "Body.h"
+//#include "GameObject.h"
+//#include "Event.h"
+//#include "Health.h"
+//#include "TetraiderAPI.h"
+//#include "Audio.h"
+
+#include <Stdafx.h>
 
 Projectile::Projectile() : Component(C_Projectile), m_currentLifeTime(0) {}
 

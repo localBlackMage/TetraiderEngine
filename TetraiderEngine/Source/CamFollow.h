@@ -2,9 +2,9 @@
 #ifndef CAM_FOLLOW_H
 #define CAM_FOLLOW_H
 
-#include "Component.h"
-class Transform;
-class GameObject;
+//#include "Component.h"
+//class Transform;
+//class GameObject;
 
 class CamFollow : public Component
 {

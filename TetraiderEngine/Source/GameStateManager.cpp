@@ -1,5 +1,7 @@
-#include "GameStateManager.h"
-#include "TetraiderAPI.h"
+//#include "GameStateManager.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 GameStateManager::GameStateManager() :
 	m_currentState(GameState::CURRENT_LEVEL),

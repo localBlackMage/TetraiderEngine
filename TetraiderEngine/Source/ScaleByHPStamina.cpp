@@ -1,9 +1,11 @@
-#include "GameObject.h"
-#include "Transform.h"
-#include "ScaleByHPStamina.h"
-#include "TetraiderAPI.h"
-#include "Health.h"
-#include "Stamina.h"
+//#include "GameObject.h"
+//#include "Transform.h"
+//#include "ScaleByHPStamina.h"
+//#include "TetraiderAPI.h"
+//#include "Health.h"
+//#include "Stamina.h"
+
+#include <Stdafx.h>
 
 ScaleByHPStamina::ScaleByHPStamina(): Component(ComponentType::C_ScaleByHPStamina), m_originalScale(0), m_isScaleByHealth(true) {}
 ScaleByHPStamina::~ScaleByHPStamina() {}

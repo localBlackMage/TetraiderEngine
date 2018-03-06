@@ -1,6 +1,9 @@
-#include "Audio.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
+//#include "Audio.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+
+#include <Stdafx.h>
+
 Audio::Audio() :Component(ComponentType::C_Audio) {}
 Audio::~Audio() {}
 

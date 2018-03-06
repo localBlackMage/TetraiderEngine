@@ -15,7 +15,7 @@ Creation date: 1/17/18
 #ifndef MATRIX2X2_H
 #define MATRIX2X2_H
 
-#include "Vector2D.h"
+//#include "Vector2D.h"
 
 class Matrix2x2
 {

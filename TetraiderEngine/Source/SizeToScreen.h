@@ -2,9 +2,9 @@
 #ifndef SIZE_TO_SCREEN_H
 #define SIZE_TO_SCREEN_H
 
-#include "Component.h"
-class Transform;
-class Camera;
+//#include "Component.h"
+//class Transform;
+//class Camera;
 
 /*
 This component will set the pGO's Transform's Scale x & y to match that of the visible screen plus some offset.

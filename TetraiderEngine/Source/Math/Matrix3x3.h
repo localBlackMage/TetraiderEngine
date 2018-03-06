@@ -15,8 +15,8 @@ Creation date: 1/17/18
 #ifndef MATRIX3X3_H
 #define MATRIX3X3_H
 
-#include "Vector2D.h"
-#include "Vector3D.h"
+//#include "Vector2D.h"
+//#include "Vector3D.h"
 
 class Matrix3x3
 {

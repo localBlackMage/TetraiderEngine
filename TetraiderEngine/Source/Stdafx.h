@@ -3,10 +3,21 @@
 #pragma warning(disable: 4005)
 #pragma warning(disable: 4995) 
 
-#include <Math\MathLibs.h>
+
+
+//#include <Math\MathLibs.h>
 #include <glew.h>
 #include <GL\gl.h>
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_keycode.h>
+#include <SDL_events.h>
+#include <fmod_studio.hpp>
+#include <fmod.hpp>
+#include <fmod_errors.h>
+#include <External\Imgui\imgui.h>
+#include <External\Imgui\imgui_impl_sdl_gl3.h>
+#include <External\json.hpp>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -31,11 +42,27 @@
 #include <assert.h> 
 #include <conio.h>
 #include <chrono>
+#include <filesystem>
+#include <memory>
+//#include <stdlib.h>
+//#include <time.h>
+#include <math.h>
+
+#pragma region Math
+#include <Math\MathDefs.h>
+#include <Math\Vector2D.h>
+#include <Math\Vector3D.h>
+#include <Math\Matrix2x2.h>
+#include <Math\Matrix3x3.h>
+#include <Math\Matrix4x4.h>
+#include <Math\LineSegment2D.h>
+#include <Math\MathFunctions.h>
+#include <Math\Collisions.h>
+#pragma endregion
 
 #pragma region Resources
 #include <Singleton.h>
 #include <JsonReader.h>
-
 using json = nlohmann::json;
 using namespace JsonReader;
 
@@ -54,6 +81,7 @@ using namespace JsonReader;
 #include <Shader.h>
 #include <ShaderProgram.h>
 #include <Sorting.h>
+#include <Shape.h>
 #pragma endregion
 
 #pragma region Game Object
@@ -152,6 +180,8 @@ using namespace JsonReader;
 #include <ImguiManager.h>
 #include <LevelEditor.h>
 #include <ComponentFactory.h>
+#include <LuaScript.h>
+
 #include <Global.h>
 #include <TetraiderAPI.h>
 #pragma endregion 

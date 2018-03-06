@@ -2,9 +2,9 @@
 #ifndef FOLLOW_CAMERA_H
 #define FOLLOW_CAMERA_H
 
-#include "Component.h"
-class Transform;
-class GameObject;
+//#include "Component.h"
+//class Transform;
+//class GameObject;
 
 
 /*

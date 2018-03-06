@@ -2,10 +2,10 @@
 #ifndef SPAWN_ONHEALTH_ZERO_H
 #define SPAWN_ONHEALTH_ZERO_H
 
-#include "Component.h"
-#include "Math/MathLibs.h"
-
-class Transform;
+//#include "Component.h"
+//#include "Math/MathLibs.h"
+//
+//class Transform;
 
 class SpawnOnHealthZero : public Component {
 public:

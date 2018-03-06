@@ -1,12 +1,14 @@
-#include "InputManager.h"
-#include "TetraiderAPI.h"
+//#include "InputManager.h"
+//#include "TetraiderAPI.h"
+//
+//#include <SDL.h>
+//#include <string.h>
+//#include <iostream>
+//
+//#include "TetraiderAPI.h"
+//#include "Agent.h"
 
-#include <SDL.h>
-#include <string.h>
-#include <iostream>
-
-#include "TetraiderAPI.h"
-#include "Agent.h"
+#include <Stdafx.h>
 
 #define JoystickDeadZone 5500
 

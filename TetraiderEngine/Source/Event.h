@@ -3,8 +3,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <string>
-#include "Math\MathLibs.h"
+//#include <string>
+//#include "Math\MathLibs.h"
 
 // Macro trick to make Event names enums from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,

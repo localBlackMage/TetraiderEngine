@@ -15,7 +15,7 @@ Creation date: 1/17/18
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include "Vector2D.h"
+//#include "Vector2D.h"
 
 class Vector3D
 {

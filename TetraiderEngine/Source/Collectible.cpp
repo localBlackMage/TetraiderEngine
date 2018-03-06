@@ -1,7 +1,9 @@
-#include "GameObject.h"
-#include "Collectible.h"
-#include "Health.h"
-#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "Collectible.h"
+//#include "Health.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 Collectible::Collectible(): Component(ComponentType::C_Collectible) {}
 Collectible::~Collectible() {}

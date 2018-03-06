@@ -2,12 +2,12 @@
 #ifndef LEVEL_EDITOR
 #define LEVEL_EDITOR
 
-#include <vector>
-#include <unordered_map>
-#include "GameObject.h"
-#include "Subscriber.h"
-
-class Transform;
+//#include <vector>
+//#include <unordered_map>
+//#include "GameObject.h"
+//#include "Subscriber.h"
+//
+//class Transform;
 
 static const int fileNameSize = 256;
 static const std::string m_gizmoObject = "P_ZGizmoDrawing";

@@ -1,9 +1,11 @@
-#include "ResourceManager.h"
-#include "JsonReader.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
-#include <iostream>
-#include <filesystem>
+//#include "ResourceManager.h"
+//#include "JsonReader.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+//#include <iostream>
+//#include <filesystem>
+
+#include <Stdafx.h>
 
 namespace fs = std::experimental::filesystem;
 

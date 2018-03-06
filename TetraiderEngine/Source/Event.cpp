@@ -1,5 +1,7 @@
-#include "Event.h"
-#include <unordered_map>
+//#include "Event.h"
+//#include <unordered_map>
+
+#include <Stdafx.h>
 
 Event::Event(EventType type, double time) :
 	m_time(time), m_type(type), m_data(nullptr)

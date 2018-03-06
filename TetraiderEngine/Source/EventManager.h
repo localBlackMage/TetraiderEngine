@@ -7,7 +7,7 @@
 //#include <utility>
 //#include "Event.h"
 
-//class Subscriber;
+class Subscriber;
 
 class EventManager
 {

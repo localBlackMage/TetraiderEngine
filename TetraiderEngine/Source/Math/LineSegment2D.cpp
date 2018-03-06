@@ -1,4 +1,6 @@
-#include "LineSegment2D.h"
+//#include "LineSegment2D.h"
+
+#include <Stdafx.h>
 
 LineSegment2D::LineSegment2D(float x0, float y0, float x1, float y1) : 
 	m_p0(Vector2D(x0, y0)), 

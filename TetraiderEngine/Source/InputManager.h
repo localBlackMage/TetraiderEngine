@@ -14,13 +14,13 @@ Creation date: 1/17/18
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
-#include "SDL_keycode.h"
-#include <vector>
-#include "JsonReader.h"
-#include "Event.h"
-#include "Subscriber.h"
+//#include "SDL_keycode.h"
+//#include <vector>
+//#include "JsonReader.h"
+//#include "Event.h"
+//#include "Subscriber.h"
 
-using json = nlohmann::json;
+//using json = nlohmann::json;
 
 #define MAX_CONTROLLERS 4
 
