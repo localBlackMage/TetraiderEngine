@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_WalkTowardPlayerAttack.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_WalkTowardPlayerAttack.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_WalkTowardPlayerAttack::AI_WalkTowardPlayerAttack()
 : AI_State(NPC_State_WalkTowardPlayerAttack) {

@@ -14,7 +14,7 @@ Creation date: 2/22/18
 #ifndef AI_ENGAGE_H
 #define AI_ENGAGE_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_Engage : public AI_State {
 public:

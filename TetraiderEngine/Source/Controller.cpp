@@ -1,12 +1,14 @@
-#include "GameObject.h"
-#include "Controller.h"
-#include "Weapon.h"
-#include "Health.h"
-#include "Stamina.h"
-#include "Transform.h"
-#include "ParticleEmitter.h"
-#include "TetraiderAPI.h"
-#include <iostream>
+//#include "GameObject.h"
+//#include "Controller.h"
+//#include "Weapon.h"
+//#include "Health.h"
+//#include "Stamina.h"
+//#include "Transform.h"
+//#include "ParticleEmitter.h"
+//#include "TetraiderAPI.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Controller::Controller() :
 	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0)

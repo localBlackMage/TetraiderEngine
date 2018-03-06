@@ -1,8 +1,9 @@
-#include "TetraiderAPI.h"
-#include "ParticleEmitter.h"
-#include "GameObject.h"
-#include <iostream>
-#include <cstdlib>
+//#include "TetraiderAPI.h"
+//#include "ParticleEmitter.h"
+//#include "GameObject.h"
+//#include <iostream>
+//#include <cstdlib>
+#include <Stdafx.h>
 
 #pragma region Private Methods
 

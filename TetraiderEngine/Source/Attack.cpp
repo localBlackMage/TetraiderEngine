@@ -1,5 +1,7 @@
-#include "Attack.h"
-#include "TetraiderAPI.h"
+//#include "Attack.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 // Assumes direction is normalized
 bool Attack::Use(const Vector3D& direction) {

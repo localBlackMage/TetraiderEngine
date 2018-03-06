@@ -14,7 +14,7 @@ Creation date: 2/22/18
 #ifndef AI_MOVETORANDOMPOINTINZONE_H
 #define AI_MOVETORANDOMPOINTINZONE_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_MoveToRandomPointInZone : public AI_State {
 public:

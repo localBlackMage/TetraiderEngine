@@ -2,8 +2,7 @@
 #ifndef ATTACK_H
 #define ATTACK_H
 
-#include "Math/Vector3D.h"
-
+//#include "Math/Vector3D.h"
 class Weapon;
 
 enum class AttackType {

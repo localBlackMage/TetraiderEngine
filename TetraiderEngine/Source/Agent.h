@@ -3,17 +3,17 @@
 #ifndef AGENT_H
 #define AGENT_H
 
-#include "Component.h"
+//#include "Component.h"
 
 enum class FaceDirection {
 	Right,
 	Left
 };
 
-// Forward declaration
-class Transform;
-class Body;
-class Animation;
+//// Forward declaration
+//class Transform;
+//class Body;
+//class Animation;
 
 class Agent : public Component {
 public:

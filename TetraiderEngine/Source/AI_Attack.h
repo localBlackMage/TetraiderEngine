@@ -13,7 +13,7 @@ Creation date: 2/22/18
 #ifndef AI_ATTACK_H
 #define AI_ATTACK_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_Attack : public AI_State {
 public:

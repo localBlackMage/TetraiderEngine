@@ -1,11 +1,13 @@
-#include "GameObject.h"
-#include "Agent.h"
-#include "Body.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include "Animation.h"
-#include "Camera.h"
-#include <iostream>
+//#include "GameObject.h"
+//#include "Agent.h"
+//#include "Body.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include "Animation.h"
+//#include "Camera.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 Agent::Agent(ComponentType _type) :
 	Component(_type),

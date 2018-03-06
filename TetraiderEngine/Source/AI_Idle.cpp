@@ -1,10 +1,12 @@
-#include "Agent.h"
-#include "AI_Idle.h"
-#include "TetraiderAPI.h"
-#include "Math\MathFunctions.h"
+//#include "Agent.h"
+//#include "AI_Idle.h"
+//#include "TetraiderAPI.h"
+//#include "Math\MathFunctions.h"
+//
+//#include <stdlib.h> // rand()
+//#include <iostream>
 
-#include <stdlib.h> // rand()
-#include <iostream>
+#include <Stdafx.h>
 
 AI_Idle::AI_Idle()
 : AI_State(NPC_State_Idle) {

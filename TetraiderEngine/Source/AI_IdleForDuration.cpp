@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_IdleForDuration.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_IdleForDuration.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_IdleForDuration::AI_IdleForDuration()
 : AI_State(NPC_State_Retreat) {

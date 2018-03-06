@@ -3,14 +3,14 @@
 #ifndef PARTICLE_EMITTER_H
 #define PARTICLE_EMITTER_H
 
-#include "Component.h"
-#include "Transform.h"
-#include "SurfaceTextureBuffer.h"
-#include "Mesh.h"
-#include "Color.h"
-#include "Math\MathLibs.h"
-#include <glew.h>
-#include <string>
+//#include "Component.h"
+//#include "Transform.h"
+//#include "SurfaceTextureBuffer.h"
+//#include "Mesh.h"
+//#include "Color.h"
+//#include "Math\MathLibs.h"
+//#include <glew.h>
+//#include <string>
 
 class GameObject;
 

@@ -1,9 +1,11 @@
-#include "RangeAttack.h"
-#include "TetraiderAPI.h"
-#include "Weapon.h"
-#include "Transform.h"
-#include "Projectile.h"
-#include "GameObject.h"
+//#include "RangeAttack.h"
+//#include "TetraiderAPI.h"
+//#include "Weapon.h"
+//#include "Transform.h"
+//#include "Projectile.h"
+//#include "GameObject.h"
+
+#include <Stdafx.h>
 
 RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
 	Attack(coolDown, baseDamage, knockBackSpeed, type),

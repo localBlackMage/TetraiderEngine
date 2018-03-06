@@ -2,18 +2,18 @@
 #ifndef GAME_OBJECT_MANAGER_H
 #define GAME_OBJECT_MANAGER_H
 
-#include "GameObjectTags.h"
-#include "ComponentFactory.h"
-#include "Subscriber.h"
-#include "Layers.h"
-#include <string>
-#include <vector>
-#include <iostream>
+//#include "GameObjectTags.h"
+//#include "ComponentFactory.h"
+//#include "Subscriber.h"
+//#include "Layers.h"
+//#include <string>
+//#include <vector>
+//#include <iostream>
 
 
 // Forward declarations
-class GameObject;
-class Event;
+//class GameObject;
+//class Event;
 
 class GameObjectLayer {
 private:
@@ -36,7 +36,6 @@ class GameObjectManager: public Subscriber
 {
 private:
 	unsigned int m_currentId;
-	ComponentFactory componentFactory;
 	std::vector<GameObject*> m_GameObjectsQueue;
 	std::vector<GameObject*> m_pCameras;
 	GameObject* m_pPrimaryCamera;

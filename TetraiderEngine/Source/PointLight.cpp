@@ -1,9 +1,11 @@
-#include "GameObject.h"
-#include "PointLight.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include "Math/MathLibs.h"
-#include <iostream>
+//#include "GameObject.h"
+//#include "PointLight.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include "Math/MathLibs.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 PointLight::PointLight() :
 	Component(ComponentType::C_PointLight)

@@ -2,10 +2,10 @@
 #ifndef AOE_ATTACK_H
 #define AOE_ATTACK_H
 
-#include "Attack.h"
-#include "Math\Vector3D.h"
-
-class GameObject;
+//#include "Attack.h"
+//#include "Math\Vector3D.h"
+//
+//class GameObject;
 
 class AOEAttack : public Attack {
 public:

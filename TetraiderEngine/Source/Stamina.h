@@ -2,9 +2,6 @@
 #ifndef STAMINA_H
 #define STAMINA_H
 
-#include "Component.h"
-#include "Math\Vector3D.h"
-
 class Stamina : public Component {
 public:
 	Stamina();

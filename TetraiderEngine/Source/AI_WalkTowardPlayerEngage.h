@@ -13,7 +13,7 @@ Creation date: 2/25/18
 #ifndef AI_WALKTOWARDPLAYER_ENGAGE_H
 #define AI_WALKTOWARDPLAYER_ENGAGE_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_WalkTowardPlayerEngage : public AI_State {
 public:

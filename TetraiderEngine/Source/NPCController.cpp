@@ -1,13 +1,15 @@
-#include "GameObject.h"
-#include "NPCController.h"
-#include "Weapon.h"
-#include "Health.h"
-#include "Transform.h"
-#include "Animation.h"
-#include "TetraiderAPI.h"
-#include "Camera.h"
-#include "Math\MathFunctions.h"
-#include <iostream>
+//#include "GameObject.h"
+//#include "NPCController.h"
+//#include "Weapon.h"
+//#include "Health.h"
+//#include "Transform.h"
+//#include "Animation.h"
+//#include "TetraiderAPI.h"
+//#include "Camera.h"
+//#include "Math\MathFunctions.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 NPCController::NPCController() :
 	Agent(ComponentType::C_NPCCONTROLLER),

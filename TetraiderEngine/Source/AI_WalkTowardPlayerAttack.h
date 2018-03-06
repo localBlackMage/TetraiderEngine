@@ -13,7 +13,7 @@ Creation date: 2/25/18
 #ifndef AI_WALKTOWARDPLAYER_ATTACK_H
 #define AI_WALKTOWARDPLAYER_ATTACK_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_WalkTowardPlayerAttack : public AI_State {
 public:

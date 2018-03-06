@@ -1,6 +1,8 @@
-#include "GameObject.h"
-#include "Stamina.h"
-#include "TetraiderAPI.h"
+//#include "GameObject.h"
+//#include "Stamina.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 Stamina::Stamina(): Component(ComponentType::C_Stamina) {}
 Stamina::~Stamina() {}

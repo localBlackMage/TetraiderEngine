@@ -2,9 +2,9 @@
 #ifndef RANGE_ATTACK_H
 #define RANGE_ATTACK_H
 
-#include "Attack.h"
-#include "Math\Vector3D.h"
-#include <string>
+//#include "Attack.h"
+//#include "Math\Vector3D.h"
+//#include <string>
 
 class RangeAttack : public Attack {
 public:

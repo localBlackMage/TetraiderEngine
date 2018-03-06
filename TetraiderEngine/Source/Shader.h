@@ -15,9 +15,6 @@ Creation date: 1/17/18
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glew.h>
-#include <string>
-
 const enum SHADER_TYPE {
 	VERTEX_SHADER = 0,
 	FRAGMENT_SHADER = 1

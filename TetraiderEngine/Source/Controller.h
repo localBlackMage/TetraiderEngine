@@ -2,11 +2,11 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "Agent.h"
+//#include "Agent.h"
 
 class Weapon;
-class Stamina;
-class ParticleEmitter;
+//class Stamina;
+//class ParticleEmitter;
 
 class Controller : public Agent {
 public:

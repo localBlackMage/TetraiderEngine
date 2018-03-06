@@ -14,7 +14,7 @@ Creation date: 2/22/18
 #ifndef AI_RETREAT_H
 #define AI_RETREAT_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_Retreat : public AI_State {
 public:

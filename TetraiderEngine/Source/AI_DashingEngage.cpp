@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_DashingEngage.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_DashingEngage.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_DashingEngage::AI_DashingEngage()
 	: AI_State(NPC_State_DashingEngage) {

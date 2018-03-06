@@ -1,10 +1,12 @@
-#include "MeleeAttack.h"
-#include "Weapon.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
-#include "Math\Collisions.h"
-#include "GameObject.h"
-#include "Health.h"
+//#include "MeleeAttack.h"
+//#include "Weapon.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+//#include "Math\Collisions.h"
+//#include "GameObject.h"
+//#include "Health.h"
+
+#include <Stdafx.h>
 
 MeleeAttack::MeleeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float radius, float angle, float triggerAttackIn):
 	Attack(coolDown, baseDamage, knockBackSpeed, type),

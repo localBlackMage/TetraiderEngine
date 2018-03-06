@@ -3,9 +3,9 @@
 #ifndef DEBUG_LINE_MESH_H
 #define DEBUG_LINE_MESH_H
 
-#include "Math/MathLibs.h"
-#include <glew.h>
-#include <GL/gl.h>
+//#include "Math/MathLibs.h"
+//#include <glew.h>
+//#include <GL/gl.h>
 
 class DebugLineMesh
 {

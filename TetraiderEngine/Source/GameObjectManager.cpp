@@ -1,17 +1,19 @@
-#include "GameObjectManager.h"
-#include "GameObject.h"
-#include "Component.h"
-#include "Camera.h"
-#include "Transform.h"
-#include "Sorting.h"
-#include "TetraiderAPI.h"
-#include <conio.h>
-#include <chrono>
+//#include "GameObjectManager.h"
+//#include "GameObject.h"
+//#include "Component.h"
+//#include "Camera.h"
+//#include "Transform.h"
+//#include "Sorting.h"
+//#include "TetraiderAPI.h"
+//#include <conio.h>
+//#include <chrono>
+//
+//#include <fstream>
+//#include <iostream>
 
-#include <fstream>
-#include <iostream>
+#include <Stdafx.h>
 
-using namespace JsonReader;
+//using namespace JsonReader;
 static const std::string COMPONENTS = "COMPONENTS";
 
 static bool LeftYGreaterThanRightY(GameObject*left, GameObject*right) 
@@ -226,7 +228,7 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 	if (pGameObject->m_tag == GameObjectTag::T_Camera)	m_pCameras.push_back(pGameObject);
 	int size = (*j)[COMPONENTS].size();
 	for (int i = 0; i < size; ++i) {
-		Component* pComponent = componentFactory.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
+		Component* pComponent = TETRA_COMPONENTS.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
 		pGameObject->AddComponent(pComponent);
 		pComponent->Serialize((*j)[COMPONENTS][i]);
 	}

@@ -1,6 +1,8 @@
-#include <windows.h>
-#include "TetraiderAPI.h"
-#include <iostream>
+//#include <windows.h>
+//#include "TetraiderAPI.h"
+//#include <iostream>
+
+#include <Stdafx.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nShowCmd)
 {

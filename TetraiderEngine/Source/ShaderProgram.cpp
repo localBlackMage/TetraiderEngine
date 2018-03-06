@@ -1,6 +1,8 @@
-#include "ShaderProgram.h"
-#include <iostream>
-#include <vector>
+//#include "ShaderProgram.h"
+//#include <iostream>
+//#include <vector>
+
+#include <Stdafx.h>
 
 ShaderProgram::ShaderProgram() :
 	m_pVertexShader(NULL),

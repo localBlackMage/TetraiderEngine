@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_Engage.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_Engage.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_Engage::AI_Engage()
 	: AI_State(NPC_State_Engage) {

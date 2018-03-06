@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_Attack.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_Attack.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_Attack::AI_Attack()
 : AI_State(NPC_State_Attack) {

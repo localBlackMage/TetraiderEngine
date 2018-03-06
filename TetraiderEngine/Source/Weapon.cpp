@@ -1,14 +1,16 @@
-#include "Weapon.h"
-#include "RangeAttack.h"
-#include "MeleeAttack.h"
-#include "Agent.h"
-#include "GameObject.h"
-#include "Controller.h"
-#include "NPCController.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include "Animation.h"
-#include "Audio.h"
+//#include "Weapon.h"
+//#include "RangeAttack.h"
+//#include "MeleeAttack.h"
+//#include "Agent.h"
+//#include "GameObject.h"
+//#include "Controller.h"
+//#include "NPCController.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include "Animation.h"
+//#include "Audio.h"
+
+#include "Stdafx.h"
 
 Weapon::Weapon(): Component(C_Weapon), m_pEffect(nullptr) {}
 

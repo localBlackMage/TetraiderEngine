@@ -2,11 +2,11 @@
 #ifndef POINT_LIGHT_H
 #define POINT_LIGHT_H
 
-#include "Component.h"
-#include "Color.h"
+//#include "Component.h"
+//#include "Color.h"
 
-class Transform;
-class GameObject;
+//class Transform;
+//class GameObject;
 
 class PointLight : public Component
 {

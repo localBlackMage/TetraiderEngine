@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_DashingStunned.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_DashingStunned.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_DashingStunned::AI_DashingStunned()
 : AI_State(NPC_State_DashingStunned) {

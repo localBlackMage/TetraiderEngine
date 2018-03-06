@@ -13,19 +13,19 @@ Creation date: 2/22/18
 #ifndef AI_STATE_H
 #define AI_STATE_H
 
-#include "AI_StateTypes.h"
-#include "Subscriber.h"
-#include "JsonReader.h"
-#include "NPCController.h"
-#include "Event.h"
-#include <assert.h>
-
-using json = nlohmann::json;
-using namespace JsonReader;
+//#include "AI_StateTypes.h"
+//#include "Subscriber.h"
+//#include "JsonReader.h"
+//#include "NPCController.h"
+//#include "Event.h"
+//#include <assert.h>
+//
+//using json = nlohmann::json;
+//using namespace JsonReader;
 
 // forward declaration
 class NPCController;
-class Event;
+//class Event;
 
 class AI_State: public Subscriber{
 protected:

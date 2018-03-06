@@ -14,7 +14,7 @@ Creation date: 2/22/18
 #ifndef AI_IDLE_H
 #define AI_IDLE_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_Idle : public AI_State {
 public:

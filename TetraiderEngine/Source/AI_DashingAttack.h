@@ -13,7 +13,7 @@ Creation date: 2/22/18
 #ifndef AI_DASHINGATTACK_H
 #define AI_DASHINGATTACK_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_DashingAttack : public AI_State {
 public:

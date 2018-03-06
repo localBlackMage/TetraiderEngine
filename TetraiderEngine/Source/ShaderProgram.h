@@ -15,10 +15,10 @@ Creation date: 1/17/18
 #ifndef SHADER_PROGRAM_H
 #define SHADER_PROGRAM_H
 
-#include <glew.h>
-#include <map>
-#include <string>
-#include "Shader.h"
+//#include <glew.h>
+//#include <map>
+//#include <string>
+//#include "Shader.h"
 
 class ShaderProgram
 {

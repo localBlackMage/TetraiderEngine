@@ -2,11 +2,6 @@
 #ifndef MELEE_ATTACK_H
 #define MELEE_ATTACK_H
 
-#include "Attack.h"
-#include "Math\Vector3D.h"
-
-class GameObject;
-
 class MeleeAttack : public Attack {
 public:
 	MeleeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float radius, float angle, float triggerAttackIn);

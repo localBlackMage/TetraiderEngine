@@ -2,12 +2,12 @@
 #ifndef NPCCONTROLLER_H
 #define NPCCONTROLLER_H
 
-#include "Agent.h"
-#include <unordered_map>
-#include "AI_State.h"
-#include "AI_StateTypes.h"
-#include "AI_StateFactory.h"
-#include "GameObjectTags.h"
+//#include "Agent.h"
+//#include <unordered_map>
+//#include "AI_State.h"
+//#include "AI_StateTypes.h"
+//#include "AI_StateFactory.h"
+//#include "GameObjectTags.h"
 
 class Weapon;
 

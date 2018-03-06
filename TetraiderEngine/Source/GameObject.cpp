@@ -1,9 +1,11 @@
-#include "GameObject.h"
-#include "Component.h"
-#include "Event.h"
-#include "Transform.h"
-#include "TetraiderAPI.h"
-#include <algorithm>
+//#include "GameObject.h"
+//#include "Component.h"
+//#include "Event.h"
+//#include "Transform.h"
+//#include "TetraiderAPI.h"
+//#include <algorithm>
+
+#include <Stdafx.h>
 
 GameObject::GameObject(unsigned int id) : 
 	m_id(id), 

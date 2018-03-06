@@ -3,16 +3,16 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "ComponentTypes.h"
-#include "Subscriber.h"
-#include "JsonReader.h"
-#include <assert.h> 
+//#include "ComponentTypes.h"
+//#include "Subscriber.h"
+//#include "JsonReader.h"
+//#include <assert.h> 
 
-using json = nlohmann::json;
-using namespace JsonReader;
+//using json = nlohmann::json;
+//using namespace JsonReader;
 
 class GameObject;
-class Event;
+//class Event;
 
 class Component : 
 	public Subscriber

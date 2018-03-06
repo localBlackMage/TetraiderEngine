@@ -2,42 +2,42 @@
 #ifndef TETRAIDER_API_H
 #define TETRAIDER_API_H
 
-#include "GameConfig.h"
-#include "GameStateManager.h"
-#include "InputManager.h"
-#include "FrameRateManager.h"
-#include "RenderManager.h"
-#include "ResourceManager.h"
-#include "PhysicsManager.h"
-#include "EventManager.h"
-#include "LevelManager.h"
-#include "DebugManager.h"
-#include "AudioManager.h"
-#include "GameObjectManager.h"
-#include "MemoryManager.h"
-#include "FloorPlanGenerator.h"
-#include "ImguiManager.h"
-#include "LevelEditor.h"
-#include "Singleton.h"
-#include <string>
-
-#define TETRA_MEMORY Singleton<MemoryManager>::GetInstance()
-#define TETRA_GAME_CONFIG Singleton<GameConfig>::GetInstance()
-#define TETRA_GAME_STATE Singleton<GameStateManager>::GetInstance()
-#define TETRA_EVENTS Singleton<EventManager>::GetInstance()
-#define TETRA_FRAMERATE Singleton<FrameRateManager>::GetInstance()
-#define TETRA_RENDERER Singleton<RenderManager>::GetInstance()
-#define TETRA_INPUT Singleton<InputManager>::GetInstance()
-#define TETRA_RESOURCES Singleton<ResourceManager>::GetInstance()
-#define TETRA_LEVELS Singleton<LevelManager>::GetInstance()
-#define TETRA_DEBUG Singleton<DebugManager>::GetInstance()
-#define TETRA_AUDIO Singleton<AudioManager>::GetInstance()
-#define TETRA_PHYSICS Singleton<PhysicsManager>::GetInstance()
-#define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
-#define TETRA_LUA Singleton<LuaScript>::GetInstance()
-#define TETRA_LEVEL_GEN Singleton<FloorPlanGenerator>::GetInstance()
-#define TETRA_IMGUI Singleton<ImguiManager>::GetInstance()
-#define TETRA_EDITOR Singleton<LevelEditor>::GetInstance()
+//#include "GameConfig.h"
+//#include "GameStateManager.h"
+//#include "InputManager.h"
+//#include "FrameRateManager.h"
+//#include "RenderManager.h"
+//#include "ResourceManager.h"
+//#include "PhysicsManager.h"
+//#include "EventManager.h"
+//#include "LevelManager.h"
+//#include "DebugManager.h"
+//#include "AudioManager.h"
+//#include "GameObjectManager.h"
+//#include "MemoryManager.h"
+//#include "FloorPlanGenerator.h"
+//#include "ImguiManager.h"
+//#include "LevelEditor.h"
+//#include "Singleton.h"
+//#include <string>
+//
+//#define TETRA_MEMORY Singleton<MemoryManager>::GetInstance()
+//#define TETRA_GAME_CONFIG Singleton<GameConfig>::GetInstance()
+//#define TETRA_GAME_STATE Singleton<GameStateManager>::GetInstance()
+//#define TETRA_EVENTS Singleton<EventManager>::GetInstance()
+//#define TETRA_FRAMERATE Singleton<FrameRateManager>::GetInstance()
+//#define TETRA_RENDERER Singleton<RenderManager>::GetInstance()
+//#define TETRA_INPUT Singleton<InputManager>::GetInstance()
+//#define TETRA_RESOURCES Singleton<ResourceManager>::GetInstance()
+//#define TETRA_LEVELS Singleton<LevelManager>::GetInstance()
+//#define TETRA_DEBUG Singleton<DebugManager>::GetInstance()
+//#define TETRA_AUDIO Singleton<AudioManager>::GetInstance()
+//#define TETRA_PHYSICS Singleton<PhysicsManager>::GetInstance()
+//#define TETRA_GAME_OBJECTS Singleton<GameObjectManager>::GetInstance()
+//#define TETRA_LUA Singleton<LuaScript>::GetInstance()
+//#define TETRA_LEVEL_GEN Singleton<FloorPlanGenerator>::GetInstance()
+//#define TETRA_IMGUI Singleton<ImguiManager>::GetInstance()
+//#define TETRA_EDITOR Singleton<LevelEditor>::GetInstance()
 
 namespace Tetraider {
 	//! int Initialize(std::string configFileName)

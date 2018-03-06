@@ -1,6 +1,8 @@
-#include "Agent.h"
-#include "AI_MoveToRandomPointInZone.h"
-#include "TetraiderAPI.h"
+//#include "Agent.h"
+//#include "AI_MoveToRandomPointInZone.h"
+//#include "TetraiderAPI.h"
+
+#include <Stdafx.h>
 
 AI_MoveToRandomPointInZone::AI_MoveToRandomPointInZone()
 : AI_State(NPC_State_MoveToRandomPointInZone) {

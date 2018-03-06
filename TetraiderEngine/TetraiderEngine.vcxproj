@@ -103,6 +103,7 @@
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
+    <ClCompile Include="Source\Stdafx.cpp" />
     <ClCompile Include="Source\StraightLineMovement.cpp" />
     <ClCompile Include="Source\Subscriber.cpp" />
     <ClCompile Include="Source\SubscriberTracker.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="Source\AI_WalkTowardPlayerAttack.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayerEngage.h" />
     <ClInclude Include="Source\Color.h" />
+    <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\External\Imgui\imconfig.h" />
     <ClInclude Include="Source\External\Imgui\imgui.h" />
     <ClInclude Include="Source\External\Imgui\imgui_impl_sdl_gl3.h" />
@@ -129,6 +131,7 @@
     <ClInclude Include="Source\External\Imgui\stb_textedit.h" />
     <ClInclude Include="Source\External\Imgui\stb_truetype.h" />
     <ClInclude Include="Source\FollowCamera.h" />
+    <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\ImguiManager.h" />
     <ClInclude Include="Source\LevelEditor.h" />
     <ClInclude Include="Source\Microphone.h" />
@@ -216,6 +219,7 @@
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />
+    <ClInclude Include="Source\Stdafx.h" />
     <ClInclude Include="Source\StraightLineMovement.h" />
     <ClInclude Include="Source\SurfaceTextureBuffer.h" />
     <ClInclude Include="Source\Subscriber.h" />
@@ -280,15 +284,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(ProjectDir)SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(ProjectDir)SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Source\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -299,6 +307,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)GL\lib;$(ProjectDir)SDL2\lib\x86;$(ProjectDir)FMOD Studio API Windows\api\lowlevel\lib;$(ProjectDir)FMOD Studio API Windows\api\studio\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

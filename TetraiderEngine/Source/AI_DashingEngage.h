@@ -14,7 +14,7 @@ Creation date: 2/22/18
 #ifndef AI_DASHINGENGAGE_H
 #define AI_DASHINGENGAGE_H
 
-#include "AI_State.h"
+//#include "AI_State.h"
 
 class AI_DashingEngage : public AI_State {
 public:

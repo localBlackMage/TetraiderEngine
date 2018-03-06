@@ -3,9 +3,6 @@
 #ifndef RENDER_LAYERS_H
 #define RENDER_LAYERS_H
 
-#include <unordered_map>
-#include <string>
-
 enum RENDER_LAYER {
 	L_BG_2 = 0,
 	L_BG_1,

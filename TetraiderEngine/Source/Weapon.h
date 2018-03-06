@@ -2,11 +2,11 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "Component.h"
+//#include "Component.h"
 
-class Attack;
-class Transform;
-class Agent;
+//class Attack;
+//class Transform;
+//class Agent;
 
 class Weapon : public Component {
 public:

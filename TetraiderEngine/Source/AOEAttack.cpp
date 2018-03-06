@@ -1,10 +1,12 @@
-#include "AOEAttack.h"
-#include "Weapon.h"
-#include "TetraiderAPI.h"
-#include "Transform.h"
-#include "Math\Collisions.h"
-#include "GameObject.h"
-#include "Health.h"
+//#include "AOEAttack.h"
+//#include "Weapon.h"
+//#include "TetraiderAPI.h"
+//#include "Transform.h"
+//#include "Math\Collisions.h"
+//#include "GameObject.h"
+//#include "Health.h"
+
+#include <Stdafx.h>
 
 AOEAttack::AOEAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float radius):
 	Attack(coolDown, baseDamage, knockBackSpeed, type),

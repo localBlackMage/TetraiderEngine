@@ -1,22 +1,24 @@
-#include "RenderManager.h"
-#include "TetraiderAPI.h"
-#include "JsonReader.h"
-#include "DebugLineMesh.h"
-#include "ShaderProgram.h"
-#include "Shader.h"
+//#include "RenderManager.h"
+//#include "TetraiderAPI.h"
+//#include "JsonReader.h"
+//#include "DebugLineMesh.h"
+//#include "ShaderProgram.h"
+//#include "Shader.h"
+//
+//#include "GameObject.h"
+//#include "Component.h"
+//#include "Transform.h"
+//#include "Camera.h"
+//#include "Sprite.h"
+//#include "ParticleEmitter.h"
+//#include "Text.h"
+//
+//#include "SDL_image.h"
+//#include <iostream>
+//#include <fstream>
+//#include <windows.h>
 
-#include "GameObject.h"
-#include "Component.h"
-#include "Transform.h"
-#include "Camera.h"
-#include "Sprite.h"
-#include "ParticleEmitter.h"
-#include "Text.h"
-
-#include "SDL_image.h"
-#include <iostream>
-#include <fstream>
-#include <windows.h>
+#include <Stdafx.h>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),

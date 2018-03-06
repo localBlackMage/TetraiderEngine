@@ -1,6 +1,7 @@
-#include "Subscriber.h"
-#include "TetraiderAPI.h"
-#include "SubscriberTracker.h"
+//#include "Subscriber.h"
+//#include "TetraiderAPI.h"
+//#include "SubscriberTracker.h"
+#include <Stdafx.h>
 
 Subscriber::Subscriber()
 {

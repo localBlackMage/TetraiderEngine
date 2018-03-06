@@ -1,6 +1,7 @@
-#include "Agent.h"
-#include "AI_DashingAttack.h"
-#include "TetraiderAPI.h"
+//#/*include "Agent.h"
+//#include "AI_DashingAttack.h"
+//#include "TetraiderAPI.h"*/
+#include <Stdafx.h>
 
 AI_DashingAttack::AI_DashingAttack()
 : AI_State(NPC_State_DashingAttack) {
