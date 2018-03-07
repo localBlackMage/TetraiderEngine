@@ -1,9 +1,3 @@
-//#include "PhysicsManager.h"
-//#include "GameObject.h"
-//#include "ComponentTypes.h"
-//#include "Body.h"
-//#include "TetraiderAPI.h"
-
 #include <Stdafx.h>
 
 PhysicsManager::PhysicsManager(): m_isSpatialParitioning(false) {

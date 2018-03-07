@@ -2,16 +2,6 @@
 #ifndef PHYSICS_MANAGER_H
 #define PHYSICS_MANAGER_H
 
-//#include "Math/MathLibs.h"
-//#include "GameObjectTags.h"
-//#include "Event.h"
-//#include "Shape.h"
-//#include <vector>
-//#include "Subscriber.h"
-
-// Forward declaration
-//class GameObject;
-//class Body;
 class PhysicsManager;
 
 struct Contact {

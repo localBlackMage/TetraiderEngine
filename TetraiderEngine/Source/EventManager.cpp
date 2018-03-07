@@ -1,11 +1,3 @@
-//#include "EventManager.h"
-//#include "SubscriberTracker.h"
-//#include "Subscriber.h"
-//#include "TetraiderAPI.h"
-//#include <utility>
-//#include <algorithm>
-//#include <iostream>
-
 #include <Stdafx.h>
 
 EventManager::EventManager()
