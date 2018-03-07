@@ -3,17 +3,6 @@
 #ifndef PARTICLE_EMITTER_H
 #define PARTICLE_EMITTER_H
 
-//#include "Component.h"
-//#include "Transform.h"
-//#include "SurfaceTextureBuffer.h"
-//#include "Mesh.h"
-//#include "Color.h"
-//#include "Math\MathLibs.h"
-//#include <glew.h>
-//#include <string>
-
-//class GameObject;
-
 struct Particle {
 	Vector3D m_pos, m_velocity;
 	Color m_color;

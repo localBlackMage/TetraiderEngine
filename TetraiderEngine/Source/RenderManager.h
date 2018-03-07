@@ -15,20 +15,6 @@ Creation date: 1/17/18
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
-//#include "SurfaceTextureBuffer.h"
-
-//class DebugManager;
-//class GameObject;
-//class ShaderProgram;
-//class Shader;
-//
-//class Component;
-//class Sprite;
-//class ParticleEmitter;
-//class Text;
-//class Transform;
-//enum DebugShape;
-
 enum SHADER_LOCATIONS {
 	POSITION = 0,		// 0
 	TEXTURE_COORD,		// 1
