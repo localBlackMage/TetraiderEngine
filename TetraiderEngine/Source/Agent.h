@@ -27,6 +27,7 @@ public:
 	const Vector3D& GetCurrentVelocity() { return m_currentVelocity; }
 	const Vector3D& GetTargetVelocity() { return m_targetVelocity; }
 	const Vector3D& GetLookDirection() { return m_lookDirection; }
+	Vector3D GetMovementDirection() { return Vector3D::Normalize(m_currentVelocity); }
 	FaceDirection GetFaceDirection() { return m_faceDirection; }
 	void AddVelocity(const Vector3D& velocity) { m_currentVelocity += velocity; }
 	bool GetIgnoreHazard() { return m_isIgnoreHazards; }

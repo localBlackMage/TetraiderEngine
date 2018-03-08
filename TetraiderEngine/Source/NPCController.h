@@ -11,6 +11,15 @@
 
 class Weapon;
 
+#define ObstacleAvoidanceFrontCheack 125.0f
+#define ObstacleAvoidanceSideCheck 125.0f
+#define ObstacleAvoidanceSideCheckAngle 40.0f
+
+enum class ObstacleAvoidanceDirection {
+	RIGHT,
+	LEFT
+};
+
 class NPCController : public Agent {
 public:
 	NPCController();
@@ -44,10 +53,10 @@ public:
 	void LookAtPlayer(float offsetAngle);
 	void SetSpeedMultiplier(float speedMultiplier) { m_speedMultiplier = speedMultiplier; }
 	bool RollDie(float probability);
+	void SetAvoidObstacles(bool active) { m_isAvoidObstacles = active; }
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
-
 private:
 	AIStateFactory AIStateFactory;
 	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];
@@ -61,10 +70,21 @@ private:
 	float m_speedMultiplier;
 	Vector3D m_startingPoint;
 	Vector3D m_targetDestination;
+	Vector3D m_secondaryDestination;
 	bool m_arrivedAtDestination;
 	bool m_isPlayerDead;
+	bool m_isAvoidObstacles;
+	bool m_isAvoidingObstacle;
 	const Transform* m_pPlayerTransform;
 	GameObjectTag m_tagsToIgnore[3];
+	ObstacleAvoidanceDirection m_avoidDirection;
+
+	bool IsPlayerOutOfScreen();
+	void SetSecondaryTargetDestination(const Vector3D& pos) { m_secondaryDestination = pos; }
+	void CheckForObstacleAvoidance();
+	void AvoidObstacles(float dt);
+	float m_stuckTimer = 0.0f;
+	Vector3D m_prevPos;
 };
 
 #endif

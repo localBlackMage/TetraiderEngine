@@ -63,7 +63,7 @@ public:
 	void HandleEvent(Event* pEvent);
 	void FireEventsToContacts();
 	void ClearContacts();
-	bool Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize);
+	bool Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize, GameObject* rayCastSource = nullptr);
 	
 	std::vector<GameObject*> m_gameObjects;
 private:

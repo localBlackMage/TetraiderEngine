@@ -16,6 +16,7 @@ void AI_DashingAttack::OnEnter(){
 	pAgent->SetSpeedMultiplier(4.5f);
 	triedSofar = 0.0f;
 	tryTime = 1.5f;
+	pAgent->SetAvoidObstacles(false);
 }
 
 void AI_DashingAttack::OnUpdate(float dt){
@@ -32,6 +33,7 @@ void AI_DashingAttack::OnUpdate(float dt){
 
 void AI_DashingAttack::OnExit(){
 	pAgent->SetSpeedMultiplier(1.0f);
+	pAgent->SetAvoidObstacles(true);
 }
 
 void AI_DashingAttack::HandleEvent(Event* pEvent) {
