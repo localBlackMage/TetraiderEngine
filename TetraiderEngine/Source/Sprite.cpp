@@ -1,12 +1,8 @@
-//#include "Sprite.h"
-//#include "TetraiderAPI.h"
-//
-//using namespace JsonReader;
-
 #include <Stdafx.h>
 
 Sprite::Sprite(std::string textureName) :
 	Component(ComponentType::C_Sprite),
+	m_isLit(false),
 	m_xTiling(1.0f), 
 	m_yTiling(1.0f), 
 	m_uOffset(0.f),
@@ -31,6 +27,7 @@ void Sprite::Update(float dt) {}
 
 void Sprite::Serialize(const json& j)
 {
+	m_isLit = ParseBool(j, "lit");
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");
 	m_uOffset = ParseFloat(j, "uvOffset", "u");

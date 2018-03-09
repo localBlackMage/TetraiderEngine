@@ -17,15 +17,17 @@ Creation date: 1/17/18
 
 enum SHADER_LOCATIONS {
 	POSITION = 0,		// 0
-	TEXTURE_COORD,		// 1
-	P_POS_SIZE,			// 2
-	P_COLOR,			// 3
-	P_TEXTURE_COORD,	// 4
+	NORMAL,				// 1
+	TEXTURE_COORD,		// 2
+	P_POS_SIZE,			// 3
+	P_COLOR,			// 4
+	P_TEXTURE_COORD,	// 5
 
 	PERSP_MATRIX = 10,	// 10
 	VIEW_MATRIX,		// 11
 	MODEL_MATRIX,		// 12
 	NORMAL_MATRIX,		// 13
+	CAMERA_POS,			// 14
 
 	TINT_COLOR = 30,	// 30
 	SATURATION_COLOR,	// 31
@@ -33,9 +35,20 @@ enum SHADER_LOCATIONS {
 	FRAME_SIZE,			// 33
 	TILE,				// 34
 
+	GLOBAL_AMBIENT = 40,// 40
+	AMBIENT,			// 41
+	DIFFUSE,			// 42
+	SPECULAR,			// 43
+
+	LIT = 47,			// 47
+	L_A = 48,			// 48
+	L_B = 49,			// 49
 	L_POS_DIST = 50,	// 50
-	L_COLOR				// 51
+	L_COLOR = 66,		// 66
+	
 };
+
+class GameObjectLayer;
 
 
 class RenderManager : public Subscriber
@@ -43,6 +56,7 @@ class RenderManager : public Subscriber
 private:
 	friend class DebugManager;
 
+	float m_la, m_lb;		// light falloff numbers
 	int m_width, m_height;
 	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky
 	SDL_GLContext m_context;
@@ -61,6 +75,7 @@ private:
 	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const Component* renderingComponent);
 	void _SetUpCamera(const GameObject& camera);
+	void _SetUpLights(const GameObjectLayer& gol);
 
 	void _SetUpDebug(const GameObject& camera);
 	void _RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
@@ -71,6 +86,7 @@ private:
 	
 	void _EnableAlphaTest();
 	void _EnableDepthTest();
+	void _BindMesh(const Mesh& mesh);
 	void _BindGameObjectTransform(const GameObject& gameObject);
 	void _BindGameObjectTransformWithOffset(const GameObject& gameObject, const Vector3D& offset);
 	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
@@ -101,7 +117,7 @@ public:
 	float GetAspectRatio() const;
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 
-	void RenderGameObject(const GameObject& camera, const GameObject& go);
+	void RenderGameObject(const GameObject& camera, const GameObject& go, const GameObjectLayer& gol);
 
 	GLuint GenerateStreamingVBO(unsigned int size);
 	template <typename BufferType>

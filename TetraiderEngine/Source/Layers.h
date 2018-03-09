@@ -23,6 +23,7 @@ enum RENDER_LAYER {
 
 static std::unordered_map<std::string, RENDER_LAYER> RENDER_LAYER_STRINGS = {
 	{ "N/A", RENDER_LAYER::L_NOT_RENDERED },
+
 	{ "BG_2", RENDER_LAYER::L_BG_2 },
 	{ "BG_1", RENDER_LAYER::L_BG_1 },
 	{ "BG", RENDER_LAYER::L_BG },

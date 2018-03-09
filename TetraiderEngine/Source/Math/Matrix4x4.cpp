@@ -314,24 +314,26 @@ Matrix4x4 Matrix4x4::Inverse(const Matrix4x4& other)
 
 Matrix4x4 Matrix4x4::Inverse3x3(const Matrix4x4& other)
 {
-	float idet = 1.0f / (other.Get(0, 0) * (other.Get(1, 1) * other.Get(2, 2) - other.Get(2, 1) * other.Get(1, 2))
-		- other.Get(0, 1) * (other.Get(1, 0) * other.Get(2, 2) - other.Get(2, 0) * other.Get(1, 2))
-		+ other.Get(0, 2) * (other.Get(1, 0) * other.Get(2, 1) - other.Get(1, 1) * other.Get(2, 0)));
+	float idet = 1.0f / (
+			  other.m_matrix[0][0] * (other.m_matrix[1][1] * other.m_matrix[2][2] - other.m_matrix[2][1] * other.m_matrix[1][2])
+			- other.m_matrix[0][1] * (other.m_matrix[1][0] * other.m_matrix[2][2] - other.m_matrix[2][0] * other.m_matrix[1][2])
+			+ other.m_matrix[0][2] * (other.m_matrix[1][0] * other.m_matrix[2][1] - other.m_matrix[1][1] * other.m_matrix[2][0])
+		);
 
 	return Matrix4x4(
-		idet*(other.Get(1, 1) * other.Get(2, 2) - other.Get(2, 1) * other.Get(1, 2)),
-		-idet*(other.Get(0, 1) * other.Get(2, 2) - other.Get(2, 1) * other.Get(0, 2)),
-		idet*(other.Get(0, 1) * other.Get(1, 2) - other.Get(1, 1) * other.Get(0, 2)),
+		idet*(other.m_matrix[1][1] * other.m_matrix[2][2] - other.m_matrix[2][1] * other.m_matrix[1][2]),
+		-idet*(other.m_matrix[0][1] * other.m_matrix[2][2] - other.m_matrix[2][1] * other.m_matrix[0][2]),
+		idet*(other.m_matrix[0][1] * other.m_matrix[1][2] - other.m_matrix[1][1] * other.m_matrix[0][2]),
 		0.0f,
 
-		-idet*(other.Get(1, 0) * other.Get(2, 2) - other.Get(2, 0) * other.Get(1, 2)),
-		idet*(other.Get(0, 0) * other.Get(2, 2) - other.Get(2, 0) * other.Get(0, 2)),
-		-idet*(other.Get(0, 0) * other.Get(1, 2) - other.Get(1, 0) * other.Get(0, 2)),
+		-idet*(other.m_matrix[1][0] * other.m_matrix[2][2] - other.m_matrix[2][0] * other.m_matrix[1][2]),
+		idet*(other.m_matrix[0][0] * other.m_matrix[2][2] - other.m_matrix[2][0] * other.m_matrix[0][2]),
+		-idet*(other.m_matrix[0][0] * other.m_matrix[1][2] - other.m_matrix[1][0] * other.m_matrix[0][2]),
 		0.0f,
 
-		idet*(other.Get(1, 0) * other.Get(2, 1) - other.Get(2, 0) * other.Get(1, 1)),
-		-idet*(other.Get(0, 0) * other.Get(2, 1) - other.Get(2, 0) * other.Get(0, 1)),
-		idet*(other.Get(0, 0) * other.Get(1, 1) - other.Get(1, 0) * other.Get(0, 1)),
+		idet*(other.m_matrix[1][0] * other.m_matrix[2][1] - other.m_matrix[2][0] * other.m_matrix[1][1]),
+		-idet*(other.m_matrix[0][0] * other.m_matrix[2][1] - other.m_matrix[2][0] * other.m_matrix[0][1]),
+		idet*(other.m_matrix[0][0] * other.m_matrix[1][1] - other.m_matrix[1][0] * other.m_matrix[0][1]),
 		0.0f,
 
 		0.0f, 0.0f, 0.0f, 1.0f

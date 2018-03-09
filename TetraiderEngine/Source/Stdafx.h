@@ -123,6 +123,7 @@ using namespace JsonReader;
 #include <Text.h>
 #include <Animation.h>
 #include <Camera.h>
+#include <LightBase.h>
 #include <PointLight.h>
 
 #include <Stamina.h>

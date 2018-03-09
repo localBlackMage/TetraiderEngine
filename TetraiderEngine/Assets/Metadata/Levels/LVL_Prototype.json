@@ -68,11 +68,25 @@
     },
 	
 	{
+		"prefab": "P_PointLight",
+		"position": {
+			"x": -600,
+			"y": 170
+		}
+	},
+	{
 		"prefab": "P_FireLight",
 		"position": {
 			"x": -600,
 			"y": 170,
 			"z": 0
+		}
+	},
+	{
+		"prefab": "P_PointLight",
+		"position": {
+			"x": -600,
+			"y": -150
 		}
 	},
 	{
@@ -85,11 +99,26 @@
 	},
 	
 	{
+		"prefab": "P_PointLight",
+		"position": {
+			"x": 950,
+			"y": 190
+		}
+	},
+	{
 		"prefab": "P_FireLight",
 		"position": {
 			"x": 950,
 			"y": 190,
 			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_PointLight",
+		"position": {
+			"x": 950,
+			"y": -170
 		}
 	},
 	{
@@ -263,6 +292,38 @@
         "z": 0
       }
     },
+	
+	{
+		"prefab": "P_PointLight",
+		"position": {
+			"x": 1900,
+			"y": 190
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 1900,
+			"y": -200,
+			"z": 0
+		}
+	},
+		{
+		"prefab": "P_PointLight",
+		"position": {
+			"x": 1900,
+			"y": -200
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 1900,
+			"y": 190,
+			"z": 0
+		}
+	},
+	
 	{
       "prefab": "P_Rock",
       "position": {

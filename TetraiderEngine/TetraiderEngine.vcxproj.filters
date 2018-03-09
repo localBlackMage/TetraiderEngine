@@ -359,6 +359,9 @@
     <ClCompile Include="Source\Stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LightBase.cpp">
+      <Filter>Source Files\Components\Rendering\Lights</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -708,6 +711,9 @@
     </ClInclude>
     <ClInclude Include="Source\Shape.h">
       <Filter>Source Files\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LightBase.h">
+      <Filter>Source Files\Components\Rendering\Lights</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

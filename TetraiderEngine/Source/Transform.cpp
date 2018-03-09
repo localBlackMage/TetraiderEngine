@@ -59,7 +59,7 @@ void Transform::LateUpdate(float dt) {
 	else
 		trans = Matrix4x4::Translate(m_position);
 	
-	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
+	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, 1.f));	//	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
 	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
 	//Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
@@ -320,7 +320,7 @@ Matrix4x4 Transform::GetTransformAfterOffset(const Vector3D & offset) const
 	else
 		trans = Matrix4x4::Translate(m_position + offset);
 
-	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
+	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, 1.f));	// NOTE: Z SCALE IS HARD CODED FOR INVERSION
 	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
 													   //Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
@@ -337,7 +337,7 @@ Matrix4x4 Transform::TransformWithOffsetAndScale(const Vector3D & offset, const 
 	else
 		trans = Matrix4x4::Translate(m_position + offset);
 
-	Matrix4x4 scale(Matrix4x4::Scale(scaleX, scaleY, 0));
+	Matrix4x4 scale(Matrix4x4::Scale(scaleX, scaleY, 1.f));
 	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
 													   //Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 

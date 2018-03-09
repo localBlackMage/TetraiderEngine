@@ -2,24 +2,21 @@
 #ifndef GAME_OBJECT_MANAGER_H
 #define GAME_OBJECT_MANAGER_H
 
-//#include "GameObjectTags.h"
-//#include "ComponentFactory.h"
-//#include "Subscriber.h"
-//#include "Layers.h"
-//#include <string>
-//#include <vector>
-//#include <iostream>
-
-
-// Forward declarations
-//class GameObject;
-//class Event;
+#define MAX_LIGHTS 16
 
 class GameObjectLayer {
 private:
 	std::vector<GameObject*> m_layerObjects;
+	std::vector<GameObject*> m_layerLights;
+
+	unsigned short m_numLights;
+	GLuint m_lightColorsBuffer;
+	GLuint m_m_lightPositionsAndDistancesBuffer;
+
+	GLubyte m_lightColors[MAX_LIGHTS*4];				// r, g, b, a
+	float m_lightPositionsAndDistances[MAX_LIGHTS*4];	// x, y, z, distance
 public:
-	GameObjectLayer() {};
+	GameObjectLayer();
 	~GameObjectLayer() {};
 	GameObjectLayer(const GameObjectLayer & rhs);
 	void operator=(const GameObjectLayer & rhs);
@@ -28,7 +25,14 @@ public:
 	void ReSortLayer();
 	void AddToLayer(GameObject* pGO);
 	void RemoveFromLayer(GameObject* pGO);
+	void AddLightToLayer(GameObject* pGO);
+	void RemoveLightFromLayer(GameObject* pGO);
+	void Update();
 	void ClearLayer();
+
+	GLuint GetLightColors()	const { return m_lightColorsBuffer; }
+	GLuint GetLightPosAndDist()	const { return m_m_lightPositionsAndDistancesBuffer; }
+	void BindBufferDatas() const;
 };
 
 
@@ -56,6 +60,7 @@ private:
 	void HandleEvent(Event *pEvent);
 
 	void _InsertGameObjectIntoList(GameObject* pGO);
+	void _InsertLightIntoLayers(GameObject* pGO);
 	GameObject* m_pPlayerReference;
 public:
 	GameObjectManager();

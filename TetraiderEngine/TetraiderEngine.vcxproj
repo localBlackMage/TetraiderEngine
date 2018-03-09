@@ -53,6 +53,7 @@
     <ClCompile Include="Source\FollowCamera.cpp" />
     <ClCompile Include="Source\ImguiManager.cpp" />
     <ClCompile Include="Source\LevelEditor.cpp" />
+    <ClCompile Include="Source\LightBase.cpp" />
     <ClCompile Include="Source\Microphone.cpp" />
     <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\ImguiManager.h" />
     <ClInclude Include="Source\LevelEditor.h" />
+    <ClInclude Include="Source\LightBase.h" />
     <ClInclude Include="Source\Microphone.h" />
     <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
