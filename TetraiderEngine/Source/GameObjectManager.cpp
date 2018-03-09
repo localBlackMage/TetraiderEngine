@@ -231,8 +231,18 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 void GameObjectManager::DestroyGameObjects() {
 	for (std::vector<GameObject*>::iterator it = mGameObjects.begin(); it != mGameObjects.end();) {
 		if ((*it)->m_isDestroy) {
+			// Remove GO from any layer it may be on
 			if ((*it)->GetLayer() != L_NOT_RENDERED)
 				m_layers[(*it)->GetLayer()].RemoveFromLayer(*it);
+
+			// Remove Any GO with a Light Comp from layers
+			if ((*it)->HasComponent(ComponentType::C_PointLight)/* or other lights here*/) {
+				LightBase* pLight = (*it)->GetComponent<PointLight>(C_PointLight);
+				for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
+					if (pLight->GetLayer(i))
+						m_layers[i].RemoveLightFromLayer((*it));
+				}
+			}
 
 			RemoveGameObjectsFromHealthList(*it);
 			if ((*it)->m_tag == T_Camera) {
