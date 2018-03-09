@@ -32,11 +32,10 @@ void AI_DashingEngage::OnUpdate(float dt) {
 		return;
 	}
 	else if (sinceEngage < 0.4f) {
-		pAgent->PlayAnimation(0); 
 		pAgent->MoveToPlayer();
 	}
 	else {
-		pAgent->PlayAnimation(1); // shaking
+		pAgent->PlayAnimation(2); // shaking
 		pAgent->StopMoving();
 	}
 
@@ -44,7 +43,7 @@ void AI_DashingEngage::OnUpdate(float dt) {
 }
 
 void AI_DashingEngage::OnExit(){
-	pAgent->PlayAnimation(0);
+	pAgent->ControlAnimationOnVelocity(true);
 }
 
 void AI_DashingEngage::HandleEvent(Event* pEvent) {

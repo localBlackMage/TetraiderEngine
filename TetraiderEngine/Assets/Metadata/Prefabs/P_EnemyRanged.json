@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 100,
+        "x": 110,
+        "y": 110,
         "z": 0
       },
       "pivotOffset": {
@@ -62,7 +62,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_BatEnemy02.png",
+      "Texture": "T_RedBat.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -71,11 +71,11 @@
         "u": 0,
         "v": 0
       },
-      "hasAlpha": true,
+      "lit": true,
       "tint": {
         "r": 1,
-        "g": 0,
-        "b": 0,
+        "g": 1,
+        "b": 1,
         "a": 1
       },
 	  "saturation": {
@@ -86,12 +86,32 @@
       }
     },
 	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 2,
+			"animationSpeed": 4,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 2,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
 		"Component": "Body",
 		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 35
+			"radius": 40
 		}
 	},
 	{

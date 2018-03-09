@@ -35,6 +35,7 @@ public:
 	Vector2D getNorm() const { return m_norm; }
 	float getNDotP0() const { return m_nDotP0; }
 	Vector2D getDirection() const { return m_direction; }
+	void SetLine(float x0, float y0, float x1, float y1);
 };
 
 #endif

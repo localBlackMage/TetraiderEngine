@@ -1,31 +1,16 @@
-//#include "RenderManager.h"
-//#include "TetraiderAPI.h"
-//#include "JsonReader.h"
-//#include "DebugLineMesh.h"
-//#include "ShaderProgram.h"
-//#include "Shader.h"
-//
-//#include "GameObject.h"
-//#include "Component.h"
-//#include "Transform.h"
-//#include "Camera.h"
-//#include "Sprite.h"
-//#include "ParticleEmitter.h"
-//#include "Text.h"
-//
-//#include "SDL_image.h"
-//#include <iostream>
-//#include <fstream>
-//#include <windows.h>
-
 #include <Stdafx.h>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
+	m_la(0.1f), m_lb(0.01f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
 	_InitWindow(title);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
+
+	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 }
 
 RenderManager::~RenderManager() 
@@ -94,13 +79,14 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
-	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, pSpriteComp->GetMesh().GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pSpriteComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
-
+	_BindMesh(pSpriteComp->GetMesh());
+	glUniform1i(SHADER_LOCATIONS::LIT, pSpriteComp->IsLit());
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
+	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
+	
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
@@ -120,9 +106,7 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 {
 	pParticleEmitterComp->BindBufferDatas();
 
-	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, pParticleEmitterComp->GetMesh().GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-
-	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pParticleEmitterComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+	_BindMesh(pParticleEmitterComp->GetMesh());
 
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pParticleEmitterComp->FrameWidth(), pParticleEmitterComp->FrameHeight());
 
@@ -146,9 +130,9 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 
 void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTransformComp)
 {
-	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, pTextComp->GetMesh().GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, pTextComp->GetMesh().GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+	_BindMesh(pTextComp->GetMesh());
 
+	glUniform1i(SHADER_LOCATIONS::LIT, false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pTextComp->FrameWidth(), pTextComp->FrameHeight());
 
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pTextComp->GetTintColor());
@@ -246,10 +230,20 @@ void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 void RenderManager::_SetUpCamera(const GameObject & camera)
 {
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
+	const Transform * transformComp = camera.GetComponent<Transform>(ComponentType::C_Transform);
 	glUseProgram(m_pCurrentProgram->GetProgram());
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
 	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
+	_BindUniform4(SHADER_LOCATIONS::CAMERA_POS, transformComp->GetPosition());
+}
+
+void RenderManager::_SetUpLights(const GameObjectLayer & gol)
+{
+	gol.BindBufferDatas();
+
+	glUniform1f(SHADER_LOCATIONS::L_A, m_la);
+	glUniform1f(SHADER_LOCATIONS::L_B, m_lb);
 }
 
 #pragma region Debug
@@ -405,6 +399,10 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
 
+#pragma endregion
+
+#pragma region Binds
+
 void RenderManager::_EnableAlphaTest()
 {
 	glDisable(GL_DEPTH_TEST);
@@ -421,9 +419,12 @@ void RenderManager::_EnableDepthTest()
 	glEnable(GL_DEPTH_TEST);
 }
 
-#pragma endregion
-
-#pragma region Binds
+void RenderManager::_BindMesh(const Mesh & mesh)
+{
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, mesh.GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::NORMAL, mesh.GetNormalBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+}
 
 void RenderManager::_BindGameObjectTransform(const GameObject & gameObject)
 {
@@ -492,6 +493,30 @@ void RenderManager::FrameEnd()
 	SDL_GL_SwapWindow(m_pWindow);
 }
 
+void RenderManager::HandleEvent(Event * p_event)
+{
+	switch (p_event->Type()) {
+	case EventType::EVENT_FPS_UPDATE:
+	{
+		int fps = (int)p_event->Data<FPSData>()->mFPS;
+		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
+		break;
+	}
+	case EVENT_LIGHT_A_DOWN:
+		m_la -= 0.01;
+		break;
+	case EVENT_LIGHT_A_UP:
+		m_la += 0.01;
+		break;
+	case EVENT_LIGHT_B_DOWN:
+		m_lb -= 0.01;
+		break;
+	case EVENT_LIGHT_B_UP:
+		m_lb += 0.01;
+		break;
+	}
+}
+
 #pragma region Window Methods
 
 void RenderManager::Resize(int width, int height)
@@ -499,14 +524,6 @@ void RenderManager::Resize(int width, int height)
 	m_width = width;
 	m_height = height;
 	glViewport(0, 0, width, height);
-}
-
-void RenderManager::HandleEvent(Event * p_event)
-{
-	if (p_event->Type() == EventType::EVENT_FPS_UPDATE) {
-		int fps = (int)p_event->Data<FPSData>()->mFPS;
-		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
-	}
 }
 
 void RenderManager::EnableWindowsCursor()
@@ -555,7 +572,7 @@ float RenderManager::GetAspectRatio() const
 
 #pragma endregion
 
-void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject)
+void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject, const GameObjectLayer& gol)
 {
 	//_RenderGameObject(go);
 
@@ -577,6 +594,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 		const Sprite* cpSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
 		_SelectShaderProgram(cpSpriteComp);
 		_SetUpCamera(camera);
+		_SetUpLights(gol);
 		if (cpSpriteComp->HasPosOffset())
 			_BindGameObjectTransformWithOffset(gameObject, cpSpriteComp->GetPosOffset());
 		else

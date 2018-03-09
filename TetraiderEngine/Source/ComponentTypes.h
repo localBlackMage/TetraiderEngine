@@ -3,6 +3,8 @@
 #ifndef COMPONENT_TYPES_H
 #define COMPONENT_TYPES_H
 
+static const std::string COMPONENTS = "COMPONENTS";
+
 // Macro trick to make Component types enums from the file ComponentTypesNames.h
 #define REGISTER_COMPONENT_TYPE(x) x,
 typedef enum

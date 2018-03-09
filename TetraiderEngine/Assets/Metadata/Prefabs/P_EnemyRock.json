@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 150,
-        "y": 150,
+        "x": 140,
+        "y": 140,
         "z": 0
       },
       "pivotOffset": {
@@ -73,7 +73,7 @@
         "u": 0,
         "v": 0
       },
-      "hasAlpha": true,
+      "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -89,12 +89,19 @@
     },
 	{
 		"Component": "Animation",
-		"defaultAnimation": 0,
+		"defaultAnimation": 1,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Walk",
+			"frames": 2,
+			"animationSpeed": 3,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
 			"frames": 1,
-			"animationSpeed": 16,
+			"animationSpeed": 8,
 			"isLooping": true,
 			"isPlayOnAwake": false
 		},
@@ -107,6 +114,13 @@
 		},
 		{
 			"Name": "Stun",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Dead",
 			"frames": 1,
 			"animationSpeed": 8,
 			"isLooping": true,

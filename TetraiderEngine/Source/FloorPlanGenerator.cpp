@@ -1,15 +1,3 @@
-//#include "FloorPlanGenerator.h"
-//#include "TetraiderAPI.h"
-//
-//#include "GameObject.h"
-//#include "Transform.h"
-//
-//#include <cstdlib>
-//#include <time.h>
-//#include <iostream>
-//#include <algorithm>
-//#include <filesystem>
-
 #include <Stdafx.h>
 
 static std::unordered_map<std::string, RoomConnections> ROOM_CONN_STRINGS = {

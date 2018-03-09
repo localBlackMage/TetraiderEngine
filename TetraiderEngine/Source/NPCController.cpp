@@ -20,12 +20,14 @@ NPCController::NPCController() :
 	m_zoneWidth(0.0f),
 	m_zoneHeight(0.0f),
 	m_arrivedAtDestination(true),
-	m_speedMultiplier(1.0f)
+	m_speedMultiplier(1.0f),
+	m_isAvoidObstacles(true),
+	m_isAvoidingObstacle(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
-	m_tagsToIgnore[0] = T_Enemy;
+	m_tagsToIgnore[0] = T_Projectile;
 	m_tagsToIgnore[1] = T_Player;
-	m_tagsToIgnore[2] = T_Projectile;
+	m_tagsToIgnore[2] = T_Enemy;
 }
 
 NPCController::~NPCController() {
@@ -57,7 +59,17 @@ void NPCController::Update(float dt) {
 
 	// Move to destination
 	if (!m_arrivedAtDestination && !IsArrivedAtDestination()) {
-		Vector3D dirToTarget = m_targetDestination - m_pTransform->GetPosition();
+		// Avoid Obstacles
+		AvoidObstacles(dt);
+		m_prevPos = m_pTransform->GetPosition();
+		Vector3D dirToTarget;
+		if (m_isAvoidingObstacle) {
+			dirToTarget = m_secondaryDestination - m_pTransform->GetPosition();
+		}
+		else {
+			dirToTarget = m_targetDestination - m_pTransform->GetPosition();
+		}
+
 		dirToTarget.Normalize();
 		m_targetVelocity = dirToTarget*m_speed*m_speedMultiplier;
 	}
@@ -76,24 +88,13 @@ void NPCController::LateUpdate(float dt) {
 		TETRA_DEBUG.DrawWireRectangle(m_startingPoint, Vector3D(), Vector3D(m_zoneWidth, m_zoneHeight, 0), DebugColor::WHITE);
 		if (!m_arrivedAtDestination) {
 			TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_targetDestination, DebugColor::CYAN);
+			if(m_isAvoidingObstacle)
+				TETRA_DEBUG.DrawLine(m_pTransform->GetPosition(), m_secondaryDestination, DebugColor::YELLOW);
+
 		}
 	}
 
-	// THIS CODE IS GARABGE, JUST FOR RAYCAST TESTING
-	/*GameObject* player = TETRA_GAME_OBJECTS.FindObjectWithTag(T_Player);
-	Transform* playerTransfrom = player->GetComponent<Transform>(ComponentType::C_Transform);
-	LineSegment2D ray(Vector2D(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y), Vector2D(playerTransfrom->GetPosition().x, playerTransfrom->GetPosition().y));
-	GameObjectTag tagsToIgnore[3];
-	tagsToIgnore[0] = T_Enemy;
-	tagsToIgnore[1] = T_Player;
-	tagsToIgnore[2] = T_Projectile;
-	if (!TETRA_PHYSICS.Raycast(ray, tagsToIgnore, 3)) {
-		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::WHITE);
-	}
-	else {
-		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
-	}*/
-	//---------------------------------
+	CheckForObstacleAvoidance();
 }
 
 void NPCController::Serialize(const json& j) {
@@ -140,15 +141,6 @@ void NPCController::LateInitialize() {
 	if(!m_pWeapon) {
 		if (pGO)
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
-		else {
-		//	printf("No Game Object found. NPC Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pWeapon) {
-		//	printf("No Weapon component found. NPC Controller component failed to operate.\n");
-			return;
-		}
 	}
 }
 
@@ -184,6 +176,7 @@ bool NPCController::IsPlayerOutOfSight() {
 
 void NPCController::StopMoving() {
 	m_targetDestination = m_pTransform->GetPosition();
+	m_isAvoidingObstacle = false;
 	m_arrivedAtDestination = true;
 }
 
@@ -204,6 +197,7 @@ void NPCController::SetDestinationToRandomPointInZone() {
 
 void NPCController::SetVelocityToZero() {
 	m_currentVelocity = Vector3D(0, 0, 0);
+	m_isAvoidingObstacle = false;
 	m_arrivedAtDestination = true;
 }
 
@@ -220,6 +214,10 @@ void NPCController::LookInDirectionOfMovement() {
 void NPCController::LookAtPlayer() {
 	m_lookDirection = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
 	m_lookDirection.Normalize();
+}
+
+bool NPCController::IsPlayerOutOfScreen() {
+	return GetSquareDistanceToPlayer() > TETRA_RENDERER.WindowWidth()*TETRA_RENDERER.WindowWidth();
 }
 
 void NPCController::LookAtPlayer(float offsetAngleDegrees) {
@@ -290,4 +288,109 @@ bool NPCController::IsTooFarFromStartingPoint() {
 
 void NPCController::GoToStartingPoint() {
 	SetTargetDestination(m_startingPoint);
+}
+
+void NPCController::CheckForObstacleAvoidance() {
+	// Player can see enemy, check for obstacle avoidance
+	if (IsPlayerOutOfScreen() || !m_isAvoidObstacles) {
+		m_isAvoidingObstacle = false;
+		return;
+	}
+
+	if (m_isAvoidingObstacle) return;
+
+	// Is there an obstacle right infront of me
+	Vector3D pos = m_pTransform->GetPosition();
+	Vector3D dirToTargetDestination = (m_targetDestination - m_pTransform->GetPosition());
+	dirToTargetDestination.Normalize();
+	LineSegment2D ray(pos.x, pos.y, dirToTargetDestination.x*ObstacleAvoidanceFrontCheack + pos.x, dirToTargetDestination.y*ObstacleAvoidanceFrontCheack + pos.y);
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO)) {
+		// No need to avoid obstacles
+		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::WHITE);
+		m_isAvoidingObstacle = false;
+		return;
+	}
+	else {
+		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
+		float angle = dirToTargetDestination.AngleDegrees() + ObstacleAvoidanceSideCheckAngle;
+		if (angle > 180.0f)	angle -= 360;
+		else if (angle < -180) angle += 360;
+
+		Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
+		ray.SetLine(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
+		if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO)) {
+			TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::WHITE);
+			angle = dirToTargetDestination.AngleDegrees() - ObstacleAvoidanceSideCheckAngle;
+			if (angle > 180.0f)	angle -= 360;
+			else if (angle < -180) angle += 360;
+
+			Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
+			ray.SetLine(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
+			if (TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO)) {
+				TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
+				m_avoidDirection = ObstacleAvoidanceDirection::LEFT;
+			}
+		}
+		else {
+			TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
+			m_avoidDirection = ObstacleAvoidanceDirection::RIGHT;
+		}
+
+		m_isAvoidingObstacle = true;
+		m_stuckTimer = 0.0f;
+	}
+}
+
+void NPCController::AvoidObstacles(float dt) {
+	if (!m_isAvoidingObstacle || !m_isAvoidObstacles) return;
+
+	Vector3D pos = m_pTransform->GetPosition();
+	Vector3D dirToTargetDestination = (m_targetDestination - m_pTransform->GetPosition());
+	dirToTargetDestination.Normalize();
+	float angle = 0;
+	
+	int sign = 1;
+
+	if (m_avoidDirection == ObstacleAvoidanceDirection::LEFT)
+		sign = -1;
+
+	angle = dirToTargetDestination.AngleDegrees() + ObstacleAvoidanceSideCheckAngle*sign;
+
+	if (angle >= 180.0f) angle -= 360;
+	else if (angle < -180.0f) angle += 360;
+
+	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
+	LineSegment2D ray(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
+	LineSegment2D rayForward(pos.x, pos.y, dirToTargetDestination.x*ObstacleAvoidanceFrontCheack + pos.x, dirToTargetDestination.y*ObstacleAvoidanceFrontCheack + pos.y);
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO) && !TETRA_PHYSICS.Raycast(rayForward, m_tagsToIgnore, 2, pGO)) {
+		m_isAvoidingObstacle = false;
+		m_stuckTimer = 0.0f;
+		return;
+	}
+	else {
+		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
+		TETRA_DEBUG.DrawLine(Vector3D(rayForward.getP0()), Vector3D(rayForward.getP1()), DebugColor::RED);
+		angle = dirToTargetDestination.AngleDegrees() - 70*sign;
+
+		if (angle >= 180.0f) angle -= 360;
+		else if (angle < -180.0f) angle += 360;
+
+		dir = Vector3D::VectorFromAngleDegrees(angle);
+		SetSecondaryTargetDestination(Vector3D(pos.x + dir.x*ObstacleAvoidanceSideCheck*4.0f, pos.y + dir.y*ObstacleAvoidanceSideCheck*4.0f, 0));
+	}
+
+	// Check if AI is stuck
+	/*if (Vector3D::SquareDistance(m_pTransform->GetPosition(), m_prevPos) < 1.0f)
+		m_stuckTimer += dt;
+	else
+		m_stuckTimer = 0;
+
+	if (m_stuckTimer > 0.2f) {
+		if (m_avoidDirection == ObstacleAvoidanceDirection::LEFT)
+			m_avoidDirection = ObstacleAvoidanceDirection::RIGHT;
+		else
+			m_avoidDirection = ObstacleAvoidanceDirection::LEFT;
+
+		m_stuckTimer = 0.0f;
+	}*/
 }

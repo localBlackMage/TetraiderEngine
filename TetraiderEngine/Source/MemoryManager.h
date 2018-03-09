@@ -13,12 +13,6 @@ Creation date: 2/1/18
 #ifndef MEMORYMANAGER_H
 #define MEMORYMANAGER_H
 
-//#include "GameObject.h"
-//#include "ComponentTypes.h"
-//
-//#include <cstdlib>
-//#include <vector>
-
 using namespace std;
 
 const int	 MAX_CACHE_SIZE_NUM = 100;			// # of Cacheable MemoryBlocks

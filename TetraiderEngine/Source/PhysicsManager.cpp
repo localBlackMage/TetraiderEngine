@@ -1,9 +1,3 @@
-//#include "PhysicsManager.h"
-//#include "GameObject.h"
-//#include "ComponentTypes.h"
-//#include "Body.h"
-//#include "TetraiderAPI.h"
-
 #include <Stdafx.h>
 
 PhysicsManager::PhysicsManager(): m_isSpatialParitioning(false) {
@@ -160,9 +154,10 @@ void PhysicsManager::GenerateContact(const Body& pBodyA, const Body& pBodyB, MTV
 	m_pContacts.push_back(pContact);
 }
 
-bool PhysicsManager::Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize) {
+bool PhysicsManager::Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize, GameObject* rayCastSource) {
 	for (unsigned int i = 0; i < m_gameObjects.size(); ++i) {
 		Body* pBody = m_gameObjects[i]->GetComponent<Body>(ComponentType::C_Body);
+		if (pBody->pGO == rayCastSource) continue;
 		
 		bool isIgnore = false;
 		for (int i = 0; i < layerSize; ++i) {

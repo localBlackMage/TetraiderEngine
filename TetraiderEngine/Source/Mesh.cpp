@@ -1,6 +1,3 @@
-//#include "Mesh.h"
-//#include "Math\Matrix4x4.h"
-
 #include <Stdafx.h>
 
 Mesh::Mesh() {}

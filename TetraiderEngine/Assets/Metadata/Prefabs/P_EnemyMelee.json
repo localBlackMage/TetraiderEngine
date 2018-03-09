@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 128,
-        "y": 128,
+        "x": 110,
+        "y": 110,
         "z": 0
       },
       "pivotOffset": {
@@ -71,7 +71,7 @@
         "u": 0,
         "v": 0
       },
-      "hasAlpha": true,
+      "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -111,6 +111,33 @@
 		}
 	},
 	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 5,
+			"animationSpeed": 6,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Dead",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
 		"Component": "Weapon",
 		"Attacks":[
 			{
@@ -123,7 +150,7 @@
 				"knockBackSpeed": 800
 			}
 		],
-		"weaponPrefab": "P_Sword",
+		"weaponPrefab": "P_RatSword",
 		"weaponOffset": {
 			"x": 0,
 			"y": 0,

@@ -1,11 +1,3 @@
-//#include "GameObject.h"
-//#include "Agent.h"
-//#include "Body.h"
-//#include "Transform.h"
-//#include "TetraiderAPI.h"
-//#include "Animation.h"
-//#include "Camera.h"
-//#include <iostream>
 
 #include <Stdafx.h>
 

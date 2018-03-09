@@ -2,16 +2,6 @@
 #ifndef PHYSICS_MANAGER_H
 #define PHYSICS_MANAGER_H
 
-//#include "Math/MathLibs.h"
-//#include "GameObjectTags.h"
-//#include "Event.h"
-//#include "Shape.h"
-//#include <vector>
-//#include "Subscriber.h"
-
-// Forward declaration
-//class GameObject;
-//class Body;
 class PhysicsManager;
 
 struct Contact {
@@ -63,7 +53,7 @@ public:
 	void HandleEvent(Event* pEvent);
 	void FireEventsToContacts();
 	void ClearContacts();
-	bool Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize);
+	bool Raycast(const LineSegment2D& ray, const GameObjectTag* pIgnoreLayer, int layerSize, GameObject* rayCastSource = nullptr);
 	
 	std::vector<GameObject*> m_gameObjects;
 private:

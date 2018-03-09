@@ -2,15 +2,10 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-//#include "Component.h"
-//#include "SurfaceTextureBuffer.h"
-//#include "Mesh.h"
-//#include "Math\MathLibs.h"
-//#include <string>
-
 class Sprite : public Component 
 {
 protected:	
+	bool m_isLit;
 	float m_xTiling;
 	float m_yTiling;
 	float m_uOffset;
@@ -34,6 +29,8 @@ public:
 
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
+
+	inline bool IsLit() const { return m_isLit; }
 
 	std::string GetSpriteName() const;
 	virtual void SetSprite(std::string spriteName);

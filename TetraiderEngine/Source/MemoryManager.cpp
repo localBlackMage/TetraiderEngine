@@ -10,18 +10,6 @@ Author: Hyoyup Chung
 Creation date: 2/1/18
 - End Header --------------------------------------------------------*/
 
-//#include "MemoryManager.h"
-//#include "TetraiderAPI.h"
-//#include "Component.h"
-//#include "ComponentTypes.h"
-//#include "GameObjectTags.h"
-//#include <iostream>
-//
-//// temp
-//#include <conio.h>
-//#include <chrono>
-//#include <vector>
-
 #include <Stdafx.h>
 
 static void PrintLinkedList(MemoryBlock* node) {

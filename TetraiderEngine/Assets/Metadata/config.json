@@ -114,6 +114,44 @@
 			"isJoystick": true,
 			"KeyBoardKey": 41,
 			"XboxKey": 6
+		},
+		
+		{
+			"Name": "LIGHT_A_DOWN",
+			"EventType": 10,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 47,
+			"XboxKey": 0
+		},
+		{
+			"Name": "LIGHT_A_UP",
+			"EventType": 11,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 48,
+			"XboxKey": 0
+		},
+		
+		{
+			"Name": "LIGHT_B_DOWN",
+			"EventType": 12,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 45,
+			"XboxKey": 0
+		},
+		{
+			"Name": "LIGHT_B_UP",
+			"EventType": 13,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": true,
+			"KeyBoardKey": 46,
+			"XboxKey": 0
 		}
 	]
 }

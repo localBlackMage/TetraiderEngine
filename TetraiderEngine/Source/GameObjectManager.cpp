@@ -1,22 +1,6 @@
-//#include "GameObjectManager.h"
-//#include "GameObject.h"
-//#include "Component.h"
-//#include "Camera.h"
-//#include "Transform.h"
-//#include "Sorting.h"
-//#include "TetraiderAPI.h"
-//#include <conio.h>
-//#include <chrono>
-//
-//#include <fstream>
-//#include <iostream>
-
 #include <Stdafx.h>
 
-//using namespace JsonReader;
-static const std::string COMPONENTS = "COMPONENTS";
-
-static bool LeftYGreaterThanRightY(GameObject*left, GameObject*right) 
+static bool LeftYGreaterThanRightY(GameObject*left, GameObject*right)
 {
 	Transform* tLeft = left->GetComponent<Transform>(ComponentType::C_Transform);
 	Transform* tRight = right->GetComponent<Transform>(ComponentType::C_Transform);
@@ -34,6 +18,14 @@ static bool LeftYGreaterThanOrEqualToRightY(GameObject*left, GameObject*right)
 
 #pragma region GameObjectLayer
 
+GameObjectLayer::GameObjectLayer()
+{
+	//std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + (MAX_LIGHTS * 4), 0.f);
+	std::fill(m_lightColors, m_lightColors + (MAX_LIGHTS * 4), 255);
+	m_lightColorsBuffer = TETRA_RENDERER.GenerateStreamingVBO(MAX_LIGHTS * 4 * sizeof(GLubyte));
+	m_m_lightPositionsAndDistancesBuffer = TETRA_RENDERER.GenerateStreamingVBO(MAX_LIGHTS * 4 * sizeof(GLfloat));
+}
+
 GameObjectLayer::GameObjectLayer(const GameObjectLayer & rhs) : m_layerObjects(rhs.m_layerObjects) {}
 
 void GameObjectLayer::operator=(const GameObjectLayer & rhs)
@@ -45,7 +37,7 @@ void GameObjectLayer::RenderLayer(GameObject* camera)
 {
 	for (GameObject* pGO : m_layerObjects) {
 		if (pGO->m_isActive && pGO->m_isRender)
-			TETRA_RENDERER.RenderGameObject(*camera, *pGO);
+			TETRA_RENDERER.RenderGameObject(*camera, *pGO, *this);
 	}
 }
 
@@ -68,12 +60,80 @@ void GameObjectLayer::RemoveFromLayer(GameObject * pGO)
 	);
 }
 
+void GameObjectLayer::AddLightToLayer(GameObject * pGO)
+{
+	int idx = m_layerLights.size() * 4;
+	m_layerLights.push_back(pGO);
+
+	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
+
+	m_lightColors[idx + 0] = pLightComp->Red();
+	m_lightColors[idx + 1] = pLightComp->Green();
+	m_lightColors[idx + 2] = pLightComp->Blue();
+	m_lightColors[idx + 3] = pLightComp->Alpha();
+
+	Vector3D pos = pLightComp->GetPosition();
+	m_lightPositionsAndDistances[idx + 0] = pos.x;
+	m_lightPositionsAndDistances[idx + 1] = pos.y;
+	m_lightPositionsAndDistances[idx + 2] = pos.z;
+	m_lightPositionsAndDistances[idx + 3] = pLightComp->Distance();
+}
+
+void GameObjectLayer::RemoveLightFromLayer(GameObject * pGO)
+{
+	m_layerLights.erase(
+		std::find(m_layerLights.begin(), m_layerLights.end(), pGO),
+		m_layerLights.end()
+	);
+}
+
+void GameObjectLayer::Update()
+{
+	for (int i = 0; i < m_layerLights.size(); ++i) {
+		int idx = i * 4;
+		PointLight* pPointLightComp = m_layerLights[i]->GetComponent<PointLight>(ComponentType::C_PointLight);
+
+		m_lightColors[idx + 0] = pPointLightComp->Red();
+		m_lightColors[idx + 1] = pPointLightComp->Green();
+		m_lightColors[idx + 2] = pPointLightComp->Blue();
+		m_lightColors[idx + 3] = pPointLightComp->Alpha();
+
+		Vector3D pos = pPointLightComp->GetPosition();
+		m_lightPositionsAndDistances[idx + 0] = pos.x;
+		m_lightPositionsAndDistances[idx + 1] = pos.y;
+		m_lightPositionsAndDistances[idx + 2] = pos.z;
+		m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
+	}
+	m_numLights = m_layerLights.size();
+}
+
 void GameObjectLayer::ClearLayer()
 {
 	m_layerObjects.clear();
 }
 
+void GameObjectLayer::BindBufferDatas() const
+{
+	float colors[MAX_LIGHTS * 4];
+	//std::fill(colors, colors + (MAX_LIGHTS * 4), 0.f);
+	for (int i = 0; i < m_numLights; ++i) {
+		int idx = i * 4;
+		PointLight* pPointLightComp = m_layerLights[i]->GetComponent<PointLight>(ComponentType::C_PointLight);
+
+		colors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
+		colors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
+		colors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
+		colors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
+	}
+
+
+	glUniform4fv(SHADER_LOCATIONS::L_COLOR, MAX_LIGHTS, colors);
+	glUniform4fv(SHADER_LOCATIONS::L_POS_DIST, MAX_LIGHTS, m_lightPositionsAndDistances);
+}
+
 #pragma endregion
+
+#pragma region GameObjectManager
 
 GameObjectManager::GameObjectManager() : m_currentId(0) {}
 
@@ -93,17 +153,18 @@ void GameObjectManager::Update(float dt) {
 void GameObjectManager::UpdateStatus() {
 	DestroyGameObjects();
 	AddGameObjectsFromQueueToMainVector();
-	
+
 }
 
 void GameObjectManager::LateUpdate(float dt) {
 	for (auto gameObject : mGameObjects) {
-		 if (gameObject->m_isActive)
-			 gameObject->LateUpdate(dt);
+		if (gameObject->m_isActive)
+			gameObject->LateUpdate(dt);
 	}
 
 	for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
 		m_layers[layer].ReSortLayer();
+		m_layers[layer].Update();
 	}
 }
 
@@ -162,13 +223,26 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 	if (pGO->HasComponent(ComponentType::C_Health)) {
 		mGameObjectsWithHealthComponents.push_back(pGO);
 	}
+	if (pGO->HasComponent(ComponentType::C_PointLight)/* or other lights here*/) {
+		_InsertLightIntoLayers(pGO);
+	}
 }
 
 void GameObjectManager::DestroyGameObjects() {
 	for (std::vector<GameObject*>::iterator it = mGameObjects.begin(); it != mGameObjects.end();) {
 		if ((*it)->m_isDestroy) {
+			// Remove GO from any layer it may be on
 			if ((*it)->GetLayer() != L_NOT_RENDERED)
 				m_layers[(*it)->GetLayer()].RemoveFromLayer(*it);
+
+			// Remove Any GO with a Light Comp from layers
+			if ((*it)->HasComponent(ComponentType::C_PointLight)/* or other lights here*/) {
+				LightBase* pLight = (*it)->GetComponent<PointLight>(C_PointLight);
+				for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
+					if (pLight->GetLayer(i))
+						m_layers[i].RemoveLightFromLayer((*it));
+				}
+			}
 
 			RemoveGameObjectsFromHealthList(*it);
 			if ((*it)->m_tag == T_Camera) {
@@ -283,6 +357,16 @@ void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
 		m_layers[pGO->GetLayer()].AddToLayer(pGO);
 }
 
+void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
+{
+	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
+
+	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
+		if (pLightComp->GetLayer(i))
+			m_layers[i].AddLightToLayer(pGO);
+	}
+}
+
 RENDER_LAYER GameObjectManager::GetLayerFromString(std::string layerName) {
 	return RENDER_LAYER_STRINGS[layerName];
 }
@@ -294,3 +378,5 @@ void GameObjectManager::RemoveGameObjectsFromHealthList(GameObject* pGO) {
 			mGameObjectsWithHealthComponents.erase(it);
 	}
 }
+
+#pragma endregion

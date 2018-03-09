@@ -1,10 +1,11 @@
 #version 430
 
 layout(location = 0) in vec4 position;
-layout(location = 1) in vec2 texture_coord;
-layout(location = 2) in vec4 p_pos_size;
-layout(location = 3) in vec4 p_color;
-layout(location = 4) in vec2 p_texture_coord;
+layout(location = 1) in vec4 normal;
+layout(location = 2) in vec2 texture_coord;
+layout(location = 3) in vec4 p_pos_size;
+layout(location = 4) in vec4 p_color;
+layout(location = 5) in vec2 p_texture_coord;
 
 layout(location = 10) uniform mat4 persp_matrix;
 layout(location = 11) uniform mat4 view_matrix;

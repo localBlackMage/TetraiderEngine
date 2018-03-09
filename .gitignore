@@ -308,5 +308,9 @@ OpenCover/
 !TetraiderEngine/GL/lib/*
 TetraiderEngine/Source/Math/*.o
 TetraiderEngine/Source/Math/*.exe
+TetraiderEngine/Shaders/*
+TetraiderEngine/Images/*
+gliInterceptLog.txt
+gliLog.txt
 
 ~AutoRecover.*

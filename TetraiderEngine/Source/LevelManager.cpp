@@ -1,11 +1,3 @@
-//#include "GameObject.h"
-//#include "LevelManager.h"
-//#include "TetraiderAPI.h"
-//#include "Transform.h"
-//#include "Body.h"
-//#include "Shape.h"
-//#include <iostream>
-
 #include <Stdafx.h>
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";

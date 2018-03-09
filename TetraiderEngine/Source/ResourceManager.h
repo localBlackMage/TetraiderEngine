@@ -16,21 +16,6 @@ Creation date: 1/17/18
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 
-//#include "Mesh.h"
-//#include "DebugLineMesh.h"
-//#include "SurfaceTextureBuffer.h"
-//#include <unordered_map>
-//#include <utility>
-//#include "fmod_errors.h"
-//#include "fmod_studio.hpp"
-//#include "fmod.hpp"
-//#include "JsonReader.h"
-
-//#include "SDL_image.h"
-
-//using json = nlohmann::json;
-//using namespace JsonReader;
-
 enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
 
 class ResourceManager
