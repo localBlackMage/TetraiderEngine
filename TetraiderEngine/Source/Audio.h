@@ -34,11 +34,14 @@ public:
 private:
 	std::string m_audioClip;
 	float m_volume;
+	//min and max values for sound attenuation to have effect
+	float m_minDist, m_maxDist;
 	bool m_Ismute;
 	bool m_isLoop;
 	bool m_is3D;
 	bool m_isPlayOnAwake;
 	bool m_isBGM;
+	float m_fadeTime;
 	int fadeState;
 	//0-none, 1-fade in, 2-fade out.
 };

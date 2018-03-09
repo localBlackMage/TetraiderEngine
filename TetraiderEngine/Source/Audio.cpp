@@ -28,9 +28,15 @@ void Audio::Serialize(const json& j)
 	m_isPlayOnAwake = ParseBool(j, "isPlayOnAwake");
 	m_isBGM = ParseBool(j, "isBGM");
 	m_is3D = ParseBool(j, "is3D");
+	m_minDist = ParseFloat(j,"minDistance");
+	m_maxDist = ParseFloat(j, "maxDistance");
+	m_fadeTime= ParseFloat(j, "fadeTime");
 
 	if (m_isBGM)
+	{
 		TETRA_RESOURCES.LoadSong(m_audioClip);
+		TETRA_AUDIO.SetFadeTime(m_fadeTime);
+	}	
 	else
 		TETRA_RESOURCES.LoadSFX(m_audioClip);
 }
@@ -48,9 +54,9 @@ void Audio::Play()
 		TETRA_AUDIO.PlaySong(m_audioClip, m_volume);	
 	}
 	else if (m_Ismute)
-		TETRA_AUDIO.PlaySFX(m_audioClip, 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+		TETRA_AUDIO.PlaySFX(m_audioClip, 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(),m_minDist,m_maxDist);
 	else
-		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
 }
 
 void Audio::LateInitialize()

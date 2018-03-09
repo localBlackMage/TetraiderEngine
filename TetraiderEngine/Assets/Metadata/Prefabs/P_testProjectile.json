@@ -64,12 +64,14 @@
 	{
 		"Component": "Audio",
 		"audioClip": "pew1.mp3",
-		"volume": 0.2,
+		"volume": 0.6,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
 		"isBGM": false,
-		"is3D":true
+    "is3D":false,
+    "minDistance": 20,
+    "maxDistance": 900
 	}
   ]
 }

@@ -152,13 +152,14 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "bgm.mp3",
-		"volume": 0.05,
+		"audioClip": "wind.mp3",
+		"volume": 0.2,
 		"isMute": false,
 		"isLoop": true,
 		"isPlayOnAwake": true,
 		"isBGM": true,
-		"is3D":false
+		"is3D":false,
+		"fadeTime": 1
 	}
   ]
 }

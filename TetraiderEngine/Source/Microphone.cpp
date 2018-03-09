@@ -7,10 +7,8 @@
 #include <Stdafx.h>
 
 Microphone::Microphone():Component(ComponentType::C_Microphone)
-{
-	
+{	
 }
-
 
 Microphone::~Microphone()
 {

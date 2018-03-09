@@ -60,6 +60,7 @@ void AudioManager::Update(float elapsed)
 {
 	float vol;
 	m_pCurrentSongChannel->getVolume(&vol);
+	ScaledVol(vol);
 	std::cout << "Music volume :" << vol << "\n";
 
 	//TEST part
@@ -90,7 +91,7 @@ void AudioManager::Update(float elapsed)
 		float volume;
 		ErrorCheck(m_pCurrentSongChannel->getVolume(&volume));
 		float nextVolume = volume + elapsed / m_fadeTime;
-		if (nextVolume >= m_musicVol)
+		if (nextVolume >= ScaledVol(m_musicVol))
 		{
 			ErrorCheck(m_pCurrentSongChannel->setVolume(m_musicVol));
 			m_fade = FADE_NONE;
@@ -125,8 +126,9 @@ void AudioManager::Update(float elapsed)
 	ErrorCheck(m_pSystem->update());
 }
 
-void AudioManager::PlaySFX(const std::string & name, float volume, bool loop, bool is3D, Vector3D SourcePos)
+void AudioManager::PlaySFX(const std::string & name, float volume, bool loop, bool is3D, Vector3D SourcePos,float minDis,float maxDist)
 {
+	volume = ScaledVol(volume);
 	// Try to find sound effect and return if not found 
 	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + name, SFX);
 	if (!sound)
@@ -143,18 +145,12 @@ void AudioManager::PlaySFX(const std::string & name, float volume, bool loop, bo
 		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_LOOP_NORMAL));
 	else if (is3D)
 	{
-		FMOD_VECTOR curve[3] =
-		{
-			{ 0.0f,  1.0f, 0.0f },
-		{ 2.0f,  0.2f, 0.0f },
-		{ 15.0f, 0.0f, 0.0f }
-		};
+	
 		ErrorCheck(channel->setMode(FMOD_DEFAULT | FMOD_3D| FMOD_3D_LINEARSQUAREROLLOFF));
 		FMOD_VECTOR position = VectorToFmod(SourcePos);
 		ErrorCheck(channel->set3DAttributes(&position, NULL));
-		//ErrorCheck(sound->set3DCustomRolloff(curve,3));
-		
-		channel->set3DMinMaxDistance(20.0f, 900.0f);
+		//channel->set3DMinMaxDistance(20.0f, 900.0f);
+		channel->set3DMinMaxDistance(minDis, maxDist);
 	}
 	//set to the channel grp it belongs
 	ErrorCheck(channel->setChannelGroup(m_pGroups[SFX]));
@@ -187,7 +183,7 @@ void AudioManager::PlaySFX(const std::string & name, float volume)
 void AudioManager::PlaySong(const std::string & name, float volume)
 {
 	//store music volume
-	m_musicVol = volume;
+	m_musicVol = ScaledVol(volume);
 
 	//ignore if song already playing
 	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
@@ -374,13 +370,11 @@ void AudioManager::SetFadeTime(float time)
 	m_fadeTime = time;
 }
 
-//void AudioManager::Set3dListener()
-//{
-//    Transform* pTrans;
-//	pTrans = m_pCameraObj->GetComponent<Transform>(ComponentType::C_Transform);
-//	FMOD_VECTOR position = VectorToFmod(pTrans->GetPosition());
-//	m_pSystem->set3DListenerAttributes(0, &position, 0, 0, 0);
-//}
+float AudioManager::ScaledVol(float vol)
+{
+	return vol / 10.0f;
+}
+
 
 
 

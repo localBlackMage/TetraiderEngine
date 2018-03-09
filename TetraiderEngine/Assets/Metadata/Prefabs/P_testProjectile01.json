@@ -63,13 +63,15 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "pew1.mp3",
-		"volume": 0.2,
+		"audioClip": "cannon.wav",
+		"volume": 0.8,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
 		"isBGM": false,
-		"is3D":true
+    "is3D":true,
+    "minDistance": 20,
+    "maxDistance": 1100
 	}
   ]
 }

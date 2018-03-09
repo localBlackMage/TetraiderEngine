@@ -32,7 +32,7 @@ public:
 	void operator=(const AudioManager &) = delete;
 
 	void Update(float elapsed);
-	void PlaySFX(const std::string& path, float volume, bool loop, bool is3D, Vector3D SourcePos);
+	void PlaySFX(const std::string& path, float volume, bool loop, bool is3D, Vector3D SourcePos,float,float);
 	void PlaySFX(const std::string& path, float volume);
 	void PlaySong(const std::string& path, float volume);
 	void StopAllSFXs();
@@ -61,7 +61,9 @@ public:
 	void SetFadeTime(float time);
 	FMOD::Channel* getSongChannel() { return m_pCurrentSongChannel; }
 	enum FadeState { FADE_NONE, FADE_IN, FADE_OUT };
+	
 private:
+	float ScaledVol(float);
 	FMOD::System* m_pSystem;
 	FMOD::ChannelGroup* m_pMaster;
 	FMOD::ChannelGroup* m_pGroups[2];
