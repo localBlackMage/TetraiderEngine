@@ -17,6 +17,7 @@ void AI_DashingAttack::OnEnter(){
 	triedSofar = 0.0f;
 	tryTime = 1.5f;
 	pAgent->SetAvoidObstacles(false);
+	pAgent->PlayAnimation(1);
 }
 
 void AI_DashingAttack::OnUpdate(float dt){
@@ -34,6 +35,7 @@ void AI_DashingAttack::OnUpdate(float dt){
 void AI_DashingAttack::OnExit(){
 	pAgent->SetSpeedMultiplier(1.0f);
 	pAgent->SetAvoidObstacles(true);
+	pAgent->ControlAnimationOnVelocity(true);
 }
 
 void AI_DashingAttack::HandleEvent(Event* pEvent) {

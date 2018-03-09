@@ -54,6 +54,7 @@ public:
 	void SetSpeedMultiplier(float speedMultiplier) { m_speedMultiplier = speedMultiplier; }
 	bool RollDie(float probability);
 	void SetAvoidObstacles(bool active) { m_isAvoidObstacles = active; }
+	void ControlAnimationOnVelocity(bool active) { m_isControlAnimationOnVelocity = active; }
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
