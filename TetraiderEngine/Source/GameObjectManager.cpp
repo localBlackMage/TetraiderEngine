@@ -216,7 +216,7 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 	m_GameObjectsQueue.clear();
 }
 
-GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
+GameObject* GameObjectManager::CreateGameObject(const std::string& name, bool isCreateAtPos, const Vector3D& position) {
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
 
 	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(TagNameText[FindTagWithString(name)], ++m_currentId);
@@ -231,6 +231,13 @@ GameObject* GameObjectManager::CreateGameObject(const std::string& name) {
 		Component* pComponent = TETRA_COMPONENTS.CreateComponent(ParseString((*j)[COMPONENTS][i], "Component"));
 		pGameObject->AddComponent(pComponent);
 		pComponent->Serialize((*j)[COMPONENTS][i]);
+	}
+
+	if (isCreateAtPos) {
+		Transform* pTransform = pGameObject->GetComponent<Transform>(C_Transform);
+		if (pTransform) {
+			pTransform->SetPosition(position);
+		}
 	}
 
 	pGameObject->LateInitialize();

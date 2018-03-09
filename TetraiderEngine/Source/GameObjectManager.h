@@ -79,7 +79,7 @@ public:
 	void SetPrimaryCamera(GameObject* pCameraGO) { m_pPrimaryCamera = pCameraGO; }
 	GameObject* GetPrimaryCamera() const { return m_pPrimaryCamera; }
 
-	GameObject* CreateGameObject(const std::string& name);
+	GameObject* CreateGameObject(const std::string& name, bool isCreateAtPos = false, const Vector3D& position = Vector3D());
 	GameObjectTag GameObjectManager::FindTagWithString(std::string tag);
 	GameObject* FindObjectWithTag(GameObjectTag tag);
 	RENDER_LAYER GetLayerFromString(std::string layerName);

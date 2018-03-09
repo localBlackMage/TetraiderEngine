@@ -23,7 +23,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 
 	Transform* pTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
 	Vector3D instantiatePos = pTransform->GetPosition() + m_offset*direction;
-	GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab);
+	GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab, true, instantiatePos);
 	Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 
 	bool isEnemyProjectile = false;
@@ -31,7 +31,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 		isEnemyProjectile = true;
 
 	// TODO: Change base damage to take into consideration character stats
-	pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
+	pProjectile->SetProperties(m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
 	return true;
 }
 

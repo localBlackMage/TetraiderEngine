@@ -49,8 +49,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 	}
 }
 
-void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile, float knockBackSpeed, GameObject* owner) {
-	m_pTransform->SetPosition(position);
+void Projectile::SetProperties(int damage, float speed, const Vector3D& dir, float lifeTime, bool isEnemyProjectile, float knockBackSpeed, GameObject* owner) {
 	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x)*180/PI);
 	m_damage = damage;
 	m_lifeTime = lifeTime;
@@ -67,8 +66,7 @@ void Projectile::SetProperties(const Vector3D& position, int damage, float speed
 		m_pAudio->Play();
 }
 
-void Projectile::SetProperties(const Vector3D& position, int damage, float speed, const Vector3D& dir, float lifeTime, float knockBackSpeed, GameObject* owner) {
-	m_pTransform->SetPosition(position);
+void Projectile::SetProperties(int damage, float speed, const Vector3D& dir, float lifeTime, float knockBackSpeed, GameObject* owner) {
 	m_pTransform->SetAngleZ(atan2f(dir.y, dir.x) * 180 / PI);
 	m_damage = damage;
 	m_lifeTime = lifeTime;

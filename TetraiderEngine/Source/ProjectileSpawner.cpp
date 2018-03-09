@@ -29,10 +29,10 @@ void ProjectileSpawner::Update(float dt) {
 			if (Vector3D::SquareDistance(pPlayerTransform->GetPosition(), m_pTransform->GetPosition()) > 640000) return;*/
 
 			Vector3D instantiatePos = m_pTransform->GetPosition() + m_instantiationOffset*m_diriection;
-			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab);
+			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab, true, instantiatePos);
 			Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 			bool isEnemyProjectile = true;
-			pProjectile->SetProperties(instantiatePos, m_baseDamage, m_projectileSpeed, m_diriection, m_lifeTime, m_knockBackSpeed, pGO);
+			pProjectile->SetProperties(m_baseDamage, m_projectileSpeed, m_diriection, m_lifeTime, m_knockBackSpeed, pGO);
 		}
 	}
 }
