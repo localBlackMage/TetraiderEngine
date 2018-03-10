@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 72,
-        "y": 72,
+        "x": 130,
+        "y": 130,
         "z": 0
       },
       "pivotOffset": {
@@ -27,43 +27,42 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 150,
-			"acceleration": 7,
+			"speed": 118,
+			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 300,
-		"outOfSightRadius": 350,
-		"zoneWidth": 64,
-		"zoneHeight": 64,
-		"attackRange": 250,
+		"detectionRadius": 550,
+		"outOfSightRadius": 650,
+		"zoneWidth": 350,
+		"zoneHeight": 320,
+		"attackRange": 500,
 		"AIStates": [
-      {
-        "name": "NPC_IDLE",
-        "behaviorIndex": 0,
-        "AIStateType": "NPC_State_Idle"
-      },
-      { "name": "NPC_ENGAGE",
-        "behaviorIndex": 1,
-        "AIStateType": "NPC_State_WalkTowardPlayerEngage"
-      },
-      { "name": "attackBehavior",
-        "behaviorIndex": 2,       
-        "AIStateType": "NPC_State_WalkTowardPlayerAttack"
-      },
-      {
-        "name": "NPC_MOVETORANDOMPOINTINZONE",
-        "behaviorIndex": 4,
-        "AIStateType": "NPC_State_Idle"
-      },
-      { "name": "NPC_STUNNED",
-        "behaviorIndex": 5,
-        "AIStateType": "NPC_State_IdleForDuration"
-      }
-    ]
+			{
+				"name": "idleBehavior",
+				"behaviorIndex": 0,
+				"AIStateType": "NPC_State_Idle"
+			},
+			{	"name": "engageBehavior",
+				"behaviorIndex": 1,
+				"AIStateType": "NPC_State_Engage"
+			},
+			{	"name": "attackBehavior",
+				"behaviorIndex": 2,				
+				"AIStateType": "NPC_State_Attack"
+			},
+			{	"name": "retreatBehavior",
+				"behaviorIndex": 3,
+				"AIStateType": "NPC_State_Retreat"
+			},
+			{	"name": "moveToRandomPointInZoneBehavior",
+				"behaviorIndex": 4,
+				"AIStateType": "NPC_State_MoveToRandomPointInZone"
+			}
+		]
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_BatEnemy.png",
+      "Texture": "T_DragonEnemy.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -98,7 +97,14 @@
 			"isPlayOnAwake": false
 		},
 		{
-			"Name": "Sleep",
+			"Name": "Idle",
+			"frames": 2,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},		
+		{
+			"Name": "Death",
 			"frames": 1,
 			"animationSpeed": 8,
 			"isLooping": true,
@@ -112,13 +118,13 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 25
+			"radius": 40
 		}
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 30,
-		"maxHealth": 30,
+		"startingHealth": 40,
+		"maxHealth": 40,
 		"isInvincible": false
 	},
 	{
@@ -132,9 +138,28 @@
 		}
 	},
 	{
-		"Component": "DealDamageOnCollision",
-		"damage": 4,
-		"knockBackSpeed": 600
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Ranged",
+				"coolDown": 0.6,
+				"baseDamage": 3,
+				"projectileSpeed": 500,
+				"ammo": 0,
+				"isUnlimitedAmmo": true,
+				"instantiationOffset": 50,
+				"lifeTime": 1.5,
+				"multipleShots": 3,
+				"coneAngle": 15,
+				"projectilePrefab": "P_testProjectile",
+				"knockBackSpeed": 300
+			}
+		],
+		"rotationOffset": 0
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"prefab": "P_EggPickUp"
 	},
 	{
 		"Component": "SpawnOnHealthZero",
@@ -142,11 +167,11 @@
 		"RandomDrops": [
 			{
 				"prefab": "P_AmmoPickUp",
-				"weight": 10
+				"weight": 20
 			},
 			{
 				"prefab": "P_MeatPickup",
-				"weight": 5
+				"weight": 50
 			},
 			{
 				"prefab": "",

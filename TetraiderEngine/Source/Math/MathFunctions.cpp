@@ -28,15 +28,22 @@ static void _GeneratePascalRow(unsigned short degree) {
 	pascalTriangle[degree] = row;
 }
 
-Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t) {
-	return Vector3D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t), Lerp(vectorA.z, vectorB.z, t), Lerp(vectorA.w, vectorB.w, t));
+Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t, bool isEaseIn, bool isEaseOut) {
+	return Vector3D(Lerp(vectorA.x, vectorB.x, t, isEaseIn, isEaseOut), Lerp(vectorA.y, vectorB.y, t, isEaseIn, isEaseOut), Lerp(vectorA.z, vectorB.z, t, isEaseIn, isEaseOut), Lerp(vectorA.w, vectorB.w, t, isEaseIn, isEaseOut));
 }
 
-Vector2D Lerp(const Vector2D& vectorA, const Vector2D& vectorB, float t) {
-	return Vector2D(Lerp(vectorA.x, vectorB.x, t), Lerp(vectorA.y, vectorB.y, t), Lerp(vectorA.w, vectorB.w, t));
+Vector2D Lerp(const Vector2D& vectorA, const Vector2D& vectorB, float t, bool isEaseIn, bool isEaseOut) {
+	return Vector2D(Lerp(vectorA.x, vectorB.x, t, isEaseIn, isEaseOut), Lerp(vectorA.y, vectorB.y, t, isEaseIn, isEaseOut), Lerp(vectorA.w, vectorB.w, t, isEaseIn, isEaseOut));
 }
 
-float Lerp(float valueA, float valueB, float t) {
+float Lerp(float valueA, float valueB, float t, bool isEaseIn, bool isEaseOut) {
+	if (isEaseIn) {
+		t = 1 - cosf(t*PI*0.5f);
+	}
+	else if (isEaseOut) {
+		t = sinf(t*PI*0.5f);
+	}
+
 	if (t > 1)
 		t = 1;
 	else if (t < 0)

@@ -162,7 +162,7 @@
       }
     },
 	{
-      "prefab": "P_EnemyMelee",
+      "prefab": "P_EnemyDragon",
       "position": {
         "x": 1800,
         "y": -150,

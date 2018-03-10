@@ -19,7 +19,7 @@ void ScriptedAnimation::Update(float dt) {
 			m_translationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_translationSpeed;
 			if (m_translationT > 1) m_translationT = 1;
 
-			m_pTransform->SetPosition(Lerp(m_startPos, m_scriptedAnimation[m_currentAnimationIndex].m_finalPos, m_translationT));
+			m_pTransform->SetPosition(Lerp(m_startPos, m_scriptedAnimation[m_currentAnimationIndex].m_finalPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_translationT = 1;
@@ -28,7 +28,7 @@ void ScriptedAnimation::Update(float dt) {
 			m_rotationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_rotationSpeed;
 			if (m_rotationT > 1) m_rotationT = 1;
 
-			m_pTransform->SetAngleZ(Lerp(m_startRot, m_scriptedAnimation[m_currentAnimationIndex].m_finalZRotation, m_rotationT));
+			m_pTransform->SetAngleZ(Lerp(m_startRot, m_scriptedAnimation[m_currentAnimationIndex].m_finalZRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_rotationT = 1;
@@ -37,7 +37,7 @@ void ScriptedAnimation::Update(float dt) {
 			m_scaleT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_scaleSpeed;
 			if (m_scaleT > 1) m_scaleT = 1;
 
-			m_pTransform->SetScale(Lerp(m_startScale, m_scriptedAnimation[m_currentAnimationIndex].m_finalScale, m_scaleT));
+			m_pTransform->SetScale(Lerp(m_startScale, m_scriptedAnimation[m_currentAnimationIndex].m_finalScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_scaleT = 1;
@@ -61,7 +61,9 @@ void ScriptedAnimation::Serialize(const json& j) {
 			ParseFloat(j["ScriptedAnimation"][i], "scaleSpeed"),
 			ParseBool(j["ScriptedAnimation"][i], "isTranslate"),
 			ParseBool(j["ScriptedAnimation"][i], "isScale"),
-			ParseBool(j["ScriptedAnimation"][i], "isRotate")
+			ParseBool(j["ScriptedAnimation"][i], "isRotate"),
+			ParseBool(j["ScriptedAnimation"][i], "isEaseIn"),
+			ParseBool(j["ScriptedAnimation"][i], "isEaseOut")
 		));
 	}
 

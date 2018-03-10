@@ -3,7 +3,7 @@
 #define SCRIPTED_ANIMATION_H
 
 struct ScriptedAnimationData {
-	ScriptedAnimationData(const Vector3D& finalPos, float translationSpeed, float finalZRotation, float rotationSpeed, const Vector3D& finalScale, float scaleSpeed, bool isTranslate, bool isScale, bool isRotate) :
+	ScriptedAnimationData(const Vector3D& finalPos, float translationSpeed, float finalZRotation, float rotationSpeed, const Vector3D& finalScale, float scaleSpeed, bool isTranslate, bool isScale, bool isRotate, bool isEaseIn, bool isEaseOut) :
 		m_finalPos(finalPos),
 		m_translationSpeed(translationSpeed),
 		m_finalZRotation(finalZRotation),
@@ -12,7 +12,9 @@ struct ScriptedAnimationData {
 		m_scaleSpeed(scaleSpeed),
 		m_isTranslate(isTranslate),
 		m_isScale(isScale),
-		m_isRotate(isRotate)
+		m_isRotate(isRotate),
+		m_isEaseIn(isEaseIn),
+		m_isEaseOut(isEaseOut)
 	{}
 	Vector3D m_finalPos;
 	float m_translationSpeed;
@@ -23,6 +25,8 @@ struct ScriptedAnimationData {
 	bool m_isTranslate;
 	bool m_isScale;
 	bool m_isRotate;
+	bool m_isEaseIn;
+	bool m_isEaseOut;
 };
 
 class ScriptedAnimation : public Component {

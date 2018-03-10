@@ -97,10 +97,12 @@
 				"y" : 100,
 				"z" : 0
 			},
-			"scaleSpeed": 4,
+			"scaleSpeed": 3,
 			"isTranslate": false,
 			"isScale": true,
-			"isRotate": false
+			"isRotate": false,
+			"isEaseIn": false,
+			"isEaseOut": true
 		},
 		{
 			"finalPos": {
@@ -116,10 +118,12 @@
 				"y" : 77,
 				"z" : 0
 			},
-			"scaleSpeed": 8,
+			"scaleSpeed": 5,
 			"isTranslate": false,
 			"isScale": true,
-			"isRotate": false
+			"isRotate": false,
+			"isEaseIn": true,
+			"isEaseOut": false
 		}
 	  ]
 	  }

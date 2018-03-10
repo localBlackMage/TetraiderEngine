@@ -97,6 +97,8 @@ void Weapon::Serialize(const json& j) {
 				ParseFloat(j["Attacks"][i], "projectileSpeed"),
 				ParseFloat(j["Attacks"][i], "instantiationOffset"),
 				ParseFloat(j["Attacks"][i], "lifeTime"),
+				ParseInt(j["Attacks"][i], "multipleShots"),
+				ParseFloat(j["Attacks"][i], "coneAngle"),
 				ParseString(j["Attacks"][i], "projectilePrefab")
 			);
 

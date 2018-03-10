@@ -8,7 +8,7 @@
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
-		"soundsMute":false,
+		"soundsMute":true,
 		"enableWindowsCursor": false
 	},
 	"WINDOW_SETTINGS": {
