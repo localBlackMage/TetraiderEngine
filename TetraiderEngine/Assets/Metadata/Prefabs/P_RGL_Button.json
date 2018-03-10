@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 33.333,
+        "x": 120,
+        "y": 40,
         "z": 0
       },
       "pivotOffset": {
@@ -66,10 +66,10 @@
   },
   {
 		"Component": "Text",
-		"letterHeight": 12,
-		"letterWidth": 12,
+		"letterHeight": 20,
+		"letterWidth": 20,
 		"pivotOffset": {
-			"x": -12,
+			"x": -18,
 			"y": 0
 		},
 		"tint": {

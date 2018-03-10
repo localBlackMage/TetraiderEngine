@@ -55,7 +55,7 @@
 	{
 		"Component": "Text",
 		"letterHeight": 20,
-		"letterWidth": 15,
+		"letterWidth": 20,
 		"pivotOffset": {
 			"x": 25,
 			"y": 0
