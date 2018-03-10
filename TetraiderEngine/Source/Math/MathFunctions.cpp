@@ -86,3 +86,7 @@ float BezierInterpolation(const std::vector<Point>& points, const float& t) {
 	}
 	return returnValue;
 }
+
+bool RollDie(float probability) {
+	return RandomFloat(0, 1) < probability;
+}

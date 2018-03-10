@@ -19,6 +19,7 @@ public:
 private:
 	bool m_isHealthPickUp;
 	bool m_isEgg;
+	bool m_isAmmo;
 	int m_value;
 };
 

@@ -159,8 +159,10 @@ using namespace JsonReader;
 #include <Button.h>
 #include <LevelStatus.h>
 #include <EggCounter.h>
+#include <UICounter.h>
 #include <PauseMenu.h>
 #include <Microphone.h>
+#include <ScriptedAnimation.h>
 #pragma endregion 
 
 #pragma region Globals + API

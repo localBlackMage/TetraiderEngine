@@ -138,6 +138,8 @@
 				"coolDown": 0.6,
 				"baseDamage": 3,
 				"projectileSpeed": 600,
+				"ammo": 0,
+				"isUnlimitedAmmo": true,
 				"instantiationOffset": 50,
 				"lifeTime": 1.5,
 				"projectilePrefab": "P_testProjectile",

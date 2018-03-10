@@ -1,6 +1,6 @@
 {
-  "Tag": "Obstacle",
-  "Layer": "2",
+  "Tag": "None",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 100,
+        "x": 40,
+        "y": 40,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_Barrel.png",
+      "Texture": "T_Arrows.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -51,51 +51,28 @@
     },
 	{
 		"Component": "Body",
-		"isStatic": true,
+		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 100,
-			"height": 100
+			"type": "circle",
+			"radius": 16
 		}
 	},
 	{
-		"Component": "Health",
-		"startingHealth": 15,
-		"maxHealth": 15,
-		"isInvincible": false
+		"Component": "Collectible",
+		"isHealth": false,
+		"isEgg": false,
+		"isAmmo": true,
+		"value": 5
 	},
 	{
-		"Component": "DestroyOnHealthZero",
-		"destroyIn": 0
-	},
-	{
-		"Component": "FlashOnTakeDamage",
-		"decaySpeed": 4,
-		"flashColor": {
-        "r": 1,
-        "g": 1,
-        "b": 1,
-        "a": 0
-		}
-	},
-		{
-		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
-		"RandomDrops": [
-			{
-				"prefab": "P_AmmoPickUp",
-				"weight": 15
-			},
-			{
-				"prefab": "P_MeatPickup",
-				"weight": 5
-			},
-			{
-				"prefab": "",
-				"weight": 100
-			}
-		]
-	}	
+		"Component": "WaveMovement",
+		"isModifyXPos": false,
+		"isModifyYPos": true,
+		"isAbsoluteValue": true,
+		"frequency": 2,
+		"phaseShift": 0,
+		"amplitude": 10
+	}
   ]
 }

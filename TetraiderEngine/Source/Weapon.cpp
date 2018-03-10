@@ -1,18 +1,6 @@
-//#include "Weapon.h"
-//#include "RangeAttack.h"
-//#include "MeleeAttack.h"
-//#include "Agent.h"
-//#include "GameObject.h"
-//#include "Controller.h"
-//#include "NPCController.h"
-//#include "Transform.h"
-//#include "TetraiderAPI.h"
-//#include "Animation.h"
-//#include "Audio.h"
-
 #include "Stdafx.h"
 
-Weapon::Weapon(): Component(C_Weapon), m_pEffect(nullptr) {}
+Weapon::Weapon(): Component(C_Weapon), m_pEffect(nullptr), m_isRotationOffset(true) {}
 
 Weapon::~Weapon() {
 	for (auto attack : m_Attacks) {
@@ -45,11 +33,21 @@ void Weapon::Update(float dt) {
 
 	float angle = m_pController->GetLookDirection().AngleDegrees();
 	if (m_pController->GetFaceDirection() == FaceDirection::Left) {
-		if (m_pWeapon) m_pWeaponTransform->SetAngleZ(180 - angle*-1 - m_rotationOffset*swingDir);
+		if (m_pWeapon) {
+			if (m_isRotationOffset)
+				m_pWeaponTransform->SetAngleZ(180 - angle*-1 - m_rotationOffset*swingDir);
+			else
+				m_pWeaponTransform->SetAngleZ(180 - angle*-1);
+		}
 		if(m_pEffect) m_pEffectTransform->SetAngleZ(180 - angle*-1);
 	}
 	else {
-		if(m_pWeapon) m_pWeaponTransform->SetAngleZ(angle - m_rotationOffset*swingDir);
+		if (m_pWeapon) {
+			if (m_isRotationOffset)
+				m_pWeaponTransform->SetAngleZ(angle - m_rotationOffset*swingDir);
+			else
+				m_pWeaponTransform->SetAngleZ(angle);
+		}
 		if (m_pEffect) m_pEffectTransform->SetAngleZ(angle);
 	}
 }
@@ -93,6 +91,8 @@ void Weapon::Serialize(const json& j) {
 				ParseFloat(j["Attacks"][i], "coolDown"),
 				ParseInt(j["Attacks"][i], "baseDamage"),
 				ParseFloat(j["Attacks"][i], "knockBackSpeed"),
+				ParseInt(j["Attacks"][i], "ammo"),
+				ParseBool(j["Attacks"][i], "isUnlimitedAmmo"),
 				AttackType::Ranged,
 				ParseFloat(j["Attacks"][i], "projectileSpeed"),
 				ParseFloat(j["Attacks"][i], "instantiationOffset"),
@@ -142,12 +142,30 @@ void Weapon::LateInitialize() {
 			}
 		}
 	}
+
+	if (pGO->m_tag == T_Player) {
+		TETRA_EVENTS.Subscribe(EventType::EVENT_AmmoUpdate, this);
+	}
 }
 
 void Weapon::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_FlipScaleX) {
 		if(m_pWeapon) m_pWeapon->HandleEvent(pEvent);
 		if(m_pEffect) m_pEffect->HandleEvent(pEvent);
+	}
+	else if (pEvent->Type() == EVENT_OnLevelInitialized) {
+		if (pGO->m_tag == T_Player) {
+			int ammo = GetAmmo(1);
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, &CollectibleData(ammo)));
+		}
+	}
+	else if (pEvent->Type() == EVENT_AmmoUpdate) {
+		CollectibleData* pData = pEvent->Data<CollectibleData>();
+		if (pData) {
+			AddAmmo(1, pData->m_value);
+			pData->m_value = GetAmmo(1);
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, pData));
+		}
 	}
 }
 
@@ -171,3 +189,28 @@ void Weapon::PlayEffect() {
 bool Weapon::UseAttack(int attack, const Vector3D& dirToAttack) {
 	return m_Attacks[attack]->Use(dirToAttack);
 }
+
+bool Weapon::UseAttack(int attack, const Vector3D& dirToAttack, int& ammo) {
+	return m_Attacks[attack]->Use(dirToAttack);
+}
+
+int Weapon::GetAmmo(int attack) {
+	RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[attack]);
+	if (pAttack)
+		return pAttack->GetAmmo();
+	else
+		return 0;
+}
+
+void Weapon::AddAmmo(int attack, int ammo) {
+	RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[attack]);
+	if (pAttack)
+		return pAttack->UpdateAmmo(ammo + pAttack->GetAmmo());
+}
+
+void Weapon::SetAmmo(int attack, int ammo) {
+	RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[attack]);
+	if (pAttack)
+		return pAttack->UpdateAmmo(ammo);
+}
+

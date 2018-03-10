@@ -78,6 +78,7 @@ public:
 	void SetScaleUniform(float amount);
 	void SetScale(float scaleX, float scaleY);
 	void SetScale(float scaleX, float scaleY, float scaleZ);
+	void SetScale(const Vector3D& scale);
 	void ScaleUniform(float amount);
 	Vector3D GetScaleVector() const;
 

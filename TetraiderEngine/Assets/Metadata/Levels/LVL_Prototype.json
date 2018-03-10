@@ -668,10 +668,21 @@
       "prefab": "P_PauseMenu"
     },
 	{
+	  "prefab": "P_UIarrowAmmo"
+	},
+	{
       "prefab": "P_BarrelWithEgg",
       "position": {
         "x": 1000,
         "y": -720,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_AmmoPickUp",
+      "position": {
+        "x": 300,
+        "y": 0,
         "z": 0
       }
     },

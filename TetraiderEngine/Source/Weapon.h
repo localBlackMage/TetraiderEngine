@@ -19,9 +19,15 @@ public:
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt);
 	virtual void HandleEvent(Event* pEvent);
+	float GetCoolDown(int attack) { return m_Attacks[attack]->GetCoolDown(); }
 	void PlayEffect();
 	bool UseAttack(int attack, const Vector3D& dirToAttack);
+	bool UseAttack(int attack, const Vector3D& dirToAttack, int &ammo);
+	int GetAmmo(int attack);
+	void AddAmmo(int attack, int value);
+	void SetAmmo(int attack, int value);
 	void Swing() { swingDir *= -1; }
+	void IsRotationOffset(bool active) { m_isRotationOffset = active; }
 private:
 	std::vector<Attack*> m_Attacks;
 	std::string m_weaponPrefab;
@@ -34,6 +40,7 @@ private:
 	Vector3D m_weaponOffset;
 	int swingDir = 1;
 	float m_rotationOffset;
+	bool m_isRotationOffset;
 };
 
 #endif

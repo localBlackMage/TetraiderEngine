@@ -15,12 +15,14 @@ enum class AttackType {
 
 class Attack {
 public:
-	Attack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type): m_coolDown(coolDown), m_baseDamage(baseDamage), m_knockBackSpeed(knockBackSpeed), m_type(type) {}
+	Attack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type): 
+		m_coolDown(coolDown), m_baseDamage(baseDamage), m_knockBackSpeed(knockBackSpeed), m_type(type) {}
 	virtual ~Attack() {}
 	virtual bool Use(const Vector3D& direction); // Assumes direction is normalized
 	virtual void Update(float dt);
 	virtual void Debug(const Vector3D& dir) {}
 	bool IsOnCoolDown() { return m_isOnCooldown; }
+	float GetCoolDown() { return m_coolDown; }
 	AttackType GetType() { return m_type; }
 	friend Weapon;
 protected:

@@ -7,6 +7,12 @@
 //
 //class Transform;
 
+struct RandomDrop {
+	RandomDrop(std::string name, int weight) : m_prefabName(name), m_weight(weight) {}
+	std::string m_prefabName;
+	int m_weight;
+};
+
 class SpawnOnHealthZero : public Component {
 public:
 	SpawnOnHealthZero();
@@ -19,8 +25,12 @@ public:
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
 	virtual void Override(const json& j);
+	void SetSpawnObject(std::string prefab);
 private:
 	std::string m_prefab;
+	bool m_isRandom;
+	std::vector<RandomDrop> m_randomDrops;
+	int RandomDropIndex();
 };
 
 #endif

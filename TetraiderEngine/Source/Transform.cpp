@@ -300,6 +300,11 @@ void Transform::SetScale(float scaleX, float scaleY, float scaleZ)
 	m_scale.Set(scaleX, scaleY, scaleZ);
 }
 
+void Transform::SetScale(const Vector3D& scale)
+{
+	m_scale.Set(scale.x, scale.y, scale.z);
+}
+
 void Transform::ScaleUniform(float amount)
 {
 	m_scale += (Vector3D(1.f, 1.f, 1.f) * amount);

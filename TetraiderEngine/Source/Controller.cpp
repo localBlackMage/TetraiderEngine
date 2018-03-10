@@ -87,13 +87,21 @@ void Controller::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EVENT_INPUT_MELEE: {
+			if (m_isIgnoreHazards) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed) m_pWeapon->UseAttack(0, m_lookDirection);
+			if (pButtonData->m_isPressed)
+				if (m_pWeapon->UseAttack(0, m_lookDirection)) 
+					m_pWeapon->IsRotationOffset(true);
 			break;
 		}
 		case EVENT_INPUT_RANGE: {
+			if (m_isIgnoreHazards) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed) m_pWeapon->UseAttack(1, m_lookDirection);
+			if (pButtonData->m_isPressed) 
+				if (m_pWeapon->UseAttack(1, m_lookDirection)) {
+					m_pWeapon->IsRotationOffset(false);
+					
+				}
 			break;
 		}
 	}

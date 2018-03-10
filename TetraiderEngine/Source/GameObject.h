@@ -3,17 +3,6 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-//#include <vector>
-//#include "Subscriber.h"
-//#include "GameObjectTags.h"
-//#include "ComponentTypes.h"
-//#include "Layers.h"
-//#include "JsonReader.h"
-
-// Forward declaration
-//class Event;
-//class Component;
-
 class GameObject 
 {
 private:

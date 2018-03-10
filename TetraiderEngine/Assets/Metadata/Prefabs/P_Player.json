@@ -57,6 +57,8 @@
 			"knockBackMultiplier": 1
 		},
 		"flySpeed": 550,
+		"startingArrows": 20,
+		"isUnlimitedArrows": false,
 		"featherParticlePrefab": "P_FeatherParticleEmitter"
 	},
 	{
@@ -124,10 +126,12 @@
 			},
 			{
 				"type": "Ranged",
-				"coolDown": 0.6,
+				"coolDown": 0.4,
 				"baseDamage": 4,
 				"projectileSpeed": 600,
 				"instantiationOffset": 50,
+				"ammo": 5,
+				"isUnlimitedAmmo": false,
 				"lifeTime": 1.5,
 				"projectilePrefab": "P_testProjectile",
 				"knockBackSpeed": 300

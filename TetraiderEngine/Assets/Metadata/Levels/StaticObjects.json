@@ -27,7 +27,9 @@
     {
       "prefab": "P_PauseMenu"
     },
-	
+	{
+	  "prefab": "P_UIarrowAmmo"
+	},
 	
 	{
 		"prefab": "P_Cloud_One",

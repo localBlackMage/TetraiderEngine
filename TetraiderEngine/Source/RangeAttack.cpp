@@ -7,12 +7,14 @@
 
 #include <Stdafx.h>
 
-RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, AttackType type, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
+RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, int ammo, bool isUnlimitedAmmo, AttackType type, float projectileSpeed, float offset, float lifeTime, std::string projectilePrefab):
 	Attack(coolDown, baseDamage, knockBackSpeed, type),
 	m_projectileSpeed(projectileSpeed),
 	m_offset(offset),
 	m_lifeTime(lifeTime),
-	m_projectilePrefab(projectilePrefab)
+	m_projectilePrefab(projectilePrefab),
+	m_ammo(ammo),
+	m_isUnlimitedAmmo(isUnlimitedAmmo)
 {}
 
 RangeAttack::~RangeAttack() {}
@@ -20,6 +22,11 @@ RangeAttack::~RangeAttack() {}
 // Assumes direction is normalized
 bool RangeAttack::Use(const Vector3D& direction) {
 	if (!Attack::Use(direction)) return false;
+	if (!m_isUnlimitedAmmo) {
+		if (m_ammo == 0) return false; // out of ammo
+		--m_ammo;
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, &CollectibleData(m_ammo)));
+	}
 
 	Transform* pTransform = m_pOwner->pGO->GetComponent<Transform>(ComponentType::C_Transform);
 	Vector3D instantiatePos = pTransform->GetPosition() + m_offset*direction;

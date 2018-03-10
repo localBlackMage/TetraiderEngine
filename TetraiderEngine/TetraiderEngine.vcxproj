@@ -117,6 +117,7 @@
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\ScaleByHPStamina.cpp" />
     <ClCompile Include="Source\ScreenWrap.cpp" />
+    <ClCompile Include="Source\ScriptedAnimation.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SizeToScreen.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Source\TetraiderAPI.cpp" />
     <ClCompile Include="Source\Text.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\UICounter.cpp" />
     <ClCompile Include="Source\WaveMovement.cpp" />
     <ClCompile Include="Source\Weapon.cpp" />
   </ItemGroup>
@@ -235,6 +237,7 @@
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\ScaleByHPStamina.h" />
     <ClInclude Include="Source\ScreenWrap.h" />
+    <ClInclude Include="Source\ScriptedAnimation.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Shape.h" />
@@ -254,6 +257,7 @@
     <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Text.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\UICounter.h" />
     <ClInclude Include="Source\WaveMovement.h" />
     <ClInclude Include="Source\Weapon.h" />
   </ItemGroup>

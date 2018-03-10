@@ -17,6 +17,7 @@ void Collectible::Update(float dt) {}
 void Collectible::Serialize(const json& j) {
 	m_isHealthPickUp = ParseBool(j, "isHealth");
 	m_isEgg = ParseBool(j, "isEgg");
+	m_isAmmo = ParseBool(j, "isAmmo");
 	m_value = ParseInt(j, "value");
 }
 
@@ -38,6 +39,10 @@ void Collectible::HandleEvent(Event* pEvent) {
 					pHealth->HandleEvent(&Event(EVENT_HealthCollected, &CollectibleData(m_value)));
 					pGO->Destroy();
 				}
+			}
+			else if (m_isAmmo) {
+				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_AmmoUpdate, &CollectibleData(m_value)));
+				pGO->Destroy();
 			}
 
 			break;
