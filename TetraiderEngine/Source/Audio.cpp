@@ -48,12 +48,8 @@ bool Audio::IsPlaying()
 
 void Audio::Play()
 {
-	//temp fix
-	if (m_isBGM)
-	{
-		TETRA_AUDIO.PlaySong(m_audioClip, m_volume);	
-	}
-	else if (m_Ismute)
+
+	 if (m_Ismute)
 		TETRA_AUDIO.PlaySFX(m_audioClip, 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(),m_minDist,m_maxDist);
 	else
 		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
@@ -61,14 +57,13 @@ void Audio::Play()
 
 void Audio::LateInitialize()
 {
-	//return;
-	//fix late initialize
+
 	if (m_isPlayOnAwake)
 	{
 		if (m_isBGM)
 			TETRA_AUDIO.PlaySong(m_audioClip, m_volume);
 		else
-			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
 	}
 }
 
