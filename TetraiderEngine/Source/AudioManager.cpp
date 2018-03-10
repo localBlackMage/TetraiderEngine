@@ -61,25 +61,6 @@ void AudioManager::Update(float elapsed)
 	float vol;
 	m_pCurrentSongChannel->getVolume(&vol);
 	ScaledVol(vol);
-	std::cout << "Music volume :" << vol << "\n";
-
-	//TEST part
-	if(TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_K))
-	{
-		MuteMusic();
-	}
-	else if(TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_L))
-	{
-		ResumeMusic();
-	}
-	else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_O))
-	{
-		MuteAllSFX();
-	}
-	else if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_P))
-	{
-		UnmuteAllSFX();
-	}
 
 	if (TETRA_GAME_CONFIG.GetsoundsMute())
 	{

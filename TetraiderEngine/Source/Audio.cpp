@@ -61,15 +61,15 @@ void Audio::Play()
 
 void Audio::LateInitialize()
 {
-	return;
+	//return;
 	//fix late initialize
-	/*if (m_isPlayOnAwake)
+	if (m_isPlayOnAwake)
 	{
 		if (m_isBGM)
 			TETRA_AUDIO.PlaySong(m_audioClip, m_volume);
 		else
 			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
-	}*/
+	}
 }
 
 void Audio::Stop() 
