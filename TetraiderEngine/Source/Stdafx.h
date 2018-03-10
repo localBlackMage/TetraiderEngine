@@ -139,6 +139,15 @@ using namespace JsonReader;
 // Components - Combat
 #include <Weapon.h>
 
+//Components - Audio
+#include <Audio.h>
+#include <Microphone.h>
+
+//Components - UI
+#include <FollowCursor.h>
+#include <Button.h>
+#include <PauseMenu.h>
+#include <Canvas.h>
 
 #include <CamFollow.h>
 #include <ScreenWrap.h>
@@ -148,7 +157,7 @@ using namespace JsonReader;
 #include <Health.h>
 #include <FlashOnTakeDamage.h>
 #include <Projectile.h>
-#include <Audio.h>
+
 #include <DestroyOnHealthZero.h>
 #include <DealDamageOnCollision.h>
 #include <ProjectileSpawner.h>
@@ -157,8 +166,7 @@ using namespace JsonReader;
 #include <WaveMovement.h>
 #include <StraightLineMovement.h>
 #include <SpawnOnHealthZero.h>
-#include <FollowCursor.h>
-#include <Button.h>
+
 #include <LevelStatus.h>
 #include <EggCounter.h>
 #include <UICounter.h>
@@ -166,6 +174,8 @@ using namespace JsonReader;
 #include <Microphone.h>
 #include <ScriptedAnimation.h>
 #include <WinMessage.h>
+
+
 #pragma endregion 
 
 #pragma region Globals + API
@@ -187,6 +197,7 @@ using namespace JsonReader;
 #include <LevelEditor.h>
 #include <ComponentFactory.h>
 #include <LuaScript.h>
+#include <UIManager.h>
 
 #include <Global.h>
 #include <TetraiderAPI.h>

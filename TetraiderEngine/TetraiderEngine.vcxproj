@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Canvas.cpp" />
     <ClCompile Include="Source\AI_DashingAttack.cpp" />
     <ClCompile Include="Source\AI_DashingEngage.cpp" />
     <ClCompile Include="Source\AI_DashingStunned.cpp" />
@@ -141,8 +142,10 @@
     <ClCompile Include="Source\WaveMovement.cpp" />
     <ClCompile Include="Source\Weapon.cpp" />
     <ClCompile Include="Source\WinMessage.cpp" />
+    <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Canvas.h" />
     <ClInclude Include="Source\AI_DashingAttack.h" />
     <ClInclude Include="Source\AI_DashingEngage.h" />
     <ClInclude Include="Source\AI_DashingStunned.h" />
@@ -263,6 +266,7 @@
     <ClInclude Include="Source\WaveMovement.h" />
     <ClInclude Include="Source\Weapon.h" />
     <ClInclude Include="Source\WinMessage.h" />
+    <ClInclude Include="Source\UIManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
