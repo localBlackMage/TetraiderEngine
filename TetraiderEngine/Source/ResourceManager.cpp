@@ -11,6 +11,47 @@ ResourceManager::~ResourceManager()
 
 #pragma region Private Methods
 
+void ResourceManager::_RenderFont(FontInfo & fontInfo)
+{
+	if (!fontInfo.IsGlyphProvided())
+		return;
+
+	SDL_Color fg = { 0,0,0,255 };
+
+	for (int i = 0; i<128; i++)
+	{
+		/* cache rendered surface */
+		fontInfo.m_text[i] = TTF_RenderGlyph_Blended(fontInfo.m_font, i + fontInfo.m_startGlyph, fg);
+		if (!fontInfo.m_text[i])
+			std::cout << "TTF_RenderGlyph_Shaded: " << TTF_GetError() << std::endl;
+
+		/* cache metrics */
+		TTF_GlyphMetrics(
+			fontInfo.m_font, i + fontInfo.m_startGlyph,
+			&fontInfo.m_metrics[i].minX, &fontInfo.m_metrics[i].maxX,
+			&fontInfo.m_metrics[i].minY, &fontInfo.m_metrics[i].maxY,
+			&fontInfo.m_metrics[i].advance
+		);
+		int mode = fontInfo.m_text[i]->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
+		fontInfo.m_texBuffers[i] = _CreateTextureBuffer(fontInfo.m_text[i], mode);
+	}
+}
+
+FontInfo* ResourceManager::_LoadFont(const Font_Size & font_size)
+{
+	TTF_Font* font = TTF_OpenFont((TETRA_GAME_CONFIG.FontsDir() + font_size.name).c_str(), font_size.size);
+	if (!font) {
+		std::cout << "TTF_OpenFont could not open font: " << font_size.name << " size: " << font_size.size << " :: Error: " << TTF_GetError() << std::endl;
+		return nullptr;
+	}
+
+	FontInfo* pFontInfo = new FontInfo(font, 0, font_size.size);
+	_RenderFont(*pFontInfo);
+
+	m_fonts[font_size] = pFontInfo;
+	return pFontInfo;
+}
+
 GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurface, int alphaMode)
 {
 	GLuint textureBufferID;
@@ -26,14 +67,6 @@ GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurfac
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	return textureBufferID;
-}
-
-ResourceManager::TextureInfo ResourceManager::_LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha)
-{
-	TextureInfo info;
-	info.filename = texturesDir + textureInfoFilePath;
-	info.hasAlpha = hasAlpha;
-	return info;
 }
 
 #pragma endregion
@@ -137,6 +170,16 @@ void ResourceManager::UnloadMesh(const std::string& meshName)
 }
 
 #pragma endregion
+
+FontInfo * ResourceManager::GetFont(const Font_Size & font_size)
+{
+	FontInfo * pFontInfo = m_fonts[font_size];
+
+	if (pFontInfo)
+		return pFontInfo;
+	else
+		return _LoadFont(font_size);
+}
 
 #pragma region Texture
 

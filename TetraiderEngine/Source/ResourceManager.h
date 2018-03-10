@@ -17,6 +17,26 @@ Creation date: 1/17/18
 #define RESOURCE_MANAGER_H
 
 enum Sound_Category { SFX, SONG, CATEGORY_COUNT };
+struct Font_Size {
+	std::string name;
+	int size;
+
+	explicit Font_Size(std::string _name, int _size) : name(_name), size(_size) {}
+
+	bool operator==(const Font_Size& other) const {
+		return (name == other.name && size == other.size);
+	}
+};
+
+struct Font_SizeHasher {
+	std::size_t operator() (const Font_Size& k) const {
+		// Compute individual hash values for first,
+		// second and combine them using XOR
+		// and bit shifting:
+
+		return ((std::hash<std::string>()(k.name) ^ (std::hash<int>()(k.size) << 1)) >> 1);
+	}
+};
 
 class ResourceManager
 {
@@ -28,14 +48,17 @@ private:
 	
 	DebugLineMesh * m_pDebugLineMesh;
 	std::unordered_map<std::string, Mesh*> m_meshes;
+	std::unordered_map< Font_Size, FontInfo*, Font_SizeHasher> m_fonts;
 	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
 	std::map<std::string, json*> m_prefabs;
 	std::vector<std::string> m_prefabStrings;
 
 	std::unordered_map<std::string, FMOD::Sound*> m_Sounds[CATEGORY_COUNT];
 	
+	void _RenderFont(FontInfo& fontInfo);
+	FontInfo* _LoadFont(const Font_Size& font_size);
+
 	GLuint _CreateTextureBuffer(const SDL_Surface * const sdlSurface, int alphaMode);
-	TextureInfo _LoadTextureInfoFile(std::string textureInfoFilePath, std::string texturesDir, bool hasAlpha);
 	SurfaceTextureBuffer* _LoadTexture(std::string textureName);
 public:
 	ResourceManager();
@@ -49,6 +72,8 @@ public:
 	Mesh * LoadMesh(const std::string& meshName);
 	Mesh * GetMesh(const std::string& meshName);
 	void UnloadMesh(const std::string& meshName);
+
+	FontInfo* GetFont(const Font_Size& font_size);
 
 	SurfaceTextureBuffer* GetTexture(const std::string& textureName);
 	void UnloadTexture(const std::string& textureName);

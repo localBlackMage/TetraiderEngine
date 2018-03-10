@@ -15,9 +15,6 @@ Creation date: 1/17/18
 #ifndef SURFACE_TEXTURE_BUFFER_H
 #define SURFACE_TEXTURE_BUFFER_H
 
-//#include <glew.h>
-//#include <SDL.h>
-
 struct SurfaceTextureBuffer {
 	explicit SurfaceTextureBuffer(SDL_Surface * _surface, GLuint _bufferId, int _alphaMode) :
 		surface(_surface), bufferId(_bufferId), alphaMode(_alphaMode){};

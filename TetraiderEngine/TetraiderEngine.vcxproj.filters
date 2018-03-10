@@ -362,12 +362,6 @@
     <ClCompile Include="Source\LightBase.cpp">
       <Filter>Source Files\Components\Rendering\Lights</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UICounter.cpp">
-      <Filter>Source Files\Components\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScriptedAnimation.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -721,11 +715,8 @@
     <ClInclude Include="Source\LightBase.h">
       <Filter>Source Files\Components\Rendering\Lights</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UICounter.h">
-      <Filter>Source Files\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScriptedAnimation.h">
-      <Filter>Source Files\Components</Filter>
+    <ClInclude Include="Source\FontInfo.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

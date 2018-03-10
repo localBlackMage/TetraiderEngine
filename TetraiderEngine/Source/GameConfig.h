@@ -18,8 +18,8 @@ private:
 	std::string m_sfxDir;
 	std::string m_shadersDir;
 	std::string m_roomFilesDir;
+	std::string m_fontsDir;
 	
-	//TODO option to enable sounds at the start
 	bool m_soundsMute;
 
 	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
@@ -35,20 +35,21 @@ public:
 
 	void LoadConfig(std::string);
 
-	std::string TexturesDir() const { return m_texturesDir; }
-	std::string LevelFilesDir() const { return m_levelFilesDir; }
-	std::string PrefabsDir() const { return m_prefabsDir; }
-	std::string SFXDir() const { return m_sfxDir; }
-	std::string ShadersDir() const { return m_shadersDir; }
-	std::string RoomFilesDir() const { return m_roomFilesDir; }
+	inline std::string TexturesDir() const { return m_texturesDir; }
+	inline std::string LevelFilesDir() const { return m_levelFilesDir; }
+	inline std::string PrefabsDir() const { return m_prefabsDir; }
+	inline std::string SFXDir() const { return m_sfxDir; }
+	inline std::string ShadersDir() const { return m_shadersDir; }
+	inline std::string RoomFilesDir() const { return m_roomFilesDir; }
+	inline std::string FontsDir() const { return m_fontsDir; }
 
-	bool GetsoundsMute(){ return m_soundsMute; }
-	unsigned short CellWidth() const { return m_cellWidth; }
-	unsigned short CellHeight() const { return m_cellHeight; }
-	unsigned short RoomWidth() const { return m_roomWidth; }
-	unsigned short RoomHeight() const { return m_roomHeight; }
-	unsigned int LevelWidth() const { return int(m_cellWidth) * int(m_roomWidth) * int(m_roomsX); }
-	unsigned int LevelHeight() const { return int(m_cellHeight) * int(m_roomHeight) * int(m_roomsY); }
+	inline bool GetsoundsMute(){ return m_soundsMute; }
+	inline unsigned short CellWidth() const { return m_cellWidth; }
+	inline unsigned short CellHeight() const { return m_cellHeight; }
+	inline unsigned short RoomWidth() const { return m_roomWidth; }
+	inline unsigned short RoomHeight() const { return m_roomHeight; }
+	inline unsigned int LevelWidth() const { return int(m_cellWidth) * int(m_roomWidth) * int(m_roomsX); }
+	inline unsigned int LevelHeight() const { return int(m_cellHeight) * int(m_roomHeight) * int(m_roomsY); }
 };
 
 #endif

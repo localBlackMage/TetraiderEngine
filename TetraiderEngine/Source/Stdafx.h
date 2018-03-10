@@ -10,6 +10,7 @@
 #include <GL\gl.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <SDL_keycode.h>
 #include <SDL_events.h>
 #include <fmod_studio.hpp>
@@ -76,6 +77,7 @@ using namespace JsonReader;
 #include <SubscriberTracker.h>
 #include <Subscriber.h>
 #include <SurfaceTextureBuffer.h>
+#include <FontInfo.h>
 #include <Mesh.h>
 #include <DebugLineMesh.h>
 #include <Shader.h>
