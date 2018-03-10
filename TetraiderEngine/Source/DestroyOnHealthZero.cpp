@@ -63,7 +63,7 @@ void DestroyOnHealthZero::Serialize(const json& j) {
 void DestroyOnHealthZero::LateInitialize() {}
 
 void DestroyOnHealthZero::HandleEvent(Event* pEvent) {
-	if (pEvent->Type() == EventType::EVENT_OnHealthZero) {
+	if (pEvent->Type() == EventType::EVENT_OnHealthZero || pEvent->Type() == EventType::EVENT_Explode) {
 		m_timeStamp = TETRA_FRAMERATE.GetElapsedTime() - 0.001f;
 		m_isDestory = true;
 	}

@@ -38,6 +38,11 @@ private:
 	float m_currentLifeTime;
 	float m_knockBackSpeed;
 	bool m_isEnemyProjectile;
+	float m_deccelerationSpeed;
+	bool m_isAccelerateToZero;
+	bool m_isRotate;
+	bool m_isIgnoreCollideEvent;
+	bool m_isExplodeOnVelocityZero;
 };
 
 #endif

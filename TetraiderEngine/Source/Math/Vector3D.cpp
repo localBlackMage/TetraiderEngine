@@ -172,8 +172,8 @@ void Vector3D::Zero()
 	x = y = z = 0.0f;
 }
 
-bool Vector3D::IsVectorZero() {
-	return (fabsf(x) < EPSILON && fabsf(y) < EPSILON && fabsf(z) < EPSILON);
+bool Vector3D::IsVectorZero(float error) const {
+	return (fabsf(x) < error && fabsf(y) < error && fabsf(z) < error);
 }
 
 void Vector3D::Negate()

@@ -59,7 +59,7 @@ public:
 	float SquareLength() const;
 	float Length() const;
 	void Normalize();
-	bool IsVectorZero();
+	bool IsVectorZero(float error = EPSILON) const;
 
 	static float SquareDistance(const Vector3D& vector0, const Vector3D& vector1);
 	static float Distance(const Vector3D& vector0, const Vector3D& vector1);

@@ -14,8 +14,22 @@ Projectile::Projectile() : Component(C_Projectile), m_currentLifeTime(0) {}
 void Projectile::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 
+	//m_pBody->SetVelocity(Lerp(m_pBody->Get))
+	if(m_isAccelerateToZero)
+		m_pBody->SetVelocity(Lerp(m_pBody->GetVelocity(), Vector3D(), dt*m_deccelerationSpeed));
+
+	if (m_isRotate) {
+		m_pTransform->RotateZ(-m_pBody->GetVelocity().Length() * dt);
+	}
+
+	if (m_isExplodeOnVelocityZero) {
+		if (m_pBody->GetVelocity().IsVectorZero(10.0f)) {
+			pGO->HandleEvent(&Event(EVENT_Explode));
+		}
+	}
+
 	m_currentLifeTime += dt;
-	if (m_currentLifeTime > m_lifeTime)
+	if (m_currentLifeTime > m_lifeTime && !m_isExplodeOnVelocityZero)
 		pGO->Destroy();
 }
 
@@ -25,27 +39,39 @@ void Projectile::Deactivate() {
 	m_pTransform = nullptr; 
 }
 
-void Projectile::Serialize(const json& j) {}
+void Projectile::Serialize(const json& j) {
+	m_isAccelerateToZero = ParseBool(j , "isAccelerateToZero");
+	m_isRotate = ParseBool(j, "isRotate");
+	m_isExplodeOnVelocityZero = ParseBool(j, "isExplodeOnVelocityZero");
+	m_isIgnoreCollideEvent = ParseBool(j, "isIgnoreCollideEvent");
+	m_deccelerationSpeed = ParseFloat(j, "deacclerationSpeed");
+}
 
 void Projectile::HandleEvent(Event* pEvent) {
 	if (pEvent->Type() == EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
 
-		// Avoid friendly fire
-		if (m_projectileType == ProjectileType::EnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
-		else if (m_projectileType == ProjectileType::PlayerProjectile && collisionData->pGO->m_tag == T_Player) return;
-		else if (collisionData->pGO->m_tag == T_Projectile) return;
-		else if (collisionData->pGO == m_pOwner) return;
-		else if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_None) return;
+		if (!m_isIgnoreCollideEvent) {
 
-		// If object has health component, deal damage before destroying itself
-		Health* pHealth = collisionData->pGO->GetComponent<Health>(ComponentType::C_Health);
-		Transform* pTrans = collisionData->pGO->GetComponent<Transform>(ComponentType::C_Transform);
-		Vector3D dirOfAttack = pTrans->GetPosition() - m_pTransform->GetPosition();
-		dirOfAttack.Normalize();
-		if (pHealth) pHealth->TakeDamage(m_damage, dirOfAttack, m_knockBackSpeed, false);
+			// Avoid friendly fire
+			if (m_projectileType == ProjectileType::EnemyProjectile && collisionData->pGO->m_tag == T_Enemy) return;
+			else if (m_projectileType == ProjectileType::PlayerProjectile && collisionData->pGO->m_tag == T_Player) return;
+			else if (collisionData->pGO->m_tag == T_Projectile) return;
+			else if (collisionData->pGO == m_pOwner) return;
+			else if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_None) return;
 
-		pGO->Destroy();
+			// If object has health component, deal damage before destroying itself
+			Health* pHealth = collisionData->pGO->GetComponent<Health>(ComponentType::C_Health);
+			Transform* pTrans = collisionData->pGO->GetComponent<Transform>(ComponentType::C_Transform);
+			Vector3D dirOfAttack = pTrans->GetPosition() - m_pTransform->GetPosition();
+			dirOfAttack.Normalize();
+			if (pHealth) pHealth->TakeDamage(m_damage, dirOfAttack, m_knockBackSpeed, false);
+
+			pGO->Destroy();
+		}
+		else {
+			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
+		}
 	}
 }
 
