@@ -17,6 +17,8 @@ RenderManager::~RenderManager()
 {
 	EnableWindowsCursor();
 	SDL_GL_DeleteContext(m_context);
+	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }
 
@@ -49,6 +51,12 @@ void RenderManager::_InitWindow(std::string title)
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
 		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
 	}
+
+	// Start SDL_ttf
+	if (TTF_Init() == -1) {
+		std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
+	}
+
 
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 	glViewport(0, 0, m_width, m_height);

@@ -1,14 +1,3 @@
-
-//#include "GameObject.h"
-//#include "Controller.h"
-//#include "Weapon.h"
-//#include "Health.h"
-//#include "Stamina.h"
-//#include "Transform.h"
-//#include "ParticleEmitter.h"
-//#include "TetraiderAPI.h"
-//#include <iostream>
-
 #include <Stdafx.h>
 
 

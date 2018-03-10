@@ -6,6 +6,7 @@
 		"sfxDir": "../TetraiderEngine/Assets/SFX/",
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
+		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
 		"soundsMute":false,

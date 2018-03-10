@@ -19,6 +19,7 @@ class Text : public Component
 protected:
 	std::string m_fontName;
 	std::string m_shader;
+	FontInfo* m_pFont;
 	SurfaceTextureBuffer * m_texture;
 	TexCoordsGrid m_textureOffsets; // collection of UV coordinates for each letter
 	Paragraph m_letters; // indecies into m_textureOffsets

@@ -80,7 +80,7 @@
 		},
 		"rows": 6,
 		"cols": 16,
-		"font": "baseFont.png",
+		"font": "ShadowCardGothicFont.png",
 		"text": "Editor"
 	}
 	]
