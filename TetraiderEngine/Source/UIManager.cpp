@@ -9,29 +9,24 @@ UIManager::~UIManager()
 {
 }
 
-void UIManager::ActivateCanvas(int canvasType)
+void UIManager::ActivateCanvas(CanvasType c)
 {
-	for (auto can : m_Canvas)
-	{
-		if (can->m_canvasType == canvasType)
-		{
-			can->ActivateCanvas();
-		}
-	}
+	if(!m_Canvas[(int)c])
+	m_Canvas[(int)c]->ActivateCanvas();
 }
 
-void UIManager::DeactivateCanvas(int canvasType)
+void UIManager::DeactivateCanvas(CanvasType c)
 {
-	for (auto can : m_Canvas)
-	{
-		if (can->m_canvasType == canvasType)
-		{
-			can->DeactivateCanvas();
-		}
-	}
+	if (!m_Canvas[(int)c])
+	m_Canvas[(int)c]->DeactivateCanvas();
 }
 
 void UIManager::RegisterCanvas(Canvas* c)
 {
-	m_Canvas.push_back(c);
+	m_Canvas[(int)c->m_canvasType] = c;
+}
+
+void UIManager::DeregisterCanvas(Canvas* c)
+{
+	m_Canvas[(int)c->m_canvasType] = nullptr;
 }

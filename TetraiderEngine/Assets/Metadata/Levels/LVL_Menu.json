@@ -5,41 +5,7 @@
       "prefab": "P_UICameraMenu"
     },
     {
-      "prefab": "P_Button",
-      "position": {
-        "x": 0,
-        "y": 50,
-        "z": 0
-      }
-    },
-    {
-      "prefab": "P_Cursor",
-      "position": {
-        "x": 100,
-        "y": 100,
-        "z": 0
-      }
-    },
-	{
-      "prefab":"P_RGL_Button",
-      "position":{
-        "x":0,
-        "y":-25
-      }
-    },
-	{
-	  "prefab": "P_ButtonLevelEditor",
-	  "position": {
-        "x":0,
-        "y":-100
-      }
-	},
-    {
-      "prefab":"P_QuitButton",
-      "position":{
-        "x":0,
-        "y":-175
-      }
+      "prefab": "P_MainMenu"
     },
     {
       "prefab":"P_Title",

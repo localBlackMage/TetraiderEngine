@@ -6,8 +6,8 @@
 
 Button::Button() :Component(ComponentType::C_Button) 
 {
-	isQuit = false;
-	isRestart = false;
+	m_isQuit = false;
+	m_isRestart = false;
 }
 Button::~Button() {}
 
@@ -19,10 +19,15 @@ void Button::Update(float dt)
 void Button::Serialize(const json & j)
 {
 	m_levelNumber = ParseInt(j, "level");
-	isQuit = ParseBool(j, "quit");
-	isRestart = ParseBool(j,"restart");
-	isRandomGenerated = ParseBool(j, "isRandomGenerated");
-	isLooadLevelEditor = ParseBool(j, "isLoadLevelEditor");
+	m_isQuit = ParseBool(j, "quit");
+	m_isRestart = ParseBool(j,"restart");
+	m_isLoadCanvas = ParseBool(j, "isLoadCanvas");
+	if (m_isLoadCanvas) {
+		m_canvasToActivate = (CanvasType)ParseInt(j, "canvasToActivate");
+		m_canvasToDeActivate = (CanvasType)ParseInt(j, "canvasToDeActivate");
+	}
+	m_isRandomGenerated = ParseBool(j, "m_isRandomGenerated");
+	m_isLoadLevelEditor = ParseBool(j, "isLoadLevelEditor");
 }
 
 void Button::LateInitialize()
@@ -55,17 +60,22 @@ void Button::HandleEvent(Event* pEvent)
 				m_pSprite->SetVOffset(0.6666f);
 			}
 			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
-				if (isQuit) {
+				if (m_isQuit) {
 					TETRA_EVENTS.BroadcastEvent(&Event(WINDOW_CLOSED));
 				}
-				else if (isRestart) {
+				else if (m_isRestart) {
 					TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
 				}
-				else if (isLooadLevelEditor) {
+				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);
 				}
+				else if(m_isLoadCanvas)
+				{
+					TETRA_UI.ActivateCanvas(m_canvasToActivate);
+					TETRA_UI.DeactivateCanvas(m_canvasToDeActivate);
+				}
 				else {
-					TETRA_LEVELS.ActivateRandomGeneration(isRandomGenerated);
+					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
 				}
 			}

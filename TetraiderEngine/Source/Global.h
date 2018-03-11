@@ -21,5 +21,5 @@
 #define TETRA_IMGUI Singleton<ImguiManager>::GetInstance()
 #define TETRA_EDITOR Singleton<LevelEditor>::GetInstance()
 #define TETRA_COMPONENTS Singleton<ComponentFactory>::GetInstance()
-
+#define TETRA_UI Singleton<UIManager>::GetInstance()
 #endif

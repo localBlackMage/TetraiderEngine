@@ -1,6 +1,15 @@
 #pragma once
 
 class Canvas;
+enum class CanvasType
+{
+	CANVAS_PAUSE,
+	CANVAS_OPTION,
+	CANVAS_CREDITS,
+	
+	CANVAS_NUM
+};
+
 class UIManager : public Subscriber
 {
 public:
@@ -8,19 +17,13 @@ public:
 	~UIManager();
 	UIManager(const UIManager&) = delete;
 	void operator=(const UIManager &) = delete;
-	void ActivateCanvas(int);
-	void DeactivateCanvas(int);
+	void ActivateCanvas(const CanvasType);
+	void DeactivateCanvas(const CanvasType);
 	void RegisterCanvas(Canvas *);
-	void DeregisterCanvas();
-	
-	enum CanvasType
-	{
-		CANVAS_PAUSE,
-		CANVAS_OPTION,
-		CANVAS_CREDITS
-	};
+	void DeregisterCanvas(Canvas *);
+
 private:
-	std::vector<Canvas*> m_Canvas;
+	Canvas* m_Canvas[(int)CanvasType::CANVAS_NUM];
 	
 };
 

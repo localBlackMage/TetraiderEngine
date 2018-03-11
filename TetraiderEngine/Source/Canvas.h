@@ -1,11 +1,11 @@
 #pragma once
 #include "Component.h"
+//enum class CanvasType;
 class Canvas : public Component
 {
 private:
 	std::vector<GameObject*> m_UIelements;
 	bool m_isActive;
-	int m_canvasType;
 	bool m_isActiveOnAwake;
 public:
 	Canvas();
@@ -17,8 +17,7 @@ public:
 	void HandleEvent(Event* pEvent);
 	void ActivateCanvas();
 	void DeactivateCanvas();
-
 	
-	
+	CanvasType m_canvasType;
 };
 
