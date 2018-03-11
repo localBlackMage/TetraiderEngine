@@ -128,12 +128,12 @@
 				"type": "Ranged",
 				"coolDown": 0.4,
 				"baseDamage": 4,
-				"projectileSpeed": 600,
+				"projectileSpeed": 700,
 				"instantiationOffset": 50,
 				"ammo": 5,
 				"isUnlimitedAmmo": false,
 				"lifeTime": 1.5,
-				"projectilePrefab": "P_testProjectile",
+				"projectilePrefab": "P_arrowProjectile",
 				"knockBackSpeed": 300
 			}
 		],

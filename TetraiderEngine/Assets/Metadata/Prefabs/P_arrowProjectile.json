@@ -1,17 +1,17 @@
 {
-  "Tag": "UI",
-  "Layer": "UI",
+  "Tag": "Projectile",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -515,
-        "y": 270,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 25,
-        "y": 25,
+        "x": 40,
+        "y": 20,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_ArrowsUI.png",
+      "Texture": "T_Arrow.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-      "lit": false,
+	  "lit": false,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,27 +50,16 @@
       }
     },
 	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIAmmoUpdate"
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 20
+		}
 	},
 	{
-		"Component": "Text",
-		"letterHeight": 20,
-		"letterWidth": 20,
-		"pivotOffset": {
-			"x": 25,
-			"y": 0
-		},
-		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"rows": 6,
-		"cols": 16,
-		"font": "ShadowCardGothicFont.png",
-		"text": "0"
+		"Component": "Projectile"		
 	}
   ]
 }

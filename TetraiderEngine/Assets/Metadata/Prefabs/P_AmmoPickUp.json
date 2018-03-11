@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_Arrows.png",
+      "Texture": "T_ArrowsUI.png",
       "tiling": {
         "x": 1,
         "y": 1
