@@ -122,7 +122,7 @@
 			"EventType": 10,
 			"InputType": 0,
 			"isMouse": false,
-			"isJoystick": true,
+			"isJoystick": false,
 			"KeyBoardKey": 47,
 			"XboxKey": 0
 		},
@@ -131,7 +131,7 @@
 			"EventType": 11,
 			"InputType": 0,
 			"isMouse": false,
-			"isJoystick": true,
+			"isJoystick": false,
 			"KeyBoardKey": 48,
 			"XboxKey": 0
 		},
@@ -141,7 +141,7 @@
 			"EventType": 12,
 			"InputType": 0,
 			"isMouse": false,
-			"isJoystick": true,
+			"isJoystick": false,
 			"KeyBoardKey": 45,
 			"XboxKey": 0
 		},
@@ -150,8 +150,17 @@
 			"EventType": 13,
 			"InputType": 0,
 			"isMouse": false,
-			"isJoystick": true,
+			"isJoystick": false,
 			"KeyBoardKey": 46,
+			"XboxKey": 0
+		},
+		{
+			"Name": "ExitLevel",
+			"EventType": 14,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 8,
 			"XboxKey": 0
 		}
 	]

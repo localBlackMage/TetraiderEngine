@@ -15,6 +15,7 @@ void ProjectileSpawner::DeActivate() {
 
 void ProjectileSpawner::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
 	//TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), 2000, DebugColor::GREY);
 	if (m_isActive) {
 		m_timeFromLastFire += dt;

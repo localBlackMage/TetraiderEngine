@@ -9,8 +9,9 @@
 
 PauseMenu::PauseMenu():Component(ComponentType::C_PauseMenu)
 {
-	isActive = false;
-	isLevelOver = false;
+	m_isActive = false;
+	m_isLevelOver = false;
+	m_isCannotPause = false;
 }
 
 PauseMenu::~PauseMenu(){}
@@ -44,16 +45,16 @@ void PauseMenu::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME)
 	{
-		if (isLevelOver) return;
+		if (m_isLevelOver || m_isCannotPause) return;
 
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
 		if (pData->m_isTrigger) {
-			isActive = !isActive;
+			m_isActive = !m_isActive;
 			for (auto gameObjects : m_objects)
 			{
-				gameObjects->SetActive(isActive);
+				gameObjects->SetActive(m_isActive);
 			}
-			pGO->m_isRender = isActive;
+			pGO->m_isRender = m_isActive;
 		}
 
 		if (m_pText) {
@@ -61,7 +62,7 @@ void PauseMenu::HandleEvent(Event * pEvent)
 			m_pText->SetOffset(Vector3D(-130, 200, 0));
 		}
 	}
-	else if (pEvent->Type() == EVENT_LevelComplete) {
+	/*else if (pEvent->Type() == EVENT_LevelComplete) {
 		isLevelOver = true;
 		isActive = true;
 		for (auto gameObjects : m_objects)
@@ -74,28 +75,31 @@ void PauseMenu::HandleEvent(Event * pEvent)
 			m_pText->SetText("YOU WIN");
 			m_pText->SetOffset(Vector3D(-160, 200, 0));
 		}
-	}
+	}*/
 	else if (pEvent->Type() == EVENT_LevelInComplete) {
-		isLevelOver = true;
-		isActive = true;
+		m_isLevelOver = true;
+		m_isActive = true;
 
 		for (auto gameObjects : m_objects) {
-			gameObjects->SetActive(isActive);
+			gameObjects->SetActive(m_isActive);
 		}
 
-		pGO->m_isRender = isActive;
+		pGO->m_isRender = m_isActive;
 
 		if (m_pText) {
 			m_pText->SetText("YOU LOSE");
 			m_pText->SetOffset(Vector3D(-180, 200, 0));
 		}
 	}
+	else if (pEvent->Type() == EVENT_ExitLevel) {
+		m_isCannotPause = true;
+	}
 }
 
 void PauseMenu::LateInitialize()
 {
 	for (auto gameObjects : m_objects) {
-		gameObjects->SetActive(isActive);
+		gameObjects->SetActive(m_isActive);
 	}
 
 	if (!m_pText) {
@@ -116,7 +120,7 @@ void PauseMenu::LateInitialize()
 	pGO->m_isRender = false;
 
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
-	TETRA_EVENTS.Subscribe(EVENT_LevelComplete , this);
+	TETRA_EVENTS.Subscribe(EVENT_ExitLevel , this);
 	TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
 }
 

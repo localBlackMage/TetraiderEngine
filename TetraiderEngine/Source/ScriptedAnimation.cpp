@@ -10,10 +10,6 @@ void ScriptedAnimation::DeActivate() {
 void ScriptedAnimation::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 
-	/*if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_Y)) {
-		PlayAnimation();
-	}*/
-
 	if (m_isPlayAnimation) {
 		if (m_scriptedAnimation[m_currentAnimationIndex].m_isTranslate) {
 			m_translationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_translationSpeed;

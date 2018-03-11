@@ -671,6 +671,9 @@
 	  "prefab": "P_UIarrowAmmo"
 	},
 	{
+	  "prefab": "P_WinMessage"
+	},
+	{
       "prefab": "P_BarrelWithEgg",
       "position": {
         "x": 1000,

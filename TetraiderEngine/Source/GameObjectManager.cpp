@@ -379,4 +379,9 @@ void GameObjectManager::RemoveGameObjectsFromHealthList(GameObject* pGO) {
 	}
 }
 
+bool GameObjectManager::IsPlayerAlive() {
+	Health* pHealth = m_pPlayerReference->GetComponent<Health>(C_Health);
+	return !(pHealth->GetHealth() == 0);
+}
+
 #pragma endregion

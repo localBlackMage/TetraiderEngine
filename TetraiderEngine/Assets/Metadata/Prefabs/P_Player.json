@@ -153,17 +153,6 @@
 		"rechargeSpeed": 30,
 		"rechargeCoolDown": 1.5,
 		"useSpeed": 20
-	},
-	{
-		"Component": "Audio",
-		"audioClip": "wind.mp3",
-		"volume": 0.2,
-		"isMute": false,
-		"isLoop": true,
-		"isPlayOnAwake": true,
-		"isBGM": true,
-		"is3D":false,
-		"fadeTime": 1
 	}
   ]
 }

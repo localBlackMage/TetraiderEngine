@@ -10,7 +10,7 @@ GameStateManager::GameStateManager() :
 	m_isLevelEditorMode(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
-	TETRA_EVENTS.Subscribe(EVENT_LevelComplete, this);
+	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
 }
 
@@ -67,14 +67,13 @@ void GameStateManager::HandleEvent(Event * p_event) {
 			if(pData->m_isTrigger) PauseGame(!m_isGamePaused);
 			break;
 		}
-		case EVENT_LevelComplete: {
+		case EVENT_LevelInComplete: {
 			m_isLevelOver = true;
 			PauseGame(true);
 			break;
 		}
-		case EVENT_LevelInComplete: {
+		case EVENT_ExitLevel: {
 			m_isLevelOver = true;
-			PauseGame(true);
 			break;
 		}
 	}

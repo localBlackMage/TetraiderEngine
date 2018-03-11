@@ -5,7 +5,7 @@
 
 #include <Stdafx.h>
 
-WaveMovement::WaveMovement(): Component(ComponentType::C_WaveMovement) {}
+WaveMovement::WaveMovement(): Component(ComponentType::C_WaveMovement), m_isActive(true) {}
 WaveMovement::~WaveMovement() {}
 
 void WaveMovement::Deactivate() {
@@ -14,24 +14,25 @@ void WaveMovement::Deactivate() {
 }
 
 void WaveMovement::Update(float dt) { 
-	float value = SinWave(m_amplitude, m_frequency, m_phaseShift, TETRA_FRAMERATE.GetElapsedTime());
+	if (m_isActive) {
+		float value = SinWave(m_amplitude, m_frequency, m_phaseShift, TETRA_FRAMERATE.GetElapsedTime());
 
-	if (m_isAbsoluteValue)
-		value = fabsf(value);
+		if (m_isAbsoluteValue)
+			value = fabsf(value);
 
-	if (m_isModifyXPos && !m_isModifyYPos) {
-		Vector3D newPos(m_initialPos.x + value, m_initialPos.y, m_initialPos.z);
-		m_pTransform->SetPosition(newPos);
+		if (m_isModifyXPos && !m_isModifyYPos) {
+			Vector3D newPos(m_initialPos.x + value, m_initialPos.y, m_initialPos.z);
+			m_pTransform->SetPosition(newPos);
+		}
+		else if (m_isModifyYPos && !m_isModifyXPos) {
+			Vector3D newPos(m_initialPos.x, m_initialPos.y + value, m_initialPos.z);
+			m_pTransform->SetPosition(newPos);
+		}
+		else {
+			Vector3D newPos(m_initialPos.x + value, m_initialPos.y + value, m_initialPos.z);
+			m_pTransform->SetPosition(newPos);
+		}
 	}
-	else if (m_isModifyYPos && !m_isModifyXPos) {
-		Vector3D newPos(m_initialPos.x, m_initialPos.y + value, m_initialPos.z);
-		m_pTransform->SetPosition(newPos);
-	}
-	else {
-		Vector3D newPos(m_initialPos.x + value, m_initialPos.y + value, m_initialPos.z);
-		m_pTransform->SetPosition(newPos);
-	}
-
 }
 
 void WaveMovement::Serialize(const json& j) {

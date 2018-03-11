@@ -75,6 +75,7 @@ public:
 	void RenderGameObjects();
 	void DestroyAllGameObjects();
 	void UpdateStatus();
+	bool IsPlayerAlive();
 	const std::vector<GameObject*>& GetObjectsWithHealthComponents() {	return mGameObjectsWithHealthComponents; }
 	const GameObject* GetPlayer() { return m_pPlayerReference; }
 

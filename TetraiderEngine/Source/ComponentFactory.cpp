@@ -38,6 +38,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Microphone"] = Microphone::CreateInstance;
 	m_creationFunctions["UICounter"] = UICounter::CreateInstance;
 	m_creationFunctions["ScriptedAnimation"] = ScriptedAnimation::CreateInstance;
+	m_creationFunctions["WinMessage"] = WinMessage::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

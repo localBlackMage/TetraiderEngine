@@ -2,7 +2,7 @@
 
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0)
+	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0), m_isControlsEnabled(true), m_flyOffset(1250.0f), m_isFlyingOutOfLevel(false)
 {
 }
 
@@ -15,6 +15,14 @@ void Controller::Deactivate() {
 
 void Controller::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
+
+	if (m_isFlyingInLevel) {
+		FlyIn();
+	}
+	else if (m_isFlyingOutOfLevel) {
+		FlyOut();
+	}
+
 	Agent::Update(dt);
 }
 
@@ -28,13 +36,24 @@ void Controller::Serialize(const json& j) {
 }
 
 void Controller::HandleEvent(Event* pEvent) {
-	if (m_isDead) return;
+	if (m_isDead || !m_isControlsEnabled) return;
 
-	if (pEvent->Type() == EventType::EVENT_OnLevelInitialized)
-	{
-		Audio* pAudio = pGO->GetComponent<Audio>(ComponentType::C_Audio);
-		pAudio->Play();
+	if (pEvent->Type() == EventType::EVENT_OnLevelInitialized) {
+		m_isFlyingInLevel = true;
+		SetControlActive(false);
+		pGO->m_isCollisionDisabled = true;
+		m_posToFlyTo = m_pTransform->GetPosition();
+		m_pTransform->SetPosition(m_pTransform->GetPosition() + Vector3D(-1, 0, 0) * m_flyOffset);
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
 	}
+	else if (pEvent->Type() == EventType::EVENT_ExitLevel) {
+		m_isFlyingOutOfLevel = true;
+		SetControlActive(false);
+		pGO->m_isCollisionDisabled = true;
+		m_posToFlyTo = m_pTransform->GetPosition() + Vector3D(1, 0, 0) * m_flyOffset;
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
+	}
+
 	if (TETRA_GAME_STATE.IsGamePaused()) {
 		if (pEvent->Type() == EVENT_INPUT_FLY) {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
@@ -98,9 +117,11 @@ void Controller::HandleEvent(Event* pEvent) {
 
 void Controller::LateInitialize() {
 	Agent::LateInitialize();
+
 	if (m_pParticleEmitterGO) {
 		m_pParticleEmitterGO->SetParent(pGO);
 	}
+
 	if(!m_pWeapon) {
 		if (pGO)
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
@@ -134,4 +155,30 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_FLY, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_MELEE, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RANGE, this);
+	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
+}
+
+void Controller::FlyIn() {
+	m_isControlAnimationOnVelocity = false;
+	m_pAnimation->Play(2);
+	Vector3D dir(1, 0, 0);
+	m_targetVelocity = dir*m_flySpeed;
+	m_lookDirection = dir;
+
+	if (Vector3D::SquareDistance(m_pTransform->GetPosition(), m_posToFlyTo) < 500.0f) {
+		m_isFlyingInLevel = false;
+		m_isControlAnimationOnVelocity = true;
+		SetControlActive(true);
+		pGO->m_isCollisionDisabled = false;
+		m_targetVelocity = Vector3D();
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnableCamFollow));
+	}
+}
+
+void Controller::FlyOut() {
+	m_isControlAnimationOnVelocity = false;
+	m_pAnimation->Play(2);
+	Vector3D dir(1, 0, 0);
+	m_targetVelocity = dir*m_flySpeed;
+	m_lookDirection = dir;
 }

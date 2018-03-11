@@ -13,6 +13,7 @@ private:
 	GameObject* m_pTarget;
 	float m_followSpeed;
 	std::string m_defaultTargetTag;
+	bool m_isActive;
 public:
 	CamFollow();
 	~CamFollow();

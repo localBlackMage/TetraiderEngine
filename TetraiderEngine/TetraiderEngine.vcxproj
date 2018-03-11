@@ -140,6 +140,7 @@
     <ClCompile Include="Source\UICounter.cpp" />
     <ClCompile Include="Source\WaveMovement.cpp" />
     <ClCompile Include="Source\Weapon.cpp" />
+    <ClCompile Include="Source\WinMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI_DashingAttack.h" />
@@ -261,6 +262,7 @@
     <ClInclude Include="Source\UICounter.h" />
     <ClInclude Include="Source\WaveMovement.h" />
     <ClInclude Include="Source\Weapon.h" />
+    <ClInclude Include="Source\WinMessage.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

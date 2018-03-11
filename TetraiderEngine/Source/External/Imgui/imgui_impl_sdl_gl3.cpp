@@ -406,7 +406,7 @@ void ImGui_ImplSdlGL3_NewFrame(SDL_Window* window)
 #endif
 
     // Hide OS mouse cursor if ImGui is drawing it
-    SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
+    // SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
 
     // Start the frame. This call will update the io.WantCaptureMouse, io.WantCaptureKeyboard flag that you can use to dispatch inputs (or not) to your application.
     ImGui::NewFrame();

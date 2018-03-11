@@ -19,11 +19,15 @@ public:
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
 	void ChangeInitialPos(const Vector3D& pos) { m_initialPos = pos; }
+	void SetActive(bool isActive) { m_isActive = isActive; }
+	void SetInitialPos(const Vector3D& pos) { m_initialPos = pos; }
+	bool IsActive() { return m_isActive; }
 private:
 	Transform* m_pTransform;
 	bool m_isModifyXPos;
 	bool m_isModifyYPos;
 	bool m_isAbsoluteValue;
+	bool m_isActive;
 	float m_amplitude;
 	float m_frequency;
 	float m_phaseShift;

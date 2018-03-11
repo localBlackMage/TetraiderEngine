@@ -24,6 +24,8 @@ GameObject::~GameObject() {
 		if (mComponents[i])
 			TETRA_MEMORY.DeleteComponent(mComponents[i]);
 	}
+
+	m_activeComponents.clear();
 }
 
 bool GameObject::operator==(const GameObject& rhs) const
@@ -54,21 +56,33 @@ void GameObject::Deactivate() {
 			mComponents[i] = nullptr;
 		}
 	}
+
+	m_activeComponents.clear();
 }
 
 void GameObject::OverrideComponents(const json & j)
 {
+	for (int i = 0; i < m_activeComponents.size(); ++i) {
+		mComponents[(int)m_activeComponents[i]]->Override(j);
+	}
+
+	/*
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
 			mComponents[i]->Override(j);
-	}
+	}*/
 }
 
 void GameObject::Update(float dt) {
+	for (int i = 0; i < m_activeComponents.size(); ++i) {
+		mComponents[(int)m_activeComponents[i]]->Update(dt);
+	}
+
+	/*
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
 			mComponents[i]->Update(dt);
-	}
+	}*/
 
 	if (m_isSetToDestroy) {
 		if (TETRA_FRAMERATE.GetElapsedTime() - m_destroySetTimeStamp > m_destroyTimer)
@@ -77,22 +91,32 @@ void GameObject::Update(float dt) {
 }
 
 void GameObject::LateUpdate(float dt) {
+	for (int i = 0; i < m_activeComponents.size(); ++i) {
+		mComponents[(int)m_activeComponents[i]]->LateUpdate(dt);
+	}
+
+	/*
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
 			mComponents[i]->LateUpdate(dt);
-	}
+	}*/
 }
 
 void GameObject::LateInitialize() {
-	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
+	for (int i = 0; i < m_activeComponents.size(); ++i) {
+		mComponents[(int)m_activeComponents[i]]->LateInitialize();
+	}
+		
+	/*for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
 			mComponents[i]->LateInitialize();
-	}
+	}*/
 }
 
 void GameObject::AddComponent(Component* pComponent) {
 	pComponent->pGO = this;
 	mComponents[pComponent->Type()] = pComponent;
+	m_activeComponents.push_back(pComponent->Type());
 }
 
 bool GameObject::HasComponent(ComponentType type) const
@@ -101,10 +125,15 @@ bool GameObject::HasComponent(ComponentType type) const
 }
 
 void GameObject::HandleEvent(Event* pEvent) {
+	for (int i = 0; i < m_activeComponents.size(); ++i) {
+		mComponents[(int)m_activeComponents[i]]->HandleEvent(pEvent);
+	}
+
+	/*
 	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
 		if (mComponents[i])
 			mComponents[i]->HandleEvent(pEvent);
-	}
+	}*/
 }
 
 void GameObject::SetParent(GameObject* pParent) {

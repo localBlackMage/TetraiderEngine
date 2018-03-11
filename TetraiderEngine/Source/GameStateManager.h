@@ -25,7 +25,6 @@ private:
 	bool m_isGamePaused;
 	bool m_isLevelOver;
 	bool m_isLevelEditorMode;
-
 	void SetGameState(GameState);
 public:
 	GameStateManager();

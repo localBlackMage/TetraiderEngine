@@ -8,8 +8,12 @@
 
 CamFollow::CamFollow() :
 	Component(ComponentType::C_CamFollow),
-	m_followSpeed(0.0f)
-{}
+	m_followSpeed(0.0f),
+	m_isActive(true)
+{
+	TETRA_EVENTS.Subscribe(EVENT_DisableCamFollow, this);
+	TETRA_EVENTS.Subscribe(EVENT_EnableCamFollow, this);
+}
 
 CamFollow::~CamFollow() {}
 
@@ -45,10 +49,12 @@ void CamFollow::LateInitialize()
 void CamFollow::Update(float dt) {}
 
 void CamFollow::LateUpdate(float dt) {
-	Transform* targetTransform = m_pTarget->GetComponent<Transform>(ComponentType::C_Transform);
-	float z = m_pTransform->GetPosition().z;
-	Vector3D lerpPosition = Lerp(m_pTransform->GetPosition(), targetTransform->GetPosition(), m_followSpeed*dt);
-	m_pTransform->SetPosition(Vector3D(lerpPosition.x, lerpPosition.y, z));
+	if (m_isActive) {
+		Transform* targetTransform = m_pTarget->GetComponent<Transform>(ComponentType::C_Transform);
+		float z = m_pTransform->GetPosition().z;
+		Vector3D lerpPosition = Lerp(m_pTransform->GetPosition(), targetTransform->GetPosition(), m_followSpeed*dt);
+		m_pTransform->SetPosition(Vector3D(lerpPosition.x, lerpPosition.y, z));
+	}
 }
 
 void CamFollow::HandleEvent(Event* pEvent) {
@@ -60,4 +66,8 @@ void CamFollow::HandleEvent(Event* pEvent) {
 			m_pTransform->SetPosition(Vector3D(targetTransform->GetPosition().x, targetTransform->GetPosition().y, z));
 		}
 	}
+	else if (pEvent->Type() == EVENT_DisableCamFollow)
+		m_isActive = false;
+	else if (pEvent->Type() == EVENT_EnableCamFollow)
+		m_isActive = true;
 }

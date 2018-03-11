@@ -7,6 +7,7 @@ class GameObject
 {
 private:
 	Component* mComponents[ComponentType::NUM_COMPONENTS];
+	std::vector<ComponentType> m_activeComponents;
 	unsigned int m_id;
 	unsigned short m_layer;
 	bool m_isSetToDestroy;

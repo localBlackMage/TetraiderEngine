@@ -17,7 +17,8 @@ private:
 	std::vector<GameObject*> m_objects;
 	std::string m_prefabName;
 	Text* m_pText;
-	bool isActive;
-	bool isLevelOver;
+	bool m_isActive;
+	bool m_isLevelOver;
+	bool m_isCannotPause;
 };
 

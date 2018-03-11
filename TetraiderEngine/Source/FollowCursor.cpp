@@ -23,7 +23,7 @@ void FollowCursor::Serialize(const json & j)
 		m_isDisableRenderOnPause = ParseBool(j, "isDisableRenderOnPause");
 		if (m_isDisableRenderOnPause) {
 			TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
-			TETRA_EVENTS.Subscribe(EVENT_LevelComplete, this);
+			TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 			TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
 		}
 	}
@@ -54,7 +54,7 @@ void FollowCursor::HandleEvent(Event * pEvent)
 			if(pData->m_isTrigger)
 				pGO->m_isRender = !pGO->m_isRender;
 		}
-		else if (pEvent->Type() == EVENT_LevelComplete) {
+		else if (pEvent->Type() == EVENT_ExitLevel) {
 			pGO->m_isRender = false;
 			m_isLevelOver = true;
 		}

@@ -41,6 +41,7 @@ public:
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
 	void PlayAnimation();
+	bool IsPlaying() { return m_isPlayAnimation; }
 private:
 	std::vector<ScriptedAnimationData> m_scriptedAnimation;
 	Vector3D m_initialPos;

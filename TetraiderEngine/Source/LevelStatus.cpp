@@ -39,7 +39,7 @@ void LevelStatus::HandleEvent(Event* pEvent) {
 			CollectibleData* pData = pEvent->Data<CollectibleData>();
 			m_eggsCollected += pData->m_value;
 			if (m_eggsCollected == m_eggsToCollect) {
-				Event* pEvent = new Event(EVENT_LevelComplete, 3.0f);
+				Event* pEvent = new Event(EVENT_LevelComplete, 1.5f);
 				TETRA_EVENTS.AddDelayedEvent(pEvent);
 				m_enemiesInLevel = 0;
 			}

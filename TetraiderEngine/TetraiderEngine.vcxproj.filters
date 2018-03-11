@@ -239,13 +239,7 @@
     <ClCompile Include="Source\SpawnOnHealthZero.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FollowCursor.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\LevelStatus.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EggCounter.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI_Attack.cpp">
@@ -361,6 +355,21 @@
     </ClCompile>
     <ClCompile Include="Source\LightBase.cpp">
       <Filter>Source Files\Components\Rendering\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScriptedAnimation.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UICounter.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EggCounter.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FollowCursor.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WinMessage.cpp">
+      <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -562,13 +571,7 @@
     <ClInclude Include="Source\SpawnOnHealthZero.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FollowCursor.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\LevelStatus.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EggCounter.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_Attack.h">
@@ -717,6 +720,21 @@
     </ClInclude>
     <ClInclude Include="Source\FontInfo.h">
       <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptedAnimation.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UICounter.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EggCounter.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FollowCursor.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinMessage.h">
+      <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

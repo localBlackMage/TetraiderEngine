@@ -165,6 +165,7 @@ using namespace JsonReader;
 #include <PauseMenu.h>
 #include <Microphone.h>
 #include <ScriptedAnimation.h>
+#include <WinMessage.h>
 #pragma endregion 
 
 #pragma region Globals + API
