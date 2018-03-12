@@ -39,10 +39,6 @@ public:
 
 
 const float MAX_DISTANCE = 10000000.f;
-const short MAX_ROWS = 5;
-const short MAX_COLS = 5;
-const short MAX_ROWS_IDX = MAX_ROWS - 1;
-const short MAX_COLS_IDX = MAX_COLS - 1;
 
 enum RoomConnections {
 	LEFT = 1,

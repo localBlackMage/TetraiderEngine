@@ -60,6 +60,7 @@ Text::Text(std::string fontName) :
 	m_cols(1.0f),
 	m_frameHeight(0.f),
 	m_frameWidth(0.f),
+	m_letterSpacing(1.f),
 	m_fontName(fontName),
 	m_texture(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
@@ -79,6 +80,7 @@ void Text::Serialize(const json & j)
 {
 	m_textHeight = j["letterHeight"];
 	m_textWidth = j["letterWidth"];
+	m_letterSpacing = ValueExists(j, "spacing") ? j["spacing"] : 1.f;
 
 	m_pivotOffset = ParseVector3D(j, "pivotOffset");
 	m_tintColor = ParseColor(j, "tint");

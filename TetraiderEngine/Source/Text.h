@@ -2,11 +2,6 @@
 #ifndef TEXT_COMPONENT_H
 #define TEXT_COMPONENT_H
 
-//#include "Component.h"
-//#include "SurfaceTextureBuffer.h"
-//#include "Mesh.h"
-//#include <string>
-
 typedef std::pair<int, int> Letter;
 typedef std::vector< Letter > Sentence;
 typedef std::vector< Sentence > Paragraph;
@@ -29,8 +24,9 @@ protected:
 	
 	Vector3D m_tintColor;
 	Vector3D m_pivotOffset;
-	float m_textHeight;
-	float m_textWidth;
+	float m_textHeight;		// Height in pixels of each letter
+	float m_textWidth;		// Width in pixels of each letter
+	float m_letterSpacing;	// Modifier for spacing between each letter (default is 1)
 
 	float m_rows, m_cols;
 	float m_frameHeight, m_frameWidth;
@@ -51,27 +47,28 @@ public:
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
 
-	std::string Shader() const { return m_shader; }
+	inline std::string Shader() const { return m_shader; }
 
 	virtual void SetFont(std::string fontName);
 	void SetText(std::string newText);
 	std::string GetText() const;
 
-	Vector3D GetOffset() const { return m_pivotOffset; }
-	void GetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
-	void SetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
+	inline Vector3D GetOffset() const { return m_pivotOffset; }
+	inline void GetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
+	inline void SetOffset(const Vector3D& pivotOffset) { m_pivotOffset = pivotOffset; }
 
 	GLuint GetTextureBuffer() const;
 	int GetAlphaMode() const;
 
-	Vector3D GetTintColor() const { return m_tintColor; }
-	void SetTintColor(const Vector3D& tintColor) { m_tintColor = tintColor; }
+	inline Vector3D GetTintColor() const { return m_tintColor; }
+	inline void SetTintColor(const Vector3D& tintColor) { m_tintColor = tintColor; }
 
-	float GetLetterHeight() const { return m_textHeight; }
-	float GetLetterWidth() const { return m_textWidth; }
+	inline float GetLetterHeight() const { return m_textHeight; }
+	inline float GetLetterWidth() const { return m_textWidth; }
+	inline float GetLetterSpacing() const { return m_letterSpacing; }
 
-	float FrameHeight() const { return m_frameHeight; }
-	float FrameWidth() const { return m_frameWidth; }
+	inline float FrameHeight() const { return m_frameHeight; }
+	inline float FrameWidth() const { return m_frameWidth; }
 
 	TexCoordsGrid GetTextureOffsets() const;
 	ParagraphAndColors GetLetterData() const;
