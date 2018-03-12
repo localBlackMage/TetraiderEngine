@@ -9,7 +9,7 @@
 		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
-		"soundsMute": true,
+		"soundsMute": false,
 		"enableWindowsCursor": false
 	},
 	"WINDOW_SETTINGS": {

@@ -169,7 +169,7 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 
 	for (Sentence letterRow : letterData.first) {
 		for (Letter letter : letterRow) {
-			M = pTransformComp->TransformWithOffsetAndScale(Vector3D(xScale * x, yScale * y, 0) + offset, xScale, yScale);
+			M = pTransformComp->TransformWithOffsetAndScale(Vector3D(xScale * x * 0.9f, yScale * y, 0) + offset, xScale, yScale);
 			N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
 			glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 			glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
