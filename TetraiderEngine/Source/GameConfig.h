@@ -22,9 +22,8 @@ private:
 	
 	bool m_soundsMute;
 
-	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 	unsigned short m_roomWidth, m_roomHeight;	// Room dimensions in cells (ex. 12x8)
-	unsigned short m_roomsX, m_roomsY;			// Number of rooms in the x and y directions on the grid
+	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 
 	int m_screenWidth, m_screenHeight;
 public:
@@ -48,8 +47,8 @@ public:
 	inline unsigned short CellHeight() const { return m_cellHeight; }
 	inline unsigned short RoomWidth() const { return m_roomWidth; }
 	inline unsigned short RoomHeight() const { return m_roomHeight; }
-	inline unsigned int LevelWidth() const { return int(m_cellWidth) * int(m_roomWidth) * int(m_roomsX); }
-	inline unsigned int LevelHeight() const { return int(m_cellHeight) * int(m_roomHeight) * int(m_roomsY); }
+	inline unsigned short RoomWidthPixels() const { return m_cellWidth * m_roomWidth; }
+	inline unsigned short RoomHeightPixels() const { return m_cellHeight * m_roomHeight; }
 };
 
 #endif

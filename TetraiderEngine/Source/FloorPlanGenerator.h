@@ -87,15 +87,17 @@ struct RoomNode {
 
 class FloorPlanGenerator {
 protected:
-	RoomNode* m_roomNodes[MAX_ROWS][MAX_COLS];
+	RoomNode** m_roomNodes;
 	RoomNode* m_spawnNode;
+	unsigned short m_cols, m_rows;	// How many rooms wide and tall a floor will be (ex. 5x5)
+	unsigned short m_maxRowIdx, m_maxColIdx;
+	int m_seed;
 
-	// TODO: Move this to LevelManager or somewhere more fitting
 	std::unordered_map<RoomConnections, std::vector<json*> > m_roomFiles;
 
 	bool _A_Star(RoomNode& start, RoomNode& goal);
 
-	void _GenerateRoomNodes();
+	
 	void _ResetNodeDistances();
 	void _ResetNodeParents();
 	void _ConnectNeighbors();
@@ -110,6 +112,7 @@ public:
 	FloorPlanGenerator(const FloorPlanGenerator &) = delete;
 	void operator=(const FloorPlanGenerator &) = delete;
 	
+	void GenerateRoomNodes(unsigned short cols, unsigned short rows);
 	void GenerateFloorPlan(int seed = -1);
 	void ResetAllNodes();
 	void PrintFloorPlan();
@@ -117,8 +120,12 @@ public:
 
 	RoomConnections GetRoomConnectionType(const std::string connectionType);
 	
-	// TODO: Move this to LevelManager or somewhere more fitting
 	void LoadRoomFiles();
+
+	unsigned int FloorWidthPixels() const;
+	unsigned int FloorHeightPixels() const;
+
+	inline int Seed() const { return m_seed; }
 };
 
 #endif

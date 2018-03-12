@@ -1,6 +1,3 @@
-//#include "GameConfig.h"
-//#include "TetraiderAPI.h"
-
 #include <Stdafx.h>
 
 #define GAME_SETTINGS "GAME_SETTINGS"

@@ -54,6 +54,7 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 
 void LevelManager::LoadLevel() {
 	if (m_isRandomlyGenerated) {
+		TETRA_LEVEL_GEN.GenerateRoomNodes(4, 4);
 		TETRA_LEVEL_GEN.GenerateFloorPlan();
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
