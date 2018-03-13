@@ -27,7 +27,7 @@ void UIManager::DeactivateCanvas(CanvasType c)
 
 void UIManager::RegisterCanvas(Canvas* c)
 {
-	std::cout << "Canvas #  "<<(int)c->m_canvasType << std::endl;
+	//std::cout << "Canvas #  "<<(int)c->m_canvasType << std::endl;
 	m_Canvas[(int)c->m_canvasType] = c;
 }
 

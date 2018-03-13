@@ -40,6 +40,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["ScriptedAnimation"] = ScriptedAnimation::CreateInstance;
 	m_creationFunctions["WinMessage"] = WinMessage::CreateInstance;
 	m_creationFunctions["Canvas"] = Canvas::CreateInstance;
+	m_creationFunctions["Slider"] = Slider::CreateInstance;
+	m_creationFunctions["Endpoints"] = Endpoints::CreateInstance;
 	m_creationFunctions["PowerUpButton"] = PowerUpButton::CreateInstance;
 }
 

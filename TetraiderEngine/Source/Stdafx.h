@@ -176,6 +176,8 @@ using namespace JsonReader;
 #include <Button.h>
 #include <PauseMenu.h>
 #include <Canvas.h>
+#include <Slider.h>
+#include <Endpoints.h>
 
 #include <CamFollow.h>
 #include <ScreenWrap.h>

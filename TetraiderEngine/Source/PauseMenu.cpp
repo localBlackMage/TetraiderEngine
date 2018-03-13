@@ -40,7 +40,6 @@ void PauseMenu::Serialize(const json & j)
 	}
 }
 
-
 void PauseMenu::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME)

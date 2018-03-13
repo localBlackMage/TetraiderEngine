@@ -54,7 +54,7 @@ void Button::HandleEvent(Event* pEvent)
 	if (pEvent->Type() == EVENT_OnCollide)
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
-		if (pData->pGO->m_tag == T_UI) {
+		if (pData->pGO->m_tag == T_Cursor) {
 			m_pSprite->SetVOffset(0.3333f);
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				m_pSprite->SetVOffset(0.6666f);

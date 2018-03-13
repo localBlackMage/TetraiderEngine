@@ -37,6 +37,20 @@
                     }
                   },
                   {
+                    "prefab":"P_SliderBar",
+                    "position":{
+                      "x":200,
+                      "y":-25
+                    }
+                  },
+                  {
+                    "prefab":"P_SliderBall",
+                    "position":{
+                      "x":120,
+                      "y":-25
+                    }
+                  },
+                  {
                     "prefab":"P_SoundTitle",
                     "position":{
                       "x":0,

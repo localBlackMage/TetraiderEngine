@@ -1,6 +1,6 @@
 {
-    "Tag": "Cursor",
-    "Layer": "UI_2",
+    "Tag": "SliderBar",
+    "Layer": "UI",
     "COMPONENTS": [
       {
         "Component": "Transform",
@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 40,
-          "y": 40,
+          "x": 200,
+          "y": 5,
           "z": 0
         },
         "pivotOffset": {
@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_Feather2.png",
+        "Texture": "T_StaminaBar.png",
         "tiling": {
           "x": 1,
           "y": 1
@@ -37,9 +37,9 @@
         },
         "lit": false,
         "tint": {
-          "r": 1,
-          "g": 1,
-          "b": 1,
+          "r": 0,
+          "g": 0,
+          "b": 0,
           "a": 1
         },
         "saturation": {
@@ -50,16 +50,17 @@
         }
       },
       {
-          "Component": "Body",
-          "isStatic": false,
-          "mass": 0,
-          "SHAPE": {
-              "type": "circle",
-              "radius": 10
-          }
+        "Component": "Body",
+        "isStatic": false,
+        "mass": 0,
+        "SHAPE": {
+            "type": "AABB",
+            "width": 200,
+            "height": 5
+        }
       },
-	  {
-		  "Component":"FollowCursor"		
-	  }
+      {
+          "Component":"Endpoints"
+      }
    ]
   }

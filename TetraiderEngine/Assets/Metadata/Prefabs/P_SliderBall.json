@@ -1,6 +1,6 @@
 {
-    "Tag": "Cursor",
-    "Layer": "UI_2",
+    "Tag": "UI",
+    "Layer": "UI",
     "COMPONENTS": [
       {
         "Component": "Transform",
@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 40,
-          "y": 40,
+          "x": 20,
+          "y": 20,
           "z": 0
         },
         "pivotOffset": {
@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_Feather2.png",
+        "Texture": "T_SliderBall.png",
         "tiling": {
           "x": 1,
           "y": 1
@@ -59,7 +59,7 @@
           }
       },
 	  {
-		  "Component":"FollowCursor"		
+		"Component":"Slider"		
 	  }
    ]
   }

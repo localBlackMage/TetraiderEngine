@@ -34,7 +34,6 @@ void Canvas::Serialize(const json & j)
 	{
 		GameObject *pObject;
 		prefabName = ParseString(j["UIElements"][i], "prefab");
-
 		x = ParseFloat(j["UIElements"][i]["position"], "x");
 		y = ParseFloat(j["UIElements"][i]["position"], "y");
 		z = ParseFloat(j["UIElements"][i]["position"], "z");

@@ -33,6 +33,8 @@ static std::unordered_map<std::string, GameObjectTag> TAG_NAMES = {
 	{ "Emitter", T_Emitter },
 	{"Pause",T_Pause},
 	{ "PowerUpText",T_PowerUpText },
+	{"Cursor",T_Cursor},
+	{"SliderBar",T_SliderBar},
 	{ "None", T_None }
 
 };
