@@ -388,15 +388,21 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 			pTransform->SetPosition(m_spawnNode->m_position);
 	}
 
+
+	// TODO: Do this better in general
 	int idx = RandomInt(0, enemies.size());
-	enemies[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+	if (idx < enemies.size()))
+		enemies[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+
 	idx = RandomInt(0, objects.size());
-	objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+	if (idx < objects.size())
+		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 	int prevIdx = idx;
 	idx = RandomInt(0, objects.size());
 	while (idx == prevIdx)
 		idx = RandomInt(0, objects.size());
-	objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+	if (idx < objects.size())
+		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 }
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
