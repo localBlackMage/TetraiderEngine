@@ -74,7 +74,7 @@ void Button::HandleEvent(Event* pEvent)
 					TETRA_UI.ActivateCanvas(m_canvasToActivate);
 					TETRA_UI.DeactivateCanvas(m_canvasToDeActivate);
 				}
-				else if(m_isRandomGenerated) {
+				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
 				}
