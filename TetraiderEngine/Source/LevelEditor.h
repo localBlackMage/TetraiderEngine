@@ -37,6 +37,7 @@ private:
 	Vector3D m_cameraMoveDir;
 	int m_roomSelectedItem;
 	int m_roomTemplateSelectedItem;
+	int m_difficulty;
 	bool m_isFileNameInvalid;
 	bool m_isPopUpOpen;
 	bool m_isLoadSuccess;

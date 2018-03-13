@@ -1,5 +1,6 @@
 {
   "ROOM_CONNECTION_TYPE": "DOWN",
+  "DIFFICULTY": 0,
   "GAME_OBJECTS": [
     {
       "prefab": "P_DownBG"

@@ -1,12 +1,3 @@
-//#include "LevelEditor.h"
-//#include "External\Imgui\imgui.h"
-//#include "TetraiderAPI.h"
-//#include "Transform.h"
-//#include "Body.h"
-//#include <iostream>
-//#include <fstream>
-//#include <filesystem>
-
 #include <Stdafx.h>
 
 LevelEditor::LevelEditor() :
@@ -17,6 +8,7 @@ LevelEditor::LevelEditor() :
 	m_cameraMovSpeed(500.0f),
 	m_roomSelectedItem(0),
 	m_roomTemplateSelectedItem(0),
+	m_difficulty(0),
 	m_isFileNameInvalid(false),
 	m_isLoadSuccess(true)
 {
@@ -101,7 +93,7 @@ void LevelEditor::Update(float dt) {
 
 		pGizmoGOTransform->SetPosition(pSelectedGOTransform->GetPosition());
 
-		if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F)) {
+		if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F) && !m_isPopUpOpen) {
 			Vector3D pos(pSelectedGOTransform->GetPosition().x, pSelectedGOTransform->GetPosition().y, m_pCameraTransform->GetPosition().z);
 			m_pCameraTransform->SetPosition(pos);
 		}
@@ -255,6 +247,13 @@ void LevelEditor::UpdateInspectorWindow() {
 
 void LevelEditor::GoBackToMainMenu() {
 	// This is hard coded.... Change later
+
+	for (auto instance : m_instances) {
+		delete instance.second;
+	}
+
+	m_instances.clear();
+
 	TETRA_LEVELS.ChangeLevel(1);
 }
 
@@ -286,6 +285,7 @@ void LevelEditor::SavePopup() {
 	else {
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "File name: ");
 		ImGui::InputText("##FileName", m_fileName, IM_ARRAYSIZE(m_fileName));
+		ImGui::InputInt("Difficulty", &m_difficulty, 1, 2);
 		if (ImGui::Button("Save")) {
 			if (ValidateFileName()) {
 				std::string fileName;
@@ -420,6 +420,7 @@ bool LevelEditor::LoadJsonFile(std::string room, bool isTemplate) {
 	}
 
 	m_currentRoomType = ValueExists(j, "ROOM_CONNECTION_TYPE") ? ParseString(j, "ROOM_CONNECTION_TYPE") : "";
+	m_difficulty = ValueExists(j, "DIFFICULTY") ? ParseInt(j, "DIFFICULTY") : 0;
 	m_pSelectedGO = nullptr;
 	return true;
 }
@@ -440,6 +441,7 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 
 	file << "{" << endl;
 	file << "	\"ROOM_CONNECTION_TYPE\": " << "\"" << m_currentRoomType << "\"," << endl;
+	file << "	\"DIFFICULTY\": " << m_difficulty << "," << endl;
 	file << "	\"GAME_OBJECTS\": [" << endl;
 
 	std::unordered_map<GameObject*, ObjectInstance*>::iterator it = m_instances.begin();
