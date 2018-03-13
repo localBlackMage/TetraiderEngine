@@ -26,7 +26,7 @@ void Button::Serialize(const json & j)
 		m_canvasToActivate = (CanvasType)ParseInt(j, "canvasToActivate");
 		m_canvasToDeActivate = (CanvasType)ParseInt(j, "canvasToDeActivate");
 	}
-	m_isRandomGenerated = ParseBool(j, "m_isRandomGenerated");
+	m_isRandomGenerated = ParseBool(j, "isRandomGenerated");
 	m_isLoadLevelEditor = ParseBool(j, "isLoadLevelEditor");
 }
 
@@ -74,7 +74,7 @@ void Button::HandleEvent(Event* pEvent)
 					TETRA_UI.ActivateCanvas(m_canvasToActivate);
 					TETRA_UI.DeactivateCanvas(m_canvasToDeActivate);
 				}
-				else {
+				else if(m_isRandomGenerated) {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
 				}
