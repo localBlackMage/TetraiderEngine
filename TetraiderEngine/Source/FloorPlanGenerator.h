@@ -59,6 +59,8 @@ enum RoomConnections {
 	ALL = 15
 };
 
+std::ostream& operator<<(std::ostream& out, const RoomConnections& rc);
+
 enum class RoomType {
 	GOAL, INTERESTING, SPAWN, DEAD, ALIVE
 };
@@ -81,6 +83,9 @@ struct RoomNode {
 	bool operator() (const RoomNode& lhs, const RoomNode& rhs);
 };
 
+typedef std::vector<json*> RoomFiles;
+typedef std::unordered_map<unsigned short, RoomFiles> DifficultyMap;
+
 class FloorPlanGenerator {
 protected:
 	RoomNode** m_roomNodes;
@@ -88,8 +93,9 @@ protected:
 	unsigned short m_cols, m_rows;	// How many rooms wide and tall a floor will be (ex. 5x5)
 	unsigned short m_maxRowIdx, m_maxColIdx;
 	int m_seed;
+	unsigned short m_difficulty;
 
-	std::unordered_map<RoomConnections, std::vector<json*> > m_roomFiles;
+	std::unordered_map<RoomConnections, DifficultyMap > m_roomFiles;
 
 	bool _A_Star(RoomNode& start, RoomNode& goal);
 
@@ -102,13 +108,14 @@ protected:
 	void _SelectivelyUnsetNodeNeighbors();
 	void _SetRoomConnectionTypes();
 	void _UnsetNodeNeigbors(RoomNode& node);
+	json* _GetRoomJsonForDifficulty(short row, short col, RoomConnections connection);
 public:
 	FloorPlanGenerator();
 	~FloorPlanGenerator();
 	FloorPlanGenerator(const FloorPlanGenerator &) = delete;
 	void operator=(const FloorPlanGenerator &) = delete;
 	
-	void GenerateRoomNodes(unsigned short cols, unsigned short rows);
+	void GenerateRoomNodes(unsigned short cols, unsigned short rows, unsigned short difficulty = 1);
 	void GenerateFloorPlan(int seed = -1);
 	void ResetAllNodes();
 	void PrintFloorPlan();

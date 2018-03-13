@@ -1,6 +1,9 @@
 #include <Stdafx.h>
 
-static std::unordered_map<std::string, RoomConnections> ROOM_CONN_STRINGS = {
+#define ROOM_CONNECTION_TYPE "ROOM_CONNECTION_TYPE"
+#define ROOM_DIFFICULTY "DIFFICULTY"
+
+static std::unordered_map<std::string, RoomConnections> ROOM_CONNECTION_STRINGS_TO_TYPES = {
 	{ "LEFT", RoomConnections::LEFT },
 	{ "UP", RoomConnections::UP },
 	{ "LEFT_UP", RoomConnections::LEFT_UP },
@@ -16,6 +19,24 @@ static std::unordered_map<std::string, RoomConnections> ROOM_CONN_STRINGS = {
 	{ "LEFT_RIGHT_DOWN", RoomConnections::LEFT_RIGHT_DOWN },
 	{ "UP_RIGHT_DOWN", RoomConnections::UP_RIGHT_DOWN },
 	{ "ALL", RoomConnections::ALL }
+};
+
+static std::string ROOM_CONNECTION_STRINGS[15] = {
+	"LEFT",
+	"UP",
+	"LEFT_UP",
+	"RIGHT",
+	"LEFT_RIGHT",
+	"UP_RIGHT",
+	"LEFT_UP_RIGHT",
+	"DOWN",
+	"LEFT_DOWN",
+	"UP_DOWN",
+	"LEFT_UP_DOWN",
+	"RIGHT_DOWN",
+	"LEFT_RIGHT_DOWN",
+	"UP_RIGHT_DOWN",
+	"ALL"
 };
 
 // small helper enum to remember directions
@@ -244,6 +265,17 @@ void FloorPlanGenerator::_UnsetNodeNeigbors(RoomNode& node)
 	node.m_Neighbors[2] = nullptr;
 	node.m_Neighbors[3] = nullptr;
 }
+
+json * FloorPlanGenerator::_GetRoomJsonForDifficulty(short row, short col, RoomConnections connection)
+{
+	unsigned short difficulty = m_difficulty;
+	while (m_roomFiles[connection][difficulty].size() == 0) {
+		if (--difficulty < 1)
+			return nullptr;
+	}
+	int idx = RandomInt(0, m_roomFiles[connection][difficulty].size());
+	return m_roomFiles[connection][difficulty][idx];
+}
 #pragma endregion
 
 #pragma region FloorPlanGenerator Methods
@@ -260,12 +292,13 @@ FloorPlanGenerator::~FloorPlanGenerator()
 	TETRA_MEMORY.Free(m_roomNodes);
 }
 
-void FloorPlanGenerator::GenerateRoomNodes(unsigned short cols, unsigned short rows)
+void FloorPlanGenerator::GenerateRoomNodes(unsigned short cols, unsigned short rows, unsigned short difficulty)
 {
 	m_cols = cols;
 	m_rows = rows;
 	m_maxRowIdx = m_rows - 1;
 	m_maxColIdx = m_cols - 1;
+	m_difficulty = difficulty;
 
 	short id = 0;
 	m_roomNodes = (RoomNode**)TETRA_MEMORY.Alloc(sizeof(RoomNode*) * m_rows);
@@ -331,8 +364,11 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 			// Set the position of each important node
 			m_roomNodes[row][col].m_position = offset;
 
-			// TODO: Add some logic to select a room file, for now just select the first
-			json* j = m_roomFiles[m_roomNodes[row][col].m_ConnectionType][0];
+			json* j = _GetRoomJsonForDifficulty(row, col, m_roomNodes[row][col].m_ConnectionType);
+			if (!j) {
+				std::cout << "ABORTING! NO LEVEL FILE FOUND FOR ROOM TYPE: " << m_roomNodes[row][col].m_ConnectionType << std::endl;
+				return;
+			}
 
 			// Move all game objects in this room to their designated location
 			std::vector<GameObject*> createdGameObjects = TETRA_LEVELS.LoadRoomFile(*j);
@@ -354,20 +390,20 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
 {
-	return ROOM_CONN_STRINGS[connectionType];
+	return ROOM_CONNECTION_STRINGS_TO_TYPES[connectionType];
 }
 
 void FloorPlanGenerator::LoadRoomFiles()
 {
-	const std::string ROOM_CONNECTION_TYPE = "ROOM_CONNECTION_TYPE";
 	std::string path = TETRA_GAME_CONFIG.RoomFilesDir();
-	for (auto &room : std::experimental::filesystem::directory_iterator(path)) {
+	for (const std::experimental::filesystem::v1::directory_entry &room : std::experimental::filesystem::directory_iterator(path)) {
 		if (room.path().has_extension()) {
 			json* j = new json();
 			*j = OpenJsonFile(room.path().string());
 
 			std::string name = (*j)[ROOM_CONNECTION_TYPE];
-			m_roomFiles[GetRoomConnectionType(name)].push_back(j);
+			int difficulty = ValueExists((*j), ROOM_DIFFICULTY) ? (*j)[ROOM_DIFFICULTY] : 1;
+			m_roomFiles[GetRoomConnectionType(name)][difficulty].push_back(j);
 		}
 	}
 }
@@ -383,6 +419,11 @@ unsigned int FloorPlanGenerator::FloorHeightPixels() const
 }
 
 #pragma endregion
+
+std::ostream& operator<<(std::ostream& out, const RoomConnections& rc) {
+	out << ROOM_CONNECTION_STRINGS[rc-1];
+	return out;
+}
 
 std::ostream& operator<<(std::ostream& out, const RoomType& rt) {
 	switch (rt) {
@@ -409,3 +450,7 @@ bool RoomNode::operator()(const RoomNode & lhs, const RoomNode & rhs)
 {
 	return lhs.m_cost < rhs.m_cost;
 }
+
+
+#undef ROOM_CONNECTION_TYPE
+#undef ROOM_DIFFICULTY
