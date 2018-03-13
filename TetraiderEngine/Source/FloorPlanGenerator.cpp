@@ -65,10 +65,9 @@ static float _Distance(RoomNode& a, RoomNode& b) {
 bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 {
 	if (start == goal)	return true;
-	_ResetNodeDistances();
-	_ResetNodeParents();
+	_ResetNodeDistancesAndParents();
 	std::unordered_map<short, bool> closedSet; // node id -> true if this node is on the closedSet
-	MinHeap<RoomNode*> openSet;
+	Sorting::MinHeap<RoomNode*> openSet;
 	openSet.push(&start);
 
 	start.m_cost = _Heuristic(start, goal);
@@ -109,18 +108,24 @@ bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 	return false;
 }
 
-void FloorPlanGenerator::_ResetNodeDistances()
+bool FloorPlanGenerator::_IsGOAViableObject(GameObject * pGO)
 {
-	for (short row = 0; row < m_rows; ++row)
-		for (short col = 0; col < m_cols; ++col)
-			m_roomNodes[row][col].m_cost = MAX_DISTANCE;
+	return pGO->HasComponent(C_SpawnOnHealthZero) && pGO->TagIs(GameObjectTag::T_Obstacle);
 }
 
-void FloorPlanGenerator::_ResetNodeParents()
+bool FloorPlanGenerator::_IsGOAViableEnemy(GameObject * pGO)
 {
-	for (short row = 0; row < m_rows; ++row)
-		for (short col = 0; col < m_cols; ++col)
+	return pGO->HasComponent(C_SpawnOnHealthZero) && pGO->TagIs(GameObjectTag::T_Enemy);
+}
+
+void FloorPlanGenerator::_ResetNodeDistancesAndParents()
+{
+	for (short row = 0; row < m_rows; ++row) {
+		for (short col = 0; col < m_cols; ++col) {
+			m_roomNodes[row][col].m_cost = MAX_DISTANCE;
 			m_roomNodes[row][col].m_parent = nullptr;
+		}
+	}
 }
 
 void FloorPlanGenerator::_ConnectNeighbors()
@@ -222,36 +227,28 @@ void FloorPlanGenerator::_ConnectSelectedNodes(std::vector<RoomNode*>& selectedN
 	}
 }
 
-void FloorPlanGenerator::_SelectivelyUnsetNodeNeighbors()
-{
-	RoomNode* node;
-	for (short row = 0; row < m_rows; ++row) {
-		for (short col = 0; col < m_cols; ++col) {
-			node = &m_roomNodes[row][col];
-			if (node->m_type == RoomType::DEAD)
-				_UnsetNodeNeigbors(*node);
-			else {
-				node->m_Neighbors[0] = !node->m_Neighbors[0] || node->m_Neighbors[0]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[0];
-				node->m_Neighbors[1] = !node->m_Neighbors[1] || node->m_Neighbors[1]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[1];;
-				node->m_Neighbors[2] = !node->m_Neighbors[2] || node->m_Neighbors[2]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[2];;
-				node->m_Neighbors[3] = !node->m_Neighbors[3] || node->m_Neighbors[3]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[3];;
-			}
-		}
-	}
-}
-
 void FloorPlanGenerator::_SetRoomConnectionTypes()
 {
 	RoomNode* node;
 	for (short row = 0; row < m_rows; ++row) {
 		for (short col = 0; col < m_cols; ++col) {
 			node = &m_roomNodes[row][col];
-			if (node->m_type == RoomType::DEAD)	continue;
+			if (node->m_type == RoomType::DEAD) {
+				_UnsetNodeNeigbors(*node);
+				continue;
+			}
+			else {
+				node->m_Neighbors[0] = !node->m_Neighbors[0] || node->m_Neighbors[0]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[0];
+				node->m_Neighbors[1] = !node->m_Neighbors[1] || node->m_Neighbors[1]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[1];
+				node->m_Neighbors[2] = !node->m_Neighbors[2] || node->m_Neighbors[2]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[2];
+				node->m_Neighbors[3] = !node->m_Neighbors[3] || node->m_Neighbors[3]->m_type == RoomType::DEAD ? nullptr : node->m_Neighbors[3];
+			}
 
-			int connection = (node->m_Neighbors[NEIGHBOR::N_LEFT] ? 1 : 0) + 
-				(node->m_Neighbors[NEIGHBOR::N_UP] ? 2 : 0) +
-				(node->m_Neighbors[NEIGHBOR::N_RIGHT] ? 4 : 0) +
-				(node->m_Neighbors[NEIGHBOR::N_DOWN] ? 8 : 0);
+
+			int connection =	(node->m_Neighbors[NEIGHBOR::N_LEFT]	? 1 : 0) + 
+								(node->m_Neighbors[NEIGHBOR::N_UP]		? 2 : 0) +
+								(node->m_Neighbors[NEIGHBOR::N_RIGHT]	? 4 : 0) +
+								(node->m_Neighbors[NEIGHBOR::N_DOWN]	? 8 : 0);
 
 			node->m_ConnectionType = static_cast<RoomConnections>(connection);
 		}
@@ -321,7 +318,6 @@ void FloorPlanGenerator::GenerateFloorPlan(int seed)
 	srand(m_seed);
 
 	_ConnectSelectedNodes(_SelectNodes());
-	_SelectivelyUnsetNodeNeighbors();
 	_SetRoomConnectionTypes();
 }
 
@@ -355,6 +351,9 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	float y = float(roomHeight * cellHeight);
 	float yHalf = y / 2.f;
 
+	std::vector<GameObject*> enemies;
+	std::vector<GameObject*> objects;
+
 	for (short row = 0; row < m_rows; ++row) {
 		for (short col = 0; col < m_cols; ++col) {
 			if (m_roomNodes[row][col].m_type == RoomType::DEAD)	
@@ -375,6 +374,9 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 			for (GameObject* pGO : createdGameObjects) {
 				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 				if (pTransform)	pTransform->Move(offset);
+
+				if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
+				else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
 			}
 		}
 	}
@@ -382,10 +384,19 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	GameObject* pGO = TETRA_GAME_OBJECTS.FindObjectWithTag(GameObjectTag::T_Player);
 	if (pGO) {
 		Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-
 		if (pTransform)
 			pTransform->SetPosition(m_spawnNode->m_position);
 	}
+
+	int idx = RandomInt(0, enemies.size());
+	enemies[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+	idx = RandomInt(0, objects.size());
+	objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+	int prevIdx = idx;
+	idx = RandomInt(0, objects.size());
+	while (idx == prevIdx)
+		idx = RandomInt(0, objects.size());
+	objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 }
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)

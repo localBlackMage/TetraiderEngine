@@ -3,41 +3,6 @@
 #ifndef FLOOR_PLAN_GENERATOR_H
 #define FLOOR_PLAN_GENERATOR_H
 
-template<class T, class Container = std::vector<T>, class Compare = std::less<typename Container::value_type> >
-class MinHeap : public std::priority_queue<T, Container, Compare>
-{
-public:
-	typedef typename
-		std::priority_queue<T, Container, Compare>::container_type::const_iterator const_iterator;
-
-	bool contains(const T& val) const
-	{
-		auto first = this->c.cbegin();
-		auto last = this->c.cend();
-		while (first != last) {
-			if (*first == val) return true;
-			++first;
-		}
-		return false;
-	}
-
-	// Returns true if updated successfully, false if the value wasn't in the heap
-	bool update(T& val)
-	{
-		auto first = this->c.begin();
-		auto last = this->c.end();
-		while (first != last) {
-			if (*first == val) {
-				*first = val;
-				return true;
-			}
-			++first;
-		}
-		return false;
-	}
-};
-
-
 const float MAX_DISTANCE = 10000000.f;
 
 enum RoomConnections {
@@ -99,13 +64,15 @@ protected:
 
 	bool _A_Star(RoomNode& start, RoomNode& goal);
 
-	
-	void _ResetNodeDistances();
-	void _ResetNodeParents();
+	/* Viable meaning the GO has a C_SpawnOnHealthZero component and is a T_Obstacle */
+	bool _IsGOAViableObject(GameObject* pGO);
+	/* Viable meaning the GO has a C_SpawnOnHealthZero component and is a T_Enemy */
+	bool _IsGOAViableEnemy(GameObject* pGO);
+	void _ResetNodeDistancesAndParents();
 	void _ConnectNeighbors();
 	std::vector<RoomNode*> _SelectNodes();
 	void _ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes);
-	void _SelectivelyUnsetNodeNeighbors();
+	/* First selectively unsets neighbors, then sets connection type */
 	void _SetRoomConnectionTypes();
 	void _UnsetNodeNeigbors(RoomNode& node);
 	json* _GetRoomJsonForDifficulty(short row, short col, RoomConnections connection);

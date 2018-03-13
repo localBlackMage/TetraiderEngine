@@ -44,6 +44,8 @@ public:
 	bool HasComponent(ComponentType type) const;
 	void SetParent(GameObject* pParent);
 	void SetActive(bool active);
+	inline GameObjectTag Tag() const { return m_tag; }
+	inline bool TagIs(GameObjectTag tag) const { return m_tag == tag; }
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {

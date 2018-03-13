@@ -61,6 +61,40 @@ namespace Sorting {
 			}
 		}
 	}
+
+	template<class T, class Container = std::vector<T>, class Compare = std::less<typename Container::value_type> >
+	class MinHeap : public std::priority_queue<T, Container, Compare>
+	{
+	public:
+		typedef typename
+			std::priority_queue<T, Container, Compare>::container_type::const_iterator const_iterator;
+
+		bool contains(const T& val) const
+		{
+			auto first = this->c.cbegin();
+			auto last = this->c.cend();
+			while (first != last) {
+				if (*first == val) return true;
+				++first;
+			}
+			return false;
+		}
+
+		// Returns true if updated successfully, false if the value wasn't in the heap
+		bool update(T& val)
+		{
+			auto first = this->c.begin();
+			auto last = this->c.end();
+			while (first != last) {
+				if (*first == val) {
+					*first = val;
+					return true;
+				}
+				++first;
+			}
+			return false;
+		}
+	};
 }
 
 #endif
