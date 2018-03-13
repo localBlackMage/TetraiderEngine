@@ -11,7 +11,8 @@
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
 		"soundsMute": false,
-		"enableWindowsCursor": false
+		"enableWindowsCursor": false,
+		"consoleEnabled": true
 	},
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",

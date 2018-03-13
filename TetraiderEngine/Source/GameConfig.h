@@ -26,6 +26,7 @@ private:
 	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 
 	int m_screenWidth, m_screenHeight;
+	bool m_consoleEnabled;
 public:
 	GameConfig();
 	~GameConfig();
@@ -49,6 +50,8 @@ public:
 	inline unsigned short RoomHeight() const { return m_roomHeight; }
 	inline unsigned short RoomWidthPixels() const { return m_cellWidth * m_roomWidth; }
 	inline unsigned short RoomHeightPixels() const { return m_cellHeight * m_roomHeight; }
+
+	inline bool IsConsoleEnabled() const { return m_consoleEnabled; }
 };
 
 #endif

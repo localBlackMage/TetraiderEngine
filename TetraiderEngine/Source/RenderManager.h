@@ -106,6 +106,8 @@ public:
 	void Resize(int width, int height);
 	virtual void HandleEvent(Event * p_event);
 
+	void SetUpConsole();
+	void InitWindow();
 	void EnableWindowsCursor();
 	void DisableWindowsCursor();
 	void SetWindowWidth(int width);

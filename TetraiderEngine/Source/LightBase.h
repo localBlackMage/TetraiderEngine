@@ -6,6 +6,7 @@ class LightBase : public Component
 {
 private:
 	Transform * m_pTransform;
+	Vector3D m_offset;
 	Color m_color;
 	float m_distance;
 

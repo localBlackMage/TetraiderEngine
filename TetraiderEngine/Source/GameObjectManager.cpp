@@ -20,9 +20,8 @@ static bool LeftYGreaterThanOrEqualToRightY(GameObject*left, GameObject*right)
 
 GameObjectLayer::GameObjectLayer()
 {
-	//std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + (MAX_LIGHTS * 4), 0.f);
-	std::fill(m_lightColors, m_lightColors + (MAX_LIGHTS * 4), 255);
-	m_lightColorsBuffer = TETRA_RENDERER.GenerateStreamingVBO(MAX_LIGHTS * 4 * sizeof(GLubyte));
+	std::fill(m_lightColors, m_lightColors + (MAX_LIGHTS * 4), 1.f);
+	m_lightColorsBuffer = TETRA_RENDERER.GenerateStreamingVBO(MAX_LIGHTS * 4 * sizeof(float));
 	m_m_lightPositionsAndDistancesBuffer = TETRA_RENDERER.GenerateStreamingVBO(MAX_LIGHTS * 4 * sizeof(GLfloat));
 }
 
@@ -93,10 +92,10 @@ void GameObjectLayer::Update()
 		int idx = i * 4;
 		PointLight* pPointLightComp = m_layerLights[i]->GetComponent<PointLight>(ComponentType::C_PointLight);
 
-		m_lightColors[idx + 0] = pPointLightComp->Red();
-		m_lightColors[idx + 1] = pPointLightComp->Green();
-		m_lightColors[idx + 2] = pPointLightComp->Blue();
-		m_lightColors[idx + 3] = pPointLightComp->Alpha();
+		m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
+		m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
+		m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
+		m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
 
 		Vector3D pos = pPointLightComp->GetPosition();
 		m_lightPositionsAndDistances[idx + 0] = pos.x;
@@ -114,20 +113,7 @@ void GameObjectLayer::ClearLayer()
 
 void GameObjectLayer::BindBufferDatas() const
 {
-	float colors[MAX_LIGHTS * 4];
-	//std::fill(colors, colors + (MAX_LIGHTS * 4), 0.f);
-	for (int i = 0; i < m_numLights; ++i) {
-		int idx = i * 4;
-		PointLight* pPointLightComp = m_layerLights[i]->GetComponent<PointLight>(ComponentType::C_PointLight);
-
-		colors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
-		colors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
-		colors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
-		colors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
-	}
-
-
-	glUniform4fv(SHADER_LOCATIONS::L_COLOR, MAX_LIGHTS, colors);
+	glUniform4fv(SHADER_LOCATIONS::L_COLOR, MAX_LIGHTS, m_lightColors);
 	glUniform4fv(SHADER_LOCATIONS::L_POS_DIST, MAX_LIGHTS, m_lightPositionsAndDistances);
 }
 
@@ -189,7 +175,7 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 void GameObjectManager::RenderGameObjects()
 {
 	// Render all layers but UI
-	for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS - 1; ++layer) {
+	for (unsigned int layer = 0; layer < RENDER_LAYER::L_UI; ++layer) {
 		for (GameObject* cameraGO : m_pCameras) {
 			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
 			if (cameraComp->ShouldRenderLayer(layer))

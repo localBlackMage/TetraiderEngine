@@ -20,6 +20,8 @@ void LightBase::Serialize(const json& j)
 	m_color.b = int(color.z * 255.f);
 	m_color.a = int(color.w * 255.f);
 
+	m_offset = ParseVector3D(j, "offset");
+
 	m_distance = j["distance"];
 
 	std::vector< std::string > layers = ParseStringList(j, "layers");
@@ -46,7 +48,7 @@ void LightBase::Override(const json & j)
 
 Vector3D LightBase::GetPosition() const
 {
-	return m_pTransform->GetPosition();
+	return m_pTransform->GetPosition() + m_offset;
 }
 
 void LightBase::LateInitialize()

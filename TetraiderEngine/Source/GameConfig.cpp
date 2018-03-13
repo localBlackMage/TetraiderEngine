@@ -6,12 +6,11 @@
 #define INPUT_SETTINGS "INPUT_SETTINGS"
 #define WINDOW_SETTINGS "WINDOW_SETTINGS"
 
-GameConfig::GameConfig() {}
+GameConfig::GameConfig() : m_consoleEnabled(false){}
 
 GameConfig::~GameConfig() {}
 
 void GameConfig::LoadConfig(std::string s) {
-	//return;
 	json j = OpenJsonFile(s);
 	json gameSettings = j[GAME_SETTINGS];
 
@@ -31,6 +30,10 @@ void GameConfig::LoadConfig(std::string s) {
 
 	//set mute
 	m_soundsMute = ParseBool(gameSettings,"soundsMute");
+	
+	m_consoleEnabled = ParseBool(gameSettings, "consoleEnabled");
+	if (m_consoleEnabled)
+		TETRA_RENDERER.SetUpConsole();
 
 	m_cellWidth = j[ROOM_SETTINGS]["cellWidth"];
 	m_cellHeight = j[ROOM_SETTINGS]["cellHeight"];
@@ -39,6 +42,7 @@ void GameConfig::LoadConfig(std::string s) {
 
 	m_screenWidth = j[WINDOW_SETTINGS]["width"];
 	m_screenHeight = j[WINDOW_SETTINGS]["height"];
+	TETRA_RENDERER.InitWindow();
 	TETRA_RENDERER.SetWindowDimensions(m_screenWidth, m_screenHeight);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
 

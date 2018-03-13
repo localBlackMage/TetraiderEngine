@@ -1,10 +1,10 @@
 #include <Stdafx.h>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_la(0.1f), m_lb(0.01f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
+	m_la(-0.24f), m_lb(0.19f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
-	_InitWindow(title);
+	//_InitWindow(title);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
 
 	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
@@ -26,17 +26,6 @@ RenderManager::~RenderManager()
 
 void RenderManager::_InitWindow(std::string title)
 {
-	if (AllocConsole())
-	{
-		FILE* file;
-
-		freopen_s(&file, "CONOUT$", "wt", stdout);
-		freopen_s(&file, "CONOUT$", "wt", stderr);
-		freopen_s(&file, "CONOUT$", "wt", stdin);
-
-		SetConsoleTitle("Tetraider Engine");
-	}
-
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_pWindow = SDL_CreateWindow(title.c_str(),
@@ -535,6 +524,25 @@ void RenderManager::Resize(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void RenderManager::SetUpConsole()
+{
+	if (AllocConsole())
+	{
+		FILE* file;
+
+		freopen_s(&file, "CONOUT$", "wt", stdout);
+		freopen_s(&file, "CONOUT$", "wt", stderr);
+		freopen_s(&file, "CONOUT$", "wt", stdin);
+
+		SetConsoleTitle("Tetraider Engine");
+	}
+}
+
+void RenderManager::InitWindow()
+{
+	_InitWindow(m_windowTitle);
+}
+
 void RenderManager::EnableWindowsCursor()
 {
 	SDL_ShowCursor(SDL_ENABLE);
@@ -583,14 +591,10 @@ float RenderManager::GetAspectRatio() const
 
 void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject, const GameObjectLayer& gol)
 {
-	//_RenderGameObject(go);
-
-
-	// Only attempt to draw if the game object has a sprite component and transform component
+	// Only attempt to draw if the game object has a renderable component and transform component
 	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
 		return;
 
-	// set shader attributes
 	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
 		const ParticleEmitter* cpParticleEmitterComp = gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
 		_SelectShaderProgram(cpParticleEmitterComp);

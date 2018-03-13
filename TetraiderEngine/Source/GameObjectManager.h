@@ -13,7 +13,7 @@ private:
 	GLuint m_lightColorsBuffer;
 	GLuint m_m_lightPositionsAndDistancesBuffer;
 
-	GLubyte m_lightColors[MAX_LIGHTS*4];				// r, g, b, a
+	float m_lightColors[MAX_LIGHTS * 4];				// r, g, b, a
 	float m_lightPositionsAndDistances[MAX_LIGHTS*4];	// x, y, z, distance
 public:
 	GameObjectLayer();
@@ -33,6 +33,7 @@ public:
 	GLuint GetLightColors()	const { return m_lightColorsBuffer; }
 	GLuint GetLightPosAndDist()	const { return m_m_lightPositionsAndDistancesBuffer; }
 	void BindBufferDatas() const;
+	inline unsigned short LightsCount() const { return m_numLights; }
 };
 
 
