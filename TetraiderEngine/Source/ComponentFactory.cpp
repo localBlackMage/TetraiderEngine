@@ -43,6 +43,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Slider"] = Slider::CreateInstance;
 	m_creationFunctions["Endpoints"] = Endpoints::CreateInstance;
 	m_creationFunctions["PowerUpButton"] = PowerUpButton::CreateInstance;
+	m_creationFunctions["Slider"] = Slider::CreateInstance;
+	m_creationFunctions["Endpoints"] = Endpoints::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {
