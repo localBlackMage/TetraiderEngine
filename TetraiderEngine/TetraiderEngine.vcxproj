@@ -145,6 +145,7 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\CanvasTypeName.h" />
     <ClInclude Include="Source\Canvas.h" />
     <ClInclude Include="Source\AI_DashingAttack.h" />
     <ClInclude Include="Source\AI_DashingEngage.h" />

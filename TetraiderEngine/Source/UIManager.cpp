@@ -11,18 +11,23 @@ UIManager::~UIManager()
 
 void UIManager::ActivateCanvas(CanvasType c)
 {
-	if(!m_Canvas[(int)c])
-	m_Canvas[(int)c]->ActivateCanvas();
+	if (m_Canvas[(int)c] != nullptr)
+		m_Canvas[(int)c]->ActivateCanvas();
+	else
+		std::cout<<"no canvas to activate\n";
 }
 
 void UIManager::DeactivateCanvas(CanvasType c)
 {
-	if (!m_Canvas[(int)c])
-	m_Canvas[(int)c]->DeactivateCanvas();
+	if (m_Canvas[(int)c] !=nullptr)
+		m_Canvas[(int)c]->DeactivateCanvas();
+	else
+		std::cout << "no canvas to de-activate\n";
 }
 
 void UIManager::RegisterCanvas(Canvas* c)
 {
+	std::cout << "Canvas #  "<<(int)c->m_canvasType << std::endl;
 	m_Canvas[(int)c->m_canvasType] = c;
 }
 

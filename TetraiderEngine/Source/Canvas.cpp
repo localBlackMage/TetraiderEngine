@@ -26,7 +26,7 @@ void Canvas::Serialize(const json & j)
 {
 	std::string prefabName;
 	m_isActiveOnAwake= ParseBool(j, "isActiveOnAwake");
-	m_canvasType = ParseInt(j, "canvasType");
+	m_canvasType = (CanvasType)ParseInt(j, "canvasType");
 
 	int numberOfElements = j["UIElements"].size();
 	float x, y, z;
@@ -41,8 +41,14 @@ void Canvas::Serialize(const json & j)
 
 		pObject = TETRA_GAME_OBJECTS.CreateGameObject(prefabName, true, Vector3D(x, y, z));
 		m_UIelements.push_back(pObject);
-
 	}
+
+	TETRA_UI.RegisterCanvas(this);
+
+	if (m_isActiveOnAwake)
+		TETRA_UI.ActivateCanvas(m_canvasType);
+	else
+		TETRA_UI.DeactivateCanvas(m_canvasType);
 }
 
 void Canvas::LateInitialize()
@@ -52,6 +58,7 @@ void Canvas::LateInitialize()
 
 void Canvas::HandleEvent(Event * pEvent)
 {
+
 }
 
 void Canvas::ActivateCanvas()
@@ -66,6 +73,6 @@ void Canvas::DeactivateCanvas()
 {
 	for (auto obj : m_UIelements)
 	{
-		obj->Deactivate();
+		obj->SetActive(false);
 	}
 }

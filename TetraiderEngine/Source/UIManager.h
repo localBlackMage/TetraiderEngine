@@ -1,14 +1,7 @@
 #pragma once
-
+#include "CanvasTypeName.h"
 class Canvas;
-enum class CanvasType
-{
-	CANVAS_PAUSE,
-	CANVAS_OPTION,
-	CANVAS_CREDITS,
-	
-	CANVAS_NUM
-};
+
 
 class UIManager : public Subscriber
 {

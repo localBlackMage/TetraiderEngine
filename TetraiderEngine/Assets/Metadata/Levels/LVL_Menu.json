@@ -13,6 +13,23 @@
         "x":0,
         "y":200
       }
+    },
+    {
+      "prefab": "P_OptionMenu"
+    },
+    {
+      "prefab": "P_ControlsMenu"
+    },
+    {
+      "prefab": "P_SoundMenu"
+    },
+    {
+      "prefab": "P_Cursor",
+      "position": {
+        "x": 100,
+        "y": 100,
+        "z": 0
+      }
     }
   ]
 }

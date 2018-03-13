@@ -1,0 +1,13 @@
+#pragma once
+
+enum class CanvasType
+{
+	CANVAS_MAIN_MENU,
+	CANVAS_PAUSE,
+	CANVAS_OPTION,
+	CANVAS_CONTROLS,
+	CANVAS_SOUNDS,
+	CANVAS_CREDITS,
+
+	CANVAS_NUM
+};

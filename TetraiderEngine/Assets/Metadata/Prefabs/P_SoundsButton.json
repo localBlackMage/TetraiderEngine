@@ -62,8 +62,8 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 2,
-      "canvasToDeActivate" : 0
+      "canvasToActivate"    : 4,
+      "canvasToDeActivate" : 2
     },
     {
           "Component": "Text",
@@ -82,7 +82,7 @@
           "rows": 6,
           "cols": 16,
           "font": "baseFont.png",
-          "text": "Options"
+          "text": "Sounds"
       }
       ]
   }

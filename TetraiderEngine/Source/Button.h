@@ -1,9 +1,7 @@
 #pragma once
-//#include "Component.h"
-//#include "Text.h"
-//class Sprite;
 
-//enum CanvasType;
+#include "CanvasTypeName.h"
+
 class Button :public Component
 {
 private:

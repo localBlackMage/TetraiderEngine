@@ -730,5 +730,8 @@
     <ClInclude Include="Source\UIManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CanvasTypeName.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

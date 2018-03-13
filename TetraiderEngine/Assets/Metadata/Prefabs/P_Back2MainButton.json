@@ -62,15 +62,15 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 2,
-      "canvasToDeActivate" : 0
+      "canvasToActivate"    : 0,
+      "canvasToDeActivate" : 2
     },
     {
           "Component": "Text",
           "letterHeight": 12,
           "letterWidth": 12,
           "pivotOffset": {
-              "x": -32,
+              "x": -17,
               "y": 0
           },
           "tint": {
@@ -82,7 +82,7 @@
           "rows": 6,
           "cols": 16,
           "font": "baseFont.png",
-          "text": "Options"
+          "text": "Back"
       }
       ]
   }

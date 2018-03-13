@@ -26,44 +26,28 @@
         },
         {
             "Component": "Canvas",
-            "canvasType":0,
-            "isActiveOnAwake": true,
+            "canvasType":3,
+            "isActiveOnAwake": false,
             "UIElements": [
-                {
-                    "prefab": "P_Button",
-                    "position": {
-                      "x": 0,
-                      "y": 50,
-                      "z": 0
-                    }
-                  },
-                  
                   {
-                    "prefab":"P_RGL_Button",
-                    "position":{
-                      "x":0,
-                      "y":-25
-                    }
-                  },
-                  {
-                    "prefab": "P_ButtonLevelEditor",
-                    "position": {
-                      "x":0,
-                      "y":-100
-                    }
-                  },
-                  {
-                    "prefab":"P_QuitButton",
+                    "prefab":"P_Back2Option_from_control",
                     "position":{
                       "x":0,
                       "y":-250
                     }
                   },
                   {
-                    "prefab":"P_OptionsButton",
+                        "prefab":"P_Title",
+                        "position":{
+                            "x":0,
+                            "y":200
+                        }
+                  },
+                  {
+                    "prefab":"P_ControlTitle",
                     "position":{
                       "x":0,
-                      "y":-175
+                      "y":50
                     }
                 }    
             ]
