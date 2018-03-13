@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 100,
-          "y": 33.333,
+          "x": 120,
+          "y": 40,
           "z": 0
         },
         "pivotOffset": {
@@ -67,8 +67,9 @@
     },
     {
           "Component": "Text",
-          "letterHeight": 12,
-          "letterWidth": 12,
+          "letterHeight": 20,
+          "letterWidth": 20,
+          "spacing": 0.7,
           "pivotOffset": {
               "x": -32,
               "y": 0
@@ -81,7 +82,7 @@
           },
           "rows": 6,
           "cols": 16,
-          "font": "baseFont.png",
+          "font": "ShadowCardGothicFont.png",
           "text": "Sounds"
       }
       ]

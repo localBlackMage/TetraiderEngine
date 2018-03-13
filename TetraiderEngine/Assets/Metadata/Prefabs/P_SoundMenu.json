@@ -37,13 +37,6 @@
                     }
                   },
                   {
-                        "prefab":"P_Title",
-                        "position":{
-                            "x":0,
-                            "y":200
-                        }
-                  },
-                  {
                     "prefab":"P_SoundTitle",
                     "position":{
                       "x":0,
