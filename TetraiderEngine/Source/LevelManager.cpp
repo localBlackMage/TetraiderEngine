@@ -30,6 +30,7 @@ void LevelManager::Initialize(const json& j) {
 	maxLevel = levelConfig["Levels"].size();
 	currentLevel = levelConfig["Start"];
 	firstLevel = currentLevel;
+	mainMenuLevel = levelConfig["MainMenu"];
 	m_isRandomlyGenerated = ParseBool(levelConfig, "isRandomGenerated");
 
 	std::string staticsFileName = levelConfig["Statics"];
@@ -66,6 +67,7 @@ void LevelManager::LoadLevel() {
 	}
 
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
+	TETRA_PLAYERSTATS.LoadStats();
 }
 
 void LevelManager::UnLoadLevel() {
@@ -89,6 +91,9 @@ void LevelManager::ChangeLevel(int i) {
 	}
 	else {
 		currentLevel = i;
+		if(currentLevel == mainMenuLevel) 
+			TETRA_PLAYERSTATS.ClearStats();
+
 		TETRA_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
 	}
 

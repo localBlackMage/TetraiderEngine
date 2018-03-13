@@ -1,17 +1,17 @@
 {
-  "Tag": "UI",
-  "Layer": "UI",
+  "Tag": "None",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -610,
-        "y": 240,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 25,
-        "y": 25,
+        "x": 32,
+        "y": 32,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_ArrowsUI.png",
+      "Texture": "T_GoldenFeather.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-      "lit": false,
+	  "lit": false,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,27 +50,29 @@
       }
     },
 	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIAmmoUpdate"
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 16
+		}
 	},
 	{
-		"Component": "Text",
-		"letterHeight": 20,
-		"letterWidth": 20,
-		"pivotOffset": {
-			"x": 25,
-			"y": 0
-		},
-		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"rows": 6,
-		"cols": 16,
-		"font": "ShadowCardGothicFont.png",
-		"text": "0"
+		"Component": "Collectible",
+		"isHealth": false,
+		"isEgg": false,
+		"isGoldenFeather": true,
+		"value": 1
+	},
+	{
+		"Component": "WaveMovement",
+		"isModifyXPos": false,
+		"isModifyYPos": true,
+		"isAbsoluteValue": true,
+		"frequency": 2,
+		"phaseShift": 0,
+		"amplitude": 10
 	}
   ]
 }

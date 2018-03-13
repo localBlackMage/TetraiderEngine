@@ -1,5 +1,5 @@
 {
-  "Tag": "None",
+  "Tag": "PowerUpText",
   "Layer": "UI_1",
   "COMPONENTS": [
     {
@@ -41,7 +41,7 @@
 		"rows": 6,
 		"cols": 16,
 		"font": "ShadowCardGothicFont.png",
-		"text": "Increase Health By 20"
+		"text": ""
 	}
   ]
 }

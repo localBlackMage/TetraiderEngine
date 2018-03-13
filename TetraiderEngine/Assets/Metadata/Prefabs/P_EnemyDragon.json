@@ -159,10 +159,6 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"prefab": "P_EggPickUp"
-	},
-	{
-		"Component": "SpawnOnHealthZero",
 		"isRandom": true,
 		"RandomDrops": [
 			{
@@ -172,6 +168,10 @@
 			{
 				"prefab": "P_MeatPickup",
 				"weight": 50
+			},
+			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 30
 			},
 			{
 				"prefab": "",

@@ -130,6 +130,31 @@ using namespace JsonReader;
 
 #include <Stamina.h>
 
+#pragma region Globals + API
+#include <GameConfig.h>
+#include <GameStateManager.h>
+#include <InputManager.h>
+#include <FrameRateManager.h>
+#include <RenderManager.h>
+#include <ResourceManager.h>
+#include <PhysicsManager.h>
+#include <EventManager.h>
+#include <LevelManager.h>
+#include <DebugManager.h>
+#include <AudioManager.h>
+#include <GameObjectManager.h>
+#include <MemoryManager.h>
+#include <PlayerStatsManager.h>
+#include <FloorPlanGenerator.h>
+#include <ImguiManager.h>
+#include <LevelEditor.h>
+#include <ComponentFactory.h>
+#include <LuaScript.h>
+
+#include <Global.h>
+#include <TetraiderAPI.h>
+#pragma endregion 
+
 
 // Components - Agent
 #include <Agent.h>
@@ -201,6 +226,7 @@ using namespace JsonReader;
 
 #include <Global.h>
 #include <TetraiderAPI.h>
+#include <PowerUpButton.h>
 #pragma endregion 
 
 #pragma warning(default: 4005)

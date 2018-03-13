@@ -671,6 +671,9 @@
 	  "prefab": "P_UIarrowAmmo"
 	},
 	{
+	  "prefab": "P_UIGoldenFeathers"
+	},
+	{
 	  "prefab": "P_WinMessage"
 	},
 	{
@@ -686,6 +689,14 @@
       "position": {
         "x": 300,
         "y": 0,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_GoldenFeatherPickUp",
+      "position": {
+        "x": 350,
+        "y": -200,
         "z": 0
       }
     },

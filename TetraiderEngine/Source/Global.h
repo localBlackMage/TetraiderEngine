@@ -22,4 +22,6 @@
 #define TETRA_EDITOR Singleton<LevelEditor>::GetInstance()
 #define TETRA_COMPONENTS Singleton<ComponentFactory>::GetInstance()
 #define TETRA_UI Singleton<UIManager>::GetInstance()
+#define TETRA_PLAYERSTATS Singleton<PlayerStatsManager>::GetInstance()
+
 #endif

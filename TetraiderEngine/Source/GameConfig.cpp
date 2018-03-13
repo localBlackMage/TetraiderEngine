@@ -52,6 +52,8 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
 
 	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
+
+	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }
 
 

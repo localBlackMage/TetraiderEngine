@@ -1,0 +1,43 @@
+{
+	"POWER_UP_SETTINGS": [
+		{
+			"categoryName": "Offense",
+			"POWER_UPS": [
+				{
+					"name": "TripleShot",
+					"enumType": 1,
+					"maxLevel": 1,
+					"upgradeValue": 0,
+					"sprtieTexture": "T_FireThreeShots.png",
+					"description": "Fire 3 arrows at once"
+				}
+			]
+		},
+		{
+			"categoryName": "Defense",
+			"POWER_UPS": [
+				{
+					"name": "HealthUpgrade",
+					"enumType": 0,
+					"maxLevel": 5,
+					"upgradeValue": 20,
+					"sprtieTexture": "T_Heart.png",
+					"description": "Increase Max Health"
+				}
+			]
+		},
+		{
+			"categoryName": "Utility",
+			"POWER_UPS": [
+				{
+					"name": "AmmoUpgrade",
+					"enumType": 2,
+					"maxLevel": 5,
+					"upgradeValue": 2,
+					"sprtieTexture": "T_ArrowsUI.png",
+					"description": "+2 Arrows on pickup"
+				}
+			]
+		}
+	]
+}

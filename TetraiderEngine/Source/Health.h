@@ -23,6 +23,7 @@ public:
 	void Heal(int heal);
 	int GetHealth() const { return m_currentHealth; }
 	int GetMaxHealth() const { return m_maxHealth; }
+	void SetHealth(int currentHealth, int maxHealth);
 	void Invincibility(bool active) { m_isInvincible = active; }
 private:
 	int m_currentHealth;

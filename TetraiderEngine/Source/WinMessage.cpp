@@ -34,7 +34,8 @@ void WinMessage::Update(float dt)
 		}
 		
 		if (m_timer > m_timeToLoadNextLevel) {
-			TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
+			TETRA_LEVELS.NextLevel();
+			//TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
 		}
 	}
 }
@@ -98,5 +99,10 @@ void WinMessage::LateInitialize()
 	pGO->m_isRender = false;
 	TETRA_EVENTS.Subscribe(EVENT_LevelComplete , this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_EXITLEVEL, this);
+
+	
+	/*pGO->m_isRender = true;
+	m_pScriptedAnim->PlayAnimation();
+	m_isMessageOn = true;*/
 }
 

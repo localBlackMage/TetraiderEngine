@@ -8,6 +8,7 @@ private:
 	int maxLevel;
 	int currentLevel;
 	int firstLevel;
+	int mainMenuLevel;
 	json levelConfig;
 	json staticObjects;
 	bool m_isRandomlyGenerated;

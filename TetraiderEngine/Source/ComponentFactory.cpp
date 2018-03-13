@@ -1,43 +1,3 @@
-//#include "ComponentFactory.h"
-//#include "Component.h"
-//#include "Transform.h"
-//
-//#include "Sprite.h"
-//#include "ParticleEmitter.h"
-//#include "Text.h"
-//#include "Animation.h"
-//#include "Camera.h"
-//
-//#include "Controller.h"
-//#include "Body.h"
-//#include "CamFollow.h"
-//#include "ScreenWrap.h"
-//#include "SizeToScreen.h"
-//#include "FollowCamera.h"
-//#include "SnapToCamera.h"
-//#include "Health.h"
-//#include "FlashOnTakeDamage.h"
-//#include "Projectile.h"
-//#include "Weapon.h"
-//#include "Audio.h"
-//#include "NPCController.h"
-//#include "DestroyOnHealthZero.h"
-//#include "DealDamageOnCollision.h"
-//#include "ProjectileSpawner.h"
-//#include "PointLight.h"
-//#include "ScaleByHPStamina.h"
-//#include "Stamina.h"
-//#include "Collectible.h"
-//#include "WaveMovement.h"
-//#include "StraightLineMovement.h"
-//#include "SpawnOnHealthZero.h"
-//#include "FollowCursor.h"
-//#include "Button.h"
-//#include "LevelStatus.h"
-//#include "EggCounter.h"
-//#include "PauseMenu.h"
-//#include "Microphone.h"
-//#include "Canvas.h"
 #include <Stdafx.h>
 
 ComponentFactory::ComponentFactory() {
@@ -80,6 +40,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["ScriptedAnimation"] = ScriptedAnimation::CreateInstance;
 	m_creationFunctions["WinMessage"] = WinMessage::CreateInstance;
 	m_creationFunctions["Canvas"] = Canvas::CreateInstance;
+	m_creationFunctions["PowerUpButton"] = PowerUpButton::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

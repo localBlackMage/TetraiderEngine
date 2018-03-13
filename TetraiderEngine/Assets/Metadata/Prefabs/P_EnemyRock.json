@@ -168,7 +168,11 @@
 			},
 			{
 				"prefab": "P_MeatPickup",
-				"weight": 200
+				"weight": 100
+			},
+			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 30
 			},
 			{
 				"prefab": "",

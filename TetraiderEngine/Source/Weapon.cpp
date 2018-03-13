@@ -159,6 +159,7 @@ void Weapon::HandleEvent(Event* pEvent) {
 		if (pGO->m_tag == T_Player) {
 			int ammo = GetAmmo(1);
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, &CollectibleData(ammo)));
+			CheckForPowerUps();
 		}
 	}
 	else if (pEvent->Type() == EVENT_AmmoUpdate) {
@@ -196,7 +197,7 @@ bool Weapon::UseAttack(int attack, const Vector3D& dirToAttack, int& ammo) {
 	return m_Attacks[attack]->Use(dirToAttack);
 }
 
-int Weapon::GetAmmo(int attack) {
+int Weapon::GetAmmo(int attack) const {
 	RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[attack]);
 	if (pAttack)
 		return pAttack->GetAmmo();
@@ -212,7 +213,17 @@ void Weapon::AddAmmo(int attack, int ammo) {
 
 void Weapon::SetAmmo(int attack, int ammo) {
 	RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[attack]);
-	if (pAttack)
+	if (pAttack) {
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, &CollectibleData(ammo)));
 		return pAttack->UpdateAmmo(ammo);
+	}
 }
 
+void Weapon::CheckForPowerUps() {
+	if (TETRA_PLAYERSTATS.IsTripleShotActive()) {
+		// Hardcoded for now
+		m_Attacks[1]->AddDamage(-2);
+		RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[1]);
+		pAttack->SetMultipleShot(3, 4);
+	}
+}

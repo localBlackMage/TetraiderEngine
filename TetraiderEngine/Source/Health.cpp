@@ -27,6 +27,12 @@ void Health::HandleEvent(Event* pEvent) {
 			Heal(pData->m_value);
 			break;
 		}
+		case EVENT_OnLevelInitialized: {
+			if (pGO->m_tag == T_Player) {
+				int extraHealth = TETRA_PLAYERSTATS.GetHealthUpgrade();
+				UpdgradeMaxHealth(extraHealth);
+			}
+		}
 	}
 }
 
@@ -72,3 +78,15 @@ void Health::Heal(int heal) {
 
 bool Health::IsHealthFull() { return m_currentHealth == m_maxHealth; }
 void Health::UpdgradeMaxHealth(int value) { m_maxHealth += value; }
+
+void Health::SetHealth(int currentHealth, int maxHealth) {
+	m_maxHealth = maxHealth;
+	m_currentHealth = currentHealth;
+
+	if (m_currentHealth > m_maxHealth)
+		m_currentHealth = m_maxHealth;
+
+	if (pGO->m_tag == GameObjectTag::T_Player) {
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHeal, &HealthChangeData(m_currentHealth, m_maxHealth, Vector3D(), 0, false)));
+	}
+}

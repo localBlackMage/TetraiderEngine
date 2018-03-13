@@ -1,17 +1,17 @@
 {
-  "Tag": "UI",
+  "Tag": "None",
   "Layer": "UI",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -610,
-        "y": 240,
+        "x": 0,
+        "y": -300,
         "z": 0
       },
       "scale": {
-        "x": 25,
-        "y": 25,
+        "x": 1300,
+        "y": 150,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_ArrowsUI.png",
+      "Texture": "T_Border.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -48,29 +48,6 @@
         "b": 0,
         "a": 0
       }
-    },
-	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIAmmoUpdate"
-	},
-	{
-		"Component": "Text",
-		"letterHeight": 20,
-		"letterWidth": 20,
-		"pivotOffset": {
-			"x": 25,
-			"y": 0
-		},
-		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"rows": 6,
-		"cols": 16,
-		"font": "ShadowCardGothicFont.png",
-		"text": "0"
-	}
+    }
   ]
 }

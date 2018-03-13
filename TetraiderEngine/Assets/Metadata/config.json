@@ -7,6 +7,7 @@
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
 		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
+		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
 		"soundsMute": false,
@@ -27,10 +28,12 @@
 		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
 		"Start": 1,
+		"MainMenu": 1,
 		"Levels": [
 			{ "Name": "LVL_Editor" },
 			{ "Name": "LVL_Menu" },
-			{ "Name": "LVL_Prototype" }
+			{ "Name": "LVL_Prototype" },
+			{ "Name": "LVL_PowerUpScreen" }
 		]
 	},
 	"INPUT_SETTINGS": [

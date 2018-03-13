@@ -5,8 +5,8 @@
     {
       "Component": "Transform",
       "position": {
-        "x": -610,
-        "y": 240,
+        "x": -515,
+        "y": 270,
         "z": 0
       },
       "scale": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_ArrowsUI.png",
+      "Texture": "T_GoldenFeather.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -51,7 +51,7 @@
     },
 	{
 		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIAmmoUpdate"
+		"eventSubscription": "EVENT_UIGoldenFeatherUpdate"
 	},
 	{
 		"Component": "Text",

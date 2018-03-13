@@ -138,7 +138,7 @@
 			{
 				"type": "Ranged",
 				"coolDown": 0.4,
-				"baseDamage": 4,
+				"baseDamage": 7,
 				"projectileSpeed": 700,
 				"instantiationOffset": 50,
 				"ammo": 5,

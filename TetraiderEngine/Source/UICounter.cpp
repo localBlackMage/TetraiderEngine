@@ -14,9 +14,14 @@ void UICounter::Serialize(const json& j) {
 	eventToSubscribeTo = ParseString(j, "eventSubscription");
 	if (eventToSubscribeTo == "EVENT_UIAmmoUpdate") {
 		m_eventType = EVENT_UIAmmoUpdate;
-		TETRA_EVENTS.Subscribe(m_eventType, this);
 		m_isSubscribed = true;
 	}
+	else if (eventToSubscribeTo == "EVENT_UIGoldenFeatherUpdate") {
+		m_eventType = EVENT_UIGoldenFeatherUpdate;
+		m_isSubscribed = true;
+	}
+
+	TETRA_EVENTS.Subscribe(m_eventType, this);
 }
 
 void UICounter::LateInitialize() {

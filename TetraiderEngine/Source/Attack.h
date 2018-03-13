@@ -21,6 +21,7 @@ public:
 	virtual bool Use(const Vector3D& direction); // Assumes direction is normalized
 	virtual void Update(float dt);
 	virtual void Debug(const Vector3D& dir) {}
+	void AddDamage(int damage) { m_baseDamage += damage; }
 	bool IsOnCoolDown() { return m_isOnCooldown; }
 	float GetCoolDown() { return m_coolDown; }
 	AttackType GetType() { return m_type; }

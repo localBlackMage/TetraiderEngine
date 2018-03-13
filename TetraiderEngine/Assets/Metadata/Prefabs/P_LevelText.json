@@ -1,12 +1,12 @@
 {
-  "Tag": "None",
-  "Layer": "UI_1",
+  "Tag": "Obstacle",
+  "Layer": "UI",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -180,
-        "y": -300,
+        "x": 0,
+        "y": 300,
         "z": 0
       },
       "scale": {
@@ -26,10 +26,10 @@
     },
 	{
 		"Component": "Text",
-		"letterHeight": 24,
-		"letterWidth": 18,
+		"letterHeight": 48,
+		"letterWidth": 24,
 		"pivotOffset": {
-			"x": 0,
+			"x": -100,
 			"y": 0
 		},
 		"tint": {
@@ -41,7 +41,7 @@
 		"rows": 6,
 		"cols": 16,
 		"font": "ShadowCardGothicFont.png",
-		"text": "Increase Health By 20"
+		"text": "LEVEL 1"
 	}
   ]
 }

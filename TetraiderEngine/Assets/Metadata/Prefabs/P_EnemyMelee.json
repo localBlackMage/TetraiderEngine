@@ -172,6 +172,10 @@
 				"weight": 30
 			},
 			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 10
+			},
+			{
 				"prefab": "",
 				"weight": 80
 			}

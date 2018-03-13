@@ -1,0 +1,81 @@
+{
+  "GAME_OBJECTS": 
+  [
+    {
+      "prefab": "P_UICameraMenu"
+    },
+    {
+      "prefab": "P_SkyBackGround",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_HealthBar"
+    },
+    {
+      "prefab": "P_StaminaBar"
+    },
+    {
+      "prefab": "P_EggUI"
+    },
+	{
+	  "prefab": "P_UIarrowAmmo"
+	},
+	{
+	  "prefab": "P_UIGoldenFeathers"
+	},
+	{
+	  "prefab": "P_VolcanoBackGround"
+	},
+	{
+	  "prefab": "P_PowerUpCanvas"
+	},
+	{
+	  "prefab": "P_ChooseYourBlessingText"
+	},
+	{
+	  "prefab": "P_PlayerUI"
+	},
+	{
+	  "prefab": "P_LevelText"
+	},
+	{
+	  "prefab": "P_PowerUpText"
+	},
+	{
+	  "prefab": "P_PowerUpButtonDefense",
+	   "position": {
+        "x": -160,
+        "y": -225,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_PowerUpButtonOffense",
+	   "position": {
+        "x": 0,
+        "y": -225,
+        "z": 0
+      }
+	},
+	{
+	  "prefab": "P_PowerUpButtonUtility",
+	   "position": {
+        "x": 160,
+        "y": -225,
+        "z": 0
+      }
+	},
+    {
+      "prefab": "P_Cursor",
+      "position": {
+        "x": 100,
+        "y": 100,
+        "z": 0
+      }
+    }
+  ]
+}

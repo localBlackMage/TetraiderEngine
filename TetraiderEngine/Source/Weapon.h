@@ -23,7 +23,7 @@ public:
 	void PlayEffect();
 	bool UseAttack(int attack, const Vector3D& dirToAttack);
 	bool UseAttack(int attack, const Vector3D& dirToAttack, int &ammo);
-	int GetAmmo(int attack);
+	int GetAmmo(int attack) const;
 	void AddAmmo(int attack, int value);
 	void SetAmmo(int attack, int value);
 	void Swing() { swingDir *= -1; }
@@ -41,6 +41,8 @@ private:
 	int swingDir = 1;
 	float m_rotationOffset;
 	bool m_isRotationOffset;
+
+	void CheckForPowerUps();
 };
 
 #endif

@@ -1,17 +1,17 @@
 {
   "Tag": "UI",
-  "Layer": "UI",
+  "Layer": "UI_1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -610,
-        "y": 240,
+        "x": 200,
+        "y": -100,
         "z": 0
       },
       "scale": {
-        "x": 25,
-        "y": 25,
+        "x": 60,
+        "y": 60,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_ArrowsUI.png",
+      "Texture": "T_Rio.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-      "lit": false,
+      "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,27 +50,30 @@
       }
     },
 	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIAmmoUpdate"
-	},
-	{
-		"Component": "Text",
-		"letterHeight": 20,
-		"letterWidth": 20,
-		"pivotOffset": {
-			"x": 25,
-			"y": 0
+		"Component": "Animation",
+		"defaultAnimation": 1,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 10,
+			"animationSpeed": 16,
+			"isLooping": true,
+			"isPlayOnAwake": false
 		},
-		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
+		{
+			"Name": "Idle",
+			"frames": 2,
+			"animationSpeed": 3,
+			"isLooping": true,
+			"isPlayOnAwake": true
 		},
-		"rows": 6,
-		"cols": 16,
-		"font": "ShadowCardGothicFont.png",
-		"text": "0"
+		{
+			"Name": "Fly",
+			"frames": 8,
+			"animationSpeed": 14,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		}]
 	}
   ]
 }
