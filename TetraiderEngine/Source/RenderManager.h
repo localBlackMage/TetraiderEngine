@@ -99,7 +99,7 @@ public:
 	RenderManager(const RenderManager &) = delete;
 	void operator=(const RenderManager &) = delete;
 
-	bool Init();
+	bool InitGlew();
 
 	void FrameStart();
 	void FrameEnd();

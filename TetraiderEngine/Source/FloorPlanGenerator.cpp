@@ -350,6 +350,10 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	float xHalf = x / 2.f;
 	float y = float(roomHeight * cellHeight);
 	float yHalf = y / 2.f;
+	// "Magic number" fix, the room background files had a slight gap in them when placed, this shifts everything 
+	// over to avoid said gap
+	--x;
+	--y;
 
 	std::vector<GameObject*> enemies;
 	std::vector<GameObject*> objects;

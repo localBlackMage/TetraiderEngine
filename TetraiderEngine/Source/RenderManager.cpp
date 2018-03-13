@@ -466,7 +466,7 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 
 #pragma endregion
 
-bool RenderManager::Init()
+bool RenderManager::InitGlew()
 {
 	// GLEW: get function bindings (if possible)
 	glewInit();
