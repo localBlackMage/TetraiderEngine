@@ -391,7 +391,7 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 	// TODO: Do this better in general
 	int idx = RandomInt(0, enemies.size());
-	if (idx < enemies.size()))
+	if (idx < enemies.size())
 		enemies[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 
 	idx = RandomInt(0, objects.size());
