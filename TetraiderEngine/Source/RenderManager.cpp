@@ -207,6 +207,7 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 
 void RenderManager::_SetUpLights(const GameObject& gameObject, GameObjectLayer & gol)
 {
+	if (!m_lights) return;
 	gol.BindBufferDatas(gameObject.GetComponent<Transform>(C_Transform)->GetPosition());
 	_BindUniform3(SHADER_LOCATIONS::GLOBAL_AMBIENT, m_globalAmbientLight);
 	glUniform1f(SHADER_LOCATIONS::L_A, m_la);
