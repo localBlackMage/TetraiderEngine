@@ -54,7 +54,7 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 	else if (pEvent->Type() == EVENT_OnCollide)
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
-		if (pData->pGO->m_tag == T_UI) {
+		if (pData->pGO->m_tag == T_Cursor) {
 			m_pSprite->SetVOffset(0.3333f);
 			m_pPowerUpText->SetText(m_powerUp.m_description);
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {

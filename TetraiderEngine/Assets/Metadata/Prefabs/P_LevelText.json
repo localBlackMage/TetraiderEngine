@@ -30,7 +30,7 @@
 		"letterWidth": 24,
 		"spacing": 0.65,
 		"pivotOffset": {
-			"x": -100,
+			"x": -30,
 			"y": 0
 		},
 		"tint": {
