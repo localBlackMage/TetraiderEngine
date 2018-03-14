@@ -8,7 +8,8 @@ private:
 	Transform * m_pTransform;
 	Vector3D m_offset;
 	Color m_color;
-	float m_distance;
+	float m_distance;	// How far before the light falls off entirely
+	float m_a, m_b;		// Light fall off  (1 / (1 + a * d + b^2 * d) )
 
 	bool m_layers[RENDER_LAYER::L_NUM_LAYERS];
 
@@ -31,6 +32,8 @@ public:
 	GLubyte Alpha() const { return m_color[3]; }
 	Color GetColor() const { return m_color; }
 	float Distance() const { return m_distance; }
+	float LightA() const { return m_a; }
+	float LightB() const { return m_b; }
 
 	bool GetLayer(int layer) const { return m_layers[layer]; }
 };

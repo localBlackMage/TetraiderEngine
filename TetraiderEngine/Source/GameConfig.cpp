@@ -58,6 +58,7 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_DEBUG.SetDebugMode(m_debugEnabled);
 
 	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
+	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(gameSettings, "globalAmbient"));
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }

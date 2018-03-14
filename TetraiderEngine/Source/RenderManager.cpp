@@ -17,40 +17,6 @@ RenderManager::~RenderManager()
 
 #pragma region Private Methods
 
-void RenderManager::_InitWindow(std::string title, bool debugEnabled)
-{
-	if (debugEnabled) {
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
-	}
-
-	SDL_Init(SDL_INIT_VIDEO);
-
-	m_pWindow = SDL_CreateWindow(title.c_str(),
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		m_width, m_height,
-		SDL_WINDOW_OPENGL);
-	m_context = SDL_GL_CreateContext(m_pWindow);
-
-	// Initialize PNG loading
-	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-	if (!(IMG_Init(imgFlags) & imgFlags)) {
-		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
-	}
-
-	// Start SDL_ttf
-	if (TTF_Init() == -1) {
-		std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
-	}
-
-
-	SDL_SetWindowSize(m_pWindow, m_width, m_height);
-	glViewport(0, 0, m_width, m_height);
-}
-
 std::string RenderManager::_LoadTextFile(std::string fname)
 {
 	std::string out, line;
@@ -242,7 +208,7 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 void RenderManager::_SetUpLights(const GameObject& gameObject, GameObjectLayer & gol)
 {
 	gol.BindBufferDatas(gameObject.GetComponent<Transform>(C_Transform)->GetPosition());
-
+	_BindUniform3(SHADER_LOCATIONS::GLOBAL_AMBIENT, m_globalAmbientLight);
 	glUniform1f(SHADER_LOCATIONS::L_A, m_la);
 	glUniform1f(SHADER_LOCATIONS::L_B, m_lb);
 }
@@ -460,6 +426,11 @@ void RenderManager::_BindUniform2(SHADER_LOCATIONS location, float val1, float v
 	glUniform2f(location, val1, val2);
 }
 
+void RenderManager::_BindUniform3(SHADER_LOCATIONS location, const Vector3D & values)
+{
+	glUniform3f(location, values[0], values[1], values[2]);
+}
+
 void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& values)
 {
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
@@ -537,7 +508,36 @@ void RenderManager::SetUpConsole()
 
 void RenderManager::InitWindow(bool debugEnabled)
 {
-	_InitWindow(m_windowTitle, debugEnabled);
+	if (debugEnabled) {
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
+	}
+
+	SDL_Init(SDL_INIT_VIDEO);
+
+	m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
+		m_width, m_height,
+		SDL_WINDOW_OPENGL);
+	m_context = SDL_GL_CreateContext(m_pWindow);
+
+	// Initialize PNG loading
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if (!(IMG_Init(imgFlags) & imgFlags)) {
+		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
+	}
+
+	// Start SDL_ttf
+	if (TTF_Init() == -1) {
+		std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
+	}
+
+
+	SDL_SetWindowSize(m_pWindow, m_width, m_height);
+	glViewport(0, 0, m_width, m_height);
 }
 
 void RenderManager::EnableWindowsCursor()

@@ -40,7 +40,6 @@ void main(void) {
 	vec4 m = normalize(vnormal_vector);
 	vec4 v = normalize(vview_vector);
 	vec3 lightColor = vec3(0,0,0);
-	vec3 ambient = vec3(.2,.2,.2);
 
 	if (lit){
 		for(int i = 0; i < 16; ++i) {
@@ -54,7 +53,7 @@ void main(void) {
 			d /= 143.108f; // As d is in pixels, we want it in world units. A single world unit is the diagonal of a cell
 			lightColor += (max(dot(m,L),0) * l_color[i].xyz) * falloff(d);
 		}
-		lightColor += ambient;
+		lightColor += ambient_global_color;
 	}
 	else
 		lightColor = vec3(1,1,1);
