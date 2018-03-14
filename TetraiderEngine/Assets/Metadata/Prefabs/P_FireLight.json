@@ -124,18 +124,6 @@
 		"animationSpeed": 0.1,
 		"rows": 1,
 		"cols": 3
-		},
-		{
-			"Component": "Audio",
-			"audioClip": "Fire_Loop16.wav",
-			"volume": 0.3,
-			"isMute": false,
-			"isLoop": true,
-			"isPlayOnAwake": true,
-			"isBGM": false,
-			"is3D":true,
-			"minDistance": 10,
-			"maxDistance": 900
 		}
   ]
 }
