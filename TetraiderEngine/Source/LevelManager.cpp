@@ -2,8 +2,9 @@
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
-LevelManager::LevelManager(): m_isRandomlyGenerated(true), m_wasRandomlyGenerated(false) {
+LevelManager::LevelManager(): m_isRandomlyGenerated(true), m_wasRandomlyGenerated(false), m_levelsCompleted(0) {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RESTART, this);
+	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 }
 
 LevelManager::~LevelManager() {}
@@ -55,7 +56,12 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 
 void LevelManager::LoadLevel() {
 	if (m_isRandomlyGenerated) {
-		TETRA_LEVEL_GEN.GenerateRoomNodes(4, 4);
+		if (m_levelsCompleted >= 1) {
+			TETRA_LEVEL_GEN.GenerateRoomNodes(3, 4, 2);
+		}
+		else 
+			TETRA_LEVEL_GEN.GenerateRoomNodes(3, 4, 1);
+
 		TETRA_LEVEL_GEN.GenerateFloorPlan();
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
@@ -97,8 +103,10 @@ void LevelManager::ChangeLevel(int i) {
 	}
 	else {
 		currentLevel = i;
-		if(currentLevel == mainMenuLevel) 
+		if (currentLevel == mainMenuLevel) {
+			m_levelsCompleted = 1;
 			TETRA_PLAYERSTATS.ClearStats();
+		}
 
 		TETRA_GAME_STATE.SetGameState(GameState::NEXT_LEVEL);
 	}
@@ -131,7 +139,7 @@ void LevelManager::_LoadLevel(const json& j) {
 
 void LevelManager::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
-		case EVENT_INPUT_RESTART:
+		case EVENT_INPUT_RESTART: {
 			if (TETRA_GAME_STATE.m_isLevelEditorMode) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isTrigger) {
@@ -140,5 +148,10 @@ void LevelManager::HandleEvent(Event* pEvent) {
 				TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
 			}
 			break;
+		}
+		case EVENT_ExitLevel: {
+			m_levelsCompleted += 1;
+			break;
+		}
 	}
 }
