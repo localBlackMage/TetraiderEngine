@@ -9,12 +9,23 @@
 		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
 		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
 		"isDebugModeEnabled": true,
-		"debugShader": "lineShader",
 		"soundsMute": false,
 		"enableWindowsCursor": true,
+		
+		"debugShader": "lineShader",
+		"gbV": "gaussianBlurVertical",
+		"gbH": "gaussianBlurHorizontal",
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.6, "g":0.6, "b":0.6, "a":1 }
 	},
+	"SHADERS": [
+		"brightSamplerShader",
+		"defaultShader",
+		"gaussianBlurVertical",
+		"gaussianBlurHorizontal",
+		"lineShader",
+		"particleShader"
+	],
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",
 		"width": 1280,

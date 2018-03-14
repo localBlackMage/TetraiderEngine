@@ -640,13 +640,18 @@ GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 
 #pragma region Shaders
 
-void RenderManager::LoadShaders()
+void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
 {
 	std::string shaderDir = TETRA_GAME_CONFIG.ShadersDir();
-	// TODO: Update these
-	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
-	LoadShaderProgram(shaderDir, "defaultShader.json");
-	LoadShaderProgram(shaderDir, "particleShader.json");
+	const std::string ext = ".json";
+
+	for (std::string shader : shaders) {
+		LoadShaderProgram(shaderDir, shader + ext);
+	}
+
+	//LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
+	//LoadShaderProgram(shaderDir, "defaultShader.json");
+	//LoadShaderProgram(shaderDir, "particleShader.json");
 }
 
 void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)

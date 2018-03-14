@@ -134,7 +134,7 @@ public:
 	}
 
 
-	void LoadShaders();
+	void LoadShaders(const std::vector<std::string>& shaders);
 	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }
 	void LoadShaderProgram(std::string filePath, std::string fileName);
 	ShaderProgram * GetShaderProgram(std::string programName);

@@ -6,13 +6,20 @@
 class PostProcessing : public Subscriber
 {
 private:
+	std::string m_gbVShader, m_gbHShader;
+
 public:
-	PostProcessing() {};
+	PostProcessing() : m_gbVShader(""), m_gbHShader("") {};
 	~PostProcessing() {};
 	PostProcessing(const PostProcessing &) = delete;
 	void operator=(const PostProcessing &) = delete;
 
 	virtual void HandleEvent(Event * p_event) {};
+
+	inline void SetGBShaders(std::string gbVShader, std::string gbHShader) {
+		m_gbVShader = gbVShader;
+		m_gbHShader = gbHShader;
+	}
 };
 
 #endif
