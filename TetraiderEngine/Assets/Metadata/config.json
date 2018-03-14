@@ -8,10 +8,11 @@
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
 		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
 		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
+		
 		"isDebugModeEnabled": true,
 		"soundsMute": false,
-		"enableWindowsCursor": false,
 		
+		"enableWindowsCursor": false,
 		"debugShader": "lineShader",
 		"gbV": "gaussianBlurVertical",
 		"gbH": "gaussianBlurHorizontal",
