@@ -26,11 +26,6 @@ void GameConfig::LoadConfig(std::string s) {
 
 	m_debugEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
 
-	if (ParseBool(gameSettings, "enableWindowsCursor"))
-		TETRA_RENDERER.EnableWindowsCursor();
-	else
-		TETRA_RENDERER.DisableWindowsCursor();
-
 	//set mute
 	m_soundsMute = ParseBool(gameSettings,"soundsMute");
 	
@@ -48,6 +43,11 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_RENDERER.InitWindow(m_debugEnabled);
 	TETRA_RENDERER.SetWindowDimensions(m_screenWidth, m_screenHeight);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
+
+	if (ParseBool(gameSettings, "enableWindowsCursor"))
+		TETRA_RENDERER.EnableWindowsCursor();
+	else
+		TETRA_RENDERER.DisableWindowsCursor();
 
 	// Set level parameters
 	json levelSettings = j[LEVEL_SETTINGS];

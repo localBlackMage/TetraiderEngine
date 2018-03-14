@@ -2,7 +2,7 @@
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pCurrentProgram(nullptr), m_debugShaderName("")
+	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false)
 {
 }
 
@@ -483,9 +483,23 @@ void RenderManager::HandleEvent(Event * p_event)
 			break;
 
 		case EVENT_TOGGLE_LIGHTS:
+		{
 			InputButtonData* data = p_event->Data<InputButtonData>();
 			if (data->m_isReleased)	m_lights = !m_lights;
 			break;
+		}
+		case EVENT_TOGGLE_CURSOR:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased) {
+				m_cursorEnabled = !m_cursorEnabled;
+				if (m_cursorEnabled)
+					EnableWindowsCursor();
+				else
+					DisableWindowsCursor();
+			}
+			break;
+		}
 	}
 }
 
@@ -520,6 +534,7 @@ void RenderManager::InitWindow(bool debugEnabled)
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);

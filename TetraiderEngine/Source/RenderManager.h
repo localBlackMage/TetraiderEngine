@@ -63,6 +63,7 @@ private:
 	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
+	bool m_cursorEnabled;
 
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;

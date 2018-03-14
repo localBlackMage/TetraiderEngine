@@ -7,9 +7,10 @@ class PostProcessing : public Subscriber
 {
 private:
 	std::string m_gbVShader, m_gbHShader;
+	Mesh& m_mesh;
 
 public:
-	PostProcessing() : m_gbVShader(""), m_gbHShader("") {};
+	PostProcessing();
 	~PostProcessing() {};
 	PostProcessing(const PostProcessing &) = delete;
 	void operator=(const PostProcessing &) = delete;

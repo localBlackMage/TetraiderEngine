@@ -10,7 +10,7 @@
 		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
 		"isDebugModeEnabled": true,
 		"soundsMute": false,
-		"enableWindowsCursor": true,
+		"enableWindowsCursor": false,
 		
 		"debugShader": "lineShader",
 		"gbV": "gaussianBlurVertical",
@@ -180,8 +180,17 @@
 			"XboxKey": 0
 		},
 		{
-			"Name": "ExitLevel",
+			"Name": "TOGGLE_CURSOR",
 			"EventType": 15,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 63,
+			"XboxKey": 0
+		},
+		{
+			"Name": "ExitLevel",
+			"EventType": 16,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
