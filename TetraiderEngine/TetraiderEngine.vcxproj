@@ -114,6 +114,7 @@
     <ClCompile Include="Source\PhysicsManager.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PointLight.cpp" />
+    <ClCompile Include="Source\PostProcessing.cpp" />
     <ClCompile Include="Source\PowerUpButton.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\ProjectileSpawner.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="Source\PhysicsManager.h" />
     <ClInclude Include="Source\PlayerStatsManager.h" />
     <ClInclude Include="Source\PointLight.h" />
+    <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\ProjectileSpawner.h" />

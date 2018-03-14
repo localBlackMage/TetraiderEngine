@@ -137,6 +137,7 @@ using namespace JsonReader;
 #include <GameStateManager.h>
 #include <InputManager.h>
 #include <FrameRateManager.h>
+#include <PostProcessing.h>
 #include <RenderManager.h>
 #include <ResourceManager.h>
 #include <PhysicsManager.h>

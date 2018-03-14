@@ -1,11 +1,3 @@
-//#include "MathFunctions.h"
-//#include <cmath>
-//#include <ctime>
-//#include <math.h>
-//#include <stdlib.h>
-//#include <unordered_map>
-//#include <vector>
-
 #include <Stdafx.h>
 
 std::unordered_map<unsigned short, std::vector<unsigned int> > pascalTriangle;
@@ -92,6 +84,15 @@ float BezierInterpolation(const std::vector<Point>& points, const float& t) {
 		returnValue += points[i].y * BernsteinFormula(d, t, tPow, i);
 	}
 	return returnValue;
+}
+
+
+/*
+e = Euler's number
+1 / (2 * pi * stdDeviation^2) * e^-((x^2+y^2)/(2*stdDeviation^2)) */
+float GaussianBlur(float stdDeviation)
+{
+	return 0.0f;
 }
 
 bool RollDie(float probability) {
