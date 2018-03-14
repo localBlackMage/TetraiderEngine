@@ -61,7 +61,8 @@
   },
   {
     "Component": "Button",
-    "level"    : 2
+    "level"    : 2,
+	"isRandomGenerated": true
   },
   {
 		"Component": "Text",

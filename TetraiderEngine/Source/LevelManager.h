@@ -12,6 +12,7 @@ private:
 	json levelConfig;
 	json staticObjects;
 	bool m_isRandomlyGenerated;
+	bool m_wasRandomlyGenerated;
 
 	void _LoadLevel(const json& j);
 public:
@@ -27,6 +28,7 @@ public:
 	void UnLoadLevelForRestart();
 	void ChangeLevel(int i);
 	void LoadLevelEditor(int i);
+	void RandomlyGenerateLevel();
 	void NextLevel();
 	void RestartGame();
 	void HandleEvent(Event* pEvent);

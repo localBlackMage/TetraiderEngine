@@ -62,7 +62,7 @@
   {
     "Component": "Button",
     "level"    : 2,
-	"isRandomGenerated": true
+	"isRandomGenerated": false
   },
   {
 		"Component": "Text",
@@ -82,7 +82,7 @@
 		"rows": 6,
 		"cols": 16,
 		"font": "ShadowCardGothicFont.png",
-		"text": "RGL"
+		"text": "GYM"
 	}
 	]
 }

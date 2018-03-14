@@ -62,7 +62,7 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 			}
 			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				TETRA_PLAYERSTATS.EquipPowerUp(m_powerUp.m_category, m_powerUp.m_type, m_powerUp.m_index);
-				// TETRA_LEVELS.ActivateRandomGeneration(isRandomGenerated);
+				TETRA_LEVELS.ActivateRandomGeneration(true);
 				TETRA_LEVELS.ChangeLevel(m_levelNumber);
 			}
 		}

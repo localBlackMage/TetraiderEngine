@@ -2,7 +2,7 @@
 
 static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
-LevelManager::LevelManager(): m_isRandomlyGenerated(true) {
+LevelManager::LevelManager(): m_isRandomlyGenerated(true), m_wasRandomlyGenerated(false) {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RESTART, this);
 }
 
@@ -60,14 +60,17 @@ void LevelManager::LoadLevel() {
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
+		m_wasRandomlyGenerated = true;
 	}
 	else {
 		std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
 		_LoadLevel(OpenJsonFile(s));
+		m_wasRandomlyGenerated = false;
 	}
 
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_OnLevelInitialized));
 	TETRA_PLAYERSTATS.LoadStats();
+	m_isRandomlyGenerated = false;
 }
 
 void LevelManager::UnLoadLevel() {
@@ -83,6 +86,9 @@ void LevelManager::UnLoadLevelForRestart() {
 
 void LevelManager::ChangeLevel(int i) {
 	if (i == currentLevel) {
+		if (m_wasRandomlyGenerated)
+			m_isRandomlyGenerated = true;
+
 		TETRA_GAME_STATE.SetGameState(GameState::RESTART);
 	}
 	else if (i >= maxLevel) {
