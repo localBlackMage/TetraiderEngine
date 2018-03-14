@@ -3,10 +3,10 @@
 #ifndef GLOBAL_DEFINES_H
 #define GLOBAL_DEFINES_H
 
+#define TETRA_EVENTS Singleton<EventManager>::GetInstance()
 #define TETRA_MEMORY Singleton<MemoryManager>::GetInstance()
 #define TETRA_GAME_CONFIG Singleton<GameConfig>::GetInstance()
 #define TETRA_GAME_STATE Singleton<GameStateManager>::GetInstance()
-#define TETRA_EVENTS Singleton<EventManager>::GetInstance()
 #define TETRA_FRAMERATE Singleton<FrameRateManager>::GetInstance()
 #define TETRA_RENDERER Singleton<RenderManager>::GetInstance()
 #define TETRA_INPUT Singleton<InputManager>::GetInstance()

@@ -3,7 +3,8 @@
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
-{}
+{
+}
 
 RenderManager::~RenderManager() 
 {
@@ -35,7 +36,7 @@ void RenderManager::_InitWindow(std::string title, bool debugEnabled)
 	m_context = SDL_GL_CreateContext(m_pWindow);
 
 	// Initialize PNG loading
-	int imgFlags = IMG_INIT_PNG;
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
 		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
 	}
