@@ -48,7 +48,8 @@ void FrameRateManager::FrameEnd() {
 		m_totalElapsedTime += m_frameTime;
 	}
 	else {
-		FloatSecond fsec = m_tickEnd - m_tickStart;
+		auto dur = m_tickEnd - m_tickStart;
+		FloatSecond fsec = std::chrono::duration_cast<FloatSecond>(dur);
 		m_frameTime = float(fsec.count()); //  / 1000.0f;
 		std::cout << "frametime: " << m_frameTime << std::endl;
 		m_totalElapsedTime += m_frameTime;
