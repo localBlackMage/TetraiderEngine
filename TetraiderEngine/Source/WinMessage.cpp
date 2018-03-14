@@ -17,6 +17,12 @@ void WinMessage::Update(float dt)
 {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F5) && !m_isMessageOn) {
+		pGO->m_isRender = true;
+		m_pScriptedAnim->PlayAnimation();
+		m_isMessageOn = true;
+	}
+
 	// Check if player is alive
 	if (m_isMessageOn) {
 		if (!m_pWaveMovement->IsActive() && !m_pScriptedAnim->IsPlaying()) {
