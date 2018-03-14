@@ -28,6 +28,7 @@
         "Component": "Text",
         "letterHeight": 24,
         "letterWidth": 24,
+		"spacing": 0.65,
         "pivotOffset": {
             "x": 0,
             "y": 0
@@ -40,7 +41,7 @@
         },
         "rows": 6,
         "cols": 16,
-        "font": "baseFont.png",
+        "font": "ShadowCardGothicFont.png",
         "text": "CONTROLS"
     }
     ]

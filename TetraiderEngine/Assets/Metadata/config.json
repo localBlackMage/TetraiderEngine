@@ -11,7 +11,7 @@
 		"isDebugModeEnabled": true,
 		"debugShader": "lineShader",
 		"soundsMute": false,
-		"enableWindowsCursor": false,
+		"enableWindowsCursor": true,
 		"consoleEnabled": true
 	},
 	"WINDOW_SETTINGS": {

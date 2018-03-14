@@ -1,0 +1,42 @@
+{
+  "Tag": "Hazard",
+  "Layer": "1",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 400,
+        "y": 164,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 100
+		}
+	},
+	{
+		"Component": "DealDamageOnCollision",
+		"damage": 5,
+		"knockBackSpeed": 1000
+	}
+  ]
+}
