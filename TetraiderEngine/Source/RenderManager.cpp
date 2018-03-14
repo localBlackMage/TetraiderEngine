@@ -653,6 +653,22 @@ GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 	return bufferId;
 }
 
+GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type)
+{
+	GLuint fboTexBuffer;
+	glGenFramebuffers(1, &fboID);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboID);
+
+	glGenTextures(1, &fboTexBuffer);
+	glBindTexture(GL_TEXTURE_2D, fboTexBuffer);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	return fboTexBuffer;
+}
+
 #pragma region Shaders
 
 void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
@@ -663,10 +679,6 @@ void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
 	for (std::string shader : shaders) {
 		LoadShaderProgram(shaderDir, shader + ext);
 	}
-
-	//LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
-	//LoadShaderProgram(shaderDir, "defaultShader.json");
-	//LoadShaderProgram(shaderDir, "particleShader.json");
 }
 
 void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)

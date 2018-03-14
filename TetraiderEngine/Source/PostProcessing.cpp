@@ -5,3 +5,7 @@ PostProcessing::PostProcessing() :
 	m_mesh(*TETRA_RESOURCES.LoadMesh("quad"))
 {
 }
+
+void PostProcessing::InitFBOs()
+{
+}

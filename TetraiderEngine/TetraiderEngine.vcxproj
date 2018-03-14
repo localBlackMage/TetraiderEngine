@@ -62,6 +62,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\FollowCamera.cpp" />
+    <ClCompile Include="Source\FrameBufferObject.cpp" />
     <ClCompile Include="Source\ImguiManager.cpp" />
     <ClCompile Include="Source\LevelEditor.cpp" />
     <ClCompile Include="Source\LightBase.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Source\External\Imgui\stb_truetype.h" />
     <ClInclude Include="Source\FollowCamera.h" />
     <ClInclude Include="Source\FontInfo.h" />
+    <ClInclude Include="Source\FrameBufferObject.h" />
     <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\ImguiManager.h" />
     <ClInclude Include="Source\LevelEditor.h" />

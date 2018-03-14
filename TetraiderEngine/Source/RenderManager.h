@@ -55,6 +55,7 @@ class RenderManager : public Subscriber
 {
 private:
 	friend class DebugManager;
+	friend class PostProcessing;
 
 	float m_la, m_lb;		// light falloff numbers
 	bool m_lights;			// whether or not lights should be rendered
@@ -126,6 +127,8 @@ public:
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
 	GLuint GenerateStreamingVBO(unsigned int size);
+	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
+
 	template <typename BufferType>
 	void BindBufferData(const GLuint& bufferID, BufferType& bufferData, unsigned int size)
 	{

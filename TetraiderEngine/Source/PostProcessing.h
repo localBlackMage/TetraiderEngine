@@ -8,6 +8,8 @@ class PostProcessing : public Subscriber
 private:
 	std::string m_gbVShader, m_gbHShader;
 	Mesh& m_mesh;
+	GLuint m_baseFBO_ID, m_gausFBO_ID;
+	GLuint m_baseFBO, m_gausFBO;
 
 public:
 	PostProcessing();
@@ -21,6 +23,8 @@ public:
 		m_gbVShader = gbVShader;
 		m_gbHShader = gbHShader;
 	}
+
+	void InitFBOs();
 };
 
 #endif
