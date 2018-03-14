@@ -1,7 +1,7 @@
 #include <Stdafx.h>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_la(-0.24f), m_lb(0.19f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
+	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
 }
@@ -43,7 +43,7 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
 	_BindMesh(pSpriteComp->GetMesh());
-	glUniform1i(SHADER_LOCATIONS::LIT, pSpriteComp->IsLit());
+	glUniform1i(SHADER_LOCATIONS::LIT, m_lights ? pSpriteComp->IsLit() : false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
@@ -480,6 +480,11 @@ void RenderManager::HandleEvent(Event * p_event)
 		case EVENT_LIGHT_B_UP:
 			m_lb += 0.01f;
 			break;
+
+		case EVENT_TOGGLE_LIGHTS:
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased)	m_lights = !m_lights;
+			break;
 	}
 }
 
@@ -513,6 +518,7 @@ void RenderManager::InitWindow(bool debugEnabled)
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);

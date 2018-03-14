@@ -57,6 +57,7 @@ private:
 	friend class DebugManager;
 
 	float m_la, m_lb;		// light falloff numbers
+	bool m_lights;			// whether or not lights should be rendered
 	Vector3D m_globalAmbientLight;
 	int m_width, m_height;
 	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky

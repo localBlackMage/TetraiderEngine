@@ -1,7 +1,3 @@
-//#include "Agent.h"
-//#include "AI_HitNRunEngage.h"
-//#include "TetraiderAPI.h"
-
 #include <Stdafx.h>
 
 AI_HitNRunEngage::AI_HitNRunEngage()

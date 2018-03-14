@@ -760,9 +760,6 @@
     <ClInclude Include="Source\FollowCursor.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FontInfo.h">
-      <Filter>Source Files\Components\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ScriptedAnimation.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
@@ -774,6 +771,9 @@
     </ClInclude>
     <ClInclude Include="Source\AI_HitNRunRetreat.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FontInfo.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
