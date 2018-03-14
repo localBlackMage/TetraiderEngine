@@ -63,6 +63,7 @@ private:
 	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
+	bool m_cursorEnabled;
 
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
@@ -134,7 +135,7 @@ public:
 	}
 
 
-	void LoadShaders();
+	void LoadShaders(const std::vector<std::string>& shaders);
 	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }
 	void LoadShaderProgram(std::string filePath, std::string fileName);
 	ShaderProgram * GetShaderProgram(std::string programName);
