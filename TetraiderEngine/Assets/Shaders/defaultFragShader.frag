@@ -46,8 +46,8 @@ void main(void) {
 			if(vl_lightVectors[i].w == 1)
 				continue;
 			float d = length(vl_lightVectors[i]);
-			if (d > l_pos_dist[i].w)
-				continue;
+			//if (d > l_pos_dist[i].w)
+			//	continue;
 
 			vec4 L = normalize(vl_lightVectors[i]);
 			d /= 143.108f; // As d is in pixels, we want it in world units. A single world unit is the diagonal of a cell
