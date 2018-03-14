@@ -134,7 +134,11 @@ void LevelManager::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_RESTART:
 			if (TETRA_GAME_STATE.m_isLevelEditorMode) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isTrigger) TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
+			if (pButtonData->m_isTrigger) {
+				if (m_wasRandomlyGenerated)
+					m_isRandomlyGenerated = true;
+				TETRA_EVENTS.BroadcastEvent(&Event(EventType::RESTART_LEVEL));
+			}
 			break;
 	}
 }
