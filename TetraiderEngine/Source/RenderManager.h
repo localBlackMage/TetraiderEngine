@@ -66,7 +66,7 @@ private:
 	ShaderProgram * m_pCurrentProgram;
 	std::string m_debugShaderName;
 
-	void _InitWindow(std::string title);
+	void _InitWindow(std::string title, bool debugEnabled);
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
 	void _RenderSprite(const Sprite* pSpriteComp);
@@ -75,7 +75,7 @@ private:
 	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const Component* renderingComponent);
 	void _SetUpCamera(const GameObject& camera);
-	void _SetUpLights(const GameObjectLayer& gol);
+	void _SetUpLights(const GameObject& gameObject, GameObjectLayer& gol);
 
 	void _SetUpDebug(const GameObject& camera);
 	void _RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
@@ -107,7 +107,7 @@ public:
 	virtual void HandleEvent(Event * p_event);
 
 	void SetUpConsole();
-	void InitWindow();
+	void InitWindow(bool debugEnabled);
 	void EnableWindowsCursor();
 	void DisableWindowsCursor();
 	void SetWindowWidth(int width);
@@ -119,7 +119,7 @@ public:
 	float GetAspectRatio() const;
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 
-	void RenderGameObject(const GameObject& camera, const GameObject& go, const GameObjectLayer& gol);
+	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
 	GLuint GenerateStreamingVBO(unsigned int size);
 	template <typename BufferType>

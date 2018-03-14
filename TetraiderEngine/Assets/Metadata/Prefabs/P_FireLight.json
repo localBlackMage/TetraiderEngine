@@ -2,6 +2,20 @@
   "Tag": "Obstacle",
   "Layer": "2",
   "COMPONENTS": [
+   	{
+		"Component": "PointLight",
+		"color": {
+			"r": 1, 
+			"g": 0.9882, 
+			"b": 0.7882, 
+			"a": 1
+		},
+		"distance": 1000.0,
+		"offset": {
+			"z": 250
+		},
+		"layers": ["BG", "1", "2", "3"]
+	},
     {
 		"Component": "Transform",
 		"position": {

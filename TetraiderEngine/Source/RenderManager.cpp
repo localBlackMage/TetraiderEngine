@@ -3,15 +3,7 @@
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
-{
-	//_InitWindow(title);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
-
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
-}
+{}
 
 RenderManager::~RenderManager() 
 {
@@ -24,15 +16,22 @@ RenderManager::~RenderManager()
 
 #pragma region Private Methods
 
-void RenderManager::_InitWindow(std::string title)
+void RenderManager::_InitWindow(std::string title, bool debugEnabled)
 {
+	if (debugEnabled) {
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
+	}
+
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_pWindow = SDL_CreateWindow(title.c_str(),
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		SDL_WINDOW_OPENGL);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 
 	// Initialize PNG loading
@@ -93,6 +92,9 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 
 	// select the texture to use
 	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());
@@ -236,9 +238,9 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 	_BindUniform4(SHADER_LOCATIONS::CAMERA_POS, transformComp->GetPosition());
 }
 
-void RenderManager::_SetUpLights(const GameObjectLayer & gol)
+void RenderManager::_SetUpLights(const GameObject& gameObject, GameObjectLayer & gol)
 {
-	gol.BindBufferDatas();
+	gol.BindBufferDatas(gameObject.GetComponent<Transform>(C_Transform)->GetPosition());
 
 	glUniform1f(SHADER_LOCATIONS::L_A, m_la);
 	glUniform1f(SHADER_LOCATIONS::L_B, m_lb);
@@ -494,24 +496,18 @@ void RenderManager::FrameEnd()
 void RenderManager::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
-	case EventType::EVENT_FPS_UPDATE:
-	{
-		int fps = (int)p_event->Data<FPSData>()->mFPS;
-		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
-		break;
-	}
-	case EVENT_LIGHT_A_DOWN:
-		m_la -= 0.01;
-		break;
-	case EVENT_LIGHT_A_UP:
-		m_la += 0.01;
-		break;
-	case EVENT_LIGHT_B_DOWN:
-		m_lb -= 0.01;
-		break;
-	case EVENT_LIGHT_B_UP:
-		m_lb += 0.01;
-		break;
+		case EVENT_LIGHT_A_DOWN:
+			m_la -= 0.01f;
+			break;
+		case EVENT_LIGHT_A_UP:
+			m_la += 0.01f;
+			break;
+		case EVENT_LIGHT_B_DOWN:
+			m_lb -= 0.01f;
+			break;
+		case EVENT_LIGHT_B_UP:
+			m_lb += 0.01f;
+			break;
 	}
 }
 
@@ -538,9 +534,9 @@ void RenderManager::SetUpConsole()
 	}
 }
 
-void RenderManager::InitWindow()
+void RenderManager::InitWindow(bool debugEnabled)
 {
-	_InitWindow(m_windowTitle);
+	_InitWindow(m_windowTitle, debugEnabled);
 }
 
 void RenderManager::EnableWindowsCursor()
@@ -589,7 +585,7 @@ float RenderManager::GetAspectRatio() const
 
 #pragma endregion
 
-void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject, const GameObjectLayer& gol)
+void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject, GameObjectLayer& gol)
 {
 	// Only attempt to draw if the game object has a renderable component and transform component
 	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
@@ -607,7 +603,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 		const Sprite* cpSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
 		_SelectShaderProgram(cpSpriteComp);
 		_SetUpCamera(camera);
-		_SetUpLights(gol);
+		_SetUpLights(gameObject, gol);
 		if (cpSpriteComp->HasPosOffset())
 			_BindGameObjectTransformWithOffset(gameObject, cpSpriteComp->GetPosOffset());
 		else

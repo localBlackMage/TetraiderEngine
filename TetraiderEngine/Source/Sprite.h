@@ -5,6 +5,7 @@
 class Sprite : public Component 
 {
 protected:	
+	bool m_repeats;
 	bool m_isLit;
 	float m_xTiling;
 	float m_yTiling;
@@ -30,6 +31,7 @@ public:
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
 
+	inline bool Repeats() const { return m_repeats; }
 	inline bool IsLit() const { return m_isLit; }
 
 	std::string GetSpriteName() const;

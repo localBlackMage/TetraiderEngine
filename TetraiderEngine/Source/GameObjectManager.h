@@ -9,12 +9,12 @@ private:
 	std::vector<GameObject*> m_layerObjects;
 	std::vector<GameObject*> m_layerLights;
 
-	unsigned short m_numLights;
 	GLuint m_lightColorsBuffer;
 	GLuint m_m_lightPositionsAndDistancesBuffer;
 
-	float m_lightColors[MAX_LIGHTS * 4];				// r, g, b, a
-	float m_lightPositionsAndDistances[MAX_LIGHTS*4];	// x, y, z, distance
+	static const unsigned short m_size = MAX_LIGHTS * 4;
+	float m_lightColors[m_size];				// r, g, b, a
+	float m_lightPositionsAndDistances[m_size];	// x, y, z, distance
 public:
 	GameObjectLayer();
 	~GameObjectLayer() {};
@@ -32,8 +32,7 @@ public:
 
 	GLuint GetLightColors()	const { return m_lightColorsBuffer; }
 	GLuint GetLightPosAndDist()	const { return m_m_lightPositionsAndDistancesBuffer; }
-	void BindBufferDatas() const;
-	inline unsigned short LightsCount() const { return m_numLights; }
+	void BindBufferDatas(const Vector3D& pos);
 };
 
 
