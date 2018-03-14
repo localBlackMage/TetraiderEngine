@@ -7,7 +7,7 @@
 
 #include <Stdafx.h>
 
-DealDamageOnCollision::DealDamageOnCollision(): Component(ComponentType::C_DealDamageOnCollision), m_hitCoolDown(0.15f), m_isAbleToDmgPlayer(true), m_timeFromLastHit(0.0f) {}
+DealDamageOnCollision::DealDamageOnCollision(): Component(ComponentType::C_DealDamageOnCollision), m_hitCoolDown(0.25f), m_isAbleToDmgPlayer(true), m_timeFromLastHit(0.0f) {}
 DealDamageOnCollision::~DealDamageOnCollision() {}
 
 void DealDamageOnCollision::Update(float dt) {

@@ -54,7 +54,7 @@ void Button::HandleEvent(Event* pEvent)
 	if (pEvent->Type() == EVENT_OnCollide)
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
-		if (pData->pGO->m_tag == T_UI) {
+		if (pData->pGO->m_tag == T_Cursor) {
 			m_pSprite->SetVOffset(0.3333f);
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				m_pSprite->SetVOffset(0.6666f);
@@ -64,7 +64,7 @@ void Button::HandleEvent(Event* pEvent)
 					TETRA_EVENTS.BroadcastEvent(&Event(WINDOW_CLOSED));
 				}
 				else if (m_isRestart) {
-					TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
+					TETRA_LEVELS.ChangeLevel(TETRA_LEVELS.GetCurrentLevel());
 				}
 				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);

@@ -22,6 +22,11 @@
     <ClCompile Include="Source\AI_HitNRunAttack.cpp" />
     <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
+    <ClCompile Include="Source\Endpoints.cpp" />
+    <ClCompile Include="Source\PlayerStatsManager.cpp" />
+    <ClCompile Include="Source\PostProcessing.cpp" />
+    <ClCompile Include="Source\PowerUpButton.cpp" />
+    <ClCompile Include="Source\Slider.cpp" />
     <ClCompile Include="Source\Canvas.cpp" />
     <ClCompile Include="Source\AI_DashingAttack.cpp" />
     <ClCompile Include="Source\AI_DashingEngage.cpp" />
@@ -113,9 +118,7 @@
     <ClCompile Include="Source\NPCController.cpp" />
     <ClCompile Include="Source\ParticleEmitter.cpp" />
     <ClCompile Include="Source\PhysicsManager.cpp" />
-    <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PointLight.cpp" />
-    <ClCompile Include="Source\PowerUpButton.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\ProjectileSpawner.cpp" />
     <ClCompile Include="Source\RangeAttack.cpp" />
@@ -153,6 +156,11 @@
     <ClInclude Include="Source\AI_HitNRunAttack.h" />
     <ClInclude Include="Source\AI_HitNRunEngage.h" />
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />
+    <ClInclude Include="Source\Endpoints.h" />
+    <ClInclude Include="Source\PlayerStatsManager.h" />
+    <ClInclude Include="Source\PostProcessing.h" />
+    <ClInclude Include="Source\PowerUpButton.h" />
+    <ClInclude Include="Source\Slider.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />
     <ClInclude Include="Source\Canvas.h" />
     <ClInclude Include="Source\AI_DashingAttack.h" />
@@ -243,9 +251,7 @@
     <ClInclude Include="Source\AI_StateTypeNames.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\PhysicsManager.h" />
-    <ClInclude Include="Source\PlayerStatsManager.h" />
     <ClInclude Include="Source\PointLight.h" />
-    <ClInclude Include="Source\PowerUpButton.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\ProjectileSpawner.h" />
     <ClInclude Include="Source\RangeAttack.h" />

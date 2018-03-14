@@ -1,18 +1,6 @@
 {
 	"default": {
 		"vertex": "defaultVertShader.vert",
-		"fragment": "defaultFragShader.frag",
-		"attributes": [
-			"position",
-			"texture_coord"
-		],
-		"uniforms": [
-			"persp_matrix",
-			"view_matrix",
-			"model_matrix",
-			"frame_offset",
-			"frame_size",
-			"color"
-		]
+		"fragment": "defaultFragShader.frag"
 	}
 }

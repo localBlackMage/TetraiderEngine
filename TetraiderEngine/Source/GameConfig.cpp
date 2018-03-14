@@ -5,6 +5,7 @@
 #define LEVEL_SETTINGS "LEVEL_SETTINGS"
 #define INPUT_SETTINGS "INPUT_SETTINGS"
 #define WINDOW_SETTINGS "WINDOW_SETTINGS"
+#define SHADER_LIST "SHADERS"
 
 GameConfig::GameConfig() : m_consoleEnabled(false){}
 
@@ -25,11 +26,6 @@ void GameConfig::LoadConfig(std::string s) {
 
 	m_debugEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
 
-	if (ParseBool(gameSettings, "enableWindowsCursor"))
-		TETRA_RENDERER.EnableWindowsCursor();
-	else
-		TETRA_RENDERER.DisableWindowsCursor();
-
 	//set mute
 	m_soundsMute = ParseBool(gameSettings,"soundsMute");
 	
@@ -48,6 +44,11 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_RENDERER.SetWindowDimensions(m_screenWidth, m_screenHeight);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
 
+	if (ParseBool(gameSettings, "enableWindowsCursor"))
+		TETRA_RENDERER.EnableWindowsCursor();
+	else
+		TETRA_RENDERER.DisableWindowsCursor();
+
 	// Set level parameters
 	json levelSettings = j[LEVEL_SETTINGS];
 	TETRA_LEVELS.Initialize(levelSettings);
@@ -57,8 +58,11 @@ void GameConfig::LoadConfig(std::string s) {
 	// Set debug parameters
 	TETRA_DEBUG.SetDebugMode(m_debugEnabled);
 
+	if (!TETRA_RENDERER.InitGlew())	exit(1);
 	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
+	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
 	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(gameSettings, "globalAmbient"));
+	TETRA_POST_PROCESSING.SetGBShaders(ParseString(j, "gbV"), ParseString(j, "gbH"));
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }
@@ -69,3 +73,4 @@ void GameConfig::LoadConfig(std::string s) {
 #undef LEVEL_SETTINGS 
 #undef INPUT_SETTINGS 
 #undef WINDOW_SETTINGS
+#undef SHADER_LIST

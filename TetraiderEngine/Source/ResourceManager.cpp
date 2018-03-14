@@ -65,7 +65,6 @@ GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurfac
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	//GLint repeatOrClamp = repeats ? GL_REPEAT : GL_CLAMP;
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
 

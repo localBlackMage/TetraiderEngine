@@ -8,6 +8,7 @@
 #define TETRA_GAME_CONFIG Singleton<GameConfig>::GetInstance()
 #define TETRA_GAME_STATE Singleton<GameStateManager>::GetInstance()
 #define TETRA_FRAMERATE Singleton<FrameRateManager>::GetInstance()
+#define TETRA_POST_PROCESSING Singleton<PostProcessing>::GetInstance()
 #define TETRA_RENDERER Singleton<RenderManager>::GetInstance()
 #define TETRA_INPUT Singleton<InputManager>::GetInstance()
 #define TETRA_RESOURCES Singleton<ResourceManager>::GetInstance()

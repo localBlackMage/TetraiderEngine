@@ -35,6 +35,7 @@
         "u": 0,
         "v": 0
       },
+	  "repeats": true,
       "lit": false,
       "tint": {
         "r": 1,

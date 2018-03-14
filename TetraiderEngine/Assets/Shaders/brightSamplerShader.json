@@ -1,0 +1,6 @@
+{
+	"brightSampler": {
+		"vertex": "brightSampler.vert",
+		"fragment": "brightSampler.frag"
+	}
+}

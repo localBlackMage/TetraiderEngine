@@ -26,11 +26,11 @@
       },
       {
         "Component": "Text",
-        "letterHeight": 24,
-        "letterWidth": 24,
+        "letterHeight": 48,
+        "letterWidth": 48,
 		"spacing": 0.65,
         "pivotOffset": {
-            "x": 0,
+            "x": 57,
             "y": 0
         },
         "tint": {

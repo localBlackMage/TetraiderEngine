@@ -1,10 +1,6 @@
 #ifndef MATH_FUNCTIONS_H
 #define MATH_FUNCTIONS_H
 
-//#include "Vector3D.h"
-//#include "Vector2D.h"
-//#include <vector>
-
 struct Point {
 	float x, y;
 };
@@ -20,4 +16,5 @@ int RandomInt(int min, int max);
 unsigned int GetPascalEntry(unsigned short degree, unsigned short index);
 float BezierInterpolation(const std::vector<Point>& points, const float& t);
 
+float GaussianBlur(float stdDeviation = 0);
 #endif

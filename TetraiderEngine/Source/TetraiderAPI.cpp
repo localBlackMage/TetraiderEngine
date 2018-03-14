@@ -4,10 +4,7 @@ namespace Tetraider {
 
 	int Initialize(std::string configFile)
 	{
-		
 		TETRA_GAME_CONFIG.LoadConfig(configFile);
-		TETRA_RENDERER.InitGlew();
-		TETRA_RENDERER.LoadShaders();
 		TETRA_RESOURCES.Init();
 		TETRA_IMGUI.Initialize();
 		TETRA_LEVEL_GEN.LoadRoomFiles();

@@ -2,11 +2,11 @@
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pCurrentProgram(nullptr), m_debugShaderName("")
+	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false)
 {
 }
 
-RenderManager::~RenderManager() 
+RenderManager::~RenderManager()
 {
 	EnableWindowsCursor();
 	SDL_GL_DeleteContext(m_context);
@@ -49,7 +49,7 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
-	
+
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
@@ -163,12 +163,12 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 		const Sprite* pSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
 		if (pSpriteComp->HasPosOffset())
 			_BindGameObjectTransformWithOffset(gameObject, pSpriteComp->GetPosOffset());
-		else 
+		else
 			_BindGameObjectTransform(gameObject);
 
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
 	}
-	
+
 	if (gameObject.HasComponent(ComponentType::C_Text)) {
 		_BindGameObjectTransform(gameObject);
 		_RenderText(gameObject.GetComponent<Text>(ComponentType::C_Text), gameObject.GetComponent<Transform>(ComponentType::C_Transform));
@@ -180,15 +180,15 @@ void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 	std::string shader = "";
 
 	switch (renderingComponent->Type()) {
-		case ComponentType::C_ParticleEmitter:
-			shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
-			break;
-		case ComponentType::C_Sprite:
-			shader = static_cast<const Sprite*>(renderingComponent)->Shader();
-			break;
-		case ComponentType::C_Text:
-			shader = static_cast<const Text*>(renderingComponent)->Shader();
-			break;
+	case ComponentType::C_ParticleEmitter:
+		shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
+		break;
+	case ComponentType::C_Sprite:
+		shader = static_cast<const Sprite*>(renderingComponent)->Shader();
+		break;
+	case ComponentType::C_Text:
+		shader = static_cast<const Text*>(renderingComponent)->Shader();
+		break;
 	}
 
 	SelectShaderProgram(shader == "" ? "default" : shader);
@@ -308,9 +308,9 @@ void RenderManager::_RenderLine(const Vector3D & color, const Vector3D & pos, co
 {
 	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
-	Matrix4x4 model = Matrix4x4::Translate(pos) * 
+	Matrix4x4 model = Matrix4x4::Translate(pos) *
 		Matrix4x4::Rotate(rot.z, ZAXIS) *
-		Matrix4x4::Scale(scale.x) * 
+		Matrix4x4::Scale(scale.x) *
 		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)model);
@@ -327,7 +327,7 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 	Matrix4x4 ArcMatrix;
 	int max = 32;
 	float degreeAmt = arcWidth / float(max);
-	float offset = rot.z - (arcWidth / 2.f) + degreeAmt/2.f;
+	float offset = rot.z - (arcWidth / 2.f) + degreeAmt / 2.f;
 	//max += int(rot.z);
 	Vector3D AXIS_Z = Vector3D(0, 0, 1);
 	Vector3D a = Vector3D(radius, 0, 0);
@@ -347,7 +347,7 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 		glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)ArcMatrix);
 		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 	}
-	
+
 
 	// Draw cone lines
 	Matrix4x4 model = Matrix4x4::Translate(pos) *
@@ -483,9 +483,23 @@ void RenderManager::HandleEvent(Event * p_event)
 			break;
 
 		case EVENT_TOGGLE_LIGHTS:
+		{
 			InputButtonData* data = p_event->Data<InputButtonData>();
 			if (data->m_isReleased)	m_lights = !m_lights;
 			break;
+		}
+		case EVENT_TOGGLE_CURSOR:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased) {
+				m_cursorEnabled = !m_cursorEnabled;
+				if (m_cursorEnabled)
+					EnableWindowsCursor();
+				else
+					DisableWindowsCursor();
+			}
+			break;
+		}
 	}
 }
 
@@ -520,6 +534,7 @@ void RenderManager::InitWindow(bool debugEnabled)
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -640,13 +655,18 @@ GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 
 #pragma region Shaders
 
-void RenderManager::LoadShaders()
+void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
 {
 	std::string shaderDir = TETRA_GAME_CONFIG.ShadersDir();
-	// TODO: Update these
-	LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
-	LoadShaderProgram(shaderDir, "defaultShader.json");
-	LoadShaderProgram(shaderDir, "particleShader.json");
+	const std::string ext = ".json";
+
+	for (std::string shader : shaders) {
+		LoadShaderProgram(shaderDir, shader + ext);
+	}
+
+	//LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
+	//LoadShaderProgram(shaderDir, "defaultShader.json");
+	//LoadShaderProgram(shaderDir, "particleShader.json");
 }
 
 void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)

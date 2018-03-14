@@ -377,11 +377,14 @@
     <ClCompile Include="Source\UIManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Slider.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Endpoints.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
     <ClCompile Include="Source\PlayerStatsManager.cpp">
       <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PowerUpButton.cpp">
-      <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI_HitNRunEngage.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
@@ -389,8 +392,11 @@
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_HitNRunAttack.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClCompile Include="Source\PowerUpButton.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PostProcessing.cpp">
+      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -748,26 +754,22 @@
     <ClInclude Include="Source\CanvasTypeName.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PlayerStatsManager.h">
-      <Filter>Source Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PowerUpButton.h">
-      <Filter>Source Files\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\UICounter.h">
-      <Filter>Source Files\Components\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EggCounter.h">
+    <ClInclude Include="Source\FontInfo.h" />
+    <ClInclude Include="Source\EggCounter.h" />
+    <ClInclude Include="Source\ScriptedAnimation.h" />
+    <ClInclude Include="Source\UICounter.h" />
+    <ClInclude Include="Source\WinMessage.h" />
+    <ClInclude Include="Source\Slider.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\FollowCursor.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ScriptedAnimation.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WinMessage.h">
+    <ClInclude Include="Source\Endpoints.h">
       <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerStatsManager.h">
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_HitNRunEngage.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
@@ -775,11 +777,11 @@
     <ClInclude Include="Source\AI_HitNRunRetreat.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FontInfo.h">
-      <Filter>Source Files\Rendering</Filter>
+    <ClInclude Include="Source\PowerUpButton.h">
+      <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_HitNRunAttack.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClInclude Include="Source\PostProcessing.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
