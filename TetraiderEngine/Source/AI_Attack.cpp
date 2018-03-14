@@ -13,13 +13,13 @@ AI_Attack::~AI_Attack(){
 }
 
 void AI_Attack::OnEnter(){
-	attackCounter = 0;
+	attackCounter = 1;
 }
 
 void AI_Attack::OnUpdate(float dt){
 	pAgent->LookAtPlayer();
 	if (attackCounter > attackLimit) {
-		pAgent->ChangeState(NPC_IDLE);
+		pAgent->ChangeState(NPC_ENGAGE);
 	}
 	if (pAgent->UseAttack(0)) {
 		attackCounter++;

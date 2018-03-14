@@ -20,7 +20,7 @@ void AI_HitNRunEngage::OnEnter() {
 	engageTimer = RandomFloat(minimumEngage, 4);
 	triedMovingSoFar = 0.0f;
 	sinceEngage = 0.0f;
-	minDistanceToPlayer = 100.0f;
+	minDistanceToPlayer = 250.0f;
 }
 
 void AI_HitNRunEngage::OnUpdate(float dt) {

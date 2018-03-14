@@ -270,13 +270,10 @@ void NPCController::MoveAwayFromPlayer(float dist) {
 	if (m_isPlayerDead)
 		SetTargetDestination(m_pTransform->GetPosition());
 
-	float angleOffset = RandomFloat(-45,45);
-
-	float angle = m_lookDirection.AngleDegrees() + angleOffset;
-	if (angle > 180.0f)	angle -= 360;
-	else if (angle < -180) angle += 360;
-
-	Vector3D dir = -1 * Vector3D::VectorFromAngleDegrees(angle);
+	float angleOffset = RandomFloat(-45, 45);
+	Vector3D dir = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
+	dir.Normalize();
+	dir = -1.0f * dir;
 	SetTargetDestination(dir*dist + m_pTransform->GetPosition());
 }
 

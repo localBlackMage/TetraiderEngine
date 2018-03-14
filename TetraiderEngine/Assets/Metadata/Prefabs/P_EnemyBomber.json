@@ -27,15 +27,15 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 120,
+			"speed": 130,
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 400,
-		"outOfSightRadius": 600,
+		"detectionRadius": 500,
+		"outOfSightRadius": 650,
 		"zoneWidth": 350,
-		"zoneHeight": 320,
-		"attackRange": 500,
+		"zoneHeight": 350,
+		"attackRange": 250,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -44,15 +44,15 @@
 			},
 			{	"name": "engageBehavior",
 				"behaviorIndex": 1,
-				"AIStateType": "NPC_State_HitNRunEngage"
+				"AIStateType": "NPC_State_Engage"
 			},
 			{	"name": "attackBehavior",
 				"behaviorIndex": 2,				
-				"AIStateType": "NPC_State_HitNRunAttack"
+				"AIStateType": "NPC_State_Attack"
 			},
 			{	"name": "retreatBehavior",
 				"behaviorIndex": 3,
-				"AIStateType": "NPC_State_HitNRunRetreat"
+				"AIStateType": "NPC_State_Retreat"
 			},
 			{	"name": "moveToRandomPointInZoneBehavior",
 				"behaviorIndex": 4,
@@ -62,7 +62,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_RedBat.png",
+      "Texture": "T_BipedMonster.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -86,38 +86,18 @@
       }
     },
 	{
-		"Component": "Animation",
-		"defaultAnimation": 0,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "Walk",
-			"frames": 2,
-			"animationSpeed": 4,
-			"isLooping": true,
-			"isPlayOnAwake": false
-		},
-		{
-			"Name": "Idle",
-			"frames": 2,
-			"animationSpeed": 8,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		}
-		]
-	},
-	{
 		"Component": "Body",
 		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 40
+			"radius": 50
 		}
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 30,
-		"maxHealth": 30,
+		"startingHealth": 40,
+		"maxHealth": 40,
 		"isInvincible": false
 	},
 	{
@@ -131,26 +111,75 @@
 		}
 	},
 	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 5,
+			"animationSpeed": 6,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Dead",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
 		"Component": "Weapon",
 		"Attacks":[
 			{
-				"type": "Ranged",
+				"type": "Melee",
 				"coolDown": 0.6,
-				"baseDamage": 3,
-				"projectileSpeed": 600,
-				"ammo": 0,
-				"isUnlimitedAmmo": true,
-				"instantiationOffset": 50,
-				"lifeTime": 1.5,
-				"projectilePrefab": "P_testProjectile",
-				"knockBackSpeed": 300
+				"baseDamage": 10,
+				"radius": 180,
+				"angle": 90,
+				"triggerAttackIn": 0.05,
+				"knockBackSpeed": 800
 			}
 		],
-		"rotationOffset": 0
+		"weaponPrefab": "P_RatSword",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 70,
+		"effectPrefab": "P_SlashTest"
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"prefab": "P_EggPickUp"
+		"isRandom": true,
+		"RandomDrops": [
+			{
+				"prefab": "P_AmmoPickUp",
+				"weight": 20
+			},
+			{
+				"prefab": "P_MeatPickup",
+				"weight": 30
+			},
+			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 10
+			},
+			{
+				"prefab": "",
+				"weight": 80
+			}
+		]
 	}
   ]
 }
