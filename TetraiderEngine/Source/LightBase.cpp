@@ -1,7 +1,7 @@
 #include <Stdafx.h>
 
 LightBase::LightBase(ComponentType cType) :
-	Component(cType)
+	Component(cType), m_a(-0.24f), m_b(0.19f)
 {
 	memset(m_layers, false, RENDER_LAYER::L_NUM_LAYERS);
 }
@@ -23,6 +23,9 @@ void LightBase::Serialize(const json& j)
 	m_offset = ParseVector3D(j, "offset");
 
 	m_distance = j["distance"];
+
+	m_a = ValueExists(j, "falloffA") ? j["falloffA"] : m_a;
+	m_b = ValueExists(j, "falloffB") ? j["falloffB"] : m_b;
 
 	std::vector< std::string > layers = ParseStringList(j, "layers");
 

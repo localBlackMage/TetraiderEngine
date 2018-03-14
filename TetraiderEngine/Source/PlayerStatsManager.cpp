@@ -78,7 +78,7 @@ void PlayerStatsManager::LoadStats() {
 void PlayerStatsManager::InitializePowerUps(json& json) {
 	m_powerUpSettings = json;
 	for (int i = 0; i < 3; ++i) {
-		for (int j = 0; j < json[POWER_UP_SETTINGS][i][POWER_UPS].size(); ++j) {
+		for (unsigned int j = 0; j < json[POWER_UP_SETTINGS][i][POWER_UPS].size(); ++j) {
 			PowerUp p;
 			p.m_category = (PowerUpCategory)(i);
 			p.m_type = (PowerUpType)(ParseInt(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "enumType"));
@@ -139,5 +139,5 @@ const PowerUp& PlayerStatsManager::GetRandomUtilityPowerUp() {
 	return m_powerUps[(int)PowerUpCategory::Utility][0];
 }
 
-#undef POWER_UP_SETTINGS "POWER_UP_SETTINGS"
-#undef POWER_UPS "POWER_UPS"
+#undef POWER_UP_SETTINGS
+#undef POWER_UPS

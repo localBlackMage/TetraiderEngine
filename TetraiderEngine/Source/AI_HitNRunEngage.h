@@ -14,8 +14,6 @@ Creation date: 3/13/18
 #ifndef AI_HITNRUN_ENGAGE_H
 #define AI_HITNRUN_ENGAGE_H
 
-//#include "AI_State.h"
-
 class AI_HitNRunEngage : public AI_State {
 public:
 	AI_HitNRunEngage();

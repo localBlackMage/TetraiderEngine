@@ -12,7 +12,8 @@
 		"debugShader": "lineShader",
 		"soundsMute": false,
 		"enableWindowsCursor": true,
-		"consoleEnabled": true
+		"consoleEnabled": true,
+		"globalAmbient": { "r":0.3, "g":0.3, "b":0.3, "a":1 }
 	},
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",
@@ -159,8 +160,17 @@
 			"XboxKey": 0
 		},
 		{
-			"Name": "ExitLevel",
+			"Name": "TOGGLE_LIGHTS",
 			"EventType": 14,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 61,
+			"XboxKey": 0
+		},
+		{
+			"Name": "ExitLevel",
+			"EventType": 15,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

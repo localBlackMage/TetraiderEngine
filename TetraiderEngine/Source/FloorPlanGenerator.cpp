@@ -263,7 +263,7 @@ void FloorPlanGenerator::_UnsetNodeNeigbors(RoomNode& node)
 	node.m_Neighbors[3] = nullptr;
 }
 
-json * FloorPlanGenerator::_GetRoomJsonForDifficulty(short row, short col, RoomConnections connection)
+json * FloorPlanGenerator::_GetRoomJsonForDifficulty(RoomConnections connection)
 {
 	unsigned short difficulty = m_difficulty;
 	while (m_roomFiles[connection][difficulty].size() == 0) {
@@ -272,6 +272,12 @@ json * FloorPlanGenerator::_GetRoomJsonForDifficulty(short row, short col, RoomC
 	}
 	int idx = RandomInt(0, m_roomFiles[connection][difficulty].size());
 	return m_roomFiles[connection][difficulty][idx];
+}
+
+json * FloorPlanGenerator::_GetRoomJsonForSpawn(RoomConnections connection)
+{
+	int idx = RandomInt(0, m_roomFiles[connection][0].size());
+	return m_roomFiles[connection][0][idx];
 }
 #pragma endregion
 
@@ -367,7 +373,12 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 			// Set the position of each important node
 			m_roomNodes[row][col].m_position = offset;
 
-			json* j = _GetRoomJsonForDifficulty(row, col, m_roomNodes[row][col].m_ConnectionType);
+			json* j;
+			if (m_roomNodes[row][col] == (*m_spawnNode))
+				j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
+			else
+				j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+
 			if (!j) {
 				std::cout << "ABORTING! NO LEVEL FILE FOUND FOR ROOM TYPE: " << m_roomNodes[row][col].m_ConnectionType << std::endl;
 				return;

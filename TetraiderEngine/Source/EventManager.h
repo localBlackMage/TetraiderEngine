@@ -33,6 +33,9 @@ public:
 	void BroadcastEventToSubscribers(Event * aEvent);
 
 	void ClearDelayedEvents();
+
+	/* This function does nothing, it is purely to have the EventManager be initialized first */
+	inline void Init() const {};
 };
 
 #endif

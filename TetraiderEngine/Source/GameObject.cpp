@@ -62,7 +62,7 @@ void GameObject::Deactivate() {
 
 void GameObject::OverrideComponents(const json & j)
 {
-	for (int i = 0; i < m_activeComponents.size(); ++i) {
+	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->Override(j);
 	}
 
@@ -74,7 +74,7 @@ void GameObject::OverrideComponents(const json & j)
 }
 
 void GameObject::Update(float dt) {
-	for (int i = 0; i < m_activeComponents.size(); ++i) {
+	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->Update(dt);
 	}
 
@@ -91,7 +91,7 @@ void GameObject::Update(float dt) {
 }
 
 void GameObject::LateUpdate(float dt) {
-	for (int i = 0; i < m_activeComponents.size(); ++i) {
+	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->LateUpdate(dt);
 	}
 
@@ -103,7 +103,7 @@ void GameObject::LateUpdate(float dt) {
 }
 
 void GameObject::LateInitialize() {
-	for (int i = 0; i < m_activeComponents.size(); ++i) {
+	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->LateInitialize();
 	}
 		
@@ -125,7 +125,7 @@ bool GameObject::HasComponent(ComponentType type) const
 }
 
 void GameObject::HandleEvent(Event* pEvent) {
-	for (int i = 0; i < m_activeComponents.size(); ++i) {
+	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->HandleEvent(pEvent);
 	}
 

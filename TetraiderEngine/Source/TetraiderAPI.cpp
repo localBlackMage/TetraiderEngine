@@ -1,4 +1,3 @@
-//#include "TetraiderAPI.h"
 #include <Stdafx.h>
 
 namespace Tetraider {

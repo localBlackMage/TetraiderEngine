@@ -23,6 +23,8 @@ void GameConfig::LoadConfig(std::string s) {
 	m_roomFilesDir = ParseString(gameSettings, "roomFilesDir");
 	m_fontsDir = ParseString(gameSettings, "fontsDir");
 
+	m_debugEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
+
 	if (ParseBool(gameSettings, "enableWindowsCursor"))
 		TETRA_RENDERER.EnableWindowsCursor();
 	else
@@ -42,7 +44,7 @@ void GameConfig::LoadConfig(std::string s) {
 
 	m_screenWidth = j[WINDOW_SETTINGS]["width"];
 	m_screenHeight = j[WINDOW_SETTINGS]["height"];
-	TETRA_RENDERER.InitWindow();
+	TETRA_RENDERER.InitWindow(m_debugEnabled);
 	TETRA_RENDERER.SetWindowDimensions(m_screenWidth, m_screenHeight);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
 
@@ -53,9 +55,10 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_INPUT.Initialize(inputSettings);
 
 	// Set debug parameters
-	TETRA_DEBUG.SetDebugMode(ParseBool(gameSettings, "isDebugModeEnabled"));
+	TETRA_DEBUG.SetDebugMode(m_debugEnabled);
 
 	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
+	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(gameSettings, "globalAmbient"));
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }

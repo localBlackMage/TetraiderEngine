@@ -57,6 +57,8 @@ private:
 	friend class DebugManager;
 
 	float m_la, m_lb;		// light falloff numbers
+	bool m_lights;			// whether or not lights should be rendered
+	Vector3D m_globalAmbientLight;
 	int m_width, m_height;
 	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky
 	SDL_GLContext m_context;
@@ -66,7 +68,6 @@ private:
 	ShaderProgram * m_pCurrentProgram;
 	std::string m_debugShaderName;
 
-	void _InitWindow(std::string title);
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
 	void _RenderSprite(const Sprite* pSpriteComp);
@@ -75,7 +76,7 @@ private:
 	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const Component* renderingComponent);
 	void _SetUpCamera(const GameObject& camera);
-	void _SetUpLights(const GameObjectLayer& gol);
+	void _SetUpLights(const GameObject& gameObject, GameObjectLayer& gol);
 
 	void _SetUpDebug(const GameObject& camera);
 	void _RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
@@ -92,6 +93,7 @@ private:
 	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
 	void _BindUniform2(SHADER_LOCATIONS location, const Vector3D& values);
 	void _BindUniform2(SHADER_LOCATIONS location, float val1, float val2);
+	void _BindUniform3(SHADER_LOCATIONS location, const Vector3D& values);
 	void _BindUniform4(SHADER_LOCATIONS location, const Vector3D& values);
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
@@ -101,13 +103,14 @@ public:
 
 	bool InitGlew();
 
+	void SetGlobalAmbientLight(Vector3D ambientLight) { m_globalAmbientLight = ambientLight; }
 	void FrameStart();
 	void FrameEnd();
 	void Resize(int width, int height);
 	virtual void HandleEvent(Event * p_event);
 
 	void SetUpConsole();
-	void InitWindow();
+	void InitWindow(bool debugEnabled);
 	void EnableWindowsCursor();
 	void DisableWindowsCursor();
 	void SetWindowWidth(int width);
@@ -119,7 +122,7 @@ public:
 	float GetAspectRatio() const;
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 
-	void RenderGameObject(const GameObject& camera, const GameObject& go, const GameObjectLayer& gol);
+	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
 	GLuint GenerateStreamingVBO(unsigned int size);
 	template <typename BufferType>

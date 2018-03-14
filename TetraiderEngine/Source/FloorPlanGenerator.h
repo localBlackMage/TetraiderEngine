@@ -75,7 +75,8 @@ protected:
 	/* First selectively unsets neighbors, then sets connection type */
 	void _SetRoomConnectionTypes();
 	void _UnsetNodeNeigbors(RoomNode& node);
-	json* _GetRoomJsonForDifficulty(short row, short col, RoomConnections connection);
+	json* _GetRoomJsonForDifficulty(RoomConnections connection);
+	json* _GetRoomJsonForSpawn(RoomConnections connection);
 public:
 	FloorPlanGenerator();
 	~FloorPlanGenerator();

@@ -2,6 +2,7 @@
 
 Sprite::Sprite(std::string textureName) :
 	Component(ComponentType::C_Sprite),
+	m_repeats(false),
 	m_isLit(false),
 	m_xTiling(1.0f), 
 	m_yTiling(1.0f), 
@@ -27,6 +28,7 @@ void Sprite::Update(float dt) {}
 
 void Sprite::Serialize(const json& j)
 {
+	m_repeats = ValueExists(j, "repeats") ? j["repeats"] : false;
 	m_isLit = ParseBool(j, "lit");
 	m_xTiling = ParseFloat(j, "tiling", "x");
 	m_yTiling = ParseFloat(j, "tiling", "y");

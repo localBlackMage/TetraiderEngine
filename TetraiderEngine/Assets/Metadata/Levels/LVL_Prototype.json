@@ -68,6 +68,99 @@
     },
 	
 	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -100,
+			"y": 0,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 100,
+			"y": 0,
+			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -150,
+			"y": 0,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 150,
+			"y": 0,
+			"z": 0
+		}
+	},
+	
+
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -200,
+			"y": 0,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 200,
+			"y": 0,
+			"z": 0
+		}
+	},
+
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -250,
+			"y": 0,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 250,
+			"y": 0,
+			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": -300,
+			"y": 0,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_FireLight",
+		"position": {
+			"x": 300,
+			"y": 0,
+			"z": 0
+		}
+	},	
+	
+	
+	
+	
+	
+	
+	
+	
+	{
 		"prefab": "P_PointLight",
 		"position": {
 			"x": -600,

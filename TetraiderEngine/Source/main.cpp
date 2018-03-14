@@ -1,11 +1,8 @@
-//#include <windows.h>
-//#include "TetraiderAPI.h"
-//#include <iostream>
-
 #include <Stdafx.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nShowCmd)
 {
+	TETRA_EVENTS.Init();
 	Tetraider::Initialize("../TetraiderEngine/Assets/Metadata/Config.json");
 	Tetraider::StartGameLoop();
 
