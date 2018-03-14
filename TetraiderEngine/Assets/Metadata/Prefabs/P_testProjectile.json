@@ -63,7 +63,7 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "pew1.mp3",
+		"audioClip": "arrow.mp3",
 		"volume": 0.6,
 		"isMute": false,
 		"isLoop": false,
