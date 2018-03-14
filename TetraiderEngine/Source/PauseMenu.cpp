@@ -58,7 +58,7 @@ void PauseMenu::HandleEvent(Event * pEvent)
 
 		if (m_pText) {
 			m_pText->SetText("PAUSED");
-			m_pText->SetOffset(Vector3D(-130, 200, 0));
+			m_pText->SetOffset(Vector3D(-80, 200, 0));
 		}
 	}
 	/*else if (pEvent->Type() == EVENT_LevelComplete) {

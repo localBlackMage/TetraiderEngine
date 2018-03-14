@@ -383,6 +383,18 @@
     <ClCompile Include="Source\Endpoints.cpp">
       <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerStatsManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_HitNRunEngage.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_HitNRunRetreat.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PowerUpButton.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -751,6 +763,18 @@
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Endpoints.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerStatsManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_HitNRunEngage.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_HitNRunRetreat.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PowerUpButton.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>

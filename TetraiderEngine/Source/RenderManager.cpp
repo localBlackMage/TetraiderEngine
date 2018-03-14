@@ -1,19 +1,12 @@
 #include <Stdafx.h>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
-	m_la(0.1f), m_lb(0.01f), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
+	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName("")
 {
-	_InitWindow(title);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_FPS_UPDATE, this);
-
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 }
 
-RenderManager::~RenderManager() 
+RenderManager::~RenderManager()
 {
 	EnableWindowsCursor();
 	SDL_GL_DeleteContext(m_context);
@@ -23,44 +16,6 @@ RenderManager::~RenderManager()
 }
 
 #pragma region Private Methods
-
-void RenderManager::_InitWindow(std::string title)
-{
-	if (AllocConsole())
-	{
-		FILE* file;
-
-		freopen_s(&file, "CONOUT$", "wt", stdout);
-		freopen_s(&file, "CONOUT$", "wt", stderr);
-		freopen_s(&file, "CONOUT$", "wt", stdin);
-
-		SetConsoleTitle("Tetraider Engine");
-	}
-
-	SDL_Init(SDL_INIT_VIDEO);
-
-	m_pWindow = SDL_CreateWindow(title.c_str(),
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		m_width, m_height,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-	m_context = SDL_GL_CreateContext(m_pWindow);
-
-	// Initialize PNG loading
-	int imgFlags = IMG_INIT_PNG;
-	if (!(IMG_Init(imgFlags) & imgFlags)) {
-		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
-	}
-
-	// Start SDL_ttf
-	if (TTF_Init() == -1) {
-		std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
-	}
-
-
-	SDL_SetWindowSize(m_pWindow, m_width, m_height);
-	glViewport(0, 0, m_width, m_height);
-}
 
 std::string RenderManager::_LoadTextFile(std::string fname)
 {
@@ -88,13 +43,13 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
 	_BindMesh(pSpriteComp->GetMesh());
-	glUniform1i(SHADER_LOCATIONS::LIT, pSpriteComp->IsLit());
+	glUniform1i(SHADER_LOCATIONS::LIT, m_lights ? pSpriteComp->IsLit() : false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
-	
+
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
@@ -104,6 +59,9 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 
 	// select the texture to use
 	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pSpriteComp->GetMesh().GetFaceBuffer());
@@ -205,12 +163,12 @@ void RenderManager::_RenderGameObject(const GameObject& gameObject)
 		const Sprite* pSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
 		if (pSpriteComp->HasPosOffset())
 			_BindGameObjectTransformWithOffset(gameObject, pSpriteComp->GetPosOffset());
-		else 
+		else
 			_BindGameObjectTransform(gameObject);
 
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
 	}
-	
+
 	if (gameObject.HasComponent(ComponentType::C_Text)) {
 		_BindGameObjectTransform(gameObject);
 		_RenderText(gameObject.GetComponent<Text>(ComponentType::C_Text), gameObject.GetComponent<Transform>(ComponentType::C_Transform));
@@ -222,15 +180,15 @@ void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 	std::string shader = "";
 
 	switch (renderingComponent->Type()) {
-		case ComponentType::C_ParticleEmitter:
-			shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
-			break;
-		case ComponentType::C_Sprite:
-			shader = static_cast<const Sprite*>(renderingComponent)->Shader();
-			break;
-		case ComponentType::C_Text:
-			shader = static_cast<const Text*>(renderingComponent)->Shader();
-			break;
+	case ComponentType::C_ParticleEmitter:
+		shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
+		break;
+	case ComponentType::C_Sprite:
+		shader = static_cast<const Sprite*>(renderingComponent)->Shader();
+		break;
+	case ComponentType::C_Text:
+		shader = static_cast<const Text*>(renderingComponent)->Shader();
+		break;
 	}
 
 	SelectShaderProgram(shader == "" ? "default" : shader);
@@ -247,10 +205,11 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 	_BindUniform4(SHADER_LOCATIONS::CAMERA_POS, transformComp->GetPosition());
 }
 
-void RenderManager::_SetUpLights(const GameObjectLayer & gol)
+void RenderManager::_SetUpLights(const GameObject& gameObject, GameObjectLayer & gol)
 {
-	gol.BindBufferDatas();
-
+	if (!m_lights) return;
+	gol.BindBufferDatas(gameObject.GetComponent<Transform>(C_Transform)->GetPosition());
+	_BindUniform3(SHADER_LOCATIONS::GLOBAL_AMBIENT, m_globalAmbientLight);
 	glUniform1f(SHADER_LOCATIONS::L_A, m_la);
 	glUniform1f(SHADER_LOCATIONS::L_B, m_lb);
 }
@@ -349,9 +308,9 @@ void RenderManager::_RenderLine(const Vector3D & color, const Vector3D & pos, co
 {
 	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, color.x, color.y, color.z, color.w);
 
-	Matrix4x4 model = Matrix4x4::Translate(pos) * 
+	Matrix4x4 model = Matrix4x4::Translate(pos) *
 		Matrix4x4::Rotate(rot.z, ZAXIS) *
-		Matrix4x4::Scale(scale.x) * 
+		Matrix4x4::Scale(scale.x) *
 		Matrix4x4::Translate(Vector3D(.5f, 0, 0));
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)model);
@@ -368,7 +327,7 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 	Matrix4x4 ArcMatrix;
 	int max = 32;
 	float degreeAmt = arcWidth / float(max);
-	float offset = rot.z - (arcWidth / 2.f) + degreeAmt/2.f;
+	float offset = rot.z - (arcWidth / 2.f) + degreeAmt / 2.f;
 	//max += int(rot.z);
 	Vector3D AXIS_Z = Vector3D(0, 0, 1);
 	Vector3D a = Vector3D(radius, 0, 0);
@@ -388,7 +347,7 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 		glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)ArcMatrix);
 		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 	}
-	
+
 
 	// Draw cone lines
 	Matrix4x4 model = Matrix4x4::Translate(pos) *
@@ -468,6 +427,11 @@ void RenderManager::_BindUniform2(SHADER_LOCATIONS location, float val1, float v
 	glUniform2f(location, val1, val2);
 }
 
+void RenderManager::_BindUniform3(SHADER_LOCATIONS location, const Vector3D & values)
+{
+	glUniform3f(location, values[0], values[1], values[2]);
+}
+
 void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& values)
 {
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
@@ -477,7 +441,7 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 
 #pragma endregion
 
-bool RenderManager::Init()
+bool RenderManager::InitGlew()
 {
 	// GLEW: get function bindings (if possible)
 	glewInit();
@@ -505,23 +469,22 @@ void RenderManager::FrameEnd()
 void RenderManager::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
-	case EventType::EVENT_FPS_UPDATE:
-	{
-		int fps = (int)p_event->Data<FloatData>()->mValue;
-		SetWindowTitle(m_baseWindowTitle + " ::: FPS: " + std::to_string(fps));
-		break;
-	}
 	case EVENT_LIGHT_A_DOWN:
-		m_la -= 0.01;
+		m_la -= 0.01f;
 		break;
 	case EVENT_LIGHT_A_UP:
-		m_la += 0.01;
+		m_la += 0.01f;
 		break;
 	case EVENT_LIGHT_B_DOWN:
-		m_lb -= 0.01;
+		m_lb -= 0.01f;
 		break;
 	case EVENT_LIGHT_B_UP:
-		m_lb += 0.01;
+		m_lb += 0.01f;
+		break;
+
+	case EVENT_TOGGLE_LIGHTS:
+		InputButtonData * data = p_event->Data<InputButtonData>();
+		if (data->m_isReleased)	m_lights = !m_lights;
 		break;
 	}
 }
@@ -533,6 +496,55 @@ void RenderManager::Resize(int width, int height)
 	m_width = width;
 	m_height = height;
 	glViewport(0, 0, width, height);
+}
+
+void RenderManager::SetUpConsole()
+{
+	if (AllocConsole())
+	{
+		FILE* file;
+
+		freopen_s(&file, "CONOUT$", "wt", stdout);
+		freopen_s(&file, "CONOUT$", "wt", stderr);
+		freopen_s(&file, "CONOUT$", "wt", stdin);
+
+		SetConsoleTitle("Tetraider Engine");
+	}
+}
+
+void RenderManager::InitWindow(bool debugEnabled)
+{
+	if (debugEnabled) {
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
+	}
+
+	SDL_Init(SDL_INIT_VIDEO);
+
+	m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
+		m_width, m_height,
+		SDL_WINDOW_OPENGL);
+	m_context = SDL_GL_CreateContext(m_pWindow);
+
+	// Initialize PNG loading
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if (!(IMG_Init(imgFlags) & imgFlags)) {
+		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
+	}
+
+	// Start SDL_ttf
+	if (TTF_Init() == -1) {
+		std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
+	}
+
+
+	SDL_SetWindowSize(m_pWindow, m_width, m_height);
+	glViewport(0, 0, m_width, m_height);
 }
 
 void RenderManager::EnableWindowsCursor()
@@ -581,16 +593,12 @@ float RenderManager::GetAspectRatio() const
 
 #pragma endregion
 
-void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject, const GameObjectLayer& gol)
+void RenderManager::RenderGameObject(const GameObject& camera, const GameObject& gameObject, GameObjectLayer& gol)
 {
-	//_RenderGameObject(go);
-
-
-	// Only attempt to draw if the game object has a sprite component and transform component
+	// Only attempt to draw if the game object has a renderable component and transform component
 	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
 		return;
 
-	// set shader attributes
 	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
 		const ParticleEmitter* cpParticleEmitterComp = gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
 		_SelectShaderProgram(cpParticleEmitterComp);
@@ -603,7 +611,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 		const Sprite* cpSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
 		_SelectShaderProgram(cpSpriteComp);
 		_SetUpCamera(camera);
-		_SetUpLights(gol);
+		_SetUpLights(gameObject, gol);
 		if (cpSpriteComp->HasPosOffset())
 			_BindGameObjectTransformWithOffset(gameObject, cpSpriteComp->GetPosOffset());
 		else

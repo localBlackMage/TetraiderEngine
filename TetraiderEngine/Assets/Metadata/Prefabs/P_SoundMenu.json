@@ -46,7 +46,7 @@
                   {
                     "prefab":"P_SliderBall",
                     "position":{
-                      "x":120,
+                      "x":190,
                       "y":-25
                     }
                   },
@@ -81,7 +81,7 @@
               {
                 "prefab":"P_SliderBall",
                 "position":{
-                  "x":120,
+                  "x":190,
                   "y":-75
                 }
               },
@@ -102,7 +102,7 @@
             {
               "prefab":"P_SliderBall",
               "position":{
-                "x":120,
+                "x":190,
                 "y":-125
               }
             }

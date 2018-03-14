@@ -45,7 +45,7 @@ enum SHADER_LOCATIONS {
 	L_B = 49,			// 49
 	L_POS_DIST = 50,	// 50
 	L_COLOR = 66,		// 66
-	
+
 };
 
 class GameObjectLayer;
@@ -84,7 +84,7 @@ private:
 	void _RenderCircle(const Vector3D & color, float radius, const Vector3D& position);
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 	void _RenderCone(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& arcWidthAndRadius);
-	
+
 	void _EnableAlphaTest();
 	void _EnableDepthTest();
 	void _BindMesh(const Mesh& mesh);
