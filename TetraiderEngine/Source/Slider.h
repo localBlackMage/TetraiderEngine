@@ -8,6 +8,8 @@ private:
 	float m_currentValue;
 	float m_minX;
 	float m_maxX;
+	float m_diff;
+
 	//Sprite* m_pSpriteBall;
 	Transform* m_pTransform;
 	FollowCursor* m_pfollow;

@@ -60,7 +60,8 @@
         }
       },
       {
-          "Component":"Endpoints"
+          "Component":"Endpoints",
+          "sliderName": "SFX_slider"
       }
    ]
   }

@@ -49,6 +49,9 @@ AudioManager::AudioManager() :m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isC
 	// seed value for SFx
 	srand(0);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEMUSIC, this);
+	TETRA_EVENTS.Subscribe(EVENT_ChangeBGMVol,this);
+	TETRA_EVENTS.Subscribe(EVENT_ChangeSFXVol, this);
+	TETRA_EVENTS.Subscribe(EVENT_ChangeMasterVol, this);
 }
 
 AudioManager::~AudioManager()
@@ -319,12 +322,36 @@ void AudioManager::ErrorCheck(FMOD_RESULT result)
 	}
 	return;
 }
-
+float vol;
 void AudioManager::HandleEvent(Event* pEvent) {
+	FloatData * pFloatData = pEvent->Data<FloatData>();
+	InputButtonData * pButtonData = pEvent->Data<InputButtonData>();
+	
 	switch (pEvent->Type()) {
 	case EVENT_INPUT_PAUSEMUSIC:
-		InputButtonData * pButtonData = pEvent->Data<InputButtonData>();
+		
 		if (pButtonData->m_isTrigger) TogglePause();
+		break;
+
+	case EVENT_ChangeBGMVol:
+		
+		SetSongsVolume(pFloatData->mValue);
+		m_pCurrentSongChannel->getVolume(&vol);
+		std::cout << "BGM volume : " << vol << std::endl;
+		break;
+
+	case EVENT_ChangeMasterVol:
+		//FloatData * pFloatData = pEvent->Data<FloatData>();
+		SetMasterVolume(pFloatData->mValue);
+		m_pMaster->getVolume(&vol);
+		std::cout << "Master volume : " << vol << std::endl;
+		break;
+
+	case EVENT_ChangeSFXVol:
+		//FloatData * pFloatData = pEvent->Data<FloatData>();
+		SetSFXsVolume(pFloatData->mValue);
+		m_pGroups[SFX]->getVolume(&vol);
+		std::cout << "SFX volume : " << vol << std::endl;
 		break;
 	}
 }

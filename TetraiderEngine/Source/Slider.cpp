@@ -40,15 +40,28 @@ void Slider::Update(float)
 	if (m_isPressed)
 	{
 		float x = m_pfollow->GetMousePosition().x;
-		if (x < m_pEndpoints->m_start)
-			x = m_pEndpoints->m_start;
-		else if(x > m_pEndpoints->m_end)
-			x = m_pEndpoints->m_end;
-
+		if (x < m_pEndpoints->GetMin())
+		{
+			x = m_pEndpoints->GetMin();
+			m_currentValue = m_minX;
+		}			
+		else if (x > m_pEndpoints->GetMax())
+		{
+			x = m_pEndpoints->GetMax();
+			m_currentValue = m_maxX;
+		}
+			
 		m_pTransform->SetPosition(Vector3D(x, m_pTransform->GetPosition().y, 0));
 			
+		m_currentValue = (x-m_pEndpoints->GetMin()) / m_diff;
+		//std::cout <<"Value "<< m_currentValue << std::endl;
+		if(m_pEndpoints->GetSliderName()=="BGM_slider")
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_ChangeBGMVol, &FloatData(m_currentValue)));
+		else if(m_pEndpoints->GetSliderName() == "SFX_slider")
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_ChangeSFXVol, &FloatData(m_currentValue)));
+		else if(m_pEndpoints->GetSliderName() == "MasterVol_slider")
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_ChangeMasterVol, &FloatData(m_currentValue)));
 	}
-	std::cout << m_pTransform->GetPosition().x<<std::endl;
 }
 
 void Slider::Serialize(const json & j)
@@ -80,6 +93,7 @@ void Slider::HandleEvent(Event * pEvent)
 				assert(m_pEndpoints);
 				return;
 			}
+			m_diff = m_pEndpoints->GetMax() - m_pEndpoints->GetMin();
 			m_gotEndpoints = true;
 		}
 		

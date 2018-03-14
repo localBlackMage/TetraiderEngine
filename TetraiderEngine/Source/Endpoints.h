@@ -4,6 +4,10 @@ class Endpoints :public Component
 {
 private:
 	Transform * m_pTransform;
+	float m_start;
+	float m_end;
+	std::string m_sliderName;
+
 public:
 	Endpoints();
 	~Endpoints();
@@ -14,7 +18,8 @@ public:
 	void LateInitialize();
 	void HandleEvent(Event* pEvent);
 
-	float m_start;
-	float m_end;
+	float GetMin() { return m_start; }
+	float GetMax() { return m_end; }
+	std::string GetSliderName() { return m_sliderName; }
 };
 

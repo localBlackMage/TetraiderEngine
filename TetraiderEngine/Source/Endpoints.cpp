@@ -6,7 +6,6 @@ Endpoints::Endpoints():Component(ComponentType::C_Endpoints)
 {
 }
 
-
 Endpoints::~Endpoints()
 {
 }
@@ -17,6 +16,7 @@ void Endpoints::Update(float dt)
 
 void Endpoints::Serialize(const json & j)
 {
+	m_sliderName= ParseString(j, "sliderName");
 }
 
 void Endpoints::LateInitialize()

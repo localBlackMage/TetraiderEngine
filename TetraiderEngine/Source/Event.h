@@ -52,9 +52,9 @@ struct StaminaChangeData : public EventData {
 	float mMaxStamina;
 };
 
-struct FPSData : public EventData {
-	FPSData(float fps) : mFPS(fps) {}
-	float mFPS;
+struct FloatData : public EventData {
+	FloatData(float value) : mValue(value) {}
+	float mValue;
 };
 
 struct InputButtonData : public EventData {
