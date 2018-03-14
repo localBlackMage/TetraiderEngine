@@ -10,6 +10,9 @@ REGISTER_STATE(NPC_State_WalkTowardPlayerEngage)
 REGISTER_STATE(NPC_State_DashingAttack)
 REGISTER_STATE(NPC_State_DashingEngage)
 REGISTER_STATE(NPC_State_DashingStunned)
+REGISTER_STATE(NPC_State_HitNRunRetreat)
+REGISTER_STATE(NPC_State_HitNRunEngage)
+
 
 
 // Add Some Other Controller States Below...

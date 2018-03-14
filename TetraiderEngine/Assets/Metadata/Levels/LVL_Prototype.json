@@ -129,11 +129,19 @@
 			"z": 0
 		}
 	},
+  {
+      "prefab": "P_EnemyHitNRun",
+      "position": {
+        "x": 290,
+        "y": -150,
+        "z": 0
+      }
+    },
 	{
       "prefab": "P_EnemyBat",
       "position": {
         "x": 590,
-        "y": -150,
+        "y": -50,
         "z": 0
       }
     },

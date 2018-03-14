@@ -35,11 +35,13 @@ public:
 	void ChangeState(NPC_CONTROLLER_AI);
 	void MoveToPlayer();
 	void GoToPositionAroundPlayer();
+	void MoveAwayFromPlayer(float dist);
 	void GoToStartingPoint();
 	bool UseAttack(int attack);
 	bool IsArrivedAtDestination();
 	bool IsPlayerInSight();
 	bool IsPlayerOutOfSight();
+	bool IsPlayerTooClose(float distance);
 	bool IsInAttackRange();
 	bool IsTooFarFromStartingPoint();
 	void PlayAnimation(int animation);

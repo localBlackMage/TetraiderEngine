@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
+    <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
     <ClCompile Include="Source\Canvas.cpp" />
     <ClCompile Include="Source\AI_DashingAttack.cpp" />
     <ClCompile Include="Source\AI_DashingEngage.cpp" />
@@ -147,6 +149,8 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI_HitNRunEngage.h" />
+    <ClInclude Include="Source\AI_HitNRunRetreat.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />
     <ClInclude Include="Source\Canvas.h" />
     <ClInclude Include="Source\AI_DashingAttack.h" />

@@ -1,0 +1,156 @@
+{
+  "Tag": "Enemy",
+  "Layer": "2",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 110,
+        "y": 110,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 118,
+			"acceleration": 8,
+			"knockBackMultiplier": 1
+		},
+		"detectionRadius": 600,
+		"outOfSightRadius": 800,
+		"zoneWidth": 350,
+		"zoneHeight": 320,
+		"attackRange": 700,
+		"AIStates": [
+			{
+				"name": "idleBehavior",
+				"behaviorIndex": 0,
+				"AIStateType": "NPC_State_Idle"
+			},
+			{	"name": "engageBehavior",
+				"behaviorIndex": 1,
+				"AIStateType": "NPC_State_HitNRunEngage"
+			},
+			{	"name": "attackBehavior",
+				"behaviorIndex": 2,				
+				"AIStateType": "NPC_State_Attack"
+			},
+			{	"name": "retreatBehavior",
+				"behaviorIndex": 3,
+				"AIStateType": "NPC_State_HitNRunRetreat"
+			},
+			{	"name": "moveToRandomPointInZoneBehavior",
+				"behaviorIndex": 4,
+				"AIStateType": "NPC_State_MoveToRandomPointInZone"
+			}
+		]
+	},
+    {
+      "Component": "Sprite",
+      "Texture": "T_RedBat.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "lit": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 2,
+			"animationSpeed": 4,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 2,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 40
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 30,
+		"maxHealth": 30,
+		"isInvincible": false
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
+		}
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Ranged",
+				"coolDown": 0.6,
+				"baseDamage": 3,
+				"projectileSpeed": 600,
+				"ammo": 0,
+				"isUnlimitedAmmo": true,
+				"instantiationOffset": 50,
+				"lifeTime": 1.5,
+				"projectilePrefab": "P_testProjectile",
+				"knockBackSpeed": 300
+			}
+		],
+		"rotationOffset": 0
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"prefab": "P_EggPickUp"
+	}
+  ]
+}

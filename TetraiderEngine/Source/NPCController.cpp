@@ -174,6 +174,15 @@ bool NPCController::IsPlayerOutOfSight() {
 	else return true;
 }
 
+bool NPCController::IsPlayerTooClose(float distance) {
+	if (m_isPlayerDead)
+		return false;
+	if (GetSquareDistanceToPlayer() < distance*distance) {
+		return true;
+	}
+	else return false;
+}
+
 void NPCController::StopMoving() {
 	m_targetDestination = m_pTransform->GetPosition();
 	m_isAvoidingObstacle = false;
@@ -255,6 +264,20 @@ void NPCController::GoToPositionAroundPlayer() {
 	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
 	float magnitude = RandomFloat(100, sqrtf(GetSquareDistanceToPlayer()));
 	SetTargetDestination(dir*magnitude + m_pTransform->GetPosition());
+}
+
+void NPCController::MoveAwayFromPlayer(float dist) {
+	if (m_isPlayerDead)
+		SetTargetDestination(m_pTransform->GetPosition());
+
+	float angleOffset = RandomFloat(-45,45);
+
+	float angle = m_lookDirection.AngleDegrees() + angleOffset;
+	if (angle > 180.0f)	angle -= 360;
+	else if (angle < -180) angle += 360;
+
+	Vector3D dir = -1 * Vector3D::VectorFromAngleDegrees(angle);
+	SetTargetDestination(dir*dist + m_pTransform->GetPosition());
 }
 
 bool NPCController::UseAttack(int attack) {
