@@ -57,6 +57,7 @@ void Agent::Serialize(const json& j) {
 	m_speed = ParseFloat(j, "speed");
 	m_acceleration = ParseFloat(j, "acceleration");
 	m_knockBackMultiplier = ParseFloat(j, "knockBackMultiplier");
+	//m_isIgnoreHazards = ParseBool(j, "isIgnoreHazards");
 }
 
 void Agent::HandleEvent(Event* pEvent) {
