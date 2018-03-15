@@ -14,12 +14,13 @@ private:
 
 public:
 	FrameBufferObject(GLsizei width, GLsizei height, GLint iFormat, GLenum format, GLenum type);
-	~FrameBufferObject() {}
+	~FrameBufferObject();
 
-	GLuint ID() const { return m_id; }
-	GLuint Texture() const { return m_buffer; }
-
-	void Initialize();
+	inline GLuint ID() const { return m_id; }
+	inline GLuint Texture() const { return m_buffer; }
+	inline GLsizei Width() const { return m_width; }
+	inline GLsizei Height() const { return m_height; }
+	inline GLuint Buffer() const { return m_buffer; }
 };
 
 #endif

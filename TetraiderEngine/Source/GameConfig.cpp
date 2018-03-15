@@ -63,6 +63,7 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
 	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(gameSettings, "globalAmbient"));
 	TETRA_POST_PROCESSING.SetGBShaders(ParseString(j, "gbV"), ParseString(j, "gbH"));
+	TETRA_POST_PROCESSING.InitFBOs();
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }

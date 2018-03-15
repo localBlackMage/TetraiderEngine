@@ -252,30 +252,75 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	// Render all layers but UI
-	for (unsigned int layer = 0; layer < RENDER_LAYER::L_UI; ++layer) {
-		for (GameObject* cameraGO : m_pCameras) {
-			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-			if (cameraComp->ShouldRenderLayer(layer))
-				m_layers[layer].RenderLayer(cameraGO);
-		}
-	}
+	//TETRA_RENDERER.SaveViewport();
+	//TETRA_POST_PROCESSING.BindBaseFBO();
+	//TETRA_RENDERER.ClearBuffer();
 
-	for (GameObject* cameraGO : m_pCameras) {
-		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
-			TETRA_DEBUG.RenderDebugCommands(cameraGO);
-			break;
-		}
-	}
+	//// Render all layers but UI
+	//_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
 
-	// Render UI
-	for (unsigned int layer = L_UI; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
-		for (GameObject* cameraGO : m_pCameras) {
-			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-			if (cameraComp->ShouldRenderLayer(layer))
-				m_layers[layer].RenderLayer(cameraGO);
-		}
-	}
+	//for (GameObject* cameraGO : m_pCameras) {
+	//	if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
+	//		TETRA_DEBUG.RenderDebugCommands(cameraGO);
+	//		break;
+	//	}
+	//}
+	TETRA_DEBUG.RenderDebugCommands(nullptr);
+	//// Render UI
+	//_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+
+
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, 1280, 720);
+	glClearColor(0.2f, 0.2f, 0.2f, 1);
+	glClearDepth(1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+	TETRA_RENDERER.SelectShaderProgram("fboRenderer");
+	glUseProgram(TETRA_RENDERER.m_pCurrentProgram->GetProgram());
+	//TETRA_RENDERER.RestoreViewport();
+	//TETRA_RENDERER.ClearBuffer();
+
+	glEnable(GL_CULL_FACE);
+	glDrawBuffer(GL_FRONT_AND_BACK);
+	glCullFace(GL_BACK);
+
+
+
+
+	TETRA_RENDERER._BindMesh(TETRA_POST_PROCESSING.GetMesh());
+
+	Matrix4x4 M = Matrix4x4::Translate(Vector3D(0, 0, -1)) * Matrix4x4::Scale(1280.f, 720.f, 1.f);
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+
+
+	Camera* pCameraComp = m_pPrimaryCamera->GetComponent<Camera>(C_Camera);
+	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)pCameraComp->GetCameraMatrix());
+	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)pCameraComp->GetViewMatrix());
+
+
+	//glDisable(GL_DEPTH_TEST);
+	//glEnable(GL_ALPHA_TEST);
+	//glAlphaFunc(GL_GREATER, 0.01f);
+	//glEnable(GL_BLEND);
+	//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDisable(GL_ALPHA_TEST);
+	glEnable(GL_DEPTH_TEST);
+
+	// select the texture to use
+	//glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_Sand.png")->bufferId);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, TETRA_POST_PROCESSING.GetMesh().GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * TETRA_POST_PROCESSING.GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 void GameObjectManager::AddGameObject(GameObject* pGO) {
@@ -428,6 +473,17 @@ void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
 	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
 		if (pLightComp->GetLayer(i))
 			m_layers[i].AddLightToLayer(pGO);
+	}
+}
+
+void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigned int endLayer)
+{
+	for (unsigned int layer = startLayer; layer < endLayer; ++layer) {
+		for (GameObject* cameraGO : m_pCameras) {
+			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
+			if (cameraComp->ShouldRenderLayer(layer))
+				m_layers[layer].RenderLayer(cameraGO);
+		}
 	}
 }
 

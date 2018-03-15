@@ -56,6 +56,7 @@ class RenderManager : public Subscriber
 private:
 	friend class DebugManager;
 	friend class PostProcessing;
+	friend class GameObjectManager;
 
 	float m_la, m_lb;		// light falloff numbers
 	bool m_lights;			// whether or not lights should be rendered
@@ -65,6 +66,8 @@ private:
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
 	bool m_cursorEnabled;
+
+	int m_viewportSave[4];
 
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
@@ -114,7 +117,7 @@ public:
 	void SetUpConsole();
 	void InitWindow(bool debugEnabled);
 	void EnableWindowsCursor();
-	void DisableWindowsCursor();
+	void DisableWindowsCursor(); 
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
 	void SetWindowDimensions(int width, int height);
@@ -126,8 +129,12 @@ public:
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
+	void ClearBuffer();
+	void SaveViewport();
+	void RestoreViewport();
 	GLuint GenerateStreamingVBO(unsigned int size);
 	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
+	void BindFBO(const FrameBufferObject& fbo);
 
 	template <typename BufferType>
 	void BindBufferData(const GLuint& bufferID, BufferType& bufferData, unsigned int size)
@@ -136,7 +143,6 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STREAM_DRAW); // Buffer orphaning
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, bufferData);
 	}
-
 
 	void LoadShaders(const std::vector<std::string>& shaders);
 	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }

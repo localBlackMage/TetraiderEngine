@@ -1,0 +1,6 @@
+{
+	"glowShader": {
+		"vertex": "glowShader.vert",
+		"fragment": "glowShader.frag"
+	}
+}

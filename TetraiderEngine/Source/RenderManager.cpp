@@ -437,6 +437,14 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
 }
 
+void RenderManager::ClearBuffer()
+{
+	// clear frame buffer and z-buffer
+	glClearColor(0.2f, 0.2f, 0.2f, 1);
+	glClearDepth(1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 #pragma endregion
 
 #pragma endregion
@@ -454,11 +462,7 @@ bool RenderManager::InitGlew()
 
 void RenderManager::FrameStart()
 {
-	// clear frame buffer and z-buffer
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClearDepth(1);
-	glClear(GL_DEPTH_BUFFER_BIT);
+	ClearBuffer();
 }
 
 void RenderManager::FrameEnd()
@@ -644,6 +648,17 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 	}
 }
 
+void RenderManager::SaveViewport()
+{
+	m_viewportSave[4];
+	glGetIntegerv(GL_VIEWPORT, m_viewportSave);
+}
+
+void RenderManager::RestoreViewport()
+{
+	glViewport(m_viewportSave[0], m_viewportSave[1], m_viewportSave[2], m_viewportSave[3]);
+}
+
 GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 {
 	GLuint bufferId;
@@ -667,6 +682,14 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	return fboTexBuffer;
+}
+
+void RenderManager::BindFBO(const FrameBufferObject & fbo)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
+	m_viewportSave[4];
+	glGetIntegerv(GL_VIEWPORT, m_viewportSave);
+	glViewport(0, 0, fbo.Width(), fbo.Height());
 }
 
 #pragma region Shaders

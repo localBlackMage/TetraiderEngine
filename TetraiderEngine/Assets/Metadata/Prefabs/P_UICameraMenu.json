@@ -19,7 +19,7 @@
       "fov": 105,
 	  "perspective": false,
 	  "zoom": 1,
-	  "primary": false,
+	  "primary": true,
 	  "layers": ["UIBG", "UI", "UI_1", "UI_2", "DEBUG"]
     }
   ]

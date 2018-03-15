@@ -61,6 +61,7 @@ private:
 
 	void _InsertGameObjectIntoList(GameObject* pGO);
 	void _InsertLightIntoLayers(GameObject* pGO);
+	void _RenderGameObjectLayers(unsigned int startLayer, unsigned int endLayer);
 	GameObject* m_pPlayerReference;
 public:
 	GameObjectManager();
