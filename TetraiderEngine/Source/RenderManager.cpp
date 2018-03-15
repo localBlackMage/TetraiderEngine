@@ -221,6 +221,7 @@ void RenderManager::_SetUpDebug(const GameObject& camera)
 	SelectShaderProgram(m_debugShaderName);
 	_SetUpCamera(camera);
 	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	//_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetMesh("quad")->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 }
 
 void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)
@@ -250,8 +251,8 @@ void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, co
 
 	// square base matrix
 	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, ZAXIS);
-	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, ZAXIS) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
-	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 0.f);
+	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, ZAXIS) * Matrix4x4::Scale(scale.y, 0.f, 1.f);
+	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 1.f);
 
 	Matrix4x4 Left = Base
 		* Matrix4x4::Translate(Vector3D(-halfWidth, 0, 0))
@@ -437,10 +438,10 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
 }
 
-void RenderManager::ClearBuffer()
+void RenderManager::ClearBuffer(const Vector3D& color)
 {
 	// clear frame buffer and z-buffer
-	glClearColor(0.2f, 0.2f, 0.2f, 1);
+	glClearColor(color.x, color.y, color.z, color.w);
 	glClearDepth(1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -460,10 +461,7 @@ bool RenderManager::InitGlew()
 	return true;
 }
 
-void RenderManager::FrameStart()
-{
-	ClearBuffer();
-}
+void RenderManager::FrameStart(){}
 
 void RenderManager::FrameEnd()
 {
@@ -504,6 +502,12 @@ void RenderManager::HandleEvent(Event * p_event)
 			}
 			break;
 		}
+		case EVENT_TOGGLE_POST_PROCESSING:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased)
+				TETRA_POST_PROCESSING.Toggle();
+		}
 	}
 }
 
@@ -539,6 +543,7 @@ void RenderManager::InitWindow(bool debugEnabled)
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_POST_PROCESSING, this);
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -677,9 +682,12 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 	glGenTextures(1, &fboTexBuffer);
 	glBindTexture(GL_TEXTURE_2D, fboTexBuffer);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, 0);
+	//glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2048, 2048, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexBuffer, 0);
 
 	return fboTexBuffer;
 }
@@ -687,9 +695,61 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 void RenderManager::BindFBO(const FrameBufferObject & fbo)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
-	m_viewportSave[4];
-	glGetIntegerv(GL_VIEWPORT, m_viewportSave);
 	glViewport(0, 0, fbo.Width(), fbo.Height());
+}
+
+void RenderManager::BindMainFrameBuffer()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(
+		m_viewportSave[0], m_viewportSave[1],
+		m_viewportSave[2], m_viewportSave[3]
+	);
+	ClearBuffer();
+}
+
+void RenderManager::BeginPostProcessingDraw()
+{
+	SaveViewport();
+	TETRA_POST_PROCESSING.BindBaseFBO();
+	ClearBuffer();
+}
+
+void RenderManager::DrawSceneFBO()
+{
+	TETRA_RENDERER.BindMainFrameBuffer();
+
+	// TODO: Unhardcode this
+	TETRA_RENDERER.SelectShaderProgram("fboRenderer");
+	glUseProgram(TETRA_RENDERER.m_pCurrentProgram->GetProgram());
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glDrawBuffer(GL_FRONT_AND_BACK);
+	//glCullFace(GL_BACK);
+
+	TETRA_RENDERER._BindMesh(TETRA_POST_PROCESSING.GetMesh());
+
+	_EnableAlphaTest();
+
+	// Bind PostProcessing's base FBO and render it
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
+	glUniform1i(0, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_Sand.png")->bufferId);
+	glUniform1i(1, 1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, TETRA_POST_PROCESSING.GetMesh().GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * TETRA_POST_PROCESSING.GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 #pragma region Shaders

@@ -1,4 +1,3 @@
-//#include "DebugLineMesh.h"
 #include <Stdafx.h>
 
 DebugLineMesh::DebugLineMesh(float p1x, float p1y, float p1z, float p2x, float p2y, float p2z) :

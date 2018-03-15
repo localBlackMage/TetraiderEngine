@@ -129,12 +129,15 @@ public:
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
-	void ClearBuffer();
+	void ClearBuffer(const Vector3D& color = Vector3D(.2f, .2f, .2f, 1.f));
 	void SaveViewport();
 	void RestoreViewport();
 	GLuint GenerateStreamingVBO(unsigned int size);
 	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
 	void BindFBO(const FrameBufferObject& fbo);
+	void BindMainFrameBuffer();
+	void BeginPostProcessingDraw();
+	void DrawSceneFBO();
 
 	template <typename BufferType>
 	void BindBufferData(const GLuint& bufferID, BufferType& bufferData, unsigned int size)

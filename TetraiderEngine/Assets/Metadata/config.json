@@ -17,12 +17,13 @@
 		"gbV": "gaussianBlurVertical",
 		"gbH": "gaussianBlurHorizontal",
 		"consoleEnabled": true,
-		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 }
+		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
+		"postProcessingEnabled": true
 	},
 	"SHADERS": [
 		"fboRenderer",
 		"glowShader",
-		"defaultShader",
+		"default",
 		"gaussianBlur",
 		"lineShader",
 		"particleShader"
@@ -190,8 +191,17 @@
 			"XboxKey": 0
 		},
 		{
-			"Name": "ExitLevel",
+			"Name": "TOGGLE_POST_PROCESSING",
 			"EventType": 16,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 64,
+			"XboxKey": 0
+		},
+		{
+			"Name": "ExitLevel",
+			"EventType": 17,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

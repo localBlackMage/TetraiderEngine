@@ -11,6 +11,8 @@ private:
 	FrameBufferObject* m_pBaseFBO;
 	FrameBufferObject* m_pGausFBO;
 
+	bool m_enabled;
+
 public:
 	PostProcessing();
 	~PostProcessing();
@@ -25,11 +27,17 @@ public:
 		m_gbHShader = gbHShader;
 	}
 
+	bool Enabled() const { return m_enabled; }
+	inline void Enable() { m_enabled = true; }
+	inline void Disable() { m_enabled = false; }
+	inline void Toggle() { m_enabled = !m_enabled; };
 	void InitFBOs();
 	void BindBaseFBO();
 	void BindGuasFBO();
 
 	GLuint GetBaseFBOTexture() const { return m_pBaseFBO->Buffer(); }
+
+	FrameBufferObject* BaseFBO() const { return m_pBaseFBO; }
 };
 
 #endif

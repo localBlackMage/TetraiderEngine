@@ -1,8 +1,3 @@
-//#include "Transform.h"
-//#include "Body.h"
-//#include "GameObject.h"
-//#include <iostream>
-
 #include <Stdafx.h>
 
 #pragma region Private Methods

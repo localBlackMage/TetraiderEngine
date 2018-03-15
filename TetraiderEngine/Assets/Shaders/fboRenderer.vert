@@ -5,16 +5,19 @@ layout(location = 0) in vec4 position;
 layout(location = 2) in vec2 texture_coord;
 
 // UNIFORM INPUTS
-layout(location = 10) uniform mat4 persp_matrix;
-layout(location = 11) uniform mat4 view_matrix;
-layout(location = 12) uniform mat4 model_matrix;
-layout(location = 14) uniform vec4 camera_position;
 
 // OUTPUTS
 layout(location = 2) out vec2 vtexture_coord;
 
+// Incoming Mesh will always be a quad from -0.5 to 0.5
+mat4 modelMatrix = mat4(
+	2, 0, 0, 0,
+	0, -2, 0, 0,
+	0, 0, 1, 0,
+	0, 0, 0, 1
+);
+
 void main() {
-	vec4 P = model_matrix * position;
-	gl_Position = persp_matrix * view_matrix * P;
+	gl_Position = modelMatrix * position;
 	vtexture_coord = texture_coord;
 }

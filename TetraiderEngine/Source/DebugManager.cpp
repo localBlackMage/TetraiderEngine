@@ -134,11 +134,11 @@ void DebugManager::ClearDebugCommands()
 
 void DebugManager::RenderDebugCommands(GameObject* pCamera)
 {
-	//TETRA_RENDERER._SetUpDebug(*pCamera);
+	TETRA_RENDERER._SetUpDebug(*pCamera);
 
 	int maxIndex = debugCommandCount;
 	for (int i = 0; i < maxIndex; ++i) {
-		//TETRA_RENDERER._RenderDebugCommand(m_debugCommands[i].shape, m_debugCommands[i].color, m_debugCommands[i].pos, m_debugCommands[i].rot, m_debugCommands[i].scale);
+		TETRA_RENDERER._RenderDebugCommand(m_debugCommands[i].shape, m_debugCommands[i].color, m_debugCommands[i].pos, m_debugCommands[i].rot, m_debugCommands[i].scale);
 		m_debugCommands[i].active = false;
 		--debugCommandCount;
 	}

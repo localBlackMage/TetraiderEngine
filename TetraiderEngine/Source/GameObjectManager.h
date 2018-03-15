@@ -47,7 +47,8 @@ private:
 
 	GameObjectLayer m_layers[RENDER_LAYER::L_NUM_LAYERS];
 	std::vector<GameObject*> mGameObjects;
-	
+	GameObject* m_pPlayerReference;
+
 	void SetGameObjectTag(std::string tag, GameObject* pGO);
 	void SetGameObjectTag(GameObjectTag tag, GameObject* pGO);
 	void SetGameObjectLayer(std::string layer, GameObject* pGO);
@@ -62,7 +63,8 @@ private:
 	void _InsertGameObjectIntoList(GameObject* pGO);
 	void _InsertLightIntoLayers(GameObject* pGO);
 	void _RenderGameObjectLayers(unsigned int startLayer, unsigned int endLayer);
-	GameObject* m_pPlayerReference;
+	void _RenderWithPostProcessing();
+	void _RenderWithoutPostProcessing();
 public:
 	GameObjectManager();
 	~GameObjectManager();
