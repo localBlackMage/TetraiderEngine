@@ -14,9 +14,8 @@
 		
 		"enableWindowsCursor": false,
 		"debugShader": "lineShader",
-		"fbo": "fboRenderer",
-		"gbV": "gaussianBlurVertical",
-		"gbH": "gaussianBlurHorizontal",
+		"fboShader": "fboRenderer",
+		"gaussianShader": "gaussianBlur",
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": true

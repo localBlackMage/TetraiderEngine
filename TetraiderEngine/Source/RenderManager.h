@@ -142,7 +142,8 @@ public:
 	GLuint GenerateStreamingVBO(unsigned int size);
 	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
 	void BindFBO(const FrameBufferObject& fbo);
-	void BindMainFrameBuffer();
+	void BindAndClearFBO(const FrameBufferObject& fbo);
+	void BindWindowFrameBuffer();
 	void BeginPostProcessingDraw();
 	void DrawSceneFBO();
 

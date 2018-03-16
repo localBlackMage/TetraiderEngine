@@ -230,7 +230,8 @@ void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigne
 
 void GameObjectManager::_RenderWithPostProcessing()
 {
-	TETRA_RENDERER.BeginPostProcessingDraw();
+	TETRA_POST_PROCESSING.ClearBaseFBO();
+	TETRA_POST_PROCESSING.BindBaseFBO();
 
 	#pragma region RENDER_GLOWING_OBJECTS
 	// Render all layers but UI
@@ -247,6 +248,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
 	#pragma endregion
 
+	TETRA_POST_PROCESSING.DoPostProcessing();
 	TETRA_RENDERER.DrawSceneFBO();
 }
 
@@ -321,7 +323,7 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	if (TETRA_POST_PROCESSING.Enabled())
+	if (TETRA_POST_PROCESSING.IsEnabled())
 		_RenderWithPostProcessing();
 	else
 		_RenderWithoutPostProcessing();

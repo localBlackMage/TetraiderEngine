@@ -401,11 +401,11 @@
     <ClCompile Include="Source\FrameBufferObject.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_BomberAttack.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClCompile Include="Source\AI_HitNRunAttack.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_BomberRetreat.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClCompile Include="Source\ImageRenderer.cpp">
+      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -795,11 +795,9 @@
     <ClInclude Include="Source\FrameBufferObject.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_BomberAttack.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_BomberRetreat.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClInclude Include="Source\AI_HitNRunAttack.h" />
+    <ClInclude Include="Source\ImageRenderer.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -469,7 +469,8 @@ bool RenderManager::InitGlew()
 void RenderManager::FrameStart() 
 {
 	SaveViewport();
-	BindMainFrameBuffer();
+	BindWindowFrameBuffer();
+	ClearBuffer(Vector3D());
 }
 
 void RenderManager::FrameEnd()
@@ -703,36 +704,41 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 	return fboTexBuffer;
 }
 
-void RenderManager::BindFBO(const FrameBufferObject & fbo)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
-	glViewport(0, 0, fbo.Width(), fbo.Height());
-}
+//void RenderManager::BindFBO(const FrameBufferObject & fbo)
+//{
+//	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
+//	glViewport(0, 0, fbo.Width(), fbo.Height());
+//}
+//
+//void RenderManager::BindAndClearFBO(const FrameBufferObject & fbo)
+//{
+//	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
+//	glViewport(0, 0, fbo.Width(), fbo.Height());
+//	ClearBuffer(Vector3D(0, 0, 0, 1));
+//}
 
-void RenderManager::BindMainFrameBuffer()
+void RenderManager::BindWindowFrameBuffer()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(
-		m_viewportSave[0], m_viewportSave[1],
-		m_viewportSave[2], m_viewportSave[3]
-	);
-	ClearBuffer();
-}
-
-void RenderManager::BeginPostProcessingDraw()
-{
-	SaveViewport();
-	BindFBO(*TETRA_POST_PROCESSING.BaseFBO());
-	ClearBuffer(Vector3D(0,0,0,1));
+	glViewport(0, 0, m_width, m_height);
 }
 
 void RenderManager::DrawSceneFBO()
 {
-	BindMainFrameBuffer();
 
-	SelectShaderProgram("fboRenderer");
-	GLint id = m_pCurrentProgram->GetProgramID();
-	glUseProgram(m_pCurrentProgram->GetProgramID());
+
+
+
+
+
+
+
+#pragma region FINAL_STEP
+	
+	//BindMainFrameBuffer();
+	ClearBuffer();
+
+	TETRA_POST_PROCESSING.EnableFBOShader();
 	Mesh& mesh = TETRA_POST_PROCESSING.GetMesh();
 	_BindMesh(mesh);
 
@@ -740,17 +746,18 @@ void RenderManager::DrawSceneFBO()
 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
+	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->m_frameBuffer);
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
+	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->m_frameBuffer);
 	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
-	
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * mesh.faceCount(), GL_UNSIGNED_INT, 0);
+
+#pragma endregion
 }
 
 #pragma region Shaders
