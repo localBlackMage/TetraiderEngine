@@ -58,7 +58,9 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 		_EnableDepthTest();
 
 	// select the texture to use
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 	GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
@@ -89,7 +91,9 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 	else
 		_EnableDepthTest();
 
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pParticleEmitterComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 3 * pParticleEmitterComp->GetMesh().faceCount(), pParticleEmitterComp->LiveParticles());
 }
@@ -110,7 +114,9 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 		_EnableDepthTest();
 
 	// select the texture to use
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pTextComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 
 	std::vector< std::vector<TexCoords> > textureOffsets = pTextComp->GetTextureOffsets();
@@ -444,9 +450,8 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 
 void RenderManager::ClearBuffer(const Vector3D& color)
 {
-	// clear frame buffer and z-buffer
+	// clear frame and depth buffers
 	glClearColor(color.x, color.y, color.z, color.w);
-	glClearDepth(1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -461,7 +466,11 @@ bool RenderManager::InitGlew()
 	return true;
 }
 
-void RenderManager::FrameStart() {}
+void RenderManager::FrameStart() 
+{
+	SaveViewport();
+	BindMainFrameBuffer();
+}
 
 void RenderManager::FrameEnd()
 {
@@ -682,10 +691,11 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 	glGenTextures(1, &fboTexBuffer);
 	glBindTexture(GL_TEXTURE_2D, fboTexBuffer);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-	//glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2048, 2048, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexBuffer, 0);
 
@@ -713,39 +723,34 @@ void RenderManager::BeginPostProcessingDraw()
 {
 	SaveViewport();
 	BindFBO(*TETRA_POST_PROCESSING.BaseFBO());
-	ClearBuffer();
+	ClearBuffer(Vector3D(0,0,0,1));
 }
 
 void RenderManager::DrawSceneFBO()
 {
-	TETRA_RENDERER.BindMainFrameBuffer();
+	BindMainFrameBuffer();
 
-	// TODO: Unhardcode this
-	TETRA_RENDERER.SelectShaderProgram("fboRenderer");
-	glUseProgram(TETRA_RENDERER.m_pCurrentProgram->GetProgramID());
-
-	TETRA_RENDERER._BindMesh(TETRA_POST_PROCESSING.GetMesh());
+	SelectShaderProgram("fboRenderer");
+	GLint id = m_pCurrentProgram->GetProgramID();
+	glUseProgram(m_pCurrentProgram->GetProgramID());
+	Mesh& mesh = TETRA_POST_PROCESSING.GetMesh();
+	_BindMesh(mesh);
 
 	_EnableAlphaTest();
 
 	// Bind PostProcessing's base FBO and render it
-	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
-	glUniform1i(glGetUniformLocation(m_pCurrentProgram->GetProgramID(), "fboTexture"), 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_Sand.png")->bufferId);
-	//glUniform1i(glGetUniformLocation(m_pCurrentProgram->GetProgramID(), "otherTexture"), 1);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
+	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+	
 
 	// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, TETRA_POST_PROCESSING.GetMesh().GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * TETRA_POST_PROCESSING.GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * mesh.faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 #pragma region Shaders

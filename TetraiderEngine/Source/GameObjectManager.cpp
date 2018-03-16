@@ -231,8 +231,8 @@ void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigne
 void GameObjectManager::_RenderWithPostProcessing()
 {
 	TETRA_RENDERER.BeginPostProcessingDraw();
-	#pragma region RENDER_GLOWING_OBJECTS
 
+	#pragma region RENDER_GLOWING_OBJECTS
 	// Render all layers but UI
 	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
 
@@ -245,16 +245,13 @@ void GameObjectManager::_RenderWithPostProcessing()
 	
 	// Render UI
 	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
-
-
 	#pragma endregion
+
 	TETRA_RENDERER.DrawSceneFBO();
 }
 
 void GameObjectManager::_RenderWithoutPostProcessing()
 {
-	TETRA_RENDERER.ClearBuffer();
-
 	// Render all layers but UI
 	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
 

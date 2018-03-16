@@ -14,6 +14,7 @@
 		
 		"enableWindowsCursor": false,
 		"debugShader": "lineShader",
+		"fbo": "fboRenderer",
 		"gbV": "gaussianBlurVertical",
 		"gbH": "gaussianBlurHorizontal",
 		"consoleEnabled": true,

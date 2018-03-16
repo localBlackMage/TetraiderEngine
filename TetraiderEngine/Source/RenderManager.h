@@ -15,6 +15,13 @@ Creation date: 1/17/18
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
+enum TEXTURE_LOCATIONS {
+	FIRST = 0,
+	SECOND = 1,
+	THIRD = 2,
+	FOURTH = 3
+};
+
 enum SHADER_LOCATIONS {
 	POSITION = 0,		// 0
 	NORMAL,				// 1

@@ -16,7 +16,7 @@ Shader::Shader(std::string shaderText, SHADER_TYPE type) :
 	glShaderSource(m_shaderID, 1, &text, 0);
 	glCompileShader(m_shaderID);
 	glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &result);
-	if (!result) {
+	if (result != GL_TRUE) {
 		std::cerr << (type == VERTEX_SHADER ? "Vertex" : "Fragment") << " shader failed to compile." << std::endl;
 		char buffer[1024];
 		glGetShaderInfoLog(m_shaderID, 1024, 0, buffer);
@@ -73,6 +73,8 @@ void Shader::LoadShaderFromFile(std::string shaderFilePath, SHADER_TYPE type)
 		glGetShaderInfoLog(m_shaderID, InfoLogLength, NULL, &ShaderErrorMessage[0]);
 		std::cout << &ShaderErrorMessage[0] << std::endl;
 	}
+	if (Result != GL_TRUE)
+		std::cout << "SHADER LOADING FAILED : " << m_shaderID << std::endl;
 }
 
 

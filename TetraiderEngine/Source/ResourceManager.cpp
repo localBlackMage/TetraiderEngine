@@ -58,12 +58,12 @@ GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurfac
 	glGenTextures(1, &textureBufferID);
 	glBindTexture(GL_TEXTURE_2D, textureBufferID);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, alphaMode,
 		sdlSurface->w, sdlSurface->h, 0,
 		alphaMode,
 		GL_UNSIGNED_BYTE, sdlSurface->pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);

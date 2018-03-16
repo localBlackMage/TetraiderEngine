@@ -62,6 +62,7 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
 	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
 	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(gameSettings, "globalAmbient"));
+	TETRA_POST_PROCESSING.SetFBOShader(ParseString(j, "fbo"));
 	TETRA_POST_PROCESSING.SetGBShaders(ParseString(j, "gbV"), ParseString(j, "gbH"));
 	TETRA_POST_PROCESSING.InitFBOs();
 	m_postProcessingEnabled = ParseBool(gameSettings, "postProcessingEnabled");
