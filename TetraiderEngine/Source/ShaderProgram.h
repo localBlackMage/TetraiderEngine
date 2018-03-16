@@ -31,8 +31,8 @@ public:
 	ShaderProgram();
 	~ShaderProgram();
 
-	GLint GetProgram() const;
-	GLint& GetProgramRef();
+	GLint GetProgramID() const;
+	GLint& GetProgramIDRef();
 
 	bool operator==(const ShaderProgram& rhs) const;
 	bool operator!=(const ShaderProgram& rhs) const;

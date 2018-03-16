@@ -23,12 +23,12 @@ ShaderProgram::~ShaderProgram()
 	}
 }
 
-GLint ShaderProgram::GetProgram() const
+GLint ShaderProgram::GetProgramID() const
 {
 	return m_programID;
 }
 
-GLint & ShaderProgram::GetProgramRef()
+GLint & ShaderProgram::GetProgramIDRef()
 {
 	return m_programID;
 }

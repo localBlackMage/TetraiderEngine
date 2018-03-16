@@ -18,6 +18,6 @@ mat4 modelMatrix = mat4(
 );
 
 void main() {
-	gl_Position = modelMatrix * position;
+	gl_Position = modelMatrix * position;	
 	vtexture_coord = texture_coord;
 }

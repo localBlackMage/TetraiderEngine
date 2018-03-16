@@ -199,6 +199,78 @@ void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
 
 #pragma region GameObjectManager
 
+#pragma region Private Methods
+void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
+	mGameObjects.push_back(pGO);
+
+	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
+		m_layers[pGO->GetLayer()].AddToLayer(pGO);
+}
+
+void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
+{
+	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
+
+	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
+		if (pLightComp->GetLayer(i))
+			m_layers[i].AddLightToLayer(pGO);
+	}
+}
+
+void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigned int endLayer)
+{
+	for (unsigned int layer = startLayer; layer < endLayer; ++layer) {
+		for (GameObject* cameraGO : m_pCameras) {
+			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
+			if (cameraComp->ShouldRenderLayer(layer))
+				m_layers[layer].RenderLayer(cameraGO);
+		}
+	}
+}
+
+void GameObjectManager::_RenderWithPostProcessing()
+{
+	TETRA_RENDERER.BeginPostProcessingDraw();
+	#pragma region RENDER_GLOWING_OBJECTS
+
+	// Render all layers but UI
+	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
+
+	for (GameObject* cameraGO : m_pCameras) {
+		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
+			TETRA_DEBUG.RenderDebugCommands(cameraGO);
+			break;
+		}
+	}
+	
+	// Render UI
+	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+
+
+	#pragma endregion
+	TETRA_RENDERER.DrawSceneFBO();
+}
+
+void GameObjectManager::_RenderWithoutPostProcessing()
+{
+	TETRA_RENDERER.ClearBuffer();
+
+	// Render all layers but UI
+	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
+
+	for (GameObject* cameraGO : m_pCameras) {
+		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
+			TETRA_DEBUG.RenderDebugCommands(cameraGO);
+			break;
+		}
+	}
+
+	// Render UI
+	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+}
+
+#pragma endregion
+
 GameObjectManager::GameObjectManager() : m_currentId(0) {}
 
 GameObjectManager::~GameObjectManager() {
@@ -392,75 +464,6 @@ void GameObjectManager::HandleEvent(Event *pEvent) {
 		UpdateStatus();
 		break;
 	}
-}
-
-void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
-	mGameObjects.push_back(pGO);
-
-	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
-		m_layers[pGO->GetLayer()].AddToLayer(pGO);
-}
-
-void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
-{
-	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
-
-	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
-		if (pLightComp->GetLayer(i))
-			m_layers[i].AddLightToLayer(pGO);
-	}
-}
-
-void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigned int endLayer)
-{
-	for (unsigned int layer = startLayer; layer < endLayer; ++layer) {
-		for (GameObject* cameraGO : m_pCameras) {
-			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-			if (cameraComp->ShouldRenderLayer(layer))
-				m_layers[layer].RenderLayer(cameraGO);
-		}
-	}
-}
-
-void GameObjectManager::_RenderWithPostProcessing()
-{
-	TETRA_RENDERER.BeginPostProcessingDraw();
-	// RENDER GLOWING OBJECTS
-
-	// Render all layers but UI
-	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
-
-	for (GameObject* cameraGO : m_pCameras) {
-		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
-			TETRA_DEBUG.RenderDebugCommands(cameraGO);
-			break;
-		}
-	}
-
-	// Render UI
-	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
-
-	// END RENDER GLOWING OBJECTS
-
-	TETRA_RENDERER.DrawSceneFBO();
-}
-
-void GameObjectManager::_RenderWithoutPostProcessing()
-{
-	TETRA_RENDERER.ClearBuffer();
-
-	// Render all layers but UI
-	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
-
-	for (GameObject* cameraGO : m_pCameras) {
-		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
-			TETRA_DEBUG.RenderDebugCommands(cameraGO);
-			break;
-		}
-	}
-
-	// Render UI
-	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
 }
 
 RENDER_LAYER GameObjectManager::GetLayerFromString(std::string layerName) {

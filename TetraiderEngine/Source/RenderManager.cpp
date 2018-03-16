@@ -198,7 +198,7 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 {
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	const Transform * transformComp = camera.GetComponent<Transform>(ComponentType::C_Transform);
-	glUseProgram(m_pCurrentProgram->GetProgram());
+	glUseProgram(m_pCurrentProgram->GetProgramID());
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
 	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
@@ -438,6 +438,10 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
 }
 
+#pragma endregion
+
+#pragma endregion
+
 void RenderManager::ClearBuffer(const Vector3D& color)
 {
 	// clear frame buffer and z-buffer
@@ -445,10 +449,6 @@ void RenderManager::ClearBuffer(const Vector3D& color)
 	glClearDepth(1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-
-#pragma endregion
-
-#pragma endregion
 
 bool RenderManager::InitGlew()
 {
@@ -461,7 +461,7 @@ bool RenderManager::InitGlew()
 	return true;
 }
 
-void RenderManager::FrameStart(){}
+void RenderManager::FrameStart() {}
 
 void RenderManager::FrameEnd()
 {
@@ -552,7 +552,7 @@ void RenderManager::InitWindow(bool debugEnabled)
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL);
+		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 
 	// Initialize PNG loading
@@ -689,6 +689,7 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexBuffer, 0);
 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	return fboTexBuffer;
 }
 
@@ -711,7 +712,7 @@ void RenderManager::BindMainFrameBuffer()
 void RenderManager::BeginPostProcessingDraw()
 {
 	SaveViewport();
-	TETRA_POST_PROCESSING.BindBaseFBO();
+	BindFBO(*TETRA_POST_PROCESSING.BaseFBO());
 	ClearBuffer();
 }
 
@@ -721,12 +722,7 @@ void RenderManager::DrawSceneFBO()
 
 	// TODO: Unhardcode this
 	TETRA_RENDERER.SelectShaderProgram("fboRenderer");
-	glUseProgram(TETRA_RENDERER.m_pCurrentProgram->GetProgram());
-
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	glDrawBuffer(GL_FRONT_AND_BACK);
-	//glCullFace(GL_BACK);
+	glUseProgram(TETRA_RENDERER.m_pCurrentProgram->GetProgramID());
 
 	TETRA_RENDERER._BindMesh(TETRA_POST_PROCESSING.GetMesh());
 
@@ -736,16 +732,16 @@ void RenderManager::DrawSceneFBO()
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.GetBaseFBOTexture());
-	glUniform1i(0, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glUniform1i(glGetUniformLocation(m_pCurrentProgram->GetProgramID(), "fboTexture"), 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+	//glActiveTexture(GL_TEXTURE1);
+	//glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_Sand.png")->bufferId);
+	//glUniform1i(glGetUniformLocation(m_pCurrentProgram->GetProgramID(), "otherTexture"), 1);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_Sand.png")->bufferId);
-	glUniform1i(1, 1);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, TETRA_POST_PROCESSING.GetMesh().GetFaceBuffer());
