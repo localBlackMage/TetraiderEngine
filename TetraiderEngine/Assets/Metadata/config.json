@@ -7,11 +7,13 @@
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
 		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
+		
 		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
 		
 		"isDebugModeEnabled": true,
-		"soundsMute": false,
-		
+		"soundsMute": false
+	},
+	"RENDER_SETTINGS": {
 		"enableWindowsCursor": false,
 		"debugShader": "lineShader",
 		"fboShader": "fboRenderer",
