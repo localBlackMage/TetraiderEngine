@@ -10,7 +10,8 @@
 #define MIN_FRAME_TIME 0.016667f
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
-	m_secondCounter(0.f)
+	m_secondCounter(0.f),
+	m_frameTime(60)
 {
 	if (maxFrameRate == 0) {
 		m_maxFrameRate = UINT16_MAX;
