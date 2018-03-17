@@ -152,19 +152,11 @@
         "y": -100,
         "z": 0
       }
-    },
+  },
   {
-      "prefab": "P_ProjectileBomb",
-      "position": {
-        "x": 200,
-        "y": -100,
-        "z": 0
-      }
-    },
-    {
       "prefab": "P_InGameCursor"
-    },
-    {
+  },
+  {
 	  "prefab": "P_Floor_TEST",
       "position": {
         "x": 0,
