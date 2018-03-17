@@ -75,8 +75,11 @@ void PostProcessing::DoPostProcessing()
 	m_pGaussianHIR->ClearBuffer();
 	m_pGaussianVIR->ClearBuffer();
 
-	m_pGaussianHIR->Render(m_pBaseIR);
-	m_pGaussianVIR->Render(m_pGaussianHIR);
+	m_pGaussianVIR->Render(m_pBaseIR);
+	m_pGaussianHIR->Render(m_pGaussianVIR);
+
+	//m_pBaseIR->ClearBuffer();
+	//m_pBaseIR->Render(m_pGaussianHIR);
 
 	_End();
 }

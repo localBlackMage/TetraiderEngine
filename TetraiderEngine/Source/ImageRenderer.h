@@ -24,7 +24,7 @@ public:
 	void BindFBO();
 	void UnbindFBO();
 
-	void ClearBuffer(const Vector3D& color = Vector3D());
+	void ClearBuffer(const Vector3D& color = Vector3D(0,0,0,0));
 };
 
 #endif

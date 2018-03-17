@@ -2,7 +2,6 @@
 
 // NON-UNIFORM INPUTS
 layout(location = 0) in vec4 position;
-layout(location = 2) in vec2 texture_coord;
 
 // UNIFORM INPUTS
 layout(location = 34) uniform float target_width;

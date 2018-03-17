@@ -47,7 +47,7 @@ public:
 
 
 	void RenderBaseFBO() const;
-	void ClearBaseFBO(const Vector3D& color = Vector3D());
+	void ClearBaseFBO(const Vector3D& color = Vector3D(0,0,0,0));
 	void BindBaseFBO();
 	void UnbindBaseFBO();
 

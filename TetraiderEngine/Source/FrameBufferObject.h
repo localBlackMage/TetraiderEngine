@@ -71,7 +71,7 @@ public:
 	*/
 	void UnbindFrameBuffer() const;
 
-	void ClearFrameBuffer(const Vector3D& color = Vector3D());
+	void ClearFrameBuffer(const Vector3D& color = Vector3D(0,0,0,0));
 
 	inline GLsizei Width() const { return m_width; }
 	inline GLsizei Height() const { return m_height; }

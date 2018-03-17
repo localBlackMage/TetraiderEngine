@@ -2,7 +2,8 @@
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), m_clearColor(Vector3D(.2f,.2f,.2f,1.f))
+	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
+	m_clearColor(Vector3D(.2f,.2f,.2f,1.f))
 {
 }
 
@@ -558,9 +559,20 @@ void RenderManager::InitWindow(bool debugEnabled)
 
 	SDL_Init(SDL_INIT_VIDEO);
 
+	/* Request opengl 3.2 context.
+	* SDL doesn't have the ability to choose which profile at this time of writing,
+	* but it should default to the core profile */
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
+	/* Turn on double buffering with a 24bit Z buffer.
+	* You may need to change this to 16 or 32 for your system */
+	//SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
 	m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
@@ -715,7 +727,7 @@ void RenderManager::BindWindowFrameBuffer()
 // Draws whatever's in the PostProcessing base FBO to the screen
 void RenderManager::DrawSceneFBO()
 {
-	ClearBuffer();
+	ClearBuffer(m_clearColor);
 
 	TETRA_POST_PROCESSING.RenderBaseFBO();
 }

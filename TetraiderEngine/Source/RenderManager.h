@@ -137,7 +137,7 @@ public:
 	void EnableAlphaTest();
 	void EnableDepthTest();
 	void BindMesh(const Mesh& mesh);
-	void ClearBuffer(const Vector3D& color = Vector3D(.2f, .2f, .2f, 1.f));
+	void ClearBuffer(const Vector3D& color);
 	GLuint GenerateStreamingVBO(unsigned int size);
 	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
 	void BindWindowFrameBuffer();
