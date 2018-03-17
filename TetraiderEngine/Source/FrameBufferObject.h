@@ -47,11 +47,11 @@ private:
 
 public:
 	friend class RenderManager;
+	friend class PostProcessing;
 
 	FrameBufferObject(GLsizei width, GLsizei height, GLint iFormat, GLenum format, GLenum type, FBOType fboType);
 	~FrameBufferObject();
 
-	//inline GLuint ID() const { return m_id; }
 	inline GLuint GetColorTexture() const { return m_colorTexture; }
 	inline GLuint GetDepthTexture() const { return m_depthTexture; }
 
@@ -75,7 +75,6 @@ public:
 
 	inline GLsizei Width() const { return m_width; }
 	inline GLsizei Height() const { return m_height; }
-	//inline GLuint Buffer() const { return m_buffer; }
 };
 
 #endif
