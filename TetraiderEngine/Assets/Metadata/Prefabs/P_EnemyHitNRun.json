@@ -27,15 +27,15 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 118,
+			"speed": 120,
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 600,
-		"outOfSightRadius": 800,
+		"detectionRadius": 400,
+		"outOfSightRadius": 600,
 		"zoneWidth": 350,
 		"zoneHeight": 320,
-		"attackRange": 700,
+		"attackRange": 500,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -48,7 +48,7 @@
 			},
 			{	"name": "attackBehavior",
 				"behaviorIndex": 2,				
-				"AIStateType": "NPC_State_Attack"
+				"AIStateType": "NPC_State_HitNRunAttack"
 			},
 			{	"name": "retreatBehavior",
 				"behaviorIndex": 3,

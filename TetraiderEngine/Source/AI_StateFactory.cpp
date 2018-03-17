@@ -29,6 +29,7 @@ AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_DashingAttack]] = AI_DashingAttack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_DashingEngage]] = AI_DashingEngage::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_DashingStunned]] = AI_DashingStunned::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_HitNRunAttack]] = AI_HitNRunAttack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_HitNRunEngage]] = AI_HitNRunEngage::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_HitNRunRetreat]] = AI_HitNRunRetreat::CreateInstance;
 }

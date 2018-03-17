@@ -37,12 +37,75 @@
                     }
                   },
                   {
+                    "prefab":"P_BGM_SliderBar",
+                    "position":{
+                      "x":200,
+                      "y":-25
+                    }
+                  },
+                  {
+                    "prefab":"P_SliderBall",
+                    "position":{
+                      "x":190,
+                      "y":-25
+                    }
+                  },
+                  {
                     "prefab":"P_SoundTitle",
                     "position":{
                       "x":0,
                       "y":50
                     }
-                }    
+                  },
+                  {
+                    "prefab":"P_BGM_title",
+                    "position":{
+                      "x":-50,
+                      "y":-25
+                    }
+                } ,
+                {
+                  "prefab":"P_SFX_title",
+                  "position":{
+                    "x":-50,
+                    "y":-75
+                  }
+              }  ,
+              {
+                "prefab":"P_SFX_SliderBar",
+                "position":{
+                  "x":200,
+                  "y":-75
+                }
+              },
+              {
+                "prefab":"P_SliderBall",
+                "position":{
+                  "x":190,
+                  "y":-75
+                }
+              },
+              {
+                "prefab":"P_MasterVol_title",
+                "position":{
+                  "x":-50,
+                  "y":-125
+                }
+            } ,
+            {
+              "prefab":"P_MasterVol_SliderBar",
+              "position":{
+                "x":200,
+                "y":-125
+              }
+            },
+            {
+              "prefab":"P_SliderBall",
+              "position":{
+                "x":190,
+                "y":-125
+              }
+            }
             ]
         }
     ]

@@ -167,6 +167,18 @@
 		"rechargeSpeed": 30,
 		"rechargeCoolDown": 1.5,
 		"useSpeed": 20
+	},
+	{
+		"Component": "Audio",
+		"audioClip": "Lava_Bubble_Loop1.wav",
+		"volume": 0.3,
+		"isMute": false,
+		"isLoop": true,
+		"isPlayOnAwake": true,
+		"isBGM": true,
+		"is3D":false,
+		"minDistance": 10,
+		"maxDistance": 900
 	}
   ]
 }

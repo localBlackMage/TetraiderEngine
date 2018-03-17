@@ -19,15 +19,14 @@ void AI_HitNRunRetreat::OnEnter(){
 	tryTimeDuration = RandomFloat(1.0f, 2.2f);
 	triedMovingSoFar = 0.0f;
 	sinceRetreat = 0.0f;
-	pAgent->SetSpeedMultiplier(1.75f);
-	pAgent->MoveAwayFromPlayer(minDistanceToPlayer);
 	pAgent->LookInDirectionOfMovement();
+	pAgent->MoveAwayFromPlayer(150);
 }
 
 void AI_HitNRunRetreat::OnUpdate(float dt){
 	pAgent->LookInDirectionOfMovement();
+	pAgent->SetSpeedMultiplier(3.0f);
 	if (!pAgent->IsPlayerTooClose(minDistanceToPlayer) && (sinceRetreat > minimumRetreat)){
-		pAgent->StopMoving();
 		pAgent->ChangeState(NPC_ATTACK);
 		return;
 	}
@@ -39,8 +38,12 @@ void AI_HitNRunRetreat::OnUpdate(float dt){
 		return;
 	}
 	if (pAgent->IsArrivedAtDestination()) {
-		if (pAgent->IsPlayerTooClose(minDistanceToPlayer)) {
+		if (!pAgent->IsPlayerTooClose(minDistanceToPlayer) && (sinceRetreat > minimumRetreat)) {
 			pAgent->ChangeState(NPC_ATTACK);
+		}
+		else {
+			pAgent->MoveAwayFromPlayer(150);
+			triedMovingSoFar = 0.0f;
 		}
 	}
 	triedMovingSoFar += dt;
@@ -48,7 +51,6 @@ void AI_HitNRunRetreat::OnUpdate(float dt){
 }
 
 void AI_HitNRunRetreat::OnExit(){
-	pAgent->SetSpeedMultiplier(1.0f);
 }
 
 

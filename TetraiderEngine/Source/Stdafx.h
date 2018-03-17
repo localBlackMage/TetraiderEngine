@@ -104,6 +104,7 @@ using namespace JsonReader;
 #include <AI_DashingAttack.h>
 #include <AI_DashingEngage.h>
 #include <AI_DashingStunned.h>
+#include <AI_HitNRunAttack.h>
 #include <AI_HitNRunEngage.h>
 #include <AI_HitNRunRetreat.h>
 #include <AI_StateFactory.h>
@@ -176,6 +177,8 @@ using namespace JsonReader;
 #include <Button.h>
 #include <PauseMenu.h>
 #include <Canvas.h>
+#include <Slider.h>
+#include <Endpoints.h>
 
 #include <CamFollow.h>
 #include <ScreenWrap.h>

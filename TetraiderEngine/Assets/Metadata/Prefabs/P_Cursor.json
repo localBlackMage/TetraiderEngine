@@ -1,5 +1,5 @@
 {
-    "Tag": "UI",
+    "Tag": "Cursor",
     "Layer": "UI_2",
     "COMPONENTS": [
       {
@@ -59,7 +59,7 @@
           }
       },
 	  {
-		"Component":"FollowCursor"		
+		  "Component":"FollowCursor"		
 	  }
    ]
   }

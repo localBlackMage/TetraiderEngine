@@ -5,7 +5,13 @@
 #include <Stdafx.h>
 
 Audio::Audio() :Component(ComponentType::C_Audio) {}
-Audio::~Audio() {}
+Audio::~Audio() 
+{
+	if (m_isBGM)
+	{
+		TETRA_AUDIO.StopSongs();
+	}
+}
 
 void Audio::Deactivate() {
 	pGO = nullptr;

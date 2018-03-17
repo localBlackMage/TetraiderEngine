@@ -24,6 +24,9 @@
       "prefab": "P_SoundMenu"
     },
     {
+      "prefab": "P_CreditsMenu"
+    },
+    {
       "prefab": "P_Cursor",
       "position": {
         "x": 100,

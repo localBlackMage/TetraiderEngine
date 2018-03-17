@@ -83,10 +83,11 @@
 		{
 		"Component": "Text",
 		"letterHeight": 50,
-		"letterWidth": 50,
+    "letterWidth": 50,
+    "spacing": 0.65,
 		"pivotOffset": {
-			"x": -230,
-			"y": 200
+			"x": 40,
+			"y": 0
 		},
 		"tint": {
 			"r": 1,

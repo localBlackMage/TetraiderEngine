@@ -8,12 +8,12 @@
 FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false) {}
 FollowCursor::~FollowCursor() {}
 
-Vector3D mouse;
+
 void FollowCursor::Update(float dt)
 {
-	mouse.x = (float)TETRA_INPUT.MousePosX() - (float)(TETRA_RENDERER.WindowWidth() / 2);
-	mouse.y = -(float)TETRA_INPUT.MousePosY() + (float)(TETRA_RENDERER.WindowHeight() / 2);
-	m_pTransform->SetPosition(mouse);
+	m_mousePos.x = (float)TETRA_INPUT.MousePosX() - (float)(TETRA_RENDERER.WindowWidth() / 2);
+	m_mousePos.y = -(float)TETRA_INPUT.MousePosY() + (float)(TETRA_RENDERER.WindowHeight() / 2);
+	m_pTransform->SetPosition(m_mousePos);
 	
 }
 

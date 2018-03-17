@@ -62,7 +62,7 @@ void FrameRateManager::FrameEnd() {
 	}
 
 	//if (m_secondCounter >= 0.1f) {
-	//	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_FPS_UPDATE, &FPSData(1/m_frameTime)));
+	//	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_FPS_UPDATE, &FloatData(1/m_frameTime)));
 	//	m_secondCounter = 0.f;
 	//}
 }

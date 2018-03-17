@@ -1,15 +1,6 @@
 {
   "lineShader": {
     "vertex": "lineShader.vert",
-    "fragment": "lineShader.frag",
-    "attributes": [
-      "position"
-    ],
-    "uniforms": [
-      "persp_matrix",
-      "view_matrix",
-      "model_matrix",
-      "color"
-    ]
+    "fragment": "lineShader.frag"
   }
 }

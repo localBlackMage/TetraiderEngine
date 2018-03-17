@@ -1,0 +1,185 @@
+{
+  "Tag": "Enemy",
+  "Layer": "2",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 110,
+        "y": 110,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 130,
+			"acceleration": 8,
+			"knockBackMultiplier": 1
+		},
+		"detectionRadius": 500,
+		"outOfSightRadius": 650,
+		"zoneWidth": 350,
+		"zoneHeight": 350,
+		"attackRange": 250,
+		"AIStates": [
+			{
+				"name": "idleBehavior",
+				"behaviorIndex": 0,
+				"AIStateType": "NPC_State_Idle"
+			},
+			{	"name": "engageBehavior",
+				"behaviorIndex": 1,
+				"AIStateType": "NPC_State_Engage"
+			},
+			{	"name": "attackBehavior",
+				"behaviorIndex": 2,				
+				"AIStateType": "NPC_State_Attack"
+			},
+			{	"name": "retreatBehavior",
+				"behaviorIndex": 3,
+				"AIStateType": "NPC_State_Retreat"
+			},
+			{	"name": "moveToRandomPointInZoneBehavior",
+				"behaviorIndex": 4,
+				"AIStateType": "NPC_State_MoveToRandomPointInZone"
+			}
+		]
+	},
+    {
+      "Component": "Sprite",
+      "Texture": "T_BipedMonster.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "lit": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 50
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 40,
+		"maxHealth": 40,
+		"isInvincible": false
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
+		}
+	},
+	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 5,
+			"animationSpeed": 6,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Dead",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		}
+		]
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Melee",
+				"coolDown": 0.6,
+				"baseDamage": 10,
+				"radius": 180,
+				"angle": 90,
+				"triggerAttackIn": 0.05,
+				"knockBackSpeed": 800
+			}
+		],
+		"weaponPrefab": "P_RatSword",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotationOffset": 70,
+		"effectPrefab": "P_SlashTest"
+	},
+	{
+		"Component": "SpawnOnHealthZero",
+		"isRandom": true,
+		"RandomDrops": [
+			{
+				"prefab": "P_AmmoPickUp",
+				"weight": 20
+			},
+			{
+				"prefab": "P_MeatPickup",
+				"weight": 30
+			},
+			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 10
+			},
+			{
+				"prefab": "",
+				"weight": 80
+			}
+		]
+	}
+  ]
+}
