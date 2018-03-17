@@ -82,7 +82,7 @@ void ImageRenderer::UnbindFBO()
 	m_pFBO->UnbindFrameBuffer();
 }
 
-void ImageRenderer::ClearBuffer(const Vector3D& color = Vector3D())
+void ImageRenderer::ClearBuffer(const Vector3D& color)
 {
 	m_pFBO->ClearFrameBuffer(color);
 }
