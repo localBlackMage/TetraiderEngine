@@ -62,7 +62,7 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 2,
+      "canvasToActivate"    : 0,
       "canvasToDeActivate" : 5
     },
     {

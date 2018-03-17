@@ -87,7 +87,7 @@ void PauseMenu::HandleEvent(Event * pEvent)
 
 		if (m_pText) {
 			m_pText->SetText("YOU LOSE");
-			m_pText->SetOffset(Vector3D(-180, 200, 0));
+			m_pText->SetOffset(Vector3D(-120, 200, 0));
 		}
 	}
 	else if (pEvent->Type() == EVENT_ExitLevel) {

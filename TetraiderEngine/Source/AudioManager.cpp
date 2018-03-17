@@ -335,9 +335,17 @@ void AudioManager::HandleEvent(Event* pEvent) {
 
 	case EVENT_ChangeBGMVol:
 		
-		SetSongsVolume(pFloatData->mValue);
-		m_pCurrentSongChannel->getVolume(&vol);
-		std::cout << "BGM volume : " << vol << std::endl;
+		if (!m_pCurrentSongChannel)
+		{
+			m_musicVol = pFloatData->mValue;
+			std::cout << "BGM volume : " << m_musicVol << std::endl;
+		}
+		else
+		{
+			SetSongsVolume(pFloatData->mValue);
+			m_pCurrentSongChannel->getVolume(&vol);
+			std::cout << "BGM volume : " << vol << std::endl;
+		}
 		break;
 
 	case EVENT_ChangeMasterVol:
