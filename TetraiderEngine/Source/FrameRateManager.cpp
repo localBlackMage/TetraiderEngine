@@ -16,7 +16,7 @@ FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 		m_maxFrameRate = UINT16_MAX;
 	}
 	else { m_maxFrameRate = maxFrameRate;  }
-	m_ticksPerFrame = 1000 / m_maxFrameRate;
+	m_ticksPerFrame = 1.0f / (float)m_maxFrameRate;
 	//m_frameTime = MIN_FRAME_TIME;
 	m_totalElapsedTime = 0.0f;
 }
@@ -29,7 +29,7 @@ void FrameRateManager::SetMaxFrameRate(unsigned int maxFrameRate)
 		m_maxFrameRate = UINT16_MAX;
 	}
 	else { m_maxFrameRate = maxFrameRate; }
-	m_ticksPerFrame = 1000 / m_maxFrameRate;
+	m_ticksPerFrame = 1.0f / (float)m_maxFrameRate;
 }
 
 void FrameRateManager::FrameStart() {
@@ -40,6 +40,7 @@ void FrameRateManager::FrameEnd() {
 	m_tickEnd = Clock::now();
 	Millisecond duration = std::chrono::duration_cast<Millisecond>(m_tickEnd - m_tickStart);
 	while (duration.count() < m_ticksPerFrame) {
+		duration = std::chrono::duration_cast<Millisecond>(m_tickEnd - m_tickStart);
 		m_tickEnd = Clock::now();
 	}
 
@@ -51,13 +52,12 @@ void FrameRateManager::FrameEnd() {
 		auto dur = m_tickEnd - m_tickStart;
 		FloatSecond fsec = std::chrono::duration_cast<FloatSecond>(dur);
 		m_frameTime = float(fsec.count()); //  / 1000.0f;
-		std::cout << "frametime: " << m_frameTime << std::endl;
 		m_totalElapsedTime += m_frameTime;
 
 		m_secondCounter += m_frameTime;
-		float fps = 1 / m_frameTime;
+		float fps = 1.0f / m_frameTime;
 		if (fps < 40.0f) {
-			std::cout << "FPS dropped to: " << fps << std::endl;
+			//std::cout << "FPS dropped to: " << fps << std::endl;
 		}
 	}
 
