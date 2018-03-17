@@ -757,9 +757,7 @@
     {
       "prefab": "P_EggUI"
     },
-    {
-      "prefab": "P_PauseMenu"
-    },
+    
 	{
 	  "prefab": "P_UIarrowAmmo"
 	},

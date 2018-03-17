@@ -7,6 +7,10 @@ private:
 	std::vector<GameObject*> m_UIelements;
 	bool m_isActive;
 	bool m_isActiveOnAwake;
+	Text* m_pText;
+	bool m_isLevelOver;
+	bool m_isCannotPause;
+
 public:
 	Canvas();
 	~Canvas();

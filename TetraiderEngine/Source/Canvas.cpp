@@ -52,12 +52,77 @@ void Canvas::Serialize(const json & j)
 
 void Canvas::LateInitialize()
 {
+	if (m_canvasType == CanvasType::CANVAS_PAUSE)
+	{
+		if (!m_pText) {
+			if (pGO)
+				m_pText = pGO->GetComponent<Text>(ComponentType::C_Text);
+			else {
+				printf("No Game Object found. Canvas component failed to operate.\n");
+				return;
+			}
 
+			if (!m_pText) {
+				printf("No Text component found. Canvas component failed to operate.\n");
+				assert(m_pText);
+				return;
+			}
+		}
+		TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+		TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
+		TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+	}
 }
 
 void Canvas::HandleEvent(Event * pEvent)
 {
 
+	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME)
+	{
+		if (m_isLevelOver || m_isCannotPause) return;
+
+		InputButtonData* pData = pEvent->Data<InputButtonData>();
+		if (pData->m_isTrigger) {
+			m_isActive = !m_isActive;
+			
+		}
+		if (m_isActive)
+		{
+			this->ActivateCanvas();
+			if (m_pText) {
+				m_pText->SetText("PAUSED");
+				m_pText->SetOffset(Vector3D(-80, 200, 0));
+			}
+		}	
+		else
+		{
+			this->DeactivateCanvas();
+			if (m_pText) {
+				m_pText->SetText("");
+				//m_pText->SetOffset(Vector3D(-80, 200, 0));
+			}
+		}	
+	}
+	
+	else if (pEvent->Type() == EVENT_LevelInComplete) {
+		m_isLevelOver = true;
+		m_isActive = true;
+
+		/*for (auto gameObjects : m_objects) {
+			gameObjects->SetActive(m_isActive);
+		}
+
+		pGO->m_isRender = m_isActive;*/
+		this->ActivateCanvas();
+
+		/*if (m_pText) {
+			m_pText->SetText("YOU LOSE");
+			m_pText->SetOffset(Vector3D(-120, 200, 0));
+		}*/
+	}
+	else if (pEvent->Type() == EVENT_ExitLevel) {
+		m_isCannotPause = true;
+	}
 }
 
 void Canvas::ActivateCanvas()
@@ -72,6 +137,8 @@ void Canvas::DeactivateCanvas()
 {
 	for (auto obj : m_UIelements)
 	{
+		if (obj->m_tag == T_Cursor)
+			continue;
 		obj->SetActive(false);
 	}
 }

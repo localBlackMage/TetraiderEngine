@@ -17,7 +17,7 @@
 	},
 	{
       "prefab": "P_InGameCursor"
-    },
+		},
 	 {
       "prefab": "P_LevelStatus"
     },
@@ -27,6 +27,12 @@
     {
       "prefab": "P_PauseMenu"
     },
+	{
+	  "prefab":"P_inGameSoundMenu"
+	},
+	{
+		"prefab":"P_inGameControlMenu"
+	},
 	{
 	  "prefab": "P_UIarrowAmmo"
 	},
