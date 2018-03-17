@@ -15,10 +15,9 @@ void PostProcessing::_End()
 #pragma endregion
 
 PostProcessing::PostProcessing() : 
-	m_fboShader(nullptr), m_gausShader(nullptr),
-	m_mesh(*TETRA_RESOURCES.LoadMesh("quad"))
-{
-}
+	m_fboShader(nullptr), m_gausHShader(nullptr), m_gausVShader(nullptr),
+	m_mesh(*TETRA_RESOURCES.LoadMesh("screenQuad"))
+{}
 
 PostProcessing::~PostProcessing()
 {
@@ -32,9 +31,9 @@ void PostProcessing::InitFBOs()
 	m_pGausFBO = new FrameBufferObject(1024, 1024, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE);
 }
 
-void PostProcessing::ClearBaseFBO()
+void PostProcessing::ClearBaseFBO(const Vector3D& color)
 {
-	m_pBaseFBO->ClearFrameBuffer();
+	m_pBaseFBO->ClearFrameBuffer(color);
 }
 
 void PostProcessing::BindBaseFBO()
@@ -47,9 +46,9 @@ void PostProcessing::UnbindBaseFBO()
 	m_pBaseFBO->UnbindFrameBuffer();
 }
 
-void PostProcessing::ClearGausFBO()
+void PostProcessing::ClearGausFBO(const Vector3D& color)
 {
-	m_pGausFBO->ClearFrameBuffer();
+	m_pGausFBO->ClearFrameBuffer(color);
 }
 
 void PostProcessing::BindGausFBO()
@@ -69,6 +68,14 @@ void PostProcessing::DoPostProcessing()
 	// Bind + clear gaus blur FBO
 	m_pGausFBO->BindFrameBuffer();
 	m_pGausFBO->ClearFrameBuffer();
+
+	//EnableGBHShader();
+	//TETRA_RENDERER._BindMesh(m_mesh);
+	//TETRA_RENDERER._EnableAlphaTest();
+
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, m_pBaseFBO->m_frameBuffer);
+	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 
 	m_pGausFBO->UnbindFrameBuffer();

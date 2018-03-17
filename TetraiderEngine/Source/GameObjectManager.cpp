@@ -230,7 +230,7 @@ void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigne
 
 void GameObjectManager::_RenderWithPostProcessing()
 {
-	TETRA_POST_PROCESSING.ClearBaseFBO();
+	TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(.2,.2,.2,1));
 	TETRA_POST_PROCESSING.BindBaseFBO();
 
 	#pragma region RENDER_GLOWING_OBJECTS

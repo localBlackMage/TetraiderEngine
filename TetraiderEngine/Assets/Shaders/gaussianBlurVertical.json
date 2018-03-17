@@ -1,0 +1,6 @@
+{
+	"gaussianBlurVertical": {
+		"vertex": "gaussianBlurVertical.vert",
+		"fragment": "gaussianBlur.frag"
+	}
+}

@@ -723,19 +723,9 @@ void RenderManager::BindWindowFrameBuffer()
 	glViewport(0, 0, m_width, m_height);
 }
 
+// Draws whatever's in the PostProcessing base FBO to the screen
 void RenderManager::DrawSceneFBO()
 {
-
-
-
-
-
-
-
-
-#pragma region FINAL_STEP
-	
-	//BindMainFrameBuffer();
 	ClearBuffer();
 
 	TETRA_POST_PROCESSING.EnableFBOShader();
@@ -746,18 +736,16 @@ void RenderManager::DrawSceneFBO()
 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->m_frameBuffer);
+	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->m_frameBuffer);
-	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+	//glActiveTexture(GL_TEXTURE1);
+	//glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
+	//glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * mesh.faceCount(), GL_UNSIGNED_INT, 0);
-
-#pragma endregion
 }
 
 #pragma region Shaders

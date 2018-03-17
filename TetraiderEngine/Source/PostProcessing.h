@@ -7,7 +7,8 @@ class PostProcessing : public Subscriber
 {
 private:
 	ShaderProgram * m_fboShader;
-	ShaderProgram * m_gausShader;
+	ShaderProgram * m_gausHShader;
+	ShaderProgram * m_gausVShader;
 	Mesh& m_mesh;
 
 	FrameBufferObject* m_pBaseFBO;
@@ -31,8 +32,12 @@ public:
 
 	inline void SetFBOShader(ShaderProgram* fboShader) { m_fboShader = fboShader; }
 	inline void EnableFBOShader() const { glUseProgram(m_fboShader->GetProgramID()); }
-	inline void SetGBShaders(ShaderProgram* gbShader) { m_gausShader = gbShader; }
-	inline void EnableGBShader() const { glUseProgram(m_gausShader->GetProgramID()); }
+	inline void SetGBShaders(ShaderProgram* gbHShader, ShaderProgram* gbVShader) { 
+		m_gausHShader = gbHShader; 
+		m_gausVShader = gbVShader;
+	}
+	inline void EnableGBHShader() const { glUseProgram(m_gausHShader->GetProgramID()); }
+	inline void EnableGBVShader() const { glUseProgram(m_gausVShader->GetProgramID()); }
 
 	bool IsEnabled() const { return m_enabled; }
 	inline void Enable() { m_enabled = true; }
@@ -40,19 +45,15 @@ public:
 	inline void Toggle() { m_enabled = !m_enabled; };
 
 	void InitFBOs();
-	void ClearBaseFBO();
+	void ClearBaseFBO(const Vector3D& color = Vector3D());
 	void BindBaseFBO();
 	void UnbindBaseFBO();
 
-	void ClearGausFBO();
+	void ClearGausFBO(const Vector3D& color = Vector3D());
 	void BindGausFBO();
 	void UnbindGausFBO();
 
 	void DoPostProcessing();
-
-	//GLuint GetBaseFBOTexture() const { return m_pBaseFBO->Buffer(); }
-
-	//FrameBufferObject* BaseFBO() const { return m_pBaseFBO; }
 };
 
 #endif

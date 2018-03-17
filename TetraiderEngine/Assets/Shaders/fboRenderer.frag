@@ -15,10 +15,16 @@ out vec4 frag_color;
 
 
 void main(void) {
+	/*
+	vec4 invert = vec4(1,1,1,2);
 	vec4 fboColor = texture(fboTexture, vtexture_coord);
 	vec4 otherColor = texture(otherTexture, vtexture_coord);
 	if (vtexture_coord.x < 0.5f)
-		frag_color = fboColor;//mix(fboColor, otherColor, 0.1);
+		frag_color = invert - fboColor;
 	else
 		frag_color = otherColor;
+	*/
+	frag_color = texture(fboTexture, vtexture_coord);
+		
+	//mix(fboColor, otherColor, 0.1);
 }

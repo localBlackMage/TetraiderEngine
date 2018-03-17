@@ -124,6 +124,21 @@ bool ResourceManager::Init()
 
 	quad->FinishMesh();
 
+	Mesh * screenQuad = LoadMesh("screenQuad");
+
+	screenQuad->AddTriangle(
+		-1.f, -1.f, 0.0f, .0f, .0f, 0xFFFFFFFF,
+		1.f, -1.f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
+		-1.f, 1.f, 0.0f, .0f, 1.f, 0xFFFFFFFF
+	);
+	screenQuad->AddTriangle(
+		1.f, -1.f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
+		1.f, 1.f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
+		-1.f, 1.f, 0.0f, .0f, 1.f, 0xFFFFFFFF
+	);
+
+	screenQuad->FinishMesh();
+
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
 	LoadPrefabFiles();
 
