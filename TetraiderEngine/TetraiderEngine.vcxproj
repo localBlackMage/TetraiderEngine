@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI_BomberAttack.cpp" />
+    <ClCompile Include="Source\AI_BomberRetreat.cpp" />
     <ClCompile Include="Source\AI_HitNRunAttack.cpp" />
     <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
@@ -153,6 +155,8 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI_BomberAttack.h" />
+    <ClInclude Include="Source\AI_BomberRetreat.h" />
     <ClInclude Include="Source\AI_HitNRunAttack.h" />
     <ClInclude Include="Source\AI_HitNRunEngage.h" />
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />

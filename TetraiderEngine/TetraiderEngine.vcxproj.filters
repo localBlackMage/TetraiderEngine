@@ -401,6 +401,12 @@
     <ClCompile Include="Source\AI_HitNRunAttack.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AI_BomberAttack.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_BomberRetreat.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -787,6 +793,12 @@
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_HitNRunAttack.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_BomberAttack.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_BomberRetreat.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
   </ItemGroup>

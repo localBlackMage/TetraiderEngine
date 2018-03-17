@@ -5,7 +5,7 @@
 #include <Stdafx.h>
 
 AI_HitNRunRetreat::AI_HitNRunRetreat()
-: AI_State(NPC_State_Retreat) {
+: AI_State(NPC_State_HitNRunRetreat) {
 	minimumRetreat = 1.5;
 
 }
@@ -15,7 +15,7 @@ AI_HitNRunRetreat::~AI_HitNRunRetreat(){
 }
 
 void AI_HitNRunRetreat::OnEnter(){
-	minDistanceToPlayer = 250.0f;
+	minDistanceToPlayer = 210.0f;
 	tryTimeDuration = RandomFloat(1.0f, 2.2f);
 	triedMovingSoFar = 0.0f;
 	sinceRetreat = 0.0f;

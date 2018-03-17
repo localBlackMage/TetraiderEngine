@@ -107,6 +107,8 @@ using namespace JsonReader;
 #include <AI_HitNRunAttack.h>
 #include <AI_HitNRunEngage.h>
 #include <AI_HitNRunRetreat.h>
+#include <AI_BomberAttack.h>
+#include <AI_BomberRetreat.h>
 #include <AI_StateFactory.h>
 #pragma endregion
 

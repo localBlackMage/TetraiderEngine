@@ -1,7 +1,7 @@
 #include <Stdafx.h>
 
 AI_HitNRunEngage::AI_HitNRunEngage()
-	: AI_State(NPC_State_Engage) {
+	: AI_State(NPC_State_HitNRunEngage) {
 
 }
 
@@ -16,7 +16,7 @@ void AI_HitNRunEngage::OnEnter() {
 	engageTimer = RandomFloat(minimumEngage, 4);
 	triedMovingSoFar = 0.0f;
 	sinceEngage = 0.0f;
-	minDistanceToPlayer = 250.0f;
+	minDistanceToPlayer = 210.0f;
 }
 
 void AI_HitNRunEngage::OnUpdate(float dt) {

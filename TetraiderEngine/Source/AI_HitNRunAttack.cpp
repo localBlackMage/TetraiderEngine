@@ -5,8 +5,8 @@
 #include <Stdafx.h>
 
 AI_HitNRunAttack::AI_HitNRunAttack()
-: AI_State(NPC_State_Attack) {
-	attackLimit = 1;
+: AI_State(NPC_State_HitNRunAttack) {
+	attackLimit = 3;
 }
 
 AI_HitNRunAttack::~AI_HitNRunAttack(){
@@ -14,7 +14,7 @@ AI_HitNRunAttack::~AI_HitNRunAttack(){
 
 void AI_HitNRunAttack::OnEnter(){
 	attackCounter = 1;
-	float minDistanceToPlayer = 250.0f; 
+	float minDistanceToPlayer = 210.0f; 
 	pAgent->StopMoving();
 }
 
