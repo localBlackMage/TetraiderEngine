@@ -16,6 +16,7 @@ private:
 	Mesh& m_mesh;
 
 	ImageRenderer * m_pBaseIR;
+	ImageRenderer * m_pSecondBaseIR;
 	ImageRenderer * m_pGaussianHIR;
 	ImageRenderer * m_pGaussianVIR;
 
@@ -44,15 +45,14 @@ public:
 	inline void Enable() { m_enabled = true; }
 	inline void Disable() { m_enabled = false; }
 	inline void Toggle() { m_enabled = !m_enabled; };
-
-
+	
 	void RenderBaseFBO() const;
 	void ClearBaseFBO(const Vector3D& color = Vector3D(0,0,0,0));
 	void BindBaseFBO();
 	void UnbindBaseFBO();
 
 	/*
-		Does Post Processing work to base FBO
+		Does Post Processing work to Second Base FBO
 	*/
 	void DoPostProcessing();
 };

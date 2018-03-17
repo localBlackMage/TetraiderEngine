@@ -19,7 +19,8 @@ enum TEXTURE_LOCATIONS {
 	FIRST = 0,
 	SECOND = 1,
 	THIRD = 2,
-	FOURTH = 3
+	FOURTH = 3,
+	NUM_TEXTURES = 4
 };
 
 enum SHADER_LOCATIONS {
@@ -113,6 +114,7 @@ public:
 
 	bool InitGlew();
 
+	Vector3D GetClearColor() const { return m_clearColor; }
 	void SetGlobalAmbientLight(Vector3D ambientLight) { m_globalAmbientLight = ambientLight; }
 	void FrameStart();
 	void FrameEnd();
@@ -137,6 +139,7 @@ public:
 	void EnableAlphaTest();
 	void EnableDepthTest();
 	void BindMesh(const Mesh& mesh);
+	void ClearBuffer();
 	void ClearBuffer(const Vector3D& color);
 	GLuint GenerateStreamingVBO(unsigned int size);
 	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);

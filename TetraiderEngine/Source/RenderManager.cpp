@@ -450,6 +450,11 @@ void RenderManager::BindMesh(const Mesh & mesh)
 	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
 }
 
+void RenderManager::ClearBuffer()
+{
+	ClearBuffer(m_clearColor);
+}
+
 void RenderManager::ClearBuffer(const Vector3D& color)
 {
 	// clear frame and depth buffers
@@ -704,19 +709,6 @@ GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei w
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	return fboTexBuffer;
 }
-
-//void RenderManager::BindFBO(const FrameBufferObject & fbo)
-//{
-//	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
-//	glViewport(0, 0, fbo.Width(), fbo.Height());
-//}
-//
-//void RenderManager::BindAndClearFBO(const FrameBufferObject & fbo)
-//{
-//	glBindFramebuffer(GL_FRAMEBUFFER, fbo.ID());
-//	glViewport(0, 0, fbo.Width(), fbo.Height());
-//	ClearBuffer(Vector3D(0, 0, 0, 1));
-//}
 
 void RenderManager::BindWindowFrameBuffer()
 {

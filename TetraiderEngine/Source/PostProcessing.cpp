@@ -22,33 +22,24 @@ PostProcessing::PostProcessing() :
 PostProcessing::~PostProcessing()
 {
 	if (m_pBaseIR)	delete m_pBaseIR;
+	if (m_pSecondBaseIR) delete m_pSecondBaseIR;
 	if (m_pGaussianHIR)	delete m_pGaussianHIR;
 	if (m_pGaussianVIR)	delete m_pGaussianVIR;
 }
 
 void PostProcessing::InitImageRenderers(ImageRenderersData metadata)
 {
-	m_pGaussianHIR = new ImageRenderer(
-		metadata.pGausHShader,
-		new FrameBufferObject(1024, 1024, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE)
-	);
-
-	m_pGaussianVIR = new ImageRenderer(
-		metadata.pGausVShader,
-		new FrameBufferObject(1024, 1024, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE)
-	);
-
-	m_pBaseIR = new ImageRenderer(
-		metadata.pBaseShader,
-		new FrameBufferObject(2048, 2048, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE)
-	);
+	m_pGaussianHIR = new ImageRenderer(metadata.pGausHShader, 512, 512, FBO_NONE);
+	m_pGaussianVIR = new ImageRenderer(metadata.pGausVShader, 512, 512, FBO_NONE);
+	m_pBaseIR = new ImageRenderer( metadata.pBaseShader, 2048, 2048, FBO_NONE );
+	m_pSecondBaseIR = new ImageRenderer(metadata.pBaseShader, 2048, 2048, FBO_NONE);
 
 	m_pBaseShader = metadata.pBaseShader;
 }
 
 void PostProcessing::RenderBaseFBO() const
 {
-	m_pBaseIR->Render(m_pBaseShader);
+	m_pBaseIR->RenderToScreen(*m_pBaseShader);
 }
 
 void PostProcessing::ClearBaseFBO(const Vector3D& color)
@@ -66,7 +57,6 @@ void PostProcessing::UnbindBaseFBO()
 	m_pBaseIR->UnbindFBO();
 }
 
-
 void PostProcessing::DoPostProcessing()
 {
 	_Start();
@@ -76,10 +66,20 @@ void PostProcessing::DoPostProcessing()
 	m_pGaussianVIR->ClearBuffer();
 
 	m_pGaussianVIR->Render(m_pBaseIR);
-	m_pGaussianHIR->Render(m_pGaussianVIR);
+	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
 
-	//m_pBaseIR->ClearBuffer();
-	//m_pBaseIR->Render(m_pGaussianHIR);
+	m_pGaussianHIR->Render(m_pGaussianVIR);
+	m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
+
+
+
+	//m_pSecondBaseIR->ClearBuffer();
+	//m_pSecondBaseIR->Render(m_pGaussianHIR);
+
+	////TETRA_RENDERER.ClearBuffer();
+
+	////m_pSecondBaseIR->RenderToScreen(*m_pBaseShader, *m_pBaseIR);
+	//m_pSecondBaseIR->RenderToScreen(*m_pBaseShader);
 
 	_End();
 }

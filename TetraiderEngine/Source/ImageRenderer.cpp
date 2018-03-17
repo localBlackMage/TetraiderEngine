@@ -7,10 +7,10 @@ ImageRenderer::ImageRenderer() :
 {
 }
 
-ImageRenderer::ImageRenderer(ShaderProgram* pShader, FrameBufferObject* pFBO) :
-	m_mesh(*TETRA_RESOURCES.GetMesh(SCREEN_QUAD_MESH)),
-	m_pShader(pShader), 
-	m_pFBO(pFBO)
+ImageRenderer::ImageRenderer(ShaderProgram* shader, GLsizei width, GLsizei height, FBOType fboType) :
+	m_pShader(shader),
+	m_pFBO(new FrameBufferObject(width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, fboType)),
+	m_mesh(*TETRA_RESOURCES.GetMesh(SCREEN_QUAD_MESH))
 {}
 
 ImageRenderer::~ImageRenderer()
@@ -50,13 +50,59 @@ void ImageRenderer::Render(FrameBufferObject * pOtherFBO) const
 	m_pFBO->UnbindFrameBuffer();
 }
 
-void ImageRenderer::Render(ShaderProgram* pShader) const
+void ImageRenderer::RenderToScreen(const ShaderProgram& shader) const
 {
-	if (!m_pFBO || !pShader) return;
-
 	TETRA_RENDERER.BindWindowFrameBuffer();
 
-	glUseProgram(pShader->GetProgramID());
+	glUseProgram(shader.GetProgramID());
+
+	TETRA_RENDERER.BindMesh(m_mesh);
+
+	TETRA_RENDERER.EnableAlphaTest();
+
+	// Bind PostProcessing's base FBO and render it
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_pFBO->GetColorTexture());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+
+	glUniform1i(TEXTURE_LOCATIONS::NUM_TEXTURES, 1);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+}
+
+void ImageRenderer::RenderToScreen(const ShaderProgram & shader, const ImageRenderer & ir) const
+{
+	TETRA_RENDERER.BindWindowFrameBuffer();
+
+	glUseProgram(shader.GetProgramID());
+
+	TETRA_RENDERER.BindMesh(m_mesh);
+
+	TETRA_RENDERER.EnableAlphaTest();
+
+	// Bind PostProcessing's base FBO and render it
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_pFBO->GetColorTexture());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, ir.m_pFBO->GetColorTexture());
+	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+
+	glUniform1i(TEXTURE_LOCATIONS::NUM_TEXTURES, 2);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+}
+
+void ImageRenderer::RenderToFBO(const FrameBufferObject & fbo, const ShaderProgram & shader) const
+{
+	fbo.BindFrameBuffer();
+
+	glUseProgram(shader.GetProgramID());
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
@@ -69,7 +115,14 @@ void ImageRenderer::Render(ShaderProgram* pShader) const
 
 	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 3 & m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+
+	fbo.UnbindFrameBuffer();
+}
+
+void ImageRenderer::RenderToIR(const ImageRenderer & ir, const ShaderProgram & shader) const
+{
+	RenderToFBO(*ir.m_pFBO, shader);
 }
 
 void ImageRenderer::BindFBO()

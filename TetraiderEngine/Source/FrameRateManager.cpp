@@ -11,7 +11,7 @@
 
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 	m_secondCounter(0.f),
-	m_frameTime(60)
+	m_frameTime(60.f)
 {
 	if (maxFrameRate == 0) {
 		m_maxFrameRate = UINT16_MAX;
