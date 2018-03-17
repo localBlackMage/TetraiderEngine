@@ -40,17 +40,11 @@ void PostProcessing::InitImageRenderers(ImageRenderersData metadata)
 
 	m_pBaseIR = new ImageRenderer(
 		metadata.pBaseShader,
-		new FrameBufferObject(2048, 2048, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_DEPTH_RENDER_BUFFER)
+		new FrameBufferObject(2048, 2048, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE)
 	);
 
 	m_pBaseShader = metadata.pBaseShader;
 }
-
-//void PostProcessing::InitFBOs()
-//{
-//	//m_pBaseFBO = new FrameBufferObject(2048, 2048, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE);
-//	//m_pGausFBO = new FrameBufferObject(1024, 1024, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, FBO_NONE);
-//}
 
 void PostProcessing::RenderBaseFBO() const
 {
@@ -72,20 +66,6 @@ void PostProcessing::UnbindBaseFBO()
 	m_pBaseIR->UnbindFBO();
 }
 
-//void PostProcessing::ClearGausFBO(const Vector3D& color)
-//{
-//	m_pGausFBO->ClearFrameBuffer(color);
-//}
-//
-//void PostProcessing::BindGausFBO()
-//{
-//	m_pGausFBO->BindFrameBuffer();
-//}
-//
-//void PostProcessing::UnbindGausFBO()
-//{
-//	m_pGausFBO->UnbindFrameBuffer();
-//}
 
 void PostProcessing::DoPostProcessing()
 {
@@ -97,20 +77,6 @@ void PostProcessing::DoPostProcessing()
 
 	m_pGaussianHIR->Render(m_pBaseIR);
 	m_pGaussianVIR->Render(m_pGaussianHIR);
-	
-	//m_pGausFBO->BindFrameBuffer();
-	//m_pGausFBO->ClearFrameBuffer();
-
-	////EnableGBHShader();
-	////TETRA_RENDERER._BindMesh(m_mesh);
-	////TETRA_RENDERER._EnableAlphaTest();
-
-	////glActiveTexture(GL_TEXTURE0);
-	////glBindTexture(GL_TEXTURE_2D, m_pBaseFBO->m_frameBuffer);
-	////glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-
-
-	//m_pGausFBO->UnbindFrameBuffer();
 
 	_End();
 }

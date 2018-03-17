@@ -13,11 +13,7 @@ class PostProcessing : public Subscriber
 {
 private:
 	ShaderProgram * m_pBaseShader;
-	//ShaderProgram * m_gausHShader;
-	//ShaderProgram * m_gausVShader;
 	Mesh& m_mesh;
-
-	//FrameBufferObject* m_pBaseFBO;
 
 	ImageRenderer * m_pBaseIR;
 	ImageRenderer * m_pGaussianHIR;
@@ -44,19 +40,11 @@ public:
 	inline void SetBaseShader(ShaderProgram* fboShader) { m_pBaseShader = fboShader; }
 	inline void EnableBaseShader() const { glUseProgram(m_pBaseShader->GetProgramID()); }
 
-	//inline void SetGBShaders(ShaderProgram* gbHShader, ShaderProgram* gbVShader) { 
-	//	m_gausHShader = gbHShader; 
-	//	m_gausVShader = gbVShader;
-	//}
-	//inline void EnableGBHShader() const { glUseProgram(m_gausHShader->GetProgramID()); }
-	//inline void EnableGBVShader() const { glUseProgram(m_gausVShader->GetProgramID()); }
-
 	bool IsEnabled() const { return m_enabled; }
 	inline void Enable() { m_enabled = true; }
 	inline void Disable() { m_enabled = false; }
 	inline void Toggle() { m_enabled = !m_enabled; };
 
-	//void InitFBOs();
 
 	void RenderBaseFBO() const;
 	void ClearBaseFBO(const Vector3D& color = Vector3D());
@@ -64,7 +52,7 @@ public:
 	void UnbindBaseFBO();
 
 	/*
-		Does Post Processing work to 
+		Does Post Processing work to base FBO
 	*/
 	void DoPostProcessing();
 };
