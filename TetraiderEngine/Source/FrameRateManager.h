@@ -14,11 +14,17 @@ Creation date: 1/17/18
 #ifndef FRAME_RATE_MANAGER_H
 #define FRAME_RATE_MANAGER_H
 
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::steady_clock::time_point TimePoint;
+typedef std::chrono::milliseconds Millisecond;
+typedef std::chrono::duration<float> FloatSecond;
+
 class FrameRateManager
 {
 private:
-	unsigned int m_maxFrameRate, m_ticksPerFrame;
-	unsigned int m_tickStart, m_tickEnd;
+	unsigned int m_maxFrameRate;
+	float m_ticksPerFrame;
+	TimePoint m_tickStart, m_tickEnd;
 	float m_frameTime;
 	float m_totalElapsedTime;
 	float m_secondCounter;

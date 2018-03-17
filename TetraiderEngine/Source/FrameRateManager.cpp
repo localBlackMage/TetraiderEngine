@@ -9,8 +9,6 @@
 
 #define MIN_FRAME_TIME 0.016667f
 
-typedef std::chrono::high_resolution_clock Time;
-
 FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 	m_secondCounter(0.f)
 {
@@ -18,9 +16,8 @@ FrameRateManager::FrameRateManager(unsigned int maxFrameRate) :
 		m_maxFrameRate = UINT16_MAX;
 	}
 	else { m_maxFrameRate = maxFrameRate;  }
-	m_ticksPerFrame = 1000 / m_maxFrameRate;
-	m_tickStart, m_tickEnd = 0;
-	m_frameTime = MIN_FRAME_TIME;
+	m_ticksPerFrame = 1.0f / (float)m_maxFrameRate;
+	//m_frameTime = MIN_FRAME_TIME;
 	m_totalElapsedTime = 0.0f;
 }
 
@@ -32,17 +29,19 @@ void FrameRateManager::SetMaxFrameRate(unsigned int maxFrameRate)
 		m_maxFrameRate = UINT16_MAX;
 	}
 	else { m_maxFrameRate = maxFrameRate; }
-	m_ticksPerFrame = 1000 / m_maxFrameRate;
+	m_ticksPerFrame = 1.0f / (float)m_maxFrameRate;
 }
 
 void FrameRateManager::FrameStart() {
-	m_tickStart = SDL_GetTicks();
+	m_tickStart = Clock::now();
 }
 
 void FrameRateManager::FrameEnd() {
-	m_tickEnd = SDL_GetTicks();
-	while (m_tickEnd - m_tickStart < m_ticksPerFrame) {
-		m_tickEnd = SDL_GetTicks();
+	m_tickEnd = Clock::now();
+	Millisecond duration = std::chrono::duration_cast<Millisecond>(m_tickEnd - m_tickStart);
+	while (duration.count() < m_ticksPerFrame) {
+		duration = std::chrono::duration_cast<Millisecond>(m_tickEnd - m_tickStart);
+		m_tickEnd = Clock::now();
 	}
 
 	if (TETRA_GAME_STATE.IsDebugPause()) {
@@ -50,13 +49,15 @@ void FrameRateManager::FrameEnd() {
 		m_totalElapsedTime += m_frameTime;
 	}
 	else {
-		m_frameTime = float(m_tickEnd - m_tickStart) / 1000.0f;
+		auto dur = m_tickEnd - m_tickStart;
+		FloatSecond fsec = std::chrono::duration_cast<FloatSecond>(dur);
+		m_frameTime = float(fsec.count()); //  / 1000.0f;
 		m_totalElapsedTime += m_frameTime;
 
 		m_secondCounter += m_frameTime;
-		float fps = 1 / m_frameTime;
+		float fps = 1.0f / m_frameTime;
 		if (fps < 40.0f) {
-		//	std::cout << "FPS dropped to: " << fps << std::endl;
+			//std::cout << "FPS dropped to: " << fps << std::endl;
 		}
 	}
 

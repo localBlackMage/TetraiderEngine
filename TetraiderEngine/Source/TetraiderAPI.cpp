@@ -20,7 +20,7 @@ namespace Tetraider {
 
 	float GetFrameTime()
 	{
-		return TETRA_FRAMERATE.GetFrameTime();;
+		return TETRA_FRAMERATE.GetFrameTime();
 	}
 
 	void FrameStart()
