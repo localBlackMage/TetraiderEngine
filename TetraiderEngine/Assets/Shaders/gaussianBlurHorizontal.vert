@@ -11,12 +11,12 @@ layout(location = 34) uniform float target_width;
 layout(location = 10) out vec2 vblur_texture_coords[11];
 
 void main() {
-	gl_Position = position;
+	gl_Position = vec4(position.xy, 0, 1.0);
 	
 	vec2 centerTexCoords = position.xy * 0.5f + 0.5f;
 	float pixelSize = 1.f / target_width;
 	
-	for ( int i = -5; i<5; ++i) {
+	for ( int i = -5; i<=5; ++i) {
 		vblur_texture_coords[i+5] = centerTexCoords + vec2(pixelSize * i, 0);
 	}
 }

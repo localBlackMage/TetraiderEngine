@@ -16,7 +16,7 @@
 	"RENDER_SETTINGS": {
 		"enableWindowsCursor": false,
 		"debugShader": "lineShader",
-		"fboShader": "fboRenderer",
+		"baseShader": "fboRenderer",
 		"gaussianHorizontalShader": "gaussianBlurHorizontal",
 		"gaussianVerticalShader": "gaussianBlurVertical",
 		"consoleEnabled": true,

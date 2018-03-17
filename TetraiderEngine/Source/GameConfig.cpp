@@ -64,11 +64,11 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_RENDERER.SetDebugShaderName(renderSettings["debugShader"]);
 	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
 	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(renderSettings, "globalAmbient"));
-	TETRA_POST_PROCESSING.SetBaseShader( TETRA_RENDERER.GetShaderProgram( ParseString(renderSettings, "fboShader") ) );
 
 	ImageRenderersData IRD;
 	IRD.pGausHShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianHorizontalShader"));
 	IRD.pGausVShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianVerticalShader"));
+	IRD.pBaseShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "baseShader"));
 	TETRA_POST_PROCESSING.InitImageRenderers(IRD);
 	m_postProcessingEnabled = ParseBool(renderSettings, "postProcessingEnabled");
 	if (m_postProcessingEnabled)
