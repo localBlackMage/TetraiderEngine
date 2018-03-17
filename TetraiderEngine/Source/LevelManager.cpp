@@ -104,7 +104,7 @@ void LevelManager::ChangeLevel(int i) {
 	else {
 		currentLevel = i;
 		if (currentLevel == mainMenuLevel) {
-			m_levelsCompleted = 1;
+			m_levelsCompleted = 0;
 			TETRA_PLAYERSTATS.ClearStats();
 		}
 

@@ -56,6 +56,13 @@
                     "prefab":"P_QuitButton",
                     "position":{
                       "x":0,
+                      "y":-325
+                    }
+                  },
+                  {
+                    "prefab":"P_CreditsButton",
+                    "position":{
+                      "x":0,
                       "y":-250
                     }
                   },
