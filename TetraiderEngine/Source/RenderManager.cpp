@@ -2,7 +2,7 @@
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false)
+	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), m_clearColor(Vector3D(.2f,.2f,.2f,1.f))
 {
 }
 
@@ -469,9 +469,8 @@ bool RenderManager::InitGlew()
 
 void RenderManager::FrameStart() 
 {
-	SaveViewport();
 	BindWindowFrameBuffer();
-	ClearBuffer(Vector3D());
+	ClearBuffer(m_clearColor);
 }
 
 void RenderManager::FrameEnd()
@@ -664,17 +663,6 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 	}
 }
 
-void RenderManager::SaveViewport()
-{
-	m_viewportSave[4];
-	glGetIntegerv(GL_VIEWPORT, m_viewportSave);
-}
-
-void RenderManager::RestoreViewport()
-{
-	glViewport(m_viewportSave[0], m_viewportSave[1], m_viewportSave[2], m_viewportSave[3]);
-}
-
 GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 {
 	GLuint bufferId;
@@ -730,25 +718,6 @@ void RenderManager::DrawSceneFBO()
 	ClearBuffer();
 
 	TETRA_POST_PROCESSING.RenderBaseFBO();
-
-	//TETRA_POST_PROCESSING.EnableBaseShader();
-	//Mesh& mesh = TETRA_POST_PROCESSING.GetMesh();
-	//BindMesh(mesh);
-
-	//EnableAlphaTest();
-
-	//// Bind PostProcessing's base FBO and render it
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
-	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-
-	////glActiveTexture(GL_TEXTURE1);
-	////glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
-	////glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
-
-	//// draw the mesh
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetFaceBuffer());
-	//glDrawElements(GL_TRIANGLES, 3 * mesh.faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 #pragma region Shaders

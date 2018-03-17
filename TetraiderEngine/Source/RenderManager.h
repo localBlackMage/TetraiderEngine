@@ -75,8 +75,7 @@ private:
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
 	bool m_cursorEnabled;
-
-	int m_viewportSave[4];
+	Vector3D m_clearColor;
 
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
@@ -139,14 +138,9 @@ public:
 	void EnableDepthTest();
 	void BindMesh(const Mesh& mesh);
 	void ClearBuffer(const Vector3D& color = Vector3D(.2f, .2f, .2f, 1.f));
-	void SaveViewport();
-	void RestoreViewport();
 	GLuint GenerateStreamingVBO(unsigned int size);
 	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
-	void BindFBO(const FrameBufferObject& fbo);
-	void BindAndClearFBO(const FrameBufferObject& fbo);
 	void BindWindowFrameBuffer();
-	void BeginPostProcessingDraw();
 	void DrawSceneFBO();
 
 	template <typename BufferType>
