@@ -109,7 +109,7 @@ FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category typ
 
 bool ResourceManager::Init()
 {
-	Mesh * quad = LoadMesh("quad");
+	Mesh * quad = LoadMesh(QUAD_MESH);
 
 	quad->AddTriangle(
 		-0.5f, -0.5f, 0.0f, .0f, 1.f, 0xFFFFFFFF,
@@ -124,7 +124,7 @@ bool ResourceManager::Init()
 
 	quad->FinishMesh();
 
-	Mesh * screenQuad = LoadMesh("screenQuad");
+	Mesh * screenQuad = LoadMesh(SCREEN_QUAD_MESH);
 
 	screenQuad->AddTriangle(
 		-1.f, -1.f, 0.0f, .0f, .0f, 0xFFFFFFFF,

@@ -99,9 +99,6 @@ private:
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 	void _RenderCone(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& arcWidthAndRadius);
 
-	void _EnableAlphaTest();
-	void _EnableDepthTest();
-	void _BindMesh(const Mesh& mesh);
 	void _BindGameObjectTransform(const GameObject& gameObject);
 	void _BindGameObjectTransformWithOffset(const GameObject& gameObject, const Vector3D& offset);
 	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
@@ -138,6 +135,9 @@ public:
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
+	void EnableAlphaTest();
+	void EnableDepthTest();
+	void BindMesh(const Mesh& mesh);
 	void ClearBuffer(const Vector3D& color = Vector3D(.2f, .2f, .2f, 1.f));
 	void SaveViewport();
 	void RestoreViewport();

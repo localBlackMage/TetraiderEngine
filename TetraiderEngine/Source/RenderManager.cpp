@@ -42,7 +42,7 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
-	_BindMesh(pSpriteComp->GetMesh());
+	BindMesh(pSpriteComp->GetMesh());
 	glUniform1i(SHADER_LOCATIONS::LIT, m_lights ? pSpriteComp->IsLit() : false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
@@ -53,9 +53,9 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
-		_EnableAlphaTest();
+		EnableAlphaTest();
 	else
-		_EnableDepthTest();
+		EnableDepthTest();
 
 	// select the texture to use
 	glActiveTexture(GL_TEXTURE0);
@@ -74,7 +74,7 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 {
 	pParticleEmitterComp->BindBufferDatas();
 
-	_BindMesh(pParticleEmitterComp->GetMesh());
+	BindMesh(pParticleEmitterComp->GetMesh());
 
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pParticleEmitterComp->FrameWidth(), pParticleEmitterComp->FrameHeight());
 
@@ -87,9 +87,9 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_TEXTURE_COORD, 1);	// texture coordinates : one per quad -> 1
 
 	if (pParticleEmitterComp->GetAlphaMode() == GL_RGBA)
-		_EnableAlphaTest();
+		EnableAlphaTest();
 	else
-		_EnableDepthTest();
+		EnableDepthTest();
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pParticleEmitterComp->GetTextureBuffer());
@@ -100,7 +100,7 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 
 void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTransformComp)
 {
-	_BindMesh(pTextComp->GetMesh());
+	BindMesh(pTextComp->GetMesh());
 
 	glUniform1i(SHADER_LOCATIONS::LIT, false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pTextComp->FrameWidth(), pTextComp->FrameHeight());
@@ -109,9 +109,9 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, 0.f, 0.f, 0.f, 0.f);
 
 	if (pTextComp->GetAlphaMode() == GL_RGBA)
-		_EnableAlphaTest();
+		EnableAlphaTest();
 	else
-		_EnableDepthTest();
+		EnableDepthTest();
 
 	// select the texture to use
 	glActiveTexture(GL_TEXTURE0);
@@ -227,7 +227,7 @@ void RenderManager::_SetUpDebug(const GameObject& camera)
 	SelectShaderProgram(m_debugShaderName);
 	_SetUpCamera(camera);
 	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	//_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetMesh("quad")->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	//_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetMesh(QUAD_MESH)->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 }
 
 void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)
@@ -378,29 +378,6 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 
 #pragma region Binds
 
-void RenderManager::_EnableAlphaTest()
-{
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.01f);
-	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-void RenderManager::_EnableDepthTest()
-{
-	glDisable(GL_ALPHA_TEST);
-	glEnable(GL_DEPTH_TEST);
-}
-
-void RenderManager::_BindMesh(const Mesh & mesh)
-{
-	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, mesh.GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	_BindVertexAttribute(SHADER_LOCATIONS::NORMAL, mesh.GetNormalBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
-}
-
 void RenderManager::_BindGameObjectTransform(const GameObject & gameObject)
 {
 	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
@@ -447,6 +424,30 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 #pragma endregion
 
 #pragma endregion
+
+
+void RenderManager::EnableAlphaTest()
+{
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.01f);
+	glEnable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void RenderManager::EnableDepthTest()
+{
+	glDisable(GL_ALPHA_TEST);
+	glEnable(GL_DEPTH_TEST);
+}
+
+void RenderManager::BindMesh(const Mesh & mesh)
+{
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, mesh.GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::NORMAL, mesh.GetNormalBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+}
 
 void RenderManager::ClearBuffer(const Vector3D& color)
 {
@@ -728,24 +729,26 @@ void RenderManager::DrawSceneFBO()
 {
 	ClearBuffer();
 
-	TETRA_POST_PROCESSING.EnableFBOShader();
-	Mesh& mesh = TETRA_POST_PROCESSING.GetMesh();
-	_BindMesh(mesh);
+	TETRA_POST_PROCESSING.RenderBaseFBO();
 
-	_EnableAlphaTest();
+	//TETRA_POST_PROCESSING.EnableBaseShader();
+	//Mesh& mesh = TETRA_POST_PROCESSING.GetMesh();
+	//BindMesh(mesh);
 
-	// Bind PostProcessing's base FBO and render it
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	//EnableAlphaTest();
 
-	//glActiveTexture(GL_TEXTURE1);
+	//// Bind PostProcessing's base FBO and render it
+	//glActiveTexture(GL_TEXTURE0);
 	//glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
-	//glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
-	// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * mesh.faceCount(), GL_UNSIGNED_INT, 0);
+	////glActiveTexture(GL_TEXTURE1);
+	////glBindTexture(GL_TEXTURE_2D, TETRA_POST_PROCESSING.m_pBaseFBO->GetColorTexture());
+	////glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+
+	//// draw the mesh
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetFaceBuffer());
+	//glDrawElements(GL_TRIANGLES, 3 * mesh.faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 #pragma region Shaders

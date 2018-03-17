@@ -8,14 +8,23 @@ class ImageRenderer
 private:
 	ShaderProgram* m_pShader;
 	FrameBufferObject* m_pFBO;
-	GLsizei m_width, m_height;
+	Mesh& m_mesh;
 
 public:
 	ImageRenderer();
-	ImageRenderer(ShaderProgram* pShader, FrameBufferObject* pFBO, GLsizei width, GLsizei height);
+	ImageRenderer(ShaderProgram* pShader, FrameBufferObject* pFBO);
 	~ImageRenderer();
 	ImageRenderer(const ImageRenderer &) = delete;
 	void operator=(const ImageRenderer &) = delete;
+
+	void Render(ImageRenderer * pIR) const;
+	void Render(FrameBufferObject* pOtherFBO) const;
+	void Render(ShaderProgram* pShader) const;
+
+	void BindFBO();
+	void UnbindFBO();
+
+	void ClearBuffer(const Vector3D& color = Vector3D());
 };
 
 #endif
