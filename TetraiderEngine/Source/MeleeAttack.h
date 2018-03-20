@@ -8,6 +8,7 @@ public:
 	~MeleeAttack();
 	void Update(float dt);
 	bool Use(const Vector3D& direction);
+	void IncreaseRadius(float multiplier) { m_radius = m_radius*multiplier; }
 	virtual void Debug(const Vector3D& dir);
 private:
 	void Run();

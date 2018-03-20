@@ -46,36 +46,23 @@
 	  "prefab": "P_PowerUpText"
 	},
 	{
-	  "prefab": "P_PowerUpButtonDefense",
+      "prefab": "P_Cursor"
+    },
+	{
+	  "prefab": "P_PowerUpButtonNormal",
 	   "position": {
-        "x": -160,
+        "x": -80,
         "y": -225,
         "z": 0
       }
 	},
 	{
-	  "prefab": "P_PowerUpButtonOffense",
+	  "prefab": "P_PowerUpButtonNormal",
 	   "position": {
-        "x": 0,
+        "x": 80,
         "y": -225,
         "z": 0
       }
-	},
-	{
-	  "prefab": "P_PowerUpButtonUtility",
-	   "position": {
-        "x": 160,
-        "y": -225,
-        "z": 0
-      }
-	},
-    {
-      "prefab": "P_Cursor",
-      "position": {
-        "x": 100,
-        "y": 100,
-        "z": 0
-      }
-    }
+	}
   ]
 }

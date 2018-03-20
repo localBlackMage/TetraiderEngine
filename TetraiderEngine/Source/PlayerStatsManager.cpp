@@ -8,6 +8,7 @@ PlayerStatsManager::PlayerStatsManager(): m_isNewGame(true) {
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
 }
+
 PlayerStatsManager::~PlayerStatsManager() {}
 
 void PlayerStatsManager::HandleEvent(Event * p_event) {
@@ -77,33 +78,40 @@ void PlayerStatsManager::LoadStats() {
 
 void PlayerStatsManager::InitializePowerUps(json& json) {
 	m_powerUpSettings = json;
-	for (int i = 0; i < 3; ++i) {
+
+	numberOfSpecialPowerUps = json[POWER_UP_SETTINGS][0][POWER_UPS].size();
+	numberOfNormalPowerUps = json[POWER_UP_SETTINGS][1][POWER_UPS].size();
+
+	for (int i = 0; i < 2; ++i) {
 		for (unsigned int j = 0; j < json[POWER_UP_SETTINGS][i][POWER_UPS].size(); ++j) {
 			PowerUp p;
 			p.m_category = (PowerUpCategory)(i);
 			p.m_type = (PowerUpType)(ParseInt(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "enumType"));
 			p.m_maxLevel = ParseInt(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "maxLevel");
-			p.m_upgradeValue = ParseInt(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "upgradeValue");
+			p.m_upgradeValue = ParseFloat(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "upgradeValue");
 			p.m_description = ParseString(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "description");
 			p.m_texture = ParseString(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "sprtieTexture");
+			p.m_cost = ParseInt(json[POWER_UP_SETTINGS][i][POWER_UPS][j], "cost");
+			p.m_isAvailable = false;
 			p.m_currentLevel = 0;
 			p.m_index = j;
 			m_powerUps[i].push_back(p);
 		}
 	}
-
-	//m_activePowerUps[1] = &m_powerUps[0][0];
 }
 
 void PlayerStatsManager::EquipPowerUp(PowerUpCategory category, PowerUpType type, int index) {
 	if (m_powerUps[(int)category][index].m_currentLevel < m_powerUps[(int)category][index].m_maxLevel) {
 		m_powerUps[(int)category][index].m_currentLevel += 1;
-	}
+		m_activePowerUps[(int)type] = &m_powerUps[(int)category][index];
 
-	m_activePowerUps[(int)type] = &m_powerUps[(int)category][index];
-	if (type == PowerUpType::HealthUpgrade) {
-		m_playerStats.m_maxHealth += m_activePowerUps[(int)type]->m_upgradeValue;
-		m_playerStats.m_health = m_playerStats.m_maxHealth;
+		if (type == PowerUpType::HealthUpgrade) {
+			m_playerStats.m_maxHealth += (int)(m_activePowerUps[(int)type]->m_upgradeValue);
+			m_playerStats.m_health = m_playerStats.m_maxHealth;
+		}
+		else if (type == PowerUpType::IncreaseStamina) {
+			m_playerStats.m_maxStamina += (int)(m_activePowerUps[(int)type]->m_upgradeValue);
+		}
 	}
 }
 
@@ -111,32 +119,47 @@ int PlayerStatsManager::GetGoldenFeathers() {
 	return m_playerStats.m_goldenFeathers;
 }
 
-int PlayerStatsManager::GetAmmoPickUpUpgrade() {
-	if (m_activePowerUps[(int)(PowerUpType::IncreaseAmmoPickUp)])
-		return m_activePowerUps[(int)(PowerUpType::IncreaseAmmoPickUp)]->m_currentLevel*m_activePowerUps[(int)(PowerUpType::IncreaseAmmoPickUp)]->m_upgradeValue;
-	else return 0;
+bool PlayerStatsManager::IsPowerUpActive(PowerUpType p) {
+	return m_activePowerUps[(int)p];
 }
 
-int PlayerStatsManager::GetHealthUpgrade() {
-	if (m_activePowerUps[(int)(PowerUpType::HealthUpgrade)])
-		return m_activePowerUps[(int)(PowerUpType::HealthUpgrade)]->m_currentLevel*m_activePowerUps[(int)(PowerUpType::HealthUpgrade)]->m_upgradeValue;
-	else return 0;
+bool PlayerStatsManager::IsPowerUpActive(PowerUpType p, int &upgradeValue) {
+	if (IsPowerUpActive(p)) {
+		upgradeValue = (int)(m_activePowerUps[(int)p]->m_currentLevel*m_activePowerUps[(int)p]->m_upgradeValue);
+		return true;
+	}
+
+	upgradeValue = 0;
+	return false;
 }
 
-bool PlayerStatsManager::IsTripleShotActive() {
-	return m_activePowerUps[(int)(PowerUpType::TripleShot)];
+bool PlayerStatsManager::IsPowerUpActive(PowerUpType p, float &upgradeValue) {
+	if (IsPowerUpActive(p)) {
+		upgradeValue = m_activePowerUps[(int)p]->m_currentLevel*m_activePowerUps[(int)p]->m_upgradeValue;
+		return true;
+	}
+
+	upgradeValue = 0;
+	return false;
 }
 
-const PowerUp& PlayerStatsManager::GetRandomDefensePowerUp() {
-	return m_powerUps[(int)PowerUpCategory::Defense][0];
+const PowerUp& PlayerStatsManager::GetRandomNormalPowerUp() {
+	int index = RandomInt(0, 100) % numberOfNormalPowerUps;
+	for (int i = 0; i < numberOfNormalPowerUps; ++i) {
+		if (m_powerUps[(int)PowerUpCategory::Normal][index].m_isAvailable == false) {
+			m_powerUps[(int)PowerUpCategory::Normal][index].m_isAvailable = true;
+			return m_powerUps[(int)PowerUpCategory::Normal][index];
+		}
+
+		index = (index + 1) % numberOfNormalPowerUps;
+	}
+
+	// SHOULD NOT HAPPEN IN GAME, Return same power up if all powerups are upgraded
+	return m_powerUps[(int)PowerUpCategory::Normal][0];
 }
 
-const PowerUp& PlayerStatsManager::GetRandomOffensePowerUp() {
-	return m_powerUps[(int)PowerUpCategory::Offense][0];
-}
-
-const PowerUp& PlayerStatsManager::GetRandomUtilityPowerUp() {
-	return m_powerUps[(int)PowerUpCategory::Utility][0];
+const PowerUp& PlayerStatsManager::GetSpecialPowerUp(int i) {
+	return m_powerUps[(int)PowerUpCategory::Special][i];
 }
 
 #undef POWER_UP_SETTINGS

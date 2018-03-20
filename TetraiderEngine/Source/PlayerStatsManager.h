@@ -3,20 +3,23 @@
 #define PLAYER_STAT_MANAGER_H
 
 enum class PowerUpCategory {
-	Offense,
-	Defense,
-	Utility,
+	Special,
+	Normal,
 
 	NUM
 };
 
 enum class PowerUpType {
-	HealthUpgrade,
+	IncreaseMeleeDamage,
+	IncreaseRangeDamage,
 	TripleShot,
+
+	HealthUpgrade,
+	IncreaseHealthFromPickUp,
+	IncreaseMeleeRange,
 	IncreaseAmmoPickUp,
-	/*MovementSpeedUpgrade,
-	IncreaseDamage,
-	IncreaseAttackSpeed,*/
+	IncreaseStamina,
+	IncreaseAgility,
 
 	NUM
 };
@@ -26,8 +29,10 @@ struct PowerUp {
 	PowerUpType m_type;
 	int m_maxLevel;
 	int m_currentLevel;
-	int m_upgradeValue;
+	int m_cost;
+	float m_upgradeValue;
 	int m_index;
+	bool m_isAvailable;
 	std::string m_description;
 	std::string m_texture;
 };
@@ -49,6 +54,8 @@ private:
 	PowerUp* m_activePowerUps[(int)PowerUpType::NUM];
 	PlayerStats m_playerStats;
 	json m_powerUpSettings;
+	int numberOfNormalPowerUps;
+	int numberOfSpecialPowerUps;
 	bool m_isNewGame;
 public:
 	PlayerStatsManager();
@@ -57,17 +64,16 @@ public:
 	void operator=(const PlayerStatsManager &) = delete;
 	virtual void HandleEvent(Event* p_event);
 	int GetGoldenFeathers();
-	int GetAmmoPickUpUpgrade();
-	int GetHealthUpgrade();
-	bool IsTripleShotActive();
+	bool IsPowerUpActive(PowerUpType p);
+	bool IsPowerUpActive(PowerUpType p, int &upgradeValue);
+	bool IsPowerUpActive(PowerUpType p, float &upgradeValue);
 	void ClearStats();
 	void SaveStats();
 	void LoadStats();
 	void InitializePowerUps(json& j);
 	void EquipPowerUp(PowerUpCategory category, PowerUpType type, int index);
-	const PowerUp& GetRandomDefensePowerUp();
-	const PowerUp& GetRandomOffensePowerUp();
-	const PowerUp& GetRandomUtilityPowerUp();
+	const PowerUp& GetRandomNormalPowerUp();
+	const PowerUp& GetSpecialPowerUp(int i);
 };
 
 #endif

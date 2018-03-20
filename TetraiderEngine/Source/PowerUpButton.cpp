@@ -10,14 +10,11 @@ void PowerUpButton::Update(float dt) {
 void PowerUpButton::Serialize(const json & j) {
 	std::string category = ParseString(j, "category");
 	
-	if (category == "Offense") {
-		m_powerUp = TETRA_PLAYERSTATS.GetRandomOffensePowerUp();
+	if (category == "Normal") {
+		m_powerUp = TETRA_PLAYERSTATS.GetRandomNormalPowerUp();
 	}
-	else if (category == "Defense") {
-		m_powerUp = TETRA_PLAYERSTATS.GetRandomDefensePowerUp();
-	}
-	else if (category == "Utility") {
-		m_powerUp = TETRA_PLAYERSTATS.GetRandomUtilityPowerUp();
+	else if (category == "Special") {
+		//m_powerUp = TETRA_PLAYERSTATS.GetRandomDefensePowerUp();
 	}
 
 	m_levelNumber = ParseInt(j, "level");

@@ -29,7 +29,10 @@ Vector2D Lerp(const Vector2D& vectorA, const Vector2D& vectorB, float t, bool is
 }
 
 float Lerp(float valueA, float valueB, float t, bool isEaseIn, bool isEaseOut) {
-	if (isEaseIn) {
+	if (isEaseIn && isEaseOut) {
+		t = t*t*(3.0f - 2.0f*t);
+	}
+	else if (isEaseIn) {
 		t = 1 - cosf(t*PI*0.5f);
 	}
 	else if (isEaseOut) {

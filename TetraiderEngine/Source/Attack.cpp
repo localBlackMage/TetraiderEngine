@@ -22,3 +22,11 @@ void Attack::Update(float dt) {
 			m_isOnCooldown = false;
 	}
 }
+
+void Attack::UpdateCoolDown(float multiplier) {
+	m_coolDown = m_coolDown / multiplier;
+}
+
+void Attack::MultiplyDamage(float multiplier) {
+	m_baseDamage = (int)(m_baseDamage*multiplier);
+}

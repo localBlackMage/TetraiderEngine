@@ -37,12 +37,15 @@ void Collectible::HandleEvent(Event* pEvent) {
 			else if (m_isHealthPickUp) {
 				Health* pHealth = pData->pGO->GetComponent<Health>(C_Health);
 				if (!pHealth->IsHealthFull()) {
-					pHealth->HandleEvent(&Event(EVENT_HealthCollected, &CollectibleData(m_value)));
+					int extraHealth = 0;
+					TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseHealthFromPickUp, extraHealth);
+					pHealth->HandleEvent(&Event(EVENT_HealthCollected, &CollectibleData(m_value + extraHealth)));
 					pGO->Destroy();
 				}
 			}
 			else if (m_isAmmo) {
-				int extraArrows = TETRA_PLAYERSTATS.GetAmmoPickUpUpgrade();
+				int extraArrows = 0;
+				TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseAmmoPickUp, extraArrows);
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_AmmoUpdate, &CollectibleData(m_value + extraArrows)));
 				pGO->Destroy();
 			}

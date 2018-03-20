@@ -66,11 +66,12 @@
 	{
 		"Component": "Controller",
 		"AgentData": {
-			"speed": 300,
+			"speed": 275,
 			"acceleration": 10,
 			"knockBackMultiplier": 1
 		},
-		"flySpeed": 550,
+		"flySpeed": 510,
+		"agility": 1,
 		"startingArrows": 20,
 		"isUnlimitedArrows": false,
 		"featherParticlePrefab": "P_FeatherParticleEmitter"
@@ -131,7 +132,7 @@
 		"Attacks":[
 			{
 				"type": "Melee",
-				"coolDown": 0.3,
+				"coolDown": 0.36,
 				"baseDamage": 10,
 				"radius": 180,
 				"angle": 90,
@@ -140,7 +141,7 @@
 			},
 			{
 				"type": "Ranged",
-				"coolDown": 0.4,
+				"coolDown": 0.47,
 				"baseDamage": 7,
 				"projectileSpeed": 700,
 				"instantiationOffset": 50,

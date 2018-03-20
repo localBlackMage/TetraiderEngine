@@ -27,6 +27,7 @@ protected:
 private:
 	bool m_isGameControllerEnabled;
 	float m_flySpeed;
+	float m_agility;
 	bool m_isControlsEnabled;
 	bool m_isFlyingInLevel;
 	bool m_isFlyingOutOfLevel;

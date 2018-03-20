@@ -48,6 +48,14 @@ public:
 	float GetAngleZ() const;
 	void SetAngleZ(float angle);
 
+	void SetPivotOffset(float x, float y) {
+		m_pivotOffset.x = x;
+		m_pivotOffset.y = y;
+	}
+
+	float GetPivotOffsetX() { return m_pivotOffset.x; }
+	float GetPivotOffsetY() { return m_pivotOffset.y; }
+
 	void RotateX(float amount);
 	void RotateY(float amount);
 	void RotateZ(float amount);

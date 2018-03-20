@@ -220,10 +220,54 @@ void Weapon::SetAmmo(int attack, int ammo) {
 }
 
 void Weapon::CheckForPowerUps() {
-	if (TETRA_PLAYERSTATS.IsTripleShotActive()) {
-		// Hardcoded for now
-		m_Attacks[1]->AddDamage(-2);
+	int damage;
+	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::TripleShot, damage)) {
+		m_Attacks[1]->AddDamage(damage);
 		RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[1]);
+		// Hardcoded for now
 		pAttack->SetMultipleShot(3, 4);
+	}
+
+
+	float meleeAttackRadiusMult = 1;
+	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseMeleeRange, meleeAttackRadiusMult))
+		IncreaseMeleeAttackRange(meleeAttackRadiusMult, 0);
+
+	float multiplier = 1;
+	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseMeleeDamage, multiplier)) {
+		MultiplyDamage(multiplier, 0);
+		// Add fire to sword
+	}
+
+	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseRangeDamage, multiplier)) {
+		MultiplyDamage(multiplier, 1);
+		// Add fire to projectile
+	}
+}
+
+void Weapon::UpdateAttackSpeed(float multiplier, int attack) {
+	if ((int)m_Attacks.size() > attack) {
+		m_Attacks[attack]->UpdateCoolDown(multiplier);
+	}
+}
+
+void Weapon::IncreaseMeleeAttackRange(float multiplier, int attack) {
+	if ((int)m_Attacks.size() > attack) {
+		MeleeAttack* pAttack = static_cast<MeleeAttack*>(m_Attacks[attack]);
+		if (pAttack) {
+			pAttack->IncreaseRadius(multiplier);
+			if (m_pWeaponTransform) {
+				// TODO: Better Effect that melee range increase. Switch sprite with longer sword ?
+				//m_pWeaponTransform->SetScaleX(m_pWeaponTransform->GetScaleX()*multiplier);
+				m_pWeaponTransform->SetPivotOffset(m_pWeaponTransform->GetPivotOffsetX()*multiplier, 0);
+				m_pEffectTransform->SetPivotOffset(m_pEffectTransform->GetPivotOffsetX()*multiplier, 0);
+			}
+		}
+	}
+}
+
+void Weapon::MultiplyDamage(float multiplier, int attack) {
+	if ((int)m_Attacks.size() > attack) {
+		m_Attacks[attack]->MultiplyDamage(multiplier);
 	}
 }

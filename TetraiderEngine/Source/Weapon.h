@@ -26,8 +26,11 @@ public:
 	int GetAmmo(int attack) const;
 	void AddAmmo(int attack, int value);
 	void SetAmmo(int attack, int value);
+	void UpdateAttackSpeed(float multiplier, int attack);
+	void IncreaseMeleeAttackRange(float multiplier, int attack);
 	void Swing() { swingDir *= -1; }
 	void IsRotationOffset(bool active) { m_isRotationOffset = active; }
+	void MultiplyDamage(float multiplier, int attack);
 private:
 	std::vector<Attack*> m_Attacks;
 	std::string m_weaponPrefab;
