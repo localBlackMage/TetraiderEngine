@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 128,
-        "y": 64,
+        "x": 95,
+        "y": 380,
         "z": 0
       },
       "pivotOffset": {
@@ -26,11 +26,12 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_LavaRectVertical.png",
+      "Texture": "T_Lava_Vertical.png",
       "tiling": {
         "x": 1,
-        "y": 1
+        "y": 4
       },
+	  "repeats": true,
       "uvOffset": {
         "u": 0,
         "v": 0

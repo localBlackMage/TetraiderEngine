@@ -1,21 +1,21 @@
 {
-  "Tag": "None",
-  "Layer": "2",
+  "Tag": "UI",
+  "Layer": "3",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": 0,
-        "y": 0,
+        "x": -620,
+        "y": 330,
         "z": 0
       },
       "scale": {
-        "x": 32,
-        "y": 32,
+        "x": 50,
+        "y": 6,
         "z": 0
       },
       "pivotOffset": {
-        "x": 0,
+        "x": 0.5,
         "y": 0
       },
       "rotation": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_GoldenFeather.png",
+      "Texture": "T_HealthBar.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,8 @@
         "u": 0,
         "v": 0
       },
-	  "lit": false,
+      "lit": false,
+	  "repeats": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,29 +51,9 @@
       }
     },
 	{
-		"Component": "Body",
-		"isStatic": true,
-		"mass": 0,
-		"SHAPE": {
-			"type": "circle",
-			"radius": 16
-		}
-	},
-	{
-		"Component": "Collectible",
-		"isHealth": false,
-		"isEgg": false,
-		"isGoldenFeather": true,
-		"value": 1
-	},
-	{
-		"Component": "WaveMovement",
-		"isModifyXPos": false,
-		"isModifyYPos": true,
-		"isAbsoluteValue": true,
-		"frequency": 2,
-		"phaseShift": 0,
-		"amplitude": 10
+		"Component": "ScaleByHPStamina",
+		"isScaleByHealth": true,
+		"isPlayer": false
 	}
   ]
 }

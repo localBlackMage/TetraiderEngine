@@ -11,7 +11,7 @@
 		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
 		
 		"isDebugModeEnabled": true,
-		"soundsMute": false
+		"soundsMute": true
 	},
 	"RENDER_SETTINGS": {
 		"enableWindowsCursor": false,

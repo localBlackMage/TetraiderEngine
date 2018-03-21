@@ -22,12 +22,17 @@ NPCController::NPCController() :
 	m_arrivedAtDestination(true),
 	m_speedMultiplier(1.0f),
 	m_isAvoidObstacles(true),
-	m_isAvoidingObstacle(false)
+	m_isAvoidingObstacle(false),
+	m_isDeathAnim(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	m_tagsToIgnore[0] = T_Projectile;
 	m_tagsToIgnore[1] = T_Player;
 	m_tagsToIgnore[2] = T_Enemy;
+
+	m_tagsToIgnoreForObstacleAvoidance[0] = T_Projectile;
+	m_tagsToIgnoreForObstacleAvoidance[1] = T_Player;
+	m_tagsToIgnoreForObstacleAvoidance[2] = T_Hazard;
 }
 
 NPCController::~NPCController() {
@@ -41,6 +46,7 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
+	if (m_isDead) return;
 	// Change of state
 	if (m_currentState != m_previousState) {
 		if (m_AIStates[m_currentState]) {
@@ -79,9 +85,14 @@ void NPCController::Update(float dt) {
 	}
 
 	Agent::Update(dt);
+	if (m_healthBarUI) {
+		m_healthBarUI->GetComponent<Transform>(C_Transform)->SetPosition(m_pTransform->GetPosition() + m_healthBarPosOffset);
+	}
 }
 
 void NPCController::LateUpdate(float dt) {
+	if (m_isDead) return;
+
 	if (TETRA_DEBUG.IsDebugModeOn()) {
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius*2.0f, DebugColor::RED);
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_outOfSightRadius*2.0f, DebugColor::YELLOW);
@@ -115,21 +126,50 @@ void NPCController::Serialize(const json& j) {
 	m_zoneWidth = ParseFloat(j, "zoneWidth");
 	m_zoneHeight = ParseFloat(j, "zoneHeight");
 	m_attackRange = ParseFloat(j, "attackRange");
+
+	m_healthBarPrefab = ParseString(j, "healthBarPrefab");
+	m_healthBarPosOffset = ParseVector3D(j, "healthBarOffset");
+	m_healthScale = ParseFloat(j, "healthScale");
+
+	m_isDeathAnim = ParseBool(j, "isDeathAnimationAvailable");
+	m_deathAnim = ParseInt(j, "deathAnimationIndex");
 }
 
 void NPCController::HandleEvent(Event* pEvent) {
-	Agent::HandleEvent(pEvent);
-
 	if (pEvent->Type() == EVENT_OnLevelInitialized) {
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
 		m_pPlayerTransform = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform);
 		m_startingPoint = m_pTransform->GetPosition();
 		m_targetDestination = m_startingPoint;
 	}
+	else if (pEvent->Type() == EVENT_OnTakeDamage) {
+		if (m_healthBarUI) {
+			m_healthBarUI->m_isRender = true;
+			m_healthBarUI->HandleEvent(pEvent);
+		}
+	}
 	else if (pEvent->Type() == EVENT_OnPlayerHealthZero) {
 		m_currentState = NPC_IDLE;
 		m_isPlayerDead = true;
 	}
+	else if (pEvent->Type() == EVENT_OnEnemyHealthZero) {
+		if (m_isDeathAnim) {
+			m_pAnimation->Play(m_deathAnim);
+			if(m_pWeapon) m_pWeapon->HideWeapon();
+			pGO->m_isCollisionDisabled = true;
+			TETRA_GAME_OBJECTS.SwitchGameObjectLayer(pGO, RENDER_LAYER::L_ONE);
+			//pGO->SwitchTag(T_DeadEnemy);
+			m_pBody->SetVelocity(Vector3D(0, 0, 0));
+			m_isDead = true;
+		}
+		else {
+			pGO->Destroy();
+		}
+	}
+
+	if (m_isDead) return;
+
+	Agent::HandleEvent(pEvent);
 
 	if(m_AIStates[m_currentState])
 		m_AIStates[m_currentState]->HandleEvent(pEvent);
@@ -141,6 +181,13 @@ void NPCController::LateInitialize() {
 	if(!m_pWeapon) {
 		if (pGO)
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
+	}
+
+	m_healthBarUI = TETRA_GAME_OBJECTS.CreateGameObject(m_healthBarPrefab);
+	if (m_healthBarUI) {
+		ScaleByHPStamina* pScaleByHpStamina = m_healthBarUI->GetComponent<ScaleByHPStamina>(C_ScaleByHPStamina);
+		pScaleByHpStamina->SetOriginalScale(m_healthScale, true);
+		m_healthBarUI->m_isRender = false;
 	}
 }
 
@@ -319,12 +366,16 @@ void NPCController::CheckForObstacleAvoidance() {
 
 	if (m_isAvoidingObstacle) return;
 
+	int tagNumber = 3;
+	if (!m_isIgnoreHazards)
+		tagNumber = 2;
+
 	// Is there an obstacle right infront of me
 	Vector3D pos = m_pTransform->GetPosition();
 	Vector3D dirToTargetDestination = (m_targetDestination - m_pTransform->GetPosition());
 	dirToTargetDestination.Normalize();
 	LineSegment2D ray(pos.x, pos.y, dirToTargetDestination.x*ObstacleAvoidanceFrontCheack + pos.x, dirToTargetDestination.y*ObstacleAvoidanceFrontCheack + pos.y);
-	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO)) {
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnoreForObstacleAvoidance, tagNumber, pGO)) {
 		// No need to avoid obstacles
 		TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::WHITE);
 		m_isAvoidingObstacle = false;
@@ -338,7 +389,7 @@ void NPCController::CheckForObstacleAvoidance() {
 
 		Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
 		ray.SetLine(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
-		if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO)) {
+		if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnoreForObstacleAvoidance, tagNumber, pGO)) {
 			TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::WHITE);
 			angle = dirToTargetDestination.AngleDegrees() - ObstacleAvoidanceSideCheckAngle;
 			if (angle > 180.0f)	angle -= 360;
@@ -346,7 +397,7 @@ void NPCController::CheckForObstacleAvoidance() {
 
 			Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
 			ray.SetLine(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
-			if (TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO)) {
+			if (TETRA_PHYSICS.Raycast(ray, m_tagsToIgnoreForObstacleAvoidance, tagNumber, pGO)) {
 				TETRA_DEBUG.DrawLine(Vector3D(ray.getP0()), Vector3D(ray.getP1()), DebugColor::RED);
 				m_avoidDirection = ObstacleAvoidanceDirection::LEFT;
 			}
@@ -379,10 +430,14 @@ void NPCController::AvoidObstacles(float dt) {
 	if (angle >= 180.0f) angle -= 360;
 	else if (angle < -180.0f) angle += 360;
 
+	int tagNumber = 3;
+	if (!m_isIgnoreHazards)
+		tagNumber = 2;
+
 	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
 	LineSegment2D ray(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
 	LineSegment2D rayForward(pos.x, pos.y, dirToTargetDestination.x*ObstacleAvoidanceFrontCheack + pos.x, dirToTargetDestination.y*ObstacleAvoidanceFrontCheack + pos.y);
-	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 2, pGO) && !TETRA_PHYSICS.Raycast(rayForward, m_tagsToIgnore, 2, pGO)) {
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnoreForObstacleAvoidance, tagNumber, pGO) && !TETRA_PHYSICS.Raycast(rayForward, m_tagsToIgnoreForObstacleAvoidance, tagNumber, pGO)) {
 		m_isAvoidingObstacle = false;
 		m_stuckTimer = 0.0f;
 		return;

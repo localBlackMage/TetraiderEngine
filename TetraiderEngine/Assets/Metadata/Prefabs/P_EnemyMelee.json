@@ -36,6 +36,15 @@
 		"zoneWidth": 350,
 		"zoneHeight": 350,
 		"attackRange": 250,
+		"healthBarPrefab": "P_EnemyHealthBar",
+		"isDeathAnimationAvailable": true,
+		"deathAnimationIndex": 2,
+		"healthBarOffset": {
+			"x": -30,
+			"y": 50,
+			"z": 0
+		},
+		"healthScale": 60,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -132,8 +141,8 @@
 			"Name": "Dead",
 			"frames": 1,
 			"animationSpeed": 8,
-			"isLooping": true,
-			"isPlayOnAwake": true
+			"isLooping": false,
+			"isPlayOnAwake": false
 		}
 		]
 	},

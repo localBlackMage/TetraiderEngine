@@ -271,3 +271,8 @@ void Weapon::MultiplyDamage(float multiplier, int attack) {
 		m_Attacks[attack]->MultiplyDamage(multiplier);
 	}
 }
+
+void Weapon::HideWeapon() {
+	if (m_pWeapon) m_pWeapon->m_isRender = false;
+	if (m_pEffect) m_pEffect->m_isRender = false;
+}

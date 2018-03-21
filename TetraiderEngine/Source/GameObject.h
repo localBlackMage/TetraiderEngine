@@ -37,6 +37,7 @@ public:
 	void Deactivate();
 	void OverrideComponents(const json & j);
 	void SetLayer(RENDER_LAYER layer) { m_layer = layer; }
+	void SwitchTag(GameObjectTag t) { m_tag = t; }
 	unsigned short GetLayer() { return m_layer; }
 	unsigned int ID() const { return m_id; }
 	void SetID(unsigned int id) { m_id = id; }

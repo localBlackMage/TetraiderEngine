@@ -78,6 +78,7 @@ public:
 	void RenderGameObjects();
 	void DestroyAllGameObjects();
 	void UpdateStatus();
+	void SwitchGameObjectLayer(GameObject* pGO, RENDER_LAYER layer);
 	bool IsPlayerAlive();
 	const std::vector<GameObject*>& GetObjectsWithHealthComponents() {	return mGameObjectsWithHealthComponents; }
 	const GameObject* GetPlayer() { return m_pPlayerReference; }

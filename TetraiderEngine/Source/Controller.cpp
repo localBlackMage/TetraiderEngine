@@ -93,10 +93,13 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) {
+				m_isControlAnimationOnVelocity = false;
+				m_pAnimation->Play(2);
 				m_isIgnoreHazards = true;
 				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
 			}
 			else {
+				m_isControlAnimationOnVelocity = true;
 				m_isIgnoreHazards = false;
 				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
 			}

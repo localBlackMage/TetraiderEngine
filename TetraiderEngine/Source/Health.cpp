@@ -52,8 +52,7 @@ void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float kno
 		}
 		else if (pGO->m_tag == GameObjectTag::T_Enemy) {
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnEnemyHealthZero));
-			// For prototype just destroy the enemy here
-			pGO->Destroy();
+			pGO->HandleEvent(&Event(EventType::EVENT_OnEnemyHealthZero));
 		}
 
 		pGO->HandleEvent(&Event(EventType::EVENT_OnHealthZero));
