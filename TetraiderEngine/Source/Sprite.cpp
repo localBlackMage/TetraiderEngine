@@ -12,7 +12,7 @@ Sprite::Sprite(std::string textureName) :
 	m_saturationColor(Vector3D()),
 	m_textureName(textureName),
 	m_texture(0),
-	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
+	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
 	m_shader(""),
 	m_posOffset(Vector3D())
 {

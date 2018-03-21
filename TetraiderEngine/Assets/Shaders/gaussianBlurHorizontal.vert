@@ -2,21 +2,20 @@
 
 // NON-UNIFORM INPUTS
 layout(location = 0) in vec4 position;
-layout(location = 1) in vec4 normal;
-layout(location = 2) in vec2 texture_coord;
-
 
 // UNIFORM INPUTS
-layout(location = 10) uniform mat4 persp_matrix;
-layout(location = 11) uniform mat4 view_matrix;
-layout(location = 12) uniform mat4 model_matrix;
-
+layout(location = 34) uniform float target_width;
 
 // OUTPUTS
-layout(location = 2) out vec2 vtexture_coord;
+layout(location = 10) out vec2 vblur_texture_coords[11];
 
 void main() {
-	vec4 P = model_matrix * position;
-	gl_Position = persp_matrix * view_matrix * P;
-	vtexture_coord = texture_coord;
+	gl_Position = vec4(position.xy, 0, 1.0);
+	
+	vec2 centerTexCoords = position.xy * 0.5f + 0.5f;
+	float pixelSize = 1.f / target_width;
+	
+	for ( int i = -5; i<=5; ++i) {
+		vblur_texture_coords[i+5] = centerTexCoords + vec2(pixelSize * i, 0);
+	}
 }

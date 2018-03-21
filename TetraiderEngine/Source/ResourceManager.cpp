@@ -58,12 +58,12 @@ GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurfac
 	glGenTextures(1, &textureBufferID);
 	glBindTexture(GL_TEXTURE_2D, textureBufferID);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, alphaMode,
 		sdlSurface->w, sdlSurface->h, 0,
 		alphaMode,
 		GL_UNSIGNED_BYTE, sdlSurface->pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
@@ -109,7 +109,7 @@ FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category typ
 
 bool ResourceManager::Init()
 {
-	Mesh * quad = LoadMesh("quad");
+	Mesh * quad = LoadMesh(QUAD_MESH);
 
 	quad->AddTriangle(
 		-0.5f, -0.5f, 0.0f, .0f, 1.f, 0xFFFFFFFF,
@@ -123,6 +123,21 @@ bool ResourceManager::Init()
 	);
 
 	quad->FinishMesh();
+
+	Mesh * screenQuad = LoadMesh(SCREEN_QUAD_MESH);
+
+	screenQuad->AddTriangle(
+		-1.f, -1.f, 0.0f, .0f, .0f, 0xFFFFFFFF,
+		1.f, -1.f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
+		-1.f, 1.f, 0.0f, .0f, 1.f, 0xFFFFFFFF
+	);
+	screenQuad->AddTriangle(
+		1.f, -1.f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
+		1.f, 1.f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
+		-1.f, 1.f, 0.0f, .0f, 1.f, 0xFFFFFFFF
+	);
+
+	screenQuad->FinishMesh();
 
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
 	LoadPrefabFiles();

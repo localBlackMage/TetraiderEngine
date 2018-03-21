@@ -1,6 +1,7 @@
 #include <Stdafx.h>
 
 #define GAME_SETTINGS "GAME_SETTINGS"
+#define RENDER_SETTINGS "RENDER_SETTINGS"
 #define ROOM_SETTINGS "ROOM_SETTINGS"
 #define LEVEL_SETTINGS "LEVEL_SETTINGS"
 #define INPUT_SETTINGS "INPUT_SETTINGS"
@@ -14,6 +15,7 @@ GameConfig::~GameConfig() {}
 void GameConfig::LoadConfig(std::string s) {
 	json j = OpenJsonFile(s);
 	json gameSettings = j[GAME_SETTINGS];
+	json renderSettings = j[RENDER_SETTINGS];
 
 	// Set project directories
 	m_levelFilesDir = ParseString(gameSettings, "levelFilesDir");
@@ -29,7 +31,7 @@ void GameConfig::LoadConfig(std::string s) {
 	//set mute
 	m_soundsMute = ParseBool(gameSettings,"soundsMute");
 	
-	m_consoleEnabled = ParseBool(gameSettings, "consoleEnabled");
+	m_consoleEnabled = ParseBool(renderSettings, "consoleEnabled");
 	if (m_consoleEnabled)
 		TETRA_RENDERER.SetUpConsole();
 
@@ -44,7 +46,7 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_RENDERER.SetWindowDimensions(m_screenWidth, m_screenHeight);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
 
-	if (ParseBool(gameSettings, "enableWindowsCursor"))
+	if (ParseBool(renderSettings, "enableWindowsCursor"))
 		TETRA_RENDERER.EnableWindowsCursor();
 	else
 		TETRA_RENDERER.DisableWindowsCursor();
@@ -59,16 +61,27 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_DEBUG.SetDebugMode(m_debugEnabled);
 
 	if (!TETRA_RENDERER.InitGlew())	exit(1);
-	TETRA_RENDERER.SetDebugShaderName(gameSettings["debugShader"]);
+	TETRA_RENDERER.SetDebugShaderName(renderSettings["debugShader"]);
 	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
-	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(gameSettings, "globalAmbient"));
-	TETRA_POST_PROCESSING.SetGBShaders(ParseString(j, "gbV"), ParseString(j, "gbH"));
+	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(renderSettings, "globalAmbient"));
+
+	ImageRenderersData IRD;
+	IRD.pGausHShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianHorizontalShader"));
+	IRD.pGausVShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianVerticalShader"));
+	IRD.pBaseShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "baseShader"));
+	TETRA_POST_PROCESSING.InitImageRenderers(IRD);
+	m_postProcessingEnabled = ParseBool(renderSettings, "postProcessingEnabled");
+	if (m_postProcessingEnabled)
+		TETRA_POST_PROCESSING.Enable();
+	else
+		TETRA_POST_PROCESSING.Disable();
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }
 
 
 #undef GAME_SETTINGS 
+#undef RENDER_SETTINGS
 #undef ROOM_SETTINGS 
 #undef LEVEL_SETTINGS 
 #undef INPUT_SETTINGS 

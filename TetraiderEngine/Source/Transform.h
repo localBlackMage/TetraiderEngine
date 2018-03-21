@@ -3,9 +3,6 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-//#include "Component.h"
-//#include "Math\MathLibs.h"
-
 //Forward declaration
 class Body;
 
@@ -50,6 +47,14 @@ public:
 	void SetAngleY(float angle);
 	float GetAngleZ() const;
 	void SetAngleZ(float angle);
+
+	void SetPivotOffset(float x, float y) {
+		m_pivotOffset.x = x;
+		m_pivotOffset.y = y;
+	}
+
+	float GetPivotOffsetX() { return m_pivotOffset.x; }
+	float GetPivotOffsetY() { return m_pivotOffset.y; }
 
 	void RotateX(float amount);
 	void RotateY(float amount);

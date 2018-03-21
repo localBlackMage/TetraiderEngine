@@ -62,7 +62,7 @@
   {
     "Component": "PowerUpButton",
     "level"    : 2,
-	"category" : "Defense",
+	"category" : "Normal",
 	"iconPrefab": "P_PowerUpSprite"
   }
  ]

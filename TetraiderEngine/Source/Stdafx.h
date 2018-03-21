@@ -78,10 +78,12 @@ using namespace JsonReader;
 #include <Subscriber.h>
 #include <SurfaceTextureBuffer.h>
 #include <FontInfo.h>
+#include <FrameBufferObject.h>
 #include <Mesh.h>
 #include <DebugLineMesh.h>
 #include <Shader.h>
 #include <ShaderProgram.h>
+#include <ImageRenderer.h>
 #include <Sorting.h>
 #include <Shape.h>
 #pragma endregion
@@ -107,6 +109,8 @@ using namespace JsonReader;
 #include <AI_HitNRunAttack.h>
 #include <AI_HitNRunEngage.h>
 #include <AI_HitNRunRetreat.h>
+#include <AI_BomberAttack.h>
+#include <AI_BomberRetreat.h>
 #include <AI_StateFactory.h>
 #pragma endregion
 

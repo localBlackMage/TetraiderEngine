@@ -28,6 +28,7 @@ private:
 	int m_screenWidth, m_screenHeight;
 	bool m_consoleEnabled;
 	bool m_debugEnabled;
+	bool m_postProcessingEnabled;
 public:
 	GameConfig();
 	~GameConfig();

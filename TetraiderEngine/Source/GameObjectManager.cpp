@@ -96,18 +96,8 @@ void GameObjectLayer::Update()
 			m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
 		}
 	}
-}
-
-void GameObjectLayer::ClearLayer()
-{
-	m_layerObjects.clear();
-}
-
-void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
-{
-	// If there are fewer than MAX_LIGHTS lights, don't bother sorting by distance
-	// else, Pick the MAX_LIGHTS closest lights
-	if (m_layerLights.size() > MAX_LIGHTS) {
+	else {
+		Vector3D PlayerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
 		std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
 		std::vector< std::pair<GameObject*, float> > lights;
 		lights.reserve(MAX_LIGHTS);
@@ -115,15 +105,15 @@ void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
 
 		unsigned int i = 0;
 		for (i = 0; i < MAX_LIGHTS; ++i) {
-			float dist = Vector3D::SquareDistance(pos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
+			float dist = Vector3D::SquareDistance(PlayerPos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
 			lights.push_back(std::make_pair(m_layerLights[i], dist));
 			Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
 		}
 
 		for (i = MAX_LIGHTS; i < m_layerLights.size(); ++i) {
-			float dist = Vector3D::SquareDistance(pos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
+			float dist = Vector3D::SquareDistance(PlayerPos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
 			// If this light is farther away than the farthest light, ignore it
-			if (dist > lights[MAX_LIGHTS-1].second)	continue;
+			if (dist > lights[MAX_LIGHTS - 1].second)	continue;
 
 			lights[MAX_LIGHTS - 1].first = nullptr;
 			lights.pop_back();
@@ -148,6 +138,58 @@ void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
 			m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
 		}
 	}
+}
+
+void GameObjectLayer::ClearLayer()
+{
+	m_layerObjects.clear();
+}
+
+void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
+{
+	// If there are fewer than MAX_LIGHTS lights, don't bother sorting by distance
+	// else, Pick the MAX_LIGHTS closest lights
+	//if (m_layerLights.size() > MAX_LIGHTS) {
+	//	std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
+	//	std::vector< std::pair<GameObject*, float> > lights;
+	//	lights.reserve(MAX_LIGHTS);
+
+
+	//	unsigned int i = 0;
+	//	for (i = 0; i < MAX_LIGHTS; ++i) {
+	//		float dist = Vector3D::SquareDistance(pos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
+	//		lights.push_back(std::make_pair(m_layerLights[i], dist));
+	//		Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
+	//	}
+
+	//	for (i = MAX_LIGHTS; i < m_layerLights.size(); ++i) {
+	//		float dist = Vector3D::SquareDistance(pos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
+	//		// If this light is farther away than the farthest light, ignore it
+	//		if (dist > lights[MAX_LIGHTS-1].second)	continue;
+
+	//		lights[MAX_LIGHTS - 1].first = nullptr;
+	//		lights.pop_back();
+	//		lights.push_back(std::make_pair(m_layerLights[i], dist));
+	//		Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
+	//	}
+
+	//	int idx = 0;
+	//	for (unsigned int i = 0; i < MAX_LIGHTS; ++i) {
+	//		idx = i * 4;
+	//		PointLight* pPointLightComp = lights[i].first->GetComponent<PointLight>(ComponentType::C_PointLight);
+
+	//		m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
+	//		m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
+	//		m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
+	//		m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
+
+	//		Vector3D pos = pPointLightComp->GetPosition();
+	//		m_lightPositionsAndDistances[idx + 0] = pos.x;
+	//		m_lightPositionsAndDistances[idx + 1] = pos.y;
+	//		m_lightPositionsAndDistances[idx + 2] = pos.z;
+	//		m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
+	//	}
+	//}
 
 	glUniform4fv(SHADER_LOCATIONS::L_COLOR, MAX_LIGHTS, m_lightColors);
 	glUniform4fv(SHADER_LOCATIONS::L_POS_DIST, MAX_LIGHTS, m_lightPositionsAndDistances);
@@ -156,6 +198,77 @@ void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
 #pragma endregion
 
 #pragma region GameObjectManager
+
+#pragma region Private Methods
+void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
+	mGameObjects.push_back(pGO);
+
+	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
+		m_layers[pGO->GetLayer()].AddToLayer(pGO);
+}
+
+void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
+{
+	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
+
+	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
+		if (pLightComp->GetLayer(i))
+			m_layers[i].AddLightToLayer(pGO);
+	}
+}
+
+void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigned int endLayer)
+{
+	for (unsigned int layer = startLayer; layer < endLayer; ++layer) {
+		for (GameObject* cameraGO : m_pCameras) {
+			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
+			if (cameraComp->ShouldRenderLayer(layer))
+				m_layers[layer].RenderLayer(cameraGO);
+		}
+	}
+}
+
+void GameObjectManager::_RenderWithPostProcessing()
+{
+	TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(0,0,0,0));
+	TETRA_POST_PROCESSING.BindBaseFBO();
+
+	#pragma region RENDER_GLOWING_OBJECTS
+	// Render all layers but UI
+	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
+
+	for (GameObject* cameraGO : m_pCameras) {
+		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
+			TETRA_DEBUG.RenderDebugCommands(cameraGO);
+			break;
+		}
+	}
+	
+	// Render UI
+	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+	#pragma endregion
+	TETRA_POST_PROCESSING.UnbindBaseFBO();
+	TETRA_POST_PROCESSING.DoPostProcessing();
+	//TETRA_RENDERER.DrawSceneFBO();
+}
+
+void GameObjectManager::_RenderWithoutPostProcessing()
+{
+	// Render all layers but UI
+	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
+
+	for (GameObject* cameraGO : m_pCameras) {
+		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
+			TETRA_DEBUG.RenderDebugCommands(cameraGO);
+			break;
+		}
+	}
+
+	// Render UI
+	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+}
+
+#pragma endregion
 
 GameObjectManager::GameObjectManager() : m_currentId(0) {}
 
@@ -210,30 +323,10 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	// Render all layers but UI
-	for (unsigned int layer = 0; layer < RENDER_LAYER::L_UI; ++layer) {
-		for (GameObject* cameraGO : m_pCameras) {
-			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-			if (cameraComp->ShouldRenderLayer(layer))
-				m_layers[layer].RenderLayer(cameraGO);
-		}
-	}
-
-	for (GameObject* cameraGO : m_pCameras) {
-		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
-			TETRA_DEBUG.RenderDebugCommands(cameraGO);
-			break;
-		}
-	}
-
-	// Render UI
-	for (unsigned int layer = L_UI; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
-		for (GameObject* cameraGO : m_pCameras) {
-			Camera* cameraComp = cameraGO->GetComponent<Camera>(ComponentType::C_Camera);
-			if (cameraComp->ShouldRenderLayer(layer))
-				m_layers[layer].RenderLayer(cameraGO);
-		}
-	}
+	if (TETRA_POST_PROCESSING.IsEnabled())
+		_RenderWithPostProcessing();
+	else
+		_RenderWithoutPostProcessing();
 }
 
 void GameObjectManager::AddGameObject(GameObject* pGO) {
@@ -369,23 +462,6 @@ void GameObjectManager::HandleEvent(Event *pEvent) {
 	case EventType::EVENT_StaticsLoaded:
 		UpdateStatus();
 		break;
-	}
-}
-
-void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
-	mGameObjects.push_back(pGO);
-
-	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
-		m_layers[pGO->GetLayer()].AddToLayer(pGO);
-}
-
-void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
-{
-	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
-
-	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
-		if (pLightComp->GetLayer(i))
-			m_layers[i].AddLightToLayer(pGO);
 	}
 }
 

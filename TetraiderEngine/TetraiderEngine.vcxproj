@@ -19,10 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI_BomberAttack.cpp" />
+    <ClCompile Include="Source\AI_BomberRetreat.cpp" />
     <ClCompile Include="Source\AI_HitNRunAttack.cpp" />
     <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
     <ClCompile Include="Source\Endpoints.cpp" />
+    <ClCompile Include="Source\ImageRenderer.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PostProcessing.cpp" />
     <ClCompile Include="Source\PowerUpButton.cpp" />
@@ -60,6 +63,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\FollowCamera.cpp" />
+    <ClCompile Include="Source\FrameBufferObject.cpp" />
     <ClCompile Include="Source\ImguiManager.cpp" />
     <ClCompile Include="Source\LevelEditor.cpp" />
     <ClCompile Include="Source\LightBase.cpp" />
@@ -153,10 +157,13 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI_BomberAttack.h" />
+    <ClInclude Include="Source\AI_BomberRetreat.h" />
     <ClInclude Include="Source\AI_HitNRunAttack.h" />
     <ClInclude Include="Source\AI_HitNRunEngage.h" />
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />
     <ClInclude Include="Source\Endpoints.h" />
+    <ClInclude Include="Source\ImageRenderer.h" />
     <ClInclude Include="Source\PlayerStatsManager.h" />
     <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
@@ -181,6 +188,7 @@
     <ClInclude Include="Source\External\Imgui\stb_truetype.h" />
     <ClInclude Include="Source\FollowCamera.h" />
     <ClInclude Include="Source\FontInfo.h" />
+    <ClInclude Include="Source\FrameBufferObject.h" />
     <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\ImguiManager.h" />
     <ClInclude Include="Source\LevelEditor.h" />

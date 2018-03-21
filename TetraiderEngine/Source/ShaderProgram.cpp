@@ -23,12 +23,12 @@ ShaderProgram::~ShaderProgram()
 	}
 }
 
-GLint ShaderProgram::GetProgram() const
+GLint ShaderProgram::GetProgramID() const
 {
 	return m_programID;
 }
 
-GLint & ShaderProgram::GetProgramRef()
+GLint & ShaderProgram::GetProgramIDRef()
 {
 	return m_programID;
 }
@@ -58,7 +58,7 @@ void ShaderProgram::AttachShader(Shader& shader)
 
 void ShaderProgram::LinkShaders()
 {
-	GLint Result = GL_FALSE;
+	GLint Result;
 	int InfoLogLength;
 	glLinkProgram(m_programID);
 
@@ -69,4 +69,6 @@ void ShaderProgram::LinkShaders()
 		glGetProgramInfoLog(m_programID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
 	}
+	if (Result != GL_TRUE)
+		std::cout << "LINKING FAILED : " << m_programID << std::endl;
 }

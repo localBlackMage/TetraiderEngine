@@ -63,7 +63,7 @@ Text::Text(std::string fontName) :
 	m_letterSpacing(1.f),
 	m_fontName(fontName),
 	m_texture(0),
-	m_mesh(*TETRA_RESOURCES.LoadMesh("quad")),
+	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
 	m_shader("")
 {}
 

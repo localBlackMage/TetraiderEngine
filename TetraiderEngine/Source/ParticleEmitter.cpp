@@ -175,7 +175,7 @@ ParticleEmitter::ParticleEmitter() :
 	m_emissionTime(0.f),
 	m_emissionTimer(0.f),
 	m_liveParticleCount(0),
-	m_mesh(*TETRA_RESOURCES.LoadMesh("quad"))
+	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH))
 {}
 
 ParticleEmitter::~ParticleEmitter() 

@@ -1,7 +1,7 @@
 #version 430
 
 // UNIFORM INPUTS
-layout(location = 0) uniform sampler2D usampler;
+layout(location = 0) uniform sampler2D spriteTexture;
 
 layout(location = 40) uniform vec3 ambient_global_color;
 layout(location = 41) uniform vec3 ambient_color;
@@ -56,5 +56,5 @@ void main(void) {
 	else
 		lightColor = vec3(1,1,1);
 
-	frag_color = ((texture(usampler, offsetCoords) * vtint_color) + vsaturation_color) * vec4(lightColor,1);
+	frag_color = ((texture(spriteTexture, offsetCoords) * vtint_color) + vsaturation_color) * vec4(lightColor,1);
 }

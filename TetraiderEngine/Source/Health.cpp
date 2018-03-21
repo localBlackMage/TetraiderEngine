@@ -29,7 +29,8 @@ void Health::HandleEvent(Event* pEvent) {
 		}
 		case EVENT_OnLevelInitialized: {
 			if (pGO->m_tag == T_Player) {
-				int extraHealth = TETRA_PLAYERSTATS.GetHealthUpgrade();
+				int extraHealth = 0;
+				TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::HealthUpgrade, extraHealth);
 				UpdgradeMaxHealth(extraHealth);
 			}
 		}

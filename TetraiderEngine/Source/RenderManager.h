@@ -15,6 +15,14 @@ Creation date: 1/17/18
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
+enum TEXTURE_LOCATIONS {
+	FIRST = 0,
+	SECOND = 1,
+	THIRD = 2,
+	FOURTH = 3,
+	NUM_TEXTURES = 4
+};
+
 enum SHADER_LOCATIONS {
 	POSITION = 0,		// 0
 	NORMAL,				// 1
@@ -34,6 +42,8 @@ enum SHADER_LOCATIONS {
 	FRAME_OFFSET,		// 32
 	FRAME_SIZE,			// 33
 	TILE,				// 34
+	TARGET_WIDTH,		// 35
+	TARGET_HEIGHT,		// 36
 
 	GLOBAL_AMBIENT = 40,// 40
 	AMBIENT,			// 41
@@ -55,6 +65,8 @@ class RenderManager : public Subscriber
 {
 private:
 	friend class DebugManager;
+	friend class PostProcessing;
+	friend class GameObjectManager;
 
 	float m_la, m_lb;		// light falloff numbers
 	bool m_lights;			// whether or not lights should be rendered
@@ -64,6 +76,7 @@ private:
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
 	bool m_cursorEnabled;
+	Vector3D m_clearColor;
 
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
@@ -86,9 +99,6 @@ private:
 	void _RenderLine(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale);
 	void _RenderCone(const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& arcWidthAndRadius);
 
-	void _EnableAlphaTest();
-	void _EnableDepthTest();
-	void _BindMesh(const Mesh& mesh);
 	void _BindGameObjectTransform(const GameObject& gameObject);
 	void _BindGameObjectTransformWithOffset(const GameObject& gameObject, const Vector3D& offset);
 	void _BindVertexAttribute(SHADER_LOCATIONS location, GLuint bufferID, unsigned int size, int type, int normalized, int stride = 0, int offset = 0);
@@ -104,6 +114,7 @@ public:
 
 	bool InitGlew();
 
+	Vector3D GetClearColor() const { return m_clearColor; }
 	void SetGlobalAmbientLight(Vector3D ambientLight) { m_globalAmbientLight = ambientLight; }
 	void FrameStart();
 	void FrameEnd();
@@ -113,7 +124,7 @@ public:
 	void SetUpConsole();
 	void InitWindow(bool debugEnabled);
 	void EnableWindowsCursor();
-	void DisableWindowsCursor();
+	void DisableWindowsCursor(); 
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
 	void SetWindowDimensions(int width, int height);
@@ -125,7 +136,16 @@ public:
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
+	void EnableAlphaTest();
+	void EnableDepthTest();
+	void BindMesh(const Mesh& mesh);
+	void ClearBuffer();
+	void ClearBuffer(const Vector3D& color);
 	GLuint GenerateStreamingVBO(unsigned int size);
+	GLuint GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type);
+	void BindWindowFrameBuffer();
+	void DrawSceneFBO();
+
 	template <typename BufferType>
 	void BindBufferData(const GLuint& bufferID, BufferType& bufferData, unsigned int size)
 	{
@@ -133,7 +153,6 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STREAM_DRAW); // Buffer orphaning
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, bufferData);
 	}
-
 
 	void LoadShaders(const std::vector<std::string>& shaders);
 	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }

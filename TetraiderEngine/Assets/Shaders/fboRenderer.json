@@ -1,0 +1,6 @@
+{
+	"fboRenderer": {
+		"vertex": "fboRenderer.vert",
+		"fragment": "fboRenderer.frag"
+	}
+}

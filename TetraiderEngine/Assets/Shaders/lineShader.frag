@@ -1,9 +1,9 @@
 #version 430
 
-layout(location = 1) in vec4 vsaturation_color;
+layout(location = 31) uniform vec4 saturation_color;
 
 out vec4 frag_color;
 
 void main(void) {
-	frag_color = vsaturation_color;
+	frag_color = saturation_color;
 }

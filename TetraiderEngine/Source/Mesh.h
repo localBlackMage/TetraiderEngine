@@ -15,6 +15,9 @@ Creation date: 1/17/18
 #ifndef MESH_H
 #define MESH_H
 
+#define QUAD_MESH "quad"
+#define SCREEN_QUAD_MESH "screenQuad"
+
 struct Face {
 	unsigned int index[3];
 	explicit Face(unsigned int v1, unsigned int v2, unsigned int v3) { 

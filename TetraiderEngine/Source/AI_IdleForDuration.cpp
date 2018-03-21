@@ -5,7 +5,7 @@
 #include <Stdafx.h>
 
 AI_IdleForDuration::AI_IdleForDuration()
-: AI_State(NPC_State_Retreat) {
+: AI_State(NPC_State_IdleForDuration) {
 
 }
 

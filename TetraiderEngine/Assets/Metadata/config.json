@@ -7,23 +7,28 @@
 		"shadersDir": "../TetraiderEngine/Assets/Shaders/",
 		"texturesDir": "../TetraiderEngine/Assets/Textures/",
 		"fontsDir": "../TetraiderEngine/Assets/Fonts/",
+		
 		"powerUpSettings": "../TetraiderEngine/Assets/Metadata/powerUpSettings.json",
 		
 		"isDebugModeEnabled": true,
-		"soundsMute": false,
-		
+		"soundsMute": false
+	},
+	"RENDER_SETTINGS": {
 		"enableWindowsCursor": false,
 		"debugShader": "lineShader",
-		"gbV": "gaussianBlurVertical",
-		"gbH": "gaussianBlurHorizontal",
+		"baseShader": "fboRenderer",
+		"gaussianHorizontalShader": "gaussianBlurHorizontal",
+		"gaussianVerticalShader": "gaussianBlurVertical",
 		"consoleEnabled": true,
-		"globalAmbient": { "r":0.6, "g":0.6, "b":0.6, "a":1 }
+		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
+		"postProcessingEnabled": false
 	},
 	"SHADERS": [
-		"brightSamplerShader",
-		"defaultShader",
-		"gaussianBlurVertical",
+		"fboRenderer",
+		"glowShader",
+		"default",
 		"gaussianBlurHorizontal",
+		"gaussianBlurVertical",
 		"lineShader",
 		"particleShader"
 	],
@@ -190,8 +195,17 @@
 			"XboxKey": 0
 		},
 		{
-			"Name": "ExitLevel",
+			"Name": "TOGGLE_POST_PROCESSING",
 			"EventType": 16,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 64,
+			"XboxKey": 0
+		},
+		{
+			"Name": "ExitLevel",
+			"EventType": 17,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

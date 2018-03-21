@@ -2,7 +2,8 @@
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false)
+	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
+	m_clearColor(Vector3D(.2f,.2f,.2f,1.f))
 {
 }
 
@@ -42,7 +43,7 @@ bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObj
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 {
-	_BindMesh(pSpriteComp->GetMesh());
+	BindMesh(pSpriteComp->GetMesh());
 	glUniform1i(SHADER_LOCATIONS::LIT, m_lights ? pSpriteComp->IsLit() : false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pSpriteComp->GetUOffset(), pSpriteComp->GetVOffset());
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
@@ -53,12 +54,14 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
-		_EnableAlphaTest();
+		EnableAlphaTest();
 	else
-		_EnableDepthTest();
+		EnableDepthTest();
 
 	// select the texture to use
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 	GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
@@ -72,7 +75,7 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 {
 	pParticleEmitterComp->BindBufferDatas();
 
-	_BindMesh(pParticleEmitterComp->GetMesh());
+	BindMesh(pParticleEmitterComp->GetMesh());
 
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pParticleEmitterComp->FrameWidth(), pParticleEmitterComp->FrameHeight());
 
@@ -85,18 +88,20 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_TEXTURE_COORD, 1);	// texture coordinates : one per quad -> 1
 
 	if (pParticleEmitterComp->GetAlphaMode() == GL_RGBA)
-		_EnableAlphaTest();
+		EnableAlphaTest();
 	else
-		_EnableDepthTest();
+		EnableDepthTest();
 
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pParticleEmitterComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 3 * pParticleEmitterComp->GetMesh().faceCount(), pParticleEmitterComp->LiveParticles());
 }
 
 void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTransformComp)
 {
-	_BindMesh(pTextComp->GetMesh());
+	BindMesh(pTextComp->GetMesh());
 
 	glUniform1i(SHADER_LOCATIONS::LIT, false);
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pTextComp->FrameWidth(), pTextComp->FrameHeight());
@@ -105,12 +110,14 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 	glUniform4f(SHADER_LOCATIONS::SATURATION_COLOR, 0.f, 0.f, 0.f, 0.f);
 
 	if (pTextComp->GetAlphaMode() == GL_RGBA)
-		_EnableAlphaTest();
+		EnableAlphaTest();
 	else
-		_EnableDepthTest();
+		EnableDepthTest();
 
 	// select the texture to use
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pTextComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 
 	std::vector< std::vector<TexCoords> > textureOffsets = pTextComp->GetTextureOffsets();
@@ -198,7 +205,7 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 {
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	const Transform * transformComp = camera.GetComponent<Transform>(ComponentType::C_Transform);
-	glUseProgram(m_pCurrentProgram->GetProgram());
+	glUseProgram(m_pCurrentProgram->GetProgramID());
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
 	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
@@ -221,6 +228,7 @@ void RenderManager::_SetUpDebug(const GameObject& camera)
 	SelectShaderProgram(m_debugShaderName);
 	_SetUpCamera(camera);
 	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	//_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetMesh(QUAD_MESH)->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 }
 
 void RenderManager::_RenderDebugCommand(DebugShape shape, const Vector3D & color, const Vector3D& pos, const Vector3D& rot, const Vector3D& scale)
@@ -250,8 +258,8 @@ void RenderManager::_RenderRect(const Vector3D & color, const Vector3D & pos, co
 
 	// square base matrix
 	Matrix4x4 Base = Matrix4x4::Translate(pos) * Matrix4x4::Rotate(rot.z, ZAXIS);
-	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, ZAXIS) * Matrix4x4::Scale(scale.y, 0.f, 0.f);
-	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 0.f);
+	Matrix4x4 SideBase = Matrix4x4::Rotate(90.f, ZAXIS) * Matrix4x4::Scale(scale.y, 0.f, 1.f);
+	Matrix4x4 TopBotScale = Matrix4x4::Scale(scale.x, 0.f, 1.f);
 
 	Matrix4x4 Left = Base
 		* Matrix4x4::Translate(Vector3D(-halfWidth, 0, 0))
@@ -371,29 +379,6 @@ void RenderManager::_RenderCone(const Vector3D & color, const Vector3D & pos, co
 
 #pragma region Binds
 
-void RenderManager::_EnableAlphaTest()
-{
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.01f);
-	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-void RenderManager::_EnableDepthTest()
-{
-	glDisable(GL_ALPHA_TEST);
-	glEnable(GL_DEPTH_TEST);
-}
-
-void RenderManager::_BindMesh(const Mesh & mesh)
-{
-	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, mesh.GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	_BindVertexAttribute(SHADER_LOCATIONS::NORMAL, mesh.GetNormalBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
-}
-
 void RenderManager::_BindGameObjectTransform(const GameObject & gameObject)
 {
 	Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
@@ -441,6 +426,42 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 
 #pragma endregion
 
+
+void RenderManager::EnableAlphaTest()
+{
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.01f);
+	glEnable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void RenderManager::EnableDepthTest()
+{
+	glDisable(GL_ALPHA_TEST);
+	glEnable(GL_DEPTH_TEST);
+}
+
+void RenderManager::BindMesh(const Mesh & mesh)
+{
+	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, mesh.GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::NORMAL, mesh.GetNormalBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+}
+
+void RenderManager::ClearBuffer()
+{
+	ClearBuffer(m_clearColor);
+}
+
+void RenderManager::ClearBuffer(const Vector3D& color)
+{
+	// clear frame and depth buffers
+	glClearColor(color.x, color.y, color.z, color.w);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 bool RenderManager::InitGlew()
 {
 	// GLEW: get function bindings (if possible)
@@ -452,13 +473,10 @@ bool RenderManager::InitGlew()
 	return true;
 }
 
-void RenderManager::FrameStart()
+void RenderManager::FrameStart() 
 {
-	// clear frame buffer and z-buffer
-	glClearColor(0.2f, 0.2f, 0.2f, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClearDepth(1);
-	glClear(GL_DEPTH_BUFFER_BIT);
+	BindWindowFrameBuffer();
+	ClearBuffer(m_clearColor);
 }
 
 void RenderManager::FrameEnd()
@@ -500,6 +518,12 @@ void RenderManager::HandleEvent(Event * p_event)
 			}
 			break;
 		}
+		case EVENT_TOGGLE_POST_PROCESSING:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased)
+				TETRA_POST_PROCESSING.Toggle();
+		}
 	}
 }
 
@@ -535,15 +559,27 @@ void RenderManager::InitWindow(bool debugEnabled)
 		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_POST_PROCESSING, this);
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
 
+	/* Request opengl 3.2 context.
+	* SDL doesn't have the ability to choose which profile at this time of writing,
+	* but it should default to the core profile */
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
+	/* Turn on double buffering with a 24bit Z buffer.
+	* You may need to change this to 16 or 32 for your system */
+	//SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
 	m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL);
+		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 
 	// Initialize PNG loading
@@ -653,6 +689,41 @@ GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 	return bufferId;
 }
 
+GLuint RenderManager::GenerateFBO(GLuint& fboID, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type)
+{
+	GLuint fboTexBuffer;
+	glGenFramebuffers(1, &fboID);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboID);
+
+	glGenTextures(1, &fboTexBuffer);
+	glBindTexture(GL_TEXTURE_2D, fboTexBuffer);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexBuffer, 0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	return fboTexBuffer;
+}
+
+void RenderManager::BindWindowFrameBuffer()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, m_width, m_height);
+}
+
+// Draws whatever's in the PostProcessing base FBO to the screen
+void RenderManager::DrawSceneFBO()
+{
+	ClearBuffer(m_clearColor);
+
+	TETRA_POST_PROCESSING.RenderBaseFBO();
+}
+
 #pragma region Shaders
 
 void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
@@ -663,10 +734,6 @@ void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
 	for (std::string shader : shaders) {
 		LoadShaderProgram(shaderDir, shader + ext);
 	}
-
-	//LoadShaderProgram(shaderDir, m_debugShaderName + ".json");
-	//LoadShaderProgram(shaderDir, "defaultShader.json");
-	//LoadShaderProgram(shaderDir, "particleShader.json");
 }
 
 void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)
