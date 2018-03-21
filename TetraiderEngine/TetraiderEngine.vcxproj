@@ -68,7 +68,6 @@
     <ClCompile Include="Source\LevelEditor.cpp" />
     <ClCompile Include="Source\LightBase.cpp" />
     <ClCompile Include="Source\Microphone.cpp" />
-    <ClCompile Include="Source\PauseMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\AI_Attack.cpp" />
     <ClCompile Include="Source\AI_Engage.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="Source\LevelEditor.h" />
     <ClInclude Include="Source\LightBase.h" />
     <ClInclude Include="Source\Microphone.h" />
-    <ClInclude Include="Source\PauseMenu.h" />
     <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\AI_Attack.h" />
     <ClInclude Include="Source\AI_Engage.h" />

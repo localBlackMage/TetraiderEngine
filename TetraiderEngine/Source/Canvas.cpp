@@ -68,16 +68,21 @@ void Canvas::LateInitialize()
 				return;
 			}
 		}
-		TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
 		TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
-		TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+		//TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
 	}
+	else if(m_canvasType == CanvasType::CANVAS_LOSE)
+		TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+	
+	
 }
 
 void Canvas::HandleEvent(Event * pEvent)
 {
-
-	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME)
+	
+	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME && m_canvasType==CanvasType::CANVAS_PAUSE)
 	{
 		if (m_isLevelOver || m_isCannotPause) return;
 
@@ -89,11 +94,11 @@ void Canvas::HandleEvent(Event * pEvent)
 		if (m_isActive)
 		{
 			this->ActivateCanvas();
-			if (m_pText) {
+			/*if (m_pText) {
 				m_pText->SetText("PAUSED");
 				m_pText->SetOffset(Vector3D(-80, 200, 0));
-			}
-		}	
+			}*/
+		}	 
 		else
 		{
 			this->DeactivateCanvas();
@@ -103,22 +108,22 @@ void Canvas::HandleEvent(Event * pEvent)
 			}
 		}	
 	}
+	else if(pEvent->Type() == EVENT_INPUT_PAUSEGAME && m_canvasType!= CanvasType::CANVAS_PAUSE)
+	{
+		this->DeactivateCanvas();
+	}
 	
 	else if (pEvent->Type() == EVENT_LevelInComplete) {
 		m_isLevelOver = true;
 		m_isActive = true;
 
-		/*for (auto gameObjects : m_objects) {
-			gameObjects->SetActive(m_isActive);
-		}
-
-		pGO->m_isRender = m_isActive;*/
 		this->ActivateCanvas();
-
-		/*if (m_pText) {
+		/*TETRA_UI.GetCanvasPause()->m_pText->SetText("");
+		if (m_pText) {
 			m_pText->SetText("YOU LOSE");
 			m_pText->SetOffset(Vector3D(-120, 200, 0));
 		}*/
+		
 	}
 	else if (pEvent->Type() == EVENT_ExitLevel) {
 		m_isCannotPause = true;

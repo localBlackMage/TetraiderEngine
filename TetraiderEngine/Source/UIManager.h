@@ -14,9 +14,10 @@ public:
 	void DeactivateCanvas(const CanvasType);
 	void RegisterCanvas(Canvas *);
 	void DeregisterCanvas(Canvas *);
+	Canvas* GetCanvasPause() { return m_Pause; };
 
 private:
 	Canvas* m_Canvas[(int)CanvasType::CANVAS_NUM];
-	
+	Canvas* m_Pause;
 };
 
