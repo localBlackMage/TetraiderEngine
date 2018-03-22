@@ -64,7 +64,11 @@ void GameStateManager::HandleEvent(Event * p_event) {
 		case EVENT_INPUT_PAUSEGAME: {
 			if (m_isLevelOver) return;
 			InputButtonData* pData = p_event->Data<InputButtonData>();
-			if(pData->m_isTrigger) PauseGame(!m_isGamePaused);
+			if (pData->m_isTrigger) {
+				PauseGame(!m_isGamePaused);
+				if(m_isGamePaused) TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnPauseGame));
+				else TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnGameResume));
+			}
 			break;
 		}
 		case EVENT_LevelInComplete: {

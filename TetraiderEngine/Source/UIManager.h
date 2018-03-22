@@ -1,7 +1,6 @@
 #pragma once
 #include "CanvasTypeName.h"
-class Canvas;
-
+#include "Canvas.h"
 
 class UIManager : public Subscriber
 {
@@ -14,10 +13,13 @@ public:
 	void DeactivateCanvas(const CanvasType);
 	void RegisterCanvas(Canvas *);
 	void DeregisterCanvas(Canvas *);
+	void DeActivateAllCanvas();
 	Canvas* GetCanvasPause() { return m_Pause; };
+	void HandleEvent(Event* pEvent);
 
 private:
 	Canvas* m_Canvas[(int)CanvasType::CANVAS_NUM];
 	Canvas* m_Pause;
+    int m_count;
 };
 

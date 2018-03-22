@@ -40,9 +40,17 @@
                     "prefab":"P_ControlTitle",
                     "position":{
                       "x":0,
-                      "y":50
+                      "y":200
                     }
-                }    
+                },
+                {
+                  "prefab": "P_Cursor",
+                  "position": {
+                      "x": 100,
+                      "y": 100,
+                      "z": 0
+                  }
+              }    
             ]
         }
     ]

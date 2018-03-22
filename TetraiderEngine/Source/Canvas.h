@@ -21,7 +21,7 @@ public:
 	void HandleEvent(Event* pEvent);
 	void ActivateCanvas();
 	void DeactivateCanvas();
-	
+	bool GetActiveStatus() { return m_isActive; };
 	CanvasType m_canvasType;
 };
 
