@@ -45,6 +45,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["PowerUpButton"] = PowerUpButton::CreateInstance;
 	m_creationFunctions["Slider"] = Slider::CreateInstance;
 	m_creationFunctions["Endpoints"] = Endpoints::CreateInstance;
+	m_creationFunctions["Shop"] = Shop::CreateInstance;
+	m_creationFunctions["NotEnoughGoldFeathers"] = NotEnoughGoldFeathers::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

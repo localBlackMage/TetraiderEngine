@@ -138,6 +138,15 @@
 			"KeyBoardKey": 41,
 			"XboxKey": 6
 		},
+		{
+			"Name": "OpenShop",
+			"EventType": 18,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 20,
+			"XboxKey": 0
+		},
 		
 		{
 			"Name": "LIGHT_A_DOWN",
@@ -210,6 +219,15 @@
 			"isMouse": false,
 			"isJoystick": false,
 			"KeyBoardKey": 8,
+			"XboxKey": 0
+		},
+		{
+			"Name": "AddGoldenFeathers",
+			"EventType": 19,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 67,
 			"XboxKey": 0
 		}
 	]

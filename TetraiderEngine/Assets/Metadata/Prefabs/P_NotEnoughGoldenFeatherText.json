@@ -1,17 +1,17 @@
 {
   "Tag": "UI",
-  "Layer": "UI",
+  "Layer": "UI_1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -515,
-        "y": 270,
+        "x": -180,
+        "y": -300,
         "z": 0
       },
       "scale": {
-        "x": 25,
-        "y": 25,
+        "x": 24,
+        "y": 24,
         "z": 0
       },
       "pivotOffset": {
@@ -50,28 +50,27 @@
       }
     },
 	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIGoldenFeatherUpdate"
-	},
-	{
 		"Component": "Text",
-		"letterHeight": 20,
-		"letterWidth": 20,
+		"letterHeight": 24,
+		"letterWidth": 18,
 		"spacing": 0.65,
 		"pivotOffset": {
-			"x": 25,
+			"x": -130,
 			"y": 0
 		},
 		"tint": {
 			"r": 1,
-			"g": 1,
-			"b": 1,
+			"g": 0,
+			"b": 0,
 			"a": 1
 		},
 		"rows": 6,
 		"cols": 16,
 		"font": "ShadowCardGothicFont.png",
-		"text": "0"
+		"text": "Not Enough"
+	},
+	{
+		"Component": "NotEnoughGoldFeathers"
 	}
   ]
 }

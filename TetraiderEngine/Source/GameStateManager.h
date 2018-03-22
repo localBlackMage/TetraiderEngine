@@ -25,6 +25,7 @@ private:
 	bool m_isGamePaused;
 	bool m_isLevelOver;
 	bool m_isLevelEditorMode;
+	bool m_isShopOpen;
 	void SetGameState(GameState);
 public:
 	GameStateManager();
@@ -38,6 +39,7 @@ public:
 	void PauseGame(bool active) {  m_isGamePaused = active; }
 	bool IsGamePaused() { return m_isGamePaused; }
 	bool IsEditorMode() { return m_isLevelEditorMode; }
+	bool IsShopOpen() { return m_isShopOpen;  }
 };
 
 #endif

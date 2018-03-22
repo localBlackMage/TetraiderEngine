@@ -7,6 +7,7 @@ PlayerStatsManager::PlayerStatsManager(): m_isNewGame(true) {
 	TETRA_EVENTS.Subscribe(EVENT_GoldenFeatherCollected, this);
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_GOLDENFEATHERCHEAT, this);
 }
 
 PlayerStatsManager::~PlayerStatsManager() {}
@@ -28,6 +29,11 @@ void PlayerStatsManager::HandleEvent(Event * p_event) {
 		case EVENT_LevelInComplete: {
 			ClearStats();
 			break;
+		}
+		case EVENT_INPUT_GOLDENFEATHERCHEAT: {
+			InputButtonData* pData = p_event->Data<InputButtonData>();
+			if(pData->m_isTrigger)
+				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_GoldenFeatherCollected, &CollectibleData(10)));
 		}
 	}
 }
@@ -100,7 +106,16 @@ void PlayerStatsManager::InitializePowerUps(json& json) {
 	}
 }
 
-void PlayerStatsManager::EquipPowerUp(PowerUpCategory category, PowerUpType type, int index) {
+bool PlayerStatsManager::EquipPowerUp(PowerUpCategory category, PowerUpType type, int index) {
+	if (category == PowerUpCategory::Special) {
+		if (m_playerStats.m_goldenFeathers < m_powerUps[(int)category][index].m_cost) {
+			return false;
+		}
+		else {
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_GoldenFeatherCollected, &CollectibleData(-m_powerUps[(int)category][index].m_cost)));
+		}
+	}
+
 	if (m_powerUps[(int)category][index].m_currentLevel < m_powerUps[(int)category][index].m_maxLevel) {
 		m_powerUps[(int)category][index].m_currentLevel += 1;
 		m_activePowerUps[(int)type] = &m_powerUps[(int)category][index];
@@ -113,6 +128,8 @@ void PlayerStatsManager::EquipPowerUp(PowerUpCategory category, PowerUpType type
 			m_playerStats.m_maxStamina += (int)(m_activePowerUps[(int)type]->m_upgradeValue);
 		}
 	}
+
+	return true;
 }
 
 int PlayerStatsManager::GetGoldenFeathers() {
@@ -121,6 +138,13 @@ int PlayerStatsManager::GetGoldenFeathers() {
 
 bool PlayerStatsManager::IsPowerUpActive(PowerUpType p) {
 	return m_activePowerUps[(int)p];
+}
+
+bool PlayerStatsManager::IsEnoughGoldenFeather(PowerUpCategory category, PowerUpType type, int index) {
+	if (m_playerStats.m_goldenFeathers < m_powerUps[(int)category][index].m_cost)
+		return false;
+
+	return true;
 }
 
 bool PlayerStatsManager::IsPowerUpActive(PowerUpType p, int &upgradeValue) {

@@ -71,7 +71,8 @@ public:
 	void SaveStats();
 	void LoadStats();
 	void InitializePowerUps(json& j);
-	void EquipPowerUp(PowerUpCategory category, PowerUpType type, int index);
+	bool EquipPowerUp(PowerUpCategory category, PowerUpType type, int index);
+	bool IsEnoughGoldenFeather(PowerUpCategory category, PowerUpType type, int index);
 	const PowerUp& GetRandomNormalPowerUp();
 	const PowerUp& GetSpecialPowerUp(int i);
 };

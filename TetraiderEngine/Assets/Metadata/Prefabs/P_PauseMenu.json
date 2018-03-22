@@ -53,7 +53,7 @@
             "Component": "PauseMenu",
             "UIElements": [
                 {
-                    "Buttonprefab": "P_MenuButton",
+                    "prefab": "P_MenuButton",
                     "position":
                     {
                         "x":0,
@@ -62,7 +62,7 @@
                     }
                 },
                 {
-                    "Buttonprefab":"P_RestartButton",
+                    "prefab":"P_RestartButton",
                     "position":
                     {
                         "x":0,
@@ -71,7 +71,7 @@
                     }
                 },
                 {
-                    "Buttonprefab": "P_Cursor",
+                    "prefab": "P_Cursor",
                     "position": {
                         "x": 100,
                         "y": 100,

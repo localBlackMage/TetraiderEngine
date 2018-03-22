@@ -9,8 +9,13 @@ private:
 	Text* m_pPowerUpText;
 	PowerUp m_powerUp;
 	PowerUpCategory m_category;
+	GameObject* m_pPrice;
+	Vector3D m_offsetForPrice;
 	std::string m_powerUpIconPrefab;
+	std::string m_powerUpPrice;
+	int m_specialPowerIndex;
 	int m_levelNumber;
+	bool m_isSpecial;
 public:
 	PowerUpButton();
 	~PowerUpButton();

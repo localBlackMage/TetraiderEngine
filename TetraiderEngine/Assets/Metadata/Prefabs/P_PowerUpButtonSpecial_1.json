@@ -63,7 +63,14 @@
     "Component": "PowerUpButton",
     "level"    : 2,
 	"category" : "Special",
-	"iconPrefab": "P_PowerUpSprite"
+	"iconPrefab": "P_PowerUpSprite",
+	"powerUpPricePrefab": "P_UIGoldenFeathersPrice",
+	"priceOffset": {
+		"x": -20,
+		"y": -50,
+		"z": 0
+	},
+	"specialPowerIndex": 1
   }
  ]
 }

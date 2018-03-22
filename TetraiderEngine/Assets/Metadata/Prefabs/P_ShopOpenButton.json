@@ -1,17 +1,17 @@
 {
-  "Tag": "UI",
-  "Layer": "UI",
+  "Tag": "None",
+  "Layer": "3",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": -515,
-        "y": 270,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 25,
-        "y": 25,
+        "x": 50,
+        "y": 50,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_GoldenFeather.png",
+      "Texture": "T_Q.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,10 +35,10 @@
         "u": 0,
         "v": 0
       },
-      "lit": false,
+      "lit": true,
       "tint": {
-        "r": 1,
-        "g": 1,
+        "r": 0,
+        "g": 0,
         "b": 1,
         "a": 1
       },
@@ -50,28 +50,13 @@
       }
     },
 	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIGoldenFeatherUpdate"
-	},
-	{
-		"Component": "Text",
-		"letterHeight": 20,
-		"letterWidth": 20,
-		"spacing": 0.65,
-		"pivotOffset": {
-			"x": 25,
-			"y": 0
-		},
-		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"rows": 6,
-		"cols": 16,
-		"font": "ShadowCardGothicFont.png",
-		"text": "0"
+		"Component": "WaveMovement",
+		"isModifyXPos": false,
+		"isModifyYPos": true,
+		"isAbsoluteValue": true,
+		"frequency": 2,
+		"phaseShift": 0,
+		"amplitude": 13
 	}
   ]
 }

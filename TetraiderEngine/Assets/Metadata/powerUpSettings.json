@@ -7,7 +7,7 @@
 					"name": "TripleShot",
 					"enumType": 2,
 					"maxLevel": 1,
-					"upgradeValue": -2,
+					"upgradeValue": -1,
 					"sprtieTexture": "T_FireThreeShots.png",
 					"cost": 10,
 					"description": "Fire 3 arrows at once"
@@ -25,7 +25,7 @@
 					"name": "FireSword",
 					"enumType": 0,
 					"maxLevel": 1,
-					"upgradeValue": 5,
+					"upgradeValue": 1.5,
 					"sprtieTexture": "T_FireThreeShots.png",
 					"cost": 10,
 					"description": "Ignite sword with fire for increased damage"

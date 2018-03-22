@@ -35,3 +35,7 @@ void UIManager::DeregisterCanvas(Canvas* c)
 {
 	m_Canvas[(int)c->m_canvasType] = nullptr;
 }
+
+void UIManager::AddGameObjectToCanvas(CanvasType type, GameObject* _pGO) {
+	m_Canvas[(int)type]->AddGameObjectToCanvas(_pGO);
+}

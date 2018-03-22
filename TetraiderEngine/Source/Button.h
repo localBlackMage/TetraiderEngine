@@ -13,6 +13,7 @@ private:
 	bool m_isRestart;
 	bool m_isRandomGenerated;
 	bool m_isLoadCanvas;
+	bool m_isCloseShop;
 	CanvasType m_canvasToActivate;
 	CanvasType m_canvasToDeActivate;
 	//Text* m_pText;

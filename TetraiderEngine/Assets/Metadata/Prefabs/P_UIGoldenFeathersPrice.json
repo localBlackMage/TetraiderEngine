@@ -50,10 +50,6 @@
       }
     },
 	{
-		"Component": "UICounter",
-		"eventSubscription": "EVENT_UIGoldenFeatherUpdate"
-	},
-	{
 		"Component": "Text",
 		"letterHeight": 20,
 		"letterWidth": 20,

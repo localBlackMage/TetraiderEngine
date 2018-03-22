@@ -22,6 +22,7 @@ void Button::Serialize(const json & j)
 	m_isQuit = ParseBool(j, "quit");
 	m_isRestart = ParseBool(j,"restart");
 	m_isLoadCanvas = ParseBool(j, "isLoadCanvas");
+	m_isCloseShop = ParseBool(j, "isCloseShop");
 	if (m_isLoadCanvas) {
 		m_canvasToActivate = (CanvasType)ParseInt(j, "canvasToActivate");
 		m_canvasToDeActivate = (CanvasType)ParseInt(j, "canvasToDeActivate");
@@ -73,6 +74,9 @@ void Button::HandleEvent(Event* pEvent)
 				{
 					TETRA_UI.ActivateCanvas(m_canvasToActivate);
 					TETRA_UI.DeactivateCanvas(m_canvasToDeActivate);
+				}
+				else if (m_isCloseShop) {
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_ShopClosed));
 				}
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);

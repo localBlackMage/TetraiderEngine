@@ -147,6 +147,7 @@ void Weapon::LateInitialize() {
 
 	if (pGO->m_tag == T_Player) {
 		TETRA_EVENTS.Subscribe(EventType::EVENT_AmmoUpdate, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_PowerUpPurchased, this);
 	}
 }
 
@@ -169,6 +170,9 @@ void Weapon::HandleEvent(Event* pEvent) {
 			pData->m_value = GetAmmo(1);
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, pData));
 		}
+	}
+	else if (pEvent->Type() == EVENT_PowerUpPurchased) {
+		CheckForPowerUps();
 	}
 }
 

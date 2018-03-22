@@ -201,6 +201,8 @@ using namespace JsonReader;
 #include <WaveMovement.h>
 #include <StraightLineMovement.h>
 #include <SpawnOnHealthZero.h>
+#include <Shop.h>
+#include <NotEnoughGoldFeathers.h>
 
 #include <LevelStatus.h>
 #include <EggCounter.h>

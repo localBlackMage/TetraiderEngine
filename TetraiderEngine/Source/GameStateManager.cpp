@@ -7,11 +7,14 @@ GameStateManager::GameStateManager() :
 	m_currentState(GameState::CURRENT_LEVEL),
 	m_nextState(GameState::CURRENT_LEVEL),
 	m_debugPause(false),
-	m_isLevelEditorMode(false)
+	m_isLevelEditorMode(false),
+	m_isShopOpen(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+	TETRA_EVENTS.Subscribe(EVENT_ShopOpened, this);
+	TETRA_EVENTS.Subscribe(EVENT_ShopClosed, this);
 }
 
 GameStateManager::~GameStateManager() {}
@@ -62,7 +65,7 @@ void GameStateManager::HandleEvent(Event * p_event) {
 			break;
 		}
 		case EVENT_INPUT_PAUSEGAME: {
-			if (m_isLevelOver) return;
+			if (m_isLevelOver || m_isShopOpen) return;
 			InputButtonData* pData = p_event->Data<InputButtonData>();
 			if(pData->m_isTrigger) PauseGame(!m_isGamePaused);
 			break;
@@ -74,6 +77,14 @@ void GameStateManager::HandleEvent(Event * p_event) {
 		}
 		case EVENT_ExitLevel: {
 			m_isLevelOver = true;
+			break;
+		}
+		case EVENT_ShopOpened: {
+			m_isShopOpen = true;
+			break;
+		}
+		case EVENT_ShopClosed: {
+			m_isShopOpen = false;
 			break;
 		}
 	}
