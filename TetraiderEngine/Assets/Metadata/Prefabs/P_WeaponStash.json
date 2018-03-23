@@ -1,6 +1,6 @@
 {
-  "Tag": "None",
-  "Layer": "1",
+  "Tag": "Obstacle",
+  "Layer": "2",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 40,
-        "y": 80,
+        "x": 90,
+        "y": 90,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_Gate.png",
+      "Texture": "T_WeaponStash.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,8 +35,7 @@
         "u": 0,
         "v": 0
       },
-      "lit": true,
-	  "repeats": true,
+	  "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -51,16 +50,18 @@
       }
     },
 	{
-		"Component": "Animation",
-		"defaultAnimation": 0,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "GateOpen",
-			"frames": 7,
-			"animationSpeed": 30,
-			"isLooping": false,
-			"isPlayOnAwake": false
-		}]
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "AABB",
+			"width": 60,
+			"height": 40,
+			"offset": {
+				"x": 0,
+				"y": -20
+			}
+		}
 	}
   ]
 }

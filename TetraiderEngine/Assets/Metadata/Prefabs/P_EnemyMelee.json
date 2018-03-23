@@ -31,8 +31,8 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 500,
-		"outOfSightRadius": 650,
+		"detectionRadius": 425,
+		"outOfSightRadius": 550,
 		"zoneWidth": 350,
 		"zoneHeight": 350,
 		"attackRange": 250,
@@ -71,7 +71,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_BipedMonster.png",
+      "Texture": "T_EnemyRat.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -121,19 +121,19 @@
 	},
 	{
 		"Component": "Animation",
-		"defaultAnimation": 0,
+		"defaultAnimation": 1,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Walk",
-			"frames": 5,
+			"frames": 4,
 			"animationSpeed": 6,
 			"isLooping": true,
 			"isPlayOnAwake": false
 		},
 		{
 			"Name": "Idle",
-			"frames": 1,
-			"animationSpeed": 8,
+			"frames": 2,
+			"animationSpeed": 3,
 			"isLooping": true,
 			"isPlayOnAwake": true
 		},

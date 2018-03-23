@@ -32,8 +32,8 @@
 			"knockBackMultiplier": 1,
 			"isIgnoreHazards" : true
 		},
-		"detectionRadius": 550,
-		"outOfSightRadius": 650,
+		"detectionRadius": 425,
+		"outOfSightRadius": 550,
 		"zoneWidth": 350,
 		"zoneHeight": 320,
 		"attackRange": 500,
@@ -46,6 +46,8 @@
 		"healthScale": 60,
 		"isDeathAnimationAvailable": true,
 		"deathAnimationIndex": 2,
+		"isAttackAnimationAvailable": true,
+		"attackAnimationIndex": 3,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -119,6 +121,13 @@
 			"animationSpeed": 8,
 			"isLooping": true,
 			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Attack",
+			"frames": 2,
+			"animationSpeed": 6,
+			"isLooping": false,
+			"isPlayOnAwake": false
 		}
 		]
 	},

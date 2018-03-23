@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_Rio.png",
+      "Texture": "T_ShopKeeper.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -37,8 +37,8 @@
       },
       "lit": true,
       "tint": {
-        "r": 0.7,
-        "g": 0.7,
+        "r": 1,
+        "g": 1,
         "b": 1,
         "a": 1
       },
@@ -51,28 +51,14 @@
     },
 	{
 		"Component": "Animation",
-		"defaultAnimation": 1,
+		"defaultAnimation": 0,
 		"MY_ANIMATIONS":[
-		{
-			"Name": "Walk",
-			"frames": 10,
-			"animationSpeed": 16,
-			"isLooping": true,
-			"isPlayOnAwake": false
-		},
 		{
 			"Name": "Idle",
 			"frames": 2,
 			"animationSpeed": 3,
 			"isLooping": true,
 			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Fly",
-			"frames": 8,
-			"animationSpeed": 14,
-			"isLooping": true,
-			"isPlayOnAwake": false
 		}]
 	},
 	{
@@ -81,7 +67,11 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 55
+			"radius": 45,
+			"offset": {
+				"x": 0,
+				"y": -20
+			}
 		}
 	},
 	{

@@ -74,6 +74,14 @@
 			}
 		},
 		{
+			"prefab": "P_WeaponStash",
+			"position": {
+				"x": -180,
+				"y": -100,
+				"z": 0
+			}
+		},
+		{
 			"prefab": "P_ShopCanvas"
 		},
 
