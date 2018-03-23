@@ -25,6 +25,8 @@
     <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
     <ClCompile Include="Source\Endpoints.cpp" />
+    <ClCompile Include="Source\Gate.cpp" />
+    <ClCompile Include="Source\GateTriggerBox.cpp" />
     <ClCompile Include="Source\ImageRenderer.cpp" />
     <ClCompile Include="Source\NotEnoughGoldFeathers.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
@@ -164,6 +166,8 @@
     <ClInclude Include="Source\AI_HitNRunEngage.h" />
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />
     <ClInclude Include="Source\Endpoints.h" />
+    <ClInclude Include="Source\Gate.h" />
+    <ClInclude Include="Source\GateTriggerBox.h" />
     <ClInclude Include="Source\ImageRenderer.h" />
     <ClInclude Include="Source\NotEnoughGoldFeathers.h" />
     <ClInclude Include="Source\PlayerStatsManager.h" />

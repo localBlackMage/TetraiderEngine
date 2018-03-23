@@ -1,17 +1,17 @@
 {
-  "Tag": "UI",
-  "Layer": "UI",
+  "Tag": "None",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": 525,
-        "y": 320,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 30,
-        "y": 30,
+        "x": 40,
+        "y": 80,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_Egg.png",
+      "Texture": "T_Gate.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,8 @@
         "u": 0,
         "v": 0
       },
-      "lit": false,
+      "lit": true,
+	  "repeats": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,27 +51,16 @@
       }
     },
 	{
-		"Component": "EggCounter"
-	},
-	{
-		"Component": "Text",
-		"letterHeight": 30,
-		"letterWidth": 30,
-		"spacing": 0.65,
-		"pivotOffset": {
-			"x": 40,
-			"y": 0
-		},
-		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
-			"a": 1
-		},
-		"rows": 6,
-		"cols": 16,
-		"font": "ShadowCardGothicFont.png",
-		"text": "0/0"
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "GateOpen",
+			"frames": 5,
+			"animationSpeed": 20,
+			"isLooping": false,
+			"isPlayOnAwake": false
+		}]
 	}
   ]
 }

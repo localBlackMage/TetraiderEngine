@@ -106,7 +106,11 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 45
+			"radius": 40,
+			"offset": {
+				"x": 0,
+				"y": -20
+			}
 		}
 	},
 	{

@@ -40,9 +40,10 @@ void Animation::Update(float dt) {
 					pGO->m_isRender = false;
 
 				m_isPlaying = false;
+				m_currentFrame = m_frames - 1;
 			}
-
-			m_currentFrame = 0;
+			else
+				m_currentFrame = 0;
 		}
 
 		m_elapsedTime = 0;
@@ -50,18 +51,29 @@ void Animation::Update(float dt) {
 
 	m_pSprite->SetTileX(m_uStartPos);
 	m_pSprite->SetTileY(m_vStartPos);
-	m_pSprite->SetUOffset(m_uStartPos*m_currentFrame*m_reverse);
+	if (m_reverse < 0) 
+		m_pSprite->SetUOffset(m_uStartPos*(m_frames - m_currentFrame - 1));
+	else
+		m_pSprite->SetUOffset(m_uStartPos*m_currentFrame);
+	
 	m_pSprite->SetVOffset(m_vStartPos*m_currentAnimation);
 
-	if (!m_isPlaying) 
+	if (!m_isPlaying) {
+		m_elapsedTime = 0;
 		return;
+	}
 
 	m_elapsedTime += dt*m_animationSpeed*m_speedMultiplier;
 }
 
 void Animation::Play(int animation) {
-	if (animation != m_currentAnimation || !m_isPlaying)
+	if (animation != m_currentAnimation)
 		ChangeAnimation(animation);
+	else if (!m_isPlaying) {
+		pGO->m_isRender = true;
+		m_elapsedTime = 0;
+		m_currentFrame = 0;
+	}
 
 	m_isPlaying = true;
 }
@@ -117,6 +129,8 @@ void Animation::Serialize(const json& j) {
 
 	m_uStartPos = 1 / (float)m_maxFrames;
 	m_vStartPos = 1 / (float)m_numberOfAnimations;
+
+	//ChangeAnimation(m_currentAnimation);
 
 	if (m_isPlayOnAwake) {
 		Play(m_currentAnimation);

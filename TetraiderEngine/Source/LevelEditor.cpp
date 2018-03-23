@@ -155,6 +155,7 @@ void LevelEditor::UpdatePrefabWindow() {
 		if (ImGui::Selectable(m_prefabStrings[i].c_str(), false, ImGuiSelectableFlags_AllowDoubleClick)) {
 			if (ImGui::IsMouseDoubleClicked(0)) {
 				m_pSelectedGO = CreateInstance(i);
+				m_selectedGOname = m_instances[m_pSelectedGO]->name;
 			}
 		}
 	}
@@ -181,37 +182,38 @@ void LevelEditor::UpdateInspectorWindow() {
 	if (m_pSelectedGO) {
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), (m_selectedGOname).c_str());
 		ImGui::Indent(m_indent);
-		if (ImGui::CollapsingHeader("Transform")) {
-			ImGui::Indent(m_indent);
-			Transform* pTransform = m_pSelectedGO->GetComponent<Transform>(C_Transform);
-
-			if (ImGui::CollapsingHeader("Position")) {
-				int x = (int)(pTransform->GetPosition().x);
-				int y = (int)(pTransform->GetPosition().y);
-				ImGui::InputInt("x##1", &x, 8, 64);
-				ImGui::InputInt("y##1", &y, 8, 64);
-				pTransform->SetPosition(Vector3D((float)x, (float)y, 0));
+		Transform* pTransform = m_pSelectedGO->GetComponent<Transform>(C_Transform);
+		if (pTransform) {
+			if (ImGui::CollapsingHeader("Transform")) {
+				ImGui::Indent(m_indent);
+				if (ImGui::CollapsingHeader("Position")) {
+					int x = (int)(pTransform->GetPosition().x);
+					int y = (int)(pTransform->GetPosition().y);
+					ImGui::InputInt("x##1", &x, 8, 64);
+					ImGui::InputInt("y##1", &y, 8, 64);
+					pTransform->SetPosition(Vector3D((float)x, (float)y, 0));
+				}
+				if (ImGui::CollapsingHeader("Scale")) {
+					int x = (int)(pTransform->GetScaleX());
+					int y = (int)(pTransform->GetScaleY());
+					ImGui::InputInt("x##2", &x, 8, 64);
+					ImGui::InputInt("y##2", &y, 8, 64);
+					pTransform->SetScale((float)x, (float)y);
+				}
+				if (ImGui::CollapsingHeader("Rotation")) {
+					int z = (int)(pTransform->GetAngleZ());
+					ImGui::InputInt("z##1", &z, 5, 15);
+					if (z > 360) z = 0;
+					pTransform->SetAngleZ((float)z);
+				}
+				ImGui::Indent(-m_indent);
 			}
-			if (ImGui::CollapsingHeader("Scale")) {
-				int x = (int)(pTransform->GetScaleX());
-				int y = (int)(pTransform->GetScaleY());
-				ImGui::InputInt("x##2", &x, 8, 64);
-				ImGui::InputInt("y##2", &y, 8, 64);
-				pTransform->SetScale((float)x, (float)y);
-			}
-			if (ImGui::CollapsingHeader("Rotation")) {
-				int z = (int)(pTransform->GetAngleZ());
-				ImGui::InputInt("z##1", &z, 5, 15);
-				if (z > 360) z = 0;
-				pTransform->SetAngleZ((float)z);
-			}
-			ImGui::Indent(-m_indent);
 		}
 
-		if (ImGui::CollapsingHeader("Body")) {
-			ImGui::Indent(m_indent);
-			Body* pBody = m_pSelectedGO->GetComponent<Body>(C_Body);
-			if (pBody) {
+		Body* pBody = m_pSelectedGO->GetComponent<Body>(C_Body);
+		if (pBody) {
+			if (ImGui::CollapsingHeader("Body")) {
+				ImGui::Indent(m_indent);
 				if (ImGui::CollapsingHeader("Shape")) {
 					ImGui::Indent(m_indent);
 					if (pBody->m_pShape->type == ShapeType::ST_AABB) {
@@ -237,13 +239,13 @@ void LevelEditor::UpdateInspectorWindow() {
 					pBody->SetOffset((float)x, (float)y);
 					ImGui::Indent(-m_indent);
 				}
+				ImGui::Indent(-m_indent);
 			}
-			ImGui::Indent(-m_indent);
 		}
 
-		if (ImGui::CollapsingHeader("Sprite")) {
-			Sprite* pSprite = m_pSelectedGO->GetComponent<Sprite>(C_Sprite);
-			if (pSprite) {
+		Sprite* pSprite = m_pSelectedGO->GetComponent<Sprite>(C_Sprite);
+		if (pSprite) {
+			if (ImGui::CollapsingHeader("Sprite")) {
 				ImGui::Indent(m_indent);
 				float xTiling = pSprite->TileX();
 				float yTiling = pSprite->TileY();
@@ -254,6 +256,32 @@ void LevelEditor::UpdateInspectorWindow() {
 				pSprite->SetTileX(xTiling);
 				pSprite->SetTileY(yTiling);
 				pSprite->SetIsRepeat(isRepeat);
+				ImGui::Indent(-m_indent);
+			}
+		}
+
+		GateTriggerBox* pGateTriggerBox = m_pSelectedGO->GetComponent<GateTriggerBox>(C_GateTriggerBox);
+		if (pGateTriggerBox) {
+			if (ImGui::CollapsingHeader("GateTriggerBox")) {
+				ImGui::Indent(m_indent);
+
+				int numberOfGates = pGateTriggerBox->GetNumberOfGates();
+				ImGui::InputInt("Gates", &numberOfGates, 1, 1);
+				pGateTriggerBox->SetGatePosSize(numberOfGates);
+				for (int i = 0; i < numberOfGates; ++i) {
+					if (ImGui::CollapsingHeader(("GatePos##" + std::to_string(i)).c_str())) {
+						int x = (int)pGateTriggerBox->GetGatePos(i).x;
+						int y = (int)pGateTriggerBox->GetGatePos(i).y;
+						ImGui::InputInt(("x##6" + std::to_string(i)).c_str(), &x, 8, 64);
+						ImGui::InputInt(("y##6" + std::to_string(i)).c_str(), &y, 8, 64);
+						pGateTriggerBox->SetGatePos(i, Vector3D((float)x, (float)y, 0));
+						bool isHorizontal;
+						isHorizontal = pGateTriggerBox->IsHorizontal(i);
+						ImGui::Checkbox(("horizontal##6" + std::to_string(i)).c_str(), &isHorizontal);
+						pGateTriggerBox->SetAlignment(i, isHorizontal);
+					}
+				}
+
 				ImGui::Indent(-m_indent);
 			}
 		}
@@ -469,6 +497,7 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 		Transform* pTransform = it->first->GetComponent<Transform>(C_Transform);
 		Body* pBody = it->first->GetComponent<Body>(C_Body);
 		Sprite* pSprite = it->first->GetComponent<Sprite>(C_Sprite);
+		GateTriggerBox* pTriggerBox = it->first->GetComponent<GateTriggerBox>(C_GateTriggerBox);
 		if (pTransform) {
 			file << "			\"position\": {" << endl;
 			file << "				\"x\": " << std::to_string(pTransform->GetPosition().x) << "," << endl;
@@ -498,7 +527,7 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 			file << "					\"x\": " << std::to_string(pBody->GetPositionOffset().x) << "," << endl;
 			file << "					\"y\": " << std::to_string(pBody->GetPositionOffset().y) << endl;
 			file << "				}" << endl;
-			file << "			}" << endl;
+			file << "			}";
 		}
 
 		if (pSprite) {
@@ -507,7 +536,33 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 			file << "				\"x\": " << std::to_string(pSprite->TileX()) << "," << endl;
 			file << "				\"y\": " << std::to_string(pSprite->TileY()) << endl;
 			file << "			}," << endl;
-			file << "			\"repeats\": "<< std::to_string(pSprite->Repeats()) << endl;
+			file << "			\"repeats\": ";
+			if (pSprite->Repeats())
+				file << "true";
+			else
+				file << "false";
+		}
+
+		if (pTriggerBox) {
+			file << "," << endl;
+			file << "			\"gatePositions\": [" << endl;
+			for (int i = 0; i < pTriggerBox->GetNumberOfGates(); ++i) {
+				file << "				{" << endl;
+				file << "					\"position\": {" << endl;
+				file << "						\"x\": " << std::to_string(pTriggerBox->GetGatePos(i).x) << "," << endl;
+				file << "						\"y\": " << std::to_string(pTriggerBox->GetGatePos(i).y) << endl;
+				file << "					}," << endl;
+				file << "					\"isHorizontal\": ";
+				if (pTriggerBox->IsHorizontal(i))
+					file << "true" << endl;
+				else
+					file << "false" << endl;
+				if(i + 1 == pTriggerBox->GetNumberOfGates())
+					file << "				}" << endl;
+				else
+					file << "				}," << endl;
+			}
+			file << "			]";
 		}
 
 		if(std::next(it) != m_instances.end()) file << "		}," << endl;
