@@ -154,7 +154,7 @@ void LevelEditor::UpdatePrefabWindow() {
 	for (unsigned int i = 0; i < m_prefabStrings.size(); ++i) {
 		if (ImGui::Selectable(m_prefabStrings[i].c_str(), false, ImGuiSelectableFlags_AllowDoubleClick)) {
 			if (ImGui::IsMouseDoubleClicked(0)) {
-				CreateInstance(i);
+				m_pSelectedGO = CreateInstance(i);
 			}
 		}
 	}
@@ -238,7 +238,24 @@ void LevelEditor::UpdateInspectorWindow() {
 					ImGui::Indent(-m_indent);
 				}
 			}
-			
+			ImGui::Indent(-m_indent);
+		}
+
+		if (ImGui::CollapsingHeader("Sprite")) {
+			Sprite* pSprite = m_pSelectedGO->GetComponent<Sprite>(C_Sprite);
+			if (pSprite) {
+				ImGui::Indent(m_indent);
+				float xTiling = pSprite->TileX();
+				float yTiling = pSprite->TileY();
+				bool isRepeat = pSprite->Repeats();
+				ImGui::InputFloat("xTiling##4", &xTiling);
+				ImGui::InputFloat("yTiling##4", &yTiling);
+				ImGui::Checkbox("repeats", &isRepeat);
+				pSprite->SetTileX(xTiling);
+				pSprite->SetTileY(yTiling);
+				pSprite->SetIsRepeat(isRepeat);
+				ImGui::Indent(-m_indent);
+			}
 		}
 	}
 
@@ -451,6 +468,7 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 		file << "			\"prefab\": " << "\"" << m_prefabStrings[it->second->index] << "\"," << endl;
 		Transform* pTransform = it->first->GetComponent<Transform>(C_Transform);
 		Body* pBody = it->first->GetComponent<Body>(C_Body);
+		Sprite* pSprite = it->first->GetComponent<Sprite>(C_Sprite);
 		if (pTransform) {
 			file << "			\"position\": {" << endl;
 			file << "				\"x\": " << std::to_string(pTransform->GetPosition().x) << "," << endl;
@@ -480,8 +498,16 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 			file << "					\"x\": " << std::to_string(pBody->GetPositionOffset().x) << "," << endl;
 			file << "					\"y\": " << std::to_string(pBody->GetPositionOffset().y) << endl;
 			file << "				}" << endl;
-
 			file << "			}" << endl;
+		}
+
+		if (pSprite) {
+			file << "," << endl;
+			file << "			\"tiling\": {" << endl;
+			file << "				\"x\": " << std::to_string(pSprite->TileX()) << "," << endl;
+			file << "				\"y\": " << std::to_string(pSprite->TileY()) << endl;
+			file << "			}," << endl;
+			file << "			\"repeats\": "<< std::to_string(pSprite->Repeats()) << endl;
 		}
 
 		if(std::next(it) != m_instances.end()) file << "		}," << endl;

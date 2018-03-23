@@ -9,7 +9,7 @@
 
 #define BARSCALEFACTOR 1.5f
 
-ScaleByHPStamina::ScaleByHPStamina(): Component(ComponentType::C_ScaleByHPStamina), m_originalScale(0), m_isScaleByHealth(true) {}
+ScaleByHPStamina::ScaleByHPStamina(): Component(ComponentType::C_ScaleByHPStamina), m_originalScale(0), m_isScaleByHealth(true), m_isPlayer(false) {}
 ScaleByHPStamina::~ScaleByHPStamina() {}
 
 void ScaleByHPStamina::DeActivate() {
@@ -21,6 +21,7 @@ void ScaleByHPStamina::Update(float dt) {}
 
 void ScaleByHPStamina::Serialize(const json& j) {
 	m_isScaleByHealth = ParseBool(j, "isScaleByHealth");
+	m_isPlayer = ParseBool(j, "isPlayer");
 }
 
 void ScaleByHPStamina::LateInitialize() {
@@ -41,11 +42,11 @@ void ScaleByHPStamina::LateInitialize() {
 
 	m_originalScale = m_pTransform->GetScaleX();
 
-	if (m_isScaleByHealth) {
+	if (m_isScaleByHealth && m_isPlayer) {
 		TETRA_EVENTS.Subscribe(EventType::EVENT_OnTakeDamage, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_OnPlayerHeal, this);
 	}
-	else {
+	else if(m_isPlayer) {
 		TETRA_EVENTS.Subscribe(EventType::EVENT_StaminaUse, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_StaminaRecharge, this);
 	}
@@ -63,14 +64,14 @@ void ScaleByHPStamina::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EventType::EVENT_OnPlayerHeal : {
-			if (m_isScaleByHealth) {
+			if (m_isScaleByHealth && m_isPlayer) {
 				HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
 				m_pTransform->SetScaleX(((float)healthData->mCurrentHealth / (float)healthData->mMaxHealth)*m_originalScale);
 			}
 			break;
 		}
 		case EventType::EVENT_OnLevelInitialized: {
-			if (m_isScaleByHealth) {
+			if (m_isScaleByHealth && m_isPlayer) {
 				const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
 				int healthUpgrade = 0;
 				TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::HealthUpgrade, healthUpgrade);
@@ -83,7 +84,7 @@ void ScaleByHPStamina::HandleEvent(Event* pEvent) {
 					m_pTransform->SetScaleX(m_originalScale);
 				}
 			}
-			else {
+			else if(m_isPlayer) {
 				const GameObject* pPlayer = TETRA_GAME_OBJECTS.GetPlayer();
 				int staminaUpgrade = 0;
 				TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseStamina, staminaUpgrade);
@@ -113,4 +114,10 @@ void ScaleByHPStamina::HandleEvent(Event* pEvent) {
 			break;
 		}
 	}
+}
+
+void ScaleByHPStamina::SetOriginalScale(float scale, bool isApplyToTransform) {
+	if(isApplyToTransform)
+		m_pTransform->SetScaleX(scale);
+	m_originalScale = scale;
 }

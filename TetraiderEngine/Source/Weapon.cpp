@@ -147,6 +147,7 @@ void Weapon::LateInitialize() {
 
 	if (pGO->m_tag == T_Player) {
 		TETRA_EVENTS.Subscribe(EventType::EVENT_AmmoUpdate, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_PowerUpPurchased, this);
 	}
 }
 
@@ -169,6 +170,9 @@ void Weapon::HandleEvent(Event* pEvent) {
 			pData->m_value = GetAmmo(1);
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, pData));
 		}
+	}
+	else if (pEvent->Type() == EVENT_PowerUpPurchased) {
+		CheckForPowerUps();
 	}
 }
 
@@ -270,4 +274,9 @@ void Weapon::MultiplyDamage(float multiplier, int attack) {
 	if ((int)m_Attacks.size() > attack) {
 		m_Attacks[attack]->MultiplyDamage(multiplier);
 	}
+}
+
+void Weapon::HideWeapon() {
+	if (m_pWeapon) m_pWeapon->m_isRender = false;
+	if (m_pEffect) m_pEffect->m_isRender = false;
 }

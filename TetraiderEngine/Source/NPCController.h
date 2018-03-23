@@ -78,8 +78,11 @@ private:
 	bool m_isPlayerDead;
 	bool m_isAvoidObstacles;
 	bool m_isAvoidingObstacle;
+	bool m_isDeathAnim;
+	int m_deathAnim;
 	const Transform* m_pPlayerTransform;
 	GameObjectTag m_tagsToIgnore[3];
+	GameObjectTag m_tagsToIgnoreForObstacleAvoidance[3];
 	ObstacleAvoidanceDirection m_avoidDirection;
 
 	bool IsPlayerOutOfScreen();
@@ -88,6 +91,11 @@ private:
 	void AvoidObstacles(float dt);
 	float m_stuckTimer = 0.0f;
 	Vector3D m_prevPos;
+
+	std::string m_healthBarPrefab;
+	Vector3D m_healthBarPosOffset;
+	float m_healthScale;
+	GameObject* m_healthBarUI;
 };
 
 #endif

@@ -3,6 +3,28 @@
 	"DIFFICULTY": 2,
 	"GAME_OBJECTS": [
 		{
+			"prefab": "P_ProjectileSpawner02",
+			"position": {
+				"x": -584.000000,
+				"y": 32.000000
+			},
+			"scale": {
+				"x": 100.000000,
+				"y": 100.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 100.000000,
+				"height": 100.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}
+		},
+		{
 			"prefab": "P_ColliderLeftRightLong",
 			"position": {
 				"x": -704.000000,
@@ -148,28 +170,6 @@
 			}
 		},
 		{
-			"prefab": "P_ProjectileSpawner02",
-			"position": {
-				"x": -584.000000,
-				"y": 32.000000
-			},
-			"scale": {
-				"x": 100.000000,
-				"y": 100.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 100.000000,
-				"height": 100.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": 0.000000
-				}
-			}
-		},
-		{
 			"prefab": "P_ProjectileSpawner",
 			"position": {
 				"x": -584.000000,
@@ -278,28 +278,6 @@
 			}
 		},
 		{
-			"prefab": "P_LavaRiverVertical",
-			"position": {
-				"x": 0.000000,
-				"y": -192.000000
-			},
-			"scale": {
-				"x": 384.000000,
-				"y": 157.600006
-			},
-			"rotation": {
-				"z": 90.000000
-			},
-			"shape": {
-				"width": 130.000000,
-				"height": 384.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": 0.000000
-				}
-			}
-		},
-		{
 			"prefab": "P_Box",
 			"position": {
 				"x": -472.000000,
@@ -318,6 +296,41 @@
 				"offset": {
 					"x": 0.000000,
 					"y": -8.000000
+				}
+			}
+		},
+		{
+			"prefab": "P_LavaVert",
+			"position": {
+				"x": 0.000000,
+				"y": -192.000000
+			},
+			"scale": {
+				"x": 95.000000,
+				"y": 380.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			}		},
+		{
+			"prefab": "P_DamageOnCollisionColliderRect",
+			"position": {
+				"x": 0.000000,
+				"y": -192.000000
+			},
+			"scale": {
+				"x": 100.000000,
+				"y": 100.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 72.000000,
+				"height": 384.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
 				}
 			}
 		}

@@ -1,0 +1,100 @@
+{
+    "Tag": "UI",
+    "Layer": "UI",
+    "COMPONENTS": [
+        {
+          "Component": "Transform",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "scale": {
+            "x": 1400,
+            "y": 1000,
+            "z": 0
+          },
+          "pivotOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+            "Component": "Canvas",
+            "canvasType":6,
+            "isActiveOnAwake": false,
+            "UIElements": [
+                  
+                {
+					"prefab": "P_UI_ShopBackground",
+                    "position": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0
+                    }
+                },
+				{
+					"prefab": "P_CloseShopButton",
+                    "position": {
+                      "x": 0,
+                      "y": -150,
+                      "z": 0
+                    }
+				},
+                {
+                    "prefab": "P_Cursor",
+                    "position": {
+                        "x": 100,
+                        "y": 100,
+                        "z": 0
+                    }
+                },
+				{
+                    "prefab": "P_PowerUpButtonSpecial_0",
+                    "position": {
+                        "x": -200,
+                        "y": -50,
+                        "z": 0
+                    }
+                },
+				{
+                    "prefab": "P_PowerUpButtonSpecial_1",
+                    "position": {
+                        "x": 0,
+                        "y": -50,
+                        "z": 0
+                    }
+                },
+				{
+                    "prefab": "P_PowerUpButtonSpecial_2",
+                    "position": {
+                        "x": 200,
+                        "y": -50,
+                        "z": 0
+                    }
+                },
+				{
+                    "prefab": "P_PowerUpTextShop",
+                    "position": {
+                        "x": -50,
+                        "y": 50,
+                        "z": 0
+                    }
+                },
+				{
+                    "prefab": "P_NotEnoughGoldenFeatherText",
+                    "position": {
+                        "x": 60,
+                        "y": 10,
+                        "z": 0
+                    }
+                }
+            ]
+        }
+    ]
+}

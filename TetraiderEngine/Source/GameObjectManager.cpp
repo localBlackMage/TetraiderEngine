@@ -207,6 +207,14 @@ void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
 		m_layers[pGO->GetLayer()].AddToLayer(pGO);
 }
 
+void GameObjectManager::SwitchGameObjectLayer(GameObject* pGO, RENDER_LAYER layer) {
+	m_layers[pGO->GetLayer()].RemoveFromLayer(pGO);
+	pGO->SetLayer(layer);
+	
+	if (layer != RENDER_LAYER::L_NOT_RENDERED)
+		m_layers[layer].AddToLayer(pGO);
+}
+
 void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
 {
 	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
@@ -407,6 +415,8 @@ void GameObjectManager::AddGameObjectsFromQueueToMainVector() {
 
 GameObject* GameObjectManager::CreateGameObject(const std::string& name, bool isCreateAtPos, const Vector3D& position) {
 	json* j = TETRA_RESOURCES.GetPrefabFile(name + ".json");
+	if (!j)
+		return 0;
 
 	GameObject *pGameObject = TETRA_MEMORY.GetNewGameObject(TagNameText[FindTagWithString(name)], ++m_currentId);
 

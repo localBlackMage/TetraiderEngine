@@ -37,6 +37,15 @@
 		"zoneWidth": 350,
 		"zoneHeight": 320,
 		"attackRange": 500,
+		"healthBarPrefab": "P_EnemyHealthBar",
+		"healthBarOffset": {
+			"x": -30,
+			"y": 50,
+			"z": 0
+		},
+		"healthScale": 60,
+		"isDeathAnimationAvailable": true,
+		"deathAnimationIndex": 2,
 		"AIStates": [
 			{
 				"name": "idleBehavior",

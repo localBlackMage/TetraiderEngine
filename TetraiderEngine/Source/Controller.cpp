@@ -37,7 +37,17 @@ void Controller::Serialize(const json& j) {
 }
 
 void Controller::HandleEvent(Event* pEvent) {
-	if (m_isDead || !m_isControlsEnabled) return;
+	if (m_isDead) return;
+
+	if (pEvent->Type() == EventType::EVENT_ShopOpened) {
+		m_targetVelocity = Vector3D();
+		m_pBody->SetVelocity(Vector3D());
+		m_isControlsEnabled = false;
+	}
+	else if (pEvent->Type() == EventType::EVENT_ShopClosed)
+		m_isControlsEnabled = true;
+
+	if (!m_isControlsEnabled) return;
 
 	if (pEvent->Type() == EventType::EVENT_OnLevelInitialized) {
 		float agility;
@@ -93,10 +103,13 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) {
+				m_isControlAnimationOnVelocity = false;
+				m_pAnimation->Play(2);
 				m_isIgnoreHazards = true;
 				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
 			}
 			else {
+				m_isControlAnimationOnVelocity = true;
 				m_isIgnoreHazards = false;
 				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
 			}
@@ -164,6 +177,8 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_MELEE, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RANGE, this);
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
+	TETRA_EVENTS.Subscribe(EVENT_ShopOpened, this);
+	TETRA_EVENTS.Subscribe(EVENT_ShopClosed, this);
 }
 
 void Controller::FlyIn() {

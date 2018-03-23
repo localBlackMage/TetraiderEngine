@@ -37,6 +37,13 @@
 		"zoneWidth": 64,
 		"zoneHeight": 64,
 		"attackRange": 250,
+		"healthBarPrefab": "P_EnemyHealthBar",
+		"healthBarOffset": {
+			"x": -25,
+			"y": 40,
+			"z": 0
+		},
+		"healthScale": 50,
 		"AIStates": [
       {
         "name": "NPC_IDLE",

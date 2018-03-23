@@ -33,11 +33,8 @@ void Agent::Update(float dt) {
 	if (m_pAnimation && m_isControlAnimationOnVelocity) {
 		if (m_currentVelocity.SquareLength()  < 200.0f)
 			m_pAnimation->Play(1);
-		else if(m_currentVelocity.SquareLength() && !m_isIgnoreHazards)
+		else if(m_currentVelocity.SquareLength())
 			m_pAnimation->Play(0);
-		else
-			m_pAnimation->Play(2);
-
 	}
 
 	float angle = m_lookDirection.AngleDegrees();
@@ -57,20 +54,17 @@ void Agent::Serialize(const json& j) {
 	m_speed = ParseFloat(j, "speed");
 	m_acceleration = ParseFloat(j, "acceleration");
 	m_knockBackMultiplier = ParseFloat(j, "knockBackMultiplier");
-	//m_isIgnoreHazards = ParseBool(j, "isIgnoreHazards");
+	m_isIgnoreHazards = ParseBool(j, "isIgnoreHazards");
 }
 
 void Agent::HandleEvent(Event* pEvent) {
-
-	
-
 	if (pEvent->Type() == EventType::EVENT_OnCollide) {
 		OnCollideData* collisionData = pEvent->Data<OnCollideData>();
 		if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_Projectile)
 			return;
 		else if(collisionData->pGO->m_tag == T_Enemy || collisionData->pGO->m_tag == T_Player)
 			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration*0.5f);
-		else if(collisionData->pGO->m_tag == T_Obstacle)
+		else if(collisionData->pGO->m_tag == T_Obstacle || collisionData->pGO->m_tag == T_DeadEnemy)
 			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
 	}
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
@@ -80,6 +74,7 @@ void Agent::HandleEvent(Event* pEvent) {
 			m_isDead = true;
 		}
 		else if (healthData->mIsForceKnockBack && m_knockBackMultiplier == 0) {
+			m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			pGO->HandleEvent(&Event(EVENT_ForceKnockBack));
 			AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
 		}

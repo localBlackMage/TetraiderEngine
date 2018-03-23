@@ -52,7 +52,8 @@
     },
 	{
 		"Component": "ScaleByHPStamina",
-		"isScaleByHealth": true
+		"isScaleByHealth": true,
+		"isPlayer": true
 	}
   ]
 }

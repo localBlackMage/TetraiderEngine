@@ -323,6 +323,9 @@
     <ClCompile Include="Source\WaveMovement.cpp">
       <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PauseMenu.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
     <ClCompile Include="Source\AI_WalkTowardPlayerEngage.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
@@ -398,17 +401,23 @@
     <ClCompile Include="Source\FrameBufferObject.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_HitNRunAttack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ImageRenderer.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Shop.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NotEnoughGoldFeathers.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_HitNRunAttack.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
     <ClCompile Include="Source\AI_BomberAttack.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI_BomberRetreat.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -706,6 +715,9 @@
     <ClInclude Include="Source\WaveMovement.h">
       <Filter>Source Files\Components\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PauseMenu.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
     <ClInclude Include="Source\AI_WalkTowardPlayerAttack.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
@@ -764,10 +776,6 @@
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\FontInfo.h" />
-    <ClInclude Include="Source\EggCounter.h" />
-    <ClInclude Include="Source\ScriptedAnimation.h" />
-    <ClInclude Include="Source\UICounter.h" />
-    <ClInclude Include="Source\WinMessage.h" />
     <ClInclude Include="Source\Slider.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
@@ -795,11 +803,35 @@
     <ClInclude Include="Source\FrameBufferObject.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_HitNRunAttack.h" />
     <ClInclude Include="Source\ImageRenderer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_BomberAttack.h" />
-    <ClInclude Include="Source\AI_BomberRetreat.h" />
+    <ClInclude Include="Source\Shop.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NotEnoughGoldFeathers.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EggCounter.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UICounter.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinMessage.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptedAnimation.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_HitNRunAttack.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_BomberRetreat.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_BomberAttack.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

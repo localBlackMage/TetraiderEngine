@@ -73,6 +73,10 @@ void Canvas::LateInitialize()
 	}	
 }
 
+void Canvas::AddGameObjectToCanvas(GameObject* _pGO) {
+	m_UIelements.push_back(_pGO);
+}
+
 void Canvas::HandleEvent(Event * pEvent)
 {
 

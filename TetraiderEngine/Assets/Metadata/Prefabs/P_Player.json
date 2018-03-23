@@ -72,8 +72,6 @@
 		},
 		"flySpeed": 510,
 		"agility": 1,
-		"startingArrows": 20,
-		"isUnlimitedArrows": false,
 		"featherParticlePrefab": "P_FeatherParticleEmitter"
 	},
 	{
@@ -145,7 +143,7 @@
 				"baseDamage": 7,
 				"projectileSpeed": 700,
 				"instantiationOffset": 50,
-				"ammo": 5,
+				"ammo": 15,
 				"isUnlimitedAmmo": false,
 				"lifeTime": 1.5,
 				"projectilePrefab": "P_arrowProjectile",

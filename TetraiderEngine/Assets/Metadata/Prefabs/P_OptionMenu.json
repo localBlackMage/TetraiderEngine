@@ -34,7 +34,7 @@
                     "prefab": "P_ControlsButton",
                     "position": {
                       "x": 0,
-                      "y": -25,
+                      "y": 25,
                       "z": 0
                     }
                   },
@@ -42,21 +42,21 @@
                     "prefab":"P_Back2MainButton",
                     "position":{
                       "x":0,
-                      "y":-175
+                      "y":-125
                     }
                 },
                 {
                     "prefab":"P_SoundsButton",
                     "position":{
                       "x":0,
-                      "y":-100
+                      "y":-50
                     }
                 },
                 {
                     "prefab":"P_OptionTitle",
                     "position":{
                       "x":0,
-                      "y":50
+                      "y":100
                     }
                 }  
             ]

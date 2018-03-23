@@ -53,6 +53,17 @@ void Sprite::Serialize(const json& j)
 	m_texture = TETRA_RESOURCES.GetTexture(m_textureName);
 }
 
+void Sprite::Override(const json& j) {
+	if (ValueExists(j, "tiling")) {
+		m_xTiling = ParseFloat(j, "tiling", "x");
+		m_yTiling = ParseFloat(j, "tiling", "y");
+	}
+
+	if (ValueExists(j, "repeats")) {
+		m_repeats = ValueExists(j, "repeats");
+	}
+}
+
 const Mesh & Sprite::GetMesh() const {
 	return m_mesh;
 }

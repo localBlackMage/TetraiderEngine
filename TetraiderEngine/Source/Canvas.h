@@ -16,6 +16,7 @@ public:
 	~Canvas();
 	static Component* CreateInstance() { return new Canvas(); }
 	void Update(float);
+	void AddGameObjectToCanvas(GameObject* pGO);
 	void Serialize(const json& j);
 	void LateInitialize();
 	void HandleEvent(Event* pEvent);

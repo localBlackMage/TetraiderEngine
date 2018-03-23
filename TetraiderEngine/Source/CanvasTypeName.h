@@ -10,5 +10,7 @@ enum class CanvasType
 	CANVAS_LOSE,
 	CANVAS_CREDITS,
 	
+	CANVAS_SHOP,
+
 	CANVAS_NUM
 };

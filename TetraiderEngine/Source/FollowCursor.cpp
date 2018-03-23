@@ -26,6 +26,8 @@ void FollowCursor::Serialize(const json & j)
 			TETRA_EVENTS.Subscribe(EVENT_OnGameResume, this);
 			TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 			TETRA_EVENTS.Subscribe(EVENT_LevelInComplete, this);
+			TETRA_EVENTS.Subscribe(EVENT_ShopOpened, this);
+			TETRA_EVENTS.Subscribe(EVENT_ShopClosed, this);
 		}
 	}
 }
@@ -54,6 +56,16 @@ void FollowCursor::HandleEvent(Event * pEvent)
 			pGO->m_isRender = false;
 		}
 		else if (pEvent->Type() == EVENT_OnGameResume && !m_isLevelOver) {
+			pGO->m_isRender = true;
+		if (pEvent->Type() == EVENT_OnPauseGame && !m_isLevelOver && !TETRA_GAME_STATE.IsShopOpen()) {
+			InputButtonData* pData = pEvent->Data<InputButtonData>();
+			if(pData->m_isTrigger)
+				pGO->m_isRender = !pGO->m_isRender;
+		}
+		else if (pEvent->Type() == EVENT_ShopOpened) {
+			pGO->m_isRender = false;
+		}
+		else if (pEvent->Type() == EVENT_ShopClosed) {
 			pGO->m_isRender = true;
 		}
 		else if (pEvent->Type() == EVENT_ExitLevel) {

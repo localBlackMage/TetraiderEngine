@@ -33,7 +33,7 @@
                     "prefab": "P_Button",
                     "position": {
                       "x": 0,
-                      "y": 50,
+                      "y": 100,
                       "z": 0
                     }
                   },
@@ -42,35 +42,35 @@
                     "prefab":"P_RGL_Button",
                     "position":{
                       "x":0,
-                      "y":-25
+                      "y":25
                     }
                   },
                   {
                     "prefab": "P_ButtonLevelEditor",
                     "position": {
                       "x":0,
-                      "y":-100
+                      "y":-50
                     }
                   },
                   {
                     "prefab":"P_QuitButton",
                     "position":{
                       "x":0,
-                      "y":-325
+                      "y":-275
                     }
                   },
                   {
                     "prefab":"P_CreditsButton",
                     "position":{
                       "x":0,
-                      "y":-250
+                      "y":-200
                     }
                   },
                   {
                     "prefab":"P_OptionsButton",
                     "position":{
                       "x":0,
-                      "y":-175
+                      "y":-125
                     }
                 }  
             ]

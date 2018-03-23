@@ -28,7 +28,7 @@ void PauseMenu::Serialize(const json & j)
 	for (int i=0;i<numberOfElements;++i)
 	{
 		GameObject *pObject;
-		m_prefabName = ParseString(j["UIElements"][i], "Buttonprefab");
+		m_prefabName = ParseString(j["UIElements"][i], "prefab");
 		pObject=TETRA_GAME_OBJECTS.CreateGameObject(m_prefabName);
 		m_objects.push_back(pObject);
 
@@ -44,7 +44,7 @@ void PauseMenu::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_INPUT_PAUSEGAME)
 	{
-		if (m_isLevelOver || m_isCannotPause) return;
+		if (m_isLevelOver || m_isCannotPause || TETRA_GAME_STATE.IsShopOpen()) return;
 
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
 		if (pData->m_isTrigger) {

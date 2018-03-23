@@ -27,11 +27,13 @@ public:
 	virtual void Deactivate();
 	virtual void Update(float dt);
 	virtual void Serialize(const json& j);
+	void Override(const json& j);
 
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
 
 	inline bool Repeats() const { return m_repeats; }
+	void SetIsRepeat(bool isRepeat) { m_repeats = isRepeat;	}
 	inline bool IsLit() const { return m_isLit; }
 
 	std::string GetSpriteName() const;

@@ -19,9 +19,11 @@ public:
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
+	void SetOriginalScale(float scale, bool isApplyToTransform = true);
 private:
 	bool m_isScaleByHealth;
 	float m_originalScale;
+	bool m_isPlayer;
 	Transform* m_pTransform;
 };
 

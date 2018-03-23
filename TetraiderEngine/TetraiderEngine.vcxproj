@@ -26,9 +26,11 @@
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
     <ClCompile Include="Source\Endpoints.cpp" />
     <ClCompile Include="Source\ImageRenderer.cpp" />
+    <ClCompile Include="Source\NotEnoughGoldFeathers.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PostProcessing.cpp" />
     <ClCompile Include="Source\PowerUpButton.cpp" />
+    <ClCompile Include="Source\Shop.cpp" />
     <ClCompile Include="Source\Slider.cpp" />
     <ClCompile Include="Source\Canvas.cpp" />
     <ClCompile Include="Source\AI_DashingAttack.cpp" />
@@ -163,9 +165,11 @@
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />
     <ClInclude Include="Source\Endpoints.h" />
     <ClInclude Include="Source\ImageRenderer.h" />
+    <ClInclude Include="Source\NotEnoughGoldFeathers.h" />
     <ClInclude Include="Source\PlayerStatsManager.h" />
     <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
+    <ClInclude Include="Source\Shop.h" />
     <ClInclude Include="Source\Slider.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />
     <ClInclude Include="Source\Canvas.h" />

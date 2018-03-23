@@ -16,6 +16,7 @@ public:
 	void DeActivateAllCanvas();
 	Canvas* GetCanvasPause() { return m_Pause; };
 	void HandleEvent(Event* pEvent);
+	void AddGameObjectToCanvas(CanvasType type, GameObject* _pGO);
 
 private:
 	Canvas* m_Canvas[(int)CanvasType::CANVAS_NUM];

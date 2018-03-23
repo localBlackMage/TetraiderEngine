@@ -66,6 +66,18 @@
         "z": 0
       }
     },
+	{
+      "prefab": "P_ShopKeeper",
+      "position": {
+        "x": -200,
+        "y": 0,
+        "z": 0
+      }
+    },
+	{
+      "prefab": "P_ShopCanvas"
+    },
+	
 	
 	
 	{
