@@ -2,13 +2,6 @@
 #ifndef NPCCONTROLLER_H
 #define NPCCONTROLLER_H
 
-//#include "Agent.h"
-//#include <unordered_map>
-//#include "AI_State.h"
-//#include "AI_StateTypes.h"
-//#include "AI_StateFactory.h"
-//#include "GameObjectTags.h"
-
 class Weapon;
 
 #define ObstacleAvoidanceFrontCheack 125.0f
@@ -57,6 +50,8 @@ public:
 	bool RollDie(float probability);
 	void SetAvoidObstacles(bool active) { m_isAvoidObstacles = active; }
 	void ControlAnimationOnVelocity(bool active) { m_isControlAnimationOnVelocity = active; }
+	bool IsAttackAnimComplete();
+	void PlayAttackAnim();
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
@@ -80,6 +75,8 @@ private:
 	bool m_isAvoidingObstacle;
 	bool m_isDeathAnim;
 	int m_deathAnim;
+	bool m_isAttackAnim;
+	int m_attackAnim;
 	const Transform* m_pPlayerTransform;
 	GameObjectTag m_tagsToIgnore[3];
 	GameObjectTag m_tagsToIgnoreForObstacleAvoidance[3];

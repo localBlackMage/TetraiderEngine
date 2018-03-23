@@ -18,16 +18,21 @@ void AI_Attack::OnEnter(){
 
 void AI_Attack::OnUpdate(float dt){
 	pAgent->LookAtPlayer();
-	if (attackCounter > attackLimit) {
+	if (attackCounter > attackLimit && pAgent->IsAttackAnimComplete()) {
 		pAgent->ChangeState(NPC_ENGAGE);
 	}
 	if (pAgent->UseAttack(0)) {
+		pAgent->PlayAttackAnim();
 		attackCounter++;
 	}
+
+	if (pAgent->IsAttackAnimComplete())
+		pAgent->ControlAnimationOnVelocity(true);
 }
 
 void AI_Attack::OnExit(){
 	pAgent->SetSpeedMultiplier(1.0f);
+	pAgent->ControlAnimationOnVelocity(true);
 }
 
 void AI_Attack::HandleEvent(Event* pEvent) {

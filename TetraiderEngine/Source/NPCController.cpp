@@ -23,7 +23,8 @@ NPCController::NPCController() :
 	m_speedMultiplier(1.0f),
 	m_isAvoidObstacles(true),
 	m_isAvoidingObstacle(false),
-	m_isDeathAnim(false)
+	m_isDeathAnim(false),
+	m_isAttackAnim(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	m_tagsToIgnore[0] = T_Projectile;
@@ -133,6 +134,9 @@ void NPCController::Serialize(const json& j) {
 
 	m_isDeathAnim = ParseBool(j, "isDeathAnimationAvailable");
 	m_deathAnim = ParseInt(j, "deathAnimationIndex");
+
+	m_isAttackAnim = ParseBool(j, "isAttackAnimationAvailable");
+	m_attackAnim = ParseInt(j, "attackAnimationIndex");
 }
 
 void NPCController::HandleEvent(Event* pEvent) {
@@ -409,6 +413,23 @@ void NPCController::CheckForObstacleAvoidance() {
 
 		m_isAvoidingObstacle = true;
 		m_stuckTimer = 0.0f;
+	}
+}
+
+bool NPCController::IsAttackAnimComplete() {
+	if (m_isAttackAnim) {
+		if (m_pAnimation->IsPlaying())
+			return false;
+		else
+			return true;
+	}
+	else
+		return true;
+}
+
+void NPCController::PlayAttackAnim() {
+	if (m_isAttackAnim) {
+		PlayAnimation(m_attackAnim);
 	}
 }
 
