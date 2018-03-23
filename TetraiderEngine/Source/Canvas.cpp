@@ -83,6 +83,7 @@ void Canvas::ActivateCanvas()
 	m_isActive = true;
 	for (auto obj : m_UIelements)
 	{
+		//HACK
 		if (obj->m_tag == T_Cursor) {
 			obj->m_isCollisionDisabled = false;
 			obj->m_isRender = true;

@@ -5,7 +5,7 @@
 
 #include <Stdafx.h>
 
-FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false) {}
+FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false), m_isSliderBallSeleced(false) {}
 FollowCursor::~FollowCursor() {}
 
 

@@ -22,5 +22,6 @@ public:
 	//----end pure virtual fn
 
 	void HandleEvent(Event* pEvent);
+	bool m_isSliderBallSeleced;
 };
 

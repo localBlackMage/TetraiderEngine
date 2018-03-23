@@ -36,6 +36,8 @@ void Slider::Update(float)
 	if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT))
 	{
 		m_isPressed = false;
+		if(m_pfollow)
+			m_pfollow->m_isSliderBallSeleced = false;
 	}
 	if (m_isPressed)
 	{
@@ -76,13 +78,11 @@ void Slider::HandleEvent(Event * pEvent)
 		if (pData->pGO->m_tag==T_Cursor)
 		{
 			m_pfollow = pData->pGO->GetComponent<FollowCursor>(ComponentType::C_FollowCursor);
+			if (m_pfollow->m_isSliderBallSeleced) return;
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT))
 			{
 				m_isPressed = true;
-			}
-			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT))
-			{
-				m_isPressed = false;
+				m_pfollow->m_isSliderBallSeleced = true;
 			}
 		}
 		else if (pData->pGO->m_tag == T_SliderBar && m_gotEndpoints==false)
