@@ -38,7 +38,16 @@ void ScriptedAnimation::Update(float dt) {
 		else
 			m_scaleT = 1;
 
-		if (m_translationT >= 1 && m_scaleT >= 1 && m_rotationT >= 1) {
+		if (m_scriptedAnimation[m_currentAnimationIndex].m_isFade) {
+			m_fadeT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_fadeSpeed;
+			if (m_fadeT > 1) m_fadeT = 1;
+
+			m_pSprite->SetAlpha(Lerp(m_startFade, m_scriptedAnimation[m_currentAnimationIndex].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+		}
+		else
+			m_fadeT = 1;
+
+		if (m_translationT >= 1 && m_scaleT >= 1 && m_rotationT >= 1 && m_fadeT >= 1) {
 			NextAnim();
 		}
 	}
@@ -55,9 +64,12 @@ void ScriptedAnimation::Serialize(const json& j) {
 			ParseFloat(j["ScriptedAnimation"][i], "rotationSpeed"),
 			ParseVector3D(j["ScriptedAnimation"][i], "finalScale"),
 			ParseFloat(j["ScriptedAnimation"][i], "scaleSpeed"),
+			ParseFloat(j["ScriptedAnimation"][i], "finalFade"),
+			ParseFloat(j["ScriptedAnimation"][i], "fadeSpeed"),
 			ParseBool(j["ScriptedAnimation"][i], "isTranslate"),
 			ParseBool(j["ScriptedAnimation"][i], "isScale"),
 			ParseBool(j["ScriptedAnimation"][i], "isRotate"),
+			ParseBool(j["ScriptedAnimation"][i], "isFade"),
 			ParseBool(j["ScriptedAnimation"][i], "isEaseIn"),
 			ParseBool(j["ScriptedAnimation"][i], "isEaseOut")
 		));
@@ -66,6 +78,7 @@ void ScriptedAnimation::Serialize(const json& j) {
 	m_initialPos = ParseVector3D(j, "initialPos");
 	m_initialScale = ParseVector3D(j, "initialScale");
 	m_initialRotation = ParseFloat(j, "initialRotation");
+	m_initialFade = ParseFloat(j, "initialFade");
 	m_isPlayOnAwake = ParseBool(j, "isPlayOnAwake");
 }
 
@@ -85,6 +98,21 @@ void ScriptedAnimation::LateInitialize() {
 		}
 	}
 
+	if (!m_pSprite) {
+		if (pGO)
+			m_pSprite = pGO->GetComponent<Sprite>(ComponentType::C_Sprite);
+		else {
+			printf("No Game Object found. Scripted Animation component failed to operate.\n");
+			return;
+		}
+
+		if (!m_pTransform) {
+			printf("No Sprite component found. Scripted Animation component failed to operate.\n");
+			assert(m_pTransform);
+			return;
+		}
+	}
+
 	if (m_isPlayOnAwake)
 		PlayAnimation();
 }
@@ -95,13 +123,16 @@ void ScriptedAnimation::PlayAnimation() {
 		m_startPos = m_initialPos;
 		m_startScale = m_initialScale;
 		m_startRot = m_initialRotation;
+		m_startFade = m_initialFade;
 		m_currentAnimationIndex = 0;
 		m_rotationT = 0;
 		m_scaleT = 0;
 		m_translationT = 0;
+		m_fadeT = 0;
 		m_pTransform->SetPosition(m_startPos);
 		m_pTransform->SetScale(m_startScale);
 		m_pTransform->SetAngleZ(m_startRot);
+		m_pSprite->SetAlpha(m_startFade);
 	}
 }
 
@@ -119,8 +150,10 @@ void ScriptedAnimation::NextAnim() {
 		m_startPos = m_pTransform->GetPosition();
 		m_startScale = m_pTransform->GetScaleVector();
 		m_startRot = m_pTransform->GetAngleZ();
+		m_startFade = m_pSprite->GetAlpha();
 		m_rotationT = 0;
 		m_scaleT = 0;
 		m_translationT = 0;
+		m_fadeT = 0;
 	}
 }

@@ -64,6 +64,8 @@ public:
 
 	bool HasPosOffset() const { return m_posOffset.x != 0.f || m_posOffset.y != 0.f; }
 	const Vector3D& GetPosOffset() const { return m_posOffset; }
+	float GetAlpha();
+	void SetAlpha(float alpha);
 };
 
 #endif

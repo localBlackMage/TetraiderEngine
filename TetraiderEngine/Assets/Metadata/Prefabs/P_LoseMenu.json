@@ -25,31 +25,6 @@
           }
         },
         {
-          "Component": "Sprite",
-          "Texture": "T_StaminaBar.png",
-          "tiling": {
-            "x": 1,
-            "y": 1
-          },
-          "uvOffset": {
-            "u": 0,
-            "v": 0
-          },
-          "lit": false,
-          "tint": {
-            "r": 0,
-            "g": 0,
-            "b": 0,
-            "a": 0.5
-          },
-          "saturation": {
-            "r": 0,
-            "g": 0,
-            "b": 0,
-            "a": 0
-          }
-        },
-        {
             "Component": "Canvas",
             "canvasType":6,
             "isActiveOnAwake": false,

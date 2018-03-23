@@ -63,6 +63,8 @@
 			"y" : 0,
 			"z" : 0
 	  },
+	  "initialFade": 1,
+		  
 	  "ScriptedAnimation": [
 		{
 			"finalPos": {

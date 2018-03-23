@@ -37,6 +37,9 @@
 		"prefab": "P_OptionMenu"
 	},
 	{
+		"prefab": "P_LoseMenu"
+	},
+	{
 	  "prefab": "P_UIarrowAmmo"
 	},
 	{
@@ -44,9 +47,6 @@
 	},
 	{
 	  "prefab": "P_WinMessage"
-	},
-	{
-		"prefab": "P_LoseMenu"
 	}
   ]
 }

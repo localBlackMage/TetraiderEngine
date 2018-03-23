@@ -64,6 +64,7 @@
 				"y" : 1000,
 				"z" : 0
 		  },
+		  "initialFade": 1,
 		  "ScriptedAnimation": [
 			{
 				"finalPos": {
@@ -74,6 +75,8 @@
 				"translationSpeed": 1,
 				"finalZRotation": 0,
 				"rotationSpeed": 1,
+				"finalFade": 1,
+				"fadeSpeed": 1,
 				"finalScale": {
 					"x" : 720,
 					"y" : 180,
@@ -83,6 +86,7 @@
 				"isTranslate": true,
 				"isScale": false,
 				"isRotate": false,
+				"isFade": false,
 				"isEaseIn": true,
 				"isEaseOut": false
 			}

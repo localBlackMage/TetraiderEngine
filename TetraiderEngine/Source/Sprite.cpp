@@ -133,6 +133,14 @@ void Sprite::SetTileY(float tile)
 	m_yTiling = tile;
 }
 
+float Sprite::GetAlpha() {
+	return m_tintColor.w;
+}
+
+void Sprite::SetAlpha(float alpha) {
+	m_tintColor.w = alpha;
+}
+
 String Sprite::Shader() const
 {
 	return m_shader;

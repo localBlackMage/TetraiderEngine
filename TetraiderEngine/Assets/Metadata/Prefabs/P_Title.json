@@ -63,70 +63,86 @@
 			"y" : 0,
 			"z" : 0
 	  },
-	  "ScriptedAnimation": [
-		{
-			"finalPos": {
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
+	  "initialFade": 1,
+	  
+		  "ScriptedAnimation": [
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false
 			},
-			"translationSpeed": 1,
-			"finalZRotation": 0,
-			"rotationSpeed": 1,
-			"finalScale": {
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				"finalScale": {
+					"x" : 650,
+					"y" : 100,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				
+				"isEaseIn": true,
+				"isEaseOut": true
 			},
-			"scaleSpeed": 3,
-			"isTranslate": false,
-			"isScale": true,
-			"isRotate": false
-		},
-		{
-			"finalPos": {
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
-			},
-			"translationSpeed": 1,
-			"finalZRotation": 0,
-			"rotationSpeed": 1,
-			"finalScale": {
-				"x" : 650,
-				"y" : 100,
-				"z" : 0
-			},
-			"scaleSpeed": 3,
-			"isTranslate": false,
-			"isScale": true,
-			"isRotate": false,
-			"isEaseIn": false,
-			"isEaseOut": true
-		},
-		{
-			"finalPos": {
-				"x" : 0,
-				"y" : 0,
-				"z" : 0
-			},
-			"translationSpeed": 1,
-			"finalZRotation": 0,
-			"rotationSpeed": 1,
-			"finalScale": {
-				"x" : 500,
-				"y" : 77,
-				"z" : 0
-			},
-			"scaleSpeed": 5,
-			"isTranslate": false,
-			"isScale": true,
-			"isRotate": false,
-			"isEaseIn": true,
-			"isEaseOut": false
-		}
-	  ]
-	  }
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				"finalFade": 0,
+				"fadeSpeed": 1,
+				"finalScale": {
+					"x" : 500,
+					"y" : 77,
+					"z" : 0
+				},
+				"scaleSpeed": 5,
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				"isEaseIn": true,
+				"isEaseOut": false
+			}
+		  ]
+		  }
 	  
     ]
 }
