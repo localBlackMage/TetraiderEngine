@@ -51,30 +51,39 @@ void FollowCursor::LateInitialize() {
 
 void FollowCursor::HandleEvent(Event * pEvent)
 {	
-	if (m_isDisableRenderOnPause) {
-		if (pEvent->Type() == EVENT_OnPauseGame && !m_isLevelOver) {
+	if (m_isDisableRenderOnPause)
+	{
+		if (pEvent->Type() == EVENT_OnPauseGame && !m_isLevelOver)
+		{
 			pGO->m_isRender = false;
 		}
-		else if (pEvent->Type() == EVENT_OnGameResume && !m_isLevelOver) {
+		else if (pEvent->Type() == EVENT_OnGameResume && !m_isLevelOver)
+		{
 			pGO->m_isRender = true;
-		if (pEvent->Type() == EVENT_OnPauseGame && !m_isLevelOver && !TETRA_GAME_STATE.IsShopOpen()) {
-			InputButtonData* pData = pEvent->Data<InputButtonData>();
-			if(pData->m_isTrigger)
-				pGO->m_isRender = !pGO->m_isRender;
-		}
-		else if (pEvent->Type() == EVENT_ShopOpened) {
-			pGO->m_isRender = false;
-		}
-		else if (pEvent->Type() == EVENT_ShopClosed) {
-			pGO->m_isRender = true;
-		}
-		else if (pEvent->Type() == EVENT_ExitLevel) {
-			pGO->m_isRender = false;
-			m_isLevelOver = true;
-		}
-		else if (pEvent->Type() == EVENT_LevelInComplete) {
-			pGO->m_isRender = false;
-			m_isLevelOver = true;
+			if (pEvent->Type() == EVENT_OnPauseGame && !m_isLevelOver && !TETRA_GAME_STATE.IsShopOpen())
+			{
+				InputButtonData* pData = pEvent->Data<InputButtonData>();
+				if (pData->m_isTrigger)
+					pGO->m_isRender = !pGO->m_isRender;
+			}
+			else if (pEvent->Type() == EVENT_ShopOpened)
+			{
+				pGO->m_isRender = false;
+			}
+			else if (pEvent->Type() == EVENT_ShopClosed)
+			{
+				pGO->m_isRender = true;
+			}
+			else if (pEvent->Type() == EVENT_ExitLevel)
+			{
+				pGO->m_isRender = false;
+				m_isLevelOver = true;
+			}
+			else if (pEvent->Type() == EVENT_LevelInComplete)
+			{
+				pGO->m_isRender = false;
+				m_isLevelOver = true;
+			}
 		}
 	}
 }

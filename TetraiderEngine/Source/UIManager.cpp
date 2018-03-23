@@ -56,11 +56,14 @@ void UIManager::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_OnPauseGame)
 	{
-		m_Canvas[(int)CanvasType::CANVAS_PAUSE]->ActivateCanvas();	
+		m_Canvas[(int)CanvasType::CANVAS_PAUSE]->ActivateCanvas();
 	}
 	else if (pEvent->Type() == EVENT_OnGameResume) {
 		DeActivateAllCanvas();
 	}
-void UIManager::AddGameObjectToCanvas(CanvasType type, GameObject* _pGO) {
+}
+
+void UIManager::AddGameObjectToCanvas(CanvasType type, GameObject* _pGO)
+{
 	m_Canvas[(int)type]->AddGameObjectToCanvas(_pGO);
 }

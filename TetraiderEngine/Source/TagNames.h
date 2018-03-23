@@ -16,8 +16,6 @@ REGISTER_TAG_NAME(T_Pause)
 REGISTER_TAG_NAME(T_PowerUpText)
 REGISTER_TAG_NAME(T_Cursor)
 REGISTER_TAG_NAME(T_SliderBar)
-<<<<<<< HEAD
 REGISTER_TAG_NAME(T_Text)
-=======
 REGISTER_TAG_NAME(T_DeadEnemy)
->>>>>>> develop
+
