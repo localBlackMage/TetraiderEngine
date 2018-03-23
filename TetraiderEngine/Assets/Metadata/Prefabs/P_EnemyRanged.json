@@ -32,8 +32,8 @@
 			"knockBackMultiplier": 1,
 			"isIgnoreHazards" : true
 		},
-		"detectionRadius": 400,
-		"outOfSightRadius": 500,
+		"detectionRadius": 425,
+		"outOfSightRadius": 525,
 		"zoneWidth": 350,
 		"zoneHeight": 320,
 		"attackRange": 500,

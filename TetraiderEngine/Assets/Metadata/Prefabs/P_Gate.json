@@ -56,8 +56,8 @@
 		"MY_ANIMATIONS":[
 		{
 			"Name": "GateOpen",
-			"frames": 5,
-			"animationSpeed": 20,
+			"frames": 7,
+			"animationSpeed": 30,
 			"isLooping": false,
 			"isPlayOnAwake": false
 		}]
