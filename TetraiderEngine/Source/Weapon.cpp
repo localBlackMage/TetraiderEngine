@@ -180,7 +180,7 @@ void Weapon::PlayEffect() {
 	if (m_pEffect) {
 		Animation* pAnimation = m_pEffect->GetComponent<Animation>(ComponentType::C_Animation);
 		if (pAnimation)
-			pAnimation->Play(0, true);
+			pAnimation->Play(0);
 
 		Swing();
 

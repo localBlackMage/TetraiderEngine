@@ -47,6 +47,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Endpoints"] = Endpoints::CreateInstance;
 	m_creationFunctions["Shop"] = Shop::CreateInstance;
 	m_creationFunctions["NotEnoughGoldFeathers"] = NotEnoughGoldFeathers::CreateInstance;
+	m_creationFunctions["Gate"] = Gate::CreateInstance;
+	m_creationFunctions["GateTriggerBox"] = GateTriggerBox::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

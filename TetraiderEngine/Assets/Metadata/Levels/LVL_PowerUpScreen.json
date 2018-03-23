@@ -18,9 +18,6 @@
     {
       "prefab": "P_StaminaBar"
     },
-    {
-      "prefab": "P_EggUI"
-    },
 	{
 	  "prefab": "P_UIarrowAmmo"
 	},

@@ -65,24 +65,12 @@ void GameObject::OverrideComponents(const json & j)
 	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->Override(j);
 	}
-
-	/*
-	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
-		if (mComponents[i])
-			mComponents[i]->Override(j);
-	}*/
 }
 
 void GameObject::Update(float dt) {
 	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->Update(dt);
 	}
-
-	/*
-	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
-		if (mComponents[i])
-			mComponents[i]->Update(dt);
-	}*/
 
 	if (m_isSetToDestroy) {
 		if (TETRA_FRAMERATE.GetElapsedTime() - m_destroySetTimeStamp > m_destroyTimer)
@@ -94,23 +82,12 @@ void GameObject::LateUpdate(float dt) {
 	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->LateUpdate(dt);
 	}
-
-	/*
-	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
-		if (mComponents[i])
-			mComponents[i]->LateUpdate(dt);
-	}*/
 }
 
 void GameObject::LateInitialize() {
 	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->LateInitialize();
 	}
-		
-	/*for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
-		if (mComponents[i])
-			mComponents[i]->LateInitialize();
-	}*/
 }
 
 void GameObject::AddComponent(Component* pComponent) {
@@ -128,12 +105,6 @@ void GameObject::HandleEvent(Event* pEvent) {
 	for (unsigned int i = 0; i < m_activeComponents.size(); ++i) {
 		mComponents[(int)m_activeComponents[i]]->HandleEvent(pEvent);
 	}
-
-	/*
-	for (int i = 0; i < ComponentType::NUM_COMPONENTS; ++i) {
-		if (mComponents[i])
-			mComponents[i]->HandleEvent(pEvent);
-	}*/
 }
 
 void GameObject::SetParent(GameObject* pParent) {
@@ -160,6 +131,8 @@ void GameObject::UpdateForLevelEditor(float dt) {
 		mComponents[ComponentType::C_Body]->Update(dt);
 	if (mComponents[ComponentType::C_Camera])
 		mComponents[ComponentType::C_Camera]->Update(dt);
+	if (mComponents[ComponentType::C_GateTriggerBox])
+		mComponents[ComponentType::C_GateTriggerBox]->Update(dt);
 
 	if (m_isSetToDestroy) {
 		if (TETRA_FRAMERATE.GetElapsedTime() - m_destroySetTimeStamp > m_destroyTimer)
@@ -176,4 +149,6 @@ void GameObject::LateUpdateForLevelEditor(float dt) {
 		mComponents[ComponentType::C_Body]->LateUpdate(dt);
 	if (mComponents[ComponentType::C_Camera])
 		mComponents[ComponentType::C_Camera]->LateUpdate(dt);
+	if (mComponents[ComponentType::C_GateTriggerBox])
+		mComponents[ComponentType::C_GateTriggerBox]->LateUpdate(dt);
 }

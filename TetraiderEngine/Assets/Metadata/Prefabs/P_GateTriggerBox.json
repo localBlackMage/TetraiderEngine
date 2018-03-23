@@ -1,5 +1,5 @@
 {
-  "Tag": "Hazard",
+  "Tag": "TriggerBox",
   "Layer": "1",
   "COMPONENTS": [
     {
@@ -29,15 +29,18 @@
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "circle",
-			"radius": 100
+			"type": "AABB",
+			"width": 400,
+			"height": 120
 		}
 	},
 	{
-		"Component": "DealDamageOnCollision",
-		"damage": 5,
-		"knockBackSpeed": 1000,
-		"isForceKnockBack": true
+		"Component": "GateTriggerBox",
+		"gatePrefabHorizontal": "P_GateHorizontal",
+		"gatePrefabVertical": "P_GateVertical",
+		"gatePositions": [
+		
+		]
 	}
   ]
 }

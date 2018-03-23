@@ -1,8 +1,3 @@
-//#include "GameObject.h"
-//#include "EggCounter.h"
-//#include "TetraiderAPI.h"
-//#include "Text.h"
-
 #include <Stdafx.h>
 
 EggCounter::EggCounter(): Component(ComponentType::C_EggCounter), m_eggsCollected(0), m_eggsToCollect(3) {}
@@ -34,6 +29,7 @@ void EggCounter::LateInitialize() {
 	
 	TETRA_EVENTS.Subscribe(EVENT_EggCounterInitialization, this);
 	TETRA_EVENTS.Subscribe(EVENT_EggCollected, this);
+	TETRA_EVENTS.Subscribe(EVENT_LevelComplete, this);
 }
 
 void EggCounter::HandleEvent(Event* pEvent) {
@@ -50,6 +46,9 @@ void EggCounter::HandleEvent(Event* pEvent) {
 			m_eggsCollected += pData->m_value;
 			m_pText->SetText(std::to_string(m_eggsCollected) + "/" + std::to_string(m_eggsToCollect));
 			break;
+		}
+		case EventType::EVENT_LevelComplete: {
+			pGO->m_isRender = false;
 		}
 	}
 }

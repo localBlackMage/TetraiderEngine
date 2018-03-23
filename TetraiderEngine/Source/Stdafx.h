@@ -211,7 +211,8 @@ using namespace JsonReader;
 #include <Microphone.h>
 #include <ScriptedAnimation.h>
 #include <WinMessage.h>
-
+#include <Gate.h>
+#include <GateTriggerBox.h>
 
 #pragma endregion 
 
