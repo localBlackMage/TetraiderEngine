@@ -14,13 +14,12 @@ public:
 	void RegisterCanvas(Canvas *);
 	void DeregisterCanvas(Canvas *);
 	void DeActivateAllCanvas();
-	Canvas* GetCanvasPause() { return m_Pause; };
+	bool IsCanvasAvailable(const CanvasType);
 	void HandleEvent(Event* pEvent);
 	void AddGameObjectToCanvas(CanvasType type, GameObject* _pGO);
 
 private:
 	Canvas* m_Canvas[(int)CanvasType::CANVAS_NUM];
-	Canvas* m_Pause;
     int m_count;
 };
 

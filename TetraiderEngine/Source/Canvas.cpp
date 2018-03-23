@@ -95,7 +95,7 @@ void Canvas::ActivateCanvas()
 		}
 		obj->SetActive(true);
 	}
-	//std::cout << "Active CanvasType : " << (int)m_canvasType << std::endl;
+	std::cout << "Active CanvasType : " << (int)m_canvasType << std::endl;
 }
 
 void Canvas::DeactivateCanvas()

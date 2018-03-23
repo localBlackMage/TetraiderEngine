@@ -323,9 +323,6 @@
     <ClCompile Include="Source\WaveMovement.cpp">
       <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PauseMenu.cpp">
-      <Filter>Source Files\Components\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AI_WalkTowardPlayerEngage.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
@@ -720,9 +717,6 @@
     </ClInclude>
     <ClInclude Include="Source\WaveMovement.h">
       <Filter>Source Files\Components\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PauseMenu.h">
-      <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI_WalkTowardPlayerAttack.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
