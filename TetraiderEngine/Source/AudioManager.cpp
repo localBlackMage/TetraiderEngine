@@ -338,13 +338,13 @@ void AudioManager::HandleEvent(Event* pEvent) {
 		if (!m_pCurrentSongChannel)
 		{
 			m_musicVol = pFloatData->mValue;
-			std::cout << "BGM volume : " << m_musicVol << std::endl;
+			//std::cout << "BGM volume : " << m_musicVol << std::endl;
 		}
 		else
 		{
 			SetSongsVolume(pFloatData->mValue);
 			m_pCurrentSongChannel->getVolume(&vol);
-			std::cout << "BGM volume : " << vol << std::endl;
+			//std::cout << "BGM volume : " << vol << std::endl;
 		}
 		break;
 
@@ -352,14 +352,14 @@ void AudioManager::HandleEvent(Event* pEvent) {
 		//FloatData * pFloatData = pEvent->Data<FloatData>();
 		SetMasterVolume(pFloatData->mValue);
 		m_pMaster->getVolume(&vol);
-		std::cout << "Master volume : " << vol << std::endl;
+		//std::cout << "Master volume : " << vol << std::endl;
 		break;
 
 	case EVENT_ChangeSFXVol:
 		//FloatData * pFloatData = pEvent->Data<FloatData>();
 		SetSFXsVolume(pFloatData->mValue);
 		m_pGroups[SFX]->getVolume(&vol);
-		std::cout << "SFX volume : " << vol << std::endl;
+		//std::cout << "SFX volume : " << vol << std::endl;
 		break;
 	}
 }
