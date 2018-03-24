@@ -49,6 +49,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["NotEnoughGoldFeathers"] = NotEnoughGoldFeathers::CreateInstance;
 	m_creationFunctions["Gate"] = Gate::CreateInstance;
 	m_creationFunctions["GateTriggerBox"] = GateTriggerBox::CreateInstance;
+	m_creationFunctions["CutScene"] = CutScene::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

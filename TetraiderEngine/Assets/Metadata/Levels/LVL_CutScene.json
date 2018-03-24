@@ -5,10 +5,10 @@
         "prefab": "P_UICameraMenu"
       },
       {
-        "prefab":"P_Title",
+        "prefab":"P_CutSceneBG",
         "position":{
           "x":0,
-          "y":250
+          "y":0
         }
       }
     ]

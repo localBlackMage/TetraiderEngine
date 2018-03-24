@@ -52,7 +52,8 @@
 			{ "Name": "LVL_Editor" },
 			{ "Name": "LVL_Menu" },
 			{ "Name": "LVL_Prototype" },
-			{ "Name": "LVL_PowerUpScreen" }
+			{ "Name": "LVL_PowerUpScreen" },
+			{ "Name": "LVL_CutScene" }
 		]
 	},
 	"INPUT_SETTINGS": [

@@ -422,6 +422,9 @@
     <ClCompile Include="Source\Gate.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CutScene.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -837,6 +840,9 @@
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Gate.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CutScene.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

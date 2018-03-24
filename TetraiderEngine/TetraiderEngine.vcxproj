@@ -24,6 +24,7 @@
     <ClCompile Include="Source\AI_HitNRunAttack.cpp" />
     <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
+    <ClCompile Include="Source\CutScene.cpp" />
     <ClCompile Include="Source\Endpoints.cpp" />
     <ClCompile Include="Source\Gate.cpp" />
     <ClCompile Include="Source\GateTriggerBox.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Source\AI_HitNRunAttack.h" />
     <ClInclude Include="Source\AI_HitNRunEngage.h" />
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />
+    <ClInclude Include="Source\CutScene.h" />
     <ClInclude Include="Source\Endpoints.h" />
     <ClInclude Include="Source\Gate.h" />
     <ClInclude Include="Source\GateTriggerBox.h" />

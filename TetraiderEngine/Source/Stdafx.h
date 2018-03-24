@@ -184,6 +184,7 @@ using namespace JsonReader;
 #include <Slider.h>
 #include <Endpoints.h>
 
+#include <CutScene.h>
 #include <CamFollow.h>
 #include <ScreenWrap.h>
 #include <SizeToScreen.h>

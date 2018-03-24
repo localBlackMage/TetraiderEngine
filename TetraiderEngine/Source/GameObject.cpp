@@ -111,6 +111,9 @@ void GameObject::SetParent(GameObject* pParent) {
 	Transform* myTransform = GetComponent<Transform>(ComponentType::C_Transform);
 	if (myTransform) {
 		Transform* parentTransform = pParent->GetComponent<Transform>(ComponentType::C_Transform);
+		
+		myTransform->SetPosition(myTransform->GetPosition() - parentTransform->GetPosition());
+
 		if (parentTransform) 
 			myTransform->SetParent(parentTransform);
 	}
