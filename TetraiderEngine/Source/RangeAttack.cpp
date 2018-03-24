@@ -1,6 +1,6 @@
 #include <Stdafx.h>
 
-RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, int ammo, bool isUnlimitedAmmo, AttackType type, float projectileSpeed, float offset, float lifeTime, int multipleShot, float coneAngle, std::string projectilePrefab):
+RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, int ammo, bool isUnlimitedAmmo, AttackType type, float projectileSpeed, float offset, float lifeTime, int multipleShot, float coneAngle, bool isFlash, std::string projectilePrefab):
 	Attack(coolDown, baseDamage, knockBackSpeed, type),
 	m_projectileSpeed(projectileSpeed),
 	m_offset(offset),
@@ -9,8 +9,10 @@ RangeAttack::RangeAttack(float coolDown, int baseDamage, float knockBackSpeed, i
 	m_ammo(ammo),
 	m_isUnlimitedAmmo(isUnlimitedAmmo),
 	m_multipleShot(multipleShot),
-	m_coneAngle(coneAngle)
-{}
+	m_coneAngle(coneAngle),
+	m_isFlash(isFlash)
+{
+}
 
 RangeAttack::~RangeAttack() {}
 
@@ -35,6 +37,11 @@ bool RangeAttack::Use(const Vector3D& direction) {
 		Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 		// TODO: Change base damage to take into consideration character stats
 		pProjectile->SetProperties(m_baseDamage, m_projectileSpeed, direction, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
+
+		if (m_isFlash) {
+			m_pOwner->HideWeapon(true);
+			m_isWeaponFlash = true;
+		}
 	}
 	else {
 		//float angle = Vector3D
@@ -52,6 +59,11 @@ bool RangeAttack::Use(const Vector3D& direction) {
 			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab, true, instantiatePos);
 			Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
 			pProjectile->SetProperties(m_baseDamage, m_projectileSpeed, dir, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
+		}
+
+		if (m_isFlash) {
+			m_pOwner->HideWeapon(true);
+			m_isWeaponFlash = true;
 		}
 	}
 		

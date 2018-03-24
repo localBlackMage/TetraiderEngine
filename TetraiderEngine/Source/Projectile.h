@@ -43,6 +43,7 @@ private:
 	bool m_isRotate;
 	bool m_isIgnoreCollideEvent;
 	bool m_isExplodeOnVelocityZero;
+	bool m_isBouncy;
 };
 
 #endif

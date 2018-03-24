@@ -26,7 +26,7 @@ public:
 	virtual void Override(const json& j);
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt);
-
+	void AddVelocity(const Vector3D& vel) { m_Velocity += vel; }
 	void SetVelocity(const Vector3D& pVel);
 	void SetVelocity(float speed, float angle);
 	void Integrate(float dt);

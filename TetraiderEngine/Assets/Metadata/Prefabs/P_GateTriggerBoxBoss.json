@@ -38,7 +38,7 @@
 		"Component": "GateTriggerBox",
 		"gatePrefabHorizontal": "P_GateHorizontal",
 		"gatePrefabVertical": "P_GateVertical",
-		"isBossTriggerBox": false,
+		"isBossTriggerBox": true,
 		"gatePositions": [
 		
 		]

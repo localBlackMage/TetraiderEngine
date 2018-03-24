@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 50,
-        "y": 50,
+        "x": 40,
+        "y": 40,
         "z": 0
       },
       "pivotOffset": {
@@ -76,10 +76,10 @@
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
 		"isExplode": true,
-		"explosionRadius": 150,
+		"explosionRadius": 100,
 		"explosionKnockBack": 2000,
 		"explosionDamage": 40,
-		"explosionPrefab": "P_Explosion"
+		"explosionPrefab": "P_ExplosionSmall"
 	},
 	{
 		"Component": "FlashOnTakeDamage",
