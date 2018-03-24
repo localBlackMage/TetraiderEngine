@@ -60,15 +60,15 @@
 		  },
 		  "initialRotation": 0,
 		  "initialScale": {
-				"x" : 716,
-				"y" : 615.333,
+        "x": 551.333,
+        "y": 615.333,
 				"z" : 0
 		  },
 		  "initialFade": 1,
 		  "ScriptedAnimation": [
 			{
 				"finalPos": {
-					"x" : 0,
+					"x" : 298,
 					"y" : 0,
 					"z" : 0
 				},
@@ -92,7 +92,35 @@
 				"isRotate": false,
                 "isFade": false,
                 "isEaseIn": true,
-                "isEaseOut": false
+                "isEaseOut": true
+      },
+      {
+				"finalPos": {
+					"x" : 298,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": true,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": false,
+                "isEaseIn": true,
+                "isEaseOut": true
 			}
 		  ]
 		}

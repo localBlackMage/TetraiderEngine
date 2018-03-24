@@ -1,6 +1,6 @@
 {
-    "Tag": "UI",
-    "Layer": "UIBG",
+    "Tag": "NONE",
+    "Layer": "UI_2",
     "COMPONENTS": [
         {
           "Component": "Transform",
@@ -10,8 +10,8 @@
             "z": 0
           },
           "scale": {
-            "x": 1400,
-            "y": 1000,
+            "x": 1280,
+            "y": 720,
             "z": 0
           },
           "pivotOffset": {
@@ -41,7 +41,7 @@
             "r": 0,
             "g": 0,
             "b": 0,
-            "a": 1
+            "a": 0
           },
           "saturation": {
             "r": 0,
@@ -50,28 +50,51 @@
             "a": 0
           }
         },
-        {
-            "Component": "CutScene",
-            "Scenes": [
-                  {
-                    "prefab":"P_Z_Intro1_1",
-                    "position":{
-                      "x":0,
-                      "y":0
-                    },
-                    "isDisablePreviousRendering": false,
-                    "isParentPrev": false
-                  },
-                  {
-                    "prefab":"P_Z_Intro1_2",
-                    "position":{
-                      "x":1300,
-                      "y":0
-                    },
-                    "isDisablePreviousRendering": false,
-                    "isParentPrev": true
-                  }    
-            ]
-        }
-    ]
+		{
+		  "Component": "ScriptedAnimation",
+		  "isPlayOnAwake": false,
+		  "initialPos": {
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
+		  },
+		  "initialRotation": 0,
+		  "initialScale": {
+            "x": 1280,
+            "y": 720,
+				"z" : 0
+		  },
+		  "initialFade": 0,
+		  "ScriptedAnimation": [
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 1280,
+					"y" : 720,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": false,
+				"isScale": false,
+				"isRotate": false,
+        "isFade": true,
+        "isEaseIn": true,
+        "isEaseOut": false
+			}
+		  ]
+		}
+	]
 }

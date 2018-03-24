@@ -16,6 +16,8 @@ private:
 	std::vector<CutSceneInfo> m_cutSceneObjects;
 	int m_count;
 	ScriptedAnimation* mp_Animation;
+	bool m_isIntro;
+	bool m_isOutro;
 	bool m_isCutsceneOver;
 	void DisablePrevRendering();
 	void ParentPrevRendering();

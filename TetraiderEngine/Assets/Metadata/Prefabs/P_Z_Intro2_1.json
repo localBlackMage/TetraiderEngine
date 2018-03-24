@@ -5,13 +5,13 @@
         {
           "Component": "Transform",
           "position": {
-            "x": 0,
+            "x": 1300,
             "y": 0,
             "z": 0
           },
           "scale": {
-            "x": 716,
-            "y": 615.333,
+            "x": 536.66,
+            "y": 312,
             "z": 0
           },
           "pivotOffset": {
@@ -26,7 +26,7 @@
         },
         {
           "Component": "Sprite",
-          "Texture": "T_intro_Sc01_P01.png",
+          "Texture": "T_intro_Sc02_P01.png",
           "tiling": {
             "x": 1,
             "y": 1
@@ -36,12 +36,12 @@
             "v": 0
           },
           "lit": false,
-		  "repeats": false,
+		  "repeats": true,
           "tint": {
             "r": 1,
             "g": 1,
             "b": 1,
-            "a": 1
+            "a": 0
           },
           "saturation": {
             "r": 0,
@@ -54,22 +54,22 @@
 		  "Component": "ScriptedAnimation",
 		  "isPlayOnAwake": false,
 		  "initialPos": {
-				"x" : -240,
-				"y" : 0,
+				"x" : -316,
+				"y" : 152,
 				"z" : 0
 		  },
 		  "initialRotation": 0,
 		  "initialScale": {
-				"x" : 716,
-				"y" : 615.333,
+        "x": 536.66,
+        "y": 312,
 				"z" : 0
 		  },
 		  "initialFade": 0,
 		  "ScriptedAnimation": [
 			{
 				"finalPos": {
-					"x" : -240,
-					"y" : 0,
+					"x" : -316,
+					"y" : 152,
 					"z" : 0
 				},
 				"translationSpeed": 1,
@@ -92,7 +92,7 @@
 				"isRotate": false,
                 "isFade": true,
                 "isEaseIn": true,
-                "isEaseOut": false
+                "isEaseOut": true
 			}
 		  ]
 		}

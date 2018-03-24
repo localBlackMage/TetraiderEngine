@@ -5,7 +5,7 @@
         "prefab": "P_UICameraMenu"
       },
       {
-        "prefab":"P_CutSceneBG",
+        "prefab":"P_Z_CutSceneBG",
         "position":{
           "x":0,
           "y":0

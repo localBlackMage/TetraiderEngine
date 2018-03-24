@@ -12,6 +12,7 @@ Canvas::~Canvas()
 	{
 		obj->Destroy();
 	}
+	TETRA_UI.DeregisterCanvas(this);
 }
 
 void Canvas::Update(float)

@@ -5,6 +5,7 @@
 CutScene::CutScene():Component(ComponentType::C_Cutscene), m_isCutsceneOver(false)
 {
 	m_count = 0;
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
 }
 
 CutScene::~CutScene()
@@ -33,7 +34,10 @@ void CutScene::Update(float dt)
 	}
 	else
 	{
-
+		if (m_isIntro) {
+			TETRA_LEVELS.ActivateRandomGeneration(true);
+			TETRA_LEVELS.ChangeLevel(0);
+		}
 	}
 }
 
@@ -55,12 +59,17 @@ void CutScene::Serialize(const json & j)
 	int numberOfElements = j["Scenes"].size();
 	for (int i = 0; i<numberOfElements; ++i)
 	{
+		prefabName = ParseString(j["Scenes"][i], "prefab");
 		m_cutSceneObjects.push_back(CutSceneInfo(
 			TETRA_GAME_OBJECTS.CreateGameObject(ParseString(j["Scenes"][i], "prefab"), true, ParseVector3D(j["Scenes"][i], "position")),
 			ParseBool(j["Scenes"][i], "isDisablePreviousRendering"),
 			ParseBool(j["Scenes"][i], "isParentPrev")
 		));
+		m_cutSceneObjects[i].m_pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->SetInitialPos(ParseVector3D(j["Scenes"][i], "position"));
 	}
+
+	m_isIntro = ParseBool(j, "isIntro");
+	m_isOutro = ParseBool(j, "isOutro");
 }
 
 void CutScene::HandleEvent(Event * pEvent)
@@ -70,8 +79,14 @@ void CutScene::HandleEvent(Event * pEvent)
 			m_isCutsceneOver = true;
 			return;
 		}
-
 		m_cutSceneObjects[m_count].m_pGO->GetComponent<ScriptedAnimation>(ComponentType::C_ScriptedAnimation)->PlayAnimation();
+	}
+	else if (pEvent->Type() == EVENT_INPUT_PAUSEGAME) {
+		InputButtonData* pData = pEvent->Data<InputButtonData>();
+		if (pData->m_isTrigger) {
+			TETRA_LEVELS.ActivateRandomGeneration(true);
+			TETRA_LEVELS.ChangeLevel(2);
+		}
 	}
 }
 

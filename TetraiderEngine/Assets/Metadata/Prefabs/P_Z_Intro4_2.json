@@ -5,13 +5,13 @@
         {
           "Component": "Transform",
           "position": {
-            "x": 0,
+            "x": 1300,
             "y": 0,
             "z": 0
           },
           "scale": {
-            "x": 716,
-            "y": 615.333,
+            "x": 365.33,
+            "y": 615.33,
             "z": 0
           },
           "pivotOffset": {
@@ -26,7 +26,7 @@
         },
         {
           "Component": "Sprite",
-          "Texture": "T_intro_Sc01_P01.png",
+          "Texture": "T_intro_Sc04_P02.png",
           "tiling": {
             "x": 1,
             "y": 1
@@ -36,7 +36,7 @@
             "v": 0
           },
           "lit": false,
-		  "repeats": false,
+		  "repeats": true,
           "tint": {
             "r": 1,
             "g": 1,
@@ -54,22 +54,22 @@
 		  "Component": "ScriptedAnimation",
 		  "isPlayOnAwake": false,
 		  "initialPos": {
-				"x" : -240,
-				"y" : 0,
+				"x" : 394,
+				"y" : 1300,
 				"z" : 0
 		  },
 		  "initialRotation": 0,
 		  "initialScale": {
-				"x" : 716,
-				"y" : 615.333,
-				"z" : 0
+            "x": 365.33,
+            "y": 615.33,
+			"z": 0
 		  },
-		  "initialFade": 0,
+		  "initialFade": 1,
 		  "ScriptedAnimation": [
 			{
 				"finalPos": {
-					"x" : -240,
-					"y" : 0,
+					"x" : 394,
+					"y" : -8,
 					"z" : 0
 				},
 				"translationSpeed": 1,
@@ -87,12 +87,40 @@
 				},
 				"scaleSpeed": 3,
 				
-				"isTranslate": false,
+				"isTranslate": true,
 				"isScale": false,
 				"isRotate": false,
-                "isFade": true,
+                "isFade": false,
                 "isEaseIn": true,
-                "isEaseOut": false
+                "isEaseOut": true
+            },
+            {
+				"finalPos": {
+					"x" : 394,
+					"y" : -8,
+					"z" : 0
+				},
+				"translationSpeed": 0.8,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": true,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": false,
+                "isEaseIn": true,
+                "isEaseOut": true
 			}
 		  ]
 		}
