@@ -45,6 +45,7 @@ void Projectile::Serialize(const json& j) {
 	m_isExplodeOnVelocityZero = ParseBool(j, "isExplodeOnVelocityZero");
 	m_isIgnoreCollideEvent = ParseBool(j, "isIgnoreCollideEvent");
 	m_deccelerationSpeed = ParseFloat(j, "deacclerationSpeed");
+	
 }
 
 void Projectile::HandleEvent(Event* pEvent) {
@@ -72,6 +73,9 @@ void Projectile::HandleEvent(Event* pEvent) {
 		}
 		else {
 			m_pTransform->SetPosition(m_pTransform->GetPosition() + collisionData->mtv.normal*collisionData->mtv.penetration);
+			m_pBody->AddVelocity(collisionData->mtv.normal * m_pBody->GetVelocity().Length()*0.5f);
+			if(collisionData->pGO->m_tag == T_Player)
+				pGO->HandleEvent(&Event(EVENT_Explode));
 		}
 	}
 }

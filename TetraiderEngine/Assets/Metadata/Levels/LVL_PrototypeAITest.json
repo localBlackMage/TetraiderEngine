@@ -138,6 +138,15 @@
       }
     },
 	{
+      "prefab": "P_EnemySnake",
+      "position": {
+        "x": 1200,
+        "y": -150,
+        "z": 0
+      }
+    },
+	
+	{
       "prefab": "P_EnemyHitNRun",
       "position": {
         "x": 1500,

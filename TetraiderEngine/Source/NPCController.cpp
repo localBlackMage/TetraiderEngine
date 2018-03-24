@@ -161,8 +161,6 @@ void NPCController::Serialize(const json& j) {
 void NPCController::EnterBoss() {
 	pGO->m_isRender = true;
 	m_isActive = true;
-	//LookAtPlayer();
-	//SetOrientation();
 	if (m_pWeapon)
 		m_pWeapon->HideWeapon(false);
 

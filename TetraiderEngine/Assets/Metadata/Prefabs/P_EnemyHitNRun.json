@@ -31,7 +31,7 @@
 			"acceleration": 8,
 			"knockBackMultiplier": 1
 		},
-		"detectionRadius": 400,
+		"detectionRadius": 500,
 		"outOfSightRadius": 600,
 		"zoneWidth": 350,
 		"zoneHeight": 320,
@@ -62,7 +62,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_RedBat.png",
+      "Texture": "T_EnemyRatRed.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -91,17 +91,24 @@
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Walk",
-			"frames": 2,
-			"animationSpeed": 4,
+			"frames": 4,
+			"animationSpeed": 6,
 			"isLooping": true,
 			"isPlayOnAwake": false
 		},
 		{
 			"Name": "Idle",
 			"frames": 2,
-			"animationSpeed": 8,
+			"animationSpeed": 3,
 			"isLooping": true,
 			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Dead",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": false,
+			"isPlayOnAwake": false
 		}
 		]
 	},
@@ -142,11 +149,17 @@
 				"isUnlimitedAmmo": true,
 				"instantiationOffset": 50,
 				"lifeTime": 1.5,
-				"projectilePrefab": "P_testProjectile",
+				"projectilePrefab": "P_arrowProjectile",
 				"knockBackSpeed": 300
 			}
 		],
-		"rotationOffset": 0
+		"rotationOffset": 0,
+		"weaponPrefab": "P_RatCrossBow",
+		"weaponOffset": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		}
 	},
 	{
 		"Component": "SpawnOnHealthZero",

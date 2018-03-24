@@ -1,6 +1,6 @@
 {
-  "Tag": "Projectile",
-  "Layer": "2",
+  "Tag": "None",
+  "Layer": "3",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 40,
-        "y": 20,
+        "x": 225,
+        "y": 225,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_Arrow.png",
+      "Texture": "T_Explosion.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-	  "lit": false,
+      "lit": false,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,28 +50,26 @@
       }
     },
 	{
-		"Component": "Body",
-		"isStatic": false,
-		"mass": 0,
-		"SHAPE": {
-			"type": "circle",
-			"radius": 20
-		}
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"isDisableRenderOnAnimComplete": true,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Explosion",
+			"frames": 16,
+			"animationSpeed": 20,
+			"isLooping": false,
+			"isPlayOnAwake": true
+		}]
 	},
 	{
-		"Component": "Projectile"		
-  },
-  {
 		"Component": "Audio",
-		"audioClip": "arrow.mp3",
-		"volume": 0.3,
+		"audioClip": "explosion.mp3",
+		"volume": 0.1,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
-		"isBGM": false,
-		"is3D":false,
-		"minDistance": 20,
-		"maxDistance": 900
+		"isBGM": false
 	}
   ]
 }

@@ -20,6 +20,11 @@ void Attack::Update(float dt) {
 		m_timeFromLastUsed += dt;
 		if (m_timeFromLastUsed > m_coolDown)
 			m_isOnCooldown = false;
+
+		if (m_isWeaponFlash && m_timeFromLastUsed > m_coolDown / 2.0f) {
+			m_pOwner->HideWeapon(false);
+			m_isWeaponFlash = false;
+		}
 	}
 }
 

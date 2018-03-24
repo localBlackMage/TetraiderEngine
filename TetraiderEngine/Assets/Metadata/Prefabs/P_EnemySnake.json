@@ -27,15 +27,25 @@
 	{
 		"Component": "NPCController",
 		"AgentData": {
-			"speed": 130,
+			"speed": 118,
 			"acceleration": 8,
-			"knockBackMultiplier": 1
+			"knockBackMultiplier": 1,
+			"isIgnoreHazards" : true
 		},
-		"detectionRadius": 500,
-		"outOfSightRadius": 650,
+		"detectionRadius": 425,
+		"outOfSightRadius": 525,
 		"zoneWidth": 350,
-		"zoneHeight": 350,
-		"attackRange": 250,
+		"zoneHeight": 320,
+		"attackRange": 500,
+		"healthBarPrefab": "P_EnemyHealthBar",
+		"healthBarOffset": {
+			"x": -30,
+			"y": 50,
+			"z": 0
+		},
+		"healthScale": 60,
+		"isAttackAnimationAvailable": true,
+		"attackAnimationIndex": 2,
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -48,11 +58,11 @@
 			},
 			{	"name": "attackBehavior",
 				"behaviorIndex": 2,				
-				"AIStateType": "NPC_State_BomberAttack"
+				"AIStateType": "NPC_State_Attack"
 			},
 			{	"name": "retreatBehavior",
 				"behaviorIndex": 3,
-				"AIStateType": "NPC_State_BomberRetreat"
+				"AIStateType": "NPC_State_Retreat"
 			},
 			{	"name": "moveToRandomPointInZoneBehavior",
 				"behaviorIndex": 4,
@@ -62,7 +72,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_EnemyRatBrown.png",
+      "Texture": "T_EnemySnake.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -86,18 +96,45 @@
       }
     },
 	{
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 4,
+			"animationSpeed": 4,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 2,
+			"animationSpeed": 4,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Attack",
+			"frames": 2,
+			"animationSpeed": 10,
+			"isLooping": false,
+			"isPlayOnAwake": false
+		}
+		]
+	},
+	{
 		"Component": "Body",
 		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 50
+			"radius": 40
 		}
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 40,
-		"maxHealth": 40,
+		"startingHealth": 30,
+		"maxHealth": 30,
 		"isInvincible": false
 	},
 	{
@@ -111,56 +148,22 @@
 		}
 	},
 	{
-		"Component": "Animation",
-		"defaultAnimation": 0,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "Walk",
-			"frames": 4,
-			"animationSpeed": 6,
-			"isLooping": true,
-			"isPlayOnAwake": false
-		},
-		{
-			"Name": "Idle",
-			"frames": 2,
-			"animationSpeed": 3,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Dead",
-			"frames": 1,
-			"animationSpeed": 8,
-			"isLooping": false,
-			"isPlayOnAwake": false
-		}
-		]
-	},
-	{
 		"Component": "Weapon",
 		"Attacks":[
 			{
 				"type": "Ranged",
-				"coolDown": 1,
+				"coolDown": 0.6,
 				"baseDamage": 3,
 				"projectileSpeed": 600,
 				"ammo": 0,
 				"isUnlimitedAmmo": true,
-				"instantiationOffset": 70,
+				"instantiationOffset": 50,
 				"lifeTime": 1.5,
-				"projectilePrefab": "P_ProjectileBomb",
-				"knockBackSpeed": 300,
-				"isFlash": true
+				"projectilePrefab": "P_testProjectile",
+				"knockBackSpeed": 300
 			}
 		],
-		"rotationOffset": 0,
-		"weaponPrefab": "P_RatBombRock",
-		"weaponOffset": {
-			"x": 20,
-			"y": 0,
-			"z": 0
-		}
+		"rotationOffset": 0
 	},
 	{
 		"Component": "SpawnOnHealthZero",
