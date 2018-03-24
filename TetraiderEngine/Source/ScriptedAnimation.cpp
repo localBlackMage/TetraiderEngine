@@ -157,3 +157,19 @@ void ScriptedAnimation::NextAnim() {
 		m_fadeT = 0;
 	}
 }
+
+void ScriptedAnimation::SetInitialPos(const Vector3D& pos) {
+	m_initialPos = pos;
+}
+
+void ScriptedAnimation::SetInitialScale(const Vector3D& scale) {
+	m_initialScale = scale;
+}
+
+void ScriptedAnimation::SetInitialFade(float fade) {
+	m_initialFade = fade;
+}
+
+void ScriptedAnimation::SetInitialRot(float rot) {
+	m_initialRotation = rot;
+}

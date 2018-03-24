@@ -39,12 +39,15 @@ void Controller::Serialize(const json& j) {
 void Controller::HandleEvent(Event* pEvent) {
 	if (m_isDead) return;
 
-	if (pEvent->Type() == EventType::EVENT_ShopOpened) {
+	if (pEvent->Type() == EventType::EVENT_ShopOpened || pEvent->Type() == EventType::EVENT_OnEnterBoss) {
 		m_targetVelocity = Vector3D();
 		m_pBody->SetVelocity(Vector3D());
+		m_isControlAnimationOnVelocity = true;
+		m_isIgnoreHazards = false;
 		m_isControlsEnabled = false;
+		m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
 	}
-	else if (pEvent->Type() == EventType::EVENT_ShopClosed)
+	else if (pEvent->Type() == EventType::EVENT_ShopClosed || pEvent->Type() == EventType::EVENT_OnExitBoss)
 		m_isControlsEnabled = true;
 
 	if (!m_isControlsEnabled) return;
@@ -179,6 +182,8 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_ShopOpened, this);
 	TETRA_EVENTS.Subscribe(EVENT_ShopClosed, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnEnterBoss, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnExitBoss, this);
 }
 
 void Controller::FlyIn() {

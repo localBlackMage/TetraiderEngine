@@ -47,6 +47,10 @@ public:
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
 	void PlayAnimation();
+	void SetInitialPos(const Vector3D& pos);
+	void SetInitialScale(const Vector3D& scale);
+	void SetInitialFade(float fade);
+	void SetInitialRot(float rot);
 	bool IsPlaying() { return m_isPlayAnimation; }
 private:
 	std::vector<ScriptedAnimationData> m_scriptedAnimation;

@@ -40,6 +40,8 @@ protected:
 	bool m_isIgnoreHazards;
 	bool m_isControlAnimationOnVelocity;
 	Vector3D m_currentVelocity;
+
+	void SetOrientation();
 };
 
 #endif

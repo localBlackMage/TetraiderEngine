@@ -243,7 +243,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 
 	#pragma region RENDER_GLOWING_OBJECTS
 	// Render all layers but UI
-	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
+	_RenderGameObjectLayers(0, RENDER_LAYER::L_UIBG);
 
 	for (GameObject* cameraGO : m_pCameras) {
 		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
@@ -253,7 +253,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 	}
 	
 	// Render UI
-	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 	#pragma endregion
 	TETRA_POST_PROCESSING.UnbindBaseFBO();
 	TETRA_POST_PROCESSING.DoPostProcessing();
@@ -263,7 +263,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 void GameObjectManager::_RenderWithoutPostProcessing()
 {
 	// Render all layers but UI
-	_RenderGameObjectLayers(0, RENDER_LAYER::L_UI);
+	_RenderGameObjectLayers(0, RENDER_LAYER::L_UIBG);
 
 	for (GameObject* cameraGO : m_pCameras) {
 		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
@@ -273,7 +273,7 @@ void GameObjectManager::_RenderWithoutPostProcessing()
 	}
 
 	// Render UI
-	_RenderGameObjectLayers(RENDER_LAYER::L_UI, RENDER_LAYER::L_NUM_LAYERS);
+	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 }
 
 #pragma endregion

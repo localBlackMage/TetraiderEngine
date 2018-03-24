@@ -1,6 +1,6 @@
 #include <Stdafx.h>
 
-GateTriggerBox::GateTriggerBox(): Component(ComponentType::C_GateTriggerBox), m_isTriggered(false) {}
+GateTriggerBox::GateTriggerBox(): Component(ComponentType::C_GateTriggerBox), m_isTriggered(false), m_isBossTriggerBox(false) {}
 GateTriggerBox::~GateTriggerBox() {}
 
 void GateTriggerBox::Update(float dt) {}
@@ -19,10 +19,14 @@ void GateTriggerBox::Serialize(const json& j) {
 	int gatesToSpawn = j["gatePositions"].size();
 	m_gatePrefabHorizontal = ParseString(j, "gatePrefabHorizontal");
 	m_gatePrefabVertical = ParseString(j, "gatePrefabVertical");
+	m_isBossTriggerBox = ParseBool(j, "isBossTriggerBox");
 	for (int i = 0; i < gatesToSpawn; ++i) {
 		m_gatePositions.push_back(GateInfo(ParseVector3D(j["gatePositions"][i], "position"), ParseBool(j["gatePositions"][i], "isHorizontal")));
 	}
 
+	if (m_isBossTriggerBox) {
+		TETRA_EVENTS.Subscribe(EVENT_OnBossDefeated, this);
+	}
 }
 
 void GateTriggerBox::Override(const json& j) {
@@ -60,8 +64,21 @@ void GateTriggerBox::HandleEvent(Event* pEvent) {
 						m_gates[i]->HandleEvent(&Event(EventType::EVENT_CloseGate));
 					}
 				}
+
+				if (m_isBossTriggerBox) {
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnEnterBoss));
+				}
 			}
 			break;
+		}
+		case EVENT_OnBossDefeated: {
+			if (m_isBossTriggerBox) {
+				for (unsigned int i = 0; i < m_gates.size(); ++i) {
+					if (m_gates[i]) {
+						m_gates[i]->HandleEvent(&Event(EventType::EVENT_OpenGate));
+					}
+				}
+			}
 		}
 	}
 }
