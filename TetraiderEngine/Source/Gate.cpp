@@ -4,13 +4,13 @@ Gate::Gate() : Component(ComponentType::C_Gate), m_isOpen(true) {}
 Gate::~Gate() {}
 
 void Gate::Update(float dt) {
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_G)) {
+	/*if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_G)) {
 		OpenGate();
 	}
 
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_H)) {
 		CloseGate();
-	}
+	}*/
 }
 
 void Gate::LateUpdate(float dt) {}

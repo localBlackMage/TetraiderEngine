@@ -15,6 +15,7 @@ private:
 	std::vector<GameObject*> m_gates;
 
 	bool m_isTriggered;
+	bool m_isBossTriggerBox;
 public:
 	GateTriggerBox();
 	~GateTriggerBox();

@@ -276,7 +276,7 @@ void Weapon::MultiplyDamage(float multiplier, int attack) {
 	}
 }
 
-void Weapon::HideWeapon() {
-	if (m_pWeapon) m_pWeapon->m_isRender = false;
+void Weapon::HideWeapon(bool active) {
+	if (m_pWeapon) m_pWeapon->m_isRender = !active;
 	if (m_pEffect) m_pEffect->m_isRender = false;
 }

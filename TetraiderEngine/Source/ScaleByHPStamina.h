@@ -2,12 +2,6 @@
 #ifndef SCALE_BY_HP_STAMINA_H
 #define SCALE_BY_HP_STAMINA_H
 
-//class Sprite;
-//class Transform;
-//
-//#include "Component.h"
-//#include "Math/MathLibs.h"
-
 class ScaleByHPStamina : public Component {
 public:
 	ScaleByHPStamina();
@@ -24,6 +18,7 @@ private:
 	bool m_isScaleByHealth;
 	float m_originalScale;
 	bool m_isPlayer;
+	bool m_isBoss;
 	Transform* m_pTransform;
 };
 

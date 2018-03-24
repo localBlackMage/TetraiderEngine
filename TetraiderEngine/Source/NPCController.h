@@ -56,6 +56,8 @@ protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
 private:
+	void EnterBoss();
+	void ExitBoss();
 	AIStateFactory AIStateFactory;
 	AI_State* m_AIStates[NPC_NUM_BEHAVIOR];
 	NPC_CONTROLLER_AI m_currentState;
@@ -76,6 +78,8 @@ private:
 	bool m_isDeathAnim;
 	int m_deathAnim;
 	bool m_isAttackAnim;
+	bool m_isBoss;
+	bool m_isActive;
 	int m_attackAnim;
 	const Transform* m_pPlayerTransform;
 	GameObjectTag m_tagsToIgnore[3];
@@ -93,6 +97,8 @@ private:
 	Vector3D m_healthBarPosOffset;
 	float m_healthScale;
 	GameObject* m_healthBarUI;
+
+	bool m_isBossEntering;
 };
 
 #endif

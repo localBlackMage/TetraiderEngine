@@ -1,0 +1,296 @@
+{
+	"GAME_OBJECTS": [{
+			"prefab": "P_Camera"
+		},
+		{
+			"prefab": "P_UICamera"
+		},
+		{
+			"prefab": "P_Player",
+			"position": {
+				"x": -400,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_EnemyRatBoss",
+			"position": {
+				"x": 1536,
+				"y": 800,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ShopKeeper",
+			"position": {
+				"x": -200,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_WeaponStash",
+			"position": {
+				"x": -180,
+				"y": -100,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ShopCanvas"
+		},
+
+
+
+		{
+			"prefab": "P_inGameSoundMenu"
+		},
+		{
+			"prefab": "P_inGameControlMenu"
+		},
+		{
+			"prefab": "P_OptionMenu"
+		},
+		{
+			"prefab": "P_LoseMenu"
+		},
+
+
+		{
+			"prefab": "P_InGameCursor"
+		},
+
+		{
+			"prefab": "P_RightBG"
+		},
+
+		{
+			"prefab": "P_ColliderLeftRightLong",
+			"position": {
+				"x": -704,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ColliderUpDownLong",
+			"position": {
+				"x": 0,
+				"y": 448,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ColliderUpDownLong",
+			"position": {
+				"x": 0,
+				"y": -448,
+				"z": 0
+			}
+		},
+
+
+
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": 704,
+				"y": 320,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": 704,
+				"y": -320,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_LeftBG",
+			"position": {
+				"x": 1536,
+				"y": 0,
+				"z": 0
+			}
+		},
+
+		{
+			"prefab": "P_ColliderLeftRightLong",
+			"position": {
+				"x": 2240,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ColliderUpDownLong",
+			"position": {
+				"x": 1536,
+				"y": 448,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ColliderUpDownLong",
+			"position": {
+				"x": 1536,
+				"y": -448,
+				"z": 0
+			}
+		},
+
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": 832,
+				"y": 320,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": 832,
+				"y": -320,
+				"z": 0
+			}
+		},
+
+
+		{
+			"prefab": "P_PointLight",
+			"position": {
+				"x": 1900,
+				"y": 0
+			}
+		},
+		{
+			"prefab": "P_FireLight",
+			"position": {
+				"x": 0,
+				"y": -250
+			}
+		},
+		{
+			"prefab": "P_FireLight",
+			"position": {
+				"x": 0,
+				"y": 200,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_FireLight",
+			"position": {
+				"x": 1000,
+				"y": -250
+			}
+		},
+		{
+			"prefab": "P_FireLight",
+			"position": {
+				"x": 1000,
+				"y": 250
+			}
+		},
+
+		{
+			"prefab": "P_Rock",
+			"position": {
+				"x": 430,
+				"y": 270,
+				"z": 0
+			}
+		},
+
+		{
+			"prefab": "P_HealthBar"
+		},
+		{
+			"prefab": "P_StaminaBar"
+		},
+		{
+			"prefab": "P_LevelStatus"
+		},
+		{
+			"prefab": "P_EggUI"
+		},
+		{
+			"prefab": "P_PauseMenu"
+		},
+		{
+			"prefab": "P_UIarrowAmmo"
+		},
+		{
+			"prefab": "P_UIGoldenFeathers"
+		},
+		{
+			"prefab": "P_WinMessage"
+		},
+		{
+			"prefab": "P_AmmoPickUp",
+			"position": {
+				"x": 300,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_GoldenFeatherPickUp",
+			"position": {
+				"x": 350,
+				"y": -200,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_Barrel",
+			"position": {
+				"x": -400,
+				"y": 300,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_Barrel",
+			"position": {
+				"x": -500,
+				"y": 300,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_GateTriggerBox",
+			"position": {
+				"x": 1536,
+				"y": 0
+			},
+			"scale": {
+				"x": 400.000000,
+				"y": 164.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 1150.000000,
+				"height": 760.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			},
+			"gatePositions": [{
+					"position": {
+						"x": -768.000000,
+						"y": 10.000000
+					},
+					"isHorizontal": false
+				}
+			]
+		}
+	]
+}

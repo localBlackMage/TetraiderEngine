@@ -37,6 +37,10 @@ void Agent::Update(float dt) {
 			m_pAnimation->Play(0);
 	}
 
+	SetOrientation();
+}
+
+void Agent::SetOrientation() {
 	float angle = m_lookDirection.AngleDegrees();
 	if (m_pTransform->GetScaleX() < 0) {
 		if (angle > -90 && angle < 90) {

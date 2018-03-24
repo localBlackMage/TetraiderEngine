@@ -4,14 +4,6 @@
     {
       "prefab": "P_UICameraMenu"
     },
-    {
-      "prefab": "P_SkyBackGround",
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      }
-    },
 	{
       "prefab": "P_HealthBar"
     },

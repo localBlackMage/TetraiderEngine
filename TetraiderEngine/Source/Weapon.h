@@ -31,7 +31,7 @@ public:
 	void Swing() { swingDir *= -1; }
 	void IsRotationOffset(bool active) { m_isRotationOffset = active; }
 	void MultiplyDamage(float multiplier, int attack);
-	void HideWeapon();
+	void HideWeapon(bool active = true);
 private:
 	std::vector<Attack*> m_Attacks;
 	std::string m_weaponPrefab;

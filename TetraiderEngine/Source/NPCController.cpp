@@ -24,7 +24,9 @@ NPCController::NPCController() :
 	m_isAvoidObstacles(true),
 	m_isAvoidingObstacle(false),
 	m_isDeathAnim(false),
-	m_isAttackAnim(false)
+	m_isAttackAnim(false),
+	m_isActive(true),
+	m_isBossEntering(false)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	m_tagsToIgnore[0] = T_Projectile;
@@ -47,7 +49,15 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	if (m_isDead) return;
+	if (m_isDead || !m_isActive) return;
+
+	if (m_isBossEntering) {
+		if (!pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->IsPlaying())
+			ExitBoss();
+		
+		return;
+	}
+
 	// Change of state
 	if (m_currentState != m_previousState) {
 		if (m_AIStates[m_currentState]) {
@@ -86,13 +96,13 @@ void NPCController::Update(float dt) {
 	}
 
 	Agent::Update(dt);
-	if (m_healthBarUI) {
+	if (m_healthBarUI && !m_isBoss) {
 		m_healthBarUI->GetComponent<Transform>(C_Transform)->SetPosition(m_pTransform->GetPosition() + m_healthBarPosOffset);
 	}
 }
 
 void NPCController::LateUpdate(float dt) {
-	if (m_isDead) return;
+	if (m_isDead || !m_isActive) return;
 
 	if (TETRA_DEBUG.IsDebugModeOn()) {
 		TETRA_DEBUG.DrawWireCircle(m_pTransform->GetPosition(), m_detectionRadius*2.0f, DebugColor::RED);
@@ -137,6 +147,36 @@ void NPCController::Serialize(const json& j) {
 
 	m_isAttackAnim = ParseBool(j, "isAttackAnimationAvailable");
 	m_attackAnim = ParseInt(j, "attackAnimationIndex");
+
+	m_isBoss = ParseBool(j, "isBoss");
+
+	if (m_isBoss) {
+		TETRA_EVENTS.Subscribe(EVENT_OnEnterBoss, this);
+	}
+
+	if(ValueExists(j, "isActive"))
+		m_isActive = ParseBool(j, "isActive");
+}
+
+void NPCController::EnterBoss() {
+	pGO->m_isRender = true;
+	m_isActive = true;
+	//LookAtPlayer();
+	//SetOrientation();
+	if (m_pWeapon)
+		m_pWeapon->HideWeapon(false);
+
+	if (pGO->HasComponent(C_ScriptedAnimation)) {
+		m_isBossEntering = true;
+	}
+	pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->PlayAnimation();
+}
+
+void NPCController::ExitBoss() {
+	m_isBossEntering = false;
+	pGO->m_isCollisionDisabled = false;
+	m_healthBarUI = TETRA_GAME_OBJECTS.CreateGameObject(m_healthBarPrefab, true, m_healthBarPosOffset);
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnExitBoss));
 }
 
 void NPCController::HandleEvent(Event* pEvent) {
@@ -169,6 +209,13 @@ void NPCController::HandleEvent(Event* pEvent) {
 		else {
 			pGO->Destroy();
 		}
+
+		if (m_isBoss) {
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnBossDefeated));
+		}
+	}
+	else if (pEvent->Type() == EVENT_OnEnterBoss) {
+		EnterBoss();
 	}
 
 	if (m_isDead) return;
@@ -187,11 +234,28 @@ void NPCController::LateInitialize() {
 			m_pWeapon = pGO->GetComponent<Weapon>(ComponentType::C_Weapon);
 	}
 
-	m_healthBarUI = TETRA_GAME_OBJECTS.CreateGameObject(m_healthBarPrefab);
+	if(!m_isBoss)
+		m_healthBarUI = TETRA_GAME_OBJECTS.CreateGameObject(m_healthBarPrefab);
+
 	if (m_healthBarUI) {
 		ScaleByHPStamina* pScaleByHpStamina = m_healthBarUI->GetComponent<ScaleByHPStamina>(C_ScaleByHPStamina);
 		pScaleByHpStamina->SetOriginalScale(m_healthScale, true);
 		m_healthBarUI->m_isRender = false;
+	}
+
+	if (!m_isActive) {
+		pGO->m_isRender = false;
+		pGO->m_isCollisionDisabled = true;
+		if (m_pWeapon)
+			m_pWeapon->HideWeapon(true);
+	}
+
+	if (!pGO->HasComponent(C_ScriptedAnimation)) {
+		pGO->m_isRender = true;
+		pGO->m_isCollisionDisabled = false;
+		if (m_pWeapon)
+			m_pWeapon->HideWeapon(false);
+		m_isActive = true;
 	}
 }
 

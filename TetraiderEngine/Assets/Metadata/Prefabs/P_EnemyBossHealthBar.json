@@ -1,6 +1,6 @@
 {
-  "Tag": "None",
-  "Layer": "UIBG",
+  "Tag": "UI",
+  "Layer": "UI",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,12 +10,12 @@
         "z": 0
       },
       "scale": {
-        "x": 1280,
-        "y": 720,
+        "x": 800,
+        "y": 30,
         "z": 0
       },
       "pivotOffset": {
-        "x": 0,
+        "x": 0.5,
         "y": 0
       },
       "rotation": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_VolcanoBG.png",
+      "Texture": "T_HealthBar.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -36,6 +36,7 @@
         "v": 0
       },
       "lit": false,
+	  "repeats": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -48,6 +49,12 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "ScaleByHPStamina",
+		"isScaleByHealth": true,
+		"isPlayer": false,
+		"isBoss": true
+	}
   ]
 }

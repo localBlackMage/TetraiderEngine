@@ -9,7 +9,7 @@
 
 #define BARSCALEFACTOR 1.5f
 
-ScaleByHPStamina::ScaleByHPStamina(): Component(ComponentType::C_ScaleByHPStamina), m_originalScale(0), m_isScaleByHealth(true), m_isPlayer(false) {}
+ScaleByHPStamina::ScaleByHPStamina(): Component(ComponentType::C_ScaleByHPStamina), m_originalScale(0), m_isScaleByHealth(true), m_isPlayer(false), m_isBoss(false) {}
 ScaleByHPStamina::~ScaleByHPStamina() {}
 
 void ScaleByHPStamina::DeActivate() {
@@ -22,6 +22,7 @@ void ScaleByHPStamina::Update(float dt) {}
 void ScaleByHPStamina::Serialize(const json& j) {
 	m_isScaleByHealth = ParseBool(j, "isScaleByHealth");
 	m_isPlayer = ParseBool(j, "isPlayer");
+	m_isBoss = ParseBool(j, "isBoss");
 }
 
 void ScaleByHPStamina::LateInitialize() {
