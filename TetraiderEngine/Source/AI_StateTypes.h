@@ -22,6 +22,7 @@ static const char* StateText[] =
 
 enum NPC_CONTROLLER_AI {
 	NPC_IDLE,
+	NPC_REACTION,
 	NPC_ENGAGE,
 	NPC_ATTACK,
 	NPC_RETREAT,

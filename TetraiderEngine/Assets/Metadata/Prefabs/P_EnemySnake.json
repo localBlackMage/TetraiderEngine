@@ -67,7 +67,11 @@
 			{	"name": "moveToRandomPointInZoneBehavior",
 				"behaviorIndex": 4,
 				"AIStateType": "NPC_State_MoveToRandomPointInZone"
-			}
+			},
+     		{	"name": "NPC_REACTION",
+		        "behaviorIndex": 6,
+		        "AIStateType": "NPC_State_Reaction"
+		    }
 		]
 	},
     {

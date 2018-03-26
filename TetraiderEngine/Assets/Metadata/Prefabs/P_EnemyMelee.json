@@ -47,24 +47,28 @@
 		"healthScale": 60,
 		"AIStates": [
 			{
-				"name": "idleBehavior",
+				"name": "NPC_IDLE",
 				"behaviorIndex": 0,
 				"AIStateType": "NPC_State_Idle"
 			},
-			{	"name": "engageBehavior",
-				"behaviorIndex": 1,
+		    {	"name": "NPC_REACTION",
+		        "behaviorIndex": 1,
+		        "AIStateType": "NPC_State_Reaction"
+		    },
+			{	"name": "NPC_ENGAGE",
+				"behaviorIndex": 2,
 				"AIStateType": "NPC_State_Engage"
 			},
-			{	"name": "attackBehavior",
-				"behaviorIndex": 2,				
+			{	"name": "NPC_ATTACK",
+				"behaviorIndex": 3,				
 				"AIStateType": "NPC_State_Attack"
 			},
-			{	"name": "retreatBehavior",
-				"behaviorIndex": 3,
+			{	"name": "NPC_RETREAT",
+				"behaviorIndex": 4,
 				"AIStateType": "NPC_State_Retreat"
 			},
-			{	"name": "moveToRandomPointInZoneBehavior",
-				"behaviorIndex": 4,
+			{	"name": "NPC_MOVETORANDOMPOINTINZONE",
+				"behaviorIndex": 5,
 				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}
 		]

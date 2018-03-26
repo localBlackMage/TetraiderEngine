@@ -425,6 +425,9 @@
     <ClCompile Include="Source\CutScene.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AI_Reaction.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -844,6 +847,9 @@
     </ClInclude>
     <ClInclude Include="Source\CutScene.h">
       <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_Reaction.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

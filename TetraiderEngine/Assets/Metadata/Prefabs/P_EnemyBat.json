@@ -50,12 +50,16 @@
         "behaviorIndex": 0,
         "AIStateType": "NPC_State_Idle"
       },
-      { "name": "NPC_ENGAGE",
+      {	"name": "NPC_REACTION",
         "behaviorIndex": 1,
+        "AIStateType": "NPC_State_Reaction"
+      },
+      { "name": "NPC_ENGAGE",
+        "behaviorIndex": 2,
         "AIStateType": "NPC_State_WalkTowardPlayerEngage"
       },
       { "name": "attackBehavior",
-        "behaviorIndex": 2,       
+        "behaviorIndex": 3,       
         "AIStateType": "NPC_State_WalkTowardPlayerAttack"
       },
       {
@@ -64,7 +68,7 @@
         "AIStateType": "NPC_State_Idle"
       },
       { "name": "NPC_STUNNED",
-        "behaviorIndex": 5,
+        "behaviorIndex": 6,
         "AIStateType": "NPC_State_IdleForDuration"
       }
     ]

@@ -20,13 +20,15 @@ void AI_WalkTowardPlayerAttack::OnEnter(){
 }
 
 void AI_WalkTowardPlayerAttack::OnUpdate(float dt){
-	if (idledSoFar > idleDuration) {
-		pAgent->LookAtPlayer();
-		pAgent->MoveToPlayer();
-	}
-	else {
-		idledSoFar += dt;
-	}
+	//if (idledSoFar > idleDuration) {
+	//	pAgent->LookAtPlayer();
+	//	pAgent->MoveToPlayer();
+	//}
+	//else {
+	//	idledSoFar += dt;
+	//}
+	pAgent->LookAtPlayer();
+	pAgent->MoveToPlayer();
 	if (pAgent->IsPlayerOutOfSight()) {
 		pAgent->ChangeState(NPC_STUNNED);
 	}

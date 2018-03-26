@@ -28,7 +28,7 @@ void AI_MoveToRandomPointInZone::OnUpdate(float dt){
 	pAgent->LookInDirectionOfMovement();
 	if (pAgent->IsPlayerInSight()) {
 		pAgent->StopMoving();
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_REACTION);
 		return;
 	}
 	if (pAgent->IsArrivedAtDestination()) {

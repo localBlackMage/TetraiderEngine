@@ -34,6 +34,7 @@ AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_HitNRunRetreat]] = AI_HitNRunRetreat::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_BomberAttack]] = AI_BomberAttack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_BomberRetreat]] = AI_BomberRetreat::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_Reaction]] = AI_Reaction::CreateInstance;
 }
 
 AI_State* AIStateFactory::CreateState(std::string state){
