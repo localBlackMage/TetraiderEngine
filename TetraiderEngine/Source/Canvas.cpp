@@ -16,12 +16,7 @@ Canvas::~Canvas()
 }
 
 void Canvas::Update(float)
-{
-	if (!m_isActive)
-	{
-		DeactivateCanvas();
-	}
-	
+{	
 }
 
 void Canvas::Serialize(const json & j)
