@@ -125,9 +125,26 @@ void GameObjectLayer::Update()
 			lights.push_back(std::make_pair(m_layerLights[i], dist));
 			Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
 		}
-	}
 
-	_SetLightDataArrays();
+		int idx = 0;
+		for (i = 0; i < MAX_LIGHTS; ++i) {
+			idx = i * 4;
+			PointLight* pPointLightComp = lights[i].first->GetComponent<PointLight>(ComponentType::C_PointLight);
+
+			m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
+			m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
+			m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
+			m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
+
+			Vector3D pos = pPointLightComp->GetPosition();
+			m_lightPositionsAndDistances[idx + 0] = pos.x;
+			m_lightPositionsAndDistances[idx + 1] = pos.y;
+			m_lightPositionsAndDistances[idx + 2] = pos.z;
+			m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
+		}
+	}
+	else
+		_SetLightDataArrays();
 }
 
 void GameObjectLayer::ClearLayer()
