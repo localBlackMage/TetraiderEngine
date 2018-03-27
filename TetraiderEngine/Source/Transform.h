@@ -34,9 +34,11 @@ public:
 	virtual void HandleEvent(Event * p_event);
 
 	bool operator<(const Transform& other) const;
+	bool IsParented() { return m_parent; }
 
 	void SetPosition(const Vector3D& pos);
 	Vector3D GetPosition() const;
+	Vector3D GetLocalPosition() const;
 	void Move(const Vector3D& amount);
 	Vector3D GetMovement() const { return m_position - m_prevPosition; }
 
@@ -47,6 +49,8 @@ public:
 	void SetAngleY(float angle);
 	float GetAngleZ() const;
 	void SetAngleZ(float angle);
+	float GetParentScaleX();
+	float GetParentScaleY();
 
 	void SetPivotOffset(float x, float y) {
 		m_pivotOffset.x = x;

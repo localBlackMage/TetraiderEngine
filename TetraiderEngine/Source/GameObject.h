@@ -45,6 +45,7 @@ public:
 	bool HasComponent(ComponentType type) const;
 	void SetParent(GameObject* pParent);
 	void SetActive(bool active);
+	bool IsParented();
 	inline GameObjectTag Tag() const { return m_tag; }
 	inline bool TagIs(GameObjectTag tag) const { return m_tag == tag; }
 

@@ -49,12 +49,20 @@ void Transform::Update(float dt)
 void Transform::LateUpdate(float dt) {
 	// TODO: optimization if game object is static save m_Transform somewhere and never calculate matrix again
 	Matrix4x4 trans;
-	if (m_parent)
+	Matrix4x4 scale;
+	if (m_parent) {
 		trans = Matrix4x4::Translate(m_position + m_parent->GetPosition());
-	else
+		int xSign = 1;
+		int ySign = 1;
+		if (m_scale.x < 0 && m_parent->GetScaleX() < 0) xSign = -1;
+		if (m_scale.y < 0 && m_parent->GetScaleY() < 0) ySign = -1;
+		scale = Matrix4x4::Scale(m_scale.x*m_parent->GetScaleX()*xSign, m_scale.y*m_parent->GetScaleY()*ySign, 1.f); //	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
+	}
+	else {
 		trans = Matrix4x4::Translate(m_position);
+		scale = Matrix4x4::Scale(m_scale.x, m_scale.y, 1.f); //	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
+	}
 	
-	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, 1.f));	//	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
 	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
 	//Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
@@ -130,6 +138,11 @@ Vector3D Transform::GetPosition() const
 		return Vector3D(m_transform.Get(0, 3), m_transform.Get(1, 3), m_transform.Get(2, 3));
 	else
 		return m_position;
+}
+
+Vector3D Transform::GetLocalPosition() const
+{
+	return m_position;
 }
 
 void Transform::SetPosition(const Vector3D& pos)
@@ -231,6 +244,19 @@ Vector3D Transform::Up() const
 Vector3D Transform::LookAt() const
 {
 	return m_lookAt;
+}
+
+float Transform::GetParentScaleX() {
+	if (m_parent) {
+		return m_parent->GetScaleX();
+	}
+	else return 0;
+}
+float Transform::GetParentScaleY() {
+	if (m_parent) {
+		return m_parent->GetScaleY();
+	}
+	else return 0;
 }
 #pragma endregion
 
