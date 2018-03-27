@@ -253,10 +253,8 @@ void ParticleEmitter::Update(float dt)
 			m_currentTime = 0.f;
 	}
 
-	if (m_active) {
-		_UpdateParticles(dt);
-		//_SortParticles();
-	}
+	_UpdateParticles(dt);
+	//_SortParticles();
 }
 
 void ParticleEmitter::LateUpdate(float dt)
