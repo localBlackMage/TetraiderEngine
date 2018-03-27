@@ -38,6 +38,7 @@ public:
 	bool IsInAttackRange();
 	bool IsTooFarFromStartingPoint();
 	void PlayAnimation(int animation);
+	void PlayReactionEffect();
 	void SetDestinationToRandomPointInZone();
 	void SetVelocityToZero();
 	void StopMoving();
