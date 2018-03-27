@@ -1,17 +1,17 @@
 {
   "Tag": "None",
-  "Layer": "UI",
+  "Layer": "UI_1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
         "x": 0,
-        "y": -300,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 1300,
-        "y": 150,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "pivotOffset": {
@@ -24,30 +24,146 @@
         "z": 0
 	  }
     },
-    {
-      "Component": "Sprite",
-      "Texture": "T_Border.png",
-      "tiling": {
-        "x": 1,
-        "y": 1
-      },
-      "uvOffset": {
-        "u": 0,
-        "v": 0
-      },
-      "lit": false,
-      "tint": {
-        "r": 1,
-        "g": 1,
-        "b": 1,
-        "a": 1
-      },
-	  "saturation": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 0
-      }
-    }
+	{
+		"Component": "Canvas",
+		"canvasType":8,
+		"isActiveOnAwake": true,
+		"isAnimateOnActivation": true,
+		"UIElements": [
+			{
+				"prefab": "P_UI_PowerUpBackground",
+				"position": {
+				  "x": 0,
+				  "y": 0,
+				  "z": 0
+				}
+			},
+			{
+			  "prefab": "P_PowerUpButtonNormal",
+			   "position": {
+				"x": 80,
+				"y": -10,
+				"z": 0
+			  }
+			},
+			{
+			  "prefab": "P_PowerUpButtonNormal",
+			   "position": {
+				"x": -80,
+				"y": -10,
+				"z": 0
+			  }
+			},
+			{
+				"prefab": "P_PowerUpText",
+				"position": {
+					"x": -170,
+					"y": -90,
+					"z": 0
+				}
+			},
+			{
+				"prefab": "P_ChooseYourBlessingText",
+				"position": {
+					"x": -50,
+					"y": 65,
+					"z": 0
+				}
+			}
+		]
+	},
+	{
+	  "Component": "ScriptedAnimation",
+	  "isPlayOnAwake": true,
+	  "initialPos": {
+			"x" : 0,
+			"y" : 0,
+			"z" : 0
+	  },
+	  "initialRotation": 0,
+	  "initialScale": {
+			"x" : 0,
+			"y" : 0,
+			"z" : 0
+	  },
+	  "initialFade": 1,
+	  
+		  "ScriptedAnimation": [
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 1.5,
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				
+				"isEaseIn": true,
+				"isEaseOut": true
+			},
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				"finalScale": {
+					"x" : 1.2,
+					"y" : 1.2,
+					"z" : 0
+				},
+				"scaleSpeed": 3.5,
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				
+				"isEaseIn": true,
+				"isEaseOut": true
+			},
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				"finalFade": 0,
+				"fadeSpeed": 1,
+				"finalScale": {
+					"x" : 1,
+					"y" : 1,
+					"z" : 0
+				},
+				"scaleSpeed": 6.5,
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				"isEaseIn": true,
+				"isEaseOut": true
+			}
+		  ]
+	  }
   ]
 }

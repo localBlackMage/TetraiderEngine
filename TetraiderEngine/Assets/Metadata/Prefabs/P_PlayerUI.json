@@ -1,6 +1,6 @@
 {
   "Tag": "UI",
-  "Layer": "UI_1",
+  "Layer": "UI",
   "COMPONENTS": [
     {
       "Component": "Transform",
