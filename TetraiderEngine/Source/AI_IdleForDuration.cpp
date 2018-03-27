@@ -24,16 +24,15 @@ void AI_IdleForDuration::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_REACTION);
 		return;
 	}
-	if (triedSofar > tryTime && pAgent->IsArrivedAtDestination()) {
-		pAgent->ChangeState(NPC_IDLE);
-	}
 	if (triedSofar > tryTime) {
 		pAgent->GoToStartingPoint();
 	}
 	else {
 		triedSofar += dt;
 	}
-
+	if (triedSofar > tryTime && pAgent->IsArrivedAtDestination()) {
+		pAgent->ChangeState(NPC_IDLE);
+	}
 }
 
 void AI_IdleForDuration::OnExit(){
@@ -44,6 +43,6 @@ void AI_IdleForDuration::OnExit(){
 void AI_IdleForDuration::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnTakeDamage:
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_REACTION);
 	}
 }

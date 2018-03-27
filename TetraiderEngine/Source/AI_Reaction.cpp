@@ -10,7 +10,9 @@ AI_Reaction::~AI_Reaction(){
 
 void AI_Reaction::OnEnter(){
 	// play reaction animation here//
-
+	pAgent->StopMoving();
+	pAgent->LookAtPlayer();
+	pAgent->PlayReactionEffect();
 	////////////////////////////////
 
 	idleDuration = 1.0f;
