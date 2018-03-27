@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 100,
-        "y": 100,
+        "x": 40,
+        "y": 40,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_AcidPool.png",
+      "Texture": "T_acidProjectileTest.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-	  "lit": true,
+	  "lit": false,
       "tint": {
         "r": 1,
         "g": 1,
@@ -51,23 +51,35 @@
     },
 	{
 		"Component": "Body",
-		"isStatic": true,
+		"isStatic": false,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 100,
-			"height": 100
+			"type": "circle",
+			"radius": 20
 		}
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 15,
-		"maxHealth": 15,
+		"startingHealth": 1,
+		"maxHealth": 10,
 		"isInvincible": false
 	},
 	{
+		"Component": "Projectile",
+		"isAccelerateToZero": true,
+		"isRotate": true,
+		"isExplodeOnVelocityZero": true,
+		"isIgnoreCollideEvent": true,
+		"deacclerationSpeed": 2
+	},
+	{
 		"Component": "DestroyOnHealthZero",
-		"destroyIn": 0
+		"destroyIn": 0,
+		"isExplode": true,
+		"explosionRadius": 100,
+		"explosionKnockBack": 2000,
+		"explosionDamage": 40,
+		"explosionPrefab": "P_ExplosionSmall"
 	},
 	{
 		"Component": "FlashOnTakeDamage",
@@ -78,28 +90,6 @@
         "b": 1,
         "a": 0
 		}
-	},
-		{
-		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
-		"RandomDrops": [
-			{
-				"prefab": "P_AmmoPickUp",
-				"weight": 15
-			},
-			{
-				"prefab": "P_MeatPickup",
-				"weight": 10
-			},
-			{
-				"prefab": "P_GoldenFeatherPickUp",
-				"weight": 10
-			},
-			{
-				"prefab": "",
-				"weight": 90
-			}
-		]
-	}	
+	}
   ]
 }
