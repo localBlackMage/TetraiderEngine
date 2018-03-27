@@ -140,6 +140,7 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SizeToScreen.cpp" />
     <ClCompile Include="Source\SnapToCamera.cpp" />
+    <ClCompile Include="Source\Spawner.cpp" />
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Source\PlayerStatsManager.h" />
     <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
+    <ClInclude Include="Source\PowerUpData.h" />
     <ClInclude Include="Source\Shop.h" />
     <ClInclude Include="Source\Slider.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />
@@ -285,6 +287,7 @@
     <ClInclude Include="Source\SizeToScreen.h" />
     <ClInclude Include="Source\SnapToCamera.h" />
     <ClInclude Include="Source\Sorting.h" />
+    <ClInclude Include="Source\Spawner.h" />
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />

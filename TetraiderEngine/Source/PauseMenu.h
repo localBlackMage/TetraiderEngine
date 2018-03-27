@@ -1,7 +1,4 @@
 #pragma once
-//#include "Component.h"
-//
-//class Text;
 
 class PauseMenu :public Component
 {

@@ -1,8 +1,3 @@
-//#include "Text.h"
-//#include "TetraiderAPI.h"
-//
-//using namespace JsonReader;
-
 #include <Stdafx.h>
 
 Letter Text::_GetTextureOffsetForLetter(const char letter)
