@@ -1,5 +1,7 @@
 #include <Stdafx.h>
 
+typedef std::pair<GameObject*, float> GO_Distance;
+
 static bool LeftYGreaterThanRightY(GameObject*left, GameObject*right)
 {
 	Transform* tLeft = left->GetComponent<Transform>(ComponentType::C_Transform);
@@ -22,11 +24,31 @@ static bool LeftDistLessOrEqualToRight(const std::pair<GameObject*, float>& left
 
 #pragma region GameObjectLayer
 
+void GameObjectLayer::_SetLightDataArrays()
+{
+	int idx = 0;
+	for (unsigned int i = 0; i < m_layerLights.size(); ++i) {
+		idx = i * 4;
+		PointLight* pPointLightComp = m_layerLights[i]->GetComponent<PointLight>(ComponentType::C_PointLight);
+
+		m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
+		m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
+		m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
+		m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
+
+		Vector3D pos = pPointLightComp->GetPosition();
+		m_lightPositionsAndDistances[idx + 0] = pos.x;
+		m_lightPositionsAndDistances[idx + 1] = pos.y;
+		m_lightPositionsAndDistances[idx + 2] = pos.z;
+		m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
+	}
+}
+
 GameObjectLayer::GameObjectLayer()
 {
 	std::fill(m_lightColors, m_lightColors + m_size, 1.f);
 	m_lightColorsBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_size * sizeof(float));
-	m_m_lightPositionsAndDistancesBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_size * sizeof(GLfloat));
+	m_lightPositionsAndDistancesBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_size * sizeof(GLfloat));
 }
 
 GameObjectLayer::GameObjectLayer(const GameObjectLayer & rhs) : m_layerObjects(rhs.m_layerObjects) {}
@@ -78,25 +100,8 @@ void GameObjectLayer::RemoveLightFromLayer(GameObject * pGO)
 
 void GameObjectLayer::Update()
 {
-	if (m_layerLights.size() <= MAX_LIGHTS) {
-		int idx = 0;
-		for (unsigned int i = 0; i < m_layerLights.size(); ++i) {
-			idx = i * 4;
-			PointLight* pPointLightComp = m_layerLights[i]->GetComponent<PointLight>(ComponentType::C_PointLight);
-
-			m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
-			m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
-			m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
-			m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
-
-			Vector3D pos = pPointLightComp->GetPosition();
-			m_lightPositionsAndDistances[idx + 0] = pos.x;
-			m_lightPositionsAndDistances[idx + 1] = pos.y;
-			m_lightPositionsAndDistances[idx + 2] = pos.z;
-			m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
-		}
-	}
-	else {
+	if (m_layerLights.size() > MAX_LIGHTS)
+	{
 		Vector3D PlayerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
 		std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
 		std::vector< std::pair<GameObject*, float> > lights;
@@ -120,24 +125,9 @@ void GameObjectLayer::Update()
 			lights.push_back(std::make_pair(m_layerLights[i], dist));
 			Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
 		}
-
-		int idx = 0;
-		for (unsigned int i = 0; i < MAX_LIGHTS; ++i) {
-			idx = i * 4;
-			PointLight* pPointLightComp = lights[i].first->GetComponent<PointLight>(ComponentType::C_PointLight);
-
-			m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
-			m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
-			m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
-			m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
-
-			Vector3D pos = pPointLightComp->GetPosition();
-			m_lightPositionsAndDistances[idx + 0] = pos.x;
-			m_lightPositionsAndDistances[idx + 1] = pos.y;
-			m_lightPositionsAndDistances[idx + 2] = pos.z;
-			m_lightPositionsAndDistances[idx + 3] = pPointLightComp->Distance();
-		}
 	}
+
+	_SetLightDataArrays();
 }
 
 void GameObjectLayer::ClearLayer()
@@ -147,42 +137,35 @@ void GameObjectLayer::ClearLayer()
 
 void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
 {
-	// If there are fewer than MAX_LIGHTS lights, don't bother sorting by distance
-	// else, Pick the MAX_LIGHTS closest lights
+	// //If there are fewer than MAX_LIGHTS lights, don't bother sorting by distance
+	// //else, Pick the MAX_LIGHTS closest lights
 	//if (m_layerLights.size() > MAX_LIGHTS) {
 	//	std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
 	//	std::vector< std::pair<GameObject*, float> > lights;
 	//	lights.reserve(MAX_LIGHTS);
-
-
 	//	unsigned int i = 0;
 	//	for (i = 0; i < MAX_LIGHTS; ++i) {
 	//		float dist = Vector3D::SquareDistance(pos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
 	//		lights.push_back(std::make_pair(m_layerLights[i], dist));
 	//		Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
 	//	}
-
 	//	for (i = MAX_LIGHTS; i < m_layerLights.size(); ++i) {
 	//		float dist = Vector3D::SquareDistance(pos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
 	//		// If this light is farther away than the farthest light, ignore it
 	//		if (dist > lights[MAX_LIGHTS-1].second)	continue;
-
 	//		lights[MAX_LIGHTS - 1].first = nullptr;
 	//		lights.pop_back();
 	//		lights.push_back(std::make_pair(m_layerLights[i], dist));
 	//		Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
 	//	}
-
 	//	int idx = 0;
 	//	for (unsigned int i = 0; i < MAX_LIGHTS; ++i) {
 	//		idx = i * 4;
 	//		PointLight* pPointLightComp = lights[i].first->GetComponent<PointLight>(ComponentType::C_PointLight);
-
-	//		m_lightColors[idx + 0] = float(pPointLightComp->Red()) / 255.f;
-	//		m_lightColors[idx + 1] = float(pPointLightComp->Green()) / 255.f;
-	//		m_lightColors[idx + 2] = float(pPointLightComp->Blue()) / 255.f;
-	//		m_lightColors[idx + 3] = float(pPointLightComp->Alpha()) / 255.f;
-
+	//		m_lightColors[idx + 0] = pPointLightComp->Red();
+	//		m_lightColors[idx + 1] = pPointLightComp->Green();
+	//		m_lightColors[idx + 2] = pPointLightComp->Blue();
+	//		m_lightColors[idx + 3] = pPointLightComp->Alpha();
 	//		Vector3D pos = pPointLightComp->GetPosition();
 	//		m_lightPositionsAndDistances[idx + 0] = pos.x;
 	//		m_lightPositionsAndDistances[idx + 1] = pos.y;

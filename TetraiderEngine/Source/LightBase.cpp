@@ -57,17 +57,8 @@ Vector3D LightBase::GetPosition() const
 void LightBase::LateInitialize()
 {
 	if (!m_pTransform) {
-		if (pGO)
-			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-		else {
-			std::cout << "No Game Object found. LightBase component failed to operate." << std::endl;
-			return;
-		}
-
-		if (!m_pTransform) {
-			std::cout << "No Transform component found. LightBase component failed to operate." << std::endl;
-			assert(m_pTransform);
-			return;
-		}
+		assert(pGO && "No Game Object found. LightBase component failed to operate.");
+		m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+		assert(m_pTransform && "No Transform component found. LightBase component failed to operate.");
 	}
 }
