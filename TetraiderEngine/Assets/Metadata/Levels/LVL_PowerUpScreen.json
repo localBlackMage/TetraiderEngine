@@ -23,9 +23,6 @@
 	  "prefab": "P_PowerUpCanvas"
 	},
 	{
-	  "prefab": "P_ChooseYourBlessingText"
-	},
-	{
 	  "prefab": "P_PlayerUI"
 	},
 	{
@@ -36,22 +33,6 @@
 	},
 	{
       "prefab": "P_Cursor"
-    },
-	{
-	  "prefab": "P_PowerUpButtonNormal",
-	   "position": {
-        "x": -80,
-        "y": -225,
-        "z": 0
-      }
-	},
-	{
-	  "prefab": "P_PowerUpButtonNormal",
-	   "position": {
-        "x": 80,
-        "y": -225,
-        "z": 0
-      }
-	}
+    }
   ]
 }

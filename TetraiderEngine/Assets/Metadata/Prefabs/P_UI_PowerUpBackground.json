@@ -1,6 +1,6 @@
 {
-  "Tag": "None",
-  "Layer": "UIBG",
+  "Tag": "UI",
+  "Layer": "UI_1",
   "COMPONENTS": [
     {
       "Component": "Transform",
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 1280,
-        "y": 720,
+        "x": 600,
+        "y": 300,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_VolcanoBG_Blue.png",
+      "Texture": "T_StaminaBar.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,6 +35,7 @@
         "u": 0,
         "v": 0
       },
+	  "repeats": true,
       "lit": false,
       "tint": {
         "r": 1,
@@ -48,6 +49,26 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "Text",
+		"letterHeight": 55,
+		"letterWidth": 28,
+		"spacing": 0.65,
+		"pivotOffset": {
+			"x": -170,
+			"y": 100
+		},
+		"tint": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"rows": 6,
+		"cols": 16,
+		"font": "ShadowCardGothicFont.png",
+		"text": "CHOOSE YOUR BLESSING"
+	}
   ]
 }

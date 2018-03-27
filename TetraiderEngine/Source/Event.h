@@ -74,6 +74,11 @@ struct CollectibleData : public EventData {
 	int m_value;
 };
 
+struct CanvasData : public EventData {
+	CanvasData(int type) : m_canvasType(type) {}
+	int m_canvasType;
+};
+
 class Event
 {
 protected:

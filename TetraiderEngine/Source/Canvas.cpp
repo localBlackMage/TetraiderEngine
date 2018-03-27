@@ -110,12 +110,18 @@ void Canvas::ActivateCanvas()
 		if (pGO->HasComponent(C_ScriptedAnimation))
 			pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->PlayAnimation();
 	}
+
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnCanvasActivated, &CanvasData((int)m_canvasType)));
 }
 
 void Canvas::DeactivateCanvas(bool isForceDeactivation)
 {
 	if (m_isAnimateOnActivation && !m_isDeactivating && !isForceDeactivation) {
 		DeactivateAfterAnimComplete();
+		for (auto obj : m_UIelements) {
+			obj->m_isCollisionDisabled = true;
+		}
+
 		return;
 	}
 
@@ -130,6 +136,8 @@ void Canvas::DeactivateCanvas(bool isForceDeactivation)
 		}
 		obj->SetActive(false);
 	}
+
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnCanvasDeactivated, &CanvasData((int)m_canvasType)));
 }
 
 void Canvas::DeactivateAfterAnimComplete() {
@@ -140,4 +148,3 @@ void Canvas::DeactivateAfterAnimComplete() {
 
 	m_isDeactivating = true;
 }
-

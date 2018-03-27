@@ -1,6 +1,9 @@
 #include <Stdafx.h>
 
-PowerUpButton::PowerUpButton() :Component(ComponentType::C_PowerUpButton) {}
+PowerUpButton::PowerUpButton() :Component(ComponentType::C_PowerUpButton) {
+	TETRA_EVENTS.Subscribe(EventType::EVENT_OnCanvasActivated, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_OnCanvasDeactivated, this);
+}
 PowerUpButton::~PowerUpButton() {}
 
 void PowerUpButton::Update(float dt) {
@@ -65,6 +68,9 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 			TETRA_UI.AddGameObjectToCanvas(CanvasType::CANVAS_SHOP, m_pPrice);
 			m_pPrice->SetActive(false);
 		}
+		else {
+			TETRA_UI.AddGameObjectToCanvas(CanvasType::CANVAS_POWERUPSCREEN, pIconGO);
+		}
 	}
 	else if (pEvent->Type() == EVENT_OnCollide)
 	{
@@ -87,14 +93,20 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				if (!m_isSpecial) {
 					TETRA_PLAYERSTATS.EquipPowerUp(m_powerUp.m_category, m_powerUp.m_type, m_powerUp.m_index);
-					TETRA_LEVELS.ActivateRandomGeneration(true);
-					TETRA_LEVELS.ChangeLevel(m_levelNumber);
+					TETRA_UI.DeactivateCanvas(CanvasType::CANVAS_POWERUPSCREEN);
 				}
 				else {
 					TETRA_PLAYERSTATS.EquipPowerUp(m_powerUp.m_category, m_powerUp.m_type, m_powerUp.m_index);
 					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_PowerUpPurchased));
 				}
 			}
+		}
+	}
+	else if (pEvent->Type() == EVENT_OnCanvasDeactivated) {
+		CanvasData* pData = pEvent->Data<CanvasData>();
+		if (pData->m_canvasType == (int)CanvasType::CANVAS_POWERUPSCREEN) {
+			TETRA_LEVELS.ActivateRandomGeneration(true);
+			TETRA_LEVELS.ChangeLevel(m_levelNumber);
 		}
 	}
 }
