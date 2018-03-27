@@ -84,6 +84,14 @@
 		{
 			"prefab": "P_ShopCanvas"
 		},
+		{
+			"prefab": "P_AcidPool",
+			"position": {
+				"x": 140,
+				"y": -275,
+				"z": 0
+			}
+		},
 
 		{
 			"prefab": "P_GateTriggerBox",

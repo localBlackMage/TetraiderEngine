@@ -1,5 +1,5 @@
 {
-  "Tag": "Obstacle",
+  "Tag": "Hazard",
   "Layer": "1",
   "COMPONENTS": [
     {
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 256,
-        "y": 256,
+        "x": 128,
+        "y": 128,
         "z": 0
       },
       "pivotOffset": {
@@ -54,10 +54,15 @@
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "AABB",
-			"width": 256,
-			"height": 256
+			"type": "circle",
+			"radius": 64
 		}
+	},
+	{
+		"Component": "DealDamageOnCollision",
+		"damage": 5,
+		"knockBackSpeed": 0,
+		"isForceKnockBack": false
 	}
   ]
 }

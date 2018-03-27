@@ -30,6 +30,7 @@ public:
 	void LoadLevelEditor(int i);
 	void NextLevel();
 	void RestartGame();
+	int GetLevelsCompleted() { return m_levelsCompleted; }
 	void HandleEvent(Event* pEvent);
 	bool IsLastLevel();
 	int GetCurrentLevel();

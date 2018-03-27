@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_AcidPool.png",
+      "Texture": "T_Barrel.png",
       "tiling": {
         "x": 1,
         "y": 1
