@@ -81,6 +81,8 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 					BezierInterpolation(m_velocityX.points, t) * m_velocityX.amplitude,
 					BezierInterpolation(m_velocityY.points, t) * m_velocityY.amplitude,
 					0.f);
+
+				velocityOffset = Matrix4x4::Rotate(p.m_angle, ZAXIS) * velocityOffset;
 				p.m_velocity = (velocityOffset * m_speed) + Gravity;
 				p.m_pos += p.m_velocity * deltaTime;
 				p.m_pos.z = 0.f;
@@ -131,6 +133,7 @@ void ParticleEmitter::_AllocateParticleArrays()
 
 	for (int i = 0; i < m_maxParticles; ++i) {
 		m_particles[i].m_life = -1.f;
+		m_particles[i].m_angle = 0.f;
 
 		m_particles[i].m_texCoords.u = m_frameWidth / m_texture->surface->w;
 		m_particles[i].m_texCoords.v = m_frameHeight / m_texture->surface->h;
@@ -188,18 +191,9 @@ ParticleEmitter::~ParticleEmitter()
 void ParticleEmitter::LateInitialize()
 {
 	if (!m_pTransform) {
-		if (pGO)
-			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-		else {
-			std::cout << "No Game Object found. ParticleEmitter component failed to operate." << std::endl;
-			return;
-		}
-
-		if (!m_pTransform) {
-			std::cout << "No Transform component found. ParticleEmitter component failed to operate." << std::endl;
-			assert(m_pTransform);
-			return;
-		}
+		assert(pGO && "No Game Object found. ParticleEmitter component failed to operate.");
+		m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+		assert(m_pTransform && "No Transform component found. ParticleEmitter component failed to operate.");
 	}
 }
 
@@ -251,9 +245,9 @@ void ParticleEmitter::Serialize(const json & j)
 	m_animationSpeed = ParseFloat(j, "animationSpeed");
 	m_speed = ParseFloat(j, "speed");
 
-	m_velocityX.Serialize(j, "velocityX");
-	m_velocityY.Serialize(j, "velocityY");
-	m_scale.Serialize(j, "scale");
+	SerializeInterpolationItem(m_velocityX, j, "velocityX");
+	SerializeInterpolationItem(m_velocityY, j, "velocityY");
+	SerializeInterpolationItem(m_scale, j, "scale");
 
 	m_rotation = ParseFloat(j, "rotation");
 

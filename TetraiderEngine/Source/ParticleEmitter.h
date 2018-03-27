@@ -9,6 +9,7 @@ struct Particle {
 	float m_scale;
 	float m_life;
 	float m_animationTime;
+	float m_angle;
 	float m_cameraDistance;
 	TexCoords m_texCoords;
 
@@ -19,6 +20,7 @@ struct Particle {
 		m_scale(0.f),
 		m_life(0.f),
 		m_animationTime(0.f),
+		m_angle(0.f),
 		m_cameraDistance(-1.f),
 		m_texCoords(TexCoords(0.f, 0.f))
 	{}
@@ -31,16 +33,6 @@ struct Particle {
 
 enum class P_TextureSelection {
 	CYCLE, RANDOM, SINGLE
-};
-
-struct InterpolationItem {			
-	ControlPoints points;	// Control Points for bezier curve interpolation between start and end
-	float amplitude;		// How much of an offset to give the result from the curve
-
-	void Serialize(const json& j, const std::string& item) {
-		points = ParsePoints(j, item, "points");
-		amplitude = ParseFloat(j, item, "amplitude");
-	}
 };
 
 class ParticleEmitter : public Component {
