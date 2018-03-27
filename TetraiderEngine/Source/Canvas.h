@@ -10,7 +10,8 @@ private:
 	Text* m_pText;
 	bool m_isLevelOver;
 	bool m_isCannotPause;
-
+	bool m_isAnimateOnActivation;
+	bool m_isDeactivating;
 public:
 	Canvas();
 	~Canvas();
@@ -21,7 +22,8 @@ public:
 	void LateInitialize();
 	void HandleEvent(Event* pEvent);
 	void ActivateCanvas();
-	void DeactivateCanvas();
+	void DeactivateCanvas(bool isForceDeactivation = false);
+	void DeactivateAfterAnimComplete();
 	bool GetActiveStatus() { return m_isActive; };
 	CanvasType m_canvasType;
 };

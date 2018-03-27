@@ -26,6 +26,8 @@ protected:
 	Vector3D m_pivotOffset;
 	float m_textHeight;		// Height in pixels of each letter
 	float m_textWidth;		// Width in pixels of each letter
+	float m_intialTextHeight;
+	float m_intialTextWidth;
 	float m_letterSpacing;	// Modifier for spacing between each letter (default is 1)
 
 	float m_rows, m_cols;
@@ -65,6 +67,8 @@ public:
 
 	inline float GetLetterHeight() const { return m_textHeight; }
 	inline float GetLetterWidth() const { return m_textWidth; }
+	inline void SetLetterHeight(float h) { m_textHeight = h ; m_intialTextHeight = h;  }
+	inline void SetLetterWidth(float w) { m_textWidth = w; m_intialTextWidth = w; }
 	inline float GetLetterSpacing() const { return m_letterSpacing; }
 
 	inline float FrameHeight() const { return m_frameHeight; }

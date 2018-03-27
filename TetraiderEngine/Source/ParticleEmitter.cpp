@@ -222,6 +222,7 @@ void ParticleEmitter::Update(float dt)
 		}
 
 		_UpdateParticles(dt);
+		//_SortParticles();
 
 		if (m_looping && m_currentTime >= m_loopDuration)
 			m_currentTime = 0.f;

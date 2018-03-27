@@ -113,10 +113,32 @@ void GameObject::SetParent(GameObject* pParent) {
 		Transform* parentTransform = pParent->GetComponent<Transform>(ComponentType::C_Transform);
 		
 		myTransform->SetPosition(myTransform->GetPosition() - parentTransform->GetPosition());
+		float xDiv = parentTransform->GetScaleX();
+		float yDiv = parentTransform->GetScaleY();
+		if (fabsf(xDiv) < EPSILON)
+			xDiv = 1;
+		if (fabsf(yDiv) < EPSILON)
+			yDiv = 1;
+
+		myTransform->SetScale(Vector3D(myTransform->GetScaleX()/ xDiv, myTransform->GetScaleY()/ yDiv, 0));
+		if (myTransform->pGO->HasComponent(C_Text)) {
+			Text* pMyText = myTransform->pGO->GetComponent<Text>(C_Text);
+			pMyText->SetLetterWidth(pMyText->GetLetterWidth() / xDiv);
+			pMyText->SetLetterHeight(pMyText->GetLetterHeight() / yDiv);
+		}
 
 		if (parentTransform) 
 			myTransform->SetParent(parentTransform);
 	}
+}
+
+bool GameObject::IsParented() {
+	Transform* myTransform = GetComponent<Transform>(ComponentType::C_Transform);
+	if (myTransform) {
+		return myTransform->IsParented();
+	}
+	else
+		return false;
 }
 
 void GameObject::SetActive(bool active) {

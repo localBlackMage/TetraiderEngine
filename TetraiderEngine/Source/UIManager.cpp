@@ -67,4 +67,5 @@ void UIManager::HandleEvent(Event * pEvent)
 void UIManager::AddGameObjectToCanvas(CanvasType type, GameObject* _pGO)
 {
 	m_Canvas[(int)type]->AddGameObjectToCanvas(_pGO);
+	_pGO->SetParent(m_Canvas[(int)type]->pGO);
 }

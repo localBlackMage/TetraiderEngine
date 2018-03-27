@@ -6,7 +6,7 @@
 struct Particle {
 	Vector3D m_pos, m_velocity;
 	Color m_color;
-	float m_scale, m_weight;
+	float m_scale;
 	float m_life;
 	float m_animationTime;
 	float m_cameraDistance;
@@ -17,7 +17,6 @@ struct Particle {
 		m_velocity(Vector3D()),
 		m_color(Color()),
 		m_scale(0.f),
-		m_weight(0.f),
 		m_life(0.f),
 		m_animationTime(0.f),
 		m_cameraDistance(-1.f),

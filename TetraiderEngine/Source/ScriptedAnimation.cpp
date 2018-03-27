@@ -1,6 +1,6 @@
 #include <Stdafx.h>
 
-ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0) {}
+ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0), m_isReverse(false) {}
 ScriptedAnimation::~ScriptedAnimation() {}
 
 void ScriptedAnimation::DeActivate() {
@@ -10,12 +10,19 @@ void ScriptedAnimation::DeActivate() {
 void ScriptedAnimation::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 
+	int index = m_currentAnimationIndex;
+	if (m_isReverse)
+		index -= 1;
+
 	if (m_isPlayAnimation) {
 		if (m_scriptedAnimation[m_currentAnimationIndex].m_isTranslate) {
 			m_translationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_translationSpeed;
 			if (m_translationT > 1) m_translationT = 1;
 
-			m_pTransform->SetPosition(Lerp(m_startPos, m_scriptedAnimation[m_currentAnimationIndex].m_finalPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			if(index >= 0)
+				m_pTransform->SetPosition(Lerp(m_startPos, m_scriptedAnimation[index].m_finalPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else
+				m_pTransform->SetPosition(Lerp(m_startPos, m_initialPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_translationT = 1;
@@ -24,7 +31,10 @@ void ScriptedAnimation::Update(float dt) {
 			m_rotationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_rotationSpeed;
 			if (m_rotationT > 1) m_rotationT = 1;
 
-			m_pTransform->SetAngleZ(Lerp(m_startRot, m_scriptedAnimation[m_currentAnimationIndex].m_finalZRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			if (index >= 0)
+				m_pTransform->SetAngleZ(Lerp(m_startRot, m_scriptedAnimation[index].m_finalZRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else
+				m_pTransform->SetAngleZ(Lerp(m_startRot, m_initialRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_rotationT = 1;
@@ -33,16 +43,22 @@ void ScriptedAnimation::Update(float dt) {
 			m_scaleT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_scaleSpeed;
 			if (m_scaleT > 1) m_scaleT = 1;
 
-			m_pTransform->SetScale(Lerp(m_startScale, m_scriptedAnimation[m_currentAnimationIndex].m_finalScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			if (index >= 0)
+				m_pTransform->SetScale(Lerp(m_startScale, m_scriptedAnimation[index].m_finalScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else
+				m_pTransform->SetScale(Lerp(m_startScale, m_initialScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_scaleT = 1;
 
-		if (m_scriptedAnimation[m_currentAnimationIndex].m_isFade) {
+		if (m_scriptedAnimation[m_currentAnimationIndex].m_isFade && m_pSprite) {
 			m_fadeT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_fadeSpeed;
 			if (m_fadeT > 1) m_fadeT = 1;
 
-			m_pSprite->SetAlpha(Lerp(m_startFade, m_scriptedAnimation[m_currentAnimationIndex].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			if (index >= 0)
+				m_pSprite->SetAlpha(Lerp(m_startFade, m_scriptedAnimation[index].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else
+				m_pSprite->SetAlpha(Lerp(m_startFade, m_initialFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
 		else
 			m_fadeT = 1;
@@ -117,22 +133,35 @@ void ScriptedAnimation::LateInitialize() {
 		PlayAnimation();
 }
 
-void ScriptedAnimation::PlayAnimation() {
+void ScriptedAnimation::PlayAnimation(bool isReverse) {
+	m_isReverse = isReverse;
+
 	if (!m_isPlayAnimation) {
 		m_isPlayAnimation = true;
-		m_startPos = m_initialPos;
-		m_startScale = m_initialScale;
-		m_startRot = m_initialRotation;
-		m_startFade = m_initialFade;
-		m_currentAnimationIndex = 0;
 		m_rotationT = 0;
 		m_scaleT = 0;
 		m_translationT = 0;
 		m_fadeT = 0;
+		if (!isReverse) {
+			m_startPos = m_initialPos;
+			m_startScale = m_initialScale;
+			m_startRot = m_initialRotation;
+			m_startFade = m_initialFade;
+			m_currentAnimationIndex = 0;
+		}
+		else {
+			m_startPos = m_scriptedAnimation[m_scriptedAnimation.size() - 1].m_finalPos;
+			m_startScale = m_scriptedAnimation[m_scriptedAnimation.size() - 1].m_finalScale;
+			m_startRot = m_scriptedAnimation[m_scriptedAnimation.size() - 1].m_finalZRotation;
+			m_startFade = m_scriptedAnimation[m_scriptedAnimation.size() - 1].m_finalFade;
+			m_currentAnimationIndex = m_scriptedAnimation.size() - 1;
+		}
+
 		m_pTransform->SetPosition(m_startPos);
 		m_pTransform->SetScale(m_startScale);
 		m_pTransform->SetAngleZ(m_startRot);
-		m_pSprite->SetAlpha(m_startFade);
+		if (m_pSprite)
+			m_pSprite->SetAlpha(m_startFade);
 	}
 }
 
@@ -141,21 +170,45 @@ void ScriptedAnimation::HandleEvent(Event* pEvent) {
 }
 
 void ScriptedAnimation::NextAnim() {
-	++m_currentAnimationIndex;
-	if (m_currentAnimationIndex >= (int)m_scriptedAnimation.size()) {
-		m_isPlayAnimation = false;
-		m_currentAnimationIndex = 0;
+	if (m_isReverse) {
+		--m_currentAnimationIndex;
+		if (m_currentAnimationIndex < 0) {
+			m_isPlayAnimation = false;
+			m_isReverse = false;
+			m_currentAnimationIndex = 0;
+		}
+		else {
+			m_startPos = m_pTransform->GetPosition();
+			m_startScale = m_pTransform->GetScaleVector();
+			m_startRot = m_pTransform->GetAngleZ();
+			if (m_pSprite)
+				m_startFade = m_pSprite->GetAlpha();
+			m_rotationT = 0;
+			m_scaleT = 0;
+			m_translationT = 0;
+			m_fadeT = 0;
+		}
 	}
 	else {
-		m_startPos = m_pTransform->GetPosition();
-		m_startScale = m_pTransform->GetScaleVector();
-		m_startRot = m_pTransform->GetAngleZ();
-		m_startFade = m_pSprite->GetAlpha();
-		m_rotationT = 0;
-		m_scaleT = 0;
-		m_translationT = 0;
-		m_fadeT = 0;
+		++m_currentAnimationIndex;
+		if (m_currentAnimationIndex >= (int)m_scriptedAnimation.size()) {
+			m_isReverse = false;
+			m_isPlayAnimation = false;
+			m_currentAnimationIndex = 0;
+		}
+		else {
+			m_startPos = m_pTransform->GetPosition();
+			m_startScale = m_pTransform->GetScaleVector();
+			m_startRot = m_pTransform->GetAngleZ();
+			if (m_pSprite)
+				m_startFade = m_pSprite->GetAlpha();
+			m_rotationT = 0;
+			m_scaleT = 0;
+			m_translationT = 0;
+			m_fadeT = 0;
+		}
 	}
+	
 }
 
 void ScriptedAnimation::SetInitialPos(const Vector3D& pos) {
