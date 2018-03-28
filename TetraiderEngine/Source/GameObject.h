@@ -35,19 +35,25 @@ public:
 	void Destroy();
 	void DestroyIn(float time);
 	void Deactivate();
+
 	void OverrideComponents(const json & j);
+
 	void SetLayer(RENDER_LAYER layer) { m_layer = layer; }
-	void SwitchTag(GameObjectTag t) { m_tag = t; }
 	unsigned short GetLayer() { return m_layer; }
+
 	unsigned int ID() const { return m_id; }
 	void SetID(unsigned int id) { m_id = id; }
-	void AddComponent(Component* pComponent);
-	bool HasComponent(ComponentType type) const;
+	
 	void SetParent(GameObject* pParent);
 	void SetActive(bool active);
 	bool IsParented();
+	
+	void SwitchTag(GameObjectTag t) { m_tag = t; }
 	inline GameObjectTag Tag() const { return m_tag; }
 	inline bool TagIs(GameObjectTag tag) const { return m_tag == tag; }
+
+	void AddComponent(Component* pComponent);
+	bool HasComponent(ComponentType type) const;
 
 	template <typename C>
 	C* GetComponent(ComponentType type) {
@@ -60,6 +66,11 @@ public:
 		return static_cast<C*>(mComponents[type]);
 	}
 };
+
+bool operator== (GameObject & lhs, GameObject & rhs)
+{
+	return lhs.ID() == rhs.ID();
+}
 
 #endif 
 
