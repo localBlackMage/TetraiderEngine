@@ -38,6 +38,7 @@
 		"zoneHeight": 320,
 		"attackRange": 500,
 		"healthBarPrefab": "P_EnemyHealthBar",
+		"reactionPrefab": "P_EnemyExclamation",
 		"healthBarOffset": {
 			"x": -30,
 			"y": 50,

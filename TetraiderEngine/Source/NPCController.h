@@ -82,6 +82,11 @@ private:
 	bool m_isBoss;
 	bool m_isActive;
 	int m_attackAnim;
+	bool m_isReactionAnim;
+	int m_reactionAnim;
+	float m_reactionTimer;
+	float m_nextReactionIn;
+	std::string m_reactionPrefab;
 	const Transform* m_pPlayerTransform;
 	GameObjectTag m_tagsToIgnore[3];
 	GameObjectTag m_tagsToIgnoreForObstacleAvoidance[3];

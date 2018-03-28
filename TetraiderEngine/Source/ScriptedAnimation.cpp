@@ -156,12 +156,6 @@ void ScriptedAnimation::PlayAnimation(bool isReverse) {
 			m_startFade = m_scriptedAnimation[m_scriptedAnimation.size() - 1].m_finalFade;
 			m_currentAnimationIndex = m_scriptedAnimation.size() - 1;
 		}
-
-		m_pTransform->SetPosition(m_startPos);
-		m_pTransform->SetScale(m_startScale);
-		m_pTransform->SetAngleZ(m_startRot);
-		if (m_pSprite)
-			m_pSprite->SetAlpha(m_startFade);
 	}
 }
 

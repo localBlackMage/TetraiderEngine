@@ -17,7 +17,7 @@ public:
 	virtual void LateUpdate(float dt) {}
 	virtual void Deactivate();
 	bool IsPlaying() { return m_isPlaying; }
-
+	int GetCurrentAnimation() { return m_currentAnimation; }
 	void Play(int animation);
 	void Play(int animation, bool isReverse);
 	void Play(int animation, bool isReverse, float animationSpeedMultiplier);

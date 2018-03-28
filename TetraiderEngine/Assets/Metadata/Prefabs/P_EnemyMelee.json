@@ -45,6 +45,7 @@
 			"z": 0
 		},
 		"healthScale": 60,
+		"reactionPrefab": "P_EnemyExclamation",
 		"AIStates": [
 			{
 				"name": "NPC_IDLE",

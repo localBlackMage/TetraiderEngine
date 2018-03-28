@@ -44,6 +44,8 @@
 			"z": 0
 		},
 		"healthScale": 50,
+		"isReactionAnimation": true,
+		"reactionAnimationIndex": 2,
 		"AIStates": [
       {
         "name": "NPC_IDLE",
@@ -111,6 +113,13 @@
 		},
 		{
 			"Name": "Sleep",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Reaction",
 			"frames": 1,
 			"animationSpeed": 8,
 			"isLooping": true,
