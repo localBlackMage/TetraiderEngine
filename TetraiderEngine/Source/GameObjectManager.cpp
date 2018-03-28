@@ -296,6 +296,7 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 	for (unsigned int layer = 0; layer < RENDER_LAYER::L_NUM_LAYERS; ++layer) {
 		m_layers[layer].ReSortLayer();
+		m_layers[layer].Update();
 	}
 }
 
