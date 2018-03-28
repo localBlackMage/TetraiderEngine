@@ -2,11 +2,6 @@
 #ifndef SPAWN_ONHEALTH_ZERO_H
 #define SPAWN_ONHEALTH_ZERO_H
 
-//#include "Component.h"
-//#include "Math/MathLibs.h"
-//
-//class Transform;
-
 struct RandomDrop {
 	RandomDrop(std::string name, int weight) : m_prefabName(name), m_weight(weight) {}
 	std::string m_prefabName;

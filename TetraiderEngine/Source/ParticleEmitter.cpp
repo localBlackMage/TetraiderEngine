@@ -271,6 +271,7 @@ void ParticleEmitter::Deactivate()
 
 void ParticleEmitter::Serialize(const json & j)
 {
+	m_active = ValueExists(j, "active") ? ParseBool(j, "active") : m_active;
 	m_loopDuration = ParseFloat(j, "loopDuration");
 	m_looping = ParseBool(j, "looping");
 	m_prewarmed = ParseBool(j, "prewarmed");

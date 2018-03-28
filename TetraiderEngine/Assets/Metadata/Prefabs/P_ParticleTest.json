@@ -60,38 +60,29 @@
 			]
 		},
 		"scale": {
-			"amplitude": 20.0,
-			"points": [
-			  {
-				"x": 0,
-				"y": 1
-			  },
-			  {
-				"x": 1,
-				"y": 1
-			  }
-			]
+			"amplitude": 64,
+			"points": [{"x":0,"y":0.43333333333333224},{"x":0.16666666666666666,"y":0.8000000000000016},{"x":0.3333333333333333,"y":0.46666666666666545},{"x":0.5,"y":1},{"x":0.6666666666666666,"y":0.5777777777777766},{"x":0.8333333333333334,"y":1},{"x":1,"y":1}]
 		},
 		"rotation": 0,
 		"color": {
 			"start": {
-			  "r": 1,
-			  "g": 1,
-			  "b": 1,
-			  "a": 1
+			  "r": 0.718,
+			  "g": 0.62,
+			  "b": 0.443,
+			  "a": 0.75
 			},
 			"end": {
-			  "r": 1,
-			  "g": 1,
-			  "b": 1,
+			  "r": 0.718,
+			  "g": 0.62,
+			  "b": 0.443,
 			  "a": 0
 			}
 		},
 		"gravity": 0,
-		"emissionRate": 100,
-		"max": 300,
+		"emissionRate": 15,
+		"max": 20,
 		"rotationOverTime": 0,
-		"particleTexture": "T_Particle.png",
+		"particleTexture": "T_DustParticles.png",
 		"textureSelection": "single",
 		"animationSpeed": 0,
 		"rows": 1,
