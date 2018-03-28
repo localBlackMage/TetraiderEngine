@@ -83,7 +83,7 @@
 		"Component": "SpawnOnHealthZero",
 		"dropType": "both",
 		"prefab": [
-			"P_ParticleTest"
+			"P_DustPuffParticles"
 		],
 		"RandomDrops": [
 			{

@@ -1,0 +1,93 @@
+{
+  "Tag": "Particle",
+  "Layer": "2",
+  "COMPONENTS": [
+    {
+		"Component": "Transform",
+		"position": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"scale": {
+			"x": 1,
+			"y": 0,
+			"z": 0
+		},
+		"pivotOffset": {
+			"x": 0,
+			"y": 0
+		},
+		"rotation": {
+			"x": 0,
+			"y": 0,
+			"z": 80
+		}
+    },
+    {
+		"Component": "ParticleEmitter",
+
+		"loopDuration": 0.1,
+		"looping": false,
+		"prewarmed": false,
+		"startDelay": 0,
+		"lifeTime": 1.0,
+		"speed": 100.0,
+		"velocityX": {
+			"amplitude": 0.0,
+			"points": [
+			  {
+				"x": 0,
+				"y": 1
+			  },
+			  {
+				"x": 1,
+				"y": 1
+			  }
+			]
+		},
+		"velocityY": {
+			"amplitude": 1.0,
+			"points": [
+			  {
+				"x": 0,
+				"y": 1
+			  },
+			  {
+				"x": 1,
+				"y": 1
+			  }
+			]
+		},
+		"scale": {
+			"amplitude": 64,
+			"points": [{"x":0,"y":0.43333333333333224},{"x":0.16666666666666666,"y":0.8000000000000016},{"x":0.3333333333333333,"y":0.46666666666666545},{"x":0.5,"y":1},{"x":0.6666666666666666,"y":0.5777777777777766},{"x":0.8333333333333334,"y":1},{"x":1,"y":1}]
+		},
+		"rotation": 0,
+		"color": {
+			"start": {
+			  "r": 0.718,
+			  "g": 0.62,
+			  "b": 0.443,
+			  "a": 0.75
+			},
+			"end": {
+			  "r": 0.718,
+			  "g": 0.62,
+			  "b": 0.443,
+			  "a": 0
+			}
+		},
+		"gravity": 0,
+		"emissionRate": 15,
+		"max": 20,
+		"rotationOverTime": 0,
+		"particleTexture": "T_DustParticles.png",
+		"textureSelection": "single",
+		"animationSpeed": 0,
+		"rows": 1,
+		"cols": 1,
+		"angleVariation": 180
+    }
+  ]
+}
