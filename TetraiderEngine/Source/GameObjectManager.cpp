@@ -18,7 +18,7 @@ static bool LeftYGreaterThanOrEqualToRightY(GameObject*left, GameObject*right)
 	return tLeft->GetPosition().y >= tRight->GetPosition().y;
 }
 
-static bool LeftDistLessOrEqualToRight(const std::pair<GameObject*, float>& left, const std::pair<GameObject*, float>& right) {
+static bool LeftDistLessOrEqualToRight(const GO_Distance& left, const GO_Distance& right) {
 	return left.second <= right.second;
 }
 
@@ -96,7 +96,7 @@ void GameObjectLayer::AddLightToLayer(GameObject * pGO)
 void GameObjectLayer::RemoveLightFromLayer(GameObject * pGO)
 {
 	m_layerLights.erase(
-		std::find(m_layerLights.begin(), m_layerLights.end(), pGO),
+		std::remove(m_layerLights.begin(), m_layerLights.end(), pGO),
 		m_layerLights.end()
 	);
 }
@@ -107,7 +107,7 @@ void GameObjectLayer::Update()
 	{
 		Vector3D PlayerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
 		std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
-		std::vector< std::pair<GameObject*, float> > lights;
+		std::vector< GO_Distance > lights;
 		lights.reserve(MAX_LIGHTS);
 
 

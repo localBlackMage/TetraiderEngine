@@ -13,18 +13,6 @@ struct Particle {
 	float m_cameraDistance;
 	TexCoords m_texCoords;
 
-	explicit Particle() :
-		m_pos(Vector3D()),
-		m_velocity(Vector3D()),
-		m_color(Color()),
-		m_scale(0.f),
-		m_life(0.f),
-		m_animationTime(0.f),
-		m_angleOffset(0.f),
-		m_cameraDistance(-1.f),
-		m_texCoords(TexCoords(0.f, 0.f))
-	{}
-
 	bool operator<(Particle& that) {
 		// Sort in reverse order : far particles drawn first.
 		return this->m_cameraDistance > that.m_cameraDistance;

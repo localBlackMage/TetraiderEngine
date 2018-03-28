@@ -1,6 +1,6 @@
 {
   "Tag": "Particle",
-  "Layer": "3",
+  "Layer": "2",
   "COMPONENTS": [
     {
 		"Component": "Transform",
@@ -88,6 +88,10 @@
 		"rows": 1,
 		"cols": 1,
 		"angleVariation": 180
-    }
+    },
+	{
+		"Component": "TimeToLive",
+		"time": 1.5
+	}
   ]
 }

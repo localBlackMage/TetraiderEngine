@@ -155,6 +155,7 @@
     <ClCompile Include="Source\SubscriberTracker.cpp" />
     <ClCompile Include="Source\TetraiderAPI.cpp" />
     <ClCompile Include="Source\Text.cpp" />
+    <ClCompile Include="Source\TimeToLive.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\UICounter.cpp" />
     <ClCompile Include="Source\WaveMovement.cpp" />
@@ -299,6 +300,7 @@
     <ClInclude Include="Source\TagNames.h" />
     <ClInclude Include="Source\TetraiderAPI.h" />
     <ClInclude Include="Source\Text.h" />
+    <ClInclude Include="Source\TimeToLive.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\UICounter.h" />
     <ClInclude Include="Source\WaveMovement.h" />

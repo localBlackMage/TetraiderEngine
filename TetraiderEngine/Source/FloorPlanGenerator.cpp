@@ -408,18 +408,18 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	int idx = 0;
 	if (enemies.size() > 0) {
 		idx = RandomInt(0, enemies.size());
-		enemies[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+		enemies[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->AddSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 	}
 
 	if (objects.size() > 0) {
 		idx = RandomInt(0, objects.size());
-		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->AddSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 		int prevIdx = idx;
 		idx = RandomInt(0, objects.size());
 		while (idx == prevIdx)
 			idx = RandomInt(0, objects.size());
 
-		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->SetSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
+		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->AddSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 	}
 }
 

@@ -176,7 +176,7 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"isRandom": false,
+		"dropType": "prefab",
 		"prefab": "P_EggPickUp",
 		"RandomDrops": [
 			{
