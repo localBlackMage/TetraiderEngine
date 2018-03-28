@@ -4,7 +4,7 @@
 
 class LightBase : public Component
 {
-private:
+protected:
 	Transform * m_pTransform;
 	Vector3D m_offset;
 	Color m_color;

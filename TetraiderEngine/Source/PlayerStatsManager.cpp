@@ -39,7 +39,7 @@ void PlayerStatsManager::HandleEvent(Event * p_event) {
 }
 
 void PlayerStatsManager::ClearStats() {
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < (int)PowerUpCategory::NUM; ++i) {
 		m_powerUps[i].clear();
 	}
 
