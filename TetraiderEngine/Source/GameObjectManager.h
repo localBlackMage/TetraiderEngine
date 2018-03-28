@@ -15,6 +15,7 @@ private:
 	static const unsigned short m_size = MAX_LIGHTS * 4;
 	float m_lightColors[m_size];				// r, g, b, a
 	float m_lightPositionsAndDistances[m_size];	// x, y, z, distance
+	float m_lightABs[MAX_LIGHTS * 2];			// a, b
 
 	void _SetLightDataArrays();
 public:

@@ -51,10 +51,11 @@ enum SHADER_LOCATIONS {
 	SPECULAR,			// 43
 
 	LIT = 47,			// 47
-	L_A = 48,			// 48
-	L_B = 49,			// 49
+	L_GLOBAL_A = 48,	// 48
+	L_GLOBAL_B = 49,	// 49
 	L_POS_DIST = 50,	// 50
 	L_COLOR = 66,		// 66
+	L_AB_VALUES = 82	// 82
 
 };
 
