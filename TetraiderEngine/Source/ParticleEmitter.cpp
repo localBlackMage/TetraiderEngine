@@ -1,5 +1,7 @@
 #include <Stdafx.h>
 
+#define SHAPE_STR "SHAPE"
+
 #pragma region Private Methods
 
 static Color Lerp(const Color& colorA, const Color& colorB, float t)
@@ -37,16 +39,44 @@ int ParticleEmitter::_FindUnusedParticle()
 	return -1; // All particles are taken
 }
 
+Vector3D ParticleEmitter::_GetSpawnPositionWithinShape()
+{
+	if (!m_pSpawnShape)
+		return Vector3D();
+
+	switch (m_pSpawnShape->type) {
+		case ShapeType::ST_AABB: {
+			AABB* aabb = static_cast<AABB*>(m_pSpawnShape);
+			float x = RandomFloat(-aabb->halfWidth, aabb->halfWidth);
+			float y = RandomFloat(-aabb->halfHeight, aabb->halfHeight);
+			return Vector3D(x, y, 0.f);
+		}
+		case ShapeType::ST_Circle: {
+			Circle* circle = static_cast<Circle*>(m_pSpawnShape);
+			float d = RandomFloat(0.f, circle->radius);
+			float rot = RandomFloat(-180.f, 180.f);
+			return Matrix4x4::Rotate(rot, ZAXIS) * Vector3D( 0.f, 1.f * d, 0.f);
+		}
+		default:
+			return Vector3D();
+	}
+}
+
 void ParticleEmitter::_SpawnParticle()
 {
 	int idx = _FindUnusedParticle();
 	if (idx > -1) {
 		m_particles[idx].m_life = m_lifeTime;
-		m_particles[idx].m_pos = m_pTransform->GetPosition();			// TODO: Update these
+		m_particles[idx].m_pos = m_pTransform->GetPosition() + _GetSpawnPositionWithinShape();
 		float HI = 250.f;
 		float LO = -HI;
 		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
-		m_particles[idx].m_velocity = m_pTransform->LookAt() * m_speed;		// TODO: Update these
+		m_particles[idx].m_velocity = m_pTransform->LookAt() * m_speed;
+		if (m_angleVariation != 0.f) {
+			float angleOffset = RandomFloat(-m_angleVariation, m_angleVariation);
+			m_particles[idx].m_velocity = Matrix4x4::Rotate(angleOffset, ZAXIS) * m_particles[idx].m_velocity;
+			m_particles[idx].m_angleOffset = angleOffset;
+		}
 		
 		switch (m_textureSelection) {
 			case P_TextureSelection::RANDOM:
@@ -77,12 +107,13 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 			p.m_life -= deltaTime;
 			if (p.m_life > 0.0f) {
 				t = 1.f - (p.m_life / m_lifeTime);
-				Vector3D velocityOffset = Vector3D(
-					BezierInterpolation(m_velocityX.points, t) * m_velocityX.amplitude,
-					BezierInterpolation(m_velocityY.points, t) * m_velocityY.amplitude,
-					0.f);
-
-				velocityOffset = Matrix4x4::Rotate(p.m_angle, ZAXIS) * velocityOffset;
+				Vector3D velocityOffset = Matrix4x4::Rotate(p.m_angleOffset, ZAXIS) * 
+					Vector3D(
+						BezierInterpolation(m_velocityX.points, t) * m_velocityX.amplitude,
+						BezierInterpolation(m_velocityY.points, t) * m_velocityY.amplitude,
+						0.f
+					);
+				
 				p.m_velocity = (velocityOffset * m_speed) + Gravity;
 				p.m_pos += p.m_velocity * deltaTime;
 				p.m_pos.z = 0.f;
@@ -133,7 +164,7 @@ void ParticleEmitter::_AllocateParticleArrays()
 
 	for (int i = 0; i < m_maxParticles; ++i) {
 		m_particles[i].m_life = -1.f;
-		m_particles[i].m_angle = 0.f;
+		m_particles[i].m_angleOffset = 0.f;
 
 		m_particles[i].m_texCoords.u = m_frameWidth / m_texture->surface->w;
 		m_particles[i].m_texCoords.v = m_frameHeight / m_texture->surface->h;
@@ -178,12 +209,15 @@ ParticleEmitter::ParticleEmitter() :
 	m_emissionTime(0.f),
 	m_emissionTimer(0.f),
 	m_liveParticleCount(0),
-	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH))
+	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
+	m_pSpawnShape(nullptr)
 {}
 
 ParticleEmitter::~ParticleEmitter() 
 {
 	_DeallocateParticleArrays();
+	if (m_pSpawnShape)
+		delete m_pSpawnShape;
 }
 
 #pragma region Component Methods
@@ -215,11 +249,13 @@ void ParticleEmitter::Update(float dt)
 			}
 		}
 
-		_UpdateParticles(dt);
-		//_SortParticles();
-
 		if (m_looping && m_currentTime >= m_loopDuration)
 			m_currentTime = 0.f;
+	}
+
+	if (m_active) {
+		_UpdateParticles(dt);
+		//_SortParticles();
 	}
 }
 
@@ -283,6 +319,21 @@ void ParticleEmitter::Serialize(const json & j)
 	else if (textureSelection == "random")		m_textureSelection = P_TextureSelection::RANDOM;
 	else										m_textureSelection = P_TextureSelection::SINGLE;
 
+
+	if (ValueExists(j, SHAPE_STR)) {
+		std::string shape = ParseString(j[SHAPE_STR], "type");
+
+		if (!m_pSpawnShape) {
+			if (shape == "AABB")
+				m_pSpawnShape = new AABB(ParseFloat(j[SHAPE_STR], "width"), ParseFloat(j[SHAPE_STR], "height"));
+			else if (shape == "circle")
+				m_pSpawnShape = new Circle(ParseFloat(j[SHAPE_STR], "radius"));
+			// Particle Emitter does not support polygonal spawn shapes currently
+		}
+	}
+
+	m_angleVariation = ParseFloat(j, "angleVariation");
+
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
 	m_shader = ValueExists(j, "shader") ? j["shader"] : "particle";
@@ -306,5 +357,7 @@ void ParticleEmitter::BindBufferDatas() const
 	TETRA_RENDERER.BindBufferData(m_colorsBuffer, m_colors, m_liveParticleCount * sizeof(GLubyte) * 4);
 	TETRA_RENDERER.BindBufferData(m_textureCoordsBuffer, m_textureCoords, m_liveParticleCount * sizeof(GLfloat) * 2);
 }
+
+#undef SHAPE_STR
 
 #pragma endregion

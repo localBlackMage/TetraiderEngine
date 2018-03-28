@@ -3,13 +3,6 @@
 #ifndef BODY_H
 #define BODY_H
 
-//#include "Component.h"
-//#include "Math\MathLibs.h"
-//
-//// Forward declaration
-//class Transform;
-//class Shape;
-
 class Body : public Component {
 public:
 	bool m_isStatic;
