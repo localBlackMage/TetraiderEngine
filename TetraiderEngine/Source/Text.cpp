@@ -1,8 +1,3 @@
-//#include "Text.h"
-//#include "TetraiderAPI.h"
-//
-//using namespace JsonReader;
-
 #include <Stdafx.h>
 
 Letter Text::_GetTextureOffsetForLetter(const char letter)
@@ -74,12 +69,18 @@ void Text::Deactivate()
 
 void Text::Update(float dt)
 {
+	if (pGO->IsParented()) {
+		m_textHeight = m_intialTextHeight*pGO->GetComponent<Transform>(C_Transform)->GetParentScaleY();
+		m_textWidth = m_intialTextWidth*pGO->GetComponent<Transform>(C_Transform)->GetParentScaleX();
+	}
 }
 
 void Text::Serialize(const json & j)
 {
 	m_textHeight = j["letterHeight"];
 	m_textWidth = j["letterWidth"];
+	m_intialTextHeight = m_textHeight;
+	m_intialTextWidth = m_textWidth;
 	m_letterSpacing = ValueExists(j, "spacing") ? j["spacing"] : 1.f;
 
 	m_pivotOffset = ParseVector3D(j, "pivotOffset");

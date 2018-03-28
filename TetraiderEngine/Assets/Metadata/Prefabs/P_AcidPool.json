@@ -1,17 +1,17 @@
 {
-  "Tag": "UI",
-  "Layer": "UI",
+  "Tag": "Hazard",
+  "Layer": "1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": 200,
-        "y": -100,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 128,
+        "y": 128,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_Rio.png",
+      "Texture": "T_AcidPool.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-      "lit": false,
+	  "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,30 +50,19 @@
       }
     },
 	{
-		"Component": "Animation",
-		"defaultAnimation": 1,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "Walk",
-			"frames": 10,
-			"animationSpeed": 16,
-			"isLooping": true,
-			"isPlayOnAwake": false
-		},
-		{
-			"Name": "Idle",
-			"frames": 2,
-			"animationSpeed": 3,
-			"isLooping": true,
-			"isPlayOnAwake": true
-		},
-		{
-			"Name": "Fly",
-			"frames": 8,
-			"animationSpeed": 14,
-			"isLooping": true,
-			"isPlayOnAwake": false
-		}]
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 64
+		}
+	},
+	{
+		"Component": "DealDamageOnCollision",
+		"damage": 5,
+		"knockBackSpeed": 0,
+		"isForceKnockBack": false
 	}
   ]
 }

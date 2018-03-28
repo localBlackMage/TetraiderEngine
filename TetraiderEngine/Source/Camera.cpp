@@ -1,9 +1,3 @@
-//#include "GameObject.h"
-//#include "Camera.h"
-//#include "Transform.h"
-//#include "TetraiderAPI.h"
-//#include <algorithm>
-
 #include <Stdafx.h>
 
 Camera::Camera() :

@@ -2,13 +2,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-//#include "Component.h"
-//#include "Layers.h"
-//#include "Math\MathLibs.h"
-//
-//class Transform;
-//enum RENDER_LAYER;
-
 class Camera : public Component
 {
 private:

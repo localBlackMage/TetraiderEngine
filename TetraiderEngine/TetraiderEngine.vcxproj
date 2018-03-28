@@ -25,6 +25,7 @@
     <ClCompile Include="Source\AI_HitNRunAttack.cpp" />
     <ClCompile Include="Source\AI_HitNRunEngage.cpp" />
     <ClCompile Include="Source\AI_HitNRunRetreat.cpp" />
+    <ClCompile Include="Source\AI_Reaction.cpp" />
     <ClCompile Include="Source\CutScene.cpp" />
     <ClCompile Include="Source\Endpoints.cpp" />
     <ClCompile Include="Source\Gate.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SizeToScreen.cpp" />
     <ClCompile Include="Source\SnapToCamera.cpp" />
+    <ClCompile Include="Source\Spawner.cpp" />
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
@@ -168,6 +170,7 @@
     <ClInclude Include="Source\AI_HitNRunAttack.h" />
     <ClInclude Include="Source\AI_HitNRunEngage.h" />
     <ClInclude Include="Source\AI_HitNRunRetreat.h" />
+    <ClInclude Include="Source\AI_Reaction.h" />
     <ClInclude Include="Source\CutScene.h" />
     <ClInclude Include="Source\Endpoints.h" />
     <ClInclude Include="Source\Gate.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="Source\PlayerStatsManager.h" />
     <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
+    <ClInclude Include="Source\PowerUpData.h" />
     <ClInclude Include="Source\Shop.h" />
     <ClInclude Include="Source\Slider.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />
@@ -285,6 +289,7 @@
     <ClInclude Include="Source\SizeToScreen.h" />
     <ClInclude Include="Source\SnapToCamera.h" />
     <ClInclude Include="Source\Sorting.h" />
+    <ClInclude Include="Source\Spawner.h" />
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />

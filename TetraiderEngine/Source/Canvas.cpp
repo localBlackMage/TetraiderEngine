@@ -2,7 +2,7 @@
 #include "Canvas.h"
 
 
-Canvas::Canvas():Component(ComponentType::C_Canvas)
+Canvas::Canvas():Component(ComponentType::C_Canvas), m_isAnimateOnActivation(false), m_isDeactivating(false)
 {
 }
 
@@ -16,13 +16,25 @@ Canvas::~Canvas()
 }
 
 void Canvas::Update(float)
-{	
+{
+	/*if (!m_isActive)
+	{
+		DeactivateCanvas();
+	}*/
+	if (m_isDeactivating) {
+		if (!pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->IsPlaying()) {
+			DeactivateCanvas();
+			m_isDeactivating = false;
+		}
+	}
+
 }
 
 void Canvas::Serialize(const json & j)
 {
 	std::string prefabName;
 	m_isActiveOnAwake= ParseBool(j, "isActiveOnAwake");
+	m_isAnimateOnActivation = ParseBool(j, "isAnimateOnActivation");
 	m_isActive = m_isActiveOnAwake;
 	m_canvasType = (CanvasType)ParseInt(j, "canvasType");
 
@@ -38,14 +50,17 @@ void Canvas::Serialize(const json & j)
 
 		pObject = TETRA_GAME_OBJECTS.CreateGameObject(prefabName, true, Vector3D(x, y, z));
 		m_UIelements.push_back(pObject);
+		if (pObject->m_tag != T_Cursor) {
+			pObject->SetParent(this->pGO);
+		}
 	}
 
 	TETRA_UI.RegisterCanvas(this);
 
 	if (m_isActiveOnAwake)
-		TETRA_UI.ActivateCanvas(m_canvasType);
+		ActivateCanvas();
 	else
-		TETRA_UI.DeactivateCanvas(m_canvasType);
+		DeactivateCanvas(true);
 }
 
 void Canvas::LateInitialize()
@@ -91,11 +106,26 @@ void Canvas::ActivateCanvas()
 		}
 		obj->SetActive(true);
 	}
-	std::cout << "Active CanvasType : " << (int)m_canvasType << std::endl;
+
+	if (m_isAnimateOnActivation) {
+		if (pGO->HasComponent(C_ScriptedAnimation))
+			pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->PlayAnimation();
+	}
+
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnCanvasActivated, &CanvasData((int)m_canvasType)));
 }
 
-void Canvas::DeactivateCanvas()
+void Canvas::DeactivateCanvas(bool isForceDeactivation)
 {
+	if (m_isAnimateOnActivation && !m_isDeactivating && !isForceDeactivation) {
+		DeactivateAfterAnimComplete();
+		for (auto obj : m_UIelements) {
+			obj->m_isCollisionDisabled = true;
+		}
+
+		return;
+	}
+
 	m_isActive = false;
 	for (auto obj : m_UIelements)
 	{
@@ -107,4 +137,15 @@ void Canvas::DeactivateCanvas()
 		}
 		obj->SetActive(false);
 	}
+
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnCanvasDeactivated, &CanvasData((int)m_canvasType)));
+}
+
+void Canvas::DeactivateAfterAnimComplete() {
+	if (m_isAnimateOnActivation) {
+		if (pGO->HasComponent(C_ScriptedAnimation))
+			pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->PlayAnimation(true);
+	}
+
+	m_isDeactivating = true;
 }

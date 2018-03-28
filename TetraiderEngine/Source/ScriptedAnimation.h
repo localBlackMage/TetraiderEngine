@@ -46,7 +46,7 @@ public:
 	virtual void LateInitialize();
 	virtual void LateUpdate(float dt) {}
 	virtual void HandleEvent(Event* pEvent);
-	void PlayAnimation();
+	void PlayAnimation(bool isReverse = false);
 	void SetInitialPos(const Vector3D& pos);
 	void SetInitialScale(const Vector3D& scale);
 	void SetInitialFade(float fade);
@@ -75,6 +75,7 @@ private:
 	Sprite* m_pSprite;
 	int m_currentAnimationIndex;
 	void NextAnim();
+	bool m_isReverse;
 };
 
 #endif

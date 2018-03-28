@@ -425,7 +425,10 @@
     <ClCompile Include="Source\CutScene.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\HillNodes.cpp">
+    <ClCompile Include="Source\AI_Reaction.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spawner.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -848,8 +851,14 @@
     <ClInclude Include="Source\CutScene.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\HillNodes.h">
+    <ClInclude Include="Source\AI_Reaction.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spawner.h">
       <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PowerUpData.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

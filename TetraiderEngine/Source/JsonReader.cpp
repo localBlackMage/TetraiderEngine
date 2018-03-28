@@ -321,5 +321,11 @@ namespace JsonReader {
 		return it.key().compare(key) == 0;
 	}
 
+	void SerializeInterpolationItem(InterpolationItem & i, const json & j, const String & first)
+	{
+		i.points = ParsePoints(j, first, "points");
+		i.amplitude = ParseFloat(j, first, "amplitude");
+	}
+
 }
 

@@ -1,10 +1,6 @@
 #ifndef MATH_FUNCTIONS_H
 #define MATH_FUNCTIONS_H
 
-struct Point {
-	float x, y;
-};
-
 Vector3D Lerp(const Vector3D& vectorA, const Vector3D& vectorB, float t, bool isEaseIn = false, bool isEaseOut = false);
 Vector2D Lerp(const Vector2D& vectorA, const Vector2D& vectorB, float t, bool isEaseIn = false, bool isEaseOut = false);
 float Lerp(float valueA, float valueB, float t, bool isEaseIn = false, bool isEaseOut = false);

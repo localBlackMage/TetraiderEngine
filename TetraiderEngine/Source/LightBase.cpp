@@ -47,6 +47,15 @@ void LightBase::Override(const json & j)
 	}
 
 	m_distance = ValueExists(j, "distance") ? j["distance"] : m_distance;
+	m_a = ValueExists(j, "falloffA") ? j["falloffA"] : m_a;
+	m_b = ValueExists(j, "falloffB") ? j["falloffB"] : m_b;
+	m_offset = ValueExists(j, "offset") ? ParseVector3D(j, "offset") : m_offset;
+}
+
+void LightBase::SetColor(const Vector3D& color) {
+	m_color.r = int(color.x * 255.f);
+	m_color.g = int(color.y * 255.f);
+	m_color.b = int(color.z * 255.f);
 }
 
 Vector3D LightBase::GetPosition() const
@@ -57,17 +66,8 @@ Vector3D LightBase::GetPosition() const
 void LightBase::LateInitialize()
 {
 	if (!m_pTransform) {
-		if (pGO)
-			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-		else {
-			std::cout << "No Game Object found. LightBase component failed to operate." << std::endl;
-			return;
-		}
-
-		if (!m_pTransform) {
-			std::cout << "No Transform component found. LightBase component failed to operate." << std::endl;
-			assert(m_pTransform);
-			return;
-		}
+		assert(pGO && "No Game Object found. LightBase component failed to operate.");
+		m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+		assert(m_pTransform && "No Transform component found. LightBase component failed to operate.");
 	}
 }

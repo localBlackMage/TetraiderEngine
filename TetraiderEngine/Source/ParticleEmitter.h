@@ -6,9 +6,10 @@
 struct Particle {
 	Vector3D m_pos, m_velocity;
 	Color m_color;
-	float m_scale, m_weight;
+	float m_scale;
 	float m_life;
 	float m_animationTime;
+	float m_angleOffset;
 	float m_cameraDistance;
 	TexCoords m_texCoords;
 
@@ -17,9 +18,9 @@ struct Particle {
 		m_velocity(Vector3D()),
 		m_color(Color()),
 		m_scale(0.f),
-		m_weight(0.f),
 		m_life(0.f),
 		m_animationTime(0.f),
+		m_angleOffset(0.f),
 		m_cameraDistance(-1.f),
 		m_texCoords(TexCoords(0.f, 0.f))
 	{}
@@ -32,16 +33,6 @@ struct Particle {
 
 enum class P_TextureSelection {
 	CYCLE, RANDOM, SINGLE
-};
-
-struct InterpolationItem {			
-	ControlPoints points;	// Control Points for bezier curve interpolation between start and end
-	float amplitude;		// How much of an offset to give the result from the curve
-
-	void Serialize(const json& j, const std::string& item) {
-		points = ParsePoints(j, item, "points");
-		amplitude = ParseFloat(j, item, "amplitude");
-	}
 };
 
 class ParticleEmitter : public Component {
@@ -66,6 +57,8 @@ protected:
 	float m_rotationOverTime;					// Speed at which a particle will rotate during it's lifetime
 	bool m_randomEmission;						// Whether or not the Emitter should "randomly" emit new particles
 	P_TextureSelection m_textureSelection;		// Whether or not particles should cycle through the available particle frames or choose one somehow
+	Shape* m_pSpawnShape;						// Area the particle can appear in, if no shape is attached, particles will spawn at transform location
+	float m_angleVariation;						// How far in degrees the particle can deviate from the forward direction of the transform
 
 
 	// Emitter Run Properties
@@ -96,6 +89,7 @@ protected:
 	std::string m_shader;
 
 	int _FindUnusedParticle();
+	Vector3D _GetSpawnPositionWithinShape();
 	void _SpawnParticle();
 	void _SortParticles() { std::sort(&m_particles[0], &m_particles[m_maxParticles]); }
 	void _UpdateParticles(float deltaTime);

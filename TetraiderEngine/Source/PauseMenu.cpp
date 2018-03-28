@@ -1,9 +1,3 @@
-
-//#include "PauseMenu.h"
-//#include "TetraiderAPI.h"
-//#include "Transform.h"
-//#include "Text.h"
-
 #include <Stdafx.h>
 
 

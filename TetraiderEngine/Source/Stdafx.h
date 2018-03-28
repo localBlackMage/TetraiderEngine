@@ -86,6 +86,7 @@ using namespace JsonReader;
 #include <ImageRenderer.h>
 #include <Sorting.h>
 #include <Shape.h>
+#include <PowerUpData.h>
 #pragma endregion
 
 #pragma region Game Object
@@ -111,6 +112,7 @@ using namespace JsonReader;
 #include <AI_HitNRunRetreat.h>
 #include <AI_BomberAttack.h>
 #include <AI_BomberRetreat.h>
+#include <AI_Reaction.h>
 #include <AI_StateFactory.h>
 #pragma endregion
 
@@ -137,33 +139,6 @@ using namespace JsonReader;
 
 #include <Stamina.h>
 
-#pragma region Globals + API
-#include <GameConfig.h>
-#include <GameStateManager.h>
-#include <InputManager.h>
-#include <FrameRateManager.h>
-#include <PostProcessing.h>
-#include <RenderManager.h>
-#include <ResourceManager.h>
-#include <PhysicsManager.h>
-#include <EventManager.h>
-#include <LevelManager.h>
-#include <DebugManager.h>
-#include <AudioManager.h>
-#include <GameObjectManager.h>
-#include <MemoryManager.h>
-#include <PlayerStatsManager.h>
-#include <FloorPlanGenerator.h>
-#include <ImguiManager.h>
-#include <LevelEditor.h>
-#include <ComponentFactory.h>
-#include <LuaScript.h>
-
-#include <Global.h>
-#include <TetraiderAPI.h>
-#pragma endregion 
-
-
 // Components - Agent
 #include <Agent.h>
 #include <Controller.h>
@@ -179,10 +154,13 @@ using namespace JsonReader;
 //Components - UI
 #include <FollowCursor.h>
 #include <Button.h>
-//#include <PauseMenu.h>
+#include <EggCounter.h>
+#include <UICounter.h>
+#include <PauseMenu.h>
 #include <Canvas.h>
 #include <Slider.h>
 #include <Endpoints.h>
+#include <PowerUpButton.h>
 
 #include<HillNodes.h>
 #include <CutScene.h>
@@ -207,14 +185,12 @@ using namespace JsonReader;
 #include <NotEnoughGoldFeathers.h>
 
 #include <LevelStatus.h>
-#include <EggCounter.h>
-#include <UICounter.h>
-#include <PauseMenu.h>
 #include <Microphone.h>
 #include <ScriptedAnimation.h>
 #include <WinMessage.h>
 #include <Gate.h>
 #include <GateTriggerBox.h>
+#include <Spawner.h>
 
 #pragma endregion 
 
@@ -223,6 +199,7 @@ using namespace JsonReader;
 #include <GameStateManager.h>
 #include <InputManager.h>
 #include <FrameRateManager.h>
+#include <PostProcessing.h>
 #include <RenderManager.h>
 #include <ResourceManager.h>
 #include <PhysicsManager.h>
@@ -238,10 +215,10 @@ using namespace JsonReader;
 #include <ComponentFactory.h>
 #include <LuaScript.h>
 #include <UIManager.h>
+#include <PlayerStatsManager.h>
 
 #include <Global.h>
 #include <TetraiderAPI.h>
-#include <PowerUpButton.h>
 #pragma endregion 
 
 #pragma warning(default: 4005)

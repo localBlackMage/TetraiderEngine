@@ -26,7 +26,7 @@ void AI_Idle::OnEnter(){
 void AI_Idle::OnUpdate(float dt){
 	if (pAgent->IsPlayerInSight()) {
 		pAgent->StopMoving();
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_REACTION);
 		return;
 	}
 	if (idledSoFar < idleDuration) {
@@ -45,6 +45,6 @@ void AI_Idle::OnExit(){
 void AI_Idle::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnTakeDamage:
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_REACTION);
 	}
 }

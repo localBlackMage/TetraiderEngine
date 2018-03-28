@@ -31,9 +31,13 @@ public:
 	GLubyte Blue() const { return m_color[2]; }
 	GLubyte Alpha() const { return m_color[3]; }
 	Color GetColor() const { return m_color; }
+	void SetColor(const Vector3D& color);
 	float Distance() const { return m_distance; }
 	float LightA() const { return m_a; }
 	float LightB() const { return m_b; }
+	void SetFallOff(float a, float b) { m_a = a; m_b = b; }
+	Vector3D GetOffset() { return m_offset; }
+	void SetOffset(const Vector3D& offset) { m_offset = offset; }
 
 	bool GetLayer(int layer) const { return m_layers[layer]; }
 };

@@ -1,10 +1,3 @@
-//#include "GameObject.h"
-//#include "Body.h"
-//#include "Transform.h"
-//#include "Shape.h"
-//#include "TetraiderAPI.h"
-//#include <iostream>
-
 #include <Stdafx.h>
 
 Body::Body() :

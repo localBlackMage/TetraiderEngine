@@ -14,6 +14,7 @@ layout(location = 48) uniform float l_a;
 layout(location = 49) uniform float l_b;
 layout(location = 50) uniform vec4 l_pos_dist[16];
 layout(location = 66) uniform vec4 l_color[16];
+layout(location = 82) uniform vec2 l_ab[16];
 
 
 // NON-UNIFORM INPUTS
@@ -31,8 +32,8 @@ layout(location = 10) in vec4 vl_lightVectors[16];
 // OUTPUTS
 out vec4 frag_color;
 
-float falloff(float dist) {
-	return 1.f / (1.f + l_a * dist + l_b * dist * dist);
+float falloff(float dist, float a, float b) {
+	return 1.f / (1.f + a * dist + b * dist * dist);
 }
 
 void main(void) {
@@ -49,7 +50,7 @@ void main(void) {
 
 			vec4 L = normalize(vl_lightVectors[i]);
 			d /= 143.108f; // As d is in pixels, we want it in world units. A single world unit is the diagonal of a cell
-			lightColor += (max(dot(m,L),0) * l_color[i].xyz) * falloff(d);
+			lightColor += (max(dot(m,L),0) * l_color[i].xyz) * falloff(d, l_ab[i].x, l_ab[i].y);
 		}
 		lightColor += ambient_global_color;
 	}

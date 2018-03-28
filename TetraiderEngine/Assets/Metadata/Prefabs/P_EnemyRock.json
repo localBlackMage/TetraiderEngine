@@ -51,24 +51,28 @@
         "behaviorIndex": 0,
         "AIStateType": "NPC_State_Idle"
       },
-      { "name": "NPC_ENGAGE",
+      {	"name": "NPC_REACTION",
         "behaviorIndex": 1,
+        "AIStateType": "NPC_State_Reaction"
+      },   
+      { "name": "NPC_ENGAGE",
+        "behaviorIndex": 2,
         "AIStateType": "NPC_State_DashingEngage"
       },
       { "name": "NPC_ATTACK",
-        "behaviorIndex": 2,       
+        "behaviorIndex": 3,       
         "AIStateType": "NPC_State_DashingAttack"
       },
       {
         "name": "NPC_MOVETORANDOMPOINTINZONE",
-        "behaviorIndex": 4,
+        "behaviorIndex": 5,
         "AIStateType": "NPC_State_MoveToRandomPointInZone"
       },
       {
         "name": "NPC_STUNNED",
-        "behaviorIndex": 5,
+        "behaviorIndex": 6,
         "AIStateType": "NPC_State_DashingStunned"
-      }      
+      }   
     ]
 	},
     {

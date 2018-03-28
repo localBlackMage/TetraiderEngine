@@ -14,18 +14,15 @@ AI_IdleForDuration::~AI_IdleForDuration(){
 
 void AI_IdleForDuration::OnEnter(){
 	triedSofar = 0.0f;
-	tryTime = 2.0f;
+	tryTime = 1.5f;
 	pAgent->StopMoving();
 }
 
 void AI_IdleForDuration::OnUpdate(float dt){
 	if (pAgent->IsPlayerInSight()) {
 		pAgent->StopMoving();
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_REACTION);
 		return;
-	}
-	if (triedSofar > tryTime && pAgent->IsArrivedAtDestination()) {
-		pAgent->ChangeState(NPC_IDLE);
 	}
 	if (triedSofar > tryTime) {
 		pAgent->GoToStartingPoint();
@@ -33,7 +30,9 @@ void AI_IdleForDuration::OnUpdate(float dt){
 	else {
 		triedSofar += dt;
 	}
-
+	if (triedSofar > tryTime && pAgent->IsArrivedAtDestination()) {
+		pAgent->ChangeState(NPC_IDLE);
+	}
 }
 
 void AI_IdleForDuration::OnExit(){
@@ -44,6 +43,6 @@ void AI_IdleForDuration::OnExit(){
 void AI_IdleForDuration::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnTakeDamage:
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_REACTION);
 	}
 }

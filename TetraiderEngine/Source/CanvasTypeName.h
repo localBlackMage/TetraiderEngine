@@ -1,5 +1,6 @@
 #pragma once
 
+// DO NOT CHANGE ORDER OF CANVAS TYPE
 enum class CanvasType
 {
 	CANVAS_MAIN_MENU,
@@ -10,6 +11,7 @@ enum class CanvasType
 	CANVAS_LOSE,
 	CANVAS_CREDITS,	
 	CANVAS_SHOP,
+	CANVAS_POWERUPSCREEN,
 
 	CANVAS_NUM
 };

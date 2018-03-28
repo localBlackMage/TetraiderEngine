@@ -16,14 +16,7 @@ Creation date: 10/29/17
 #ifndef JSON_READER_H
 #define JSON_READER_H
 
-//#include "External/json.hpp"
-//#include "Math/MathLibs.h"
-//#include <vector>
-//#include <string>
-
 using json = nlohmann::json;
-
-typedef std::vector<Point> ControlPoints;
 
 namespace JsonReader {
 	typedef std::string String;
@@ -71,6 +64,8 @@ namespace JsonReader {
 	json OpenJsonFile(const String& fileName);
 
 	bool KeyIs(json::iterator it, const String& key);
+
+	void SerializeInterpolationItem(InterpolationItem& i, const json& j, const String&);
 }
 
 #endif

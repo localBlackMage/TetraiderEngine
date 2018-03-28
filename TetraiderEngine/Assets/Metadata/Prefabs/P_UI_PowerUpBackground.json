@@ -1,17 +1,17 @@
 {
   "Tag": "UI",
-  "Layer": "UI",
+  "Layer": "UI_1",
   "COMPONENTS": [
     {
       "Component": "Transform",
       "position": {
-        "x": 200,
-        "y": -100,
+        "x": 0,
+        "y": 0,
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 600,
+        "y": 300,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-    {
+	{
       "Component": "Sprite",
-      "Texture": "T_Rio.png",
+      "Texture": "T_StaminaBar.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,6 +35,7 @@
         "u": 0,
         "v": 0
       },
+	  "repeats": true,
       "lit": false,
       "tint": {
         "r": 1,
@@ -50,30 +51,24 @@
       }
     },
 	{
-		"Component": "Animation",
-		"defaultAnimation": 1,
-		"MY_ANIMATIONS":[
-		{
-			"Name": "Walk",
-			"frames": 10,
-			"animationSpeed": 16,
-			"isLooping": true,
-			"isPlayOnAwake": false
+		"Component": "Text",
+		"letterHeight": 55,
+		"letterWidth": 28,
+		"spacing": 0.65,
+		"pivotOffset": {
+			"x": -170,
+			"y": 100
 		},
-		{
-			"Name": "Idle",
-			"frames": 2,
-			"animationSpeed": 3,
-			"isLooping": true,
-			"isPlayOnAwake": true
+		"tint": {
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
 		},
-		{
-			"Name": "Fly",
-			"frames": 8,
-			"animationSpeed": 14,
-			"isLooping": true,
-			"isPlayOnAwake": false
-		}]
+		"rows": 6,
+		"cols": 16,
+		"font": "ShadowCardGothicFont.png",
+		"text": "CHOOSE YOUR BLESSING"
 	}
   ]
 }

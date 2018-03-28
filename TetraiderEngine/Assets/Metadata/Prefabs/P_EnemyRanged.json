@@ -52,20 +52,24 @@
 				"behaviorIndex": 0,
 				"AIStateType": "NPC_State_Idle"
 			},
+	        {	"name": "NPC_REACTION",
+	        	"behaviorIndex": 1,
+	        	"AIStateType": "NPC_State_Reaction"
+	        },
 			{	"name": "engageBehavior",
-				"behaviorIndex": 1,
+				"behaviorIndex": 2,
 				"AIStateType": "NPC_State_Engage"
 			},
 			{	"name": "attackBehavior",
-				"behaviorIndex": 2,				
+				"behaviorIndex": 3,				
 				"AIStateType": "NPC_State_Attack"
 			},
 			{	"name": "retreatBehavior",
-				"behaviorIndex": 3,
+				"behaviorIndex": 4,
 				"AIStateType": "NPC_State_Retreat"
 			},
 			{	"name": "moveToRandomPointInZoneBehavior",
-				"behaviorIndex": 4,
+				"behaviorIndex": 5,
 				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}
 		]

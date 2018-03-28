@@ -415,6 +415,10 @@ void NPCController::PlayAnimation(int animation) {
 	m_pAnimation->Play(animation);
 }
 
+void NPCController::PlayReactionEffect() {
+	// TODO: Add reaction effect for enemies
+}
+
 bool NPCController::IsTooFarFromStartingPoint() {
 	return Vector3D::SquareDistance(m_pTransform->GetPosition(), m_startingPoint) > 1000000;
 }

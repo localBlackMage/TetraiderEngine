@@ -65,13 +65,13 @@ void PostProcessing::DoPostProcessing()
 	m_pGaussianHIR->ClearBuffer();
 	m_pGaussianVIR->ClearBuffer();
 
-	m_pGaussianVIR->Render(m_pBaseIR);
+	//m_pGaussianVIR->Render(m_pBaseIR);
 	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
 
-	m_pGaussianHIR->Render(m_pGaussianVIR);
-	m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
+	//m_pGaussianHIR->Render(m_pGaussianVIR);
+	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
 
-
+	m_pBaseIR->RenderToScreen(*m_pBaseShader);
 
 	//m_pSecondBaseIR->ClearBuffer();
 	//m_pSecondBaseIR->Render(m_pGaussianHIR);

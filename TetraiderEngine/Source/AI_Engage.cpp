@@ -38,7 +38,7 @@ void AI_Engage::OnUpdate(float dt) {
 		return;
 	}
 	// if player is out of sight, go back to idle
-	if (pAgent->IsPlayerOutOfSight()) {
+	if (pAgent->IsPlayerOutOfSight() && sinceEngage > 3.0f) {
 		pAgent->ChangeState(NPC_IDLE);
 		return;
 	}

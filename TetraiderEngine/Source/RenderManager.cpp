@@ -217,8 +217,8 @@ void RenderManager::_SetUpLights(const GameObject& gameObject, GameObjectLayer &
 	if (!m_lights) return;
 	gol.BindBufferDatas(gameObject.GetComponent<Transform>(C_Transform)->GetPosition());
 	_BindUniform3(SHADER_LOCATIONS::GLOBAL_AMBIENT, m_globalAmbientLight);
-	glUniform1f(SHADER_LOCATIONS::L_A, m_la);
-	glUniform1f(SHADER_LOCATIONS::L_B, m_lb);
+	glUniform1f(SHADER_LOCATIONS::L_GLOBAL_A, m_la);
+	glUniform1f(SHADER_LOCATIONS::L_GLOBAL_B, m_lb);
 }
 
 #pragma region Debug
@@ -431,9 +431,10 @@ void RenderManager::EnableAlphaTest()
 {
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.01f);
+	//glAlphaFunc(GL_GREATER, 0.01f);
+	glAlphaFunc(GL_ALWAYS, 0.0f);
 	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glColor4f(1.0f, 0.0f, 1.0f, 0.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
