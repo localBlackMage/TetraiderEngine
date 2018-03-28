@@ -13,7 +13,7 @@ class HillNodes:public Component
 {
 private:
 	std::vector<NodeInfo> m_Nodes;
-	
+	bool m_isMove;
 public:
 	HillNodes();
 	~HillNodes();

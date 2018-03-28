@@ -4,6 +4,8 @@
 
 HillNodes::HillNodes():Component(ComponentType::C_HillNodes)
 {
+	TETRA_EVENTS.Subscribe(EVENT_OnBlessingSelect, this);
+	m_isMove=false;
 }
 
 HillNodes::~HillNodes()
@@ -12,6 +14,10 @@ HillNodes::~HillNodes()
 
 void HillNodes::Update(float dt)
 {
+	/*if (m_isMove)
+	{
+
+	}*/
 }
 
 void HillNodes::Serialize(const json & j)
@@ -35,4 +41,9 @@ void HillNodes::LateInitialize()
 
 void HillNodes::HandleEvent(Event * pEvent)
 {
+	if (pEvent->Type() == EventType::EVENT_OnBlessingSelect)
+	{
+		//play animation, and transfer player from one node to other
+		m_isMove = true;
+	}
 }
