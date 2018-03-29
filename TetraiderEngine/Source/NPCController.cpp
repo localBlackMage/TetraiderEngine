@@ -17,8 +17,8 @@ NPCController::NPCController() :
 	m_isActive(true),
 	m_isBossEntering(false),
 	m_isReactionAnim(false),
-	m_reactionTimer(60.0f),
-	m_nextReactionIn(60.0f)
+	m_reactionTimer(10.0f),
+	m_nextReactionIn(15.0f)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnBossLand, this);

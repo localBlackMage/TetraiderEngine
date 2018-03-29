@@ -62,24 +62,22 @@
 		"Component": "Health",
 		"startingHealth": 1,
 		"maxHealth": 10,
-		"isInvincible": false
+		"isInvincible": true
 	},
 	{
 		"Component": "Projectile",
 		"isAccelerateToZero": true,
-		"isRotate": true,
+		"isRotate": false,
 		"isExplodeOnVelocityZero": true,
-		"isIgnoreCollideEvent": true,
-		"deacclerationSpeed": 2
+		"isIgnoreCollideEvent": false,
+		"deacclerationSpeed": 2,
+    "isSpawnAcidPool": true,
+    "acidPrefab": "P_AcidPool"
 	},
 	{
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
-		"isExplode": true,
-		"explosionRadius": 100,
-		"explosionKnockBack": 2000,
-		"explosionDamage": 40,
-		"explosionPrefab": "P_ExplosionSmall"
+		"isExplode": false
 	},
 	{
 		"Component": "FlashOnTakeDamage",

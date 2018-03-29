@@ -37,7 +37,10 @@ void DestroyOnHealthZero::Update(float dt) {
 				pAudio->Play();
 				m_Attack->Use(pTransform->GetPosition());
 			}
-
+			//if (m_isSpawnAcidPool) {
+			//	Transform* pTransform = pGO->GetComponent<Transform>(C_Transform);
+			//	TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, pTransform->GetPosition());
+			//}
 			pGO->Destroy();
 		}
 	}
@@ -50,6 +53,10 @@ void DestroyOnHealthZero::Update(float dt) {
 
 void DestroyOnHealthZero::Serialize(const json& j) {
 	m_destroyIn = ParseFloat(j, "destroyIn");
+	//m_isSpawnAcidPool = ParseBool(j, "isSpawnAcidPool");
+	//if (m_isSpawnAcidPool) {
+	//	m_acidPrefab = ParseString(j, "acidPrefab");
+	//}
 	m_isExplode = ParseBool(j, "isExplode");
 	if (m_isExplode) {
 		m_explosionRadius = ParseFloat(j, "explosionRadius");
