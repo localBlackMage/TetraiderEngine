@@ -16,6 +16,8 @@ REGISTER_STATE(NPC_State_HitNRunEngage)
 REGISTER_STATE(NPC_State_BomberAttack)
 REGISTER_STATE(NPC_State_BomberRetreat)
 REGISTER_STATE(NPC_State_Reaction)
+REGISTER_STATE(NPC_State_EnemyBatReaction)
+
 
 // Add Some Other Controller States Below...
 //REGISTER_STATE(Player_State_Idle)

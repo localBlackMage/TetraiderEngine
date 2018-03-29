@@ -31,6 +31,7 @@ void Projectile::Update(float dt) {
 	m_currentLifeTime += dt;
 	if (m_currentLifeTime > m_lifeTime && !m_isExplodeOnVelocityZero)
 		pGO->Destroy();
+	//TETRA_GAME_OBJECTS.CreateGameObject("P_Player", true, m_pTransform->GetPosition());
 }
 
 void Projectile::Deactivate() { 

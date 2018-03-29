@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI_EnemyBatReaction.cpp" />
     <ClCompile Include="Source\HillNodes.cpp" />
     <ClCompile Include="Source\AI_BomberAttack.cpp" />
     <ClCompile Include="Source\AI_BomberRetreat.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\HillNodes.h" />
     <ClInclude Include="Source\AI_BomberAttack.h" />
     <ClInclude Include="Source\AI_BomberRetreat.h" />
