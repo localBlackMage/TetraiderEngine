@@ -1,6 +1,6 @@
 {
   "Tag": "Particle",
-  "Layer": "2",
+  "Layer": "1",
   "COMPONENTS": [
     {
 		"Component": "Transform",
@@ -31,8 +31,8 @@
 		"looping": false,
 		"prewarmed": false,
 		"startDelay": 0,
-		"lifeTime": 0.35,
-		"speed": 100.0,
+		"lifeTime": 1.0,
+		"speed": 130.0,
 		"velocityX": {
 			"amplitude": 0.0,
 			"points": [
@@ -47,7 +47,7 @@
 			]
 		},
 		"velocityY": {
-			"amplitude": 1.2,
+			"amplitude": 1.0,
 			"points": [
 			  {
 				"x": 0,
@@ -60,7 +60,7 @@
 			]
 		},
 		"scale": {
-			"amplitude": 64,
+			"amplitude": 130,
 			"points": [{"x":0,"y":0.43333333333333224},{"x":0.16666666666666666,"y":0.8000000000000016},{"x":0.3333333333333333,"y":0.46666666666666545},{"x":0.5,"y":1},{"x":0.6666666666666666,"y":0.5777777777777766},{"x":0.8333333333333334,"y":1},{"x":1,"y":1}]
 		},
 		"rotation": 0,

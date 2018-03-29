@@ -39,6 +39,8 @@
 		"healthBarPrefab": "P_EnemyBossHealthBar",
 		"isDeathAnimationAvailable": true,
 		"deathAnimationIndex": 2,
+		"puffParticlePrefab": "P_DustPuffParticles02",
+		"puffOffset": -50,
 		"healthBarOffset": {
 			"x": -400,
 			"y": -300,
@@ -202,13 +204,13 @@
 	  "isPlayOnAwake": false,
 	  "initialPos": {
 			"x" : 1536,
-			"y" : 700,
+			"y" : 1000,
 			"z" : 0
 	  },
 	  "initialRotation": 0,
 	  "initialScale": {
-			"x" : 250,
-			"y" : 250,
+			"x" : 600,
+			"y" : 600,
 			"z" : 0
 	  },
 	  "initialFade": 1,
@@ -217,7 +219,7 @@
 		    {
 				"finalPos": {
 					"x" : 1536,
-					"y" : 700,
+					"y" : 1000,
 					"z" : 0
 				},
 				"translationSpeed": 2,
@@ -229,8 +231,8 @@
 				"fadeSpeed": 1,
 				
 				"finalScale": {
-					"x" : 250,
-					"y" : 250,
+					"x" : 600,
+					"y" : 600,
 					"z" : 0
 				},
 				"scaleSpeed": 2,
