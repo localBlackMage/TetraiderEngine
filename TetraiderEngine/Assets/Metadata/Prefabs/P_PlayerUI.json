@@ -1,5 +1,5 @@
 {
-  "Tag": "UI",
+  "Tag": "PlayerUI",
   "Layer": "UI",
   "COMPONENTS": [
     {
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 80,
+        "y": 80,
         "z": 0
       },
       "pivotOffset": {

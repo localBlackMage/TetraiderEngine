@@ -162,6 +162,7 @@ using namespace JsonReader;
 #include <Endpoints.h>
 #include <PowerUpButton.h>
 
+#include<HillNodes.h>
 #include <CutScene.h>
 #include <CamFollow.h>
 #include <ScreenWrap.h>

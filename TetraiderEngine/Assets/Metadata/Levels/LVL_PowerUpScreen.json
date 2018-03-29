@@ -26,9 +26,6 @@
 	  "prefab": "P_PlayerUI"
 	},
 	{
-	  "prefab": "P_LevelText"
-	},
-	{
 	  "prefab": "P_PowerUpText"
 	},
 	{

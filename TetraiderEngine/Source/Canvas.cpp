@@ -27,6 +27,7 @@ void Canvas::Update(float)
 			m_isDeactivating = false;
 		}
 	}
+
 }
 
 void Canvas::Serialize(const json & j)
