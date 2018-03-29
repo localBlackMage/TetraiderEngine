@@ -63,6 +63,7 @@ void LevelManager::LoadLevel() {
 		else 
 			TETRA_LEVEL_GEN.GenerateRoomNodes(3, 4, 1);
 
+		// Some logic goes here to determine boss level selection! - Holden
 		TETRA_LEVEL_GEN.GenerateFloorPlan();
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();

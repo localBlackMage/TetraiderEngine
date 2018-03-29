@@ -23,6 +23,23 @@
 			}
 		},
 		
+				{
+			"prefab": "P_FireLight",
+			"position": {
+				"x": -200,
+				"y": -200,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_FireLight",
+			"position": {
+				"x": -200,
+				"y": 190,
+				"z": 0
+			}
+		},
+		
 		{
 			"prefab": "P_ShopKeeper",
 			"position": {
@@ -282,25 +299,11 @@
 		},
 
 		{
-			"prefab": "P_PointLight",
-			"position": {
-				"x": 1900,
-				"y": 190
-			}
-		},
-		{
 			"prefab": "P_FireLight",
 			"position": {
 				"x": 1900,
 				"y": -200,
 				"z": 0
-			}
-		},
-		{
-			"prefab": "P_PointLight",
-			"position": {
-				"x": 1900,
-				"y": -200
 			}
 		},
 		{

@@ -62,22 +62,22 @@ static float _Distance(RoomNode& a, RoomNode& b) {
 
 #pragma region Private Methods
 
-bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
+bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& BOSS)
 {
-	if (start == goal)	return true;
+	if (start == BOSS)	return true;
 	_ResetNodeDistancesAndParents();
 	std::unordered_map<short, bool> closedSet; // node id -> true if this node is on the closedSet
 	Sorting::MinHeap<RoomNode*> openSet;
 	openSet.push(&start);
 
-	start.m_cost = _Heuristic(start, goal);
+	start.m_cost = _Heuristic(start, BOSS);
 
 	while (!openSet.empty()) {
 		RoomNode* current = openSet.top(); // parent node for all neighbors
 		openSet.pop();
 
-		if (*current == goal) 
-			return true;	// Found the goal
+		if (*current == BOSS) 
+			return true;	// Found the BOSS
 
 		//Cycle through neighbors
 		for (int i = 0; i < 4; ++i) {
@@ -85,7 +85,7 @@ bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 			if (!neighbor) 
 				continue;	// current node doesn't have a neighbor here, continue on
 			
-			float cost = _Distance(*neighbor, start) + _Heuristic(*neighbor, goal);
+			float cost = _Distance(*neighbor, start) + _Heuristic(*neighbor, BOSS);
 			// neighbor not on open or closed sets, push to open set
 			if (!closedSet[neighbor->m_id] && openSet.contains(neighbor))
 				openSet.push(neighbor);
@@ -179,14 +179,26 @@ void FloorPlanGenerator::_ConnectNeighbors()
 	}
 }
 
-std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes()
+std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(bool bossLevel)
 {
 	std::vector<RoomNode*> selectedNodes;
 	std::vector<RoomType> types;
-	types.push_back(RoomType::SPAWN);
-	types.push_back(RoomType::GOAL);
-	short numTypes = rand() % 3 + 2;
+	
+	short numTypes = rand() % 3 + 3;
+	types.reserve(numTypes);
 	for (short idx = 0; idx < numTypes; ++idx) types.push_back(RoomType::INTERESTING);
+
+	// Select Spawn node on left
+	short row = short(rand() % m_cols);
+	m_roomNodes[0][row].m_type = RoomType::SPAWN;
+	m_spawnNode = &m_roomNodes[0][row];
+	selectedNodes.push_back(&m_roomNodes[0][row]);
+
+	if (bossLevel) {
+		row = short(rand() % m_cols);
+		m_roomNodes[m_maxColIdx][row].m_type = RoomType::BOSS;
+		selectedNodes.push_back(&m_roomNodes[m_maxColIdx][row]);
+	}
 
 	std::vector< std::pair<short, short> > chosenCoords;
 	while (!types.empty()) {
@@ -198,8 +210,7 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes()
 		selectedNodes.push_back(&m_roomNodes[coords.first][coords.second]);
 		types.pop_back();
 	}
-	// The Spawn node will always be the last in the list of selected nodes
-	m_spawnNode = selectedNodes.back();
+	
 	return selectedNodes;
 }
 
@@ -219,7 +230,7 @@ void FloorPlanGenerator::_ConnectSelectedNodes(std::vector<RoomNode*>& selectedN
 		if (_A_Star(*startNode, *node)) {
 			curPathNode = node;
 			while (*curPathNode != *startNode) {
-				if (curPathNode->m_type != RoomType::GOAL && curPathNode->m_type != RoomType::SPAWN && curPathNode->m_type != RoomType::INTERESTING)
+				if (curPathNode->m_type == RoomType::DEAD)
 					curPathNode->m_type = RoomType::ALIVE;
 				curPathNode = curPathNode->m_parent;
 			}
@@ -315,7 +326,7 @@ void FloorPlanGenerator::GenerateRoomNodes(unsigned short cols, unsigned short r
 	}
 }
 
-void FloorPlanGenerator::GenerateFloorPlan(int seed)
+void FloorPlanGenerator::GenerateFloorPlan(int seed, bool bossLevel)
 {
 	ResetAllNodes();
 	_ConnectNeighbors();
@@ -323,7 +334,7 @@ void FloorPlanGenerator::GenerateFloorPlan(int seed)
 	std::cout << "Seed: " << m_seed << std::endl;
 	srand(m_seed);
 
-	_ConnectSelectedNodes(_SelectNodes());
+	_ConnectSelectedNodes(_SelectNodes(bossLevel));
 	_SetRoomConnectionTypes();
 }
 
@@ -462,7 +473,7 @@ std::ostream& operator<<(std::ostream& out, const RoomConnections& rc) {
 
 std::ostream& operator<<(std::ostream& out, const RoomType& rt) {
 	switch (rt) {
-	case RoomType::GOAL:
+	case RoomType::BOSS:
 		out << "G";
 		break;
 	case RoomType::INTERESTING:

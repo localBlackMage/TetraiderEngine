@@ -27,7 +27,7 @@ enum RoomConnections {
 std::ostream& operator<<(std::ostream& out, const RoomConnections& rc);
 
 enum class RoomType {
-	GOAL, INTERESTING, SPAWN, DEAD, ALIVE
+	BOSS, INTERESTING, SPAWN, DEAD, ALIVE
 };
 
 std::ostream& operator<<(std::ostream& out, const RoomType& rt);
@@ -70,7 +70,7 @@ protected:
 	bool _IsGOAViableEnemy(GameObject* pGO);
 	void _ResetNodeDistancesAndParents();
 	void _ConnectNeighbors();
-	std::vector<RoomNode*> _SelectNodes();
+	std::vector<RoomNode*> _SelectNodes(bool bossLevel);
 	void _ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes);
 	/* First selectively unsets neighbors, then sets connection type */
 	void _SetRoomConnectionTypes();
@@ -84,7 +84,7 @@ public:
 	void operator=(const FloorPlanGenerator &) = delete;
 	
 	void GenerateRoomNodes(unsigned short cols, unsigned short rows, unsigned short difficulty = 1);
-	void GenerateFloorPlan(int seed = -1);
+	void GenerateFloorPlan(int seed = -1, bool bossLevel = false);
 	void ResetAllNodes();
 	void PrintFloorPlan();
 	void GenerateLevelFromFloorPlan();
