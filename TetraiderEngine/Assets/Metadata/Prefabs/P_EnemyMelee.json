@@ -45,6 +45,7 @@
 			"z": 0
 		},
 		"healthScale": 60,
+		"reactionPrefab": "P_EnemyExclamation",
 		"AIStates": [
 			{
 				"name": "NPC_IDLE",
@@ -174,7 +175,7 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
+		"dropType": "random",
 		"RandomDrops": [
 			{
 				"prefab": "P_AmmoPickUp",

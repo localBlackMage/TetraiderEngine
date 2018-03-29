@@ -15,7 +15,7 @@ void AI_Reaction::OnEnter(){
 	pAgent->PlayReactionEffect();
 	////////////////////////////////
 
-	idleDuration = 1.0f;
+	idleDuration = 0.75f;
 	idledSoFar = 0.0f;
 }
 
@@ -29,7 +29,7 @@ void AI_Reaction::OnUpdate(float dt){
 }
 
 void AI_Reaction::OnExit(){
-	
+	pAgent->ControlAnimationOnVelocity(true);
 }
 
 

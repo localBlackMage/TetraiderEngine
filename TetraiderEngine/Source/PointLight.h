@@ -10,6 +10,7 @@ public:
 
 	static Component* CreateInstance() { return new PointLight(); }
 	virtual void HandleEvent(Event* pEvent) {};
+	void SetActive(bool active);
 };
 
 #endif

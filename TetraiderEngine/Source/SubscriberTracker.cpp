@@ -1,6 +1,3 @@
-//#include "SubscriberTracker.h"
-//#include <algorithm>
-
 #include <Stdafx.h>
 
 SubscriberTracker::SubscriberTracker(){}

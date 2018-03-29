@@ -51,6 +51,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["GateTriggerBox"] = GateTriggerBox::CreateInstance;
 	m_creationFunctions["CutScene"] = CutScene::CreateInstance;
 	m_creationFunctions["HillNodes"] = HillNodes::CreateInstance;
+	m_creationFunctions["Spawner"] = Spawner::CreateInstance;
+	m_creationFunctions["TimeToLive"] = TimeToLive::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

@@ -26,7 +26,10 @@ NPCController::NPCController() :
 	m_isDeathAnim(false),
 	m_isAttackAnim(false),
 	m_isActive(true),
-	m_isBossEntering(false)
+	m_isBossEntering(false),
+	m_isReactionAnim(false),
+	m_reactionTimer(60.0f),
+	m_nextReactionIn(60.0f)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	m_tagsToIgnore[0] = T_Projectile;
@@ -99,6 +102,10 @@ void NPCController::Update(float dt) {
 	if (m_healthBarUI && !m_isBoss) {
 		m_healthBarUI->GetComponent<Transform>(C_Transform)->SetPosition(m_pTransform->GetPosition() + m_healthBarPosOffset);
 	}
+
+	if (m_reactionTimer < m_nextReactionIn) {
+		m_reactionTimer += dt;
+	}
 }
 
 void NPCController::LateUpdate(float dt) {
@@ -147,6 +154,11 @@ void NPCController::Serialize(const json& j) {
 
 	m_isAttackAnim = ParseBool(j, "isAttackAnimationAvailable");
 	m_attackAnim = ParseInt(j, "attackAnimationIndex");
+
+	m_isReactionAnim = ParseBool(j, "isReactionAnimation");
+	m_reactionAnim = ParseInt(j, "reactionAnimationIndex");
+
+	m_reactionPrefab = ParseString(j, "reactionPrefab");
 
 	m_isBoss = ParseBool(j, "isBoss");
 
@@ -417,6 +429,17 @@ void NPCController::PlayAnimation(int animation) {
 
 void NPCController::PlayReactionEffect() {
 	// TODO: Add reaction effect for enemies
+	if (m_isReactionAnim) {
+		if(m_pAnimation->GetCurrentAnimation() == 1)
+			PlayAnimation(m_reactionAnim);
+	}
+	else if(m_reactionTimer >= m_nextReactionIn && m_reactionPrefab != "") {
+		m_reactionTimer = 0;
+		GameObject* o = TETRA_GAME_OBJECTS.CreateGameObject(m_reactionPrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_healthBarPosOffset.y, 0));
+		o->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->SetInitialPos(m_pTransform->GetPosition() + Vector3D(0, m_healthBarPosOffset.y, 0));
+		o->SetParent(pGO);
+		o->DestroyIn(2.0f);
+	}
 }
 
 bool NPCController::IsTooFarFromStartingPoint() {

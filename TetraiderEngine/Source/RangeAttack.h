@@ -15,6 +15,7 @@ public:
 	int GetAmmo() { return m_ammo; }
 	void UpdateAmmo(int ammo) { m_ammo = ammo; }
 	void SetMultipleShot(int shots, float coneAngle) { m_multipleShot = shots; m_coneAngle = coneAngle; }
+	void SetProjectilePrefab(std::string s) { m_projectilePrefab = s; }
 private:
 	std::string m_projectilePrefab;
 	float m_projectileSpeed;

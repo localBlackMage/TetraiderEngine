@@ -290,14 +290,14 @@ void LevelEditor::UpdateInspectorWindow() {
 		if (pPointLight) {
 			if (ImGui::CollapsingHeader("PointLight")) {
 				ImGui::Indent(m_indent);
-				Vector3D offset = pPointLight->GetOffset();
+				int z = (int)pPointLight->GetOffset().z;
 				Color _c = pPointLight->GetColor();
 				Vector3D c = Vector3D((float)_c.r / 255, (float)_c.g / 255, (float)_c.b / 255);
 				float fallOffA = pPointLight->LightA();
 				float fallOffB = pPointLight->LightB();
-				ImGui::InputFloat("fallOffA##4", &fallOffA);
-				ImGui::InputFloat("fallOffB##4", &fallOffB);
-				ImGui::InputFloat("Z offset##4", &offset.z);
+				ImGui::SliderFloat("fallOffA##4", &fallOffA, -1, 0);
+				ImGui::SliderFloat("fallOffB##4", &fallOffB, 0, 1);
+				ImGui::InputInt("Z offset##4", &(int)z);
 				if (ImGui::CollapsingHeader("Color")) {
 					float r = c.x;
 					float g = c.y;
@@ -308,7 +308,7 @@ void LevelEditor::UpdateInspectorWindow() {
 					pPointLight->SetColor(Vector3D(r, g, b));
 				}
 
-				pPointLight->SetOffset(Vector3D(0, 0, offset.z));
+				pPointLight->SetOffset(Vector3D(0, 0, (float)z));
 				pPointLight->SetFallOff(fallOffA, fallOffB);
 			}
 		}

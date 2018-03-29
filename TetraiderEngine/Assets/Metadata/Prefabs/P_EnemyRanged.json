@@ -46,6 +46,7 @@
 		"healthScale": 60,
 		"isAttackAnimationAvailable": true,
 		"attackAnimationIndex": 2,
+		"reactionPrefab": "P_EnemyExclamation",
 		"AIStates": [
 			{
 				"name": "idleBehavior",
@@ -171,7 +172,7 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
+		"dropType": "random",
 		"RandomDrops": [
 			{
 				"prefab": "P_AmmoPickUp",

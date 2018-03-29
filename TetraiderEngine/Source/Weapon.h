@@ -35,6 +35,7 @@ public:
 private:
 	std::vector<Attack*> m_Attacks;
 	std::string m_weaponPrefab;
+	std::string m_fireArrowPrefab;
 	GameObject* m_pWeapon;
 	Transform* m_pWeaponTransform;
 	std::string m_effectPrefab;
@@ -45,7 +46,6 @@ private:
 	int swingDir = 1;
 	float m_rotationOffset;
 	bool m_isRotationOffset;
-
 	void CheckForPowerUps();
 };
 

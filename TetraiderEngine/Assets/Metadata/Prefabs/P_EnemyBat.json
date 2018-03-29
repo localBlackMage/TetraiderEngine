@@ -44,6 +44,8 @@
 			"z": 0
 		},
 		"healthScale": 50,
+		"isReactionAnimation": true,
+		"reactionAnimationIndex": 2,
 		"AIStates": [
       {
         "name": "NPC_IDLE",
@@ -115,6 +117,13 @@
 			"animationSpeed": 8,
 			"isLooping": true,
 			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Reaction",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
 		}
 		]
 	},
@@ -150,7 +159,7 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
+		"dropType": "random",
 		"RandomDrops": [
 			{
 				"prefab": "P_AmmoPickUp",

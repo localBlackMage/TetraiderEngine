@@ -37,6 +37,7 @@
 		"zoneHeight": 500,
 		"attackRange": 250,
 		"healthBarPrefab": "P_EnemyHealthBar",
+		"reactionPrefab": "P_EnemyExclamation",
 		"healthBarOffset": {
 			"x": -35,
 			"y": 60,
@@ -173,7 +174,7 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
+		"dropType": "random",
 		"RandomDrops": [
 			{
 				"prefab": "P_AmmoPickUp",

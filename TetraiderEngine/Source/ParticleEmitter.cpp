@@ -253,10 +253,8 @@ void ParticleEmitter::Update(float dt)
 			m_currentTime = 0.f;
 	}
 
-	if (m_active) {
-		_UpdateParticles(dt);
-		//_SortParticles();
-	}
+	_UpdateParticles(dt);
+	//_SortParticles();
 }
 
 void ParticleEmitter::LateUpdate(float dt)
@@ -273,6 +271,7 @@ void ParticleEmitter::Deactivate()
 
 void ParticleEmitter::Serialize(const json & j)
 {
+	m_active = ValueExists(j, "active") ? ParseBool(j, "active") : m_active;
 	m_loopDuration = ParseFloat(j, "loopDuration");
 	m_looping = ParseBool(j, "looping");
 	m_prewarmed = ParseBool(j, "prewarmed");
@@ -337,6 +336,7 @@ void ParticleEmitter::Serialize(const json & j)
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
 	m_shader = ValueExists(j, "shader") ? j["shader"] : "particle";
+	m_active = ValueExists(j, "isActive") ? j["isActive"] : true;
 
 	_AllocateParticleArrays();
 	_AllocateVBOs();

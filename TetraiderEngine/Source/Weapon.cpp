@@ -128,6 +128,8 @@ void Weapon::Serialize(const json& j) {
 			}
 		}
 	}
+
+	m_fireArrowPrefab = ParseString(j, "fireArrowPrefab");
 }
 
 void Weapon::LateInitialize() {
@@ -241,12 +243,16 @@ void Weapon::CheckForPowerUps() {
 	float multiplier = 1;
 	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseMeleeDamage, multiplier)) {
 		MultiplyDamage(multiplier, 0);
-		// Add fire to sword
+		// Add fire sword
+		m_pWeapon->GetComponent<ParticleEmitter>(C_ParticleEmitter)->ActivateParticles();
+		m_pWeapon->GetComponent<PointLight>(C_PointLight)->SetActive(true);
 	}
 
 	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseRangeDamage, multiplier)) {
 		MultiplyDamage(multiplier, 1);
-		// Add fire to projectile
+		RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[1]);
+		// Add fire arrows
+		pAttack->SetProjectilePrefab(m_fireArrowPrefab);
 	}
 }
 

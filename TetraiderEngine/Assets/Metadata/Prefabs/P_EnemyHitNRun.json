@@ -36,6 +36,7 @@
 		"zoneWidth": 350,
 		"zoneHeight": 320,
 		"attackRange": 500,
+		"reactionPrefab": "P_EnemyExclamation",
 		"AIStates": [
 			{
 				"name": "idleBehavior",

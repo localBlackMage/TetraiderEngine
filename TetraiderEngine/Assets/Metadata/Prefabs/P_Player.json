@@ -161,7 +161,8 @@
 			"z": 0
 		},
 		"rotationOffset": 70,
-		"effectPrefab": "P_SlashTest"
+		"effectPrefab": "P_SlashTest",
+		"fireArrowPrefab": "P_fireArrowProjectile"
 	},
 	{
 		"Component": "Stamina",

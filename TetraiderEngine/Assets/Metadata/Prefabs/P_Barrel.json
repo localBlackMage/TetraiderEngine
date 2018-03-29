@@ -79,9 +79,12 @@
         "a": 0
 		}
 	},
-		{
+	{
 		"Component": "SpawnOnHealthZero",
-		"isRandom": true,
+		"dropType": "both",
+		"prefab": [
+			"P_DustPuffParticles"
+		],
 		"RandomDrops": [
 			{
 				"prefab": "P_AmmoPickUp",
