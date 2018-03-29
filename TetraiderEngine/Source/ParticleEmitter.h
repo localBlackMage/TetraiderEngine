@@ -47,7 +47,8 @@ protected:
 	P_TextureSelection m_textureSelection;		// Whether or not particles should cycle through the available particle frames or choose one somehow
 	Shape* m_pSpawnShape;						// Area the particle can appear in, if no shape is attached, particles will spawn at transform location
 	float m_angleVariation;						// How far in degrees the particle can deviate from the forward direction of the transform
-
+	bool m_particlesFollowParent;				// Determines whether or not to have particles' positions follow the emitter over time or to exist on their own
+	bool m_rotateToParentOnSpawn;				// Determines whether to rotate the particles to match the emitter's orientation at spawn or not
 
 	// Emitter Run Properties
 	bool m_active;								// Determines whether or not this emitter will run
@@ -60,6 +61,8 @@ protected:
 	SurfaceTextureBuffer * m_texture;			// Texture for all particles in this emitter
 	float m_rows, m_cols;						// Number of rows & columns of sprite frames in the texture
 	float m_frameHeight, m_frameWidth;			// Size of each frame in the sprite texture
+	bool m_renderedOnTop;						// Will force particles associated with the parent GO to be rendered first 
+	float m_directionMod;						// If the scale of the parent object gets flipped, this will appropriately flip particle velocities
 
 	// Particle Manager Properties
 	Particle* m_particles;						// Array of all existing Particles managed by this Emitter

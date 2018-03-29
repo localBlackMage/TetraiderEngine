@@ -1,6 +1,6 @@
 #include <Stdafx.h>
 
-ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0), m_isReverse(false) {}
+ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0), m_isReverse(false), m_isRelative(false) {}
 ScriptedAnimation::~ScriptedAnimation() {}
 
 void ScriptedAnimation::DeActivate() {
@@ -19,8 +19,10 @@ void ScriptedAnimation::Update(float dt) {
 			m_translationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_translationSpeed;
 			if (m_translationT > 1) m_translationT = 1;
 
-			if(index >= 0)
+			if(index >= 0 && !m_isRelative)
 				m_pTransform->SetPosition(Lerp(m_startPos, m_scriptedAnimation[index].m_finalPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else if(index >=0 && m_isRelative)
+				m_pTransform->SetPosition(Lerp(m_startPos, m_startPos + m_scriptedAnimation[index].m_finalPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 			else
 				m_pTransform->SetPosition(Lerp(m_startPos, m_initialPos, m_translationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
@@ -31,8 +33,10 @@ void ScriptedAnimation::Update(float dt) {
 			m_rotationT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_rotationSpeed;
 			if (m_rotationT > 1) m_rotationT = 1;
 
-			if (index >= 0)
+			if (index >= 0 && !m_isRelative)
 				m_pTransform->SetAngleZ(Lerp(m_startRot, m_scriptedAnimation[index].m_finalZRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else if (index >= 0 && m_isRelative)
+				m_pTransform->SetAngleZ(Lerp(m_startRot, m_startRot + m_scriptedAnimation[index].m_finalZRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 			else
 				m_pTransform->SetAngleZ(Lerp(m_startRot, m_initialRotation, m_rotationT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
@@ -43,8 +47,10 @@ void ScriptedAnimation::Update(float dt) {
 			m_scaleT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_scaleSpeed;
 			if (m_scaleT > 1) m_scaleT = 1;
 
-			if (index >= 0)
+			if (index >= 0 && !m_isRelative)
 				m_pTransform->SetScale(Lerp(m_startScale, m_scriptedAnimation[index].m_finalScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else if (index >= 0 && m_isRelative)
+				m_pTransform->SetScale(Lerp(m_startScale, m_startScale + m_scriptedAnimation[index].m_finalScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 			else
 				m_pTransform->SetScale(Lerp(m_startScale, m_initialScale, m_scaleT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
@@ -55,8 +61,10 @@ void ScriptedAnimation::Update(float dt) {
 			m_fadeT += dt*m_scriptedAnimation[m_currentAnimationIndex].m_fadeSpeed;
 			if (m_fadeT > 1) m_fadeT = 1;
 
-			if (index >= 0)
+			if (index >= 0 && !m_isRelative)
 				m_pSprite->SetAlpha(Lerp(m_startFade, m_scriptedAnimation[index].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+			else if (index >= 0 && m_isRelative)
+				m_pSprite->SetAlpha(Lerp(m_startFade, m_startFade + m_scriptedAnimation[index].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 			else
 				m_pSprite->SetAlpha(Lerp(m_startFade, m_initialFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}
@@ -96,6 +104,7 @@ void ScriptedAnimation::Serialize(const json& j) {
 	m_initialRotation = ParseFloat(j, "initialRotation");
 	m_initialFade = ParseFloat(j, "initialFade");
 	m_isPlayOnAwake = ParseBool(j, "isPlayOnAwake");
+	m_isRelative = ParseBool(j, "isRelative");
 }
 
 void ScriptedAnimation::LateInitialize() {
@@ -136,6 +145,11 @@ void ScriptedAnimation::LateInitialize() {
 void ScriptedAnimation::PlayAnimation(bool isReverse) {
 	m_isReverse = isReverse;
 
+	if (isReverse && m_isRelative) {
+		std::cout << "Cannot play animation in reverse and be relative" << std::endl;
+		return;
+	}
+
 	if (!m_isPlayAnimation) {
 		m_isPlayAnimation = true;
 		m_rotationT = 0;
@@ -143,10 +157,20 @@ void ScriptedAnimation::PlayAnimation(bool isReverse) {
 		m_translationT = 0;
 		m_fadeT = 0;
 		if (!isReverse) {
-			m_startPos = m_initialPos;
-			m_startScale = m_initialScale;
-			m_startRot = m_initialRotation;
-			m_startFade = m_initialFade;
+			if (!m_isRelative) {
+				m_startPos = m_initialPos;
+				m_startScale = m_initialScale;
+				m_startRot = m_initialRotation;
+				m_startFade = m_initialFade;
+			}
+			else {
+				m_startPos = m_pTransform->GetPosition();
+				m_startScale = m_pTransform->GetScaleVector();
+				m_startRot = m_pTransform->GetAngleZ();
+				if (m_pSprite)
+					m_startFade = m_pSprite->GetAlpha();
+			}
+
 			m_currentAnimationIndex = 0;
 		}
 		else {
@@ -177,6 +201,7 @@ void ScriptedAnimation::NextAnim() {
 			m_startRot = m_pTransform->GetAngleZ();
 			if (m_pSprite)
 				m_startFade = m_pSprite->GetAlpha();
+
 			m_rotationT = 0;
 			m_scaleT = 0;
 			m_translationT = 0;
@@ -202,7 +227,6 @@ void ScriptedAnimation::NextAnim() {
 			m_fadeT = 0;
 		}
 	}
-	
 }
 
 void ScriptedAnimation::SetInitialPos(const Vector3D& pos) {

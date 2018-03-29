@@ -12,5 +12,6 @@ int RandomInt(int min, int max);
 unsigned int GetPascalEntry(unsigned short degree, unsigned short index);
 float BezierInterpolation(const std::vector<Point>& points, const float& t);
 
-float GaussianBlur(float stdDeviation = 0);
+// Given an angle, returns a value between -180 and +180
+float ClampAngleTo180(float angle);
 #endif
