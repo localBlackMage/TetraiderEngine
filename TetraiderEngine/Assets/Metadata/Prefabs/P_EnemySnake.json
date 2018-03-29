@@ -151,6 +151,13 @@
         "b": 1,
         "a": 0
 		}
+	},	
+	{
+		"Component": "DestroyOnHealthZero",
+		"destroyIn": 0,
+    	"isSpawnAcidPool": true,
+    	"acidPrefab": "P_AcidPool",
+		"isExplode": false
 	},
 	{
 		"Component": "Weapon",
@@ -164,10 +171,10 @@
 				"isUnlimitedAmmo": true,
 				"multipleShots": 2,
 				"coneAngle": 20,
-				"instantiationOffset": 50,
+				"instantiationOffset": 70,
 				"lifeTime": 1.5,
 				"projectilePrefab": "P_ProjectileAcid",
-				"knockBackSpeed": 300
+				"knockBackSpeed": 0
 			}
 		],
 		"rotationOffset": 0

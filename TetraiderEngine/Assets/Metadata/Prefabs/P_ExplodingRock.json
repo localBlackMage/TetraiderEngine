@@ -58,6 +58,7 @@
 	{
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
+    "m_isSpawnAcidPool": false,
 		"isExplode": true,
 		"explosionRadius": 250,
 		"explosionKnockBack": 2000,
