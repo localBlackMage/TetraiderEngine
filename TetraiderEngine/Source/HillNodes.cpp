@@ -30,7 +30,8 @@ void HillNodes::Update(float dt)
 		m_Move = false;
 		if (m_changeLevel)
 		{
-			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnLoadNextLevel, 0.5f));
+			Event *pEvent = new Event(EVENT_OnLoadNextLevel, 0.5f);
+			TETRA_EVENTS.AddDelayedEvent(pEvent);
 			m_t = 0.0f;
 		}
 	}
@@ -79,7 +80,7 @@ void HillNodes::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_OnLevelInitialized)
 	{
-		std::cout << "level init called" << std::endl;
+		//std::cout << "level init called" << std::endl;
 		m_currentLevel = TETRA_LEVELS.GetLevelsCompleted();
 		m_playerUI = TETRA_GAME_OBJECTS.FindObjectWithTag(T_PlayerUI);
 		m_pTransPlayerUI = m_playerUI->GetComponent<Transform>(ComponentType::C_Transform);
@@ -99,7 +100,7 @@ void HillNodes::HandleEvent(Event * pEvent)
 
 	else if (pEvent->Type() == EVENT_OnCanvasDeactivated)
 	{
-		std::cout << "canvas deaactivated called" << std::endl;
+		//std::cout << "canvas deaactivated called" << std::endl;
 		++m_currentLevel;
 
 		if (m_currentLevel > (int)m_Nodes.size())
