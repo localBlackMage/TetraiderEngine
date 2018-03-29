@@ -43,10 +43,11 @@ void Transform::Deactivate() {
 
 void Transform::Update(float dt) 
 {
-	m_prevPosition = m_position;
 }
 
 void Transform::LateUpdate(float dt) {
+	m_prevPosition = Vector3D(m_transform.Get(0, 3), m_transform.Get(1, 3), m_transform.Get(2, 3));
+
 	// TODO: optimization if game object is static save m_Transform somewhere and never calculate matrix again
 	Matrix4x4 trans;
 	Matrix4x4 scale;
@@ -70,6 +71,7 @@ void Transform::LateUpdate(float dt) {
 	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset));
 
 	m_transform = trans*rot*scale*pivotOffset;
+	m_worldPosition = Vector3D(m_transform.Get(0, 3), m_transform.Get(1, 3), m_transform.Get(2, 3));
 }
 
 void Transform::Serialize(const json& j) {
@@ -115,14 +117,14 @@ void Transform::Override(const json & j)
 
 void Transform::HandleEvent(Event * p_event) {
 	switch (p_event->Type()) {
-	case EventType::EVENT_FlipScaleX:
-		if(m_parent) m_position.x *= -1;
-		m_scale.x *= -1;
-		break;
-	case EventType::EVENT_FlipScaleY:
-		if (m_parent) m_position.y *= -1;
-		m_scale.y *= -1;
-		break;
+		case EventType::EVENT_FlipScaleX:
+			if(m_parent) m_position.x *= -1;
+			m_scale.x *= -1;
+			break;
+		case EventType::EVENT_FlipScaleY:
+			if (m_parent) m_position.y *= -1;
+			m_scale.y *= -1;
+			break;
 	}
 }
 

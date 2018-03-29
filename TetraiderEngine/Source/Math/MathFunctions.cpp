@@ -89,15 +89,11 @@ float BezierInterpolation(const std::vector<Point>& points, const float& t) {
 	return returnValue;
 }
 
-
-/*
-e = Euler's number
-1 / (2 * pi * stdDeviation^2) * e^-((x^2+y^2)/(2*stdDeviation^2)) */
-float GaussianBlur(float stdDeviation)
+float ClampAngleTo180(float angle)
 {
-	return 0.0f;
-}
-
-bool RollDie(float probability) {
-	return RandomFloat(0, 1) < probability;
+	if (angle > 180.f)
+		return angle - float(int(angle) % 180) * 180.f;
+	else if (angle < -180.f)
+		return angle + float(int(-angle) % 180) * 180.f;
+	return angle;
 }
