@@ -102,12 +102,12 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 			}
 		}
 	}
-	else if (pEvent->Type() == EVENT_OnCanvasDeactivated) {
+	/*else if (pEvent->Type() == EVENT_OnCanvasDeactivated) {
 		CanvasData* pData = pEvent->Data<CanvasData>();
 		if (pData->m_canvasType == (int)CanvasType::CANVAS_POWERUPSCREEN) {
 			TETRA_LEVELS.ActivateRandomGeneration(true);
 			TETRA_LEVELS.ChangeLevel(m_levelNumber);
 		}
-	}
+	}*/
 }
 

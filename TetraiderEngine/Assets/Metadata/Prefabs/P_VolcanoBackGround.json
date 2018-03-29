@@ -51,6 +51,11 @@
     },
     {
       "Component":"HillNodes",
+      "speed":0.5,
+      "offset":{
+        "X":5,
+        "y":10
+      },
       "Nodes":[
           {
             "prefab":"P_Node1",
@@ -58,8 +63,8 @@
               "x":168,
               "y":-88
             },
-            "nodeToGo": 2,
-            "currentNode": 1
+            "nodeToGo": 1,
+            "currentNode": 0
           },
           {
             "prefab":"P_Node1",
@@ -67,8 +72,8 @@
               "x":232,
               "y":-16
             },
-            "nodeToGo": 3,
-            "currentNode": 2
+            "nodeToGo": 2,
+            "currentNode": 1
           },
           {
             "prefab":"P_Node1",
@@ -76,8 +81,8 @@
               "x":280,
               "y":72
             },
-            "nodeToGo": 4,
-            "currentNode": 3
+            "nodeToGo": 3,
+            "currentNode": 2
           },
           {
             "prefab":"P_Node1",
@@ -85,8 +90,8 @@
               "x":328,
               "y":152
             },
-            "nodeToGo": 5,
-            "currentNode": 4
+            "nodeToGo": 4,
+            "currentNode": 3
           },
           {
             "prefab":"P_Node1",
@@ -94,10 +99,30 @@
               "x":352,
               "y":240
             },
-            "nodeToGo": 5,
-            "currentNode": 5
+            "nodeToGo": 4,
+            "currentNode": 4
           }
       ]
+    },
+    {
+      "Component": "Text",
+      "letterHeight": 48,
+      "letterWidth": 24,
+      "spacing": 0.65,
+      "pivotOffset": {
+        "x": -30,
+        "y": 0
+      },
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "rows": 6,
+      "cols": 16,
+      "font": "ShadowCardGothicFont.png",
+      "text": "LEVEL 1"
     }
   ]
 }
