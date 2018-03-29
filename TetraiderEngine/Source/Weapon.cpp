@@ -133,9 +133,6 @@ void Weapon::Serialize(const json& j) {
 }
 
 void Weapon::LateInitialize() {
-	if(m_pWeapon) m_pWeapon->SetParent(pGO);
-	if(m_pEffect) m_pEffect->SetParent(pGO);
-
 	if (!m_pController) {
 		m_pController = pGO->GetComponent<Controller>(ComponentType::C_Controller);
 		if (!m_pController) {
@@ -160,6 +157,15 @@ void Weapon::HandleEvent(Event* pEvent) {
 		if(m_pEffect) m_pEffect->HandleEvent(pEvent);
 	}
 	else if (pEvent->Type() == EVENT_OnLevelInitialized) {
+		if (m_pWeapon) {
+			m_pWeapon->SetParent(pGO);
+			m_pWeaponTransform->SetPosition(Vector3D());
+		}
+		if (m_pEffect) {
+			m_pEffect->SetParent(pGO);
+			m_pEffectTransform->SetPosition(Vector3D());
+		}
+
 		if (pGO->m_tag == T_Player) {
 			int ammo = GetAmmo(1);
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, &CollectibleData(ammo)));

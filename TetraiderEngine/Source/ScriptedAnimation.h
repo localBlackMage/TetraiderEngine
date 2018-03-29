@@ -76,6 +76,7 @@ private:
 	int m_currentAnimationIndex;
 	void NextAnim();
 	bool m_isReverse;
+	bool m_isRelative;
 };
 
 #endif
