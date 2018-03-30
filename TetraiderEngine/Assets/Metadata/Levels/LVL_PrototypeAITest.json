@@ -572,6 +572,9 @@
     {
       "prefab": "P_PauseMenu"
     },
+    {
+      "prefab": "P_LoseMenu"
+    },
 	{
 	  "prefab": "P_UIarrowAmmo"
 	},
