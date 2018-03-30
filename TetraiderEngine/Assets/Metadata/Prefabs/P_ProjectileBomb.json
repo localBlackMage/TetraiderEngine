@@ -70,11 +70,13 @@
 		"isRotate": true,
 		"isExplodeOnVelocityZero": true,
 		"isIgnoreCollideEvent": true,
-		"deacclerationSpeed": 2
+		"deacclerationSpeed": 2,
+    "isSpawnAcidPool": false
 	},
 	{
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
+    "m_isSpawnAcidPool": false,
 		"isExplode": true,
 		"explosionRadius": 100,
 		"explosionKnockBack": 2000,

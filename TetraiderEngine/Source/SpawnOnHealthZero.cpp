@@ -114,4 +114,5 @@ void SpawnOnHealthZero::Override(const json& j) {
 
 void SpawnOnHealthZero::AddSpawnObject(std::string prefab) {
 	m_prefabs.push_back( prefab );
+	m_dropType = DropType::PREFAB_ONLY;
 }

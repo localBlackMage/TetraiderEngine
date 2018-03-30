@@ -71,13 +71,13 @@ void ParticleEmitter::_SpawnParticle()
 		float HI = 250.f;
 		float LO = -HI;
 		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
-		m_particles[idx].m_velocity = m_pTransform->LookAt() * m_speed;
-		if (m_angleVariation != 0.f) {
-			float angleOffset = RandomFloat(-m_angleVariation, m_angleVariation);
-			m_particles[idx].m_velocity = Matrix4x4::Rotate(angleOffset, ZAXIS) * m_particles[idx].m_velocity;
-			m_particles[idx].m_angleOffset = angleOffset;
-		}
-		
+
+		float angleOffset = (m_rotateToParentOnSpawn ? m_pTransform->GetAngleZ() : 0.f ) +
+			RandomFloat(-m_angleVariation, m_angleVariation);
+
+		m_particles[idx].m_angleOffset = angleOffset;
+
+
 		switch (m_textureSelection) {
 			case P_TextureSelection::RANDOM:
 				m_particles[idx].m_texCoords.u = float(RandomInt(0, (int)(m_cols + 1))) * m_frameWidth;
@@ -111,11 +111,15 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 					Vector3D(
 						BezierInterpolation(m_velocityX.points, t) * m_velocityX.amplitude,
 						BezierInterpolation(m_velocityY.points, t) * m_velocityY.amplitude,
+						0.f,
 						0.f
 					);
 				
-				p.m_velocity = (velocityOffset * m_speed) + Gravity;
+				p.m_velocity = (velocityOffset * (m_speed * m_directionMod)) + Gravity;
 				p.m_pos += p.m_velocity * deltaTime;
+				if (m_particlesFollowParent) {
+					p.m_pos += m_pTransform->GetMovement();
+				}
 				p.m_pos.z = 0.f;
 
 				p.m_scale = BezierInterpolation(m_scale.points, t) * m_scale.amplitude;
@@ -210,7 +214,8 @@ ParticleEmitter::ParticleEmitter() :
 	m_emissionTimer(0.f),
 	m_liveParticleCount(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
-	m_pSpawnShape(nullptr)
+	m_pSpawnShape(nullptr),
+	m_directionMod(1.f)
 {}
 
 ParticleEmitter::~ParticleEmitter() 
@@ -252,13 +257,12 @@ void ParticleEmitter::Update(float dt)
 		if (m_looping && m_currentTime >= m_loopDuration)
 			m_currentTime = 0.f;
 	}
-
-	_UpdateParticles(dt);
-	//_SortParticles();
 }
 
 void ParticleEmitter::LateUpdate(float dt)
 {
+	_UpdateParticles(dt);
+	//_SortParticles();
 }
 
 void ParticleEmitter::Deactivate()
@@ -338,6 +342,12 @@ void ParticleEmitter::Serialize(const json & j)
 	m_shader = ValueExists(j, "shader") ? j["shader"] : "particle";
 	m_active = ValueExists(j, "isActive") ? j["isActive"] : true;
 
+
+	m_particlesFollowParent = ParseBool(j, "followParentPosition");
+	m_rotateToParentOnSpawn = ParseBool(j, "matchParentRotation");
+
+	m_renderedOnTop = ParseBool(j, "renderOnTop");
+
 	_AllocateParticleArrays();
 	_AllocateVBOs();
 	m_liveParticleCount = 0;
@@ -349,6 +359,11 @@ void ParticleEmitter::Override(const json & j)
 
 void ParticleEmitter::HandleEvent(Event * p_event)
 {
+	switch (p_event->Type()) {
+		case EventType::EVENT_FlipScaleX:
+			m_directionMod *= -1;
+			break;
+	}
 }
 
 void ParticleEmitter::BindBufferDatas() const

@@ -10,6 +10,7 @@ class Transform : public Component {
 private:
 	Vector3D m_position;
 	Vector3D m_prevPosition;
+	Vector3D m_worldPosition;
 	Vector3D m_scale;
 	Vector3D m_pivotOffset;
 	Matrix4x4 m_transform;
@@ -40,7 +41,7 @@ public:
 	Vector3D GetPosition() const;
 	Vector3D GetLocalPosition() const;
 	void Move(const Vector3D& amount);
-	Vector3D GetMovement() const { return m_position - m_prevPosition; }
+	Vector3D GetMovement() const { return m_worldPosition - m_prevPosition; }
 
 	void SetAngles(float angleX, float angleY, float angleZ);
 	float GetAngleX() const;

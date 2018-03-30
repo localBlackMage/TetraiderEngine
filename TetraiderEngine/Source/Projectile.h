@@ -44,6 +44,8 @@ private:
 	bool m_isIgnoreCollideEvent;
 	bool m_isExplodeOnVelocityZero;
 	bool m_isBouncy;
+	bool m_isSpawnAcidPool;
+	std::string m_acidPrefab;
 };
 
 #endif

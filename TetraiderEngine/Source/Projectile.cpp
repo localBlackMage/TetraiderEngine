@@ -24,13 +24,20 @@ void Projectile::Update(float dt) {
 
 	if (m_isExplodeOnVelocityZero) {
 		if (m_pBody->GetVelocity().IsVectorZero(10.0f)) {
+			if (m_isSpawnAcidPool) {
+				TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, m_pTransform->GetPosition());
+			}
 			pGO->HandleEvent(&Event(EVENT_Explode));
 		}
 	}
 
 	m_currentLifeTime += dt;
-	if (m_currentLifeTime > m_lifeTime && !m_isExplodeOnVelocityZero)
+	if (m_currentLifeTime > m_lifeTime && !m_isExplodeOnVelocityZero) {
+		if (m_isSpawnAcidPool) {
+			TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, m_pTransform->GetPosition());
+		}
 		pGO->Destroy();
+	}
 }
 
 void Projectile::Deactivate() { 
@@ -45,7 +52,10 @@ void Projectile::Serialize(const json& j) {
 	m_isExplodeOnVelocityZero = ParseBool(j, "isExplodeOnVelocityZero");
 	m_isIgnoreCollideEvent = ParseBool(j, "isIgnoreCollideEvent");
 	m_deccelerationSpeed = ParseFloat(j, "deacclerationSpeed");
-	
+	m_isSpawnAcidPool = ParseBool(j, "isSpawnAcidPool");
+	if (m_isSpawnAcidPool) {
+		m_acidPrefab = ParseString(j, "acidPrefab");
+	}
 }
 
 void Projectile::HandleEvent(Event* pEvent) {
@@ -68,7 +78,9 @@ void Projectile::HandleEvent(Event* pEvent) {
 			Vector3D dirOfAttack = pTrans->GetPosition() - m_pTransform->GetPosition();
 			dirOfAttack.Normalize();
 			if (pHealth) pHealth->TakeDamage(m_damage, dirOfAttack, m_knockBackSpeed, false);
-
+			if (m_isSpawnAcidPool) {
+				TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, m_pTransform->GetPosition());
+			}
 			pGO->Destroy();
 		}
 		else {

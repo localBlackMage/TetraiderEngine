@@ -49,7 +49,7 @@
 		"reactionPrefab": "P_EnemyExclamation",
 		"AIStates": [
 			{
-				"name": "idleBehavior",
+				"name": "NPC_IDLE",
 				"behaviorIndex": 0,
 				"AIStateType": "NPC_State_Idle"
 			},
@@ -57,19 +57,19 @@
 	        	"behaviorIndex": 1,
 	        	"AIStateType": "NPC_State_Reaction"
 	        },
-			{	"name": "engageBehavior",
+			{	"name": "NPC_ENGAGE",
 				"behaviorIndex": 2,
 				"AIStateType": "NPC_State_Engage"
 			},
-			{	"name": "attackBehavior",
+			{	"name": "NPC_ATTACK",
 				"behaviorIndex": 3,				
 				"AIStateType": "NPC_State_Attack"
 			},
-			{	"name": "retreatBehavior",
+			{	"name": "NPC_RETREAT",
 				"behaviorIndex": 4,
 				"AIStateType": "NPC_State_Retreat"
 			},
-			{	"name": "moveToRandomPointInZoneBehavior",
+			{	"name": "NPC_MOVETORANDOMPOINTINZONE",
 				"behaviorIndex": 5,
 				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}

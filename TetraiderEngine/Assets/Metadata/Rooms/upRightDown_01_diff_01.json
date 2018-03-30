@@ -1,6 +1,7 @@
 {
 	"ROOM_CONNECTION_TYPE": "UP_RIGHT_DOWN",
 	"DIFFICULTY": 1,
+	"BOSS_ROOM": false,
 	"GAME_OBJECTS": [
 		{
 			"prefab": "P_ColliderUpDownShort",

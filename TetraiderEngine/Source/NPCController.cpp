@@ -1,14 +1,3 @@
-//#include "GameObject.h"
-//#include "NPCController.h"
-//#include "Weapon.h"
-//#include "Health.h"
-//#include "Transform.h"
-//#include "Animation.h"
-//#include "TetraiderAPI.h"
-//#include "Camera.h"
-//#include "Math\MathFunctions.h"
-//#include <iostream>
-
 #include <Stdafx.h>
 
 NPCController::NPCController() :
@@ -28,10 +17,11 @@ NPCController::NPCController() :
 	m_isActive(true),
 	m_isBossEntering(false),
 	m_isReactionAnim(false),
-	m_reactionTimer(60.0f),
-	m_nextReactionIn(60.0f)
+	m_reactionTimer(10.0f),
+	m_nextReactionIn(15.0f)
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnBossLand, this);
 	m_tagsToIgnore[0] = T_Projectile;
 	m_tagsToIgnore[1] = T_Player;
 	m_tagsToIgnore[2] = T_Enemy;
@@ -161,6 +151,8 @@ void NPCController::Serialize(const json& j) {
 	m_reactionPrefab = ParseString(j, "reactionPrefab");
 
 	m_isBoss = ParseBool(j, "isBoss");
+	m_puffParticlePrefab = ParseString(j, "puffParticlePrefab");
+	m_puffOffset = ParseFloat(j, "puffOffset");
 
 	if (m_isBoss) {
 		TETRA_EVENTS.Subscribe(EVENT_OnEnterBoss, this);
@@ -180,6 +172,8 @@ void NPCController::EnterBoss() {
 		m_isBossEntering = true;
 	}
 	pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->PlayAnimation();
+	Event* pEvent = new Event(EVENT_OnBossLand, 1.5f);
+	TETRA_EVENTS.AddDelayedEvent(pEvent);
 }
 
 void NPCController::ExitBoss() {
@@ -226,6 +220,9 @@ void NPCController::HandleEvent(Event* pEvent) {
 	}
 	else if (pEvent->Type() == EVENT_OnEnterBoss) {
 		EnterBoss();
+	}
+	else if (pEvent->Type() == EVENT_OnBossLand) {
+		TETRA_GAME_OBJECTS.CreateGameObject(m_puffParticlePrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_puffOffset,0));
 	}
 
 	if (m_isDead) return;

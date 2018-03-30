@@ -25,10 +25,12 @@ private:
 	float m_timeStamp;
 	bool m_isDestory;
 	bool m_isExplode;
+	bool m_isSpawnAcidPool;
 	float m_explosionRadius;
 	float m_knockBackSpeed;
 	int m_explosionDamage;
 	std::string m_explosionPrefab;
+	std::string m_acidPrefab;
 	Attack* m_Attack;
 };
 

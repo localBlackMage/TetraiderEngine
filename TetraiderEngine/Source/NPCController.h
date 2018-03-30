@@ -100,6 +100,8 @@ private:
 	Vector3D m_prevPos;
 
 	std::string m_healthBarPrefab;
+	std::string m_puffParticlePrefab;
+	float m_puffOffset;
 	Vector3D m_healthBarPosOffset;
 	float m_healthScale;
 	GameObject* m_healthBarUI;

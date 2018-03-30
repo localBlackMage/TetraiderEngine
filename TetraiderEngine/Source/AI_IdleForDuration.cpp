@@ -16,6 +16,7 @@ void AI_IdleForDuration::OnEnter(){
 	triedSofar = 0.0f;
 	tryTime = 1.5f;
 	pAgent->StopMoving();
+	pAgent->ControlAnimationOnVelocity(false);
 }
 
 void AI_IdleForDuration::OnUpdate(float dt){
@@ -36,7 +37,7 @@ void AI_IdleForDuration::OnUpdate(float dt){
 }
 
 void AI_IdleForDuration::OnExit(){
-
+	pAgent->ControlAnimationOnVelocity(true);
 }
 
 

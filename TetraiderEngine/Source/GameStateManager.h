@@ -2,11 +2,6 @@
 #ifndef GAME_STATE_MANAGER_H
 #define GAME_STATE_MANAGER_H
 
-//#include "Subscriber.h"
-//
-//class LevelManager;
-//class LevelEditor;
-
 enum class GameState {
 	QUIT,
 	RESTART,

@@ -75,12 +75,12 @@
 			"lifeTime": 0.5,
 			"speed": 100.0,
 			"velocityX": {
-				"amplitude": 0.0,
-				"points": []
-			},
-			"velocityY": {
 				"amplitude": 1.0,
 				"points": [{"x":0,"y":0.0888888888888899},{"x":0.1111111111111111,"y":0.14444444444444438},{"x":0.2222222222222222,"y":0.5333333333333323},{"x":0.3333333333333333,"y":1},{"x":0.4444444444444444,"y":1},{"x":0.5555555555555556,"y":1},{"x":0.6666666666666666,"y":0.7111111111111112},{"x":0.7777777777777778,"y":1},{"x":0.8888888888888888,"y":1},{"x":1,"y":0.12222222222222223}]
+			},
+			"velocityY": {
+				"amplitude": 0.0,
+				"points": []
 			},
 			"scale": {
 				"amplitude": 48.0,
@@ -109,7 +109,12 @@
 			"textureSelection": "random",
 			"animationSpeed": 0.1,
 			"rows": 1,
-			"cols": 3
+			"cols": 3,
+			"angleVariation": 0,
+			"followParentPosition": true,
+			"matchParentRotation": true,
+			"renderOnTop": true
+			
 	}
   ]
 }

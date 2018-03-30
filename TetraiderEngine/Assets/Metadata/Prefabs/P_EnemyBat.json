@@ -54,7 +54,7 @@
       },
       {	"name": "NPC_REACTION",
         "behaviorIndex": 1,
-        "AIStateType": "NPC_State_Reaction"
+        "AIStateType": "NPC_State_EnemyBatReaction"
       },
       { "name": "NPC_ENGAGE",
         "behaviorIndex": 2,
