@@ -48,7 +48,7 @@ void SpawnOnHealthZero::_SpawnPrefabs()
 			_SpawnPrefab(m_randomDrops[RandomDropIndex()].m_prefabName);
 			break;
 		}
-		case DropType::BOTH: {
+		case DropType::BOTH_TYPES: {
 			for (std::string prefab : m_prefabs) {
 				_SpawnPrefab(prefab);
 			}
@@ -75,9 +75,9 @@ void SpawnOnHealthZero::Serialize(const json& j) {
 	std::string dropType = ParseString(j, "dropType");
 	if (dropType == "prefab")		m_dropType = DropType::PREFAB_ONLY;
 	else if (dropType == "random")	m_dropType = DropType::RANDOM_ONLY;
-	else							m_dropType = DropType::BOTH;
+	else							m_dropType = DropType::BOTH_TYPES;
 
-	if ((m_dropType == DropType::PREFAB_ONLY || m_dropType == DropType::BOTH) && 
+	if ((m_dropType == DropType::PREFAB_ONLY || m_dropType == DropType::BOTH_TYPES) && 
 		ValueExists(j, "prefab")) 
 	{
 		if (j["prefab"].is_array())
@@ -86,7 +86,7 @@ void SpawnOnHealthZero::Serialize(const json& j) {
 			m_prefabs.push_back(ParseString(j, "prefab"));
 	}
 	
-	if ((m_dropType == DropType::RANDOM_ONLY || m_dropType == DropType::BOTH) &&
+	if ((m_dropType == DropType::RANDOM_ONLY || m_dropType == DropType::BOTH_TYPES) &&
 		ValueExists(j, "RandomDrops"))
 	{
 		int size = j["RandomDrops"].size();

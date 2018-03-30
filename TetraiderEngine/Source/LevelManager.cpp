@@ -27,6 +27,9 @@ void LevelManager::LoadStaticGameObjects()
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_StaticsLoaded));
 }
 
+#define LEVELS_NO_SHOP "LevelsToExcludeShop"
+#define BOSS_LEVELS "BossLevels"
+#define LEVEL_PARAMS "LevelParameters"
 void LevelManager::Initialize(const json& j) {
 	levelConfig = j;
 	maxLevel = levelConfig["Levels"].size();
@@ -38,7 +41,33 @@ void LevelManager::Initialize(const json& j) {
 	std::string staticsFileName = levelConfig["Statics"];
 	// TODO: Find a better spot for this? - Holden
 	staticObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + staticsFileName + ".json");
+
+	m_noShopLevels.reserve(j[LEVELS_NO_SHOP].size());
+	for (unsigned int i = 0; i < j[LEVELS_NO_SHOP].size(); ++i) {
+		m_noShopLevels.push_back(j[LEVELS_NO_SHOP][i]);
+	}
+
+	m_bossLevels.reserve(j[BOSS_LEVELS].size());
+	for (unsigned int i = 0; i < j[BOSS_LEVELS].size(); ++i) {
+		m_bossLevels.push_back(j[BOSS_LEVELS][i]);
+	}
+
+	m_maxLevel = j["NumberOfLevels"];
+
+	m_levelConfigs.reserve(j[LEVEL_PARAMS].size());
+	for (unsigned int i = 0; i < j[LEVEL_PARAMS].size(); ++i) {
+		LevelConfig config;
+		config.cols = j[LEVEL_PARAMS][i]["cols"];
+		config.rows = j[LEVEL_PARAMS][i]["rows"];
+		config.difficulty = j[LEVEL_PARAMS][i]["difficulty"];
+		config.bossAndShop = static_cast<BossAndShop>( (j[LEVEL_PARAMS][i]["boss"] ? 1 : 0) + (j[LEVEL_PARAMS][i]["shop"] ? 2 : 0) );
+
+		m_levelConfigs.push_back(config);
+	}
 }
+#undef LEVELS_NO_SHOP
+#undef BOSS_LEVELS
+#undef LEVEL_PARAMS
 
 std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 {
@@ -57,14 +86,8 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 
 void LevelManager::LoadLevel() {
 	if (m_isRandomlyGenerated) {
-		if (m_levelsCompleted >= 1) {
-			TETRA_LEVEL_GEN.GenerateRoomNodes(3, 4, 2);
-		}
-		else 
-			TETRA_LEVEL_GEN.GenerateRoomNodes(3, 4, 1);
-
-		// Some logic goes here to determine boss level selection! - Holden
-		TETRA_LEVEL_GEN.GenerateFloorPlan();
+		TETRA_LEVEL_GEN.GenerateRoomNodes(m_levelConfigs[m_levelsCompleted]);
+		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted]);
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();

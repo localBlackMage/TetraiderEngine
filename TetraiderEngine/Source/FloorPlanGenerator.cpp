@@ -2,6 +2,8 @@
 
 #define ROOM_CONNECTION_TYPE "ROOM_CONNECTION_TYPE"
 #define ROOM_DIFFICULTY "DIFFICULTY"
+#define ROOM_BOSS_LEVEL "BOSS_ROOM"
+#define ROOM_SHOP_LEVEL "SHOP_ROOM"
 
 static std::unordered_map<std::string, RoomConnections> ROOM_CONNECTION_STRINGS_TO_TYPES = {
 	{ "LEFT", RoomConnections::LEFT },
@@ -53,31 +55,24 @@ static float _Heuristic(RoomNode& a, RoomNode& b) {
 	return float(x + y) * WEIGHT;
 }
 
-// Actual distance, no diagonals
-static float _Distance(RoomNode& a, RoomNode& b) {
-	short x = abs(a.m_row - b.m_row);
-	short y = abs(a.m_col - b.m_col);
-	return float(x + y);
-}
-
 #pragma region Private Methods
 
-bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& BOSS)
+bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 {
-	if (start == BOSS)	return true;
+	if (start == goal)	return true;
 	_ResetNodeDistancesAndParents();
-	std::unordered_map<short, bool> closedSet; // node id -> true if this node is on the closedSet
 	Sorting::MinHeap<RoomNode*> openSet;
 	openSet.push(&start);
 
-	start.m_cost = _Heuristic(start, BOSS);
+	start.m_totalCost = _Heuristic(start, goal);
+	start.m_gCost = 0;
 
 	while (!openSet.empty()) {
 		RoomNode* current = openSet.top(); // parent node for all neighbors
 		openSet.pop();
 
-		if (*current == BOSS) 
-			return true;	// Found the BOSS
+		if (*current == goal) 
+			return true;	// Found the goal
 
 		//Cycle through neighbors
 		for (int i = 0; i < 4; ++i) {
@@ -85,24 +80,33 @@ bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& BOSS)
 			if (!neighbor) 
 				continue;	// current node doesn't have a neighbor here, continue on
 			
-			float cost = _Distance(*neighbor, start) + _Heuristic(*neighbor, BOSS);
-			// neighbor not on open or closed sets, push to open set
-			if (!closedSet[neighbor->m_id] && openSet.contains(neighbor))
-				openSet.push(neighbor);
-			// If neighbor is on neither set and the new cost is cheaper than the current node's cost
-			else if (cost < current->m_cost && cost < neighbor->m_cost) {
-				neighbor->m_cost = cost;
+			float gCost = current->m_gCost + 1.f;
+			if (neighbor->m_set == Set::NO_SET) {
+				neighbor->m_gCost = gCost;
+				neighbor->m_totalCost = gCost + _Heuristic(*neighbor, goal);
 				neighbor->m_parent = current;
-				// Remove node from closedSet
-				closedSet[current->m_id] = false;
-				
-				// If the openSet contains the neighbor, simply update it, else push it to
-				if (!openSet.update(neighbor))
-					openSet.push(neighbor);
+
+				neighbor->m_set = Set::OPEN_SET;
+				openSet.push(neighbor);
 			}
+			else if (gCost < current->m_gCost) {
+				neighbor->m_gCost = gCost;
+				neighbor->m_totalCost = gCost + _Heuristic(*neighbor, goal);
+				neighbor->m_parent = current;
+
+
+				if (neighbor->m_set == Set::CLOSED_SET) {
+					neighbor->m_set = Set::OPEN_SET;
+					openSet.push(neighbor);
+				}
+				else {
+					openSet.update(neighbor);
+				}
+			}
+
 		}
 
-		closedSet[current->m_id] = true;
+		current->m_set = Set::CLOSED_SET;
 	}
 	// Didn't find path
 	return false;
@@ -122,7 +126,8 @@ void FloorPlanGenerator::_ResetNodeDistancesAndParents()
 {
 	for (short row = 0; row < m_rows; ++row) {
 		for (short col = 0; col < m_cols; ++col) {
-			m_roomNodes[row][col].m_cost = MAX_DISTANCE;
+			m_roomNodes[row][col].m_gCost = MAX_DISTANCE;
+			m_roomNodes[row][col].m_totalCost = MAX_DISTANCE;
 			m_roomNodes[row][col].m_parent = nullptr;
 		}
 	}
@@ -179,7 +184,7 @@ void FloorPlanGenerator::_ConnectNeighbors()
 	}
 }
 
-std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(bool bossLevel)
+std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& config)
 {
 	std::vector<RoomNode*> selectedNodes;
 	std::vector<RoomType> types;
@@ -194,9 +199,15 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(bool bossLevel)
 	m_spawnNode = &m_roomNodes[0][row];
 	selectedNodes.push_back(&m_roomNodes[0][row]);
 
-	if (bossLevel) {
+	if (config.bossAndShop == BossAndShop::BOSS_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
 		row = short(rand() % m_cols);
 		m_roomNodes[m_maxColIdx][row].m_type = RoomType::BOSS;
+		selectedNodes.push_back(&m_roomNodes[m_maxColIdx][row]);
+	}
+
+	if (config.bossAndShop == BossAndShop::SHOP_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
+		row = short(rand() % m_cols);
+		m_roomNodes[m_maxColIdx][row].m_type = RoomType::SHOP;
 		selectedNodes.push_back(&m_roomNodes[m_maxColIdx][row]);
 	}
 
@@ -274,22 +285,69 @@ void FloorPlanGenerator::_UnsetNodeNeigbors(RoomNode& node)
 	node.m_Neighbors[3] = nullptr;
 }
 
-json * FloorPlanGenerator::_GetRoomJsonForDifficulty(RoomConnections connection)
+/*
+Cycles through the given map of room files starting at m_difficulty and returns the highest difficulty list
+If none are found, returns unsigned short max
+*/
+unsigned short FloorPlanGenerator::_FindRoomListForDifficulty(DifficultyMap& difficultyMap, RoomType type)
 {
 	unsigned short difficulty = m_difficulty;
-	while (m_roomFiles[connection][difficulty].size() == 0) {
+	while (difficultyMap[difficulty].GetRooms(type).size() == 0) {
 		if (--difficulty < 1)
-			return nullptr;
+			return -1;
 	}
-	int idx = RandomInt(0, m_roomFiles[connection][difficulty].size());
-	return m_roomFiles[connection][difficulty][idx];
+	return difficulty;
 }
 
+/*
+Iterates through the available room files until it finds a room file of the known difficulty or lower without going to difficulty 0
+If none are found, returns a nullptr
+*/
+json * FloorPlanGenerator::_GetRoomJsonForDifficulty(RoomConnections connection)
+{
+	unsigned short difficulty = _FindRoomListForDifficulty(m_roomFiles[connection], RoomType::ALIVE);
+	if (difficulty > m_difficulty)	return nullptr;
+
+	int idx = RandomInt(0, m_roomFiles[connection][difficulty].normalRooms.size());
+	return m_roomFiles[connection][difficulty].normalRooms[idx];
+}
+
+/*
+Finds a spawn room for the given connection 
+(spawn rooms are always difficulty 0)
+*/
 json * FloorPlanGenerator::_GetRoomJsonForSpawn(RoomConnections connection)
 {
-	int idx = RandomInt(0, m_roomFiles[connection][0].size());
-	return m_roomFiles[connection][0][idx];
+	int idx = RandomInt(0, m_roomFiles[connection][0].normalRooms.size());
+	return m_roomFiles[connection][0].normalRooms[idx];
 }
+
+/*
+Finds a boss room for the given connection
+Will attempt to find a room of the highest difficulty available
+*/
+json * FloorPlanGenerator::_GetRoomJsonForBoss(RoomConnections connection)
+{
+	unsigned short difficulty = _FindRoomListForDifficulty(m_roomFiles[connection], RoomType::BOSS);
+	if (difficulty > m_difficulty)	return nullptr;
+
+	int idx = RandomInt(0, m_roomFiles[connection][difficulty].bossRooms.size());
+	return m_roomFiles[connection][difficulty].bossRooms[idx];
+}
+
+/*
+Finds a shop room for the given connection
+Will attempt to find a room of the highest difficulty available
+*/
+json * FloorPlanGenerator::_GetRoomJsonForShop(RoomConnections connection)
+{
+	unsigned short difficulty = _FindRoomListForDifficulty(m_roomFiles[connection], RoomType::SHOP);
+	if (difficulty > m_difficulty)	return nullptr;
+
+	int idx = RandomInt(0, m_roomFiles[connection][difficulty].shopRooms.size());
+	return m_roomFiles[connection][difficulty].shopRooms[idx];
+}
+
 #pragma endregion
 
 #pragma region FloorPlanGenerator Methods
@@ -326,7 +384,12 @@ void FloorPlanGenerator::GenerateRoomNodes(unsigned short cols, unsigned short r
 	}
 }
 
-void FloorPlanGenerator::GenerateFloorPlan(int seed, bool bossLevel)
+void FloorPlanGenerator::GenerateRoomNodes(const LevelConfig & config)
+{
+	GenerateRoomNodes(config.cols, config.rows, config.difficulty);
+}
+
+void FloorPlanGenerator::GenerateFloorPlan(const LevelConfig & config, int seed)
 {
 	ResetAllNodes();
 	_ConnectNeighbors();
@@ -334,7 +397,7 @@ void FloorPlanGenerator::GenerateFloorPlan(int seed, bool bossLevel)
 	std::cout << "Seed: " << m_seed << std::endl;
 	srand(m_seed);
 
-	_ConnectSelectedNodes(_SelectNodes(bossLevel));
+	_ConnectSelectedNodes(_SelectNodes(config));
 	_SetRoomConnectionTypes();
 }
 
@@ -352,7 +415,7 @@ void FloorPlanGenerator::PrintFloorPlan()
 		for (short col = 0; col < m_cols; ++col) {
 			std::cout << m_roomNodes[row][col].m_type;
 		}
-		std::cout << std::endl;
+		std::cout << std::endl << std::endl;
 	}
 }
 
@@ -385,10 +448,23 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 			m_roomNodes[row][col].m_position = offset;
 
 			json* j;
-			if (m_roomNodes[row][col] == (*m_spawnNode))
-				j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
-			else
-				j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+			switch (m_roomNodes[row][col].m_type) {
+				case RoomType::SPAWN: {
+					j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
+					break;
+				}
+				case RoomType::BOSS: {
+					j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
+					break;
+				}
+				case RoomType::SHOP: {
+					j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
+					break;
+				}
+				default: {
+					j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+				}
+			}
 
 			if (!j) {
 				std::cout << "ABORTING! NO LEVEL FILE FOUND FOR ROOM TYPE: " << m_roomNodes[row][col].m_ConnectionType << std::endl;
@@ -449,9 +525,27 @@ void FloorPlanGenerator::LoadRoomFiles()
 
 			std::string name = (*j)[ROOM_CONNECTION_TYPE];
 			int difficulty = ValueExists((*j), ROOM_DIFFICULTY) ? (*j)[ROOM_DIFFICULTY] : 1;
-			m_roomFiles[GetRoomConnectionType(name)][difficulty].push_back(j);
+
+			BossAndShop bossAndShop = static_cast<BossAndShop>(((*j)[ROOM_BOSS_LEVEL] ? 1 : 0) + ((*j)[ROOM_SHOP_LEVEL] ? 2 : 0));
+
+			switch (bossAndShop) {
+				case BossAndShop::BOSS_ONLY: {
+					m_roomFiles[GetRoomConnectionType(name)][difficulty].bossRooms.push_back(j);
+				}
+				case BossAndShop::SHOP_ONLY: {
+					m_roomFiles[GetRoomConnectionType(name)][difficulty].shopRooms.push_back(j);
+				}
+				case BossAndShop::BOSS_SHOP: {
+					m_roomFiles[GetRoomConnectionType(name)][difficulty].bossRooms.push_back(j);
+					m_roomFiles[GetRoomConnectionType(name)][difficulty].shopRooms.push_back(j);
+				}
+				default:
+					m_roomFiles[GetRoomConnectionType(name)][difficulty].normalRooms.push_back(j);
+			}
 		}
 	}
+
+	// Shrink m_roomFiles vectors
 }
 
 unsigned int FloorPlanGenerator::FloorWidthPixels() const
@@ -474,19 +568,22 @@ std::ostream& operator<<(std::ostream& out, const RoomConnections& rc) {
 std::ostream& operator<<(std::ostream& out, const RoomType& rt) {
 	switch (rt) {
 	case RoomType::BOSS:
-		out << "G";
+		out << " G ";
 		break;
 	case RoomType::INTERESTING:
-		out << "I";
+		out << " I ";
 		break;
 	case RoomType::SPAWN:
-		out << "S";
+		out << " S ";
 		break;
 	case RoomType::DEAD:
-		out << "X";
+		out << " X ";
 		break;
 	case RoomType::ALIVE:
-		out << "A";
+		out << " A ";
+		break;
+	case RoomType::SHOP:
+		out << " P ";
 		break;
 	}
 	return out;
@@ -494,9 +591,11 @@ std::ostream& operator<<(std::ostream& out, const RoomType& rt) {
 
 bool RoomNode::operator()(const RoomNode & lhs, const RoomNode & rhs)
 {
-	return lhs.m_cost < rhs.m_cost;
+	return lhs.m_totalCost < rhs.m_totalCost;
 }
 
 
 #undef ROOM_CONNECTION_TYPE
 #undef ROOM_DIFFICULTY
+#undef ROOM_BOSS_LEVEL
+#undef ROOM_SHOP_LEVEL

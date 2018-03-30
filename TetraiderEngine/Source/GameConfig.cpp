@@ -60,6 +60,7 @@ void GameConfig::LoadConfig(std::string s) {
 	// Set debug parameters
 	TETRA_DEBUG.SetDebugMode(m_debugEnabled);
 
+
 	if (!TETRA_RENDERER.InitGlew())	exit(1);
 	TETRA_RENDERER.SetDebugShaderName(renderSettings["debugShader"]);
 	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
@@ -75,6 +76,8 @@ void GameConfig::LoadConfig(std::string s) {
 		TETRA_POST_PROCESSING.Enable();
 	else
 		TETRA_POST_PROCESSING.Disable();
+
+
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
 }

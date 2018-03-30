@@ -3,12 +3,6 @@
 #ifndef GAME_CONFIG_H
 #define GAME_CONFIG_H
 
-//#include <string>
-//#include <utility>
-//#include "JsonReader.h"
-//
-//using json = nlohmann::json;
-
 class GameConfig
 {
 private:

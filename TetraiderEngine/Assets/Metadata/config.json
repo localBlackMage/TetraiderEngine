@@ -54,6 +54,15 @@
 			{ "Name": "LVL_PrototypeAITest" },
 			{ "Name": "LVL_PowerUpScreen" },
 			{ "Name": "LVL_CutScene" }
+		],
+		"BossLevels": [2, 4],
+		"LevelsToExcludeShop": [1],
+		"NumberOfLevels": 4,
+		"LevelParameters": [
+			{"cols": 3, "rows": 4, "difficulty": 1, "boss": false, "shop": false},
+			{"cols": 3, "rows": 4, "difficulty": 2, "boss": true, "shop": true},
+			{"cols": 3, "rows": 4, "difficulty": 3, "boss": false, "shop": true},
+			{"cols": 3, "rows": 4, "difficulty": 4, "boss": true, "shop": true}
 		]
 	},
 	"INPUT_SETTINGS": [

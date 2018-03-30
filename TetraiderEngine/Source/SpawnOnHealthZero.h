@@ -11,7 +11,7 @@ struct RandomDrop {
 enum DropType {
 	PREFAB_ONLY = 0,
 	RANDOM_ONLY,
-	BOTH
+	BOTH_TYPES
 };
 
 class SpawnOnHealthZero : public Component {
@@ -51,7 +51,7 @@ public:
 
 	// Enables this component to spawn both predetermined prefabs within the prefab list as
 	// well as random prefabs from within the randomDrops list, if any
-	inline void EnableRandomAndPrefab() { m_dropType = DropType::BOTH; }
+	inline void EnableRandomAndPrefab() { m_dropType = DropType::BOTH_TYPES; }
 };
 
 #endif

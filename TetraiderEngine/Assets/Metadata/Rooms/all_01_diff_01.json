@@ -2,6 +2,7 @@
 	"ROOM_CONNECTION_TYPE": "ALL",
 	"DIFFICULTY": 1,
 	"BOSS_ROOM": false,
+	"SHOP_ROOM": false,
 	"GAME_OBJECTS": [
 		{
 			"prefab": "P_ColliderLeftRightShort",

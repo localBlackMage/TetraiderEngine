@@ -27,29 +27,56 @@ enum RoomConnections {
 std::ostream& operator<<(std::ostream& out, const RoomConnections& rc);
 
 enum class RoomType {
-	BOSS, INTERESTING, SPAWN, DEAD, ALIVE
+	BOSS, INTERESTING, SHOP, SPAWN, DEAD, ALIVE
 };
 
 std::ostream& operator<<(std::ostream& out, const RoomType& rt);
 
+enum Set {
+	OPEN_SET = 0,
+	CLOSED_SET,
+	NO_SET
+};
 struct RoomNode {
 	explicit RoomNode(RoomType type, short id, short row, short col) : 
-		m_type(type), m_id(id), m_row(row), m_col(col), m_cost(MAX_DISTANCE), m_parent(nullptr){}
+		m_type(type), m_id(id), m_row(row), m_col(col), 
+		m_gCost(MAX_DISTANCE), 
+		m_totalCost(MAX_DISTANCE),
+		m_parent(nullptr),
+		m_set(Set::NO_SET)
+	{}
 	short m_id, m_row, m_col;
 	RoomConnections m_ConnectionType;
 	RoomNode* m_Neighbors[4]; // 0 = left, 1 = up, 2 = right, 3 = down
 	RoomType m_type;
-	float m_cost;
+	float m_gCost;
+	float m_totalCost;
 	RoomNode* m_parent;
 	Vector3D m_position;
+	Set m_set;
 
 	bool operator==(const RoomNode& rhs) { return m_id == rhs.m_id; }
 	bool operator!=(const RoomNode& rhs) { return m_id != rhs.m_id; }
 	bool operator() (const RoomNode& lhs, const RoomNode& rhs);
 };
 
-typedef std::vector<json*> RoomFiles;
-typedef std::unordered_map<unsigned short, RoomFiles> DifficultyMap;
+struct RoomFiles {
+	std::vector<json*> normalRooms;
+	std::vector<json*> shopRooms;
+	std::vector<json*> bossRooms;
+
+	const std::vector<json*>& GetRooms(RoomType type) {
+		switch (type) {
+		case RoomType::BOSS:
+			return bossRooms;
+		case RoomType::SHOP:
+			return shopRooms;
+		default:
+			return normalRooms;
+		}
+	}
+};
+typedef std::unordered_map<short, RoomFiles> DifficultyMap;
 
 class FloorPlanGenerator {
 protected:
@@ -70,13 +97,17 @@ protected:
 	bool _IsGOAViableEnemy(GameObject* pGO);
 	void _ResetNodeDistancesAndParents();
 	void _ConnectNeighbors();
-	std::vector<RoomNode*> _SelectNodes(bool bossLevel);
+	std::vector<RoomNode*> _SelectNodes(const LevelConfig& config);
 	void _ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes);
 	/* First selectively unsets neighbors, then sets connection type */
 	void _SetRoomConnectionTypes();
 	void _UnsetNodeNeigbors(RoomNode& node);
+
+	unsigned short _FindRoomListForDifficulty(DifficultyMap& difficultyMap, RoomType type);
 	json* _GetRoomJsonForDifficulty(RoomConnections connection);
 	json* _GetRoomJsonForSpawn(RoomConnections connection);
+	json* _GetRoomJsonForBoss(RoomConnections connection);
+	json* _GetRoomJsonForShop(RoomConnections connection);
 public:
 	FloorPlanGenerator();
 	~FloorPlanGenerator();
@@ -84,7 +115,8 @@ public:
 	void operator=(const FloorPlanGenerator &) = delete;
 	
 	void GenerateRoomNodes(unsigned short cols, unsigned short rows, unsigned short difficulty = 1);
-	void GenerateFloorPlan(int seed = -1, bool bossLevel = false);
+	void GenerateRoomNodes(const LevelConfig& config);
+	void GenerateFloorPlan(const LevelConfig& config, int seed = -1);
 	void ResetAllNodes();
 	void PrintFloorPlan();
 	void GenerateLevelFromFloorPlan();
