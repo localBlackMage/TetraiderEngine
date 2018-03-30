@@ -114,9 +114,6 @@
 		{
 			"prefab": "P_LoseMenu"
 		},
-
-
-
 		{
 			"prefab": "P_EnemyBat",
 			"position": {

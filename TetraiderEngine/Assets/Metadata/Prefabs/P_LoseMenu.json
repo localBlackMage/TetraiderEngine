@@ -26,7 +26,7 @@
         },
         {
             "Component": "Canvas",
-            "canvasType":6,
+            "canvasType":5,
             "isActiveOnAwake": false,
             "UIElements": [
                 {

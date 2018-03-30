@@ -62,6 +62,10 @@ void UIManager::HandleEvent(Event * pEvent)
 	else if (pEvent->Type() == EVENT_OnGameResume) {
 		DeActivateAllCanvas();
 	}
+	else if (pEvent->Type() == EVENT_LevelInComplete)
+	{
+		m_Canvas[(int)CanvasType::CANVAS_LOSE]->ActivateCanvas();
+	}
 }
 
 void UIManager::AddGameObjectToCanvas(CanvasType type, GameObject* _pGO)
