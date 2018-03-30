@@ -1,6 +1,7 @@
 {
 	"ROOM_CONNECTION_TYPE": "",
 	"DIFFICULTY": 0,
+	"BOSS_ROOM": false,
 	"GAME_OBJECTS": [
 		{
 			"prefab": "P_Node1",

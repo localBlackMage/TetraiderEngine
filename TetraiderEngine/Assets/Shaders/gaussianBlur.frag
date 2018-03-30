@@ -25,6 +25,4 @@ void main(void) {
 	frag_color += texture(gausTexture, vblur_texture_coords[8]) * 0.065984;
 	frag_color += texture(gausTexture, vblur_texture_coords[9]) * 0.028002;
 	frag_color += texture(gausTexture, vblur_texture_coords[10]) * 0.0093;
-	
-	frag_color.a = 1;
 }

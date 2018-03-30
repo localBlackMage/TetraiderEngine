@@ -1,6 +1,3 @@
-//#include "GameStateManager.h"
-//#include "TetraiderAPI.h"
-
 #include <Stdafx.h>
 
 GameStateManager::GameStateManager() :

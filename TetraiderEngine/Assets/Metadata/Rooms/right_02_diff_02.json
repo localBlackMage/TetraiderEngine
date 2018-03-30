@@ -1,6 +1,7 @@
 {
 	"ROOM_CONNECTION_TYPE": "RIGHT",
 	"DIFFICULTY": 2,
+	"BOSS_ROOM": false,
 	"GAME_OBJECTS": [
 		{
 			"prefab": "P_RightBG",
