@@ -37,6 +37,7 @@ enum Set {
 	CLOSED_SET,
 	NO_SET
 };
+
 struct RoomNode {
 	explicit RoomNode(RoomType type, short id, short row, short col) : 
 		m_type(type), m_id(id), m_row(row), m_col(col), 
@@ -45,6 +46,7 @@ struct RoomNode {
 		m_parent(nullptr),
 		m_set(Set::NO_SET)
 	{}
+
 	short m_id, m_row, m_col;
 	RoomConnections m_ConnectionType;
 	RoomNode* m_Neighbors[4]; // 0 = left, 1 = up, 2 = right, 3 = down
@@ -80,6 +82,9 @@ typedef std::unordered_map<short, RoomFiles> DifficultyMap;
 
 class FloorPlanGenerator {
 protected:
+	int m_lastUsed;
+	RoomNode* m_openSet[25];
+
 	RoomNode** m_roomNodes;
 	RoomNode* m_spawnNode;
 	unsigned short m_cols, m_rows;	// How many rooms wide and tall a floor will be (ex. 5x5)
@@ -88,6 +93,10 @@ protected:
 	unsigned short m_difficulty;
 
 	std::unordered_map<RoomConnections, DifficultyMap > m_roomFiles;
+
+	void _PushToOpenset(RoomNode* node);
+	RoomNode* _GetCheapest();
+	void _ResetOpenset();
 
 	bool _A_Star(RoomNode& start, RoomNode& goal);
 

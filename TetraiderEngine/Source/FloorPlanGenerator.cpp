@@ -57,51 +57,67 @@ static float _Heuristic(RoomNode& a, RoomNode& b) {
 
 #pragma region Private Methods
 
+void FloorPlanGenerator::_PushToOpenset(RoomNode * node)
+{
+	node->m_set = Set::OPEN_SET;
+	m_openSet[m_lastUsed++] = node;
+}
+
+RoomNode * FloorPlanGenerator::_GetCheapest()
+{
+	int cheapest = 0;
+	for (int i = 1; i < m_lastUsed; ++i) {
+		if (m_openSet[i]->m_totalCost < m_openSet[cheapest]->m_totalCost)
+			cheapest = i;
+	}
+	RoomNode* retNode = m_openSet[cheapest];
+	m_openSet[cheapest] = m_openSet[m_lastUsed - 1];
+	m_openSet[m_lastUsed--] = nullptr;
+	return retNode;
+}
+
+void FloorPlanGenerator::_ResetOpenset()
+{
+	memset(m_openSet, 0, 25);
+	m_lastUsed = 0;
+}
+
 bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 {
 	if (start == goal)	return true;
 	_ResetNodeDistancesAndParents();
-	Sorting::MinHeap<RoomNode*> openSet;
-	openSet.push(&start);
 
 	start.m_totalCost = _Heuristic(start, goal);
 	start.m_gCost = 0;
+	_PushToOpenset(&start);
 
-	while (!openSet.empty()) {
-		RoomNode* current = openSet.top(); // parent node for all neighbors
-		openSet.pop();
+	while (m_lastUsed != 0) {
+		RoomNode* current = _GetCheapest(); // parent node for all neighbors
+		current->m_set = Set::NO_SET;
 
 		if (*current == goal) 
 			return true;	// Found the goal
 
 		//Cycle through neighbors
 		for (int i = 0; i < 4; ++i) {
-			RoomNode* neighbor = current->m_Neighbors[i];	// short cut
-			if (!neighbor) 
+			if (!current->m_Neighbors[i])
 				continue;	// current node doesn't have a neighbor here, continue on
-			
+			RoomNode* neighbor = current->m_Neighbors[i];	// short cut
 			float gCost = current->m_gCost + 1.f;
+			
+			// neighbor not on open or closed sets, push to open set
 			if (neighbor->m_set == Set::NO_SET) {
 				neighbor->m_gCost = gCost;
-				neighbor->m_totalCost = gCost + _Heuristic(*neighbor, goal);
+				neighbor->m_totalCost = neighbor->m_gCost + _Heuristic(*neighbor, goal);
 				neighbor->m_parent = current;
 
-				neighbor->m_set = Set::OPEN_SET;
-				openSet.push(neighbor);
+				_PushToOpenset(neighbor);
 			}
-			else if (gCost < current->m_gCost) {
+			else if (neighbor->m_set == Set::OPEN_SET && gCost < neighbor->m_gCost) {
+				float heuristic = neighbor->m_totalCost - neighbor->m_gCost;
 				neighbor->m_gCost = gCost;
-				neighbor->m_totalCost = gCost + _Heuristic(*neighbor, goal);
+				neighbor->m_totalCost = neighbor->m_gCost + heuristic;
 				neighbor->m_parent = current;
-
-
-				if (neighbor->m_set == Set::CLOSED_SET) {
-					neighbor->m_set = Set::OPEN_SET;
-					openSet.push(neighbor);
-				}
-				else {
-					openSet.update(neighbor);
-				}
 			}
 
 		}
@@ -189,7 +205,7 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 	std::vector<RoomNode*> selectedNodes;
 	std::vector<RoomType> types;
 	
-	short numTypes = rand() % 3 + 3;
+	short numTypes = rand() % 3 + 1;
 	types.reserve(numTypes);
 	for (short idx = 0; idx < numTypes; ++idx) types.push_back(RoomType::INTERESTING);
 
@@ -197,7 +213,6 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 	short row = short(rand() % m_cols);
 	m_roomNodes[0][row].m_type = RoomType::SPAWN;
 	m_spawnNode = &m_roomNodes[0][row];
-	selectedNodes.push_back(&m_roomNodes[0][row]);
 
 	if (config.bossAndShop == BossAndShop::BOSS_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
 		row = short(rand() % m_cols);
@@ -228,19 +243,16 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 void FloorPlanGenerator::_ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes)
 {
 	if (selectedNodes.size() < 2)	return;
-
-	RoomNode * startNode = selectedNodes.back();
-	selectedNodes.pop_back();
-
+	
 	RoomNode * node, * curPathNode;
 
 	while (!selectedNodes.empty()) {
 		node = selectedNodes.back();
 		selectedNodes.pop_back();
 
-		if (_A_Star(*startNode, *node)) {
+		if (_A_Star(*m_spawnNode, *node)) {
 			curPathNode = node;
-			while (*curPathNode != *startNode) {
+			while (*curPathNode != *m_spawnNode) {
 				if (curPathNode->m_type == RoomType::DEAD)
 					curPathNode->m_type = RoomType::ALIVE;
 				curPathNode = curPathNode->m_parent;
