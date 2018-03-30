@@ -29,17 +29,25 @@
 		"AgentData": {
 			"speed": 130,
 			"acceleration": 8,
-			"knockBackMultiplier": 1
+			"knockBackMultiplier": 1,
+			"isIgnoreHazards" : true
 		},
 		"detectionRadius": 500,
 		"outOfSightRadius": 650,
 		"zoneWidth": 350,
 		"zoneHeight": 350,
 		"attackRange": 250,
+		"healthBarPrefab": "P_EnemyHealthBar",		
+		"healthBarOffset": {
+			"x": -30,
+			"y": 50,
+			"z": 0
+		},
+		"healthScale": 60,
 		"reactionPrefab": "P_EnemyExclamation",
 		"AIStates": [
 			{
-				"name": "idleBehavior",
+				"name": "NPC_IDLE",
 				"behaviorIndex": 0,
 				"AIStateType": "NPC_State_Idle"
 			},
@@ -47,19 +55,19 @@
         		"behaviorIndex": 1,
         		"AIStateType": "NPC_State_Reaction"
       		},
-			{	"name": "engageBehavior",
+			{	"name": "NPC_ENGAGE",
 				"behaviorIndex": 2,
 				"AIStateType": "NPC_State_Engage"
 			},
-			{	"name": "attackBehavior",
+			{	"name": "NPC_ATTACK",
 				"behaviorIndex": 3,				
 				"AIStateType": "NPC_State_BomberAttack"
 			},
-			{	"name": "retreatBehavior",
+			{	"name": "NPC_RETREAT",
 				"behaviorIndex": 4,
 				"AIStateType": "NPC_State_BomberRetreat"
 			},
-			{	"name": "moveToRandomPointInZoneBehavior",
+			{	"name": "NPC_MOVETORANDOMPOINTINZONE",
 				"behaviorIndex": 5,
 				"AIStateType": "NPC_State_MoveToRandomPointInZone"
 			}
@@ -115,9 +123,9 @@
         "a": 0
 		}
 	},
-	{
+		{
 		"Component": "Animation",
-		"defaultAnimation": 0,
+		"defaultAnimation": 1,
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Walk",
@@ -166,6 +174,16 @@
 			"y": 0,
 			"z": 0
 		}
+	},
+	{
+		"Component": "DestroyOnHealthZero",
+		"destroyIn": 0,
+    	"m_isSpawnAcidPool": false,
+		"isExplode": true,
+		"explosionRadius": 100,
+		"explosionKnockBack": 2000,
+		"explosionDamage": 40,
+		"explosionPrefab": "P_ExplosionSmall"
 	},
 	{
 		"Component": "SpawnOnHealthZero",

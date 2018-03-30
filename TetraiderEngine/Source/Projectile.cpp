@@ -33,6 +33,9 @@ void Projectile::Update(float dt) {
 
 	m_currentLifeTime += dt;
 	if (m_currentLifeTime > m_lifeTime && !m_isExplodeOnVelocityZero) {
+		if (m_isSpawnAcidPool) {
+			TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, m_pTransform->GetPosition());
+		}
 		pGO->Destroy();
 	}
 }

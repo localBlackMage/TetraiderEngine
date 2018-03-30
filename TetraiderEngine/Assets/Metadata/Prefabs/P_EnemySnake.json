@@ -156,7 +156,7 @@
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
     	"isSpawnAcidPool": true,
-    	"acidPrefab": "P_AcidPool",
+    	"acidPrefab": "P_AcidPoolPermanent",
 		"isExplode": false
 	},
 	{
@@ -172,7 +172,7 @@
 				"multipleShots": 2,
 				"coneAngle": 20,
 				"instantiationOffset": 70,
-				"lifeTime": 1.5,
+				"lifeTime": 0.5,
 				"projectilePrefab": "P_ProjectileAcid",
 				"knockBackSpeed": 0
 			}

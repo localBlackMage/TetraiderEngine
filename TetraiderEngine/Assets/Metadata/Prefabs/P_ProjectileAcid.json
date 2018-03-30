@@ -59,16 +59,10 @@
 		}
 	},
 	{
-		"Component": "Health",
-		"startingHealth": 1,
-		"maxHealth": 10,
-		"isInvincible": true
-	},
-	{
 		"Component": "Projectile",
-		"isAccelerateToZero": true,
+		"isAccelerateToZero": false,
 		"isRotate": false,
-		"isExplodeOnVelocityZero": true,
+		"isExplodeOnVelocityZero": false,
 		"isIgnoreCollideEvent": false,
 		"deacclerationSpeed": 2,
     "isSpawnAcidPool": true,
