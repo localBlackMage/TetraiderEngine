@@ -29,8 +29,6 @@ private:
 	bool m_wasRandomlyGenerated;
 	int m_levelsCompleted;
 	short m_maxLevel;							// Maximum level in a randomly-generated playthrough
-	std::vector<short> m_bossLevels;			// Which levels should contain a boss room
-	std::vector<short> m_noShopLevels;			// Which levels should NOT contain a shop
 	std::vector< LevelConfig > m_levelConfigs;	// Contains configuration info. for each level
 
 	void _LoadLevel(const json& j);

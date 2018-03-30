@@ -85,6 +85,7 @@ void FloorPlanGenerator::_ResetOpenset()
 bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 {
 	if (start == goal)	return true;
+	_ResetOpenset();
 	_ResetNodeDistancesAndParents();
 
 	start.m_totalCost = _Heuristic(start, goal);
@@ -113,7 +114,7 @@ bool FloorPlanGenerator::_A_Star(RoomNode& start, RoomNode& goal)
 
 				_PushToOpenset(neighbor);
 			}
-			else if (neighbor->m_set == Set::OPEN_SET && gCost < neighbor->m_gCost) {
+			else if (neighbor->m_set != Set::NO_SET && gCost < neighbor->m_gCost) {
 				float heuristic = neighbor->m_totalCost - neighbor->m_gCost;
 				neighbor->m_gCost = gCost;
 				neighbor->m_totalCost = neighbor->m_gCost + heuristic;
@@ -145,6 +146,7 @@ void FloorPlanGenerator::_ResetNodeDistancesAndParents()
 			m_roomNodes[row][col].m_gCost = MAX_DISTANCE;
 			m_roomNodes[row][col].m_totalCost = MAX_DISTANCE;
 			m_roomNodes[row][col].m_parent = nullptr;
+			m_roomNodes[row][col].m_set = Set::NO_SET;
 		}
 	}
 }
@@ -210,20 +212,21 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 	for (short idx = 0; idx < numTypes; ++idx) types.push_back(RoomType::INTERESTING);
 
 	// Select Spawn node on left
-	short row = short(rand() % m_cols);
-	m_roomNodes[0][row].m_type = RoomType::SPAWN;
-	m_spawnNode = &m_roomNodes[0][row];
+	short row = short(rand() % m_rows);
+	m_roomNodes[row][0].m_type = RoomType::SPAWN;
+	m_spawnNode = &m_roomNodes[row][0];
 
 	if (config.bossAndShop == BossAndShop::BOSS_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
-		row = short(rand() % m_cols);
-		m_roomNodes[m_maxColIdx][row].m_type = RoomType::BOSS;
-		selectedNodes.push_back(&m_roomNodes[m_maxColIdx][row]);
+		row = short(rand() % m_rows);
+		m_roomNodes[row][m_maxColIdx].m_type = RoomType::BOSS;
+		selectedNodes.push_back(&m_roomNodes[row][m_maxColIdx]);
 	}
 
 	if (config.bossAndShop == BossAndShop::SHOP_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
-		row = short(rand() % m_cols);
-		m_roomNodes[m_maxColIdx][row].m_type = RoomType::SHOP;
-		selectedNodes.push_back(&m_roomNodes[m_maxColIdx][row]);
+		short col = short(rand() % m_cols);
+		row = short(rand() % m_rows);
+		m_roomNodes[row][col].m_type = RoomType::SHOP;
+		selectedNodes.push_back(&m_roomNodes[row][col]);
 	}
 
 	std::vector< std::pair<short, short> > chosenCoords;
@@ -466,11 +469,13 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 					break;
 				}
 				case RoomType::BOSS: {
-					j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
+					j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+					//j = _GetRoomJsonForBoss(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
 				case RoomType::SHOP: {
-					j = _GetRoomJsonForSpawn(m_roomNodes[row][col].m_ConnectionType);
+					j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+					//j = _GetRoomJsonForShop(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
 				default: {

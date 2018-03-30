@@ -27,8 +27,6 @@ void LevelManager::LoadStaticGameObjects()
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_StaticsLoaded));
 }
 
-#define LEVELS_NO_SHOP "LevelsToExcludeShop"
-#define BOSS_LEVELS "BossLevels"
 #define LEVEL_PARAMS "LevelParameters"
 void LevelManager::Initialize(const json& j) {
 	levelConfig = j;
@@ -42,18 +40,6 @@ void LevelManager::Initialize(const json& j) {
 	// TODO: Find a better spot for this? - Holden
 	staticObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + staticsFileName + ".json");
 
-	m_noShopLevels.reserve(j[LEVELS_NO_SHOP].size());
-	for (unsigned int i = 0; i < j[LEVELS_NO_SHOP].size(); ++i) {
-		m_noShopLevels.push_back(j[LEVELS_NO_SHOP][i]);
-	}
-
-	m_bossLevels.reserve(j[BOSS_LEVELS].size());
-	for (unsigned int i = 0; i < j[BOSS_LEVELS].size(); ++i) {
-		m_bossLevels.push_back(j[BOSS_LEVELS][i]);
-	}
-
-	m_maxLevel = j["NumberOfLevels"];
-
 	m_levelConfigs.reserve(j[LEVEL_PARAMS].size());
 	for (unsigned int i = 0; i < j[LEVEL_PARAMS].size(); ++i) {
 		LevelConfig config;
@@ -64,9 +50,8 @@ void LevelManager::Initialize(const json& j) {
 
 		m_levelConfigs.push_back(config);
 	}
+	m_maxLevel = m_levelConfigs.size();
 }
-#undef LEVELS_NO_SHOP
-#undef BOSS_LEVELS
 #undef LEVEL_PARAMS
 
 std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
@@ -87,7 +72,7 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 void LevelManager::LoadLevel() {
 	if (m_isRandomlyGenerated) {
 		TETRA_LEVEL_GEN.GenerateRoomNodes(m_levelConfigs[m_levelsCompleted]);
-		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted]);
+		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted], 1522395539);
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
