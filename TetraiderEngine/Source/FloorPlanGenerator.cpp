@@ -244,9 +244,7 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 }
 
 void FloorPlanGenerator::_ConnectSelectedNodes(std::vector<RoomNode*>& selectedNodes)
-{
-	if (selectedNodes.size() < 2)	return;
-	
+{	
 	RoomNode * node, * curPathNode;
 
 	while (!selectedNodes.empty()) {

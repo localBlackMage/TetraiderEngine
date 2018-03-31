@@ -58,6 +58,7 @@ Text::Text(std::string fontName) :
 	m_letterSpacing(1.f),
 	m_fontName(fontName),
 	m_texture(0),
+	m_alignment(TextAlignment::TEXT_LEFT),
 	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
 	m_shader("")
 {}
@@ -93,6 +94,13 @@ void Text::Serialize(const json & j)
 	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
 
 	SetFont(JsonReader::ValueExists(j, "font") ? j["font"] : m_fontName);
+
+	if (ValueExists(j, "alignment")) {
+		std::string align = j["alignment"];
+		if (align == "left")		m_alignment = TextAlignment::TEXT_LEFT;
+		else if (align == "right")	m_alignment = TextAlignment::TEXT_RIGHT;
+		else						m_alignment = TextAlignment::TEXT_MIDDLE;
+	}
 
 	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
 }

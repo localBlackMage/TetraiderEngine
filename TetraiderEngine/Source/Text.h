@@ -9,6 +9,12 @@ typedef std::vector<Vector3D *> Colors;
 typedef std::pair< Paragraph, std::vector<Vector3D *> > ParagraphAndColors;
 typedef std::vector< std::vector<TexCoords> > TexCoordsGrid;
 
+enum TextAlignment : short {
+	TEXT_LEFT = 0,
+	TEXT_MIDDLE,
+	TEXT_RIGHT
+};
+
 class Text : public Component 
 {
 protected:
@@ -32,6 +38,8 @@ protected:
 
 	float m_rows, m_cols;
 	float m_frameHeight, m_frameWidth;
+
+	TextAlignment m_alignment;
 
 	Letter _GetTextureOffsetForLetter(const char letter);
 	void _SetLettersFromString();
@@ -76,6 +84,8 @@ public:
 
 	TexCoordsGrid GetTextureOffsets() const;
 	ParagraphAndColors GetLetterData() const;
+
+	inline TextAlignment GetAlignment() const { return m_alignment; }
 };
 
 #endif

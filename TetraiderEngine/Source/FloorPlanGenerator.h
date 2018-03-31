@@ -6,6 +6,8 @@
 const float MAX_DISTANCE = 10000000.f;
 
 enum RoomConnections {
+	NONE = 0,
+
 	LEFT = 1,
 	UP = 2,
 	RIGHT = 4,

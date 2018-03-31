@@ -123,34 +123,67 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 	std::vector< std::vector<TexCoords> > textureOffsets = pTextComp->GetTextureOffsets();
 	ParagraphAndColors letterData = pTextComp->GetLetterData();
 
-	int x = 0, y = 0;
+	float letterNumber = 0.f, lineNumber = 0.f;
 	Matrix4x4 M, N;
 	int triCount = 3 * pTextComp->GetMesh().faceCount();
 	const GLuint faceBuffer = pTextComp->GetMesh().GetFaceBuffer();
-	const float xScale = pTextComp->GetLetterWidth();
-	const float yScale = pTextComp->GetLetterHeight();
+	const float letterWidth = pTextComp->GetLetterWidth();
+	const float letterHeight = pTextComp->GetLetterHeight();
 	const float letterSpacing = pTextComp->GetLetterSpacing();
 
 	Vector3D offset = pTextComp->GetOffset();
 
-	for (Sentence letterRow : letterData.first) {
-		for (Letter letter : letterRow) {
-			M = pTransformComp->TransformWithOffsetAndScale(Vector3D(xScale * x * letterSpacing, yScale * y, 0) + offset, xScale, yScale);
-			N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
-			glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-			glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
+	TextAlignment alignmentOption = pTextComp->GetAlignment();
 
-			TexCoords texOff = textureOffsets[letter.first][letter.second];
-			glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, texOff.v, texOff.u);
+	switch (alignmentOption) {
+		case TextAlignment::TEXT_MIDDLE: {
+			for (Sentence letterRow : letterData.first) {
+				float halfLineWidth = (float(letterRow.size() - 1) * (letterWidth * letterSpacing) + letterWidth) / 2.f;
 
-			// draw the mesh
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
-			glDrawElements(GL_TRIANGLES, triCount, GL_UNSIGNED_INT, 0);
+				for (Letter letter : letterRow) {
+					M = pTransformComp->TransformWithOffsetAndScale(Vector3D((letterWidth * letterNumber * letterSpacing) - halfLineWidth, letterHeight * lineNumber, 0) + offset, letterWidth, letterHeight);
+					N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+					glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+					glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
 
-			++x;
+					TexCoords texOff = textureOffsets[letter.first][letter.second];
+					glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, texOff.v, texOff.u);
+
+					// draw the mesh
+					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
+					glDrawElements(GL_TRIANGLES, triCount, GL_UNSIGNED_INT, 0);
+
+					++letterNumber;
+				}
+				--lineNumber;
+				letterNumber = 0;
+			}
+			break;
 		}
-		--y;
-		x = 0;
+
+		case TextAlignment::TEXT_LEFT:
+		case TextAlignment::TEXT_RIGHT: {
+			for (Sentence letterRow : letterData.first) {
+				for (Letter letter : letterRow) {
+					M = pTransformComp->TransformWithOffsetAndScale(Vector3D(letterWidth * letterNumber * letterSpacing, letterHeight * lineNumber, 0) + offset, letterWidth, letterHeight);
+					N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+					glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+					glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
+
+					TexCoords texOff = textureOffsets[letter.first][letter.second];
+					glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, texOff.v, texOff.u);
+
+					// draw the mesh
+					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceBuffer);
+					glDrawElements(GL_TRIANGLES, triCount, GL_UNSIGNED_INT, 0);
+
+					++letterNumber;
+				}
+				--lineNumber;
+				letterNumber = 0;
+			}
+			break;
+		}
 	}
 }
 
