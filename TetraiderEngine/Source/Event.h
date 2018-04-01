@@ -3,9 +3,6 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-//#include <string>
-//#include "Math\MathLibs.h"
-
 // Macro trick to make Event names enums from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,
 typedef enum
@@ -27,6 +24,13 @@ class GameObject;
 
 // Abstract struct, data objects should inherit from this
 struct EventData {};
+
+struct WindowResizedData : public EventData {
+	WindowResizedData(int _width, int _height) :
+		width(_width), height(_height) {}
+
+	int width, height;
+};
 
 struct OnCollideData : public EventData {
 	OnCollideData(GameObject* _pGO, MTV _mtv) :

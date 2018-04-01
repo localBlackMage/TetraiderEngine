@@ -40,10 +40,14 @@ void GameConfig::LoadConfig(std::string s) {
 	m_roomWidth = j[ROOM_SETTINGS]["roomWidth"];
 	m_roomHeight = j[ROOM_SETTINGS]["roomHeight"];
 
-	m_screenWidth = j[WINDOW_SETTINGS]["width"];
-	m_screenHeight = j[WINDOW_SETTINGS]["height"];
+	for (unsigned int i = 0; i < j[WINDOW_SETTINGS]["resolutions"].size(); ++i) {
+		m_resolutions[i].width = j[WINDOW_SETTINGS]["resolutions"][i]["width"];
+		m_resolutions[i].height = j[WINDOW_SETTINGS]["resolutions"][i]["height"];
+	}
+	m_currentResolution = j[WINDOW_SETTINGS]["defaultResolution"];
+
 	TETRA_RENDERER.InitWindow(m_debugEnabled);
-	TETRA_RENDERER.SetWindowDimensions(m_screenWidth, m_screenHeight);
+	TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
 
 	if (ParseBool(renderSettings, "enableWindowsCursor"))
@@ -80,6 +84,27 @@ void GameConfig::LoadConfig(std::string s) {
 
 
 	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
+}
+
+void GameConfig::SelectResolution(unsigned short resolutionIndex)
+{
+	if (resolutionIndex > 3)	return;
+	m_currentResolution = resolutionIndex;
+	TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
+
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
+}
+
+void GameConfig::NextResolution()
+{
+	if (++m_currentResolution > 3)	m_currentResolution = 0;
+	SelectResolution(m_currentResolution);
+}
+
+void GameConfig::PrevResolution()
+{
+	if (--m_currentResolution > 3)	m_currentResolution = 3;
+	SelectResolution(m_currentResolution);
 }
 
 

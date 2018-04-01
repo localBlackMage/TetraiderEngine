@@ -9,11 +9,12 @@ private:
 
 	float m_fov, m_aspectRatio;
 	unsigned int m_screenWidth, m_screenHeight;
-	float m_zoom;
-	Matrix4x4 m_viewMatrix, m_cameraMatrix;
-	bool m_primary;
-	bool m_isPersp;
-	bool m_layersToRender[RENDER_LAYER::L_NUM_LAYERS];
+	unsigned short m_currentZoomIndex;						// 
+	Matrix4x4 m_viewMatrix, m_cameraMatrix;				// View matrix and perspective/orthographic matrix
+	bool m_primary;										// True if this camera is the game's primary camera
+	bool m_isPersp;										// True if this camera is Perspective, false if Orthographic
+	bool m_layersToRender[RENDER_LAYER::L_NUM_LAYERS];	// True if this camera should render the respective layer, false if it should not
+	float m_zoomLevels[4];								// Holds the zoom amount for each resolution loaded into GameConfig
 
 	Matrix4x4 _MatrixFromCameraVectors(const Vector3D& right, const Vector3D& up, const Vector3D& forward);
 	void _CalcViewMatrix();
@@ -26,6 +27,7 @@ public:
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void Serialize(const json& j);
+	virtual void HandleEvent(Event* pEvent);
 
 	Vector3D TransformPointToScreenSpace(const Vector3D& worldCoordinates);
 
@@ -35,10 +37,9 @@ public:
 	float GetAspect() const;
 	Matrix4x4 GetViewMatrix() const { return m_viewMatrix; };
 	Matrix4x4 GetCameraMatrix() const { return m_cameraMatrix; };
-	void ZoomCamera(float newZoom) { m_zoom = newZoom; }
-	float ViewWidth() const { return m_screenWidth * m_zoom; }
-	float ViewHeight() const { return m_screenHeight * m_zoom; }
-	float GetZoom() { return m_zoom; }
+	float ViewWidth() const { return m_screenWidth * m_zoomLevels[m_currentZoomIndex]; }
+	float ViewHeight() const { return m_screenHeight * m_zoomLevels[m_currentZoomIndex]; }
+	float GetZoom() { return m_zoomLevels[m_currentZoomIndex]; }
 };
 
 #endif

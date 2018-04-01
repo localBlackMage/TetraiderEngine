@@ -521,18 +521,31 @@ void RenderManager::FrameEnd()
 void RenderManager::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
-		case EVENT_LIGHT_A_DOWN:
-			m_la -= 0.01f;
+		//case EVENT_LIGHT_A_DOWN:
+		//	m_la -= 0.01f;
+		//	break;
+		//case EVENT_LIGHT_A_UP:
+		//	m_la += 0.01f;
+		//	break;
+		//case EVENT_LIGHT_B_DOWN:
+		//	m_lb -= 0.01f;
+		//	break;
+		//case EVENT_LIGHT_B_UP:
+		//	m_lb += 0.01f;
+		//	break;
+
+		case EVENT_PREV_RESOLUTION:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased)	TETRA_GAME_CONFIG.PrevResolution();
 			break;
-		case EVENT_LIGHT_A_UP:
-			m_la += 0.01f;
+		}
+		case EVENT_NEXT_RESOLUTION:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased)	TETRA_GAME_CONFIG.NextResolution();
 			break;
-		case EVENT_LIGHT_B_DOWN:
-			m_lb -= 0.01f;
-			break;
-		case EVENT_LIGHT_B_UP:
-			m_lb += 0.01f;
-			break;
+		}
 
 		case EVENT_TOGGLE_LIGHTS:
 		{
@@ -587,13 +600,16 @@ void RenderManager::SetUpConsole()
 void RenderManager::InitWindow(bool debugEnabled)
 {
 	if (debugEnabled) {
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
+		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
+		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
+		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
+		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_POST_PROCESSING, this);
+
+		TETRA_EVENTS.Subscribe(EventType::EVENT_NEXT_RESOLUTION, this);
+		TETRA_EVENTS.Subscribe(EventType::EVENT_PREV_RESOLUTION, this);
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -613,7 +629,7 @@ void RenderManager::InitWindow(bool debugEnabled)
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		SDL_WINDOW_OPENGL);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 
 	// Initialize PNG loading
@@ -663,6 +679,7 @@ void RenderManager::SetWindowDimensions(int width, int height)
 	m_height = height;
 	glViewport(0, 0, width, height);
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
+	//SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
 }
 
 void RenderManager::SetWindowTitle(std::string title)

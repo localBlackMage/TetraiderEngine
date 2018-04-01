@@ -207,37 +207,48 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 	std::vector<RoomNode*> selectedNodes;
 	std::vector<RoomType> types;
 	
-	short numTypes = rand() % 3 + 1;
+	short numTypes = rand() % 3 + 2;
 	types.reserve(numTypes);
-	for (short idx = 0; idx < numTypes; ++idx) types.push_back(RoomType::INTERESTING);
+	for (short idx = 0; idx < numTypes; ++idx) 
+		types.push_back(RoomType::INTERESTING);
 
-	// Select Spawn node on left
-	short row = short(rand() % m_rows);
-	m_roomNodes[row][0].m_type = RoomType::SPAWN;
-	m_spawnNode = &m_roomNodes[row][0];
+	types.push_back(RoomType::SPAWN);
 
-	if (config.bossAndShop == BossAndShop::BOSS_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
-		row = short(rand() % m_rows);
-		m_roomNodes[row][m_maxColIdx].m_type = RoomType::BOSS;
-		selectedNodes.push_back(&m_roomNodes[row][m_maxColIdx]);
-	}
+	if (config.bossAndShop == BossAndShop::BOSS_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP)
+		types.push_back(RoomType::BOSS);
 
-	if (config.bossAndShop == BossAndShop::SHOP_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP) {
-		short col = short(rand() % m_cols);
-		row = short(rand() % m_rows);
-		m_roomNodes[row][col].m_type = RoomType::SHOP;
-		selectedNodes.push_back(&m_roomNodes[row][col]);
-	}
+	if (config.bossAndShop == BossAndShop::SHOP_ONLY || config.bossAndShop == BossAndShop::BOSS_SHOP)
+		types.push_back(RoomType::SHOP);
 
 	std::vector< std::pair<short, short> > chosenCoords;
 	while (!types.empty()) {
-		std::pair<short, short> coords = std::pair<short, short>(short(rand() % m_rows), short(rand() % m_cols));
-		for (unsigned int pairIdx = 0; pairIdx < chosenCoords.size(); ++pairIdx)
-			if (chosenCoords[pairIdx] == coords)	continue;
+		std::pair<short, short> coords;
+		
+		switch (types.back()) {
+			case RoomType::SPAWN: {	// Spawn nodes are always in the left most column
+				coords = std::pair<short, short>(short(rand() % m_rows), 0);
+				break;
+			}
+			case RoomType::BOSS: { // Boss nodes are always in the right most column
+				coords = std::pair<short, short>(short(rand() % m_rows), m_maxColIdx);
+				break;
+			}
+			default: {
+				coords = std::pair<short, short>(short(rand() % m_rows), short(rand() % m_cols));
+				break;
+			}
+		}
+		
 
-		m_roomNodes[coords.first][coords.second].m_type = types.back();
-		selectedNodes.push_back(&m_roomNodes[coords.first][coords.second]);
-		types.pop_back();
+		if (std::find(chosenCoords.begin(), chosenCoords.end(), coords) == chosenCoords.end()) {
+			m_roomNodes[coords.first][coords.second].m_type = types.back();
+			if (types.back() == RoomType::SPAWN)
+				m_spawnNode = &m_roomNodes[coords.first][coords.second];
+			else
+				selectedNodes.push_back(&m_roomNodes[coords.first][coords.second]);
+			types.pop_back();
+			chosenCoords.push_back(coords);
+		}
 	}
 	
 	return selectedNodes;

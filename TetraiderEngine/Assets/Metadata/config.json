@@ -20,7 +20,7 @@
 		"gaussianHorizontalShader": "gaussianBlurHorizontal",
 		"gaussianVerticalShader": "gaussianBlurVertical",
 		"consoleEnabled": true,
-		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
+		"globalAmbient": { "r":0.1, "g":0.1, "b":0.1, "a":1 },
 		"postProcessingEnabled": false
 	},
 	"SHADERS": [
@@ -34,8 +34,25 @@
 	],
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",
-		"width": 1280,
-		"height": 720
+		"resolutions": [
+			{
+				"width": 1024,
+				"height": 600
+			},
+			{
+				"width": 1280,
+				"height": 720
+			},
+			{
+				"width": 1600,
+				"height": 900
+			},
+			{
+				"width": 1920,
+				"height": 1080
+			}
+		],
+		"defaultResolution": 1
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
@@ -219,9 +236,29 @@
 			"KeyBoardKey": 64,
 			"XboxKey": 0
 		},
+		
+		{
+			"Name": "EVENT_PREV_RESOLUTION",
+			"EventType": 17,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 47,
+			"XboxKey": 0
+		},
+		{
+			"Name": "EVENT_NEXT_RESOLUTION",
+			"EventType": 18,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 48,
+			"XboxKey": 0
+		},
+		
 		{
 			"Name": "ExitLevel",
-			"EventType": 17,
+			"EventType": 19,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -230,7 +267,7 @@
 		},
 		{
 			"Name": "AddGoldenFeathers",
-			"EventType": 19,
+			"EventType": 21,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

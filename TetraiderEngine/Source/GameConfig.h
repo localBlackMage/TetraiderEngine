@@ -3,6 +3,10 @@
 #ifndef GAME_CONFIG_H
 #define GAME_CONFIG_H
 
+struct Resolution {
+	short width, height;
+};
+
 class GameConfig
 {
 private:
@@ -19,10 +23,12 @@ private:
 	unsigned short m_roomWidth, m_roomHeight;	// Room dimensions in cells (ex. 12x8)
 	unsigned short m_cellWidth, m_cellHeight;	// Cell dimensions in pixels (ex. 96x96)
 
-	int m_screenWidth, m_screenHeight;
 	bool m_consoleEnabled;
 	bool m_debugEnabled;
 	bool m_postProcessingEnabled;
+
+	Resolution m_resolutions[4];				// Array of supported resolutions, accepts a maximum of 4
+	unsigned short m_currentResolution;			// Index into m_resolutions for currently used resolution
 public:
 	GameConfig();
 	~GameConfig();
@@ -48,6 +54,11 @@ public:
 	inline unsigned short RoomHeightPixels() const { return m_cellHeight * m_roomHeight; }
 
 	inline bool IsConsoleEnabled() const { return m_consoleEnabled; }
+	inline const Resolution& GetResolution() const { return m_resolutions[m_currentResolution]; }
+	void SelectResolution(unsigned short resolutionIndex);
+	void NextResolution();
+	void PrevResolution();
+	inline unsigned short GetCurrentResolutionIndex() const { return m_currentResolution; }
 };
 
 #endif
