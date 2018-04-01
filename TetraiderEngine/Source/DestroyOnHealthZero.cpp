@@ -41,7 +41,12 @@ void DestroyOnHealthZero::Update(float dt) {
 				Transform* pTransform = pGO->GetComponent<Transform>(C_Transform);
 				TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, pTransform->GetPosition());
 			}
-			pGO->Destroy();
+
+			if(pGO->m_tag != T_Enemy)
+				pGO->Destroy();
+			else {
+				m_isDestory = false;
+			}
 		}
 	}
 

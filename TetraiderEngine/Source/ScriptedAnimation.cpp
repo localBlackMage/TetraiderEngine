@@ -64,7 +64,7 @@ void ScriptedAnimation::Update(float dt) {
 			if (index >= 0 && !m_isRelative)
 				m_pSprite->SetAlpha(Lerp(m_startFade, m_scriptedAnimation[index].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 			else if (index >= 0 && m_isRelative)
-				m_pSprite->SetAlpha(Lerp(m_startFade, m_startFade + m_scriptedAnimation[index].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
+				m_pSprite->SetAlpha(Lerp(m_startFade, m_scriptedAnimation[index].m_finalFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 			else
 				m_pSprite->SetAlpha(Lerp(m_startFade, m_initialFade, m_fadeT, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseIn, m_scriptedAnimation[m_currentAnimationIndex].m_isEaseOut));
 		}

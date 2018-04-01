@@ -71,6 +71,7 @@ void Projectile::HandleEvent(Event* pEvent) {
 			else if (collisionData->pGO->m_tag == T_Projectile) return;
 			else if (collisionData->pGO == m_pOwner) return;
 			else if (collisionData->pGO->m_tag == T_Hazard || collisionData->pGO->m_tag == T_None || collisionData->pGO->m_tag == T_DeadEnemy) return;
+			else if	(collisionData->pGO->m_tag == T_BoundaryObstacle && !m_isSpawnAcidPool) return;
 
 			// If object has health component, deal damage before destroying itself
 			Health* pHealth = collisionData->pGO->GetComponent<Health>(ComponentType::C_Health);

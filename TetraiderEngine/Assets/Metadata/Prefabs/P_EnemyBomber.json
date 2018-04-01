@@ -36,6 +36,8 @@
 		"outOfSightRadius": 650,
 		"zoneWidth": 350,
 		"zoneHeight": 350,
+		"isDeathAnimationAvailable": true,
+		"deathAnimationIndex": 2,
 		"attackRange": 250,
 		"healthBarPrefab": "P_EnemyHealthBar",		
 		"healthBarOffset": {

@@ -25,6 +25,7 @@ NPCController::NPCController() :
 	m_tagsToIgnore[0] = T_Projectile;
 	m_tagsToIgnore[1] = T_Player;
 	m_tagsToIgnore[2] = T_Enemy;
+	m_tagsToIgnore[3] = T_BoundaryObstacle;
 
 	m_tagsToIgnoreForObstacleAvoidance[0] = T_Projectile;
 	m_tagsToIgnoreForObstacleAvoidance[1] = T_Player;
@@ -89,7 +90,7 @@ void NPCController::Update(float dt) {
 	}
 
 	Agent::Update(dt);
-	if (m_healthBarUI && !m_isBoss) {
+	if (m_healthBarUI && !m_isBoss && m_healthBarUI->m_isRender) {
 		m_healthBarUI->GetComponent<Transform>(C_Transform)->SetPosition(m_pTransform->GetPosition() + m_healthBarPosOffset);
 	}
 
@@ -280,7 +281,7 @@ bool NPCController::IsPlayerInSight() {
 
 	if (GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius) {
 		LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3);
+		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 4);
 	}
 	else return false;
 }
@@ -290,7 +291,7 @@ bool NPCController::IsPlayerOutOfSight() {
 		return true;
 
 	LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3)) {
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 4)) {
 		return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
 	}
 	else return true;
