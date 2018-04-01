@@ -434,11 +434,11 @@
     <ClCompile Include="Source\TimeToLive.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\HillNodes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AI_EnemyBatReaction.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HillNodes.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -872,9 +872,11 @@
     <ClInclude Include="Source\TimeToLive.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\HillNodes.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HillNodes.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

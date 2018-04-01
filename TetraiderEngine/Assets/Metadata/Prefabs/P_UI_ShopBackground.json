@@ -55,8 +55,9 @@
 		"letterHeight": 55,
 		"letterWidth": 28,
 		"spacing": 0.65,
+		"alignment": "middle",
 		"pivotOffset": {
-			"x": -35,
+			"x": 0,
 			"y": 120
 		},
 		"tint": {

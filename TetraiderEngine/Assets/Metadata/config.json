@@ -68,7 +68,7 @@
 		"Levels": [
 			{ "Name": "LVL_Editor" },
 			{ "Name": "LVL_Menu" },
-			{ "Name": "LVL_PrototypeAITest" },
+			{ "Name": "LVL_Prototype" },
 			{ "Name": "LVL_PowerUpScreen" },
 			{ "Name": "LVL_CutScene" }
 		],
@@ -164,7 +164,7 @@
 		},
 		{
 			"Name": "OpenShop",
-			"EventType": 18,
+			"EventType": 20,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

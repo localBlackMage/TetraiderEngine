@@ -71,6 +71,11 @@ std::vector<GameObject*> LevelManager::LoadRoomFile(const json & j)
 
 void LevelManager::LoadLevel() {
 	if (m_isRandomlyGenerated) {
+		if (m_levelsCompleted >= (int)m_levelConfigs.size()) {
+			std::cout << "Attempted to load a level out of index. Reverted to last level" << std::endl;
+			m_levelsCompleted = m_levelConfigs.size() - 1;
+		}
+
 		TETRA_LEVEL_GEN.GenerateRoomNodes(m_levelConfigs[m_levelsCompleted]);
 		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted], 1522551283);
 		TETRA_LEVEL_GEN.PrintFloorPlan();

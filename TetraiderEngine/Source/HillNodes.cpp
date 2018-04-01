@@ -38,7 +38,7 @@ void HillNodes::Update(float dt)
 
 	if (m_pText) {
 		m_pText->SetText("Level"+std::to_string(m_currentLevel));
-		m_pText->SetOffset(Vector3D(-100, 300, 0));
+		m_pText->SetOffset(Vector3D(0, 300, 0));
 	}
 }
 
@@ -47,12 +47,12 @@ void HillNodes::Serialize(const json & j)
 	std::string prefabName;
 	m_speed = ParseFloat(j, "speed");
 	int numberOfElements = j["Nodes"].size();
+	m_offset = ParseVector3D(j, "offset");
 	for (int i = 0; i<numberOfElements; ++i)
 	{
 		prefabName = ParseString(j["Nodes"][i], "prefab");
 		m_Nodes.push_back(NodeInfo(
 			TETRA_GAME_OBJECTS.CreateGameObject(ParseString(j["Nodes"][i], "prefab"), true, ParseVector3D(j["Nodes"][i], "position")),
-			ParseVector3D(j["Nodes"][i], "offset"),
 			ParseInt(j["Nodes"][i], "nodeToGo"),
 			ParseInt(j["Nodes"][i], "currentNode")
 		));

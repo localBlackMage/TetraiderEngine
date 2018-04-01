@@ -82,7 +82,7 @@
 				{
                     "prefab": "P_PowerUpTextShop",
                     "position": {
-                        "x": -50,
+                        "x": 0,
                         "y": 50,
                         "z": 0
                     }
@@ -90,7 +90,7 @@
 				{
                     "prefab": "P_NotEnoughGoldenFeatherText",
                     "position": {
-                        "x": 60,
+                        "x": 70,
                         "y": 10,
                         "z": 0
                     }

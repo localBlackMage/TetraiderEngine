@@ -29,8 +29,9 @@
 		"letterHeight": 26,
 		"letterWidth": 20,
 		"spacing": 0.65,
+		"alignment": "middle",
 		"pivotOffset": {
-			"x": 50,
+			"x": 0,
 			"y": 0
 		},
 		"tint": {

@@ -4,7 +4,7 @@
 #include "Text.h"
 
 struct NodeInfo {
-	NodeInfo(GameObject* _pGo, Vector3D _offset, int _nodeToGo, int _currentNode) : m_pGO(_pGo), m_nodeToGo(_nodeToGo), m_currentNode(_currentNode) {}
+	NodeInfo(GameObject* _pGo, int _nodeToGo, int _currentNode) : m_pGO(_pGo), m_nodeToGo(_nodeToGo), m_currentNode(_currentNode) {}
 	GameObject* m_pGO;
 	int m_nodeToGo;
 	int m_currentNode;
