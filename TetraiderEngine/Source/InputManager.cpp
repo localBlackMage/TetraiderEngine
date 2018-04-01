@@ -72,8 +72,21 @@ void InputManager::Update() {
 				break;
 			case SDL_WINDOWEVENT:
 			{
-				if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-					TETRA_RENDERER.SetWindowDimensions(event.window.data1, event.window.data2);
+				switch (event.window.event) {
+					case SDL_WINDOWEVENT_RESIZED:
+					{
+						TETRA_RENDERER.SetWindowDimensions(event.window.data1, event.window.data2);
+						break;
+					}
+					case SDL_WINDOWEVENT_HIDDEN:
+					case SDL_WINDOWEVENT_LEAVE:
+					case SDL_WINDOWEVENT_FOCUS_LOST:
+					case SDL_WINDOWEVENT_MINIMIZED:
+					{
+						cout << "Pause game now." << endl;
+						break;
+					}
+				}
 				break;
 			}
 		}
