@@ -126,14 +126,17 @@
 				}
 			},
 			"gravity": 0,
-			"emissionRate": 5,
+			"emissionRate": 50,
 			"max": 100,
 			"rotationOverTime": 0,
 			"particleTexture": "T_FireParticles.png",
 			"textureSelection": "random",
 			"animationSpeed": 0.1,
 			"rows": 1,
-			"cols": 3
+			"cols": 3,
+			"followParentPosition": true,
+			"matchParentRotation": true,
+			"renderOnTop": true
 	}
   ]
 }

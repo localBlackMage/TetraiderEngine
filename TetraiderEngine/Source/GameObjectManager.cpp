@@ -26,6 +26,8 @@ static bool LeftDistLessOrEqualToRight(const GO_Distance& left, const GO_Distanc
 
 void GameObjectLayer::_SetLightDataArrays()
 {
+	std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
+
 	int idx = 0;
 	for (unsigned int i = 0; i < m_layerLights.size(); ++i) {
 		idx = i * 4;
