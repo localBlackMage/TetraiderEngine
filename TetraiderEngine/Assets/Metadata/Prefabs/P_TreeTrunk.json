@@ -1,5 +1,5 @@
 {
-  "Tag": "None",
+  "Tag": "Obstacle",
   "Layer": "2",
   "COMPONENTS": [
     {
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 128,
-        "y": 128,
+        "x": 150,
+        "y": 150,
         "z": 0
       },
       "pivotOffset": {
@@ -48,6 +48,20 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "Body",
+		"isStatic": true,
+		"mass": 0,
+		"SHAPE": {
+			"type": "AABB",
+			"width": 75,
+			"height": 50,
+			"offset": {
+				"x": 0,
+				"y": -38
+			}
+		}
+	}
   ]
 }

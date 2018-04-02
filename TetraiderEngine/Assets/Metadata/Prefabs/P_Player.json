@@ -2,20 +2,6 @@
   "Tag": "Player",
   "Layer": "2",
   "COMPONENTS": [
-  	{
-		"Component": "PointLight",
-		"color": {
-			"r": 0.2, 
-			"g": 0.2, 
-			"b": 0.2, 
-			"a": 1
-		},
-		"distance": 275.0,
-		"offset": {
-			"z": 250
-		},
-		"layers": ["BG", "1", "2", "3"]
-	},
     {
       "Component": "Transform",
       "position": {

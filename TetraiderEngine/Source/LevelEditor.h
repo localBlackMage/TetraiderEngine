@@ -41,6 +41,8 @@ private:
 	bool m_isFileNameInvalid;
 	bool m_isPopUpOpen;
 	bool m_isLoadSuccess;
+	bool m_isShopRoom;
+	bool m_isBossRoom;
 
 	void RoomTemplatesInit();
 	void RoomInit();

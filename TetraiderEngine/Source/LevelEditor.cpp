@@ -10,7 +10,9 @@ LevelEditor::LevelEditor() :
 	m_roomTemplateSelectedItem(0),
 	m_difficulty(0),
 	m_isFileNameInvalid(false),
-	m_isLoadSuccess(true)
+	m_isLoadSuccess(true),
+	m_isShopRoom(false),
+	m_isBossRoom(false)
 {
 }
 
@@ -358,6 +360,8 @@ void LevelEditor::SavePopup() {
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "File name: ");
 		ImGui::InputText("##FileName", m_fileName, IM_ARRAYSIZE(m_fileName));
 		ImGui::InputInt("Difficulty", &m_difficulty, 1, 2);
+		ImGui::Checkbox("isBossRoom", &m_isBossRoom);
+		ImGui::Checkbox("isShopRoom", &m_isShopRoom);
 		if (ImGui::Button("Save")) {
 			if (ValidateFileName()) {
 				std::string fileName;
@@ -493,6 +497,8 @@ bool LevelEditor::LoadJsonFile(std::string room, bool isTemplate) {
 
 	m_currentRoomType = ValueExists(j, "ROOM_CONNECTION_TYPE") ? ParseString(j, "ROOM_CONNECTION_TYPE") : "";
 	m_difficulty = ValueExists(j, "DIFFICULTY") ? ParseInt(j, "DIFFICULTY") : 0;
+	m_isBossRoom = ValueExists(j, "BOSS_ROOM") ? ParseBool(j, "BOSS_ROOM") : false;
+	m_isShopRoom = ValueExists(j, "SHOP_ROOM") ? ParseBool(j, "SHOP_ROOM") : false;
 	m_pSelectedGO = nullptr;
 	return true;
 }
@@ -514,6 +520,18 @@ void LevelEditor::SaveJsonFile(std::string fileName) {
 	file << "{" << endl;
 	file << "	\"ROOM_CONNECTION_TYPE\": " << "\"" << m_currentRoomType << "\"," << endl;
 	file << "	\"DIFFICULTY\": " << m_difficulty << "," << endl;
+	file << "	\"BOSS_ROOM\": ";
+	if (m_isBossRoom)
+		file << "true," << endl;
+	else 
+		file << "false," << endl;
+
+	file << "	\"SHOP_ROOM\": ";
+	if (m_isShopRoom)
+		file << "true," << endl;
+	else
+		file << "false," << endl;
+
 	file << "	\"GAME_OBJECTS\": [" << endl;
 
 	std::unordered_map<GameObject*, ObjectInstance*>::iterator it = m_instances.begin();
