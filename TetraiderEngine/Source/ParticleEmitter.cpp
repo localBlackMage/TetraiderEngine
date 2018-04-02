@@ -204,6 +204,21 @@ void ParticleEmitter::_AllocateVBOs()
 	m_textureCoordsBuffer = TETRA_RENDERER.GenerateStreamingVBO(m_maxParticles * 2 * sizeof(GLfloat));
 }
 
+void ParticleEmitter::_WarmSystem()
+{
+	const float step = 0.1f;
+	for (float timer = 0.f; timer < m_loopDuration; timer += step) {
+		m_emissionTimer += step;
+
+		while (m_emissionTimer > m_emissionTime) {
+			_SpawnParticle();
+			m_emissionTimer -= m_emissionTime;
+		}
+
+		_UpdateParticles(step);
+	}
+}
+
 #pragma endregion
 
 ParticleEmitter::ParticleEmitter() :
@@ -215,8 +230,11 @@ ParticleEmitter::ParticleEmitter() :
 	m_liveParticleCount(0),
 	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
 	m_pSpawnShape(nullptr),
-	m_directionMod(1.f)
-{}
+	m_directionMod(1.f),
+	m_brightness(1.f)
+{
+	TETRA_EVENTS.Subscribe(EVENT_OnLevelInitialized, this);
+}
 
 ParticleEmitter::~ParticleEmitter() 
 {
@@ -262,7 +280,7 @@ void ParticleEmitter::Update(float dt)
 void ParticleEmitter::LateUpdate(float dt)
 {
 	_UpdateParticles(dt);
-	//_SortParticles();
+	//_SortParticles();	// Not used in our game on purpose
 }
 
 void ParticleEmitter::Deactivate()
@@ -348,6 +366,8 @@ void ParticleEmitter::Serialize(const json & j)
 
 	m_renderedOnTop = ParseBool(j, "renderOnTop");
 
+	m_brightness = ValueExists(j, "brightness") ? j["brightness"] : m_brightness;
+
 	_AllocateParticleArrays();
 	_AllocateVBOs();
 	m_liveParticleCount = 0;
@@ -360,9 +380,15 @@ void ParticleEmitter::Override(const json & j)
 void ParticleEmitter::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
-		case EventType::EVENT_FlipScaleX:
+		case EventType::EVENT_FlipScaleX: {
 			m_directionMod *= -1;
 			break;
+		}
+		case EventType::EVENT_OnLevelInitialized: {
+			if (m_prewarmed)
+				_WarmSystem();
+			break;
+		}
 	}
 }
 

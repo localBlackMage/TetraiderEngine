@@ -78,6 +78,7 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 	BindMesh(pParticleEmitterComp->GetMesh());
 
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pParticleEmitterComp->FrameWidth(), pParticleEmitterComp->FrameHeight());
+	glUniform1f(SHADER_LOCATIONS::P_BRIGHTNESS_TINT, pParticleEmitterComp->Brightness());
 
 	_BindVertexAttribute(SHADER_LOCATIONS::P_POS_SIZE, pParticleEmitterComp->GetPositions(), 4, GL_FLOAT, GL_FALSE, 0, 0);
 	_BindVertexAttribute(SHADER_LOCATIONS::P_COLOR, pParticleEmitterComp->GetColors(), 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
@@ -701,7 +702,8 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
 		return;
 
-	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
+	// Render particles if they're NOT set to render on top of everything else
+	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter) && !gameObject.GetComponent<ParticleEmitter>(C_ParticleEmitter)->ShouldRenderLast()) {
 		const ParticleEmitter* cpParticleEmitterComp = gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
 		_SelectShaderProgram(cpParticleEmitterComp);
 		_SetUpCamera(camera);
@@ -709,6 +711,7 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 		_RenderParticles(cpParticleEmitterComp);
 	}
 
+	// Render sprite for the GO
 	if (gameObject.HasComponent(ComponentType::C_Sprite)) {
 		const Sprite* cpSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
 		_SelectShaderProgram(cpSpriteComp);
@@ -722,12 +725,22 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
 	}
 
+	// Render text for the GO
 	if (gameObject.HasComponent(ComponentType::C_Text)) {
 		const Text* cpTextComp = gameObject.GetComponent<Text>(ComponentType::C_Text);
 		_SelectShaderProgram(cpTextComp);
 		_SetUpCamera(camera);
 		_BindGameObjectTransform(gameObject);
 		_RenderText(cpTextComp, gameObject.GetComponent<Transform>(ComponentType::C_Transform));
+	}
+
+	// Render particles if they're set to render on top of everything else
+	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter) && gameObject.GetComponent<ParticleEmitter>(C_ParticleEmitter)->ShouldRenderLast()) {
+		const ParticleEmitter* cpParticleEmitterComp = gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
+		_SelectShaderProgram(cpParticleEmitterComp);
+		_SetUpCamera(camera);
+		_BindGameObjectTransform(gameObject);
+		_RenderParticles(cpParticleEmitterComp);
 	}
 }
 

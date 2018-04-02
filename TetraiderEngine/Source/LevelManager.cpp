@@ -50,7 +50,7 @@ void LevelManager::Initialize(const json& j) {
 
 		m_levelConfigs.push_back(config);
 	}
-	m_maxLevel = m_levelConfigs.size();
+	m_maxLevel = unsigned short(m_levelConfigs.size());
 }
 #undef LEVEL_PARAMS
 
@@ -77,7 +77,7 @@ void LevelManager::LoadLevel() {
 		}
 
 		TETRA_LEVEL_GEN.GenerateRoomNodes(m_levelConfigs[m_levelsCompleted]);
-		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted], 1522551283);
+		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted]);
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();

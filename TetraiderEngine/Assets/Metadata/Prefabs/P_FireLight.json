@@ -124,7 +124,8 @@
 			"animationSpeed": 0.1,
 			"rows": 1,
 			"cols": 3,
-			"angleVariation": 12
+			"angleVariation": 12,
+			"brightness": 1.6
 		}
 	]
 }

@@ -49,6 +49,7 @@ protected:
 	float m_angleVariation;						// How far in degrees the particle can deviate from the forward direction of the transform
 	bool m_particlesFollowParent;				// Determines whether or not to have particles' positions follow the emitter over time or to exist on their own
 	bool m_rotateToParentOnSpawn;				// Determines whether to rotate the particles to match the emitter's orientation at spawn or not
+	float m_brightness;							// Tints the particles for added or dulled brightness
 
 	// Emitter Run Properties
 	bool m_active;								// Determines whether or not this emitter will run
@@ -87,6 +88,7 @@ protected:
 	void _AllocateParticleArrays();
 	void _DeallocateParticleArrays();
 	void _AllocateVBOs();
+	void _WarmSystem();
 public:
 	ParticleEmitter();
 	~ParticleEmitter();
@@ -101,25 +103,28 @@ public:
 	virtual void LateInitialize();
 	virtual void HandleEvent(Event* pEvent);
 
-	const Mesh& GetMesh() const { return m_mesh; };
-	void SetMesh(Mesh& mesh) { m_mesh = mesh; }
+	inline const Mesh& GetMesh() const { return m_mesh; };
+	inline void SetMesh(Mesh& mesh) { m_mesh = mesh; }
 
-	GLuint GetTextureBuffer() const { return m_texture->bufferId; }
-	int GetAlphaMode() const { return m_texture->alphaMode; }
+	inline GLuint GetTextureBuffer() const { return m_texture->bufferId; }
+	inline int GetAlphaMode() const { return m_texture->alphaMode; }
 	void BindBufferDatas() const;
-	GLuint GetPositions() const { return m_positionsScalesBuffer; }
-	GLuint GetColors() const { return m_colorsBuffer; }
-	GLuint GetTextureCoords() const { return m_textureCoordsBuffer; }
+	inline GLuint GetPositions() const { return m_positionsScalesBuffer; }
+	inline GLuint GetColors() const { return m_colorsBuffer; }
+	inline GLuint GetTextureCoords() const { return m_textureCoordsBuffer; }
 
-	int LiveParticles() const { return m_liveParticleCount; }
+	inline int LiveParticles() const { return m_liveParticleCount; }
 
-	void ActivateParticles() { m_active = true; }
-	void DeactivateParticles() { m_active = false; }
+	inline void ActivateParticles() { m_active = true; }
+	inline void DeactivateParticles() { m_active = false; }
 
-	float FrameWidth() const { return m_frameWidth; }
-	float FrameHeight() const { return m_frameHeight; }
+	inline float FrameWidth() const { return m_frameWidth; }
+	inline float FrameHeight() const { return m_frameHeight; }
 
-	std::string Shader() const { return m_shader; }
+	inline float Brightness() const { return m_brightness; }
+	inline bool ShouldRenderLast() const { return m_renderedOnTop; }
+
+	inline std::string Shader() const { return m_shader; }
 };
 
 #endif
