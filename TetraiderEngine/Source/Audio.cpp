@@ -4,7 +4,7 @@
 
 #include <Stdafx.h>
 
-Audio::Audio() :Component(ComponentType::C_Audio) {}
+Audio::Audio() :Component(ComponentType::C_Audio), m_currentIndex(0) {}
 Audio::~Audio() 
 {
 	if (m_isBGM)
@@ -27,7 +27,11 @@ void Audio::Update(float dt)
 
 void Audio::Serialize(const json& j)
 {
-	m_audioClip = ParseString(j, "audioClip");
+	if (j["audioClip"].is_array())
+		m_audioClip = (ParseStringList(j, "audioClip"));
+	else
+		m_audioClip.push_back(ParseString(j, "audioClip"));
+
 	m_volume = ParseFloat(j, "volume");
 	m_Ismute = ParseBool(j, "isMute");
 	m_isLoop = ParseBool(j, "isLoop");
@@ -40,25 +44,25 @@ void Audio::Serialize(const json& j)
 
 	if (m_isBGM)
 	{
-		TETRA_RESOURCES.LoadSong(m_audioClip);
+		TETRA_RESOURCES.LoadSong(m_audioClip[m_currentIndex]);
 		TETRA_AUDIO.SetFadeTime(m_fadeTime);
 	}	
 	else
-		TETRA_RESOURCES.LoadSFX(m_audioClip);
+		TETRA_RESOURCES.LoadSFX(m_audioClip[m_currentIndex]);
 }
 
 bool Audio::IsPlaying()
 {
-	return TETRA_AUDIO.isSoundPlaying(m_audioClip);
+	return TETRA_AUDIO.isSoundPlaying(m_audioClip[m_currentIndex]);
 }
 
-void Audio::Play()
+void Audio::Play(int index)
 {
 
 	 if (m_Ismute)
-		TETRA_AUDIO.PlaySFX(m_audioClip, 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(),m_minDist,m_maxDist);
+		TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(),m_minDist,m_maxDist);
 	else
-		TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
+		TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
 }
 
 void Audio::LateInitialize()
@@ -66,9 +70,9 @@ void Audio::LateInitialize()
 	if (m_isPlayOnAwake)
 	{
 		if (m_isBGM)
-			TETRA_AUDIO.PlaySong(m_audioClip, m_volume);
+			TETRA_AUDIO.PlaySong(m_audioClip[m_currentIndex], m_volume);
 		else
-			TETRA_AUDIO.PlaySFX(m_audioClip, m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
+			TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
 	}
 }
 
@@ -78,7 +82,7 @@ void Audio::Stop()
 	if (m_isBGM)
 		TETRA_AUDIO.StopSongs();
 	else
-		TETRA_AUDIO.StopSFX(m_audioClip);
+		TETRA_AUDIO.StopSFX(m_audioClip[m_currentIndex]);
 }
 
 void Audio::Pause() {
@@ -86,7 +90,7 @@ void Audio::Pause() {
 	if (m_isBGM)
 		TETRA_AUDIO.PauseSound();
 	else
-		TETRA_AUDIO.PauseSFX(m_audioClip);
+		TETRA_AUDIO.PauseSFX(m_audioClip[m_currentIndex]);
 }
 
 void Audio::Resume()
@@ -94,7 +98,7 @@ void Audio::Resume()
 	if (m_isBGM)
 		TETRA_AUDIO.ResumeSound();
 	else
-		TETRA_AUDIO.ResumeSFX(m_audioClip);
+		TETRA_AUDIO.ResumeSFX(m_audioClip[m_currentIndex]);
 }
 
 void Audio::ToggleMuteAll()

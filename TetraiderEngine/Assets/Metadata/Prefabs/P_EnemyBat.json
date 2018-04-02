@@ -37,6 +37,8 @@
 		"zoneWidth": 64,
 		"zoneHeight": 64,
 		"attackRange": 250,
+		"isDeathAnimationAvailable": true,
+		"deathAnimationIndex": 3,
 		"healthBarPrefab": "P_EnemyHealthBar",
 		"healthBarOffset": {
 			"x": -25,
@@ -124,6 +126,13 @@
 			"animationSpeed": 8,
 			"isLooping": true,
 			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Death",
+			"frames": 1,
+			"animationSpeed": 6,
+			"isLooping": false,
+			"isPlayOnAwake": false
 		}
 		]
 	},

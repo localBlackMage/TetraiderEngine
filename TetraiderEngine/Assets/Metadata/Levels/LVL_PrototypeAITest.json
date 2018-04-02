@@ -74,6 +74,14 @@
         "z": 0
       }
     },
+	{
+      "prefab": "P_EnemyHitNRun",
+      "position": {
+        "x": 1700,
+        "y": 1000,
+        "z": 0
+      }
+    },
   {
       "prefab": "P_EnemyBomber",
       "position": {

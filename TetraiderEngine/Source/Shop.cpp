@@ -23,6 +23,20 @@ void Shop::Update(float dt) {
 	else
 		m_pControlsObject->m_isRender = false;
 
+
+	Transform* pTransform = pGO->GetComponent<Transform>(C_Transform);
+	Vector3D dirToPlayer = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition() - pTransform->GetPosition();
+	if (pTransform->GetScaleX() < 0) {
+		if (Vector3D::Dot(dirToPlayer, Vector3D(1, 0, 0)) > 0) {
+			pGO->HandleEvent(&Event(EVENT_FlipScaleX));
+		}
+	}
+	else {
+		if (Vector3D::Dot(dirToPlayer, Vector3D(1, 0, 0)) < 0) {
+			pGO->HandleEvent(&Event(EVENT_FlipScaleX));
+		}
+	}
+
 	TETRA_DEBUG.DrawWireCircle(pGO->GetComponent<Transform>(C_Transform)->GetPosition(), m_radius*2.0f, DebugColor::CYAN);
 }
 

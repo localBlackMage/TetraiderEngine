@@ -27,6 +27,10 @@ void Weapon::Deactivate() {
 }
 
 void Weapon::Update(float dt) {
+	if (m_pController->IsDead() || TETRA_GAME_STATE.IsGamePaused()) {
+		return;
+	}
+
 	for (auto attacks : m_Attacks) {
 		attacks->Update(dt);
 	}

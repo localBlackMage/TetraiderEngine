@@ -193,6 +193,7 @@ using namespace JsonReader;
 #include <GateTriggerBox.h>
 #include <Spawner.h>
 #include <TimeToLive.h>
+#include <ApplyTinyOnDifficultyUp.h>
 
 #pragma endregion 
 

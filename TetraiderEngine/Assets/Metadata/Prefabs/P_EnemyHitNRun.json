@@ -37,6 +37,7 @@
 		"zoneHeight": 320,
 		"attackRange": 500,
 		"healthBarPrefab": "P_EnemyHealthBar",
+		"healthScale": 60,
 		"isDeathAnimationAvailable": true,
 		"deathAnimationIndex": 2,
 		"reactionPrefab": "P_EnemyExclamation",

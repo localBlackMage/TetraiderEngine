@@ -20,7 +20,7 @@ public:
 	virtual void HandleEvent(Event* pEvent) {}
 
 	bool IsPlaying();
-	void Play();
+	void Play(int index = 0);
 	void Stop();
 	void Pause();
 	void Resume();
@@ -32,7 +32,8 @@ public:
 	int getFadeState() { return fadeState; }
 	void setFadeState(int fade) { fadeState = fade; }
 private:
-	std::string m_audioClip;
+	std::vector<std::string> m_audioClip;
+	int m_currentIndex;
 	float m_volume;
 	//min and max values for sound attenuation to have effect
 	float m_minDist, m_maxDist;

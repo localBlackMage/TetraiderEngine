@@ -24,6 +24,7 @@ public:
 	FaceDirection GetFaceDirection() { return m_faceDirection; }
 	void AddVelocity(const Vector3D& velocity) { m_currentVelocity += velocity; }
 	bool GetIgnoreHazard() { return m_isIgnoreHazards; }
+	bool IsDead() { return m_isDead; }
 	static Vector3D GetDirectionFromPlayerToMouse();
 protected:
 	float m_speed;

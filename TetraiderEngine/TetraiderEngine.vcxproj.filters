@@ -440,6 +440,9 @@
     <ClCompile Include="Source\HillNodes.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ApplyTinyOnDifficultyUp.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -876,6 +879,9 @@
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Source\HillNodes.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ApplyTinyOnDifficultyUp.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

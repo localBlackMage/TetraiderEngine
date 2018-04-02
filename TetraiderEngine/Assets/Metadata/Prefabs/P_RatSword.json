@@ -36,6 +36,7 @@
         "v": 0
       },
       "hasAlpha": true,
+	  "lit": true,
       "tint": {
         "r": 1,
         "g": 1,

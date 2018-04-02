@@ -46,6 +46,7 @@ void NPCController::Update(float dt) {
 	if (m_isDead || !m_isActive) return;
 
 	if (m_isBossEntering) {
+		SetOrientation();
 		if (!pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->IsPlaying())
 			ExitBoss();
 		
@@ -173,6 +174,8 @@ void NPCController::EnterBoss() {
 		m_isBossEntering = true;
 	}
 	pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->PlayAnimation();
+	LookAtPlayer();
+	SetOrientation();
 	Event* pEvent = new Event(EVENT_OnBossLand, 1.5f);
 	TETRA_EVENTS.AddDelayedEvent(pEvent);
 }

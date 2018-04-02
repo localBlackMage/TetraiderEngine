@@ -184,7 +184,11 @@ void ScriptedAnimation::PlayAnimation(bool isReverse) {
 }
 
 void ScriptedAnimation::HandleEvent(Event* pEvent) {
-	
+	// HACK FOR BOSS
+	if (pEvent->Type() == EVENT_FlipScaleX) {
+		m_startScale.x = m_startScale.x*-1;
+		m_scriptedAnimation[m_currentAnimationIndex + 1].m_finalScale.x = m_scriptedAnimation[m_currentAnimationIndex + 1].m_finalScale.x*-1;
+	}
 }
 
 void ScriptedAnimation::NextAnim() {

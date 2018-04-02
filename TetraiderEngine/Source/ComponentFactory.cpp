@@ -34,7 +34,6 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Button"] = Button::CreateInstance;
 	m_creationFunctions["LevelStatus"] = LevelStatus::CreateInstance;
 	m_creationFunctions["EggCounter"] = EggCounter::CreateInstance;
-	//m_creationFunctions["PauseMenu"] = PauseMenu::CreateInstance;
 	m_creationFunctions["Microphone"] = Microphone::CreateInstance;
 	m_creationFunctions["UICounter"] = UICounter::CreateInstance;
 	m_creationFunctions["ScriptedAnimation"] = ScriptedAnimation::CreateInstance;
@@ -53,6 +52,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["HillNodes"] = HillNodes::CreateInstance;
 	m_creationFunctions["Spawner"] = Spawner::CreateInstance;
 	m_creationFunctions["TimeToLive"] = TimeToLive::CreateInstance;
+	m_creationFunctions["ApplyTintOnDifficultyUp"] = ApplyTintOnDifficultyUp::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

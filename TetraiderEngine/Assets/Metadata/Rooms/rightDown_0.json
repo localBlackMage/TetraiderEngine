@@ -1,63 +1,170 @@
 {
-  "ROOM_CONNECTION_TYPE": "RIGHT_DOWN",
-  "DIFFICULTY": 0,
-  "BOSS_ROOM": false,
+	"ROOM_CONNECTION_TYPE": "RIGHT_DOWN",
+	"DIFFICULTY": 0,
+	  "BOSS_ROOM": false,
 	"SHOP_ROOM": false,
-  "GAME_OBJECTS": [
-    {
-      "prefab": "P_RightDownBG"
-    },
-	
-	{
-		"prefab": "P_ColliderLeftRightLong",
-		"position": {
-		    "x": -704,
-			"y": 0,
-			"z": 0
-		}
-	},
-	{
-		"prefab": "P_ColliderUpDownLong",
-		"position": {
-		    "x": 0,
-			"y": 448,
-			"z": 0
-		}
-	},
-	
-
-	{
-		"prefab": "P_ColliderUpDownShort",
-		"position": {
-		    "x": 448,
-			"y": -448,
-			"z": 0
-		}
-	},
-	{
-		"prefab": "P_ColliderUpDownShort",
-		"position": {
-		    "x": -448,
-			"y": -448,
-			"z": 0
-		}
-	},
-	
-	{
-		"prefab": "P_ColliderLeftRightShort",
-		"position": {
-		    "x": 704,
-			"y": 320,
-			"z": 0
-		}
-	},
-	{
-		"prefab": "P_ColliderLeftRightShort",
-		"position": {
-		    "x": 704,
-			"y": -320,
-			"z": 0
-		}
-	}
-  ]
+	"GAME_OBJECTS": [
+		{
+			"prefab": "P_Feathers",
+			"position": {
+				"x": 0.000000,
+				"y": 0.000000
+			},
+			"scale": {
+				"x": 160.000000,
+				"y": 160.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_RightDownBG",
+			"position": {
+				"x": 0.000000,
+				"y": 0.000000
+			},
+			"scale": {
+				"x": 1536.000000,
+				"y": 1024.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_ColliderLeftRightLong",
+			"position": {
+				"x": -704.000000,
+				"y": 0.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 128.000000,
+				"height": 1024.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
+		{
+			"prefab": "P_ColliderUpDownLong",
+			"position": {
+				"x": 0.000000,
+				"y": 448.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 1536.000000,
+				"height": 128.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
+		{
+			"prefab": "P_ColliderUpDownShort",
+			"position": {
+				"x": 448.000000,
+				"y": -448.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 640.000000,
+				"height": 128.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": 704.000000,
+				"y": -320.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 128.000000,
+				"height": 384.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
+		{
+			"prefab": "P_ColliderUpDownShort",
+			"position": {
+				"x": -448.000000,
+				"y": -448.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 640.000000,
+				"height": 128.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": 704.000000,
+				"y": 320.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 128.000000,
+				"height": 384.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		}
+	]
 }

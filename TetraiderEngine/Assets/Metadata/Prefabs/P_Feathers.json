@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 70,
-        "y": 70,
+        "x": 160,
+        "y": 160,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_BrownGrass.png",
+      "Texture": "T_Feathers.png",
       "tiling": {
         "x": 1,
         "y": 1

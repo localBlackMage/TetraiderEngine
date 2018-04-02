@@ -48,6 +48,10 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "ApplyTintOnDifficultyUp",
+		"tintRate": 0.2
+	}
   ]
 }

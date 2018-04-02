@@ -87,7 +87,8 @@
 		"Component": "SpawnOnHealthZero",
 		"dropType": "both",
 		"prefab": [
-			"P_DustPuffParticles"
+			"P_DustPuffParticles",
+			"P_BrokenWood"
 		],
 		"RandomDrops": [
 			{
