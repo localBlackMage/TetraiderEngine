@@ -76,7 +76,7 @@
 			{"cols": 3, "rows": 4, "difficulty": 1, "boss": false, "shop": false},
 			{"cols": 3, "rows": 4, "difficulty": 2, "boss": true, "shop": true},
 			{"cols": 3, "rows": 4, "difficulty": 3, "boss": false, "shop": true},
-			{"cols": 3, "rows": 4, "difficulty": 4, "boss": true, "shop": true}
+			{"cols": 3, "rows": 4, "difficulty": 4, "boss": false, "shop": true}
 		]
 	},
 	"INPUT_SETTINGS": [

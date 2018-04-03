@@ -47,6 +47,9 @@
 	},
 	{
 	  "prefab": "P_WinMessage"
+	},
+	{
+	  "prefab": "P_RightTransition_02"
 	}
   ]
 }

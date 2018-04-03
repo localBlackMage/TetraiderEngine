@@ -2,7 +2,7 @@
 
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0), m_isControlsEnabled(true), m_flyOffset(1250.0f), m_isFlyingOutOfLevel(false), m_agility(1.0f)
+	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0), m_isControlsEnabled(true), m_flyOffset(1250.0f), m_isFlyingOutOfLevel(false), m_agility(1.0f), m_waitTimeBeforeFlyIn(0)
 {
 }
 
@@ -17,6 +17,10 @@ void Controller::Update(float dt) {
 	if (TETRA_GAME_STATE.IsGamePaused()) return;
 
 	if (m_isFlyingInLevel) {
+		if (m_waitTimeBeforeFlyIn < 0.5f) {
+			m_waitTimeBeforeFlyIn += dt;
+			return;
+		}
 		FlyIn();
 	}
 	else if (m_isFlyingOutOfLevel) {

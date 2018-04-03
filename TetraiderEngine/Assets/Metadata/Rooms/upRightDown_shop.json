@@ -1,50 +1,111 @@
 {
-	"ROOM_CONNECTION_TYPE": "UP",
-	"DIFFICULTY": 0,
+	"ROOM_CONNECTION_TYPE": "UP_RIGHT_DOWN",
+	"DIFFICULTY": 1,
 	"BOSS_ROOM": false,
-	"SHOP_ROOM": false,
+	"SHOP_ROOM": true,
 	"GAME_OBJECTS": [
 		{
-			"prefab": "P_ColliderUpDownShort",
+			"prefab": "P_RockBig",
 			"position": {
-				"x": 448.000000,
-				"y": 448.000000
+				"x": 224.000000,
+				"y": 352.000000
 			},
 			"scale": {
-				"x": 1.000000,
-				"y": 1.000000
+				"x": 144.000000,
+				"y": 144.000000
 			},
 			"rotation": {
 				"z": 0.000000
 			},
 			"shape": {
-				"width": 640.000000,
-				"height": 128.000000,
+				"width": 140.000000,
+				"height": 75.000000,
 				"offset": {
 					"x": 0.000000,
-					"y": 0.000000
+					"y": -30.000000
 				}
-			}		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		 {
+      "prefab": "P_UpRightDownBG"
+    },
+	
+	{		
+		"prefab": "P_ColliderLeftRightLong",
+		"position": {
+		    "x": -704,
+			"y": 0,
+			"z": 0
+		}	
+	},
+	
+	
+	{
+		"prefab": "P_ColliderLeftRightShort",
+		"position": {
+		    "x": 704,
+			"y": 320,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_ColliderLeftRightShort",
+		"position": {
+		    "x": 704,
+			"y": -320,
+			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_ColliderUpDownShort",
+		"position": {
+		    "x": 448,
+			"y": -448,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_ColliderUpDownShort",
+		"position": {
+		    "x": -448,
+			"y": -448,
+			"z": 0
+		}
+	},
+	
+	{
+		"prefab": "P_ColliderUpDownShort",
+		"position": {
+		    "x": 448,
+			"y": 448,
+			"z": 0
+		}
+	},
+	{
+		"prefab": "P_ColliderUpDownShort",
+		"position": {
+		    "x": -448,
+			"y": 448,
+			"z": 0
+		}
+	},
 		{
-			"prefab": "P_RockBig",
+			"prefab": "P_Grass",
 			"position": {
-				"x": 544.000000,
+				"x": -224.000000,
 				"y": 328.000000
 			},
 			"scale": {
-				"x": 144.000000,
-				"y": 144.000000
+				"x": 128.000000,
+				"y": 128.000000
 			},
 			"rotation": {
 				"z": 0.000000
-			},
-			"shape": {
-				"width": 140.000000,
-				"height": 75.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -30.000000
-				}
 			},
 			"tiling": {
 				"x": 1.000000,
@@ -52,31 +113,36 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_ColliderUpDownLong",
+			"prefab": "P_Rock",
 			"position": {
-				"x": 0.000000,
-				"y": -448.000000
+				"x": 288.000000,
+				"y": 280.000000
 			},
 			"scale": {
-				"x": 1.000000,
-				"y": 1.000000
+				"x": 96.000000,
+				"y": 96.000000
 			},
 			"rotation": {
 				"z": 0.000000
 			},
 			"shape": {
-				"width": 1536.000000,
-				"height": 128.000000,
+				"width": 96.000000,
+				"height": 60.000000,
 				"offset": {
 					"x": 0.000000,
-					"y": 0.000000
+					"y": -15.000000
 				}
-			}		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
 		{
 			"prefab": "P_RockBig",
 			"position": {
-				"x": -552.000000,
-				"y": 344.000000
+				"x": -320.000000,
+				"y": -296.000000
 			},
 			"scale": {
 				"x": 144.000000,
@@ -99,17 +165,50 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_UpBG",
+			"prefab": "P_ShopKeeper",
 			"position": {
 				"x": 0.000000,
 				"y": 0.000000
 			},
 			"scale": {
-				"x": 1536.000000,
-				"y": 1024.000000
+				"x": 140.000000,
+				"y": 140.000000
 			},
 			"rotation": {
 				"z": 0.000000
+			},
+			"shape": {
+				"radius": 45.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": -20.000000
+				}
+			},
+			"tiling": {
+				"x": 0.500000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_WeaponStash",
+			"position": {
+				"x": 50.000000,
+				"y": -64.000000
+			},
+			"scale": {
+				"x": 90.000000,
+				"y": 90.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 60.000000,
+				"height": 40.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": -20.000000
+				}
 			},
 			"tiling": {
 				"x": 1.000000,
@@ -119,8 +218,8 @@
 		{
 			"prefab": "P_FireLight",
 			"position": {
-				"x": -350.000000,
-				"y": 200.000000
+				"x": 120.000000,
+				"y": 80.000000
 			},
 			"scale": {
 				"x": 80.000000,
@@ -143,45 +242,24 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_ColliderLeftRightLong",
+			"prefab": "P_Rock",
 			"position": {
-				"x": -704.000000,
-				"y": 0.000000
+				"x": -240.000000,
+				"y": 360.000000
 			},
 			"scale": {
-				"x": 1.000000,
-				"y": 1.000000
+				"x": 96.000000,
+				"y": 96.000000
 			},
 			"rotation": {
 				"z": 0.000000
 			},
 			"shape": {
-				"width": 128.000000,
-				"height": 1024.000000,
+				"width": 96.000000,
+				"height": 60.000000,
 				"offset": {
 					"x": 0.000000,
-					"y": 0.000000
-				}
-			}		},
-		{
-			"prefab": "P_FireLight",
-			"position": {
-				"x": 350.000000,
-				"y": 200.000000
-			},
-			"scale": {
-				"x": 80.000000,
-				"y": 80.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 60.000000,
-				"height": 45.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -40.000000
+					"y": -15.000000
 				}
 			},
 			"tiling": {
@@ -190,35 +268,14 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_ColliderLeftRightLong",
+			"prefab": "P_Grass",
 			"position": {
-				"x": 704.000000,
-				"y": 0.000000
+				"x": -96.000000,
+				"y": 96.000000
 			},
 			"scale": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 128.000000,
-				"height": 1024.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": 0.000000
-				}
-			}		},
-		{
-			"prefab": "P_Feathers",
-			"position": {
-				"x": 0.000000,
-				"y": 0.000000
-			},
-			"scale": {
-				"x": 160.000000,
-				"y": 160.000000
+				"x": 128.000000,
+				"y": 128.000000
 			},
 			"rotation": {
 				"z": 0.000000
@@ -229,46 +286,17 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_ColliderUpDownShort",
+			"prefab": "P_Grass",
 			"position": {
-				"x": -448.000000,
-				"y": 448.000000
+				"x": 192.000000,
+				"y": 296.000000
 			},
 			"scale": {
-				"x": 1.000000,
-				"y": 1.000000
+				"x": 128.000000,
+				"y": 128.000000
 			},
 			"rotation": {
 				"z": 0.000000
-			},
-			"shape": {
-				"width": 640.000000,
-				"height": 128.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": 0.000000
-				}
-			}		},
-		{
-			"prefab": "P_FireLight",
-			"position": {
-				"x": -350.000000,
-				"y": -200.000000
-			},
-			"scale": {
-				"x": 80.000000,
-				"y": 80.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 60.000000,
-				"height": 45.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -40.000000
-				}
 			},
 			"tiling": {
 				"x": 1.000000,
@@ -276,25 +304,17 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_FireLight",
+			"prefab": "P_Grass",
 			"position": {
-				"x": 350.000000,
-				"y": -200.000000
+				"x": 168.000000,
+				"y": 24.000000
 			},
 			"scale": {
-				"x": 80.000000,
-				"y": 80.000000
+				"x": 128.000000,
+				"y": 128.000000
 			},
 			"rotation": {
 				"z": 0.000000
-			},
-			"shape": {
-				"width": 60.000000,
-				"height": 45.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -40.000000
-				}
 			},
 			"tiling": {
 				"x": 1.000000,
@@ -302,9 +322,27 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_TreeTrunkBig",
+			"prefab": "P_Grass",
 			"position": {
-				"x": 136.000000,
+				"x": -208.000000,
+				"y": -328.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_TreeTrunk",
+			"position": {
+				"x": -136.000000,
 				"y": 192.000000
 			},
 			"scale": {
@@ -328,134 +366,10 @@
 			},
 			"repeats": true		},
 		{
-			"prefab": "P_Grass",
-			"position": {
-				"x": 128.000000,
-				"y": 64.000000
-			},
-			"scale": {
-				"x": 128.000000,
-				"y": 128.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"tiling": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"repeats": true		},
-		{
-			"prefab": "P_Grass",
-			"position": {
-				"x": -432.000000,
-				"y": 256.000000
-			},
-			"scale": {
-				"x": 128.000000,
-				"y": 128.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"tiling": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"repeats": true		},
-		{
-			"prefab": "P_Grass",
-			"position": {
-				"x": -456.000000,
-				"y": -232.000000
-			},
-			"scale": {
-				"x": 128.000000,
-				"y": 128.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"tiling": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"repeats": true		},
-		{
-			"prefab": "P_Grass",
-			"position": {
-				"x": 440.000000,
-				"y": 280.000000
-			},
-			"scale": {
-				"x": 128.000000,
-				"y": 128.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"tiling": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"repeats": true		},
-		{
-			"prefab": "P_Rock",
-			"position": {
-				"x": -488.000000,
-				"y": 296.000000
-			},
-			"scale": {
-				"x": 96.000000,
-				"y": 96.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 96.000000,
-				"height": 60.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -15.000000
-				}
-			},
-			"tiling": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"repeats": true		},
-		{
-			"prefab": "P_Rock",
-			"position": {
-				"x": -536.000000,
-				"y": -288.000000
-			},
-			"scale": {
-				"x": 96.000000,
-				"y": 96.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 96.000000,
-				"height": 60.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -15.000000
-				}
-			},
-			"tiling": {
-				"x": 1.000000,
-				"y": 1.000000
-			},
-			"repeats": true		},
-			{
 			"prefab": "P_Barrel",
 			"position": {
-				"x": 480.000000,
-				"y": -256.000000
+				"x": 496.000000,
+				"y": -288.000000
 			},
 			"scale": {
 				"x": 100.000000,
@@ -476,12 +390,12 @@
 				"x": 1.000000,
 				"y": 1.000000
 			},
-			"repeats": false		},
+			"repeats": true		},
 		{
 			"prefab": "P_Box",
 			"position": {
 				"x": 552.000000,
-				"y": -296.000000
+				"y": -232.000000
 			},
 			"scale": {
 				"x": 118.000000,
@@ -493,6 +407,58 @@
 			"shape": {
 				"width": 104.000000,
 				"height": 88.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": -8.000000
+				}
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_Pots01",
+			"position": {
+				"x": -160.000000,
+				"y": 72.000000
+			},
+			"scale": {
+				"x": 100.000000,
+				"y": 100.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 62.000000,
+				"height": 38.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": -8.000000
+				}
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_Pots01",
+			"position": {
+				"x": 352.000000,
+				"y": 336.000000
+			},
+			"scale": {
+				"x": 100.000000,
+				"y": 100.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 62.000000,
+				"height": 38.000000,
 				"offset": {
 					"x": 0.000000,
 					"y": -8.000000

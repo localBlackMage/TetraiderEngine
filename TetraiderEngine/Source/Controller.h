@@ -28,6 +28,7 @@ private:
 	bool m_isGameControllerEnabled;
 	float m_flySpeed;
 	float m_agility;
+	float m_waitTimeBeforeFlyIn;
 	bool m_isControlsEnabled;
 	bool m_isFlyingInLevel;
 	bool m_isFlyingOutOfLevel;

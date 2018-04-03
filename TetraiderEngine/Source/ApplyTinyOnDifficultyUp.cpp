@@ -1,6 +1,6 @@
 #include <Stdafx.h>
 
-ApplyTintOnDifficultyUp::ApplyTintOnDifficultyUp() :Component(ComponentType::C_ApplyTinyOnDifficultyUp) {}
+ApplyTintOnDifficultyUp::ApplyTintOnDifficultyUp() :Component(ComponentType::C_ApplyTintOnDifficultyUp) {}
 ApplyTintOnDifficultyUp::~ApplyTintOnDifficultyUp() {}
 
 
