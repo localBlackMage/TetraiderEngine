@@ -28,6 +28,10 @@ void AI_HitNRunAttack::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
+	if (!pAgent->IsInAttackRange()) {
+		pAgent->ChangeState(NPC_ENGAGE);
+		return;
+	}
 	if (pAgent->UseAttack(0)) {
 		attackCounter++;
 	}
@@ -39,5 +43,9 @@ void AI_HitNRunAttack::OnExit(){
 }
 
 void AI_HitNRunAttack::HandleEvent(Event* pEvent) {
+
+}
+
+void AI_HitNRunAttack::Serialize(const json& j) {
 
 }

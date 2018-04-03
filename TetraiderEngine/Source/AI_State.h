@@ -38,6 +38,7 @@ public:
 	virtual void OnUpdate(float dt) = 0;
 	virtual void OnExit() = 0;
 	virtual void HandleEvent(Event* pEvent) = 0;
+	virtual void Serialize(const json& j) = 0;
 
 	AIStateType StateType() const { return m_StateType; }
 

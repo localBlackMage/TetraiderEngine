@@ -65,7 +65,7 @@
 			},
 			{	"name": "NPC_ATTACK",
 				"behaviorIndex": 3,				
-				"AIStateType": "NPC_State_Attack"
+				"AIStateType": "NPC_State_RangeAttack"
 			},
 			{	"name": "NPC_RETREAT",
 				"behaviorIndex": 4,

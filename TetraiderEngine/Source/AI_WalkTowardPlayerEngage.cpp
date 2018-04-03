@@ -35,3 +35,6 @@ void AI_WalkTowardPlayerEngage::OnExit() {
 void AI_WalkTowardPlayerEngage::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_WalkTowardPlayerEngage::Serialize(const json& j) {
+}

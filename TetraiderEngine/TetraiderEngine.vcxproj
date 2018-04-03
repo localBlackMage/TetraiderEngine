@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AI_EnemyBatReaction.cpp" />
+    <ClCompile Include="Source\AI_RangeAttack.cpp" />
     <ClCompile Include="Source\ApplyTinyOnDifficultyUp.cpp" />
     <ClCompile Include="Source\HillNodes.cpp" />
     <ClCompile Include="Source\AI_BomberAttack.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
+    <ClInclude Include="Source\AI_RangeAttack.h" />
     <ClInclude Include="Source\ApplyTinyOnDifficultyUp.h" />
     <ClInclude Include="Source\HillNodes.h" />
     <ClInclude Include="Source\AI_BomberAttack.h" />

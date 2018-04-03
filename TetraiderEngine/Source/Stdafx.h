@@ -100,6 +100,7 @@ using namespace JsonReader;
 #include <AI_IdleForDuration.h>
 #include <AI_Engage.h>
 #include <AI_Attack.h>
+#include <AI_RangeAttack.h>
 #include <AI_Retreat.h>
 #include <AI_MoveToRandomPointInZone.h>
 #include <AI_WalkTowardPlayerAttack.h>

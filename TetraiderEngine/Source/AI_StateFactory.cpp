@@ -22,6 +22,7 @@ AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_IdleForDuration]] = AI_IdleForDuration::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Engage]] = AI_Engage::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Attack]] = AI_Attack::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RangeAttack]] = AI_RangeAttack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Retreat]] = AI_Retreat::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_MoveToRandomPointInZone]] = AI_MoveToRandomPointInZone::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_WalkTowardPlayerAttack]] = AI_WalkTowardPlayerAttack::CreateInstance;

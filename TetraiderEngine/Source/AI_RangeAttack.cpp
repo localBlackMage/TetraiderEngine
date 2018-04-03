@@ -4,40 +4,43 @@
 
 #include <Stdafx.h>
 
-AI_Attack::AI_Attack()
-: AI_State(NPC_State_Attack) {
+AI_RangeAttack::AI_RangeAttack()
+: AI_State(NPC_State_RangeAttack) {
 	attackLimit = 2;
 }
 
-AI_Attack::~AI_Attack(){
+AI_RangeAttack::~AI_RangeAttack(){
 }
 
-void AI_Attack::OnEnter(){
+void AI_RangeAttack::OnEnter(){
 	attackCounter = 1;
 }
 
-void AI_Attack::OnUpdate(float dt){
+void AI_RangeAttack::OnUpdate(float dt){
 	pAgent->LookAtPlayer();
 	if (attackCounter > attackLimit && pAgent->IsAttackAnimComplete()) {
 		pAgent->ChangeState(NPC_ENGAGE);
+	}
+	if (!pAgent->IsInAttackRange()) {
+		pAgent->ChangeState(NPC_ENGAGE);
+		return;
 	}
 	if (pAgent->UseAttack(0)) {
 		pAgent->PlayAttackAnim();
 		attackCounter++;
 	}
-
 	if (pAgent->IsAttackAnimComplete())
 		pAgent->ControlAnimationOnVelocity(true);
 }
 
-void AI_Attack::OnExit(){
+void AI_RangeAttack::OnExit(){
 	pAgent->SetSpeedMultiplier(1.0f);
 	pAgent->ControlAnimationOnVelocity(true);
 }
 
-void AI_Attack::HandleEvent(Event* pEvent) {
+void AI_RangeAttack::HandleEvent(Event* pEvent) {
 
 }
 
-void AI_Attack::Serialize(const json& j) {
+void AI_RangeAttack::Serialize(const json& j) {
 }

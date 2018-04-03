@@ -127,6 +127,9 @@ void NPCController::Serialize(const json& j) {
 			m_isControlAnimationOnVelocity = false;
 
 		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
+		if (ValueExists(j, "data")) {
+			newState->Serialize(j["data"]);
+		}
 		newState->pAgent = this;
 		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = newState;
 	}

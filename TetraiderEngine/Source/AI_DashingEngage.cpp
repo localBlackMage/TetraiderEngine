@@ -49,3 +49,6 @@ void AI_DashingEngage::OnExit(){
 void AI_DashingEngage::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_DashingEngage::Serialize(const json& j) {
+}

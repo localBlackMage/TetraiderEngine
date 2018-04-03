@@ -52,3 +52,6 @@ void AI_DashingAttack::HandleEvent(Event* pEvent) {
 			break;
 	}
 }
+
+void AI_DashingAttack::Serialize(const json& j) {
+}

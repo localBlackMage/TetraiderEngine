@@ -164,7 +164,8 @@
 	{
 		"Component": "DealDamageOnCollision",
 		"damage": 4,
-		"knockBackSpeed": 600
+		"knockBackSpeed": 600,
+		"hitCoolDown": 0.25
 	},
 	{
 		"Component": "SpawnOnHealthZero",

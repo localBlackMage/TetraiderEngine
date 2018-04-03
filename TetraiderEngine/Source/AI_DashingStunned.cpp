@@ -34,3 +34,6 @@ void AI_DashingStunned::OnExit(){
 void AI_DashingStunned::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_DashingStunned::Serialize(const json& j) {
+}

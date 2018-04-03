@@ -41,3 +41,6 @@ void AI_WalkTowardPlayerAttack::OnExit(){
 void AI_WalkTowardPlayerAttack::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_WalkTowardPlayerAttack::Serialize(const json& j) {
+}

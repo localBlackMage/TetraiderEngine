@@ -31,6 +31,7 @@ void DealDamageOnCollision::Serialize(const json& j) {
 	m_damage = ParseInt(j, "damage");
 	m_knockBackSpeed = ParseFloat(j, "knockBackSpeed");
 	m_isForceKnockBack = ParseBool(j, "isForceKnockBack");
+	m_hitCoolDown = ParseFloat(j, "hitCoolDown");
 }
 
 void DealDamageOnCollision::LateInitialize() {}

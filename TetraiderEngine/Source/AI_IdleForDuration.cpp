@@ -47,3 +47,6 @@ void AI_IdleForDuration::HandleEvent(Event* pEvent) {
 		pAgent->ChangeState(NPC_REACTION);
 	}
 }
+
+void AI_IdleForDuration::Serialize(const json& j) {
+}

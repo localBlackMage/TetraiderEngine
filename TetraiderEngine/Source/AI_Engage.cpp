@@ -38,7 +38,7 @@ void AI_Engage::OnUpdate(float dt) {
 		return;
 	}
 	// if player is out of sight, go back to idle
-	if (pAgent->IsPlayerOutOfSight() && sinceEngage > 3.0f) {
+	if (pAgent->IsPlayerOutOfSight()) {
 		pAgent->ChangeState(NPC_IDLE);
 		return;
 	}
@@ -64,4 +64,7 @@ void AI_Engage::OnExit(){
 
 void AI_Engage::HandleEvent(Event* pEvent) {
 
+}
+
+void AI_Engage::Serialize(const json& j) {
 }

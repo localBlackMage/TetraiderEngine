@@ -28,3 +28,6 @@ void AI_Retreat::OnExit(){
 void AI_Retreat::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_Retreat::Serialize(const json& j) {
+}

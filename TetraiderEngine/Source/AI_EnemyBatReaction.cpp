@@ -37,3 +37,6 @@ void AI_EnemyBatReaction::OnExit(){
 void AI_EnemyBatReaction::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_EnemyBatReaction::Serialize(const json& j) {
+}

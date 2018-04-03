@@ -36,3 +36,6 @@ void AI_Reaction::OnExit(){
 void AI_Reaction::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_Reaction::Serialize(const json& j) {
+}

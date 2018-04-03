@@ -45,6 +45,10 @@ void AI_Idle::OnExit(){
 void AI_Idle::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnTakeDamage:
-		pAgent->ChangeState(NPC_REACTION);
+		pAgent->ChangeState(NPC_ENGAGE);
 	}
+}
+
+void AI_Idle::Serialize(const json& j) {
+
 }

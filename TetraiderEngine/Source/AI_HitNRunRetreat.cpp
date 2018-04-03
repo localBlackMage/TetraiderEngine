@@ -57,3 +57,6 @@ void AI_HitNRunRetreat::OnExit(){
 void AI_HitNRunRetreat::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_HitNRunRetreat::Serialize(const json& j) {
+}

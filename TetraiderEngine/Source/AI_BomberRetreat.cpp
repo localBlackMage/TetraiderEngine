@@ -33,3 +33,6 @@ void AI_BomberRetreat::OnExit(){
 void AI_BomberRetreat::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_BomberRetreat::Serialize(const json& j) {
+}

@@ -62,3 +62,6 @@ void AI_HitNRunEngage::OnExit(){
 void AI_HitNRunEngage::HandleEvent(Event* pEvent) {
 
 }
+
+void AI_HitNRunEngage::Serialize(const json& j) {
+}
