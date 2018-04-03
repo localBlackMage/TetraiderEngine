@@ -31,6 +31,7 @@ void AI_RatBossEngage::OnEnter() {
 		engageTimer = RandomFloat(minimumEngage, 4);
 		triedMovingSoFar = 0.0f;
 		sinceEngage = 0.0f;
+		attackAfter = RandomFloat(1.0f, 5.0f);
 		break;
 	case PHASE3:
 		std::cout << "PHASE3\n";
@@ -42,6 +43,7 @@ void AI_RatBossEngage::OnEnter() {
 		engageTimer = RandomFloat(minimumEngage, 4);
 		triedMovingSoFar = 0.0f;
 		sinceEngage = 0.0f;
+		attackAfter = RandomFloat(1.0f, 5.0f);
 		break;
 	}
 }
@@ -90,6 +92,12 @@ void AI_RatBossEngage::OnUpdate(float dt) {
 			triedMovingSoFar = 0.0f;
 			return;
 		}
+		if (RandomInt(0, 400) < 1 && sinceAttack > attackAfter) {
+			if (pAgent->UseAttack(0)) {
+				pAgent->PlayAttackAnim();
+				sinceAttack = 0.0f;
+			}
+		}
 		// if next destination reached, pick another destination
 		if (pAgent->IsArrivedAtDestination()) {
 			pAgent->GoToPositionAroundPlayer();
@@ -98,6 +106,7 @@ void AI_RatBossEngage::OnUpdate(float dt) {
 		}
 		triedMovingSoFar += dt;
 		sinceEngage += dt;
+		sinceAttack += dt;
 		break;
 	case PHASE3:
 		// always face player on engage
@@ -106,6 +115,12 @@ void AI_RatBossEngage::OnUpdate(float dt) {
 		if (sinceEngage > engageTimer) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
+		}
+		if (RandomInt(0, 300) < 1 && sinceAttack > attackAfter){
+			if (pAgent->UseAttack(0)) {
+				pAgent->PlayAttackAnim();
+				sinceAttack = 0.0f;
+			}
 		}
 		// if this move has taken too much, change destination
 		if (triedMovingSoFar > tryTimeDuration) {
@@ -121,6 +136,7 @@ void AI_RatBossEngage::OnUpdate(float dt) {
 		}
 		triedMovingSoFar += dt;
 		sinceEngage += dt;
+		sinceAttack += dt;
 		break;
 	}
 }

@@ -33,6 +33,8 @@ private:
 	float triedMovingSoFar;
 	float sinceEngage;
 	
+	float sinceAttack;
+	float attackAfter;
 };
 
 #endif
