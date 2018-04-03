@@ -5,9 +5,9 @@
 	{
 		"Component": "PointLight",
 		"color": {
-			"r": 0.6, 
-			"g": 0.4, 
-			"b": 0.4, 
+			"r": 1, 
+			"g": 0.7, 
+			"b": 0, 
 			"a": 1
 		},
 		"distance": 1000.0,

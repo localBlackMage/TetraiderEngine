@@ -25,6 +25,22 @@
 	    }
     },
 	{
+			"Component": "PointLight",
+			"falloffA": -0.186,
+			"falloffB": 0.708,
+			"color": {
+				"r": 1, 
+				"g": 0.5, 
+				"b": 0, 
+				"a": 1
+			},
+			"distance": 100,
+			"offset": {
+				"z": 100
+			},
+			"layers": ["BG", "1", "2", "3"]
+	},
+	{
       "Component": "Sprite",
       "Texture": "T_ExplodingRock.png",
       "tiling": {

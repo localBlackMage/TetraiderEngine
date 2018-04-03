@@ -67,6 +67,14 @@
 				"z": 0
 			}
 		},
+		{
+			"prefab": "P_GrilledChicken",
+			"position": {
+				"x": 300,
+				"y": -275,
+				"z": 0
+			}
+		},
 
 		{
 			"prefab": "P_GateTriggerBox",
