@@ -37,6 +37,11 @@ AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_BomberRetreat]] = AI_BomberRetreat::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_Reaction]] = AI_Reaction::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_EnemyBatReaction]] = AI_EnemyBatReaction::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RatBossIdle]] = AI_RatBossIdle::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RatBossReaction]] = AI_RatBossReaction::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RatBossEngage]] = AI_RatBossEngage::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RatBossAttack]] = AI_RatBossAttack::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RatBossRetreat]] = AI_RatBossRetreat::CreateInstance;
 }
 
 AI_State* AIStateFactory::CreateState(std::string state){

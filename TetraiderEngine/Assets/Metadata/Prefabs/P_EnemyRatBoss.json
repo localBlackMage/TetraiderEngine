@@ -53,23 +53,23 @@
 			{
 				"name": "NPC_IDLE",
 				"behaviorIndex": 0,
-				"AIStateType": "NPC_State_Idle"
+				"AIStateType": "NPC_State_RatBossIdle"
 			},
 		    {	"name": "NPC_REACTION",
 		        "behaviorIndex": 1,
-		        "AIStateType": "NPC_State_Reaction"
+		        "AIStateType": "NPC_State_RatBossReaction"
 		    },
 			{	"name": "NPC_ENGAGE",
 				"behaviorIndex": 2,
-				"AIStateType": "NPC_State_Engage"
+				"AIStateType": "NPC_State_RatBossEngage"
 			},
 			{	"name": "NPC_ATTACK",
 				"behaviorIndex": 3,				
-				"AIStateType": "NPC_State_Attack"
+				"AIStateType": "NPC_State_RatBossAttack"
 			},
 			{	"name": "NPC_RETREAT",
 				"behaviorIndex": 4,
-				"AIStateType": "NPC_State_Retreat"
+				"AIStateType": "NPC_State_RatBossRetreat"
 			},
 			{	"name": "NPC_MOVETORANDOMPOINTINZONE",
 				"behaviorIndex": 5,

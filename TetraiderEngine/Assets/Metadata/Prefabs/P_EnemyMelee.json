@@ -62,7 +62,11 @@
 			},
 			{	"name": "NPC_ATTACK",
 				"behaviorIndex": 3,				
-				"AIStateType": "NPC_State_Attack"
+				"AIStateType": "NPC_State_Attack",
+				"data": {
+					"attackMinLimit": 1,
+					"attackMaxLimit": 3
+				}
 			},
 			{	"name": "NPC_RETREAT",
 				"behaviorIndex": 4,

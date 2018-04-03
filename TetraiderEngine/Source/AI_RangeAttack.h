@@ -28,8 +28,9 @@ public:
 	virtual void Serialize(const json& j);
 
 private:
-	int attackCounter;
-	int attackLimit;
+	int m_attackCounter;
+	int m_attackMaxLimit;
+	int m_attackMinLimit;
 };
 
 #endif

@@ -2,35 +2,37 @@
 Copyright (C) 2018 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: AI_Attack.h
-Purpose: Attack behavior of agent
+File Name: AI_RatBossEngage.h
+Purpose: Engage behavior of agent
 Language: C++
 Project: GAM541
 Author: Hyoyup Chung
-Creation date: 2/22/18
+Creation date: 4/03/18
 - End Header --------------------------------------------------------*/
+
 #pragma once
-#ifndef AI_ATTACK_H
-#define AI_ATTACK_H
+#ifndef AI_RATBOSS_ENGAGE_H
+#define AI_RATBOSS_ENGAGE_H
 
-//#include "AI_State.h"
-
-class AI_Attack : public AI_State {
+class AI_RatBossEngage : public AI_State {
 public:
-	AI_Attack();
-	~AI_Attack();
-	static AI_State* CreateInstance() { return new AI_Attack(); }
+	AI_RatBossEngage();
+	~AI_RatBossEngage();
+	static AI_State* CreateInstance() { return new AI_RatBossEngage(); }
 
 	virtual void OnEnter();
 	virtual void OnUpdate(float);
-	virtual void OnExit(); 
+	virtual void OnExit();
 	virtual void HandleEvent(Event* pEvent);
 	virtual void Serialize(const json& j);
 
 private:
-	int m_attackCounter;
-	int m_attackMaxLimit;
-	int m_attackMinLimit;
+	float tryTimeDuration; // in seconds
+	float engageTimer;
+	float minimumEngage;
+	float triedMovingSoFar;
+	float sinceEngage;
+	
 };
 
 #endif
