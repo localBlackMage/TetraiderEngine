@@ -127,8 +127,8 @@ void NPCController::Serialize(const json& j) {
 			m_isControlAnimationOnVelocity = false;
 
 		AI_State* newState = AIStateFactory.CreateState(ParseString((j)["AIStates"][i], "AIStateType"));
-		if (ValueExists(j, "data")) {
-			newState->Serialize(j["data"]);
+		if (ValueExists((j)["AIStates"][i], "data")) {
+			newState->Serialize((j)["AIStates"][i]["data"]);
 		}
 		newState->pAgent = this;
 		m_AIStates[ParseInt((j)["AIStates"][i], "behaviorIndex")] = newState;
@@ -582,4 +582,25 @@ void NPCController::AvoidObstacles(float dt) {
 
 		m_stuckTimer = 0.0f;
 	}*/
+}
+
+BossPhase NPCController::GetCurrentPhase() {
+	Health *pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
+	float maxHP = (float)pHealth->GetMaxHealth();
+	float curHP = (float)pHealth->GetHealth();
+	float index = maxHP / (float)TOTAL_PHASE_NUM;
+
+	return static_cast<BossPhase>( (int)std::ceil(curHP / index) - 1);
+}
+
+
+void NPCController::SteerTowardPlayer(float distance) {
+	Vector3D dir = m_pPlayerTransform->GetPosition() - m_targetDestination;
+	dir.Normalize();
+	m_targetDestination += distance * dir;
+}
+
+
+void NPCController::MoveInLookDirection(float distance) {
+	m_targetDestination += distance * m_lookDirection;
 }

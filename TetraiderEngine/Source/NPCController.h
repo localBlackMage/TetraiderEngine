@@ -53,6 +53,9 @@ public:
 	void ControlAnimationOnVelocity(bool active) { m_isControlAnimationOnVelocity = active; }
 	bool IsAttackAnimComplete();
 	void PlayAttackAnim();
+	BossPhase GetCurrentPhase();
+	void SteerTowardPlayer(float distance);
+	void MoveInLookDirection(float distance);
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
@@ -91,6 +94,7 @@ private:
 	GameObjectTag m_tagsToIgnore[4];
 	GameObjectTag m_tagsToIgnoreForObstacleAvoidance[3];
 	ObstacleAvoidanceDirection m_avoidDirection;
+	BossPhase m_currentBossPhase;
 
 	bool IsPlayerOutOfScreen();
 	void SetSecondaryTargetDestination(const Vector3D& pos) { m_secondaryDestination = pos; }

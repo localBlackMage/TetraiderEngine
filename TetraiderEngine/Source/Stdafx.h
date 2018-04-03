@@ -115,6 +115,11 @@ using namespace JsonReader;
 #include <AI_BomberRetreat.h>
 #include <AI_Reaction.h>
 #include <AI_EnemyBatReaction.h>
+#include <AI_RatBossIdle.h>
+#include <AI_RatBossReaction.h>
+#include <AI_RatBossEngage.h>
+#include <AI_RatBossAttack.h>
+#include <AI_RatBossRetreat.h>
 #include <AI_StateFactory.h>
 #pragma endregion
 

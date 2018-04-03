@@ -17,14 +17,17 @@ void GameConfig::LoadConfig(std::string s) {
 	json gameSettings = j[GAME_SETTINGS];
 	json renderSettings = j[RENDER_SETTINGS];
 
+	std::string deploymentMode = gameSettings["deploymentMode"];
+	std::string assetDirectory = gameSettings["assetDirectory"][deploymentMode];
+
 	// Set project directories
-	m_levelFilesDir = ParseString(gameSettings, "levelFilesDir");
-	m_prefabsDir = ParseString(gameSettings, "prefabsDir");
-	m_sfxDir = ParseString(gameSettings, "sfxDir");
-	m_shadersDir = ParseString(gameSettings, "shadersDir");
-	m_texturesDir = ParseString(gameSettings, "texturesDir");
-	m_roomFilesDir = ParseString(gameSettings, "roomFilesDir");
-	m_fontsDir = ParseString(gameSettings, "fontsDir");
+	m_levelFilesDir = assetDirectory + ParseString(gameSettings, "levelFilesDir");
+	m_prefabsDir = assetDirectory + ParseString(gameSettings, "prefabsDir");
+	m_sfxDir = assetDirectory + ParseString(gameSettings, "sfxDir");
+	m_shadersDir = assetDirectory + ParseString(gameSettings, "shadersDir");
+	m_texturesDir = assetDirectory + ParseString(gameSettings, "texturesDir");
+	m_roomFilesDir = assetDirectory + ParseString(gameSettings, "roomFilesDir");
+	m_fontsDir = assetDirectory + ParseString(gameSettings, "fontsDir");
 
 	m_debugEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
 
@@ -83,7 +86,7 @@ void GameConfig::LoadConfig(std::string s) {
 
 
 
-	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(gameSettings["powerUpSettings"]));
+	TETRA_PLAYERSTATS.InitializePowerUps(OpenJsonFile(assetDirectory + ParseString(gameSettings, "powerUpSettings")));
 }
 
 void GameConfig::SelectResolution(unsigned short resolutionIndex)

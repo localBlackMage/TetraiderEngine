@@ -6,25 +6,27 @@
 
 AI_HitNRunAttack::AI_HitNRunAttack()
 : AI_State(NPC_State_HitNRunAttack) {
-	attackLimit = 3;
+	m_attackMinLimit = 1;
+	m_attackMaxLimit = 3;	
+	m_minDistanceToPlayer = 210.0f;
 }
 
 AI_HitNRunAttack::~AI_HitNRunAttack(){
 }
 
 void AI_HitNRunAttack::OnEnter(){
-	attackCounter = 1;
-	float minDistanceToPlayer = 210.0f; 
+	m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
+
 	pAgent->StopMoving();
 }
 
 void AI_HitNRunAttack::OnUpdate(float dt){
 	pAgent->LookAtPlayer();
-	if (pAgent->IsPlayerTooClose(minDistanceToPlayer)) {
+	if (pAgent->IsPlayerTooClose(m_minDistanceToPlayer)) {
 		pAgent->ChangeState(NPC_RETREAT);
 		return;
 	}
-	if (attackCounter > attackLimit) {
+	if (m_attackCounter > m_attackMaxLimit) {
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
@@ -32,10 +34,11 @@ void AI_HitNRunAttack::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
+	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
-		attackCounter++;
+		m_attackCounter++;
 	}
-
+	pAgent->LookAtPlayer();
 }
 
 void AI_HitNRunAttack::OnExit(){
@@ -47,5 +50,7 @@ void AI_HitNRunAttack::HandleEvent(Event* pEvent) {
 }
 
 void AI_HitNRunAttack::Serialize(const json& j) {
-
+	m_attackMinLimit = ParseInt(j, "attackMinLimit");
+	m_attackMaxLimit = ParseInt(j, "attackMaxLimit");
+	m_minDistanceToPlayer = ParseFloat(j, "minDistanceToPlayer");
 }

@@ -3,11 +3,11 @@ Copyright (C) 2018 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: AI_RatBossIdle.h
-Purpose: Idle behavior of agent
+Purpose: Idle behavior of Rat Boss agent
 Language: C++
 Project: GAM541
 Author: Hyoyup Chung
-Creation date: 2/22/18
+Creation date: 4/03/18
 - End Header --------------------------------------------------------*/
 
 #pragma once
