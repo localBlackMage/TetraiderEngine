@@ -10,12 +10,12 @@
         "z": 0
       },
       "scale": {
-        "x": 42,
-        "y": 42,
+        "x": 375,
+        "y": 468,
         "z": 0
       },
       "pivotOffset": {
-        "x": 0,
+        "x": 1.4,
         "y": 0
       },
       "rotation": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_GoldenFeather.png",
+      "Texture": "T_SlashTest.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-	  "lit": false,
+      "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -50,29 +50,27 @@
       }
     },
 	{
-		"Component": "Body",
-		"isStatic": true,
-		"mass": 0,
-		"SHAPE": {
-			"type": "circle",
-			"radius": 16
-		}
+		"Component": "Animation",
+		"defaultAnimation": 0,
+		"isDisableRenderOnAnimComplete": true,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Slash",
+			"frames": 5,
+			"animationSpeed": 32,
+			"isLooping": false,
+			"isPlayOnAwake": false
+		}]
 	},
 	{
-		"Component": "Collectible",
-		"isHealth": false,
-		"isEgg": false,
-		"isGoldenFeather": true,
-		"value": 1
-	},
-	{
-		"Component": "WaveMovement",
-		"isModifyXPos": false,
-		"isModifyYPos": true,
-		"isAbsoluteValue": true,
-		"frequency": 2,
-		"phaseShift": 0,
-		"amplitude": 10
+		"Component": "Audio",
+		"audioClip": "swordSlash.mp3",
+		"volume": 0.5,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D": false
 	}
   ]
 }

@@ -174,7 +174,7 @@
 			"z": 0
 		},
 		"rotationOffset": 70,
-		"effectPrefab": "P_SlashTest"
+		"effectPrefab": "P_RatBossSwordSlash"
 	},
 	{
 		"Component": "SpawnOnHealthZero",

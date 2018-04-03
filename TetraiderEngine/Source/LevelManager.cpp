@@ -46,6 +46,7 @@ void LevelManager::Initialize(const json& j) {
 		config.cols = j[LEVEL_PARAMS][i]["cols"];
 		config.rows = j[LEVEL_PARAMS][i]["rows"];
 		config.difficulty = j[LEVEL_PARAMS][i]["difficulty"];
+		config.eggsToCollect = j[LEVEL_PARAMS][i]["eggsToCollect"];
 		config.bossAndShop = static_cast<BossAndShop>( (j[LEVEL_PARAMS][i]["boss"] ? 1 : 0) + (j[LEVEL_PARAMS][i]["shop"] ? 2 : 0) );
 
 		m_levelConfigs.push_back(config);
