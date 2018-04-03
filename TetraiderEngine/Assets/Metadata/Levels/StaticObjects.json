@@ -50,6 +50,9 @@
 	},
 	{
 	  "prefab": "P_RightTransition_02"
+	},
+	{
+	  "prefab": "P_ShopCanvas"
 	}
   ]
 }
