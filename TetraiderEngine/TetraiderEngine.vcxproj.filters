@@ -796,7 +796,6 @@
     <ClInclude Include="Source\CanvasTypeName.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FontInfo.h" />
     <ClInclude Include="Source\Slider.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
@@ -883,6 +882,9 @@
     </ClInclude>
     <ClInclude Include="Source\ApplyTinyOnDifficultyUp.h">
       <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FontInfo.h">
+      <Filter>Source Files\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
