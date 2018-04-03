@@ -497,14 +497,16 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 				return;
 			}
 
-			// Move all game objects in this room to their designated location
-			std::vector<GameObject*> createdGameObjects = TETRA_LEVELS.LoadRoomFile(*j);
-			for (GameObject* pGO : createdGameObjects) {
-				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-				if (pTransform)	pTransform->Move(offset);
+			if (m_roomNodes[row][col].m_type != RoomType::SPAWN && m_roomNodes[row][col].m_type != RoomType::SHOP) {
+				// Move all game objects in this room to their designated location
+				std::vector<GameObject*> createdGameObjects = TETRA_LEVELS.LoadRoomFile(*j);
+				for (GameObject* pGO : createdGameObjects) {
+					Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+					if (pTransform)	pTransform->Move(offset);
 
-				if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
-				else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
+					if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
+					else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
+				}
 			}
 		}
 	}
