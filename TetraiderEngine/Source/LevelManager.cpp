@@ -46,6 +46,7 @@ void LevelManager::Initialize(const json& j) {
 		config.cols = j[LEVEL_PARAMS][i]["cols"];
 		config.rows = j[LEVEL_PARAMS][i]["rows"];
 		config.difficulty = j[LEVEL_PARAMS][i]["difficulty"];
+		config.eggsToCollect = j[LEVEL_PARAMS][i]["eggsToCollect"];
 		config.bossAndShop = static_cast<BossAndShop>( (j[LEVEL_PARAMS][i]["boss"] ? 1 : 0) + (j[LEVEL_PARAMS][i]["shop"] ? 2 : 0) );
 
 		m_levelConfigs.push_back(config);
@@ -77,7 +78,7 @@ void LevelManager::LoadLevel() {
 		}
 
 		TETRA_LEVEL_GEN.GenerateRoomNodes(m_levelConfigs[m_levelsCompleted]);
-		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted]);
+		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted], 1522724474);
 		TETRA_LEVEL_GEN.PrintFloorPlan();
 		TETRA_LEVELS.LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();

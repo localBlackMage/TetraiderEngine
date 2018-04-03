@@ -1,5 +1,5 @@
 {
-  "Tag": "None",
+  "Tag": "Obstacle",
   "Layer": "2",
   "COMPONENTS": [
     {
@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 42,
-        "y": 42,
+        "x": 256,
+        "y": 256,
         "z": 0
       },
       "pivotOffset": {
@@ -24,9 +24,9 @@
         "z": 0
 	  }
     },
-	{
+    {
       "Component": "Sprite",
-      "Texture": "T_GoldenFeather.png",
+      "Texture": "T_TreeTrunk.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -35,7 +35,7 @@
         "u": 0,
         "v": 0
       },
-	  "lit": false,
+      "lit": true,
       "tint": {
         "r": 1,
         "g": 1,
@@ -54,25 +54,14 @@
 		"isStatic": true,
 		"mass": 0,
 		"SHAPE": {
-			"type": "circle",
-			"radius": 16
+			"type": "AABB",
+			"width": 125,
+			"height": 80,
+			"offset": {
+				"x": 0,
+				"y": -65
+			}
 		}
-	},
-	{
-		"Component": "Collectible",
-		"isHealth": false,
-		"isEgg": false,
-		"isGoldenFeather": true,
-		"value": 1
-	},
-	{
-		"Component": "WaveMovement",
-		"isModifyXPos": false,
-		"isModifyYPos": true,
-		"isAbsoluteValue": true,
-		"frequency": 2,
-		"phaseShift": 0,
-		"amplitude": 10
 	}
   ]
 }

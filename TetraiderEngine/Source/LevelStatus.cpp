@@ -28,6 +28,7 @@ void LevelStatus::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 		case EVENT_OnLevelInitialized: {
 			m_eggsCollected = 0;
+			m_eggsToCollect = TETRA_LEVELS.EggsToCollect();
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EggCounterInitialization, &CollectibleData(m_eggsToCollect)));
 			break;
 		}

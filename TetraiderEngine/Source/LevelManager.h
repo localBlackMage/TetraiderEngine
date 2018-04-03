@@ -13,6 +13,7 @@ struct LevelConfig {
 	unsigned short cols;
 	unsigned short rows;
 	unsigned short difficulty;
+	unsigned short eggsToCollect;
 	BossAndShop bossAndShop;
 };
 
@@ -48,12 +49,12 @@ public:
 	void NextLevel();
 	void RestartGame();
 	int GetLevelsCompleted() { return m_levelsCompleted; }
+	int EggsToCollect() { return m_levelConfigs[m_levelsCompleted].eggsToCollect; }
 	void HandleEvent(Event* pEvent);
 	bool IsLastLevel();
 	int GetCurrentLevel();
 	void LoadStaticGameObjects();
 	void ActivateRandomGeneration(bool isActive) {	m_isRandomlyGenerated = isActive; }
 };
-
 
 #endif

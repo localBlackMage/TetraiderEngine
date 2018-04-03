@@ -478,17 +478,18 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 					break;
 				}
 				case RoomType::BOSS: {
-					j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
-					//j = _GetRoomJsonForBoss(m_roomNodes[row][col].m_ConnectionType);
+					//j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+					j = _GetRoomJsonForBoss(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
 				case RoomType::SHOP: {
-					j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
-					//j = _GetRoomJsonForShop(m_roomNodes[row][col].m_ConnectionType);
+					//j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+					j = _GetRoomJsonForShop(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
 				default: {
 					j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
+					break;
 				}
 			}
 
@@ -503,8 +504,10 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 				Transform* pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
 				if (pTransform)	pTransform->Move(offset);
 
-				if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
-				else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
+				if (m_roomNodes[row][col].m_type != RoomType::SPAWN && m_roomNodes[row][col].m_type != RoomType::SHOP) {
+					if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
+					else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
+				}
 			}
 		}
 	}
@@ -557,16 +560,21 @@ void FloorPlanGenerator::LoadRoomFiles()
 			switch (bossAndShop) {
 				case BossAndShop::BOSS_ONLY: {
 					m_roomFiles[GetRoomConnectionType(name)][difficulty].bossRooms.push_back(j);
+					break;
 				}
 				case BossAndShop::SHOP_ONLY: {
 					m_roomFiles[GetRoomConnectionType(name)][difficulty].shopRooms.push_back(j);
+					break;
 				}
 				case BossAndShop::BOSS_SHOP: {
 					m_roomFiles[GetRoomConnectionType(name)][difficulty].bossRooms.push_back(j);
 					m_roomFiles[GetRoomConnectionType(name)][difficulty].shopRooms.push_back(j);
+					break;
 				}
-				default:
+				default: {
 					m_roomFiles[GetRoomConnectionType(name)][difficulty].normalRooms.push_back(j);
+					break;
+				}
 			}
 		}
 	}
