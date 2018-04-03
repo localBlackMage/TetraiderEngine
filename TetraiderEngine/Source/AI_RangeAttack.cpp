@@ -6,14 +6,15 @@
 
 AI_RangeAttack::AI_RangeAttack()
 : AI_State(NPC_State_RangeAttack) {
-	attackLimit = 2;
+	attackLimit = 3;
 }
 
 AI_RangeAttack::~AI_RangeAttack(){
 }
 
 void AI_RangeAttack::OnEnter(){
-	attackCounter = 1;
+	attackCounter = RandomInt(1,attackLimit+1);
+	std::cout << attackCounter << std::endl;
 }
 
 void AI_RangeAttack::OnUpdate(float dt){
@@ -25,10 +26,12 @@ void AI_RangeAttack::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
+	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
 		pAgent->PlayAttackAnim();
 		attackCounter++;
 	}
+	pAgent->LookAtPlayer();
 	if (pAgent->IsAttackAnimComplete())
 		pAgent->ControlAnimationOnVelocity(true);
 }

@@ -32,5 +32,12 @@ enum NPC_CONTROLLER_AI {
 	NPC_NUM_BEHAVIOR
 };
 
+enum BossPhase {
+	PHASE3,
+	PHASE2,
+	PHASE1,
+
+	TOTAL_PHASE_NUM
+};
 
 #endif

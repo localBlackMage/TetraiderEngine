@@ -6,14 +6,14 @@
 
 AI_BomberAttack::AI_BomberAttack()
 : AI_State(NPC_State_BomberAttack) {
-	attackLimit = 2;
+	attackLimit = 3;
 }
 
 AI_BomberAttack::~AI_BomberAttack(){
 }
 
 void AI_BomberAttack::OnEnter(){
-	attackCounter = 1;
+	attackCounter = RandomInt(1, attackLimit+1);
 }
 
 void AI_BomberAttack::OnUpdate(float dt){
@@ -21,9 +21,11 @@ void AI_BomberAttack::OnUpdate(float dt){
 	if (attackCounter > attackLimit) {
 		pAgent->ChangeState(NPC_RETREAT);
 	}
+	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
 		attackCounter++;
 	}
+	pAgent->LookAtPlayer();
 }
 
 void AI_BomberAttack::OnExit(){

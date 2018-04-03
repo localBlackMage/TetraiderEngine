@@ -583,3 +583,12 @@ void NPCController::AvoidObstacles(float dt) {
 		m_stuckTimer = 0.0f;
 	}*/
 }
+
+BossPhase NPCController::GetCurrentPhase() {
+	Health *pHealth = pGO->GetComponent<Health>(ComponentType::C_Health);
+	float maxHP = (float)pHealth->GetMaxHealth();
+	float curHP = (float)pHealth->GetHealth();
+	float index = maxHP / (float)TOTAL_PHASE_NUM;
+
+	return static_cast<BossPhase>( (int)std::ceil(curHP / index) - 1);
+}

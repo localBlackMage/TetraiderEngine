@@ -13,7 +13,7 @@ AI_HitNRunAttack::~AI_HitNRunAttack(){
 }
 
 void AI_HitNRunAttack::OnEnter(){
-	attackCounter = 1;
+	attackCounter = RandomInt(1, attackLimit+1);
 	float minDistanceToPlayer = 210.0f; 
 	pAgent->StopMoving();
 }
@@ -32,10 +32,11 @@ void AI_HitNRunAttack::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
+	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
 		attackCounter++;
 	}
-
+	pAgent->LookAtPlayer();
 }
 
 void AI_HitNRunAttack::OnExit(){

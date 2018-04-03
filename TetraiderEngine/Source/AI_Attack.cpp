@@ -13,7 +13,7 @@ AI_Attack::~AI_Attack(){
 }
 
 void AI_Attack::OnEnter(){
-	attackCounter = 1;
+	attackCounter = RandomInt(1, attackLimit);
 }
 
 void AI_Attack::OnUpdate(float dt){
@@ -25,7 +25,6 @@ void AI_Attack::OnUpdate(float dt){
 		pAgent->PlayAttackAnim();
 		attackCounter++;
 	}
-
 	if (pAgent->IsAttackAnimComplete())
 		pAgent->ControlAnimationOnVelocity(true);
 }
