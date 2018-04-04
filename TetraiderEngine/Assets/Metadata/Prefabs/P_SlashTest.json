@@ -56,7 +56,7 @@
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Slash",
-			"frames": 5,
+			"frames": 4,
 			"animationSpeed": 32,
 			"isLooping": false,
 			"isPlayOnAwake": false

@@ -151,8 +151,8 @@
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 40,
-		"maxHealth": 40,
+		"startingHealth": 50,
+		"maxHealth": 50,
 		"isInvincible": false
 	},
 	{
