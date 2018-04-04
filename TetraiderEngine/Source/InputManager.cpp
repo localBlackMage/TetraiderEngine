@@ -68,7 +68,7 @@ void InputManager::Update() {
 		TETRA_IMGUI.HandleSDLEvents(event);
 		switch (event.type) {
 			case SDL_QUIT:
-				TETRA_EVENTS.BroadcastEvent(&Event(EventType::WINDOW_CLOSED));
+				TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_WINDOW_CLOSED));
 				break;
 			case SDL_WINDOWEVENT:
 			{

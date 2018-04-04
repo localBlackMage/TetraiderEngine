@@ -49,7 +49,7 @@ void GameConfig::LoadConfig(std::string s) {
 	}
 	m_currentResolution = j[WINDOW_SETTINGS]["defaultResolution"];
 
-	TETRA_RENDERER.InitWindow(m_debugEnabled);
+	TETRA_RENDERER.InitWindow(m_debugEnabled, ParseBool(j[WINDOW_SETTINGS], "startInFullscreen"));
 	TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
 	TETRA_RENDERER.SetWindowTitle(ParseString(j[WINDOW_SETTINGS], "title"));
 
@@ -79,7 +79,7 @@ void GameConfig::LoadConfig(std::string s) {
 	IRD.pBaseShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "baseShader"));
 	if (m_debugEnabled)
 		TETRA_POST_PROCESSING.DebugInitialize();
-	TETRA_POST_PROCESSING.InitImageRenderers(IRD);
+	TETRA_POST_PROCESSING.InitImageRenderers(IRD, m_resolutions[m_currentResolution]);
 	m_postProcessingEnabled = ParseBool(renderSettings, "postProcessingEnabled");
 	if (m_postProcessingEnabled)
 		TETRA_POST_PROCESSING.Enable();
@@ -101,7 +101,7 @@ void GameConfig::SelectResolution(unsigned short resolutionIndex)
 	else 
 		TETRA_RENDERER.UnsetWindowFullscreen();
 
-	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
 }
 
 void GameConfig::NextResolution()

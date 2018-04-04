@@ -37,7 +37,7 @@ public:
 
 	inline Mesh& GetMesh() const { return m_mesh; }
 	void DebugInitialize();
-	void InitImageRenderers(ImageRenderersData metadata);
+	void InitImageRenderers(const ImageRenderersData& metadata, const Resolution& resolution);
 
 	inline void SetBaseShader(ShaderProgram* fboShader) { m_pBaseShader = fboShader; }
 	inline void EnableBaseShader() const { glUseProgram(m_pBaseShader->GetProgramID()); }

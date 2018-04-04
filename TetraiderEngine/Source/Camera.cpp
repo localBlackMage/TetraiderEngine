@@ -50,7 +50,7 @@ void Camera::Serialize(const json& j)
 void Camera::HandleEvent(Event * pEvent)
 {
 	switch (pEvent->Type()) {
-		case EventType::WINDOW_RESIZED: {
+		case EventType::EVENT_WINDOW_RESIZED: {
 			WindowResizedData* data = pEvent->Data<WindowResizedData>();
 			m_screenWidth = data->width;
 			m_screenHeight = data->height;
@@ -67,7 +67,7 @@ void Camera::LateInitialize()
 	if (m_primary)
 		TETRA_GAME_OBJECTS.SetPrimaryCamera(pGO);
 
-	TETRA_EVENTS.Subscribe(WINDOW_RESIZED, this);
+	TETRA_EVENTS.Subscribe(EVENT_WINDOW_RESIZED, this);
 	
 	Resolution res = TETRA_GAME_CONFIG.GetResolution();
 	m_screenWidth = res.width;
