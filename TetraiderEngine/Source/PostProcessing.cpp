@@ -27,6 +27,24 @@ PostProcessing::~PostProcessing()
 	if (m_pGaussianVIR)	delete m_pGaussianVIR;
 }
 
+void PostProcessing::HandleEvent(Event * p_event)
+{
+	switch (p_event->Type()) {
+		case EVENT_TOGGLE_POST_PROCESSING:
+		{
+			InputButtonData* data = p_event->Data<InputButtonData>();
+			if (data->m_isReleased)
+				Toggle();
+		}
+	}
+}
+
+void PostProcessing::DebugInitialize()
+{
+
+	TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_POST_PROCESSING, this);
+}
+
 void PostProcessing::InitImageRenderers(ImageRenderersData metadata)
 {
 	m_pGaussianHIR = new ImageRenderer(metadata.pGausHShader, 512, 512, FBO_NONE);

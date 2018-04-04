@@ -26,7 +26,7 @@
 		"gaussianVerticalShader": "gaussianBlurVertical",
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
-		"postProcessingEnabled": false
+		"postProcessingEnabled": true
 	},
 	"SHADERS": [
 		"fboRenderer",
@@ -57,7 +57,7 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 1
+		"defaultResolution": 3
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
@@ -263,8 +263,27 @@
 		},
 		
 		{
-			"Name": "ExitLevel",
+			"Name": "EVENT_ENTER_FULLSCREEN",
 			"EventType": 19,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 66,
+			"XboxKey": 0
+		},
+		{
+			"Name": "EVENT_LEAVE_FULLSCREEN",
+			"EventType": 20,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 68,
+			"XboxKey": 0
+		},
+		
+		{
+			"Name": "ExitLevel",
+			"EventType": 21,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -273,7 +292,7 @@
 		},
 		{
 			"Name": "AddGoldenFeathers",
-			"EventType": 21,
+			"EventType": 23,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

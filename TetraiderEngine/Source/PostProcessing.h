@@ -33,9 +33,10 @@ public:
 	PostProcessing(const PostProcessing &) = delete;
 	void operator=(const PostProcessing &) = delete;
 
-	virtual void HandleEvent(Event * p_event) {};
+	virtual void HandleEvent(Event * p_event);
 
 	inline Mesh& GetMesh() const { return m_mesh; }
+	void DebugInitialize();
 	void InitImageRenderers(ImageRenderersData metadata);
 
 	inline void SetBaseShader(ShaderProgram* fboShader) { m_pBaseShader = fboShader; }

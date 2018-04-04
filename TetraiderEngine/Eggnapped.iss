@@ -32,7 +32,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "Eggnapped.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "../Release/TetraiderEngine.exe"; DestDir: "{app}"; DestName: "Eggnapped.exe"; Flags: ignoreversion
 Source: "fmod.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fmodL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fmodstudioL.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -60,4 +60,5 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\README.txt"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent
 

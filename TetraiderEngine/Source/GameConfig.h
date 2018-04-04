@@ -4,7 +4,7 @@
 #define GAME_CONFIG_H
 
 struct Resolution {
-	short width, height;
+	unsigned short width, height;
 };
 
 class GameConfig
