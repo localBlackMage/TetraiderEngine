@@ -11,7 +11,7 @@
       },
       "scale": {
         "x": 700,
-        "y": 350,
+        "y": 425,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
 	{
       "Component": "Sprite",
-      "Texture": "T_StaminaBar.png",
+      "Texture": "T_UICanvas.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -54,16 +54,16 @@
 		"Component": "Text",
 		"letterHeight": 55,
 		"letterWidth": 28,
-		"spacing": 0.65,
+		"spacing": 0.75,
 		"alignment": "middle",
 		"pivotOffset": {
 			"x": 0,
 			"y": 120
 		},
 		"tint": {
-			"r": 1,
-			"g": 1,
-			"b": 1,
+			"r": 0.407,
+			"g": 0.274,
+			"b": 0.137,
 			"a": 1
 		},
 		"rows": 6,

@@ -32,10 +32,10 @@
 			"knockBackMultiplier": 1
 		},
 		"detectionRadius": 500,
-		"outOfSightRadius": 600,
+		"outOfSightRadius": 700,
 		"zoneWidth": 350,
 		"zoneHeight": 320,
-		"attackRange": 500,
+		"attackRange": 700,
 		"healthBarPrefab": "P_EnemyHealthBar",
 		"healthScale": 60,
 		"isDeathAnimationAvailable": true,
@@ -62,7 +62,12 @@
 			},
 			{	"name": "attackBehavior",
 				"behaviorIndex": 3,				
-				"AIStateType": "NPC_State_HitNRunAttack"
+				"AIStateType": "NPC_State_HitNRunAttack",
+				"data": {
+					"attackMinLimit": 2,
+					"attackMaxLimit": 4,
+					"minDistanceToPlayer": 210
+				}
 			},
 			{	"name": "retreatBehavior",
 				"behaviorIndex": 4,
@@ -177,7 +182,25 @@
 	},
 	{
 		"Component": "SpawnOnHealthZero",
-		"prefab": "P_EggPickUp"
+		"dropType": "random",
+		"RandomDrops": [
+			{
+				"prefab": "P_AmmoPickUp",
+				"weight": 20
+			},
+			{
+				"prefab": "P_MeatPickup",
+				"weight": 30
+			},
+			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 10
+			},
+			{
+				"prefab": "",
+				"weight": 80
+			}
+		]
 	}
   ]
 }

@@ -6,24 +6,25 @@
 
 AI_BomberAttack::AI_BomberAttack()
 : AI_State(NPC_State_BomberAttack) {
-	attackLimit = 3;
+	m_attackMinLimit = 1;
+	m_attackMaxLimit = 2;
 }
 
 AI_BomberAttack::~AI_BomberAttack(){
 }
 
 void AI_BomberAttack::OnEnter(){
-	attackCounter = RandomInt(1, attackLimit+1);
+	m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
 }
 
 void AI_BomberAttack::OnUpdate(float dt){
 	pAgent->LookAtPlayer();
-	if (attackCounter > attackLimit) {
+	if (m_attackCounter > m_attackMaxLimit) {
 		pAgent->ChangeState(NPC_RETREAT);
 	}
 	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
-		attackCounter++;
+		m_attackCounter++;
 	}
 	pAgent->LookAtPlayer();
 }
@@ -37,4 +38,6 @@ void AI_BomberAttack::HandleEvent(Event* pEvent) {
 }
 
 void AI_BomberAttack::Serialize(const json& j) {
+	m_attackMinLimit = ParseInt(j, "attackMinLimit");
+	m_attackMaxLimit = ParseInt(j, "attackMaxLimit");
 }

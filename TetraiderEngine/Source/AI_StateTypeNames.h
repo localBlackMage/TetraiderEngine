@@ -18,6 +18,11 @@ REGISTER_STATE(NPC_State_BomberAttack)
 REGISTER_STATE(NPC_State_BomberRetreat)
 REGISTER_STATE(NPC_State_Reaction)
 REGISTER_STATE(NPC_State_EnemyBatReaction)
+REGISTER_STATE(NPC_State_RatBossIdle)
+REGISTER_STATE(NPC_State_RatBossReaction)
+REGISTER_STATE(NPC_State_RatBossEngage)
+REGISTER_STATE(NPC_State_RatBossAttack)
+REGISTER_STATE(NPC_State_RatBossRetreat)
 
 
 // Add Some Other Controller States Below...

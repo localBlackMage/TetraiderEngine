@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 60,
-        "y": 60,
+        "x": 80,
+        "y": 80,
         "z": 0
       },
       "pivotOffset": {
@@ -67,7 +67,7 @@
 	"powerUpPricePrefab": "P_UIGoldenFeathersPrice",
 	"priceOffset": {
 		"x": -20,
-		"y": -50,
+		"y": -60,
 		"z": 0
 	},
 	"specialPowerIndex": 0

@@ -60,9 +60,10 @@
 	},
 	{
 		"Component": "DealDamageOnCollision",
-		"damage": 5,
+		"damage": 3,
 		"knockBackSpeed": 0,
-		"isForceKnockBack": false
+		"isForceKnockBack": false,
+		"hitCoolDown": 0.4
 	},
   {
     "Component": "TimeToLive",

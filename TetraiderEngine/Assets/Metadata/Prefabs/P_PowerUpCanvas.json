@@ -61,14 +61,6 @@
 					"y": -90,
 					"z": 0
 				}
-			},
-			{
-				"prefab": "P_ChooseYourBlessingText",
-				"position": {
-					"x": 0,
-					"y": 65,
-					"z": 0
-				}
 			}
 		]
 	},

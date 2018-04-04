@@ -6,20 +6,20 @@
 
 AI_RangeAttack::AI_RangeAttack()
 : AI_State(NPC_State_RangeAttack) {
-	attackLimit = 3;
+	m_attackMinLimit = 1;
+	m_attackMaxLimit = 3;
 }
 
 AI_RangeAttack::~AI_RangeAttack(){
 }
 
 void AI_RangeAttack::OnEnter(){
-	attackCounter = RandomInt(1,attackLimit+1);
-	std::cout << attackCounter << std::endl;
+	m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
 }
 
 void AI_RangeAttack::OnUpdate(float dt){
 	pAgent->LookAtPlayer();
-	if (attackCounter > attackLimit && pAgent->IsAttackAnimComplete()) {
+	if (m_attackCounter > m_attackMaxLimit && pAgent->IsAttackAnimComplete()) {
 		pAgent->ChangeState(NPC_ENGAGE);
 	}
 	if (!pAgent->IsInAttackRange()) {
@@ -29,7 +29,7 @@ void AI_RangeAttack::OnUpdate(float dt){
 	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
 		pAgent->PlayAttackAnim();
-		attackCounter++;
+		m_attackCounter++;
 	}
 	pAgent->LookAtPlayer();
 	if (pAgent->IsAttackAnimComplete())
@@ -46,4 +46,6 @@ void AI_RangeAttack::HandleEvent(Event* pEvent) {
 }
 
 void AI_RangeAttack::Serialize(const json& j) {
+	m_attackMinLimit = ParseInt(j, "attackMinLimit");
+	m_attackMaxLimit = ParseInt(j, "attackMaxLimit");
 }

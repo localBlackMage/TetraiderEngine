@@ -54,6 +54,8 @@ public:
 	bool IsAttackAnimComplete();
 	void PlayAttackAnim();
 	BossPhase GetCurrentPhase();
+	void SteerTowardPlayer(float distance);
+	void MoveInLookDirection(float distance);
 protected:
 	Weapon* m_pWeapon;
 	float GetSquareDistanceToPlayer();
