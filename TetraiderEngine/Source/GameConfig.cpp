@@ -44,8 +44,8 @@ void GameConfig::LoadConfig(std::string s) {
 	m_roomHeight = j[ROOM_SETTINGS]["roomHeight"];
 
 	for (unsigned int i = 0; i < j[WINDOW_SETTINGS]["resolutions"].size(); ++i) {
-		m_resolutions[i].width = j[WINDOW_SETTINGS]["resolutions"][i]["width"];
-		m_resolutions[i].height = j[WINDOW_SETTINGS]["resolutions"][i]["height"];
+		m_resolutions[i].width = unsigned short(j[WINDOW_SETTINGS]["resolutions"][i]["width"]);
+		m_resolutions[i].height = unsigned short(j[WINDOW_SETTINGS]["resolutions"][i]["height"]);
 	}
 	m_currentResolution = j[WINDOW_SETTINGS]["defaultResolution"];
 
@@ -77,6 +77,8 @@ void GameConfig::LoadConfig(std::string s) {
 	IRD.pGausHShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianHorizontalShader"));
 	IRD.pGausVShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianVerticalShader"));
 	IRD.pBaseShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "baseShader"));
+	if (m_debugEnabled)
+		TETRA_POST_PROCESSING.DebugInitialize();
 	TETRA_POST_PROCESSING.InitImageRenderers(IRD);
 	m_postProcessingEnabled = ParseBool(renderSettings, "postProcessingEnabled");
 	if (m_postProcessingEnabled)
@@ -94,6 +96,10 @@ void GameConfig::SelectResolution(unsigned short resolutionIndex)
 	if (resolutionIndex > 3)	return;
 	m_currentResolution = resolutionIndex;
 	TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
+	if (m_currentResolution == 3)
+		TETRA_RENDERER.SetWindowToFullscreen();
+	else 
+		TETRA_RENDERER.UnsetWindowFullscreen();
 
 	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
 }

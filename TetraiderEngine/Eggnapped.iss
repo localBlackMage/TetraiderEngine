@@ -32,7 +32,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "Eggnapped.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "../Release/TetraiderEngine.exe"; DestDir: "{app}"; DestName: "Eggnapped.exe"; Flags: ignoreversion
 Source: "fmod.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fmodL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fmodstudioL.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -50,6 +50,7 @@ Source: "SDL2_mixer.lib"; DestDir: "{app}"; Flags: ignoreversion
 Source: "SDL2_ttf.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "config.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -59,4 +60,5 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\README.txt"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent
 
