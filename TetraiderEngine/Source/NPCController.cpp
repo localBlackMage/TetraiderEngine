@@ -595,8 +595,9 @@ BossPhase NPCController::GetCurrentPhase() {
 
 
 void NPCController::SteerTowardPlayer(float distance) {
-	Vector3D dir = m_pPlayerTransform->GetPosition() - m_targetDestination;
+	Vector3D dir = m_pPlayerTransform->GetPosition() - m_pTransform->GetPosition();
 	dir.Normalize();
+	m_lookDirection = dir;
 	m_targetDestination += distance * dir;
 }
 

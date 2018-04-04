@@ -5,7 +5,7 @@ AI_RatBossAttack::AI_RatBossAttack()
 	m_attackMinLimit = 2;
 	m_attackMaxLimit = 3;
 
-	m_steerFor = 2.0f;
+	m_steerFor = 0.2f;
 }
 
 AI_RatBossAttack::~AI_RatBossAttack(){
@@ -48,7 +48,11 @@ void AI_RatBossAttack::OnUpdate(float dt){
 		if (m_steerTimer < m_steerFor) {
 			pAgent->SteerTowardPlayer(4.5f);
 		}
-		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor+0.5f)) {
+		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor + 1.2f)) {
+			pAgent->StopMoving();
+		}
+
+		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor + 1.6f)) {
 			pAgent->ChangeState(NPC_RETREAT);
 		}
 		if (pAgent->UseAttack(0)) {
@@ -62,9 +66,12 @@ void AI_RatBossAttack::OnUpdate(float dt){
 	case PHASE3:
 		pAgent->LookInDirectionOfMovement();
 		if (m_steerTimer < m_steerFor) {
-			pAgent->SteerTowardPlayer(7.0f);
+			pAgent->SteerTowardPlayer(7.5f);
 		}
-		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor + 0.5f)) {
+		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor + 1.2f)) {
+			pAgent->StopMoving();
+		}
+		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor + 1.6f)) {
 			pAgent->ChangeState(NPC_RETREAT);
 		}
 		if (pAgent->UseAttack(0)) {
