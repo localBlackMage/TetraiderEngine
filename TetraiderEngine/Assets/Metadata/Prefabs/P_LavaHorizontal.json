@@ -24,6 +24,22 @@
         "z": 0
 	  }
     },
+	{
+		"Component": "PointLight",
+		"color": {
+			"r": 1, 
+			"g": 0.7, 
+			"b": 0, 
+			"a": 1
+		},
+		"distance": 150,
+		"falloffA": -0.7,
+		"falloffB": 0.265,
+		"offset": {
+			"z": 50
+		},
+		"layers": ["BG", "1", "2", "3"]
+	},
     {
       "Component": "Sprite",
       "Texture": "T_Lava_Horizontal.png",

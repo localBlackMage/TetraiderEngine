@@ -23,7 +23,6 @@ void LightBase::Serialize(const json& j)
 	m_offset = ParseVector3D(j, "offset");
 
 	m_distance = j["distance"];
-
 	m_a = ValueExists(j, "falloffA") ? j["falloffA"] : m_a;
 	m_b = ValueExists(j, "falloffB") ? j["falloffB"] : m_b;
 

@@ -36,7 +36,7 @@ void CutScene::Update(float dt)
 	{
 		if (m_isIntro) {
 			TETRA_LEVELS.ActivateRandomGeneration(true);
-			TETRA_LEVELS.ChangeLevel(0);
+			TETRA_LEVELS.ChangeLevel(2);
 		}
 	}
 }
