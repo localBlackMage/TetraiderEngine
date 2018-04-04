@@ -46,14 +46,13 @@ void AI_RatBossAttack::OnUpdate(float dt){
 	case PHASE2:
 		pAgent->LookInDirectionOfMovement();
 		if (m_steerTimer < m_steerFor) {
-			pAgent->SteerTowardPlayer(1.35f);
+			pAgent->SteerTowardPlayer(4.5f);
 		}
 		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor+0.5f)) {
 			pAgent->ChangeState(NPC_RETREAT);
 		}
 		if (pAgent->UseAttack(0)) {
 			pAgent->PlayAttackAnim();
-			m_attackCounter++;
 		}
 		if (pAgent->IsAttackAnimComplete())
 			pAgent->ControlAnimationOnVelocity(true);
@@ -63,14 +62,13 @@ void AI_RatBossAttack::OnUpdate(float dt){
 	case PHASE3:
 		pAgent->LookInDirectionOfMovement();
 		if (m_steerTimer < m_steerFor) {
-			pAgent->SteerTowardPlayer(1.35f);
+			pAgent->SteerTowardPlayer(7.0f);
 		}
 		if (pAgent->IsArrivedAtDestination() && pAgent->IsAttackAnimComplete() || (m_steerTimer > m_steerFor + 0.5f)) {
 			pAgent->ChangeState(NPC_RETREAT);
 		}
 		if (pAgent->UseAttack(0)) {
 			pAgent->PlayAttackAnim();
-			m_attackCounter++;
 		}
 		if (pAgent->IsAttackAnimComplete())
 			pAgent->ControlAnimationOnVelocity(true);

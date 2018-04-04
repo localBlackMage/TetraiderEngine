@@ -23,7 +23,7 @@ void AI_RatBossEngage::OnEnter() {
 		break;
 	case PHASE2:
 		std::cout << "PHASE2\n";
-		pAgent->LookAtPlayer();
+		//pAgent->LookAtPlayer();
 		pAgent->GoToPositionAroundPlayer();
 		pAgent->SetSpeedMultiplier(1.6f);
 		tryTimeDuration = RandomFloat(1.0f, 2.2f);
@@ -35,15 +35,15 @@ void AI_RatBossEngage::OnEnter() {
 		break;
 	case PHASE3:
 		std::cout << "PHASE3\n";
-		pAgent->LookAtPlayer();
+		//pAgent->LookAtPlayer();
 		pAgent->GoToPositionAroundPlayer();
-		pAgent->SetSpeedMultiplier(2.1f);
+		pAgent->SetSpeedMultiplier(2.3f);
 		tryTimeDuration = RandomFloat(1.0f, 2.2f);
 		minimumEngage = 2;
 		engageTimer = RandomFloat(minimumEngage, 4);
 		triedMovingSoFar = 0.0f;
 		sinceEngage = 0.0f;
-		attackAfter = RandomFloat(1.0f, 5.0f);
+		attackAfter = RandomFloat(1.0f, 4.0f);
 		break;
 	}
 }
@@ -92,12 +92,12 @@ void AI_RatBossEngage::OnUpdate(float dt) {
 			triedMovingSoFar = 0.0f;
 			return;
 		}
-		if (RandomInt(0, 400) < 1 && sinceAttack > attackAfter) {
-			if (pAgent->UseAttack(0)) {
-				pAgent->PlayAttackAnim();
-				sinceAttack = 0.0f;
-			}
-		}
+		//if (RandomInt(0, 400) < 1 && sinceAttack > attackAfter) {
+		//	if (pAgent->UseAttack(0)) {
+		//		pAgent->PlayAttackAnim();
+		//		sinceAttack = 0.0f;
+		//	}
+		//}
 		// if next destination reached, pick another destination
 		if (pAgent->IsArrivedAtDestination()) {
 			pAgent->GoToPositionAroundPlayer();
@@ -116,12 +116,12 @@ void AI_RatBossEngage::OnUpdate(float dt) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
 		}
-		if (RandomInt(0, 300) < 1 && sinceAttack > attackAfter){
-			if (pAgent->UseAttack(0)) {
-				pAgent->PlayAttackAnim();
-				sinceAttack = 0.0f;
-			}
-		}
+		//if (RandomInt(0, 350) < 2 && sinceAttack > attackAfter){
+		//	if (pAgent->UseAttack(0)) {
+		//		pAgent->PlayAttackAnim();
+		//		sinceAttack = 0.0f;
+		//	}
+		//}
 		// if this move has taken too much, change destination
 		if (triedMovingSoFar > tryTimeDuration) {
 			pAgent->GoToPositionAroundPlayer();
