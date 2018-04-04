@@ -50,6 +50,7 @@ Source: "SDL2_mixer.lib"; DestDir: "{app}"; Flags: ignoreversion
 Source: "SDL2_ttf.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "config.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
