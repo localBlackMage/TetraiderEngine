@@ -24,7 +24,7 @@ void FrameBufferObject::_CreateTextureAttachment()
 
 void FrameBufferObject::_CreateDepthBufferAttachment()
 {
-	glGenRenderbuffers(GL_RENDERBUFFER, &m_depthBuffer);
+	glGenRenderbuffers(1, &m_depthBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, m_depthBuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_width, m_height);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBuffer);

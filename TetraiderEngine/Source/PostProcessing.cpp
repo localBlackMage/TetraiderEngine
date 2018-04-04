@@ -35,24 +35,32 @@ void PostProcessing::HandleEvent(Event * p_event)
 			InputButtonData* data = p_event->Data<InputButtonData>();
 			if (data->m_isReleased)
 				Toggle();
+			break;
+		}
+		case EventType::EVENT_WINDOW_RESIZED: {
+			WindowResizedData* data = p_event->Data<WindowResizedData>();
+			if (m_pBaseIR)	delete m_pBaseIR;
+			m_pBaseIR = new ImageRenderer(m_pBaseShader, data->width, data->height, FBO_DEPTH_RENDER_BUFFER);
+			break;
 		}
 	}
 }
 
 void PostProcessing::DebugInitialize()
 {
-
 	TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_POST_PROCESSING, this);
 }
 
-void PostProcessing::InitImageRenderers(ImageRenderersData metadata)
+void PostProcessing::InitImageRenderers(const ImageRenderersData& metadata, const Resolution& resolution)
 {
 	m_pGaussianHIR = new ImageRenderer(metadata.pGausHShader, 512, 512, FBO_NONE);
 	m_pGaussianVIR = new ImageRenderer(metadata.pGausVShader, 512, 512, FBO_NONE);
-	m_pBaseIR = new ImageRenderer( metadata.pBaseShader, 2048, 2048, FBO_NONE );
+	m_pBaseIR = new ImageRenderer( metadata.pBaseShader, resolution.width, resolution.height, FBO_DEPTH_RENDER_BUFFER);
 	m_pSecondBaseIR = new ImageRenderer(metadata.pBaseShader, 2048, 2048, FBO_NONE);
 
 	m_pBaseShader = metadata.pBaseShader;
+
+	TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
 }
 
 void PostProcessing::RenderBaseFBO() const
@@ -80,8 +88,8 @@ void PostProcessing::DoPostProcessing()
 	_Start();
 
 	// Bind + clear gaus blur FBO
-	m_pGaussianHIR->ClearBuffer();
-	m_pGaussianVIR->ClearBuffer();
+	//m_pGaussianHIR->ClearBuffer();
+	//m_pGaussianVIR->ClearBuffer();
 
 	//m_pGaussianVIR->Render(m_pBaseIR);
 	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);

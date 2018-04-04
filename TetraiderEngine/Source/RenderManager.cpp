@@ -3,7 +3,7 @@
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
-	m_clearColor(Vector3D(.2f,.2f,.2f,1.f)), m_isFullscreen(false)
+	/*m_clearColor(Vector3D(.2f,.2f,.2f,1.f)),*/m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
 {
 }
 
@@ -537,40 +537,39 @@ void RenderManager::HandleEvent(Event * p_event)
 
 		case EVENT_PREV_RESOLUTION:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	TETRA_GAME_CONFIG.PrevResolution();
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				TETRA_GAME_CONFIG.PrevResolution();
 			break;
 		}
 		case EVENT_NEXT_RESOLUTION:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	TETRA_GAME_CONFIG.NextResolution();
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				TETRA_GAME_CONFIG.NextResolution();
 			break;
 		}
 
 		case EVENT_ENTER_FULLSCREEN:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	SetWindowToFullscreen();
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				SetWindowToFullscreen();
 			break;
 		}
 		case EVENT_LEAVE_FULLSCREEN:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	UnsetWindowFullscreen();
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				UnsetWindowFullscreen();
 			break;
 		}
 
 		case EVENT_TOGGLE_LIGHTS:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	m_lights = !m_lights;
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				m_lights = !m_lights;
 			break;
 		}
 		case EVENT_TOGGLE_CURSOR:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased) {
+			if (p_event->Data<InputButtonData>()->m_isReleased) {
 				m_cursorEnabled = !m_cursorEnabled;
 				if (m_cursorEnabled)
 					EnableWindowsCursor();
@@ -605,7 +604,7 @@ void RenderManager::SetUpConsole()
 	}
 }
 
-void RenderManager::InitWindow(bool debugEnabled)
+void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 {
 	if (debugEnabled) {
 		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
@@ -638,9 +637,10 @@ void RenderManager::InitWindow(bool debugEnabled)
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL);
+		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
-	SetWindowToFullscreen();
+	if (startFullScreen)
+		SetWindowToFullscreen();
 
 	// Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;

@@ -126,7 +126,7 @@ public:
 	virtual void HandleEvent(Event * p_event);
 
 	void SetUpConsole();
-	void InitWindow(bool debugEnabled);
+	void InitWindow(bool debugEnabled, bool startFullScreen);
 	void EnableWindowsCursor();
 	void DisableWindowsCursor(); 
 	void SetWindowToFullscreen();
