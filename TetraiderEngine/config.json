@@ -1,6 +1,6 @@
 {
 	"GAME_SETTINGS": {
-		"deploymentMode": "debug",
+		"deploymentMode": "release",
 		"assetDirectory": {
 			"debug": "../TetraiderEngine/Assets/",
 			"release": "Assets/"
@@ -26,7 +26,7 @@
 		"gaussianVerticalShader": "gaussianBlurVertical",
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
-		"postProcessingEnabled": false
+		"postProcessingEnabled": true
 	},
 	"SHADERS": [
 		"fboRenderer",
@@ -57,7 +57,8 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 1
+		"defaultResolution": 1,
+		"startInFullscreen": false
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
@@ -170,7 +171,7 @@
 		},
 		{
 			"Name": "OpenShop",
-			"EventType": 20,
+			"EventType": 10,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -180,7 +181,7 @@
 		
 		{
 			"Name": "LIGHT_A_DOWN",
-			"EventType": 10,
+			"EventType": 11,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -189,7 +190,7 @@
 		},
 		{
 			"Name": "LIGHT_A_UP",
-			"EventType": 11,
+			"EventType": 12,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -199,7 +200,7 @@
 		
 		{
 			"Name": "LIGHT_B_DOWN",
-			"EventType": 12,
+			"EventType": 13,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -208,7 +209,7 @@
 		},
 		{
 			"Name": "LIGHT_B_UP",
-			"EventType": 13,
+			"EventType": 14,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -217,7 +218,7 @@
 		},
 		{
 			"Name": "TOGGLE_LIGHTS",
-			"EventType": 14,
+			"EventType": 15,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -226,7 +227,7 @@
 		},
 		{
 			"Name": "TOGGLE_CURSOR",
-			"EventType": 15,
+			"EventType": 16,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -235,7 +236,7 @@
 		},
 		{
 			"Name": "TOGGLE_POST_PROCESSING",
-			"EventType": 16,
+			"EventType": 17,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -245,7 +246,7 @@
 		
 		{
 			"Name": "EVENT_PREV_RESOLUTION",
-			"EventType": 17,
+			"EventType": 18,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -254,7 +255,7 @@
 		},
 		{
 			"Name": "EVENT_NEXT_RESOLUTION",
-			"EventType": 18,
+			"EventType": 19,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -263,8 +264,27 @@
 		},
 		
 		{
+			"Name": "EVENT_ENTER_FULLSCREEN",
+			"EventType": 20,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 66,
+			"XboxKey": 0
+		},
+		{
+			"Name": "EVENT_LEAVE_FULLSCREEN",
+			"EventType": 21,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 68,
+			"XboxKey": 0
+		},
+		
+		{
 			"Name": "ExitLevel",
-			"EventType": 19,
+			"EventType": 22,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,
@@ -273,7 +293,7 @@
 		},
 		{
 			"Name": "AddGoldenFeathers",
-			"EventType": 21,
+			"EventType": 23,
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": false,

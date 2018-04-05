@@ -33,10 +33,11 @@ public:
 	PostProcessing(const PostProcessing &) = delete;
 	void operator=(const PostProcessing &) = delete;
 
-	virtual void HandleEvent(Event * p_event) {};
+	virtual void HandleEvent(Event * p_event);
 
 	inline Mesh& GetMesh() const { return m_mesh; }
-	void InitImageRenderers(ImageRenderersData metadata);
+	void DebugInitialize();
+	void InitImageRenderers(const ImageRenderersData& metadata, const Resolution& resolution);
 
 	inline void SetBaseShader(ShaderProgram* fboShader) { m_pBaseShader = fboShader; }
 	inline void EnableBaseShader() const { glUseProgram(m_pBaseShader->GetProgramID()); }

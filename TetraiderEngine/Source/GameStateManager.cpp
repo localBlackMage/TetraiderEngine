@@ -53,7 +53,7 @@ void GameStateManager::Update() {
 
 void GameStateManager::HandleEvent(Event * p_event) {
 	switch (p_event->Type()) {
-		case WINDOW_CLOSED: {
+		case EVENT_WINDOW_CLOSED: {
 			SetGameState(GameState::QUIT);
 			break;
 		}

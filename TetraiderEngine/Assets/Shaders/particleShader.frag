@@ -11,5 +11,6 @@ layout(location = 4) in vec2 vframe_size;
 out vec4 frag_color;
 
 void main(void) {
-	frag_color = texture(spriteTexture, ((vtexture_coord * vframe_size) + vframe_offset)) * vtint_color * brightness_tint;
+	vec4 textureColor = texture(spriteTexture, ((vtexture_coord * vframe_size) + vframe_offset));
+	frag_color = textureColor * vtint_color * brightness_tint;
 }

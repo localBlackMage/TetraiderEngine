@@ -24,12 +24,13 @@ void main(void) {
 	vec4 color4 = texture(fourthTexture, vtexture_coord);
 	vec4 finalColor = color1;
 	
+	/*
 	if (texturesToRead >= 2)
 		finalColor = colorAbeforeColorB(color2, color1);
 	if (texturesToRead >= 3)
 		finalColor = colorAbeforeColorB(color3, color2);
 	if (texturesToRead >= 4)
 		finalColor = colorAbeforeColorB(color4, color3);
-	
+	*/
 	frag_color = finalColor;
 }

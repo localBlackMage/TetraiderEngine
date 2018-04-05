@@ -84,6 +84,8 @@ private:
 	ShaderProgram * m_pCurrentProgram;
 	std::string m_debugShaderName;
 
+	bool m_isFullscreen;
+
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
 	void _RenderSprite(const Sprite* pSpriteComp);
@@ -124,15 +126,17 @@ public:
 	virtual void HandleEvent(Event * p_event);
 
 	void SetUpConsole();
-	void InitWindow(bool debugEnabled);
+	void InitWindow(bool debugEnabled, bool startFullScreen);
 	void EnableWindowsCursor();
 	void DisableWindowsCursor(); 
+	void SetWindowToFullscreen();
+	void UnsetWindowFullscreen();
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
 	void SetWindowDimensions(int width, int height);
 	void SetWindowTitle(std::string title);
-	int WindowWidth() { return m_width; }
-	int WindowHeight() { return m_height; }
+	inline int WindowWidth() { return m_width; }
+	inline int WindowHeight() { return m_height; }
 	float GetAspectRatio() const;
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 

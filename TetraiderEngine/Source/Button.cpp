@@ -62,7 +62,7 @@ void Button::HandleEvent(Event* pEvent)
 			}
 			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				if (m_isQuit) {
-					TETRA_EVENTS.BroadcastEvent(&Event(WINDOW_CLOSED));
+					TETRA_EVENTS.BroadcastEvent(&Event(EVENT_WINDOW_CLOSED));
 				}
 				else if (m_isRestart) {
 					TETRA_LEVELS.ChangeLevel(TETRA_LEVELS.GetCurrentLevel());

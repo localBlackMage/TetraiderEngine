@@ -3,7 +3,7 @@
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
-	m_clearColor(Vector3D(.2f,.2f,.2f,1.f))
+	/*m_clearColor(Vector3D(.2f,.2f,.2f,1.f)),*/m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
 {
 }
 
@@ -537,27 +537,39 @@ void RenderManager::HandleEvent(Event * p_event)
 
 		case EVENT_PREV_RESOLUTION:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	TETRA_GAME_CONFIG.PrevResolution();
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				TETRA_GAME_CONFIG.PrevResolution();
 			break;
 		}
 		case EVENT_NEXT_RESOLUTION:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	TETRA_GAME_CONFIG.NextResolution();
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				TETRA_GAME_CONFIG.NextResolution();
+			break;
+		}
+
+		case EVENT_ENTER_FULLSCREEN:
+		{
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				SetWindowToFullscreen();
+			break;
+		}
+		case EVENT_LEAVE_FULLSCREEN:
+		{
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				UnsetWindowFullscreen();
 			break;
 		}
 
 		case EVENT_TOGGLE_LIGHTS:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)	m_lights = !m_lights;
+			if (p_event->Data<InputButtonData>()->m_isReleased)	
+				m_lights = !m_lights;
 			break;
 		}
 		case EVENT_TOGGLE_CURSOR:
 		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased) {
+			if (p_event->Data<InputButtonData>()->m_isReleased) {
 				m_cursorEnabled = !m_cursorEnabled;
 				if (m_cursorEnabled)
 					EnableWindowsCursor();
@@ -565,12 +577,6 @@ void RenderManager::HandleEvent(Event * p_event)
 					DisableWindowsCursor();
 			}
 			break;
-		}
-		case EVENT_TOGGLE_POST_PROCESSING:
-		{
-			InputButtonData* data = p_event->Data<InputButtonData>();
-			if (data->m_isReleased)
-				TETRA_POST_PROCESSING.Toggle();
 		}
 	}
 }
@@ -598,7 +604,7 @@ void RenderManager::SetUpConsole()
 	}
 }
 
-void RenderManager::InitWindow(bool debugEnabled)
+void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 {
 	if (debugEnabled) {
 		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
@@ -607,19 +613,20 @@ void RenderManager::InitWindow(bool debugEnabled)
 		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_POST_PROCESSING, this);
 
 		TETRA_EVENTS.Subscribe(EventType::EVENT_NEXT_RESOLUTION, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_PREV_RESOLUTION, this);
 	}
 
+	TETRA_EVENTS.Subscribe(EventType::EVENT_ENTER_FULLSCREEN, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_LEAVE_FULLSCREEN, this);
+
 	SDL_Init(SDL_INIT_VIDEO);
 
-	/* Request opengl 3.2 context.
-	* SDL doesn't have the ability to choose which profile at this time of writing,
-	* but it should default to the core profile */
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	/* Request opengl 4 context. */
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
 	/* Turn on double buffering with a 24bit Z buffer.
 	* You may need to change this to 16 or 32 for your system */
@@ -630,8 +637,10 @@ void RenderManager::InitWindow(bool debugEnabled)
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL);
+		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_pWindow);
+	if (startFullScreen)
+		SetWindowToFullscreen();
 
 	// Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
@@ -639,11 +648,10 @@ void RenderManager::InitWindow(bool debugEnabled)
 		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
 	}
 
-	// Start SDL_ttf
-	if (TTF_Init() == -1) {
-		std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
-	}
-
+	//// Start SDL_ttf
+	//if (TTF_Init() == -1) {
+	//	std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
+	//}
 
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
 	glViewport(0, 0, m_width, m_height);
@@ -657,6 +665,22 @@ void RenderManager::EnableWindowsCursor()
 void RenderManager::DisableWindowsCursor()
 {
 	SDL_ShowCursor(SDL_DISABLE);
+}
+
+void RenderManager::SetWindowToFullscreen()
+{
+	if (!m_isFullscreen) {
+		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		m_isFullscreen = true;
+	}
+}
+
+void RenderManager::UnsetWindowFullscreen()
+{
+	if (m_isFullscreen) {
+		SDL_SetWindowFullscreen(m_pWindow, 0);
+		m_isFullscreen = false;
+	}
 }
 
 void RenderManager::SetWindowWidth(int width)
@@ -680,7 +704,6 @@ void RenderManager::SetWindowDimensions(int width, int height)
 	m_height = height;
 	glViewport(0, 0, width, height);
 	SDL_SetWindowSize(m_pWindow, m_width, m_height);
-	//SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
 }
 
 void RenderManager::SetWindowTitle(std::string title)
