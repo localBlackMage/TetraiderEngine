@@ -14,4 +14,6 @@ float BezierInterpolation(const std::vector<Point>& points, const float& t);
 
 // Given an angle, returns a value between -180 and +180
 float ClampAngleTo180(float angle);
+
+bool IsSimilar(float a, float b);
 #endif

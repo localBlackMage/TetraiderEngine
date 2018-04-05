@@ -55,8 +55,8 @@ enum SHADER_LOCATIONS {
 	L_GLOBAL_A = 48,	// 48
 	L_GLOBAL_B = 49,	// 49
 	L_POS_DIST = 50,	// 50
-	L_COLOR = 66,		// 66
-	L_AB_VALUES = 82	// 82
+	L_COLOR = L_POS_DIST+MAX_LIGHTS,		// 66
+	L_AB_VALUES = L_COLOR+MAX_LIGHTS		// 82
 
 };
 
@@ -137,6 +137,7 @@ public:
 	void SetWindowTitle(std::string title);
 	inline int WindowWidth() { return m_width; }
 	inline int WindowHeight() { return m_height; }
+	inline void WindowDimensions(int& width, int& height) { width = m_width; height = m_height; }
 	float GetAspectRatio() const;
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 

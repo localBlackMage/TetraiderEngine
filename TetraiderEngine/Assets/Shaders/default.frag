@@ -1,5 +1,7 @@
 #version 430
 
+const int MAX_LIGHTS = 20;
+
 // UNIFORM INPUTS
 layout(location = 0) uniform sampler2D spriteTexture;
 
@@ -12,9 +14,9 @@ layout(location = 43) uniform vec3 specular_color;
 layout(location = 47) uniform bool lit;
 layout(location = 48) uniform float l_a;
 layout(location = 49) uniform float l_b;
-layout(location = 50) uniform vec4 l_pos_dist[16];
-layout(location = 66) uniform vec4 l_color[16];
-layout(location = 82) uniform vec2 l_ab[16];
+layout(location = 50) uniform vec4 l_pos_dist[MAX_LIGHTS];
+layout(location = 70) uniform vec4 l_color[MAX_LIGHTS]; 	// 50 + MAX_LIGHTS
+layout(location = 90) uniform vec2 l_ab[MAX_LIGHTS];		// 50 + MAX_LIGHTS + MAX_LIGHTS
 
 
 // NON-UNIFORM INPUTS
@@ -26,7 +28,7 @@ layout(location = 4) in vec2 vframe_size;
 layout(location = 5) in vec4 vnormal_vector;
 layout(location = 6) in vec4 vview_vector;
 
-layout(location = 10) in vec4 vl_lightVectors[16];
+layout(location = 10) in vec4 vl_lightVectors[MAX_LIGHTS];
 
 
 // OUTPUTS
@@ -43,7 +45,7 @@ void main(void) {
 	vec3 lightColor = vec3(0,0,0);
 
 	if (lit){
-		for(int i = 0; i < 16; ++i) {
+		for(int i = 0; i < MAX_LIGHTS; ++i) {
 			if(vl_lightVectors[i].w == 1)
 				continue;
 			float d = length(vl_lightVectors[i]);
