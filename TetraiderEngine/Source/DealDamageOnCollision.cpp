@@ -55,8 +55,14 @@ void DealDamageOnCollision::HandleEvent(Event* pEvent) {
 			}
 			else if (collisionData->pGO->m_tag == T_Enemy) {
 				Agent* agent = collisionData->pGO->GetComponent<Controller>(C_NPCCONTROLLER);
+				if (!m_isAbleToDmgPlayer)
+					return;
+
+				m_timeFromLastHit = 0.0f;
 				if (agent->GetIgnoreHazard())
 					return;
+
+				m_isAbleToDmgPlayer = false;
 			}
 
 			Health* pHealth = collisionData->pGO->GetComponent<Health>(C_Health);
