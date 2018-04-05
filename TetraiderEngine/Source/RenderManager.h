@@ -27,7 +27,7 @@ enum SHADER_LOCATIONS {
 	POSITION = 0,		// 0
 	NORMAL,				// 1
 	TEXTURE_COORD,		// 2
-	P_POS_SIZE,			// 3
+	P_POS_ROT_SIZE,		// 3
 	P_COLOR,			// 4
 	P_TEXTURE_COORD,	// 5
 

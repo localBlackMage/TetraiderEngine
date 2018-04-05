@@ -16,11 +16,13 @@ public:
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
 	void SetControlActive(bool isActive) { m_isControlsEnabled = isActive; }
+
 protected:
 	Weapon* m_pWeapon;
 	Stamina* m_pStamina;
 	GameObject* m_pFeatherParticleEmitterGO;
 	std::string m_featherPuffParticleEmitterPrefab;
+
 private:
 	bool m_isGameControllerEnabled;
 	float m_flySpeed;
@@ -29,11 +31,14 @@ private:
 	bool m_isControlsEnabled;
 	bool m_isFlyingInLevel;
 	bool m_isFlyingOutOfLevel;
+	Vector3D m_posToFlyTo;
+	float m_flyOffset;
+	bool m_flying;
 
 	void FlyIn();
 	void FlyOut();
-	Vector3D m_posToFlyTo;
-	float m_flyOffset;
+	void _Fly();
+	void _StopFlying();
 };
 
 #endif

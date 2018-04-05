@@ -2,7 +2,12 @@
 
 
 Controller::Controller() :
-	Agent(ComponentType::C_Controller), m_isGameControllerEnabled(true), m_flySpeed(0), m_isControlsEnabled(true), m_flyOffset(1250.0f), m_isFlyingOutOfLevel(false), m_agility(1.0f), m_waitTimeBeforeFlyIn(0)
+	Agent(ComponentType::C_Controller), 
+	m_isGameControllerEnabled(true), 
+	m_flySpeed(0), m_isControlsEnabled(true), 
+	m_flyOffset(1250.0f), m_isFlyingOutOfLevel(false), 
+	m_agility(1.0f), m_waitTimeBeforeFlyIn(0),
+	m_flying(false)
 {
 }
 
@@ -144,7 +149,8 @@ void Controller::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 		case EVENT_INPUT_MOVE: {
 			InputAxisData* pAxisData = pEvent->Data<InputAxisData>();
-			if(!m_isIgnoreHazards) m_targetVelocity = pAxisData->m_dir*m_speed*m_agility;
+			if(!m_isIgnoreHazards) 
+				m_targetVelocity = pAxisData->m_dir*m_speed*m_agility;
 			else {
 				m_targetVelocity = pAxisData->m_dir*m_flySpeed*m_agility;
 				m_lookDirection = pAxisData->m_dir;
@@ -161,17 +167,10 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) {
-				m_isControlAnimationOnVelocity = false;
-				m_pAnimation->Play(2);
-				m_isIgnoreHazards = true;
-				m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
-				GameObject* featherPuff = TETRA_GAME_OBJECTS.CreateGameObject(m_featherPuffParticleEmitterPrefab, true, m_pTransform->GetPosition());
-				featherPuff->GetComponent<Transform>(C_Transform)->SetAngleZ(m_pTransform->GetAngleZ());
+				_Fly();
 			}
 			else {
-				m_isControlAnimationOnVelocity = true;
-				m_isIgnoreHazards = false;
-				m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+				_StopFlying();
 			}
 			break;
 		}
@@ -186,11 +185,11 @@ void Controller::HandleEvent(Event* pEvent) {
 		case EVENT_INPUT_RANGE: {
 			if (m_isIgnoreHazards) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed) 
+			if (pButtonData->m_isPressed) {
 				if (m_pWeapon->UseAttack(1, m_lookDirection)) {
 					m_pWeapon->IsRotationOffset(false);
-					
 				}
+			}
 			break;
 		}
 	}
@@ -266,4 +265,28 @@ void Controller::FlyOut() {
 	Vector3D dir(1, 0, 0);
 	m_targetVelocity = dir*m_flySpeed*m_agility;
 	m_lookDirection = dir;
+}
+
+void Controller::_Fly()
+{
+	if (!m_flying) {
+		GameObject* featherPuff = TETRA_GAME_OBJECTS.CreateGameObject(m_featherPuffParticleEmitterPrefab, true, m_pTransform->GetPosition());
+		featherPuff->GetComponent<Transform>(C_Transform)->SetAngleZ(m_lookDirection.AngleDegrees() + 90.f);
+		m_flying = true;
+	}
+
+	m_isControlAnimationOnVelocity = false;
+	m_pAnimation->Play(2);
+	m_isIgnoreHazards = true;
+	m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
+}
+
+void Controller::_StopFlying()
+{
+	m_flying = false;
+	m_isControlAnimationOnVelocity = true;
+	m_isIgnoreHazards = false;
+	ParticleEmitter * pParticleEmitter = m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
+	pParticleEmitter->DeactivateParticles();
+	pParticleEmitter->Reset();
 }

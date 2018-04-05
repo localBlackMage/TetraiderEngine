@@ -205,7 +205,7 @@ float Vector3D::AngleRadians() const {
 }
 
 float Vector3D::AngleDegrees() const {
-	return AngleRadians() * 180 / PI;
+	return AngleRadians() * RAD_TO_DEG;
 }
 
 #pragma region Static Methods

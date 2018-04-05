@@ -67,16 +67,17 @@ void ParticleEmitter::_SpawnParticle()
 	int idx = _FindUnusedParticle();
 	if (idx > -1) {
 		m_particles[idx].m_life = m_lifeTime;
-		m_particles[idx].m_pos = m_pTransform->GetPosition() + _GetSpawnPositionWithinShape();
+		m_particles[idx].m_pos_rot = m_pTransform->GetPosition() + _GetSpawnPositionWithinShape();
 		float HI = 250.f;
 		float LO = -HI;
 		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
 
-		float angleOffset = (m_rotateToParentOnSpawn ? m_pTransform->GetAngleZ() : 0.f ) +
-			RandomFloat(-m_angleVariation, m_angleVariation);
+		float variationOffset = RandomFloat(-m_angleVariation, m_angleVariation);
+		float angleOffset = (m_rotateToParentOnSpawn ? m_pTransform->GetAngleZ() : 0.f) +
+			variationOffset;
 
 		m_particles[idx].m_angleOffset = angleOffset;
-
+		m_particles[idx].m_pos_rot.z = angleOffset * DEG_TO_RAD;
 
 		switch (m_textureSelection) {
 			case P_TextureSelection::RANDOM:
@@ -116,16 +117,18 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 					);
 				
 				p.m_velocity = (velocityOffset * (m_speed * m_directionMod)) + Gravity;
-				p.m_pos += p.m_velocity * deltaTime;
+				p.m_velocity.z = 0.f;
+				p.m_pos_rot += p.m_velocity * deltaTime;
 				if (m_particlesFollowParent) {
-					p.m_pos += m_pTransform->GetMovement();
+					Vector3D movement = m_pTransform->GetMovement();
+					movement.z = 0.f;
+					p.m_pos_rot += movement;
 				}
-				p.m_pos.z = 0.f;
 
 				p.m_scale = BezierInterpolation(m_scale.points, t) * m_scale.amplitude;
 
 				// TODO: decide on a better way to get a camera
-				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos, TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos_rot, TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
 
 				Color color = Lerp(m_colorStart, m_colorEnd, t);
 				p.m_color.r = color.r;
@@ -134,9 +137,9 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 				p.m_color.a = color.a;
 
 				// Fill the GPU buffer
-				m_positionsScales[4 * m_liveParticleCount + 0] = p.m_pos.x;
-				m_positionsScales[4 * m_liveParticleCount + 1] = p.m_pos.y;
-				m_positionsScales[4 * m_liveParticleCount + 2] = p.m_pos.z;
+				m_positionsScales[4 * m_liveParticleCount + 0] = p.m_pos_rot.x;	// Location
+				m_positionsScales[4 * m_liveParticleCount + 1] = p.m_pos_rot.y;	// Location
+				m_positionsScales[4 * m_liveParticleCount + 2] = p.m_pos_rot.z;	// Rotation
 
 				m_positionsScales[4 * m_liveParticleCount + 3] = p.m_scale;
 
@@ -397,6 +400,13 @@ void ParticleEmitter::BindBufferDatas() const
 	TETRA_RENDERER.BindBufferData(m_positionsScalesBuffer, m_positionsScales, m_liveParticleCount * sizeof(GLfloat) * 4);
 	TETRA_RENDERER.BindBufferData(m_colorsBuffer, m_colors, m_liveParticleCount * sizeof(GLubyte) * 4);
 	TETRA_RENDERER.BindBufferData(m_textureCoordsBuffer, m_textureCoords, m_liveParticleCount * sizeof(GLfloat) * 2);
+}
+
+void ParticleEmitter::Reset()
+{
+	for (int i = 0; i<m_lastUsedParticle; i++) {
+		m_particles[i].m_life = -1.f;
+	}
 }
 
 #undef SHAPE_STR

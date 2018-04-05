@@ -4,7 +4,7 @@
 #define PARTICLE_EMITTER_H
 
 struct Particle {
-	Vector3D m_pos, m_velocity;
+	Vector3D m_pos_rot, m_velocity;
 	Color m_color;
 	float m_scale;
 	float m_life;
@@ -117,6 +117,7 @@ public:
 
 	inline void ActivateParticles() { m_active = true; }
 	inline void DeactivateParticles() { m_active = false; }
+	void Reset();
 
 	inline float FrameWidth() const { return m_frameWidth; }
 	inline float FrameHeight() const { return m_frameHeight; }
