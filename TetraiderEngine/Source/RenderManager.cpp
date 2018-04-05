@@ -3,7 +3,7 @@
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
-	/*m_clearColor(Vector3D(.2f,.2f,.2f,1.f)),*/m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
+	m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
 {
 }
 
