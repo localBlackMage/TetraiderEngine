@@ -66,11 +66,11 @@
       },   
       { "name": "NPC_ENGAGE",
         "behaviorIndex": 2,
-        "AIStateType": "NPC_State_DashingEngage"
+        "AIStateType": "NPC_State_RockBossEngage"
       },
       { "name": "NPC_ATTACK",
         "behaviorIndex": 3,       
-        "AIStateType": "NPC_State_DashingAttack"
+        "AIStateType": "NPC_State_RockBossAttack"
       },
       {
         "name": "NPC_MOVETORANDOMPOINTINZONE",

@@ -23,6 +23,8 @@ REGISTER_STATE(NPC_State_RatBossReaction)
 REGISTER_STATE(NPC_State_RatBossEngage)
 REGISTER_STATE(NPC_State_RatBossAttack)
 REGISTER_STATE(NPC_State_RatBossRetreat)
+REGISTER_STATE(NPC_State_RockBossEngage)
+REGISTER_STATE(NPC_State_RockBossAttack)
 
 
 // Add Some Other Controller States Below...

@@ -120,6 +120,8 @@ using namespace JsonReader;
 #include <AI_RatBossEngage.h>
 #include <AI_RatBossAttack.h>
 #include <AI_RatBossRetreat.h>
+#include <AI_RockBossEngage.h>
+#include <AI_RockBossAttack.h>
 #include <AI_StateFactory.h>
 #pragma endregion
 

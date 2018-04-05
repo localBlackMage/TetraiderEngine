@@ -1,20 +1,3 @@
-//#include "AI_StateFactory.h"
-//#include "AI_StateTypes.h"
-//
-//#include "AI_State.h"
-//
-//#include "AI_Idle.h"
-//#include "AI_IdleForDuration.h"
-//#include "AI_Engage.h"
-//#include "AI_Attack.h"
-//#include "AI_Retreat.h"
-//#include "AI_MoveToRandomPointInZone.h"
-//#include "AI_WalkTowardPlayerAttack.h"
-//#include "AI_WalkTowardPlayerEngage.h"
-//#include "AI_DashingAttack.h"
-//#include "AI_DashingEngage.h"
-//#include "AI_DashingStunned.h"
-
 #include <Stdafx.h>
 
 AIStateFactory::AIStateFactory(){
@@ -42,6 +25,8 @@ AIStateFactory::AIStateFactory(){
 	m_CreationFunctions[StateText[NPC_State_RatBossEngage]] = AI_RatBossEngage::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_RatBossAttack]] = AI_RatBossAttack::CreateInstance;
 	m_CreationFunctions[StateText[NPC_State_RatBossRetreat]] = AI_RatBossRetreat::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RockBossEngage]] = AI_RockBossEngage::CreateInstance;
+	m_CreationFunctions[StateText[NPC_State_RockBossAttack]] = AI_RockBossAttack::CreateInstance;
 }
 
 AI_State* AIStateFactory::CreateState(std::string state){
