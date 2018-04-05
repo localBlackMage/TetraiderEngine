@@ -71,7 +71,7 @@
 		},
 		"gravity": 0.6,
 		"emissionRate": 30,
-		"max": 100,
+		"max": 60,
 		"rotationOverTime": 0,
 		"particleTexture": "T_Feather.png",
 		"textureSelection": "single",
