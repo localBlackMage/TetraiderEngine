@@ -2,11 +2,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-//#include "Agent.h"
-
 class Weapon;
-//class Stamina;
-//class ParticleEmitter;
 
 class Controller : public Agent {
 public:
@@ -23,7 +19,8 @@ public:
 protected:
 	Weapon* m_pWeapon;
 	Stamina* m_pStamina;
-	GameObject* m_pParticleEmitterGO;
+	GameObject* m_pFeatherParticleEmitterGO;
+	std::string m_featherPuffParticleEmitterPrefab;
 private:
 	bool m_isGameControllerEnabled;
 	float m_flySpeed;

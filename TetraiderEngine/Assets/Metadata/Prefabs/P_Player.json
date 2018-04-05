@@ -58,7 +58,8 @@
 		},
 		"flySpeed": 510,
 		"agility": 1,
-		"featherParticlePrefab": "P_FeatherParticleEmitter"
+		"featherParticlePrefab": "P_FeatherParticleEmitter",
+		"featherPuffParticlePrefab": "P_FeatherPuffParticleEmitter"
 	},
 	{
 		"Component": "Animation",

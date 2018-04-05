@@ -36,20 +36,70 @@ void Controller::Serialize(const json& j) {
 	Agent::Serialize(j["AgentData"]);
 	m_flySpeed = ParseFloat(j, "flySpeed");
 	m_agility = ParseFloat(j, "agility");
-	m_pParticleEmitterGO = TETRA_GAME_OBJECTS.CreateGameObject(ParseString(j, "featherParticlePrefab"));
-	m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+	m_pFeatherParticleEmitterGO = TETRA_GAME_OBJECTS.CreateGameObject(ParseString(j, "featherParticlePrefab"));
+	m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+
+	m_featherPuffParticleEmitterPrefab = ParseString(j, "featherPuffParticlePrefab");
 }
 
 void Controller::HandleEvent(Event* pEvent) {
 	if (m_isDead) return;
 
+	switch (pEvent->Type()) {
+		case EventType::EVENT_ShopOpened:
+		case EventType::EVENT_OnEnterBoss: {
+			m_targetVelocity = Vector3D();
+			m_pBody->SetVelocity(Vector3D());
+			m_isControlAnimationOnVelocity = true;
+			m_isIgnoreHazards = false;
+			m_isControlsEnabled = false;
+			m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+			break;
+		}
+		case EventType::EVENT_ShopClosed:
+		case EventType::EVENT_OnExitBoss: {
+			m_isControlsEnabled = true;
+			break;
+		}
+	}
+
+	if (!m_isControlsEnabled) return;
+
+	switch (pEvent->Type()) {
+		case EventType::EVENT_OnLevelInitialized: {
+			float agility;
+			if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseAgility, agility))
+				m_agility = agility;
+
+			m_pWeapon->UpdateAttackSpeed(m_agility, 0);
+			m_pWeapon->UpdateAttackSpeed(m_agility, 1);
+
+			m_isFlyingInLevel = true;
+			SetControlActive(false);
+			pGO->m_isCollisionDisabled = true;
+			m_posToFlyTo = m_pTransform->GetPosition();
+			m_pTransform->SetPosition(m_pTransform->GetPosition() + Vector3D(-1, 0, 0) * m_flyOffset);
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
+			break;
+		}
+		case EventType::EVENT_ExitLevel: {
+			m_isFlyingOutOfLevel = true;
+			SetControlActive(false);
+			pGO->m_isCollisionDisabled = true;
+			m_posToFlyTo = m_pTransform->GetPosition() + Vector3D(1, 0, 0) * m_flyOffset;
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
+			break;
+		}
+	}
+
+	/*
 	if (pEvent->Type() == EventType::EVENT_ShopOpened || pEvent->Type() == EventType::EVENT_OnEnterBoss) {
 		m_targetVelocity = Vector3D();
 		m_pBody->SetVelocity(Vector3D());
 		m_isControlAnimationOnVelocity = true;
 		m_isIgnoreHazards = false;
 		m_isControlsEnabled = false;
-		m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+		m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
 	}
 	else if (pEvent->Type() == EventType::EVENT_ShopClosed || pEvent->Type() == EventType::EVENT_OnExitBoss)
 		m_isControlsEnabled = true;
@@ -78,6 +128,7 @@ void Controller::HandleEvent(Event* pEvent) {
 		m_posToFlyTo = m_pTransform->GetPosition() + Vector3D(1, 0, 0) * m_flyOffset;
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
 	}
+	*/
 
 	if (TETRA_GAME_STATE.IsGamePaused()) {
 		if (pEvent->Type() == EVENT_INPUT_FLY) {
@@ -113,12 +164,14 @@ void Controller::HandleEvent(Event* pEvent) {
 				m_isControlAnimationOnVelocity = false;
 				m_pAnimation->Play(2);
 				m_isIgnoreHazards = true;
-				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
+				m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->ActivateParticles();
+				GameObject* featherPuff = TETRA_GAME_OBJECTS.CreateGameObject(m_featherPuffParticleEmitterPrefab, true, m_pTransform->GetPosition());
+				featherPuff->GetComponent<Transform>(C_Transform)->SetAngleZ(m_pTransform->GetAngleZ());
 			}
 			else {
 				m_isControlAnimationOnVelocity = true;
 				m_isIgnoreHazards = false;
-				m_pParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
+				m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
 			}
 			break;
 		}
@@ -146,8 +199,8 @@ void Controller::HandleEvent(Event* pEvent) {
 void Controller::LateInitialize() {
 	Agent::LateInitialize();
 
-	if (m_pParticleEmitterGO) {
-		m_pParticleEmitterGO->SetParent(pGO);
+	if (m_pFeatherParticleEmitterGO) {
+		m_pFeatherParticleEmitterGO->SetParent(pGO);
 	}
 
 	if(!m_pWeapon) {

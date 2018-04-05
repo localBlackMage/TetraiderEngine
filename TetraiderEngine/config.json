@@ -15,7 +15,7 @@
 		
 		"powerUpSettings": "Metadata/powerUpSettings.json",
 		
-		"isDebugModeEnabled": false,
+		"isDebugModeEnabled": true,
 		"soundsMute": false
 	},
 	"RENDER_SETTINGS": {
@@ -24,7 +24,7 @@
 		"baseShader": "fboRenderer",
 		"gaussianHorizontalShader": "gaussianBlurHorizontal",
 		"gaussianVerticalShader": "gaussianBlurVertical",
-		"consoleEnabled": false,
+		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": false
 	},
@@ -57,8 +57,8 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 3,
-		"startInFullscreen": true
+		"defaultResolution": 1,
+		"startInFullscreen": false
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
