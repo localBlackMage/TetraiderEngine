@@ -5,61 +5,31 @@
 	"SHOP_ROOM": false,
 	"GAME_OBJECTS": [
 		{
-			"prefab": "P_LeftBG",
+			"prefab": "P_Box",
 			"position": {
-				"x": 0.000000,
-				"y": 0.000000
+				"x": -16.000000,
+				"y": -296.000000
 			},
 			"scale": {
-				"x": 1536.000000,
-				"y": 1024.000000
-			},
-			"rotation": {
-				"z": 0.000000
-			}		},
-		{
-			"prefab": "P_EnemyDragon",
-			"position": {
-				"x": 232.000000,
-				"y": 0.000000
-			},
-			"scale": {
-				"x": 130.000000,
-				"y": 130.000000
+				"x": 118.000000,
+				"y": 118.000000
 			},
 			"rotation": {
 				"z": 0.000000
 			},
 			"shape": {
-				"radius": 40.000000,
+				"width": 104.000000,
+				"height": 88.000000,
 				"offset": {
 					"x": 0.000000,
-					"y": 0.000000
+					"y": -8.000000
 				}
-			}
-		},
-		{
-			"prefab": "P_ColliderLeftRightLong",
-			"position": {
-				"x": 704.000000,
-				"y": 0.000000
 			},
-			"scale": {
+			"tiling": {
 				"x": 1.000000,
 				"y": 1.000000
 			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 128.000000,
-				"height": 1024.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": 0.000000
-				}
-			}
-		},
+			"repeats": true		},
 		{
 			"prefab": "P_ColliderUpDownLong",
 			"position": {
@@ -80,35 +50,55 @@
 					"x": 0.000000,
 					"y": 0.000000
 				}
-			}
-		},
+			}		},
 		{
-			"prefab": "P_ColliderUpDownLong",
+			"prefab": "P_EnemyMelee",
 			"position": {
-				"x": 0.000000,
-				"y": 448.000000
+				"x": 272.000000,
+				"y": 32.000000
 			},
 			"scale": {
-				"x": 1.000000,
-				"y": 1.000000
+				"x": 110.000000,
+				"y": 110.000000
 			},
 			"rotation": {
 				"z": 0.000000
 			},
 			"shape": {
-				"width": 1536.000000,
-				"height": 128.000000,
+				"radius": 50.000000,
 				"offset": {
 					"x": 0.000000,
 					"y": 0.000000
 				}
-			}
-		},
+			},
+			"tiling": {
+				"x": 0.250000,
+				"y": 0.333333
+			},
+			"repeats": true		},
 		{
-			"prefab": "P_ColliderLeftRightShort",
+			"prefab": "P_LeftBG",
 			"position": {
-				"x": -704.000000,
-				"y": -320.000000
+				"x": 0.000000,
+				"y": 0.000000
+			},
+			"scale": {
+				"x": 1536.000000,
+				"y": 1024.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_ColliderLeftRightLong",
+			"position": {
+				"x": 704.000000,
+				"y": 0.000000
 			},
 			"scale": {
 				"x": 1.000000,
@@ -119,13 +109,12 @@
 			},
 			"shape": {
 				"width": 128.000000,
-				"height": 384.000000,
+				"height": 1024.000000,
 				"offset": {
 					"x": 0.000000,
 					"y": 0.000000
 				}
-			}
-		},
+			}		},
 		{
 			"prefab": "P_ColliderLeftRightShort",
 			"position": {
@@ -146,8 +135,49 @@
 					"x": 0.000000,
 					"y": 0.000000
 				}
-			}
-		},
+			}		},
+		{
+			"prefab": "P_ColliderUpDownLong",
+			"position": {
+				"x": 0.000000,
+				"y": 448.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 1536.000000,
+				"height": 128.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
+		{
+			"prefab": "P_ColliderLeftRightShort",
+			"position": {
+				"x": -704.000000,
+				"y": -320.000000
+			},
+			"scale": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 128.000000,
+				"height": 384.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		},
 		{
 			"prefab": "P_FireLight",
 			"position": {
@@ -168,52 +198,38 @@
 					"x": 0.000000,
 					"y": -40.000000
 				}
-			}
-		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
 		{
-			"prefab": "P_FireLight",
+			"prefab": "P_TreeTrunkBig",
 			"position": {
-				"x": -600.000000,
-				"y": -128.000000
+				"x": 456.000000,
+				"y": 248.000000
 			},
 			"scale": {
-				"x": 80.000000,
-				"y": 80.000000
+				"x": 256.000000,
+				"y": 256.000000
 			},
 			"rotation": {
 				"z": 0.000000
 			},
 			"shape": {
-				"width": 60.000000,
-				"height": 45.000000,
+				"width": 125.000000,
+				"height": 80.000000,
 				"offset": {
 					"x": 0.000000,
-					"y": -40.000000
+					"y": -65.000000
 				}
-			}
-		},
-		{
-			"prefab": "P_Box",
-			"position": {
-				"x": -16.000000,
-				"y": -296.000000
 			},
-			"scale": {
-				"x": 118.000000,
-				"y": 118.000000
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
 			},
-			"rotation": {
-				"z": 0.000000
-			},
-			"shape": {
-				"width": 104.000000,
-				"height": 88.000000,
-				"offset": {
-					"x": 0.000000,
-					"y": -8.000000
-				}
-			}
-		},
+			"repeats": true		},
 		{
 			"prefab": "P_RockBig",
 			"position": {
@@ -234,8 +250,12 @@
 					"x": 0.000000,
 					"y": -30.000000
 				}
-			}
-		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
 		{
 			"prefab": "P_RockBig",
 			"position": {
@@ -256,8 +276,12 @@
 					"x": 0.000000,
 					"y": -30.000000
 				}
-			}
-		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
 		{
 			"prefab": "P_RockBig",
 			"position": {
@@ -278,8 +302,12 @@
 					"x": 0.000000,
 					"y": -30.000000
 				}
-			}
-		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
 		{
 			"prefab": "P_Barrel",
 			"position": {
@@ -300,12 +328,158 @@
 					"x": 0.000000,
 					"y": 0.000000
 				}
-			}
-		},
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
 		{
-			"prefab": "P_EnemyMelee",
+			"prefab": "P_GrilledChicken",
 			"position": {
-				"x": -248.000000,
+				"x": 520.000000,
+				"y": 0.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 100.000000,
+				"height": 45.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 16.000000
+				}
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_TreeTrunk",
+			"position": {
+				"x": -440.000000,
+				"y": 312.000000
+			},
+			"scale": {
+				"x": 150.000000,
+				"y": 150.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"width": 75.000000,
+				"height": 50.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": -38.000000
+				}
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_Grass",
+			"position": {
+				"x": -456.000000,
+				"y": 264.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_Grass",
+			"position": {
+				"x": 440.000000,
+				"y": 144.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_Grass",
+			"position": {
+				"x": -192.000000,
+				"y": -176.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_Grass",
+			"position": {
+				"x": 376.000000,
+				"y": -192.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_Grass",
+			"position": {
+				"x": 0.000000,
+				"y": 96.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": true		},
+		{
+			"prefab": "P_EnemySnake",
+			"position": {
+				"x": -368.000000,
 				"y": 32.000000
 			},
 			"scale": {
@@ -316,12 +490,129 @@
 				"z": 0.000000
 			},
 			"shape": {
-				"radius": 50.000000,
+				"radius": 40.000000,
 				"offset": {
 					"x": 0.000000,
 					"y": 0.000000
 				}
-			}
-		}
+			},
+			"tiling": {
+				"x": 0.250000,
+				"y": 0.333333
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_EnemySnake",
+			"position": {
+				"x": -88.000000,
+				"y": 256.000000
+			},
+			"scale": {
+				"x": 110.000000,
+				"y": 110.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"radius": 40.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			},
+			"tiling": {
+				"x": 0.250000,
+				"y": 0.333333
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_LavaCircular",
+			"position": {
+				"x": -24.000000,
+				"y": -64.000000
+			},
+			"scale": {
+				"x": 128.000000,
+				"y": 128.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"tiling": {
+				"x": 1.000000,
+				"y": 1.000000
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_EnemyBat",
+			"position": {
+				"x": -40.000000,
+				"y": -216.000000
+			},
+			"scale": {
+				"x": 72.000000,
+				"y": 72.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"radius": 25.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			},
+			"tiling": {
+				"x": 0.500000,
+				"y": 0.250000
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_EnemyBat",
+			"position": {
+				"x": 40.000000,
+				"y": -168.000000
+			},
+			"scale": {
+				"x": 72.000000,
+				"y": 72.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"radius": 25.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			},
+			"tiling": {
+				"x": 0.500000,
+				"y": 0.250000
+			},
+			"repeats": false		},
+		{
+			"prefab": "P_DamageOnCollisionColliderCircle",
+			"position": {
+				"x": -24.000000,
+				"y": -72.000000
+			},
+			"scale": {
+				"x": 400.000000,
+				"y": 164.000000
+			},
+			"rotation": {
+				"z": 0.000000
+			},
+			"shape": {
+				"radius": 52.000000,
+				"offset": {
+					"x": 0.000000,
+					"y": 0.000000
+				}
+			}		}
 	]
 }
