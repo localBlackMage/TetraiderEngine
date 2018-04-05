@@ -1,5 +1,7 @@
 #version 430
 
+const int MAX_LIGHTS = 20;
+
 // NON-UNIFORM INPUTS
 layout(location = 0) in vec4 position;
 layout(location = 1) in vec4 normal;
@@ -19,7 +21,7 @@ layout(location = 32) uniform vec2 frame_offset;
 layout(location = 33) uniform vec2 frame_size;
 
 layout(location = 47) uniform bool lit;
-layout(location = 50) uniform vec4 l_pos_dist[16];
+layout(location = 50) uniform vec4 l_pos_dist[MAX_LIGHTS];
 
 
 // OUTPUTS
@@ -31,7 +33,7 @@ layout(location = 4) out vec2 vframe_size;
 layout(location = 5) out vec4 vnormal_vector;
 layout(location = 6) out vec4 vview_vector;
 
-layout(location = 10) out vec4 vl_lightVectors[16];
+layout(location = 10) out vec4 vl_lightVectors[MAX_LIGHTS];
 
 void main() {
 	vec4 P = model_matrix * position;
@@ -45,7 +47,7 @@ void main() {
 	vsaturation_color = saturation_color;
 
 	if (lit) {
-		for(int i = 0; i < 16; ++i) {
+		for(int i = 0; i < MAX_LIGHTS; ++i) {
 			if (l_pos_dist[i].w == 0)
 				vl_lightVectors[i] = vec4(0,0,0,1);
 			else

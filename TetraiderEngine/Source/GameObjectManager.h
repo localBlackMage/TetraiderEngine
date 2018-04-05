@@ -2,7 +2,7 @@
 #ifndef GAME_OBJECT_MANAGER_H
 #define GAME_OBJECT_MANAGER_H
 
-#define MAX_LIGHTS 16
+#define MAX_LIGHTS 20
 
 class GameObjectLayer {
 private:

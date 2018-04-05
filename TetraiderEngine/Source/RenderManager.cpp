@@ -637,7 +637,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		SDL_WINDOW_OPENGL);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 	if (startFullScreen)
 		SetWindowToFullscreen();

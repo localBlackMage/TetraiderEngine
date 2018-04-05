@@ -24,6 +24,12 @@ public:
 
 	/*
 	Renders this Image Renderer's FBO to the screen with
+	the supplied shader. The rendered quad is resized to match the current screen aspect ratio
+	*/
+	void RenderToScreen(const ShaderProgram&, int width, int height) const;
+
+	/*
+	Renders this Image Renderer's FBO to the screen with
 	the supplied shader
 	*/
 	void RenderToScreen(const ShaderProgram&) const;

@@ -5,6 +5,7 @@
 
 struct Resolution {
 	unsigned short width, height;
+	float aspectRatio;
 };
 
 class GameConfig
