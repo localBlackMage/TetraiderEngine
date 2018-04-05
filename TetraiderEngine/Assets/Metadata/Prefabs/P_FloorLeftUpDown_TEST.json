@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "Rooms/leftUpRight.png",
+      "Texture": "Rooms/leftUpDown.png",
       "tiling": {
         "x": 1,
         "y": 1
