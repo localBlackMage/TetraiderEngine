@@ -1,0 +1,95 @@
+{
+  "Tag": "None",
+  "Layer": "UIBG",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1280,
+        "y": 720,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+    {
+      "Component":"HillNodes",
+      "speed":0.5,
+      "offset":{
+        "X":5,
+        "y":45
+      },
+      "Nodes":[
+          {
+            "prefab":"P_Node1",
+            "position":{
+              "x":168,
+              "y":-98
+            },
+            "nodeToGo": 1,
+            "currentNode": 0
+          },
+          {
+            "prefab":"P_Node1",
+            "position":{
+              "x":262,
+              "y":10
+            },
+            "nodeToGo": 2,
+            "currentNode": 1
+          },
+          {
+            "prefab":"P_Node1",
+            "position":{
+              "x":310,
+              "y":102
+            },
+            "nodeToGo": 3,
+            "currentNode": 2
+          },
+          {
+            "prefab":"P_Node1",
+            "position":{
+              "x":352,
+              "y":230
+            },
+            "nodeToGo": 4,
+            "currentNode": 4
+          }
+      ]
+    },
+    {
+      "Component": "Text",
+      "letterHeight": 48,
+      "letterWidth": 24,
+      "spacing": 0.65,
+	  "alignment": "middle",
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "rows": 6,
+      "cols": 16,
+      "font": "ShadowCardGothicFont.png",
+      "text": "LEVEL 1"
+    }
+  ]
+}

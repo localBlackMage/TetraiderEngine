@@ -205,6 +205,15 @@ void Weapon::PlayEffect() {
 	}
 }
 
+int Weapon::GetDamageMultiplier() {
+	if (pGO->Tag() == T_Player) {
+		Controller* pController = pGO->GetComponent<Controller>(C_Controller);
+		return pController->GetGodModeMultiplier();
+	}
+	else
+		return 1;
+}
+
 // Assumes direction to be normalized
 bool Weapon::UseAttack(int attack, const Vector3D& dirToAttack) {
 	return m_Attacks[attack]->Use(dirToAttack);

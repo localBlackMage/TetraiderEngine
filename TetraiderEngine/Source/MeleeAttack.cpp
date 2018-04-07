@@ -61,7 +61,7 @@ void MeleeAttack::Run() {
 			// TODO: Modify attack damage to take character stats in consideration
 			Vector3D dirOfAttack = pTransform->GetPosition() - sourceOfAttack;
 			dirOfAttack.Normalize();
-			pHealth->TakeDamage(m_baseDamage, dirOfAttack, m_knockBackSpeed, false);
+			pHealth->TakeDamage(m_baseDamage*m_pOwner->GetDamageMultiplier(), dirOfAttack, m_knockBackSpeed, false);
 		}
 	}
 

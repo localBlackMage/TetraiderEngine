@@ -1,0 +1,15 @@
+{
+    "GAME_OBJECTS": 
+    [
+      {
+        "prefab": "P_UICameraMenu"
+      },
+      {
+        "prefab":"P_TetraidersLogo"
+	  },
+	  {
+		"prefab": "P_SplashScreenTransition"
+	  }
+    ]
+    
+  }

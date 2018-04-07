@@ -17,6 +17,7 @@ private:
 	int swingDir = 1;
 	float m_rotationOffset;
 	bool m_isRotationOffset;
+	int m_damageMultiplier;
 
 	void CheckForPowerUps();
 
@@ -47,7 +48,7 @@ public:
 	void IsRotationOffset(bool active) { m_isRotationOffset = active; }
 	void MultiplyDamage(float multiplier, int attack);
 	void HideWeapon(bool active = true);
-
+	int GetDamageMultiplier();
 	inline float GetRotationOffset() const { return m_rotationOffset; }
 };
 

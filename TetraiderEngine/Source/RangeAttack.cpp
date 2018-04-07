@@ -58,7 +58,7 @@ bool RangeAttack::Use(const Vector3D& direction) {
 			Vector3D instantiatePos = pTransform->GetPosition() + m_offset*dir;
 			GameObject* pProjectileGO = TETRA_GAME_OBJECTS.CreateGameObject(m_projectilePrefab, true, instantiatePos);
 			Projectile* pProjectile = pProjectileGO->GetComponent<Projectile>(ComponentType::C_Projectile);
-			pProjectile->SetProperties(m_baseDamage, m_projectileSpeed, dir, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
+			pProjectile->SetProperties(m_baseDamage*m_pOwner->GetDamageMultiplier(), m_projectileSpeed, dir, m_lifeTime, isEnemyProjectile, m_knockBackSpeed, m_pOwner->pGO);
 		}
 
 		if (m_isFlash) {

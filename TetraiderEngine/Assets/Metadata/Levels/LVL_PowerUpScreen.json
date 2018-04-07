@@ -20,6 +20,9 @@
 	  "prefab": "P_VolcanoBackGround"
 	},
 	{
+	  "prefab": "P_VolcanoNodes"
+	},
+	{
 	  "prefab": "P_PowerUpCanvas"
 	},
 	{

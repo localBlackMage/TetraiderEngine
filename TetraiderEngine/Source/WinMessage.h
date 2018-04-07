@@ -23,5 +23,6 @@ private:
 	float m_timeToSpawnRightTransition;
 	float m_timeToLoadNextLevel;
 	float m_timer;
+	int m_levelToLoad;
 };
 

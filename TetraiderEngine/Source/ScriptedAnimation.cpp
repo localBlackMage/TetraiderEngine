@@ -198,6 +198,7 @@ void ScriptedAnimation::NextAnim() {
 			m_isPlayAnimation = false;
 			m_isReverse = false;
 			m_currentAnimationIndex = 0;
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnScriptedAnimationComplete));			
 		}
 		else {
 			m_startPos = m_pTransform->GetPosition();
@@ -218,6 +219,7 @@ void ScriptedAnimation::NextAnim() {
 			m_isReverse = false;
 			m_isPlayAnimation = false;
 			m_currentAnimationIndex = 0;
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnScriptedAnimationComplete));
 		}
 		else {
 			m_startPos = m_pTransform->GetPosition();

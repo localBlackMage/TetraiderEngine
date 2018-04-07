@@ -7,7 +7,8 @@ m_isExitingLevel(false),
 m_isRightTransitionSpawned(false), 
 m_timeToSpawnRightTransition(0.75f), 
 m_timeToLoadNextLevel(3.0f),
-m_timer(0.0f)
+m_timer(0.0f),
+m_levelToLoad(3)
 {}
 
 WinMessage::~WinMessage(){}
@@ -40,7 +41,8 @@ void WinMessage::Update(float dt)
 		}
 		
 		if (m_timer > m_timeToLoadNextLevel) {
-			TETRA_LEVELS.NextLevel();
+			TETRA_LEVELS.ActivateRandomGeneration(false);
+			TETRA_LEVELS.ChangeLevel(m_levelToLoad);
 			//TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
 		}
 	}
@@ -51,6 +53,7 @@ void WinMessage::Serialize(const json & j)
 	m_timeToSpawnRightTransition = ParseFloat(j, "timeToSpawnRightTransition");
 	m_timeToLoadNextLevel = ParseFloat(j, "timeToLoadNextLevel");
 	m_rightTransitionPrefab = ParseString(j, "rightTransitionPrefab");
+	m_levelToLoad = ParseInt(j, "levelToLoad");
 }
 
 void WinMessage::HandleEvent(Event * pEvent)

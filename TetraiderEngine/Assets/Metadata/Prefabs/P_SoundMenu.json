@@ -39,14 +39,14 @@
                   {
                     "prefab":"P_BGM_SliderBar",
                     "position":{
-                      "x":200,
+                      "x":150,
                       "y":25
                     }
                   },
                   {
                     "prefab":"P_SliderBall",
                     "position":{
-                      "x":190,
+                      "x":160,
                       "y":25
                     }
                   },
@@ -54,55 +54,55 @@
                     "prefab":"P_SoundTitle",
                     "position":{
                       "x":0,
-                      "y":100
+                      "y":165
                     }
                   },
                   {
                     "prefab":"P_BGM_title",
                     "position":{
-                      "x":-50,
+                      "x":-100,
                       "y":25
                     }
                 } ,
                 {
                   "prefab":"P_SFX_title",
                   "position":{
-                    "x":-50,
+                    "x":-100,
                     "y":-25
                   }
               }  ,
               {
                 "prefab":"P_SFX_SliderBar",
                 "position":{
-                  "x":200,
+                  "x":150,
                   "y":-25
                 }
               },
               {
                 "prefab":"P_SliderBall",
                 "position":{
-                  "x":190,
+                  "x":140,
                   "y":-25
                 }
               },
               {
                 "prefab":"P_MasterVol_title",
                 "position":{
-                  "x":-50,
+                  "x":-100,
                   "y":-75
                 }
             } ,
             {
               "prefab":"P_MasterVol_SliderBar",
               "position":{
-                "x":200,
+                "x":150,
                 "y":-75
               }
             },
             {
               "prefab":"P_SliderBall",
               "position":{
-                "x":190,
+                "x":140,
                 "y":-75
               }
             }

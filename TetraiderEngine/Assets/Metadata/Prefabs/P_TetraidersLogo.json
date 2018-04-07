@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 1280,
-        "y": 720,
+        "x": 567,
+        "y": 431,
         "z": 0
       },
       "pivotOffset": {
@@ -26,7 +26,7 @@
     },
     {
       "Component": "Sprite",
-      "Texture": "T_VolcanoBG_Blue.png",
+      "Texture": "T_Tetraiders.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -48,6 +48,10 @@
         "b": 0,
         "a": 0
       }
-    }
+    },
+	{
+		"Component": "SplashScreen",
+		"levelToLoad": 1
+	}
   ]
 }

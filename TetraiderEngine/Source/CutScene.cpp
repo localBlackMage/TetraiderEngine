@@ -5,7 +5,7 @@
 CutScene::CutScene():Component(ComponentType::C_Cutscene), m_isCutsceneOver(false)
 {
 	m_count = 0;
-	TETRA_EVENTS.Subscribe(EVENT_INPUT_PAUSEGAME, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_SCREENBYPASS, this);
 }
 
 CutScene::~CutScene()
@@ -81,7 +81,7 @@ void CutScene::HandleEvent(Event * pEvent)
 		}
 		m_cutSceneObjects[m_count].m_pGO->GetComponent<ScriptedAnimation>(ComponentType::C_ScriptedAnimation)->PlayAnimation();
 	}
-	else if (pEvent->Type() == EVENT_INPUT_PAUSEGAME) {
+	else if (pEvent->Type() == EVENT_INPUT_SCREENBYPASS) {
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
 		if (pData->m_isTrigger) {
 			TETRA_LEVELS.ActivateRandomGeneration(true);

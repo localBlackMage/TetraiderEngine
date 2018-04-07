@@ -53,6 +53,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Spawner"] = Spawner::CreateInstance;
 	m_creationFunctions["TimeToLive"] = TimeToLive::CreateInstance;
 	m_creationFunctions["ApplyTintOnDifficultyUp"] = ApplyTintOnDifficultyUp::CreateInstance;
+	m_creationFunctions["SplashScreen"] = SplashScreen::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

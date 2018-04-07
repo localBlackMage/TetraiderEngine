@@ -200,6 +200,7 @@ using namespace JsonReader;
 #include <Spawner.h>
 #include <TimeToLive.h>
 #include <ApplyTinyOnDifficultyUp.h>
+#include <SplashScreen.h>
 
 #pragma endregion 
 

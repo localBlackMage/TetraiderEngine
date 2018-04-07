@@ -7,7 +7,9 @@ Controller::Controller() :
 	m_flySpeed(0), m_isControlsEnabled(true), 
 	m_flyOffset(1250.0f), m_isFlyingOutOfLevel(false), 
 	m_agility(1.0f), m_waitTimeBeforeFlyIn(0),
-	m_flying(false)
+	m_flying(false),
+	m_godModeDamageMultiplier(1),
+	m_isGodMode(false)
 {
 }
 
@@ -66,6 +68,10 @@ void Controller::HandleEvent(Event* pEvent) {
 			m_isControlsEnabled = true;
 			break;
 		}
+		case EventType::EVENT_INPUT_GODMODE: {
+			_ToggleGodMode();
+			break;
+		}
 	}
 
 	if (!m_isControlsEnabled) return;
@@ -96,44 +102,6 @@ void Controller::HandleEvent(Event* pEvent) {
 			break;
 		}
 	}
-
-	/*
-	if (pEvent->Type() == EventType::EVENT_ShopOpened || pEvent->Type() == EventType::EVENT_OnEnterBoss) {
-		m_targetVelocity = Vector3D();
-		m_pBody->SetVelocity(Vector3D());
-		m_isControlAnimationOnVelocity = true;
-		m_isIgnoreHazards = false;
-		m_isControlsEnabled = false;
-		m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter)->DeactivateParticles();
-	}
-	else if (pEvent->Type() == EventType::EVENT_ShopClosed || pEvent->Type() == EventType::EVENT_OnExitBoss)
-		m_isControlsEnabled = true;
-
-	if (!m_isControlsEnabled) return;
-
-	if (pEvent->Type() == EventType::EVENT_OnLevelInitialized) {
-		float agility;
-		if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseAgility, agility))
-			m_agility = agility;
-
-		m_pWeapon->UpdateAttackSpeed(m_agility, 0);
-		m_pWeapon->UpdateAttackSpeed(m_agility, 1);
-
-		m_isFlyingInLevel = true;
-		SetControlActive(false);
-		pGO->m_isCollisionDisabled = true;
-		m_posToFlyTo = m_pTransform->GetPosition();
-		m_pTransform->SetPosition(m_pTransform->GetPosition() + Vector3D(-1, 0, 0) * m_flyOffset);
-		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
-	}
-	else if (pEvent->Type() == EventType::EVENT_ExitLevel) {
-		m_isFlyingOutOfLevel = true;
-		SetControlActive(false);
-		pGO->m_isCollisionDisabled = true;
-		m_posToFlyTo = m_pTransform->GetPosition() + Vector3D(1, 0, 0) * m_flyOffset;
-		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_DisableCamFollow));
-	}
-	*/
 
 	if (TETRA_GAME_STATE.IsGamePaused()) {
 		if (pEvent->Type() == EVENT_INPUT_FLY) {
@@ -240,6 +208,7 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_ShopClosed, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnEnterBoss, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnExitBoss, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_GODMODE, this);
 }
 
 void Controller::FlyIn() {
@@ -289,4 +258,12 @@ void Controller::_StopFlying()
 	ParticleEmitter * pParticleEmitter = m_pFeatherParticleEmitterGO->GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter);
 	pParticleEmitter->DeactivateParticles();
 	pParticleEmitter->Reset();
+}
+
+void Controller::_ToggleGodMode() {
+	m_isGodMode = !m_isGodMode;
+	Health* pHealth = pGO->GetComponent<Health>(C_Health);
+	pHealth->Invincibility(m_isGodMode);
+	if (m_isGodMode) m_godModeDamageMultiplier = 2;
+	else m_godModeDamageMultiplier = 1;
 }

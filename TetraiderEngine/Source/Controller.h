@@ -16,6 +16,7 @@ public:
 	virtual void Serialize(const json& j);
 	virtual void HandleEvent(Event* pEvent);
 	void SetControlActive(bool isActive) { m_isControlsEnabled = isActive; }
+	int GetGodModeMultiplier() { return m_godModeDamageMultiplier; }
 
 protected:
 	Weapon* m_pWeapon;
@@ -39,6 +40,9 @@ private:
 	void FlyOut();
 	void _Fly();
 	void _StopFlying();
+	void _ToggleGodMode();
+	int m_godModeDamageMultiplier;
+	bool m_isGodMode;
 };
 
 #endif

@@ -83,6 +83,7 @@ void LevelManager::LoadLevel() {
 		TETRA_LEVELS.LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
 		m_wasRandomlyGenerated = true;
+		currentLevel = -1;
 	}
 	else {
 		std::string s = TETRA_GAME_CONFIG.LevelFilesDir() + ParseString(levelConfig["Levels"][currentLevel], "Name") + ".json";
