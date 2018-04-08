@@ -216,6 +216,9 @@ void NPCController::HandleEvent(Event* pEvent) {
 			//pGO->SwitchTag(T_DeadEnemy);
 			m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			m_isDead = true;
+			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+			if (pAudio)
+				pAudio->Play();
 		}
 		else {
 			pGO->Destroy();

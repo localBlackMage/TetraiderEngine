@@ -120,8 +120,13 @@ void Controller::HandleEvent(Event* pEvent) {
 			if(!m_isIgnoreHazards) 
 				m_targetVelocity = pAxisData->m_dir*m_speed*m_agility;
 			else {
-				m_targetVelocity = pAxisData->m_dir*m_flySpeed*m_agility;
-				m_lookDirection = pAxisData->m_dir;
+				if (!pAxisData->m_dir.IsVectorZero()) {
+					m_targetVelocity = pAxisData->m_dir*m_flySpeed*m_agility;
+					m_lookDirection = pAxisData->m_dir;
+				}
+				else {
+					m_targetVelocity = m_lookDirection*m_flySpeed*m_agility;
+				}
 			}
 			break;
 		}
@@ -146,8 +151,10 @@ void Controller::HandleEvent(Event* pEvent) {
 			if (m_isIgnoreHazards) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed)
-				if (m_pWeapon->UseAttack(0, m_lookDirection)) 
+				if (m_pWeapon->UseAttack(0, m_lookDirection)) {
+					m_pWeapon->SwapWeapons(false);
 					m_pWeapon->IsRotationOffset(true);
+				}
 			break;
 		}
 		case EVENT_INPUT_RANGE: {
@@ -155,6 +162,7 @@ void Controller::HandleEvent(Event* pEvent) {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isPressed) {
 				if (m_pWeapon->UseAttack(1, m_lookDirection)) {
+					m_pWeapon->SwapWeapons(true);
 					m_pWeapon->IsRotationOffset(false);
 				}
 			}
@@ -239,6 +247,9 @@ void Controller::FlyOut() {
 void Controller::_Fly()
 {
 	if (!m_flying) {
+		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+		if (pAudio)
+			pAudio->Play();
 		GameObject* featherPuff = TETRA_GAME_OBJECTS.CreateGameObject(m_featherPuffParticleEmitterPrefab, true, m_pTransform->GetPosition());
 		featherPuff->GetComponent<Transform>(C_Transform)->SetAngleZ(m_lookDirection.AngleDegrees() + 90.f);
 		m_flying = true;

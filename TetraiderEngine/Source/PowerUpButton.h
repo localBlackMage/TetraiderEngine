@@ -16,6 +16,7 @@ private:
 	int m_specialPowerIndex;
 	int m_levelNumber;
 	bool m_isSpecial;
+	bool m_isHover;
 public:
 	PowerUpButton();
 	~PowerUpButton();
@@ -24,6 +25,7 @@ public:
 	void Serialize(const json& j);
 	void LateInitialize();
 	void HandleEvent(Event* pEvent);
+	void LateUpdate(float dt);
 };
 
 #endif

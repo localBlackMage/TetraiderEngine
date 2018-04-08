@@ -147,6 +147,7 @@
 			"y": 0,
 			"z": 0
 		},
+		"secondaryWeaponPrefab": "P_AriCrossbow",
 		"rotationOffset": 70,
 		"effectPrefab": "P_SlashTest",
 		"fireArrowPrefab": "P_fireArrowProjectile"
@@ -159,16 +160,16 @@
 		"rechargeCoolDown": 1.5,
 		"useSpeed": 20
 	},
-	{
+    {
 		"Component": "Audio",
-		"audioClip": "Lava_Bubble_Loop1.wav",
-		"volume": 0.3,
+		"audioClip": "SFX_AriFlapWings.wav",
+		"volume": 1,
 		"isMute": false,
-		"isLoop": true,
-		"isPlayOnAwake": true,
-		"isBGM": true,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
 		"is3D":false,
-		"minDistance": 10,
+		"minDistance": 20,
 		"maxDistance": 900
 	}
   ]

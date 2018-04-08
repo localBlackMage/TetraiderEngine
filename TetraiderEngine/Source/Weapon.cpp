@@ -1,6 +1,6 @@
 #include "Stdafx.h"
 
-Weapon::Weapon(): Component(C_Weapon), m_pEffect(nullptr), m_isRotationOffset(true) {}
+Weapon::Weapon(): Component(C_Weapon), m_pEffect(nullptr), m_isRotationOffset(true), m_isSecondaryCurrentlyEquipped(false) {}
 
 Weapon::~Weapon() {
 	for (auto attack : m_Attacks) {
@@ -131,6 +131,12 @@ void Weapon::Serialize(const json& j) {
 				m_pEffectTransform = m_pEffect->GetComponent<Transform>(ComponentType::C_Transform);
 			}
 		}
+
+		m_secondaryWeaponPrefab = ValueExists(j, "secondaryWeaponPrefab") ? ParseString(j, "secondaryWeaponPrefab") : "";
+		if (m_secondaryWeaponPrefab != "") {
+			m_pSecondaryWeapon = TETRA_GAME_OBJECTS.CreateGameObject(m_secondaryWeaponPrefab);
+			m_pSecondaryWeapon->m_isRender = false;
+		}
 	}
 
 	m_fireArrowPrefab = ParseString(j, "fireArrowPrefab");
@@ -168,6 +174,11 @@ void Weapon::HandleEvent(Event* pEvent) {
 		if (m_pEffect) {
 			m_pEffect->SetParent(pGO);
 			m_pEffectTransform->SetPosition(Vector3D());
+		}
+
+		if (m_pSecondaryWeapon) {
+			m_pSecondaryWeapon->SetParent(pGO);
+			m_pSecondaryWeapon->GetComponent<Transform>(C_Transform)->SetPosition(Vector3D());
 		}
 
 		if (pGO->m_tag == T_Player) {
@@ -305,4 +316,19 @@ void Weapon::MultiplyDamage(float multiplier, int attack) {
 void Weapon::HideWeapon(bool active) {
 	if (m_pWeapon) m_pWeapon->m_isRender = !active;
 	if (m_pEffect) m_pEffect->m_isRender = false;
+}
+
+void Weapon::SwapWeapons(bool isSecondary) {
+	if (isSecondary && !m_isSecondaryCurrentlyEquipped) {
+		m_pWeapon->m_isRender = false;
+		m_pSecondaryWeapon->m_isRender = true;
+		m_pWeaponTransform = m_pSecondaryWeapon->GetComponent<Transform>(C_Transform);
+		m_isSecondaryCurrentlyEquipped = true;
+	}
+	else if(!isSecondary && m_isSecondaryCurrentlyEquipped) {
+		m_pSecondaryWeapon->m_isRender = false;
+		m_pWeapon->m_isRender = true;
+		m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(C_Transform);
+		m_isSecondaryCurrentlyEquipped = false;
+	}
 }

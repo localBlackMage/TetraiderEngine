@@ -6,8 +6,10 @@ class Weapon : public Component {
 private:
 	std::vector<Attack*> m_Attacks;
 	std::string m_weaponPrefab;
+	std::string m_secondaryWeaponPrefab;
 	std::string m_fireArrowPrefab;
 	GameObject* m_pWeapon;
+	GameObject* m_pSecondaryWeapon;
 	Transform* m_pWeaponTransform;
 	std::string m_effectPrefab;
 	GameObject* m_pEffect;
@@ -18,7 +20,7 @@ private:
 	float m_rotationOffset;
 	bool m_isRotationOffset;
 	int m_damageMultiplier;
-
+	bool m_isSecondaryCurrentlyEquipped;
 	void CheckForPowerUps();
 
 public:
@@ -48,6 +50,7 @@ public:
 	void IsRotationOffset(bool active) { m_isRotationOffset = active; }
 	void MultiplyDamage(float multiplier, int attack);
 	void HideWeapon(bool active = true);
+	void SwapWeapons(bool sisScondary);
 	int GetDamageMultiplier();
 	inline float GetRotationOffset() const { return m_rotationOffset; }
 };

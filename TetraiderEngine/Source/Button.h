@@ -14,6 +14,7 @@ private:
 	bool m_isRandomGenerated;
 	bool m_isLoadCanvas;
 	bool m_isCloseShop;
+	bool m_isHover;
 	CanvasType m_canvasToActivate;
 	CanvasType m_canvasToDeActivate;
 	//Text* m_pText;
@@ -22,6 +23,7 @@ public:
 	~Button();
 	static Component* CreateInstance() { return new Button(); }
 	void Update(float dt);
+	void LateUpdate(float dt);
 	void Serialize(const json& j);
 	void LateInitialize();
 	void HandleEvent(Event* pEvent);

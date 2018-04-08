@@ -15,6 +15,18 @@ void PowerUpButton::Update(float dt) {
 		m_pSprite->SetVOffset(0);
 }
 
+void PowerUpButton::LateUpdate(float dt) {
+	if (!m_isHover && m_pSprite->GetVOffset() > 0 && m_pSprite->GetVOffset() < 0.5f) {
+		m_isHover = true;
+		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+		if (pAudio)
+			pAudio->Play(0);
+	}
+	else if (m_isHover && m_pSprite->GetVOffset() < 0.1f) {
+		m_isHover = false;
+	}
+}
+
 void PowerUpButton::Serialize(const json & j) {
 	std::string category = ParseString(j, "category");
 	m_specialPowerIndex = ParseInt(j, "specialPowerIndex");
@@ -93,6 +105,9 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				if (!m_isSpecial) {
 					TETRA_PLAYERSTATS.EquipPowerUp(m_powerUp.m_category, m_powerUp.m_type, m_powerUp.m_index);
+					Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+					if (pAudio)
+						pAudio->Play(1);
 					TETRA_UI.DeactivateCanvas(CanvasType::CANVAS_POWERUPSCREEN);
 				}
 				else {
@@ -102,12 +117,5 @@ void PowerUpButton::HandleEvent(Event * pEvent)
 			}
 		}
 	}
-	/*else if (pEvent->Type() == EVENT_OnCanvasDeactivated) {
-		CanvasData* pData = pEvent->Data<CanvasData>();
-		if (pData->m_canvasType == (int)CanvasType::CANVAS_POWERUPSCREEN) {
-			TETRA_LEVELS.ActivateRandomGeneration(true);
-			TETRA_LEVELS.ChangeLevel(m_levelNumber);
-		}
-	}*/
 }
 

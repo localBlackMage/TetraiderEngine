@@ -33,8 +33,6 @@ void DestroyOnHealthZero::Update(float dt) {
 				Transform* pExplosion = pExplosionGO->GetComponent<Transform>(C_Transform);
 				Transform* pTransform = pGO->GetComponent<Transform>(C_Transform);
 				pExplosion->SetPosition(pTransform->GetPosition());
-				Audio* pAudio = pExplosionGO->GetComponent<Audio>(C_Audio);
-				pAudio->Play();
 				m_Attack->Use(pTransform->GetPosition());
 			}
 			if (m_isSpawnAcidPool) {
@@ -42,11 +40,16 @@ void DestroyOnHealthZero::Update(float dt) {
 				TETRA_GAME_OBJECTS.CreateGameObject(m_acidPrefab, true, pTransform->GetPosition());
 			}
 
-			if(pGO->m_tag != T_Enemy)
+			if (pGO->m_tag != T_Enemy) {
 				pGO->Destroy();
+			}
 			else {
 				m_isDestory = false;
 			}
+
+			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+			if (pAudio)
+				pAudio->Play();
 		}
 	}
 

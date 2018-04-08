@@ -25,6 +25,7 @@ void Collectible::Serialize(const json& j) {
 void Collectible::LateInitialize() {}
 
 void Collectible::HandleEvent(Event* pEvent) {
+	bool isCollected = false;
 	switch (pEvent->Type()) {
 		case EVENT_OnCollide: {
 			OnCollideData* pData = pEvent->Data<OnCollideData>();
@@ -32,6 +33,7 @@ void Collectible::HandleEvent(Event* pEvent) {
 
 			if (m_isEgg) {
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EggCollected, &CollectibleData(m_value)));
+				isCollected = true;
 				pGO->Destroy();
 			}
 			else if (m_isHealthPickUp) {
@@ -40,6 +42,7 @@ void Collectible::HandleEvent(Event* pEvent) {
 					int extraHealth = 0;
 					TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseHealthFromPickUp, extraHealth);
 					pHealth->HandleEvent(&Event(EVENT_HealthCollected, &CollectibleData(m_value + extraHealth)));
+					isCollected = true;
 					pGO->Destroy();
 				}
 			}
@@ -47,11 +50,19 @@ void Collectible::HandleEvent(Event* pEvent) {
 				int extraArrows = 0;
 				TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseAmmoPickUp, extraArrows);
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_AmmoUpdate, &CollectibleData(m_value + extraArrows)));
+				isCollected = true;
 				pGO->Destroy();
 			}
 			else if (m_isGoldenFeather) {
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_GoldenFeatherCollected, &CollectibleData(m_value)));
+				isCollected = true;
 				pGO->Destroy();
+			}
+
+			if (isCollected) {
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play();
 			}
 
 			break;

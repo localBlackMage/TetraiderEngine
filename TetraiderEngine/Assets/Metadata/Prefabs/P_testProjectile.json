@@ -63,7 +63,7 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "arrow.mp3",
+		"audioClip": "SFX_FireProjectile.wav",
 		"volume": 0.3,
 		"isMute": false,
 		"isLoop": false,
