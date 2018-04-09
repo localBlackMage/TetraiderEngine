@@ -210,6 +210,7 @@
     <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
     <ClInclude Include="Source\PowerUpData.h" />
+    <ClInclude Include="Source\RoomNodeData.h" />
     <ClInclude Include="Source\Shop.h" />
     <ClInclude Include="Source\Slider.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />

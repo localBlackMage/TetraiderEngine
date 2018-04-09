@@ -90,9 +90,9 @@ protected:
 	RoomNode** m_roomNodes;
 	RoomNode* m_spawnNode;
 	unsigned short m_cols, m_rows;	// How many rooms wide and tall a floor will be (ex. 5x5)
-	unsigned short m_maxRowIdx, m_maxColIdx;
-	int m_seed;
-	unsigned short m_difficulty;
+	unsigned short m_maxRowIdx, m_maxColIdx;	// Easy reference to m_cols-1 and m_rows-1
+	int m_seed;									// Current seed being used to generate level with
+	unsigned short m_difficulty;				// Current difficulty of the level as a whole
 
 	std::unordered_map<RoomConnections, DifficultyMap > m_roomFiles;
 

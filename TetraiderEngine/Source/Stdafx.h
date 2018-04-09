@@ -78,6 +78,7 @@ using namespace JsonReader;
 #include <Subscriber.h>
 #include <SurfaceTextureBuffer.h>
 #include <FontInfo.h>
+#include <RoomNodeData.h>
 #include <FrameBufferObject.h>
 #include <Mesh.h>
 #include <DebugLineMesh.h>

@@ -1,0 +1,6 @@
+{
+	"paintMask": {
+		"vertex": "paintMask.vert",
+		"fragment": "paintMask.frag"
+	}
+}

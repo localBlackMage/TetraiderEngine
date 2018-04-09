@@ -7,6 +7,8 @@ struct ImageRenderersData {
 	ShaderProgram * pBaseShader;
 	ShaderProgram * pGausHShader;
 	ShaderProgram * pGausVShader;
+	ShaderProgram * pMiniMapShader;
+	ShaderProgram * pMaskShader;
 };
 
 class PostProcessing : public Subscriber
@@ -19,7 +21,9 @@ private:
 	ImageRenderer * m_pSecondBaseIR;
 	ImageRenderer * m_pGaussianHIR;
 	ImageRenderer * m_pGaussianVIR;
-
+	ImageRenderer * m_pMiniMapMaskIR;
+	ImageRenderer * m_pMiniMapOriginalIR;
+	ImageRenderer * m_pMiniMapFinalIR;
 
 	bool m_enabled;
 
@@ -56,6 +60,8 @@ public:
 		Does Post Processing work to Second Base FBO
 	*/
 	void DoPostProcessing();
+
+	void CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols);
 };
 
 #endif

@@ -78,6 +78,8 @@ void GameConfig::LoadConfig(std::string s) {
 	IRD.pGausHShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianHorizontalShader"));
 	IRD.pGausVShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "gaussianVerticalShader"));
 	IRD.pBaseShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "baseShader"));
+	IRD.pMaskShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "maskShader"));
+	IRD.pMiniMapShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "miniMapShader"));
 	if (m_debugEnabled)
 		TETRA_POST_PROCESSING.DebugInitialize();
 	TETRA_POST_PROCESSING.InitImageRenderers(IRD, m_resolutions[m_currentResolution]);

@@ -1,0 +1,6 @@
+{
+	"paintMap": {
+		"vertex": "paintMap.vert",
+		"fragment": "paintMap.frag"
+	}
+}

@@ -1,4 +1,5 @@
 #include <Stdafx.h>
+#include "MathFunctions.h"
 
 std::unordered_map<unsigned short, std::vector<unsigned int> > pascalTriangle;
 
@@ -101,4 +102,16 @@ float ClampAngleTo180(float angle)
 bool IsSimilar(float a, float b)
 {
 	return double(abs(a - b)) < EPSILON;
+}
+
+static long holdrand = 0;
+
+void SeedRand(unsigned int seed)
+{
+	holdrand = (long)seed;
+}
+
+int Rand()
+{
+	return (((holdrand = holdrand * 214012L + 2531011L) >> 16) & RAND_MAX);
 }

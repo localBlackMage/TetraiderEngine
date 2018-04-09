@@ -19,6 +19,9 @@ public:
 	ImageRenderer(const ImageRenderer &) = delete;
 	void operator=(const ImageRenderer &) = delete;
 
+	inline Mesh& Mesh() const { return m_mesh; }
+	inline ShaderProgram* Shader() const { return m_pShader; }
+
 	void Render(ImageRenderer * pIR) const;
 	void Render(FrameBufferObject* pOtherFBO) const;
 

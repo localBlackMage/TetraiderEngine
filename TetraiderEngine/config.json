@@ -20,10 +20,14 @@
 	},
 	"RENDER_SETTINGS": {
 		"enableWindowsCursor": false,
+		
 		"debugShader": "lineShader",
 		"baseShader": "fboRenderer",
 		"gaussianHorizontalShader": "gaussianBlurHorizontal",
 		"gaussianVerticalShader": "gaussianBlurVertical",
+		"maskShader": "paintMask",
+		"miniMapShader": "paintMap",
+		
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": false
@@ -35,7 +39,9 @@
 		"gaussianBlurHorizontal",
 		"gaussianBlurVertical",
 		"lineShader",
-		"particleShader"
+		"particleShader",
+		"paintMask",
+		"paintMap"
 	],
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",

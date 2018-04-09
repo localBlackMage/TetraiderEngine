@@ -461,6 +461,7 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 	std::vector<GameObject*> enemies;
 	std::vector<GameObject*> objects;
+	std::vector<RoomNodeData> roomNodeDatas;
 
 	for (short row = 0; row < m_rows; ++row) {
 		for (short col = 0; col < m_cols; ++col) {
@@ -508,6 +509,13 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 					if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
 					else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
 				}
+				if (pGO->TagIs(GameObjectTag::T_Background)) {
+					RoomNodeData roomNodeData;
+					roomNodeData.col = col;
+					roomNodeData.row = row;
+					roomNodeData.spriteComponent = pGO->GetComponent<Sprite>(C_Sprite);
+					roomNodeDatas.push_back(roomNodeData);
+				}
 			}
 		}
 	}
@@ -537,6 +545,8 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->AddSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 	}
+
+	TETRA_POST_PROCESSING.CreateMiniMapTexture(roomNodeDatas, m_rows, m_cols);
 }
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
