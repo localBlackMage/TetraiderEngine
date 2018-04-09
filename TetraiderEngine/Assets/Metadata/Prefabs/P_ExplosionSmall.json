@@ -64,8 +64,8 @@
 	},
 	{
 		"Component": "Audio",
-		"audioClip": "explosion.mp3",
-		"volume": 0.5,
+		"audioClip": "SFX_Explosion.wav",
+		"volume": 1,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,

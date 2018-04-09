@@ -301,7 +301,10 @@
 	},
     {
 		"Component": "Audio",
-		"audioClip": "SFX_RatDead.wav",
+		"audioClip": [
+			"SFX_RatDead.wav",
+			"SFX_BossLand.wav"
+		],
 		"volume": 1,
 		"isMute": false,
 		"isLoop": false,

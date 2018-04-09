@@ -30,6 +30,9 @@ void SplashScreen::HandleEvent(Event * pEvent)
 		case EVENT_INPUT_SCREENBYPASS: {
 			InputButtonData* pData = pEvent->Data<InputButtonData>();
 			if (pData->m_isTrigger) {
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play();
 				TETRA_LEVELS.ChangeLevel(m_levelToLoad);
 			}
 			break;

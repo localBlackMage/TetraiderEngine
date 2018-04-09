@@ -71,6 +71,16 @@
 		"isPlayOnAwake": false,
 		"isBGM": false,
 		"is3D": false
+	},
+	{
+		"Component": "Audio",
+		"audioClip": "swordSlash.mp3",
+		"volume": 0.5,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D": false
 	}
   ]
 }

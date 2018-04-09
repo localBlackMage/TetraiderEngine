@@ -63,6 +63,9 @@ void WinMessage::HandleEvent(Event * pEvent)
 		pGO->m_isRender = true;
 		m_pScriptedAnim->PlayAnimation();
 		m_isMessageOn = true;
+		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+		if (pAudio)
+			pAudio->Play();
 	}
 	else if (m_isMessageOn && !m_isExitingLevel && pEvent->Type() == EVENT_INPUT_EXITLEVEL && !TETRA_GAME_STATE.IsGamePaused()) {
 		m_isExitingLevel = true;

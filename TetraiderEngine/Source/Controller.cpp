@@ -94,6 +94,9 @@ void Controller::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EventType::EVENT_ExitLevel: {
+			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+			if (pAudio)
+				pAudio->Play();
 			m_isFlyingOutOfLevel = true;
 			SetControlActive(false);
 			pGO->m_isCollisionDisabled = true;

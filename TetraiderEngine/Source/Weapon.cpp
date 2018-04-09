@@ -208,11 +208,9 @@ void Weapon::PlayEffect() {
 
 		Swing();
 
-		if (pGO->m_tag == T_Player) {
-			Audio* pAudio = m_pEffect->GetComponent<Audio>(ComponentType::C_Audio);
-			if (pAudio)
-				pAudio->Play();
-		}
+		Audio* pAudio = m_pEffect->GetComponent<Audio>(ComponentType::C_Audio);
+		if (pAudio)
+			pAudio->Play();
 	}
 }
 

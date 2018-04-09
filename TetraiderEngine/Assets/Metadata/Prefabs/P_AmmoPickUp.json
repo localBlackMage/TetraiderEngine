@@ -76,7 +76,7 @@
 	},
     {
 		"Component": "Audio",
-		"audioClip": "SFX_goldenFeatherPickUp.wav",
+		"audioClip": "SFX_ArrowsPickUp.wav",
 		"volume": 1,
 		"isMute": false,
 		"isLoop": false,
