@@ -1,7 +1,3 @@
-//#include "Audio.h"
-//#include "TetraiderAPI.h"
-//#include "Transform.h"
-
 #include <Stdafx.h>
 
 Audio::Audio() :Component(ComponentType::C_Audio), m_currentIndex(0) {}
@@ -47,8 +43,11 @@ void Audio::Serialize(const json& j)
 		TETRA_RESOURCES.LoadSong(m_audioClip[m_currentIndex]);
 		TETRA_AUDIO.SetFadeTime(m_fadeTime);
 	}	
-	else
-		TETRA_RESOURCES.LoadSFX(m_audioClip[m_currentIndex]);
+	else {
+		for (int i = 0; i < m_audioClip.size(); ++i) {
+			TETRA_RESOURCES.LoadSFX(m_audioClip[i]);
+		}
+	}
 }
 
 bool Audio::IsPlaying()
@@ -58,6 +57,11 @@ bool Audio::IsPlaying()
 
 void Audio::Play(int index)
 {
+	if (index >= m_audioClip.size())
+		return;
+	else {
+		m_currentIndex = index;
+	}
 
 	 if (m_Ismute)
 		TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(),m_minDist,m_maxDist);

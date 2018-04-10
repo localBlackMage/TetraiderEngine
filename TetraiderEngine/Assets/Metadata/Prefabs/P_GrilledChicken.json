@@ -76,7 +76,8 @@
 			"prewarmed": true,
 			"startDelay": 0,
 			"lifeTime": 0.9,
-			"speed": 40.0,
+			"speedMin": 100.0,
+			"speedMax": 120.0,
 			"velocityX": {
 				"amplitude": 0.0,
 				"points": []
@@ -101,7 +102,7 @@
 					"r": 1,
 					"g": 1,
 					"b": 1,
-					"a": 1
+					"a": 0
 				}
 			},
 			"gravity": 0,

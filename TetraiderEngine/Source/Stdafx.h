@@ -202,6 +202,7 @@ using namespace JsonReader;
 #include <Spawner.h>
 #include <TimeToLive.h>
 #include <ApplyTinyOnDifficultyUp.h>
+#include <SplashScreen.h>
 
 #pragma endregion 
 
@@ -211,6 +212,7 @@ using namespace JsonReader;
 #include <InputManager.h>
 #include <FrameRateManager.h>
 #include <PostProcessing.h>
+#include <GameObjectManager.h>
 #include <RenderManager.h>
 #include <ResourceManager.h>
 #include <PhysicsManager.h>
@@ -218,7 +220,6 @@ using namespace JsonReader;
 #include <LevelManager.h>
 #include <DebugManager.h>
 #include <AudioManager.h>
-#include <GameObjectManager.h>
 #include <MemoryManager.h>
 #include <FloorPlanGenerator.h>
 #include <ImguiManager.h>

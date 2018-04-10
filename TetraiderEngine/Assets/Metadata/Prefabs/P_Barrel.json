@@ -104,6 +104,18 @@
 				"weight": 90
 			}
 		]
-	}	
+	},
+	{
+		"Component": "Audio",
+		"audioClip": "SFX_WoodBreak.wav",
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
+	}
   ]
 }

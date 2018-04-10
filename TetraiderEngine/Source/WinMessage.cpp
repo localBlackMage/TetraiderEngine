@@ -7,7 +7,8 @@ m_isExitingLevel(false),
 m_isRightTransitionSpawned(false), 
 m_timeToSpawnRightTransition(0.75f), 
 m_timeToLoadNextLevel(3.0f),
-m_timer(0.0f)
+m_timer(0.0f),
+m_levelToLoad(3)
 {}
 
 WinMessage::~WinMessage(){}
@@ -40,7 +41,8 @@ void WinMessage::Update(float dt)
 		}
 		
 		if (m_timer > m_timeToLoadNextLevel) {
-			TETRA_LEVELS.NextLevel();
+			TETRA_LEVELS.ActivateRandomGeneration(false);
+			TETRA_LEVELS.ChangeLevel(m_levelToLoad);
 			//TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
 		}
 	}
@@ -51,6 +53,7 @@ void WinMessage::Serialize(const json & j)
 	m_timeToSpawnRightTransition = ParseFloat(j, "timeToSpawnRightTransition");
 	m_timeToLoadNextLevel = ParseFloat(j, "timeToLoadNextLevel");
 	m_rightTransitionPrefab = ParseString(j, "rightTransitionPrefab");
+	m_levelToLoad = ParseInt(j, "levelToLoad");
 }
 
 void WinMessage::HandleEvent(Event * pEvent)
@@ -60,6 +63,9 @@ void WinMessage::HandleEvent(Event * pEvent)
 		pGO->m_isRender = true;
 		m_pScriptedAnim->PlayAnimation();
 		m_isMessageOn = true;
+		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+		if (pAudio)
+			pAudio->Play();
 	}
 	else if (m_isMessageOn && !m_isExitingLevel && pEvent->Type() == EVENT_INPUT_EXITLEVEL && !TETRA_GAME_STATE.IsGamePaused()) {
 		m_isExitingLevel = true;

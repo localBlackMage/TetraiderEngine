@@ -8,12 +8,25 @@ Button::Button() :Component(ComponentType::C_Button)
 {
 	m_isQuit = false;
 	m_isRestart = false;
+	m_isHover = false;
 }
 Button::~Button() {}
 
 void Button::Update(float dt)
 {
 	m_pSprite->SetVOffset(0);
+}
+
+void Button::LateUpdate(float dt) {
+	if (!m_isHover && m_pSprite->GetVOffset() > 0 && m_pSprite->GetVOffset() < 0.5f) {
+		m_isHover = true;
+		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+		if (pAudio)
+			pAudio->Play(0);
+	}
+	else if(m_isHover && m_pSprite->GetVOffset() < 0.1f) {
+		m_isHover = false;
+	}
 }
 
 void Button::Serialize(const json & j)
@@ -61,11 +74,16 @@ void Button::HandleEvent(Event* pEvent)
 				m_pSprite->SetVOffset(0.6666f);
 			}
 			else if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT)) {
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play(1);
 				if (m_isQuit) {
 					TETRA_EVENTS.BroadcastEvent(&Event(EVENT_WINDOW_CLOSED));
 				}
 				else if (m_isRestart) {
-					TETRA_LEVELS.ChangeLevel(TETRA_LEVELS.GetCurrentLevel());
+					TETRA_LEVELS.ActivateRandomGeneration(false);
+					TETRA_PLAYERSTATS.ClearStats();
+					TETRA_LEVELS.ChangeLevel(m_levelNumber);
 				}
 				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);

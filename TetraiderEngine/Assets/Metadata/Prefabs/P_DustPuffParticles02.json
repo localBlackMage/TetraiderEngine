@@ -32,7 +32,8 @@
 		"prewarmed": false,
 		"startDelay": 0,
 		"lifeTime": 1.0,
-		"speed": 130.0,
+		"speedMin": 130.0,
+		"speedMax": 130.0,
 		"velocityX": {
 			"amplitude": 0.0,
 			"points": [

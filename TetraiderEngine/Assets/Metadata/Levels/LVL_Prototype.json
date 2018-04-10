@@ -15,7 +15,7 @@
 		},
 		
 		{
-			"prefab": "P_ParticleTest",
+			"prefab": "P_FireParticleEmitter",
 			"position": {
 				"x": -100,
 				"y": 0,
@@ -23,7 +23,7 @@
 			}
 		},
 		
-				{
+		{
 			"prefab": "P_FireLight",
 			"position": {
 				"x": -200,
@@ -214,8 +214,9 @@
 		{
 			"prefab": "P_InGameCursor"
 		},
+		
 		{
-			"prefab": "P_Floor_TEST",
+			"prefab": "P_FloorRight_TEST",
 			"position": {
 				"x": 0,
 				"y": 0,
@@ -223,15 +224,7 @@
 			}
 		},
 		{
-			"prefab": "P_FloorConnector",
-			"position": {
-				"x": 768,
-				"y": 0,
-				"z": 0
-			}
-		},
-		{
-			"prefab": "P_Floor",
+			"prefab": "P_FloorLeftUpDown_TEST",
 			"position": {
 				"x": 1536,
 				"y": 0,
@@ -239,34 +232,18 @@
 			}
 		},
 		{
-			"prefab": "P_FloorConnector",
-			"position": {
-				"x": 1536,
-				"y": 512,
-				"z": 0
-			}
-		},
-		{
-			"prefab": "P_FloorConnector",
-			"position": {
-				"x": 1536,
-				"y": -512,
-				"z": 0
-			}
-		},
-		{
-			"prefab": "P_Floor",
-			"position": {
-				"x": 1536,
-				"y": 1024,
-				"z": 0
-			}
-		},
-		{
-			"prefab": "P_Floor",
+			"prefab": "P_FloorUp_TEST",
 			"position": {
 				"x": 1536,
 				"y": -1024,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "P_FloorDown_TEST",
+			"position": {
+				"x": 1536,
+				"y": 1024,
 				"z": 0
 			}
 		},

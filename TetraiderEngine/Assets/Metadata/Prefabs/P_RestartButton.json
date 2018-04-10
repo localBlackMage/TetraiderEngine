@@ -61,7 +61,7 @@
     },
     {
       "Component": "Button",
-      "level"    : 2,
+      "level"    : 4,
       "restart":true
     },
     {
@@ -83,6 +83,21 @@
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
           "text": "Restart"
-      }
+      },
+    {
+		"Component": "Audio",
+		"audioClip": [
+			"SFX_MenuHover.wav",
+			"SFX_MenuClick.wav"
+		],
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
+	}
       ]
   }

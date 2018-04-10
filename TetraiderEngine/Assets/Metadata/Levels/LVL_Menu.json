@@ -7,11 +7,21 @@
     {
       "prefab": "P_MainMenu"
     },
+	{
+	  "prefab": "P_VolcanoBackGround"
+	},
     {
       "prefab":"P_Title",
       "position":{
         "x":0,
-        "y":250
+        "y":255
+      }
+    },
+	{
+      "prefab":"P_MenuBg",
+      "position":{
+        "x":0,
+        "y":0
       }
     },
     {

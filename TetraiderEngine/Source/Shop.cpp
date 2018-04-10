@@ -62,6 +62,9 @@ void Shop::HandleEvent(Event* pEvent)
 		if (pEvent->Type() == EventType::EVENT_INPUT_OPENSHOP) {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isTrigger) {
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play();
 				m_isShopOpen = true;
 				TETRA_UI.ActivateCanvas(CanvasType::CANVAS_SHOP);
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_ShopOpened));

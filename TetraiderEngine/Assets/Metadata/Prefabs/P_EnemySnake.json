@@ -30,7 +30,7 @@
 			"speed": 118,
 			"acceleration": 8,
 			"knockBackMultiplier": 1,
-			"isIgnoreHazards" : true
+			"isIgnoreHazards" : false
 		},
 		"detectionRadius": 425,
 		"outOfSightRadius": 525,
@@ -204,6 +204,18 @@
 				"weight": 80
 			}
 		]
+	},
+    {
+		"Component": "Audio",
+		"audioClip": "SFX_SnakeDeath.wav",
+		"volume": 0.5,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
 	}
   ]
 }

@@ -65,13 +65,13 @@
 		"isExplodeOnVelocityZero": false,
 		"isIgnoreCollideEvent": false,
 		"deacclerationSpeed": 2,
-    "isSpawnAcidPool": true,
-    "acidPrefab": "P_AcidPool"
+		"isSpawnAcidPool": true,
+		"acidPrefab": "P_AcidPool"
 	},
 	{
 		"Component": "DestroyOnHealthZero",
 		"destroyIn": 0,
-    "m_isSpawnAcidPool": false,
+		"m_isSpawnAcidPool": false,
 		"isExplode": false
 	},
 	{
@@ -83,6 +83,18 @@
         "b": 1,
         "a": 0
 		}
+	},
+    {
+		"Component": "Audio",
+		"audioClip": "SFX_SnakeAttack.wav",
+		"volume": 0.3,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": true,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
 	}
   ]
 }

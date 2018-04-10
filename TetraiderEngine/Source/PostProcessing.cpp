@@ -96,8 +96,9 @@ void PostProcessing::DoPostProcessing()
 
 	//m_pGaussianHIR->Render(m_pGaussianVIR);
 	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
-
-	m_pBaseIR->RenderToScreen(*m_pBaseShader);
+	int windowWidth, windowHeight;
+	TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+	m_pBaseIR->RenderToScreen(*m_pBaseShader, windowWidth, windowHeight);
 
 	//m_pSecondBaseIR->ClearBuffer();
 	//m_pSecondBaseIR->Render(m_pGaussianHIR);

@@ -461,11 +461,8 @@
     <ClCompile Include="Source\AI_RatBossRetreat.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_RockBossAttack.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_RockBossEngage.cpp">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClCompile Include="Source\SplashScreen.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -926,11 +923,8 @@
     <ClInclude Include="Source\AI_RatBossRetreat.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_RockBossAttack.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AI_RockBossEngage.h">
-      <Filter>Source Files\FiniteStateMachine</Filter>
+    <ClInclude Include="Source\SplashScreen.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

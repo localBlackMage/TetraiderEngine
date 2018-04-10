@@ -153,6 +153,7 @@
     <ClCompile Include="Source\SnapToCamera.cpp" />
     <ClCompile Include="Source\Spawner.cpp" />
     <ClCompile Include="Source\SpawnOnHealthZero.cpp" />
+    <ClCompile Include="Source\SplashScreen.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Stamina.cpp" />
     <ClCompile Include="Source\Stdafx.cpp">
@@ -312,6 +313,7 @@
     <ClInclude Include="Source\Sorting.h" />
     <ClInclude Include="Source\Spawner.h" />
     <ClInclude Include="Source\SpawnOnHealthZero.h" />
+    <ClInclude Include="Source\SplashScreen.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Stamina.h" />
     <ClInclude Include="Source\Stdafx.h" />

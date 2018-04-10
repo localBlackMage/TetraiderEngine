@@ -1,6 +1,6 @@
 {
     "Tag": "UI",
-    "Layer": "UI",
+    "Layer": "UIBG",
     "COMPONENTS": [
         {
           "Component": "Transform",
@@ -41,7 +41,7 @@
             "r": 0,
             "g": 0,
             "b": 0,
-            "a": 0.5
+            "a": 0.3
           },
           "saturation": {
             "r": 0,

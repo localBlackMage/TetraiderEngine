@@ -46,6 +46,7 @@ void GameConfig::LoadConfig(std::string s) {
 	for (unsigned int i = 0; i < j[WINDOW_SETTINGS]["resolutions"].size(); ++i) {
 		m_resolutions[i].width = unsigned short(j[WINDOW_SETTINGS]["resolutions"][i]["width"]);
 		m_resolutions[i].height = unsigned short(j[WINDOW_SETTINGS]["resolutions"][i]["height"]);
+		m_resolutions[i].aspectRatio = float(m_resolutions[i].width) / float(m_resolutions[i].height);
 	}
 	m_currentResolution = j[WINDOW_SETTINGS]["defaultResolution"];
 

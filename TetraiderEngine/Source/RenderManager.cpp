@@ -3,7 +3,7 @@
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
-	/*m_clearColor(Vector3D(.2f,.2f,.2f,1.f)),*/m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
+	m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
 {
 }
 
@@ -80,11 +80,11 @@ void RenderManager::_RenderParticles(const ParticleEmitter * pParticleEmitterCom
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pParticleEmitterComp->FrameWidth(), pParticleEmitterComp->FrameHeight());
 	glUniform1f(SHADER_LOCATIONS::P_BRIGHTNESS_TINT, pParticleEmitterComp->Brightness());
 
-	_BindVertexAttribute(SHADER_LOCATIONS::P_POS_SIZE, pParticleEmitterComp->GetPositions(), 4, GL_FLOAT, GL_FALSE, 0, 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::P_POS_ROT_SIZE, pParticleEmitterComp->GetPositions(), 4, GL_FLOAT, GL_FALSE, 0, 0);
 	_BindVertexAttribute(SHADER_LOCATIONS::P_COLOR, pParticleEmitterComp->GetColors(), 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
 	_BindVertexAttribute(SHADER_LOCATIONS::P_TEXTURE_COORD, pParticleEmitterComp->GetTextureCoords(), 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_SIZE, 1);			// positions : one per quad (its center) -> 1
+	glVertexAttribDivisor(SHADER_LOCATIONS::P_POS_ROT_SIZE, 1);			// positions : one per quad (its center) -> 1
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_COLOR, 1);			// color : one per quad -> 1
 	glVertexAttribDivisor(SHADER_LOCATIONS::P_TEXTURE_COORD, 1);	// texture coordinates : one per quad -> 1
 
@@ -637,7 +637,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		SDL_WINDOW_OPENGL);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 	if (startFullScreen)
 		SetWindowToFullscreen();

@@ -59,6 +59,9 @@ void GateTriggerBox::HandleEvent(Event* pEvent) {
 			if (pData->pGO->m_tag == T_Player) {
 				m_isTriggered = true;
 				pGO->m_isCollisionDisabled = true;
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play(0);
 				for (unsigned int i = 0; i < m_gates.size(); ++i) {
 					if (m_gates[i]) {
 						m_gates[i]->HandleEvent(&Event(EventType::EVENT_CloseGate));
@@ -73,6 +76,9 @@ void GateTriggerBox::HandleEvent(Event* pEvent) {
 		}
 		case EVENT_OnBossDefeated: {
 			if (m_isBossTriggerBox) {
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play(1);
 				for (unsigned int i = 0; i < m_gates.size(); ++i) {
 					if (m_gates[i]) {
 						m_gates[i]->HandleEvent(&Event(EventType::EVENT_OpenGate));

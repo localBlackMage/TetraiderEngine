@@ -50,6 +50,50 @@ void ImageRenderer::Render(FrameBufferObject * pOtherFBO) const
 	m_pFBO->UnbindFrameBuffer();
 }
 
+void ImageRenderer::RenderToScreen(const ShaderProgram & shader, int width, int height) const
+{
+	TETRA_RENDERER.BindWindowFrameBuffer();
+
+	glUseProgram(shader.GetProgramID());
+
+	TETRA_RENDERER.BindMesh(m_mesh);
+
+	Matrix4x4 M;
+	const Resolution& res = TETRA_GAME_CONFIG.GetResolution();
+	float aspectRatio = float(width) / float(height);
+
+	if (!IsSimilar(aspectRatio, res.aspectRatio)) {
+		int widthDiff = width - int(res.width);
+		int heightDiff = height - int(res.height);
+		// Closer to height
+		if (abs(widthDiff) > abs(heightDiff)) {
+			M = Matrix4x4::Scale(1.f + float(widthDiff) / float(res.width) , 1, 1);
+		}
+		// Closer to width
+		else {
+			M = Matrix4x4::Scale(1, 1.f + float(heightDiff) / float(res.height), 1);
+		}
+	}
+	// Close enough to the desired aspect ratio, just use it
+	else 
+		M = Matrix4x4::Scale(1, 1, 1);
+
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+
+	TETRA_RENDERER.EnableAlphaTest();
+
+	// Bind PostProcessing's base FBO and render it
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_pFBO->GetColorTexture());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+
+	glUniform1i(TEXTURE_LOCATIONS::NUM_TEXTURES, 1);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+}
+
 void ImageRenderer::RenderToScreen(const ShaderProgram& shader) const
 {
 	TETRA_RENDERER.BindWindowFrameBuffer();

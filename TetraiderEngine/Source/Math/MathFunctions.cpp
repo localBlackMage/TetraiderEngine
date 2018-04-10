@@ -97,3 +97,8 @@ float ClampAngleTo180(float angle)
 		return angle + float(int(-angle) % 180) * 180.f;
 	return angle;
 }
+
+bool IsSimilar(float a, float b)
+{
+	return double(abs(a - b)) < EPSILON;
+}

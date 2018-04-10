@@ -39,14 +39,14 @@
                   {
                     "prefab":"P_BGM_SliderBar",
                     "position":{
-                      "x":200,
+                      "x":150,
                       "y":100
                     }
                   },
                   {
                     "prefab":"P_SliderBall",
                     "position":{
-                      "x":190,
+                      "x":140,
                       "y":100
                     }
                   },
@@ -60,49 +60,49 @@
                   {
                     "prefab":"P_BGM_title",
                     "position":{
-                      "x":-50,
+                      "x":-100,
                       "y":100
                     }
                 } ,
                 {
                   "prefab":"P_SFX_title",
                   "position":{
-                    "x":-50,
+                    "x":-100,
                     "y":50
                   }
               }  ,
               {
                 "prefab":"P_SFX_SliderBar",
                 "position":{
-                  "x":200,
+                  "x":150,
                   "y":50
                 }
               },
               {
                 "prefab":"P_SliderBall",
                 "position":{
-                  "x":190,
+                  "x":140,
                   "y":50
                 }
               },
               {
                 "prefab":"P_MasterVol_title",
                 "position":{
-                  "x":-50,
+                  "x":-100,
                   "y":0
                 }
             } ,
             {
               "prefab":"P_MasterVol_SliderBar",
               "position":{
-                "x":200,
+                "x":150,
                 "y":0
               }
             },
             {
               "prefab":"P_SliderBall",
               "position":{
-                "x":190,
+                "x":140,
                 "y":0
               }
             },

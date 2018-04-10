@@ -83,7 +83,8 @@ void InputManager::Update() {
 					case SDL_WINDOWEVENT_FOCUS_LOST:
 					case SDL_WINDOWEVENT_MINIMIZED:
 					{
-						cout << "Pause game now." << endl;
+						if(!TETRA_GAME_STATE.IsGamePaused())
+							TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_INPUT_PAUSEGAME, &InputButtonData(false, true, false)));
 						break;
 					}
 				}

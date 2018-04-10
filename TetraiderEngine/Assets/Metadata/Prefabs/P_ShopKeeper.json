@@ -83,6 +83,18 @@
 			"y": 80,
 			"z": 0
 		}
+	},
+    {
+		"Component": "Audio",
+		"audioClip": "SFX_MenuClick.wav",
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
 	}
   ]
 }

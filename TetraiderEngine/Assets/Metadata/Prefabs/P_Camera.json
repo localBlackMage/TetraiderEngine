@@ -29,6 +29,18 @@
         },
         {
             "Component":"Microphone"
-        }		
+        },
+		{
+			"Component": "Audio",
+			"audioClip": "BGM_Ambience.wav",
+			"volume": 0.5,
+			"isMute": false,
+			"isLoop": true,
+			"isPlayOnAwake": true,
+			"isBGM": true,
+			"is3D":false,
+			"minDistance": 20,
+			"maxDistance": 900
+		}		
     ]
 }

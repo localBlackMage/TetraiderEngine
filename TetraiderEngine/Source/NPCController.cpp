@@ -216,19 +216,26 @@ void NPCController::HandleEvent(Event* pEvent) {
 			//pGO->SwitchTag(T_DeadEnemy);
 			m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			m_isDead = true;
+			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+			if (pAudio)
+				pAudio->Play(0);
 		}
 		else {
 			pGO->Destroy();
 		}
 
 		if (m_isBoss) {
-			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_OnBossDefeated));
+			Event* e = new Event(EVENT_OnBossDefeated, 1.5f);
+			TETRA_EVENTS.AddDelayedEvent(e);
 		}
 	}
 	else if (pEvent->Type() == EVENT_OnEnterBoss) {
 		EnterBoss();
 	}
 	else if (pEvent->Type() == EVENT_OnBossLand) {
+		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+		if (pAudio)
+			pAudio->Play(1);
 		TETRA_GAME_OBJECTS.CreateGameObject(m_puffParticlePrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_puffOffset,0));
 	}
 
