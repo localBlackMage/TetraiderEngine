@@ -21,6 +21,7 @@ public:
 
 	inline Mesh& Mesh() const { return m_mesh; }
 	inline ShaderProgram* Shader() const { return m_pShader; }
+	inline FrameBufferObject* FBO() const { return m_pFBO; }
 
 	void Render(ImageRenderer * pIR) const;
 	void Render(FrameBufferObject* pOtherFBO) const;

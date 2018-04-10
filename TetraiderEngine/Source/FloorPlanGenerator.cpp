@@ -450,9 +450,9 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	unsigned short roomWidth = TETRA_GAME_CONFIG.RoomWidth();
 	unsigned short roomHeight = TETRA_GAME_CONFIG.RoomHeight();
 
-	float x = float(roomWidth * cellWidth);
+	float x = float(roomWidth * cellWidth);		// pixel width of the room
 	float xHalf = x / 2.f;
-	float y = float(roomHeight * cellHeight);
+	float y = float(roomHeight * cellHeight);	// pixel height of the room
 	float yHalf = y / 2.f;
 	// "Magic number" fix, the room background files had a slight gap in them when placed, this shifts everything 
 	// over to avoid said gap
@@ -479,12 +479,10 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 					break;
 				}
 				case RoomType::BOSS: {
-					//j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
 					j = _GetRoomJsonForBoss(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
 				case RoomType::SHOP: {
-					//j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
 					j = _GetRoomJsonForShop(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
@@ -599,7 +597,7 @@ unsigned int FloorPlanGenerator::FloorWidthPixels() const
 
 unsigned int FloorPlanGenerator::FloorHeightPixels() const
 {
-	return int(TETRA_GAME_CONFIG.RoomWidthPixels() * m_rows);
+	return int(TETRA_GAME_CONFIG.RoomHeightPixels() * m_rows);
 }
 
 #pragma endregion

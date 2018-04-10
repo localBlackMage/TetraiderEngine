@@ -210,8 +210,8 @@ void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigne
 
 void GameObjectManager::_RenderWithPostProcessing()
 {
-	TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(0,0,0,0));
-	TETRA_POST_PROCESSING.BindBaseFBO();
+	//TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(0,0,0,0));
+	//TETRA_POST_PROCESSING.BindBaseFBO();
 
 	#pragma region RENDER_GLOWING_OBJECTS
 	// Render all layers but UI
@@ -227,7 +227,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 	// Render UI
 	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 	#pragma endregion
-	TETRA_POST_PROCESSING.UnbindBaseFBO();
+	//TETRA_POST_PROCESSING.UnbindBaseFBO();
 	TETRA_POST_PROCESSING.DoPostProcessing();
 	//TETRA_RENDERER.DrawSceneFBO();
 }

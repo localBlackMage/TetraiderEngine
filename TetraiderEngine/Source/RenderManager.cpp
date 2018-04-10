@@ -51,8 +51,6 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
-	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
-
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
 		EnableAlphaTest();
 	else

@@ -29,6 +29,8 @@ private:
 
 	void _Start();
 	void _End();
+
+	void _RenderMiniMap();
 public:
 	friend class RenderManager;
 
