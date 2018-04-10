@@ -232,6 +232,7 @@ void AudioManager::UnmuteAllSFX()
 void AudioManager::SetMasterVolume(float volume)
 {
 	ErrorCheck(m_pMaster->setVolume(volume));
+	//std::cout << "Master vol :" << volume << std::endl;
 }
 
 void AudioManager::SetSFXsVolume(float volume)
@@ -242,6 +243,25 @@ void AudioManager::SetSFXsVolume(float volume)
 void AudioManager::SetSongsVolume(float volume)
 {
 	ErrorCheck(m_pGroups[SONG]->setVolume(volume));
+	
+}
+float AudioManager::GetMasterVolume()
+{
+	float vol;
+	ErrorCheck(m_pMaster->getVolume(&vol));
+	return vol;
+}
+float AudioManager::GetSFXsVolume()
+{
+	float vol;
+	ErrorCheck(m_pGroups[SFX]->getVolume(&vol));
+	return vol;
+}
+float AudioManager::GetSongsVolume()
+{
+	float vol;
+	ErrorCheck(m_pCurrentSongChannel->getVolume(&vol));
+	return vol;
 }
 void AudioManager::TogglePause()
 {
@@ -344,7 +364,7 @@ void AudioManager::HandleEvent(Event* pEvent) {
 		{
 			SetSongsVolume(pFloatData->mValue);
 			m_pCurrentSongChannel->getVolume(&vol);
-			//std::cout << "BGM volume : " << vol << std::endl;
+			std::cout << "BGM volume : " << vol << std::endl;
 		}
 		break;
 
@@ -352,14 +372,14 @@ void AudioManager::HandleEvent(Event* pEvent) {
 		//FloatData * pFloatData = pEvent->Data<FloatData>();
 		SetMasterVolume(pFloatData->mValue);
 		m_pMaster->getVolume(&vol);
-		//std::cout << "Master volume : " << vol << std::endl;
+		std::cout << "Master volume : " << vol << std::endl;
 		break;
 
 	case EVENT_ChangeSFXVol:
 		//FloatData * pFloatData = pEvent->Data<FloatData>();
 		SetSFXsVolume(pFloatData->mValue);
 		m_pGroups[SFX]->getVolume(&vol);
-		//std::cout << "SFX volume : " << vol << std::endl;
+		std::cout << "SFX volume : " << vol << std::endl;
 		break;
 	}
 }

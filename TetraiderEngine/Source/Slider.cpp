@@ -7,6 +7,9 @@ Slider::Slider():Component(ComponentType::C_Slider)
 	m_maxX = 100;
 	m_isPressed = false;
 	m_gotEndpoints = false;
+	m_diff = 0.0f;
+	TETRA_EVENTS.Subscribe(EventType::EVENT_OnCanvasActivated, this);
+	//TETRA_LEVELS.
 }
 
 Slider::~Slider()
@@ -97,5 +100,23 @@ void Slider::HandleEvent(Event * pEvent)
 			m_gotEndpoints = true;
 		}
 		
+	}
+	 if (pEvent->Type() == EVENT_OnCanvasActivated)
+	{
+		float val,startpt;
+		CanvasData* pCanvasData = pEvent->Data<CanvasData>();
+		if (pCanvasData->m_canvasType == (int)CanvasType::CANVAS_SOUNDS)
+		{
+			val=TETRA_AUDIO.GetMasterVolume();
+			if (m_diff == 0 || !m_pEndpoints)
+				return;
+			else
+			{
+				val = val * m_diff;
+				val+=m_pEndpoints->GetMin();
+
+				m_pTransform->SetPosition(Vector3D(val, m_pTransform->GetPosition().y, 0));
+			}
+		}
 	}
 }

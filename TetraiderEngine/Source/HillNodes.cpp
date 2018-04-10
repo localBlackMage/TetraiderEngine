@@ -80,7 +80,8 @@ void HillNodes::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EVENT_OnLevelInitialized)
 	{
-		//std::cout << "level init called" << std::endl;
+		std::cout << "level init called" << std::endl;
+
 		m_currentLevel = TETRA_LEVELS.GetLevelsCompleted();
 		m_playerUI = TETRA_GAME_OBJECTS.FindObjectWithTag(T_PlayerUI);
 		m_pTransPlayerUI = m_playerUI->GetComponent<Transform>(ComponentType::C_Transform);
