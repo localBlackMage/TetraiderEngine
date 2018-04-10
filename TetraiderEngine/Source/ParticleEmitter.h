@@ -4,7 +4,8 @@
 #define PARTICLE_EMITTER_H
 
 struct Particle {
-	Vector3D m_pos_rot, m_velocity;
+	Vector3D m_pos_rot;			// x, y are location, z is rotation
+	Vector3D m_velocity_speed;	// x, y are velocity, z is speed
 	Color m_color;
 	float m_scale;
 	float m_life;
@@ -32,7 +33,8 @@ protected:
 	float m_startDelay;							// How long the emitter will wait to emit in seconds
 	float m_lifeTime;							// How long a particle will live in seconds
 	float m_animationSpeed;						// How long until a particle cycles to the next frame
-	float m_speed;								// Speed of a particle in the starting direction
+	float m_speedMax;							// Maximum speed of a particle in the starting direction
+	float m_speedMin;							// Minimum speed of a particle in the starting direction
 	InterpolationItem m_velocityX;				// Velocity x offsets of a particle at the start of it's lifetime
 	InterpolationItem m_velocityY;				// Velocity y offsets of a particle at the start of it's lifetime
 	InterpolationItem m_scale;					// X & Y scale of a particle at start and end, points to interpolate between

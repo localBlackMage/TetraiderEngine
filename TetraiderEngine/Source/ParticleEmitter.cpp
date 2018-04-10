@@ -68,9 +68,6 @@ void ParticleEmitter::_SpawnParticle()
 	if (idx > -1) {
 		m_particles[idx].m_life = m_lifeTime;
 		m_particles[idx].m_pos_rot = m_pTransform->GetPosition() + _GetSpawnPositionWithinShape();
-		float HI = 250.f;
-		float LO = -HI;
-		float x = LO + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(HI-LO));
 
 		float variationOffset = RandomFloat(-m_angleVariation, m_angleVariation);
 		float angleOffset = (m_rotateToParentOnSpawn ? m_pTransform->GetAngleZ() : 0.f) +
@@ -78,6 +75,8 @@ void ParticleEmitter::_SpawnParticle()
 
 		m_particles[idx].m_angleOffset = angleOffset;
 		m_particles[idx].m_pos_rot.z = angleOffset * DEG_TO_RAD;
+
+		m_particles[idx].m_velocity_speed.z = RandomFloat(m_speedMin, m_speedMax);
 
 		switch (m_textureSelection) {
 			case P_TextureSelection::RANDOM:
@@ -115,10 +114,14 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 						0.f,
 						0.f
 					);
+				float speed = p.m_velocity_speed.z; // save speed of the particle before modifying velocity
 				
-				p.m_velocity = (velocityOffset * (m_speed * m_directionMod)) + Gravity;
-				p.m_velocity.z = 0.f;
-				p.m_pos_rot += p.m_velocity * deltaTime;
+				p.m_velocity_speed = (velocityOffset * (speed * m_directionMod)) + Gravity;
+				
+				p.m_pos_rot += p.m_velocity_speed * deltaTime;
+
+				p.m_velocity_speed.z = speed; // restore the speed of the particle
+
 				if (m_particlesFollowParent) {
 					Vector3D movement = m_pTransform->GetMovement();
 					movement.z = 0.f;
@@ -303,7 +306,8 @@ void ParticleEmitter::Serialize(const json & j)
 	m_startDelay = ParseFloat(j, "startDelay");
 	m_lifeTime = ParseFloat(j, "lifeTime");
 	m_animationSpeed = ParseFloat(j, "animationSpeed");
-	m_speed = ParseFloat(j, "speed");
+	m_speedMax = ParseFloat(j, "speedMax");
+	m_speedMin = ParseFloat(j, "speedMin");
 
 	SerializeInterpolationItem(m_velocityX, j, "velocityX");
 	SerializeInterpolationItem(m_velocityY, j, "velocityY");
