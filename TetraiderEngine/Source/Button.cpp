@@ -3,7 +3,7 @@
 //#include "Sprite.h"
 
 #include <Stdafx.h>
-
+//#include "Event.h"
 Button::Button() :Component(ComponentType::C_Button) 
 {
 	m_isQuit = false;
@@ -83,13 +83,12 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isRestart) {
 					TETRA_LEVELS.ActivateRandomGeneration(false);
-					TETRA_LEVELS.ResetGame();
 					TETRA_PLAYERSTATS.ClearStats();
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
 				}
 				else if (m_isResume)
 				{
-					TETRA_EVENTS.BroadcastEvent(&Event(EVENT_WINDOW_CLOSED));
+					TETRA_EVENTS.BroadcastEvent(&Event(EVENT_INPUT_PAUSEGAME,&InputButtonData(false,true,false)));
 				}
 				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);
