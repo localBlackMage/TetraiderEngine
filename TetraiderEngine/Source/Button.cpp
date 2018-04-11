@@ -83,6 +83,7 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isRestart) {
 					TETRA_LEVELS.ActivateRandomGeneration(false);
+					TETRA_LEVELS.ResetGame();
 					TETRA_PLAYERSTATS.ClearStats();
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
 				}
