@@ -32,6 +32,7 @@
     <ClCompile Include="Source\AI_RockBossReaction.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp" />
     <ClCompile Include="Source\ApplyTinyOnDifficultyUp.cpp" />
+    <ClCompile Include="Source\FBOSprite.cpp" />
     <ClCompile Include="Source\HillNodes.cpp" />
     <ClCompile Include="Source\AI_BomberAttack.cpp" />
     <ClCompile Include="Source\AI_BomberRetreat.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Source\AI_RockBossReaction.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h" />
     <ClInclude Include="Source\ApplyTinyOnDifficultyUp.h" />
+    <ClInclude Include="Source\FBOSprite.h" />
     <ClInclude Include="Source\HillNodes.h" />
     <ClInclude Include="Source\AI_BomberAttack.h" />
     <ClInclude Include="Source\AI_BomberRetreat.h" />

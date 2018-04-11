@@ -30,6 +30,7 @@ private:
 	bool m_enabled;
 	float m_levelWidthPixels;
 	float m_levelHeightPixels;
+	bool m_shouldGenerateMiniMap;
 
 	void _Start();
 	void _End();
@@ -63,10 +64,17 @@ public:
 	void BindBaseFBO();
 	void UnbindBaseFBO();
 
+	FrameBufferObject* GetImageRendererFBO(const std::string& imageRendererType) const;
+
 	/*
 		Does Post Processing work to Second Base FBO
 	*/
 	void DoPostProcessing();
+
+	/*
+		Paints the MiniMap Mask and updates the MiniMapFinal texture
+	*/
+	void GenerateMiniMapTextureForFrame();
 
 	void CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols, unsigned int levelWidthPixels, unsigned int levelHeightPixels);
 };

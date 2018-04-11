@@ -1,0 +1,54 @@
+{
+  "Tag": "UI",
+  "Layer": "UI",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 520,
+        "y": -100,
+        "z": 0
+      },
+      "scale": {
+        "x": 100,
+        "y": 100,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0.5,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+      "Component": "FBOSprite",
+      "fbo": "miniMapFinal",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "lit": false,
+	  "repeats": false,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    }
+  ]
+}

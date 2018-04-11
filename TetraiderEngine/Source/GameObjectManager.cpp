@@ -304,6 +304,7 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
+	TETRA_POST_PROCESSING.GenerateMiniMapTextureForFrame();
 	if (TETRA_POST_PROCESSING.IsEnabled())
 		_RenderWithPostProcessing();
 	else

@@ -270,9 +270,29 @@ void PostProcessing::UnbindBaseFBO()
 	m_pBaseIR->UnbindFBO();
 }
 
+
+// m_pBaseIR is not stable, do not allow it to be returned
+FrameBufferObject * PostProcessing::GetImageRendererFBO(const std::string& imageRendererType) const
+{
+	if (imageRendererType == "secondBase")
+		return m_pSecondBaseIR->FBO();
+	else if (imageRendererType == "gaussianH")
+			return m_pGaussianHIR->FBO();
+	else if (imageRendererType == "gaussianV")
+			return m_pGaussianVIR->FBO();
+	else if (imageRendererType == "miniMapMask")
+			return m_pMiniMapMaskIR->FBO();
+	else if (imageRendererType == "miniMapOriginal")
+			return m_pMiniMapOriginalIR->FBO();
+	else if (imageRendererType == "miniMapFinal")
+			return m_pMiniMapFinalIR->FBO();
+	else
+			return m_pSecondBaseIR->FBO();
+}
+
 void PostProcessing::DoPostProcessing()
 {
-	_Start();
+	//_Start();
 	// Bind + clear gaus blur FBO
 	//m_pGaussianHIR->ClearBuffer();
 	//m_pGaussianVIR->ClearBuffer();
@@ -280,17 +300,21 @@ void PostProcessing::DoPostProcessing()
 	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
 	//m_pGaussianHIR->Render(m_pGaussianVIR);
 	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
+	//int windowWidth, windowHeight;
+	//TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+	//_End();
+}
 
-
-	int windowWidth, windowHeight;
-	TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+void PostProcessing::GenerateMiniMapTextureForFrame()
+{
+	_Start();
 
 	Vector3D playerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
-	
+
 	playerPos.y = m_levelHeightPixels + playerPos.y;
 	playerPos.x = ((playerPos.x / m_levelWidthPixels) * 2.f) - 1.f;
 	playerPos.y = ((playerPos.y / m_levelHeightPixels) * 2.f) - 1.f;
-	
+
 	_PaintMiniMapMask(playerPos);
 
 	_PaintMiniMap(playerPos);

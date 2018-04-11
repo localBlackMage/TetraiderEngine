@@ -142,6 +142,7 @@ using namespace JsonReader;
 #include <Body.h>
 
 // Components - Rendering
+#include <FBOSprite.h>
 #include <Sprite.h>
 #include <ParticleEmitter.h>
 #include <Text.h>
