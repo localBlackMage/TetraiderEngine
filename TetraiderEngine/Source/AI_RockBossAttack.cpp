@@ -25,7 +25,7 @@ void AI_RockBossAttack::OnEnter(){
 			pAgent->SetPositionBehindPlayer(175.0f);
 		}
 		else {
-			pAgent->SetPositionBehindPlayer(0.0f);
+			pAgent->SetPositionBehindPlayer(-5.0f);
 		}
 		pAgent->SetSpeedMultiplier(4.5f);
 		triedSofar = 0.0f;
@@ -39,7 +39,7 @@ void AI_RockBossAttack::OnEnter(){
 			pAgent->SetPositionBehindPlayer(175.0f);
 		}
 		else {
-			pAgent->SetPositionBehindPlayer(0.0f);
+			pAgent->SetPositionBehindPlayer(-5.0f);
 		}
 		pAgent->SetSpeedMultiplier(4.5f);
 		triedSofar = 0.0f;
