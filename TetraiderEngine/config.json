@@ -27,6 +27,7 @@
 		"gaussianVerticalShader": "gaussianBlurVertical",
 		"maskShader": "maskShader",
 		"miniMapShader": "miniMapShader",
+		"miniMapFinalShader": "miniMapFinalShader",
 		
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
@@ -41,7 +42,8 @@
 		"lineShader",
 		"particleShader",
 		"maskShader",
-		"miniMapShader"
+		"miniMapShader",
+		"miniMapFinalShader"
 	],
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",

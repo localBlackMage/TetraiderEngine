@@ -8,6 +8,7 @@ struct ImageRenderersData {
 	ShaderProgram * pGausHShader;
 	ShaderProgram * pGausVShader;
 	ShaderProgram * pMiniMapShader;
+	ShaderProgram * pMiniMapFinalShader;
 	ShaderProgram * pMaskShader;
 };
 
@@ -21,16 +22,20 @@ private:
 	ImageRenderer * m_pSecondBaseIR;
 	ImageRenderer * m_pGaussianHIR;
 	ImageRenderer * m_pGaussianVIR;
+
 	ImageRenderer * m_pMiniMapMaskIR;
 	ImageRenderer * m_pMiniMapOriginalIR;
 	ImageRenderer * m_pMiniMapFinalIR;
 
 	bool m_enabled;
+	float m_levelWidthPixels;
+	float m_levelHeightPixels;
 
 	void _Start();
 	void _End();
 
-	void _RenderMiniMap();
+	void _PaintMiniMap(Vector3D playerPos);
+	void _PaintMiniMapMask(Vector3D playerPos);
 public:
 	friend class RenderManager;
 
@@ -63,7 +68,7 @@ public:
 	*/
 	void DoPostProcessing();
 
-	void CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols);
+	void CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols, unsigned int levelWidthPixels, unsigned int levelHeightPixels);
 };
 
 #endif

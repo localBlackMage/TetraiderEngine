@@ -11,5 +11,10 @@ out vec4 frag_color;
 
 
 void main(void) {
-	frag_color = texture(brushTexture, vtexture_coord);	
+	vec4 brushColor = texture(brushTexture, vtexture_coord);
+	
+	if (brushColor.a != 0.0)
+		frag_color = vec4(1,1,1,1);
+	else
+		frag_color = vec4(0,0,0,0);
 }

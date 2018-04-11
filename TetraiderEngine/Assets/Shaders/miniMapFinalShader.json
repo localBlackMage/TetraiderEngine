@@ -1,0 +1,6 @@
+{
+	"miniMapFinalShader": {
+		"vertex": "miniMapFinalShader.vert",
+		"fragment": "miniMapFinalShader.frag"
+	}
+}

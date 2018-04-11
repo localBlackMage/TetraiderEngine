@@ -80,6 +80,7 @@ void GameConfig::LoadConfig(std::string s) {
 	IRD.pBaseShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "baseShader"));
 	IRD.pMaskShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "maskShader"));
 	IRD.pMiniMapShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "miniMapShader"));
+	IRD.pMiniMapFinalShader = TETRA_RENDERER.GetShaderProgram(ParseString(renderSettings, "miniMapFinalShader"));
 	if (m_debugEnabled)
 		TETRA_POST_PROCESSING.DebugInitialize();
 	TETRA_POST_PROCESSING.InitImageRenderers(IRD, m_resolutions[m_currentResolution]);

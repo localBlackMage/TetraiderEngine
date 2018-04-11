@@ -13,7 +13,82 @@ void PostProcessing::_End()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void PostProcessing::_RenderMiniMap()
+void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
+{
+#pragma region Paint Mask
+	// Draw MiniMap texture and Player Pos Indicator to Final MiniMap
+
+	m_pMiniMapMaskIR->BindFBO();
+
+	glUseProgram(m_pMiniMapMaskIR->Shader()->GetProgramID());
+
+	TETRA_RENDERER.BindMesh(m_mesh);
+	TETRA_RENDERER.EnableAlphaTest();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_PlayerPos.png")->bufferId);
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+
+	// Render player position to m_pMiniMapMaskIR
+	float scaleOfDot = .1f;
+	float scaleOfDotHalf = scaleOfDot / 2.f;
+	Matrix4x4 scale = Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
+
+	playerPos.x -= scaleOfDotHalf;
+	playerPos.y -= scaleOfDotHalf;
+
+	Vector3D playerMMPos = Vector3D(playerPos.x, -playerPos.y, 0);
+
+	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * scale;
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+
+	//// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+
+	m_pMiniMapMaskIR->UnbindFBO();
+
+#pragma endregion
+
+#pragma region Render Mask to Screen
+	//TETRA_RENDERER.SelectShaderProgram("default");
+	//GameObject* cam = TETRA_GAME_OBJECTS.GetCamera(1);
+	//TETRA_RENDERER._SetUpCamera(*cam);
+
+	//TETRA_RENDERER.BindMesh(m_mesh);
+
+	//Matrix4x4 trans = Matrix4x4::Translate(Vector3D(400, -200, 0));
+	//Matrix4x4 rot = Matrix4x4::Rotate(180, ZAXIS) * Matrix4x4::Rotate(180, YAXIS);
+	//scale = Matrix4x4::Scale(100, 100, 1.f);
+
+	//M = trans*rot*scale;
+	//Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
+	//glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+	//glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
+
+	//glUniform1i(SHADER_LOCATIONS::LIT, false);
+	//glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, 0, 0);
+	//glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, 1.f, 1.f);
+
+	//TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::TINT_COLOR, Vector3D(1, 1, 1, 1));
+	//TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, Vector3D(0, 0, 0, 0));
+
+	//TETRA_RENDERER.EnableAlphaTest();
+
+	//// select the texture to use
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, m_pMiniMapMaskIR->FBO()->GetColorTexture());
+	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	//// draw the mesh
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
+	//glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+#pragma endregion
+}
+
+void PostProcessing::_PaintMiniMap(Vector3D playerPos)
 {
 #pragma region Draw Final MiniMap
 	// Draw MiniMap texture and Player Pos Indicator to Final MiniMap
@@ -25,49 +100,55 @@ void PostProcessing::_RenderMiniMap()
 
 	m_pMiniMapFinalIR->BindFBO();
 
-	glUseProgram(m_pBaseShader->GetProgramID());
-
+	glUseProgram(m_pMiniMapFinalIR->Shader()->GetProgramID());
 	TETRA_RENDERER.BindMesh(m_mesh);
-
 	TETRA_RENDERER.EnableAlphaTest();
 
 	// Bind PostProcessing's base FBO and render it
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_pMiniMapMaskIR->FBO()->GetColorTexture());
+	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+
+	Matrix4x4 M = Matrix4x4::Scale(1, 1, 1);
+
+	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
+
+	// Bind Origin MiniMap texture
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_pMiniMapOriginalIR->FBO()->GetColorTexture());
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
-	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
 
-
+	//glUseProgram(m_pMiniMapFinalIR->Shader()->GetProgramID());
+	glUseProgram(m_pBaseShader->GetProgramID());
+	TETRA_RENDERER.BindMesh(m_mesh);
+	TETRA_RENDERER.EnableAlphaTest();
 
 	// Render player position to m_pMiniMapFinalIR
 	float scaleOfDot = .025f;
 	float scaleOfDotHalf = scaleOfDot / 2.f;
 	Matrix4x4 scale = Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 
-	Vector3D playerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
-	float width = float(TETRA_LEVEL_GEN.FloorWidthPixels());
-	float height = float(TETRA_LEVEL_GEN.FloorHeightPixels());
-	playerPos.y = height + playerPos.y;
+	playerPos.x -= scaleOfDotHalf;
+	playerPos.y -= scaleOfDotHalf;
 
-	float playerX = ((playerPos.x / width) * 2.f) - (1.f + scaleOfDotHalf);
-	float playerY = ((playerPos.y / height) * 2.f) - (1.f + scaleOfDotHalf);
+	Vector3D playerMMPos = Vector3D(playerPos.x, -playerPos.y, 0);
 
-	Vector3D playerMMPos = Vector3D(playerX, -playerY, 0);
-
-	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * scale;
+	M = Matrix4x4::Translate(playerMMPos) * scale;
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
-	// Bind PostProcessing's base FBO and render it
+	// Bind the Player Position texture
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_PlayerPos.png")->bufferId);
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
-	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
+
+
+
 
 	m_pMiniMapFinalIR->UnbindFBO();
 
@@ -162,7 +243,7 @@ void PostProcessing::InitImageRenderers(const ImageRenderersData& metadata, cons
 
 	m_pMiniMapMaskIR = new ImageRenderer(metadata.pMaskShader, 1024, 1024, FBO_NONE);
 	m_pMiniMapOriginalIR = new ImageRenderer(metadata.pMiniMapShader, 1024, 1024, FBO_NONE);
-	m_pMiniMapFinalIR = new ImageRenderer(metadata.pMaskShader, 1024, 1024, FBO_NONE);
+	m_pMiniMapFinalIR = new ImageRenderer(metadata.pMiniMapFinalShader, 1024, 1024, FBO_NONE);
 
 	m_pBaseShader = metadata.pBaseShader;
 
@@ -192,125 +273,37 @@ void PostProcessing::UnbindBaseFBO()
 void PostProcessing::DoPostProcessing()
 {
 	_Start();
-
 	// Bind + clear gaus blur FBO
 	//m_pGaussianHIR->ClearBuffer();
 	//m_pGaussianVIR->ClearBuffer();
-
 	//m_pGaussianVIR->Render(m_pBaseIR);
 	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
-
 	//m_pGaussianHIR->Render(m_pGaussianVIR);
 	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
 
 
 	int windowWidth, windowHeight;
 	TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
-	m_pBaseIR->RenderToScreen(*m_pBaseShader, windowWidth, windowHeight);
-
-	//_RenderMiniMap();
-
-
-#pragma region Paint Mask
-	// Draw MiniMap texture and Player Pos Indicator to Final MiniMap
-
-	m_pMiniMapMaskIR->BindFBO();
-
-	glUseProgram(m_pMiniMapMaskIR->Shader()->GetProgramID());
-
-	TETRA_RENDERER.BindMesh(m_mesh);
-	TETRA_RENDERER.EnableAlphaTest();
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_PlayerPos.png")->bufferId);
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-
-	// Render player position to m_pMiniMapMaskIR
-	float scaleOfDot = .1f;
-	float scaleOfDotHalf = scaleOfDot / 2.f;
-	Matrix4x4 scale = Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 
 	Vector3D playerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
-	float width = float(TETRA_LEVEL_GEN.FloorWidthPixels());
-	float height = float(TETRA_LEVEL_GEN.FloorHeightPixels());
-	playerPos.y = height + playerPos.y;
+	
+	playerPos.y = m_levelHeightPixels + playerPos.y;
+	playerPos.x = ((playerPos.x / m_levelWidthPixels) * 2.f) - 1.f;
+	playerPos.y = ((playerPos.y / m_levelHeightPixels) * 2.f) - 1.f;
+	
+	_PaintMiniMapMask(playerPos);
 
-	float playerX = ((playerPos.x / width) * 2.f) - (1.f + scaleOfDotHalf);
-	float playerY = ((playerPos.y / height) * 2.f) - (1.f + scaleOfDotHalf);
-
-	Vector3D playerMMPos = Vector3D(playerX, -playerY, 0);
-
-	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * scale;
-	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-
-	//// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
-
-	m_pMiniMapMaskIR->UnbindFBO();
-
-#pragma endregion
-
-#pragma region Render Mask to Screen
-
-	TETRA_RENDERER.SelectShaderProgram("default");
-	GameObject* cam = TETRA_GAME_OBJECTS.GetCamera(1);
-	TETRA_RENDERER._SetUpCamera(*cam);
-
-	TETRA_RENDERER.BindMesh(m_mesh);
-
-	Matrix4x4 trans = Matrix4x4::Translate(Vector3D(400, -200, 0));
-	Matrix4x4 rot = Matrix4x4::Rotate(180, ZAXIS) * Matrix4x4::Rotate(180, YAXIS);
-	/*Matrix4x4*/ scale = Matrix4x4::Scale(100, 100, 1.f);
-
-	/*Matrix4x4*/ M = trans*rot*scale;
-	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
-	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-	glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
-
-	glUniform1i(SHADER_LOCATIONS::LIT, false);
-	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, 0, 0);
-	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, 1.f, 1.f);
-
-	TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::TINT_COLOR, Vector3D(1, 1, 1, 1));
-	TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, Vector3D(0, 0, 0, 0));
-
-	TETRA_RENDERER.EnableAlphaTest();
-
-	// select the texture to use
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_pMiniMapMaskIR->FBO()->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
-
-
-#pragma endregion
-
-
-
-
-
-
-	//m_pSecondBaseIR->ClearBuffer();
-	//m_pSecondBaseIR->Render(m_pGaussianHIR);
-
-	////TETRA_RENDERER.ClearBuffer();
-
-	////m_pSecondBaseIR->RenderToScreen(*m_pBaseShader, *m_pBaseIR);
-	//m_pSecondBaseIR->RenderToScreen(*m_pBaseShader);
+	_PaintMiniMap(playerPos);
 
 	_End();
 }
 
-void PostProcessing::CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols)
+void PostProcessing::CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols, unsigned int levelWidthPixels, unsigned int levelHeightPixels)
 {
+	m_levelWidthPixels = float(levelWidthPixels);
+	m_levelHeightPixels = float(levelHeightPixels);
+
 	_Start();
-	// 1024 is the dimensions of the minimap texture to be drawn too in the end
 	float rowHeight = 2.f / float(rows);
 	float colWidth = 2.f / float(cols);
 	float halfRowHeight = rowHeight / 2.f;
@@ -349,32 +342,6 @@ void PostProcessing::CreateMiniMapTexture(const std::vector<RoomNodeData>& roomN
 	
 	// Unbind the original MiniMap and leave it as is
 	m_pMiniMapOriginalIR->UnbindFBO();
-
-
-
-	// Draw the MiniMap to the MiniMapFinal to prepare flipping
-	//m_pMiniMapOriginalIR->Render(m_pMiniMapFinalIR);
-
-
-
-
-	//// Re-Bind the original MiniMap texture for drawing
-	//m_pMiniMapOriginalIR->BindFBO();
-
-	//Matrix4x4 M = Matrix4x4::Scale(-1, 1, 1);
-	//glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-
-	//// Bind m_pMiniMapFinalIR's FBO and render it
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, m_pMiniMapFinalIR->FBO()->GetColorTexture());
-	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-	//
-	//// draw the mesh
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
-	//glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
-
-	//// Unbind the original MiniMap and leave it as is
-	//m_pMiniMapOriginalIR->UnbindFBO();
 
 	_End();
 }

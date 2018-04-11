@@ -544,7 +544,7 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->AddSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 	}
 
-	TETRA_POST_PROCESSING.CreateMiniMapTexture(roomNodeDatas, m_rows, m_cols);
+	TETRA_POST_PROCESSING.CreateMiniMapTexture(roomNodeDatas, m_rows, m_cols, FloorWidthPixels(), FloorHeightPixels());
 }
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
