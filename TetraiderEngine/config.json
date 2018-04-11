@@ -25,7 +25,7 @@
 		"baseShader": "fboRenderer",
 		"gaussianHorizontalShader": "gaussianBlurHorizontal",
 		"gaussianVerticalShader": "gaussianBlurVertical",
-		"maskShader": "paintMask",
+		"maskShader": "maskShader",
 		"miniMapShader": "miniMapShader",
 		
 		"consoleEnabled": true,
@@ -40,7 +40,7 @@
 		"gaussianBlurVertical",
 		"lineShader",
 		"particleShader",
-		"paintMask",
+		"maskShader",
 		"miniMapShader"
 	],
 	"WINDOW_SETTINGS": {
