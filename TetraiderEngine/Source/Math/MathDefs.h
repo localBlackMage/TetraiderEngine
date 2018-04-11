@@ -26,6 +26,8 @@ Creation date: 1/12/18
 #define DEG_TO_RAD (3.14159265358979323846f / 180.0f)
 #define RAD_TO_DEG (180.0f / 3.14159265358979323846f)
 
+//#define TETRA_RAND_MAX 0x7FFF
+
 struct Point {
 	float x, y;
 };

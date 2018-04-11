@@ -38,7 +38,35 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 
 bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
-	return gameObject.HasComponent(ComponentType::C_Sprite) || gameObject.HasComponent(ComponentType::C_ParticleEmitter) || gameObject.HasComponent(ComponentType::C_Text);
+	return gameObject.HasComponent(ComponentType::C_Sprite) || 
+		gameObject.HasComponent(ComponentType::C_FBOSprite) ||
+		gameObject.HasComponent(ComponentType::C_ParticleEmitter) || 
+		gameObject.HasComponent(ComponentType::C_Text);
+}
+
+void RenderManager::_RenderFBOSprite(const FBOSprite * pFBOSpriteComp)
+{
+	BindMesh(pFBOSpriteComp->GetMesh());
+	glUniform1i(SHADER_LOCATIONS::LIT, m_lights ? pFBOSpriteComp->IsLit() : false);
+	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, pFBOSpriteComp->GetUOffset(), pFBOSpriteComp->GetVOffset());
+	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pFBOSpriteComp->TileX(), pFBOSpriteComp->TileY());
+
+	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pFBOSpriteComp->GetTintColor());
+	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pFBOSpriteComp->GetSaturationColor());
+
+	EnableAlphaTest();
+
+	// select the texture to use
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, pFBOSpriteComp->GetTextureBuffer());
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	GLint repeatOrClamp = /*pFBOSpriteComp->Repeats() ? GL_REPEAT : */GL_CLAMP;
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pFBOSpriteComp->GetMesh().GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * pFBOSpriteComp->GetMesh().faceCount(), GL_UNSIGNED_INT, 0);
 }
 
 void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
@@ -49,8 +77,6 @@ void RenderManager::_RenderSprite(const Sprite * pSpriteComp)
 	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, pSpriteComp->TileX(), pSpriteComp->TileY());
 
 	_BindUniform4(SHADER_LOCATIONS::TINT_COLOR, pSpriteComp->GetTintColor());
-	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
-
 	_BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, pSpriteComp->GetSaturationColor());
 
 	if (pSpriteComp->GetAlphaMode() == GL_RGBA)
@@ -188,34 +214,6 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 	}
 }
 
-void RenderManager::_RenderGameObject(const GameObject& gameObject)
-{
-	// Only attempt to draw if the game object has a sprite component and transform component
-	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
-		return;
-
-	// set shader attributes
-	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
-		_BindGameObjectTransform(gameObject);
-		_RenderParticles(gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter));
-	}
-
-	if (gameObject.HasComponent(ComponentType::C_Sprite)) {
-		const Sprite* pSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
-		if (pSpriteComp->HasPosOffset())
-			_BindGameObjectTransformWithOffset(gameObject, pSpriteComp->GetPosOffset());
-		else
-			_BindGameObjectTransform(gameObject);
-
-		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
-	}
-
-	if (gameObject.HasComponent(ComponentType::C_Text)) {
-		_BindGameObjectTransform(gameObject);
-		_RenderText(gameObject.GetComponent<Text>(ComponentType::C_Text), gameObject.GetComponent<Transform>(ComponentType::C_Transform));
-	}
-}
-
 void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 {
 	std::string shader = "";
@@ -223,6 +221,9 @@ void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 	switch (renderingComponent->Type()) {
 	case ComponentType::C_ParticleEmitter:
 		shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
+		break;
+	case ComponentType::C_FBOSprite:
+		shader = static_cast<const FBOSprite*>(renderingComponent)->Shader();
 		break;
 	case ComponentType::C_Sprite:
 		shader = static_cast<const Sprite*>(renderingComponent)->Shader();
@@ -746,6 +747,20 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 			_BindGameObjectTransform(gameObject);
 
 		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
+	}
+
+	// Render fboSprite for the GO
+	if (gameObject.HasComponent(ComponentType::C_FBOSprite)) {
+		const FBOSprite* cpFBOSpriteComp = gameObject.GetComponent<FBOSprite>(ComponentType::C_FBOSprite);
+		_SelectShaderProgram(cpFBOSpriteComp);
+		_SetUpCamera(camera);
+		_SetUpLights(gameObject, gol);
+		if (cpFBOSpriteComp->HasPosOffset())
+			_BindGameObjectTransformWithOffset(gameObject, cpFBOSpriteComp->GetPosOffset());
+		else
+			_BindGameObjectTransform(gameObject);
+
+		_RenderFBOSprite(gameObject.GetComponent<FBOSprite>(ComponentType::C_FBOSprite));
 	}
 
 	// Render text for the GO

@@ -59,7 +59,9 @@
           }
       },
 	  {
-		"Component":"Slider"		
+    "Component":"Slider",
+    "barPrefab": "P_MasterVol_SliderBar",
+    "type": 2		
 	  }
    ]
   }

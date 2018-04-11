@@ -120,7 +120,7 @@
                     "isDisablePreviousRendering": false,
                     "isParentPrev": false,
 					"isPlaySound": true,
-					"delaySound": 2.15,
+					"delaySound": 1.5,
 					"soundIndex": 3
                   },
                   {
@@ -132,7 +132,7 @@
                     "isDisablePreviousRendering": false,
                     "isParentPrev": true,
 					"isPlaySound": true,
-					"delaySound": 1.5,
+					"delaySound": 1.2,
 					"soundIndex": 4
                   },
                   {

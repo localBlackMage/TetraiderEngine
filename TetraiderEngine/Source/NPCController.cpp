@@ -533,6 +533,10 @@ void NPCController::PlayAttackAnim() {
 	}
 }
 
+void NPCController::SetProjectileSpeed(float speed) {
+	m_pWeapon->ModifyProjectileSpeed(speed);
+}
+
 void NPCController::AvoidObstacles(float dt) {
 	if (!m_isAvoidingObstacle || !m_isAvoidObstacles) return;
 

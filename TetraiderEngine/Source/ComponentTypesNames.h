@@ -6,6 +6,7 @@ turned into entries within the ComponentType enum
 REGISTER_COMPONENT_TYPE(C_Transform)
 
 // Rendering Components
+REGISTER_COMPONENT_TYPE(C_FBOSprite)
 REGISTER_COMPONENT_TYPE(C_Sprite)
 REGISTER_COMPONENT_TYPE(C_ParticleEmitter)
 REGISTER_COMPONENT_TYPE(C_Text)

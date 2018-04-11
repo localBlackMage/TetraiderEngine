@@ -61,9 +61,9 @@
     },
     {
       "Component": "Button",
-      "isLoadCanvas":true,
-      "canvasToActivate"    : 5,
-      "canvasToDeActivate" : 0
+      "isLoadCanvas":false,
+      "isRandomGenerated": false,
+      "level" : 7
     },
     {
           "Component": "Text",

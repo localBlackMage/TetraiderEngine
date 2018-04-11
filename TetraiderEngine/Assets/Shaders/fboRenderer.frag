@@ -19,9 +19,9 @@ vec4 colorAbeforeColorB(vec4 colorA, vec4 colorB) {
 
 void main(void) {
 	vec4 color1 = texture(firstTexture, vtexture_coord);
-	vec4 color2 = texture(secondTexture, vtexture_coord);
-	vec4 color3 = texture(thirdTexture, vtexture_coord);
-	vec4 color4 = texture(fourthTexture, vtexture_coord);
+	//vec4 color2 = texture(secondTexture, vtexture_coord);
+	//vec4 color3 = texture(thirdTexture, vtexture_coord);
+	//vec4 color4 = texture(fourthTexture, vtexture_coord);
 	vec4 finalColor = color1;
 	
 	/*

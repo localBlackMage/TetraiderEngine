@@ -44,7 +44,7 @@ void Audio::Serialize(const json& j)
 		TETRA_AUDIO.SetFadeTime(m_fadeTime);
 	}	
 	else {
-		for (int i = 0; i < (int)m_audioClip.size(); ++i) {
+		for (unsigned int i = 0; i < m_audioClip.size(); ++i) {
 			TETRA_RESOURCES.LoadSFX(m_audioClip[i]);
 		}
 	}
@@ -57,7 +57,7 @@ bool Audio::IsPlaying()
 
 void Audio::Play(int index)
 {
-	if (index >= (int)m_audioClip.size())
+	if (index >= m_audioClip.size())
 		return;
 	else {
 		m_currentIndex = index;
@@ -85,11 +85,8 @@ void Audio::Stop()
 	// Stops audio from playing completely (resets)
 	if (m_isBGM)
 		TETRA_AUDIO.StopSongs();
-	else {
-		for (int i = 0; i < (int)m_audioClip.size(); ++i) {
-			TETRA_AUDIO.StopSFX(m_audioClip[i]);
-		}
-	}
+	else
+		TETRA_AUDIO.StopSFX(m_audioClip[m_currentIndex]);
 }
 
 void Audio::Pause() {

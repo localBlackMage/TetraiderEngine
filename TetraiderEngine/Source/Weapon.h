@@ -51,6 +51,7 @@ public:
 	void MultiplyDamage(float multiplier, int attack);
 	void HideWeapon(bool active = true);
 	void SwapWeapons(bool sisScondary);
+	void ModifyProjectileSpeed(float speed, int attack = 0);
 	int GetDamageMultiplier();
 	inline float GetRotationOffset() const { return m_rotationOffset; }
 };

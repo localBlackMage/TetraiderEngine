@@ -16,4 +16,7 @@ float BezierInterpolation(const std::vector<Point>& points, const float& t);
 float ClampAngleTo180(float angle);
 
 bool IsSimilar(float a, float b);
+
+void SeedRand(unsigned int seed);
+int Rand();
 #endif

@@ -107,7 +107,8 @@ void GameObjectLayer::Update()
 {
 	if (m_layerLights.size() > MAX_LIGHTS)
 	{
-		Vector3D PlayerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
+		//Vector3D sortPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
+		Vector3D sortPos = TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Transform>(C_Transform)->GetPosition();
 		std::fill(m_lightPositionsAndDistances, m_lightPositionsAndDistances + m_size, 0.f);
 		std::vector< GO_Distance > lights;
 		lights.reserve(MAX_LIGHTS);
@@ -115,13 +116,13 @@ void GameObjectLayer::Update()
 
 		unsigned int i = 0;
 		for (i = 0; i < MAX_LIGHTS; ++i) {
-			float dist = Vector3D::SquareDistance(PlayerPos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
+			float dist = Vector3D::SquareDistance(sortPos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
 			lights.push_back(std::make_pair(m_layerLights[i], dist));
 			Sorting::InsertionSort(lights, &LeftDistLessOrEqualToRight);
 		}
 
 		for (i = MAX_LIGHTS; i < m_layerLights.size(); ++i) {
-			float dist = Vector3D::SquareDistance(PlayerPos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
+			float dist = Vector3D::SquareDistance(sortPos, m_layerLights[i]->GetComponent<Transform>(C_Transform)->GetPosition());
 			// If this light is farther away than the farthest light, ignore it
 			if (dist > lights[MAX_LIGHTS - 1].second)	continue;
 
@@ -210,8 +211,8 @@ void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigne
 
 void GameObjectManager::_RenderWithPostProcessing()
 {
-	TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(0,0,0,0));
-	TETRA_POST_PROCESSING.BindBaseFBO();
+	//TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(0,0,0,0));
+	//TETRA_POST_PROCESSING.BindBaseFBO();
 
 	#pragma region RENDER_GLOWING_OBJECTS
 	// Render all layers but UI
@@ -227,7 +228,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 	// Render UI
 	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 	#pragma endregion
-	TETRA_POST_PROCESSING.UnbindBaseFBO();
+	//TETRA_POST_PROCESSING.UnbindBaseFBO();
 	TETRA_POST_PROCESSING.DoPostProcessing();
 	//TETRA_RENDERER.DrawSceneFBO();
 }
@@ -304,6 +305,7 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
+	TETRA_POST_PROCESSING.GenerateMiniMapTextureForFrame();
 	if (TETRA_POST_PROCESSING.IsEnabled())
 		_RenderWithPostProcessing();
 	else

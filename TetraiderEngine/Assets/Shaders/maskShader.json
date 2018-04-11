@@ -1,0 +1,6 @@
+{
+	"maskShader": {
+		"vertex": "maskShader.vert",
+		"fragment": "maskShader.frag"
+	}
+}

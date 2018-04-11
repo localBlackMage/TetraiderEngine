@@ -1,5 +1,5 @@
 {
-  "Tag": "None",
+  "Tag": "Background",
   "Layer": "BG",
   "COMPONENTS": [
     {
@@ -36,6 +36,7 @@
         "v": 0
       },
 	  "lit": true,
+	  "repeats": false,
       "tint": {
         "r": 1,
         "g": 1,

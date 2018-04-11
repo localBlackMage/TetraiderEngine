@@ -330,3 +330,10 @@ void Weapon::SwapWeapons(bool isSecondary) {
 		m_isSecondaryCurrentlyEquipped = false;
 	}
 }
+
+void Weapon::ModifyProjectileSpeed(float speed, int attack) {
+	RangeAttack* pAttack = static_cast<RangeAttack*>(m_Attacks[attack]);
+	if (pAttack) {
+		pAttack->SetProjectileSpeed(speed);
+	}
+}

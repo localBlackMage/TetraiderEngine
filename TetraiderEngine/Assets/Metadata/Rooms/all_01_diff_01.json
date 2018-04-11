@@ -182,7 +182,8 @@
 				"x": 1.000000,
 				"y": 1.000000
 			},
-			"repeats": false		},
+			"repeats": false		
+		},
 		{
 			"prefab": "P_RockBig",
 			"position": {

@@ -37,16 +37,9 @@
                     }
                   },
                   {
-                    "prefab":"P_BGM_SliderBar",
+                    "prefab":"P_BGMSliderBall",
                     "position":{
                       "x":150,
-                      "y":100
-                    }
-                  },
-                  {
-                    "prefab":"P_SliderBall",
-                    "position":{
-                      "x":140,
                       "y":100
                     }
                   },
@@ -72,16 +65,9 @@
                   }
               }  ,
               {
-                "prefab":"P_SFX_SliderBar",
+                "prefab":"P_SFXSliderBall",
                 "position":{
                   "x":150,
-                  "y":50
-                }
-              },
-              {
-                "prefab":"P_SliderBall",
-                "position":{
-                  "x":140,
                   "y":50
                 }
               },
@@ -93,16 +79,9 @@
                 }
             } ,
             {
-              "prefab":"P_MasterVol_SliderBar",
+              "prefab":"P_MasterSliderBall",
               "position":{
                 "x":150,
-                "y":0
-              }
-            },
-            {
-              "prefab":"P_SliderBall",
-              "position":{
-                "x":140,
                 "y":0
               }
             },

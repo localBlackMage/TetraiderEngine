@@ -99,6 +99,7 @@ void Button::HandleEvent(Event* pEvent)
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_EXITING_GAME_LEVEL));
 				}
 			}
 		}
