@@ -956,5 +956,8 @@
     <ClInclude Include="Source\AI_RockBossIdle.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SliderBallNames.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
