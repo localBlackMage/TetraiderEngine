@@ -56,8 +56,8 @@
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Explosion",
-			"frames": 16,
-			"animationSpeed": 20,
+			"frames": 8,
+			"animationSpeed": 16,
 			"isLooping": false,
 			"isPlayOnAwake": true
 		}]

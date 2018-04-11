@@ -32,6 +32,7 @@
     <ClCompile Include="Source\AI_RockBossReaction.cpp" />
     <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp" />
     <ClCompile Include="Source\ApplyTinyOnDifficultyUp.cpp" />
+    <ClCompile Include="Source\FBOSprite.cpp" />
     <ClCompile Include="Source\HillNodes.cpp" />
     <ClCompile Include="Source\AI_BomberAttack.cpp" />
     <ClCompile Include="Source\AI_BomberRetreat.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\AI_RangeAttack.h" />
     <ClInclude Include="Source\AI_RatBossAttack.h" />
@@ -192,6 +194,7 @@
     <ClInclude Include="Source\AI_RockBossReaction.h" />
     <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h" />
     <ClInclude Include="Source\ApplyTinyOnDifficultyUp.h" />
+    <ClInclude Include="Source\FBOSprite.h" />
     <ClInclude Include="Source\HillNodes.h" />
     <ClInclude Include="Source\AI_BomberAttack.h" />
     <ClInclude Include="Source\AI_BomberRetreat.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="Source\PostProcessing.h" />
     <ClInclude Include="Source\PowerUpButton.h" />
     <ClInclude Include="Source\PowerUpData.h" />
+    <ClInclude Include="Source\RoomNodeData.h" />
     <ClInclude Include="Source\Shop.h" />
     <ClInclude Include="Source\Slider.h" />
     <ClInclude Include="Source\CanvasTypeName.h" />

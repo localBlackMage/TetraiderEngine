@@ -1,11 +1,3 @@
-//#include "AudioManager.h"
-//#include <stdlib.h>
-//#include <time.h>
-//#include <math.h>
-//#include "Event.h"
-//#include "TetraiderAPI.h"
-//#include "Transform.h"
-
 #include <Stdafx.h>
 
 float ChangeSemitone(float frequency, float variation)
@@ -13,20 +5,14 @@ float ChangeSemitone(float frequency, float variation)
 	static float semitone_ratio = pow(2.0f, 1.0f / 12.0f);
 	return frequency * pow(semitone_ratio, variation);
 }
+
 float ChangeOctave(float frequency, float variation)
 {
 	static float octave_ratio = 2.0f;
 	return frequency * pow(octave_ratio, variation);
 }
-float RandomBetween(float min, float max)
-{
-	if (min == max)
-		return min;
-	float n = (float)rand() / (float)RAND_MAX;
-	return min + n * (max - min);
-}
 
-AudioManager::AudioManager() :m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isChannelGroupPaused(false)
+AudioManager::AudioManager() : m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isChannelGroupPaused(false)
 {
 	//initialize
 	ErrorCheck(FMOD::System_Create(&m_pSystem));
@@ -52,6 +38,10 @@ AudioManager::AudioManager() :m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isC
 	TETRA_EVENTS.Subscribe(EVENT_ChangeBGMVol,this);
 	TETRA_EVENTS.Subscribe(EVENT_ChangeSFXVol, this);
 	TETRA_EVENTS.Subscribe(EVENT_ChangeMasterVol, this);
+
+	SetSFXsVolume(1);
+	SetSongsVolume(1);
+	SetMasterVolume(1);
 }
 
 AudioManager::~AudioManager()
@@ -232,6 +222,7 @@ void AudioManager::UnmuteAllSFX()
 void AudioManager::SetMasterVolume(float volume)
 {
 	ErrorCheck(m_pMaster->setVolume(volume));
+	//std::cout << "Master vol :" << volume << std::endl;
 }
 
 void AudioManager::SetSFXsVolume(float volume)
@@ -242,6 +233,24 @@ void AudioManager::SetSFXsVolume(float volume)
 void AudioManager::SetSongsVolume(float volume)
 {
 	ErrorCheck(m_pGroups[SONG]->setVolume(volume));
+}
+float AudioManager::GetMasterVolume()
+{
+	float vol;
+	ErrorCheck(m_pMaster->getVolume(&vol));
+	return vol;
+}
+float AudioManager::GetSFXsVolume()
+{
+	float vol;
+	ErrorCheck(m_pGroups[SFX]->getVolume(&vol));
+	return vol;
+}
+float AudioManager::GetSongsVolume()
+{
+	float vol;
+	ErrorCheck(m_pGroups[SONG]->getVolume(&vol));
+	return vol;
 }
 void AudioManager::TogglePause()
 {

@@ -450,9 +450,9 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 	unsigned short roomWidth = TETRA_GAME_CONFIG.RoomWidth();
 	unsigned short roomHeight = TETRA_GAME_CONFIG.RoomHeight();
 
-	float x = float(roomWidth * cellWidth);
+	float x = float(roomWidth * cellWidth);		// pixel width of the room
 	float xHalf = x / 2.f;
-	float y = float(roomHeight * cellHeight);
+	float y = float(roomHeight * cellHeight);	// pixel height of the room
 	float yHalf = y / 2.f;
 	// "Magic number" fix, the room background files had a slight gap in them when placed, this shifts everything 
 	// over to avoid said gap
@@ -461,6 +461,7 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 	std::vector<GameObject*> enemies;
 	std::vector<GameObject*> objects;
+	std::vector<RoomNodeData> roomNodeDatas;
 
 	for (short row = 0; row < m_rows; ++row) {
 		for (short col = 0; col < m_cols; ++col) {
@@ -478,12 +479,10 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 					break;
 				}
 				case RoomType::BOSS: {
-					//j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
 					j = _GetRoomJsonForBoss(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
 				case RoomType::SHOP: {
-					//j = _GetRoomJsonForDifficulty(m_roomNodes[row][col].m_ConnectionType);
 					j = _GetRoomJsonForShop(m_roomNodes[row][col].m_ConnectionType);
 					break;
 				}
@@ -507,6 +506,13 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 				if (m_roomNodes[row][col].m_type != RoomType::SPAWN && m_roomNodes[row][col].m_type != RoomType::SHOP) {
 					if (_IsGOAViableObject(pGO))		objects.push_back(pGO);
 					else if (_IsGOAViableEnemy(pGO))	enemies.push_back(pGO);
+				}
+				if (pGO->TagIs(GameObjectTag::T_Background)) {
+					RoomNodeData roomNodeData;
+					roomNodeData.col = col;
+					roomNodeData.row = row;
+					roomNodeData.spriteComponent = pGO->GetComponent<Sprite>(C_Sprite);
+					roomNodeDatas.push_back(roomNodeData);
 				}
 			}
 		}
@@ -537,6 +543,8 @@ void FloorPlanGenerator::GenerateLevelFromFloorPlan()
 
 		objects[idx]->GetComponent<SpawnOnHealthZero>(C_SpawnOnHealthZero)->AddSpawnObject("P_EggPickUp"); // TODO: DO NOT HARD CODE THIS STRING
 	}
+
+	TETRA_POST_PROCESSING.CreateMiniMapTexture(roomNodeDatas, m_rows, m_cols, FloorWidthPixels(), FloorHeightPixels());
 }
 
 RoomConnections FloorPlanGenerator::GetRoomConnectionType(const std::string connectionType)
@@ -589,7 +597,7 @@ unsigned int FloorPlanGenerator::FloorWidthPixels() const
 
 unsigned int FloorPlanGenerator::FloorHeightPixels() const
 {
-	return int(TETRA_GAME_CONFIG.RoomWidthPixels() * m_rows);
+	return int(TETRA_GAME_CONFIG.RoomHeightPixels() * m_rows);
 }
 
 #pragma endregion

@@ -88,10 +88,10 @@ private:
 
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
+	void _RenderFBOSprite(const FBOSprite* pFBOSpriteComp);
 	void _RenderSprite(const Sprite* pSpriteComp);
 	void _RenderParticles(const ParticleEmitter * pParticleEmitterComp);
 	void _RenderText(const Text* pTextComp, const Transform* pTransformComp);
-	void _RenderGameObject(const GameObject& gameObject);
 	void _SelectShaderProgram(const Component* renderingComponent);
 	void _SetUpCamera(const GameObject& camera);
 	void _SetUpLights(const GameObject& gameObject, GameObjectLayer& gol);

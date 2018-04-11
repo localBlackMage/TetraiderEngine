@@ -7,6 +7,9 @@ struct ImageRenderersData {
 	ShaderProgram * pBaseShader;
 	ShaderProgram * pGausHShader;
 	ShaderProgram * pGausVShader;
+	ShaderProgram * pMiniMapShader;
+	ShaderProgram * pMiniMapFinalShader;
+	ShaderProgram * pMaskShader;
 };
 
 class PostProcessing : public Subscriber
@@ -20,11 +23,20 @@ private:
 	ImageRenderer * m_pGaussianHIR;
 	ImageRenderer * m_pGaussianVIR;
 
+	ImageRenderer * m_pMiniMapMaskIR;
+	ImageRenderer * m_pMiniMapOriginalIR;
+	ImageRenderer * m_pMiniMapFinalIR;
 
 	bool m_enabled;
+	float m_levelWidthPixels;
+	float m_levelHeightPixels;
+	bool m_shouldGenerateMiniMap;
 
 	void _Start();
 	void _End();
+
+	void _PaintMiniMap(Vector3D playerPos);
+	void _PaintMiniMapMask(Vector3D playerPos);
 public:
 	friend class RenderManager;
 
@@ -52,10 +64,19 @@ public:
 	void BindBaseFBO();
 	void UnbindBaseFBO();
 
+	FrameBufferObject* GetImageRendererFBO(const std::string& imageRendererType) const;
+
 	/*
 		Does Post Processing work to Second Base FBO
 	*/
 	void DoPostProcessing();
+
+	/*
+		Paints the MiniMap Mask and updates the MiniMapFinal texture
+	*/
+	void GenerateMiniMapTextureForFrame();
+
+	void CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols, unsigned int levelWidthPixels, unsigned int levelHeightPixels);
 };
 
 #endif

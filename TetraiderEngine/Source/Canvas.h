@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+
 //enum class CanvasType;
 class Canvas : public Component
 {

@@ -47,6 +47,7 @@ public:
 	void LookInDirectionOfMovement();
 	void LookAtPlayer();
 	void LookAtPlayer(float offsetAngle);
+	void SetProjectileSpeed(float speed);
 	void SetSpeedMultiplier(float speedMultiplier) { m_speedMultiplier = speedMultiplier; }
 	bool RollDie(float probability);
 	void SetAvoidObstacles(bool active) { m_isAvoidObstacles = active; }

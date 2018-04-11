@@ -20,10 +20,15 @@
 	},
 	"RENDER_SETTINGS": {
 		"enableWindowsCursor": false,
+		
 		"debugShader": "lineShader",
 		"baseShader": "fboRenderer",
 		"gaussianHorizontalShader": "gaussianBlurHorizontal",
 		"gaussianVerticalShader": "gaussianBlurVertical",
+		"maskShader": "maskShader",
+		"miniMapShader": "miniMapShader",
+		"miniMapFinalShader": "miniMapFinalShader",
+		
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": false
@@ -35,7 +40,10 @@
 		"gaussianBlurHorizontal",
 		"gaussianBlurVertical",
 		"lineShader",
-		"particleShader"
+		"particleShader",
+		"maskShader",
+		"miniMapShader",
+		"miniMapFinalShader"
 	],
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",
@@ -78,13 +86,14 @@
 			{ "Name": "LVL_PowerUpScreen" },
 			{ "Name": "LVL_CutScene" },
 			{ "Name": "LVL_DigiPenLogo" },
-			{ "Name": "LVL_TetraidersLogo" }
+			{ "Name": "LVL_TetraidersLogo" },
+			{ "Name": "LVL_CreditsScreen" }
 		],
 		"LevelParameters": [
 			{"cols": 3, "rows": 4, "difficulty": 1, "boss": false, "shop": false, "eggsToCollect": 3},
 			{"cols": 4, "rows": 4, "difficulty": 2, "boss": true, "shop": true, "eggsToCollect": 4},
 			{"cols": 4, "rows": 4, "difficulty": 3, "boss": false, "shop": true, "eggsToCollect": 3},
-			{"cols": 5, "rows": 4, "difficulty": 4, "boss": false, "shop": true, "eggsToCollect": 3}
+			{"cols": 5, "rows": 4, "difficulty": 4, "boss": true, "shop": true, "eggsToCollect": 4}
 		]
 	},
 	"INPUT_SETTINGS": [

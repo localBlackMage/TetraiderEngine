@@ -1,0 +1,115 @@
+{
+  "Tag": "None",
+  "Layer": "UI",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 0,
+        "y": -1320,
+        "z": 0
+      },
+      "scale": {
+        "x": 768,
+        "y": 2048,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+    {
+      "Component": "Sprite",
+      "Texture": "T_Credits.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "lit": false,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "SplashScreen",
+		"levelToLoad": 1
+	},
+	{
+		"Component": "Audio",
+		"audioClip": "SFX_MenuClick.wav",
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
+	},
+	{
+		  "Component": "ScriptedAnimation",
+		  "isPlayOnAwake": true,
+		  "initialPos": {
+				"x" : 0,
+				"y" : -1350,
+				"z" : 0
+		  },
+		  "initialRotation": 0,
+		  "initialScale": {
+            "x": 768,
+            "y": 2048,
+				"z" : 0
+		  },
+		  "initialFade": 1,
+		  "ScriptedAnimation": [
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 1320,
+					"z" : 0
+				},
+				"translationSpeed": 0.025,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 1280,
+					"y" : 720,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": true,
+				"isScale": false,
+				"isRotate": false,
+				"isFade": false,
+				"isEaseIn": false,
+				"isEaseOut": false
+			}
+		  ]
+		}
+  ]
+}

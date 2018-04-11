@@ -10,6 +10,9 @@
       "prefab": "P_Player"
     },
 	{
+      "prefab": "P_MiniMap"
+    },
+	{
 	  "prefab": "P_StaminaBar"	
 	},
 	{

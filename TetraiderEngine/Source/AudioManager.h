@@ -43,6 +43,9 @@ public:
 	void SetMasterVolume(float volume);
 	void SetSFXsVolume(float volume);
 	void SetSongsVolume(float volume);
+	float GetMasterVolume();
+	float GetSFXsVolume();
+	float GetSongsVolume();
 	void ErrorCheck(FMOD_RESULT result);
 	inline FMOD::System* getSystem() { return m_pSystem; }
 	inline FMOD_MODE* getMode() { return m_Modes; }
