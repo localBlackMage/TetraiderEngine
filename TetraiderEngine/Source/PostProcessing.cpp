@@ -30,7 +30,7 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
 	// Render player position to m_pMiniMapMaskIR
-	float scaleOfDot = .1f;
+	float scaleOfDot = .2f;
 	float scaleOfDotHalf = scaleOfDot / 2.f;
 	Matrix4x4 scale = Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 
@@ -90,10 +90,7 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 
 void PostProcessing::_PaintMiniMap(Vector3D playerPos)
 {
-#pragma region Draw Final MiniMap
 	// Draw MiniMap texture and Player Pos Indicator to Final MiniMap
-
-	// Draw the Mini Map
 	m_pMiniMapFinalIR->ClearBuffer();
 
 	// Render minimap to m_pMiniMapFinalIR
@@ -147,57 +144,14 @@ void PostProcessing::_PaintMiniMap(Vector3D playerPos)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
 
-
-
-
 	m_pMiniMapFinalIR->UnbindFBO();
-
-#pragma endregion
-
-#pragma region Render Final MiniMap to Screen
-
-	TETRA_RENDERER.SelectShaderProgram("default");
-	GameObject* cam = TETRA_GAME_OBJECTS.GetCamera(1);
-	TETRA_RENDERER._SetUpCamera(*cam);
-
-	TETRA_RENDERER.BindMesh(m_mesh);
-
-	Matrix4x4 trans = Matrix4x4::Translate(Vector3D(400, -200, 0));
-	Matrix4x4 rot = Matrix4x4::Rotate(180, ZAXIS) * Matrix4x4::Rotate(180, YAXIS);
-	/*Matrix4x4*/ scale = Matrix4x4::Scale(100, 100, 1.f);
-
-	/*Matrix4x4*/ M = trans*rot*scale;
-	Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
-	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-	glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
-
-	glUniform1i(SHADER_LOCATIONS::LIT, false);
-	glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, 0, 0);
-	glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, 1.f, 1.f);
-
-	TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::TINT_COLOR, Vector3D(1, 1, 1, 1));
-	TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, Vector3D(0, 0, 0, 0));
-
-	TETRA_RENDERER.EnableAlphaTest();
-
-	// select the texture to use
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_pMiniMapFinalIR->FBO()->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
-#pragma endregion
 }
 
 #pragma endregion
 
 PostProcessing::PostProcessing() : 
 	m_pBaseIR(nullptr), m_pGaussianHIR(nullptr), m_pGaussianVIR(nullptr),
-	m_mesh(*TETRA_RESOURCES.LoadMesh(SCREEN_QUAD_MESH))
+	m_mesh(*TETRA_RESOURCES.LoadMesh(SCREEN_QUAD_MESH)), m_shouldGenerateMiniMap(false)
 {}
 
 PostProcessing::~PostProcessing()
@@ -213,6 +167,12 @@ PostProcessing::~PostProcessing()
 void PostProcessing::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
+		case EVENT_INPUT_EXITLEVEL:
+		case EVENT_EXITING_GAME_LEVEL:
+		{
+			m_shouldGenerateMiniMap = false;
+			break;
+		}
 		case EVENT_TOGGLE_POST_PROCESSING:
 		{
 			InputButtonData* data = p_event->Data<InputButtonData>();
@@ -248,6 +208,8 @@ void PostProcessing::InitImageRenderers(const ImageRenderersData& metadata, cons
 	m_pBaseShader = metadata.pBaseShader;
 
 	TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_INPUT_EXITLEVEL, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_EXITING_GAME_LEVEL, this);
 }
 
 void PostProcessing::RenderBaseFBO() const
@@ -307,6 +269,8 @@ void PostProcessing::DoPostProcessing()
 
 void PostProcessing::GenerateMiniMapTextureForFrame()
 {
+	if (!m_shouldGenerateMiniMap)	return;
+
 	_Start();
 
 	Vector3D playerPos = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform)->GetPosition();
@@ -324,6 +288,7 @@ void PostProcessing::GenerateMiniMapTextureForFrame()
 
 void PostProcessing::CreateMiniMapTexture(const std::vector<RoomNodeData>& roomNodeData, unsigned short rows, unsigned short cols, unsigned int levelWidthPixels, unsigned int levelHeightPixels)
 {
+	m_shouldGenerateMiniMap = true;
 	m_levelWidthPixels = float(levelWidthPixels);
 	m_levelHeightPixels = float(levelHeightPixels);
 

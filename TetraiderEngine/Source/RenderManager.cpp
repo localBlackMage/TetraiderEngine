@@ -38,7 +38,10 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 
 bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
-	return gameObject.HasComponent(ComponentType::C_Sprite) || gameObject.HasComponent(ComponentType::C_ParticleEmitter) || gameObject.HasComponent(ComponentType::C_Text);
+	return gameObject.HasComponent(ComponentType::C_Sprite) || 
+		gameObject.HasComponent(ComponentType::C_FBOSprite) ||
+		gameObject.HasComponent(ComponentType::C_ParticleEmitter) || 
+		gameObject.HasComponent(ComponentType::C_Text);
 }
 
 void RenderManager::_RenderFBOSprite(const FBOSprite * pFBOSpriteComp)
@@ -57,7 +60,7 @@ void RenderManager::_RenderFBOSprite(const FBOSprite * pFBOSpriteComp)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, pFBOSpriteComp->GetTextureBuffer());
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-	GLint repeatOrClamp = pFBOSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
+	GLint repeatOrClamp = /*pFBOSpriteComp->Repeats() ? GL_REPEAT : */GL_CLAMP;
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
 
@@ -208,34 +211,6 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 			}
 			break;
 		}
-	}
-}
-
-void RenderManager::_RenderGameObject(const GameObject& gameObject)
-{
-	// Only attempt to draw if the game object has a sprite component and transform component
-	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
-		return;
-
-	// set shader attributes
-	if (gameObject.HasComponent(ComponentType::C_ParticleEmitter)) {
-		_BindGameObjectTransform(gameObject);
-		_RenderParticles(gameObject.GetComponent<ParticleEmitter>(ComponentType::C_ParticleEmitter));
-	}
-
-	if (gameObject.HasComponent(ComponentType::C_Sprite)) {
-		const Sprite* pSpriteComp = gameObject.GetComponent<Sprite>(ComponentType::C_Sprite);
-		if (pSpriteComp->HasPosOffset())
-			_BindGameObjectTransformWithOffset(gameObject, pSpriteComp->GetPosOffset());
-		else
-			_BindGameObjectTransform(gameObject);
-
-		_RenderSprite(gameObject.GetComponent<Sprite>(ComponentType::C_Sprite));
-	}
-
-	if (gameObject.HasComponent(ComponentType::C_Text)) {
-		_BindGameObjectTransform(gameObject);
-		_RenderText(gameObject.GetComponent<Text>(ComponentType::C_Text), gameObject.GetComponent<Transform>(ComponentType::C_Transform));
 	}
 }
 
