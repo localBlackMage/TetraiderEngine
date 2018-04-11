@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Endpoints.h"
+#include "SliderBallNames.h"
 
 class Slider : public Component
 {
@@ -16,6 +17,7 @@ private:
 	Endpoints* m_pEndpoints;
 	bool m_isPressed;
 	bool m_gotEndpoints;
+	SliderBallType m_sliderBallType;
 
 public:
 	Slider();

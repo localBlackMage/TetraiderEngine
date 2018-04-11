@@ -49,6 +49,7 @@ void Canvas::Serialize(const json & j)
 		z = ParseFloat(j["UIElements"][i]["position"], "z");
 
 		pObject = TETRA_GAME_OBJECTS.CreateGameObject(prefabName, true, Vector3D(x, y, z));
+
 		m_UIelements.push_back(pObject);
 		if (pObject->m_tag != T_Cursor) {
 			pObject->SetParent(this->pGO);
@@ -90,7 +91,6 @@ void Canvas::AddGameObjectToCanvas(GameObject* _pGO) {
 
 void Canvas::HandleEvent(Event * pEvent)
 {
-
 }
 
 void Canvas::ActivateCanvas()

@@ -926,5 +926,8 @@
     <ClInclude Include="Source\SplashScreen.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SliderBallNames.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -71,6 +71,7 @@ void Slider::Update(float)
 
 void Slider::Serialize(const json & j)
 {
+	m_sliderBallType = (SliderBallType)ParseInt(j, "type");
 }
 
 void Slider::HandleEvent(Event * pEvent)
@@ -103,18 +104,32 @@ void Slider::HandleEvent(Event * pEvent)
 	}
 	 if (pEvent->Type() == EVENT_OnCanvasActivated)
 	{
-		float val,startpt;
+		float val=-1.0f;
 		CanvasData* pCanvasData = pEvent->Data<CanvasData>();
 		if (pCanvasData->m_canvasType == (int)CanvasType::CANVAS_SOUNDS)
 		{
-			val=TETRA_AUDIO.GetMasterVolume();
-			if (m_diff == 0 || !m_pEndpoints)
+			if (m_sliderBallType == SliderBallType::SLIDER_MASTER)
+			{
+				val=TETRA_AUDIO.GetMasterVolume();
+				std::cout << "master vol = "<<val<<std::endl;
+			}
+			else if (m_sliderBallType == SliderBallType::SLIDER_BGM)
+			{
+				val = TETRA_AUDIO.GetSongsVolume();
+				std::cout << "BGM vol = " << val << std::endl;
+			}
+			else if (m_sliderBallType == SliderBallType::SLIDER_SFX)
+			{
+				val = TETRA_AUDIO.GetSFXsVolume();
+				std::cout << "SFX vol = " << val << std::endl;
+			}
+
+			if (/*m_diff == 0 ||*/ !m_pEndpoints)
 				return;
 			else
 			{
 				val = val * m_diff;
 				val+=m_pEndpoints->GetMin();
-
 				m_pTransform->SetPosition(Vector3D(val, m_pTransform->GetPosition().y, 0));
 			}
 		}

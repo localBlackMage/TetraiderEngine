@@ -44,7 +44,7 @@
                     }
                   },
                   {
-                    "prefab":"P_SliderBall",
+                    "prefab":"P_BGMSliderBall",
                     "position":{
                       "x":140,
                       "y":100
@@ -79,7 +79,7 @@
                 }
               },
               {
-                "prefab":"P_SliderBall",
+                "prefab":"P_SFXSliderBall",
                 "position":{
                   "x":140,
                   "y":50
@@ -100,7 +100,7 @@
               }
             },
             {
-              "prefab":"P_SliderBall",
+              "prefab":"P_MasterSliderBall",
               "position":{
                 "x":140,
                 "y":0

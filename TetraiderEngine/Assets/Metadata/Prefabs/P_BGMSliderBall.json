@@ -59,7 +59,8 @@
           }
       },
 	  {
-		"Component":"Slider"		
+    "Component":"Slider",
+    "type": 1		
 	  }
    ]
   }
