@@ -57,7 +57,7 @@
 		{
 			"Name": "Explosion",
 			"frames": 8,
-			"animationSpeed": 14,
+			"animationSpeed": 16,
 			"isLooping": false,
 			"isPlayOnAwake": true
 		}]
