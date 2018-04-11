@@ -60,6 +60,7 @@
       },
 	  {
     "Component":"Slider",
+    "barPrefab": "P_SFX_SliderBar",
     "type": 0		
 	  }
    ]

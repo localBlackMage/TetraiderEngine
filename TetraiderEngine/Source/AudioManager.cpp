@@ -52,6 +52,10 @@ AudioManager::AudioManager() :m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_isC
 	TETRA_EVENTS.Subscribe(EVENT_ChangeBGMVol,this);
 	TETRA_EVENTS.Subscribe(EVENT_ChangeSFXVol, this);
 	TETRA_EVENTS.Subscribe(EVENT_ChangeMasterVol, this);
+
+	SetSFXsVolume(1);
+	SetSongsVolume(1);
+	SetMasterVolume(1);
 }
 
 AudioManager::~AudioManager()
@@ -243,7 +247,6 @@ void AudioManager::SetSFXsVolume(float volume)
 void AudioManager::SetSongsVolume(float volume)
 {
 	ErrorCheck(m_pGroups[SONG]->setVolume(volume));
-	
 }
 float AudioManager::GetMasterVolume()
 {
@@ -260,12 +263,7 @@ float AudioManager::GetSFXsVolume()
 float AudioManager::GetSongsVolume()
 {
 	float vol;
-	//ErrorCheck(m_pCurrentSongChannel->getVolume(&vol));
-	if (m_pCurrentSongChannel==nullptr)
-	{
-		std::cout << "song channel pointer is NULL\n";
-	}
-	m_pCurrentSongChannel->getVolume(&vol);
+	ErrorCheck(m_pGroups[SONG]->getVolume(&vol));
 	return vol;
 }
 void AudioManager::TogglePause()

@@ -10,15 +10,16 @@ private:
 	float m_minX;
 	float m_maxX;
 	float m_diff;
+	float m_val;
+	std::string m_barPrefab;
 
 	//Sprite* m_pSpriteBall;
 	Transform* m_pTransform;
 	FollowCursor* m_pfollow;
 	Endpoints* m_pEndpoints;
 	bool m_isPressed;
-	bool m_gotEndpoints;
 	SliderBallType m_sliderBallType;
-
+	void UpdateBall();
 public:
 	Slider();
 	~Slider();

@@ -37,6 +37,7 @@ void Canvas::Serialize(const json & j)
 	m_isAnimateOnActivation = ParseBool(j, "isAnimateOnActivation");
 	m_isActive = m_isActiveOnAwake;
 	m_canvasType = (CanvasType)ParseInt(j, "canvasType");
+	TETRA_UI.RegisterCanvas(this);
 
 	int numberOfElements = j["UIElements"].size();
 	float x, y, z;
@@ -55,8 +56,6 @@ void Canvas::Serialize(const json & j)
 			pObject->SetParent(this->pGO);
 		}
 	}
-
-	TETRA_UI.RegisterCanvas(this);
 
 	if (m_isActiveOnAwake)
 		ActivateCanvas();
