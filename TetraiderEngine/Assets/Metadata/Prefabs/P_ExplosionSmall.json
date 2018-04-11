@@ -10,8 +10,8 @@
         "z": 0
       },
       "scale": {
-        "x": 225,
-        "y": 225,
+        "x": 200,
+        "y": 200,
         "z": 0
       },
       "pivotOffset": {
@@ -56,8 +56,8 @@
 		"MY_ANIMATIONS":[
 		{
 			"Name": "Explosion",
-			"frames": 16,
-			"animationSpeed": 20,
+			"frames": 8,
+			"animationSpeed": 14,
 			"isLooping": false,
 			"isPlayOnAwake": true
 		}]
