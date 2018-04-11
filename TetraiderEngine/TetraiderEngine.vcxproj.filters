@@ -464,6 +464,21 @@
     <ClCompile Include="Source\SplashScreen.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AI_RockBossAttack.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossEngage.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossReaction.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossIdle.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -926,8 +941,20 @@
     <ClInclude Include="Source\SplashScreen.h">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SliderBallNames.h">
-      <Filter>Source Files\Components\UI</Filter>
+    <ClInclude Include="Source\AI_RockBossEngage.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_RockBossAttack.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_RockBossReaction.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_RockBossIdle.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

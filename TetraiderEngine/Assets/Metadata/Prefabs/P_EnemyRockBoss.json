@@ -1,0 +1,325 @@
+{
+  "Tag": "Enemy",
+  "Layer": "2",
+  "COMPONENTS": [
+    {
+      "Component": "Transform",
+      "position": {
+        "x": 1536,
+        "y": 1100,
+        "z": 0
+      },
+      "scale": {
+        "x": 600,
+        "y": 600,
+        "z": 0
+      },
+      "pivotOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+	  }
+    },
+	{
+		"Component": "NPCController",
+		"AgentData": {
+			"speed": 150,
+			"acceleration": 10,
+			"knockBackMultiplier": 0
+		},
+		"detectionRadius": 900,
+		"outOfSightRadius": 1100,
+		"zoneWidth": 500,
+		"zoneHeight": 500,
+		"attackRange": 250,
+		"healthBarPrefab": "P_EnemyBossHealthBar",
+		"healthBarOffset": {
+			"x": -400,
+			"y": -300,
+			"z": 0
+		},
+		"healthScale": 70,
+		"isDeathAnimationAvailable": true,		
+		"puffParticlePrefab": "P_DustPuffParticles02",
+		"puffOffset": -50,
+		"healthBarOffset": {
+			"x": -400,
+			"y": -300,
+			"z": 0
+		},
+		"isBoss": true,
+		"isActive": false,
+		"deathAnimationIndex": 4,
+		"AIStates": [
+      {
+        "name": "NPC_IDLE",
+        "behaviorIndex": 0,
+        "AIStateType": "NPC_State_RockBossIdle"
+      },
+      {	"name": "NPC_REACTION",
+        "behaviorIndex": 1,
+        "AIStateType": "NPC_State_RockBossReaction"
+      },   
+      { "name": "NPC_ENGAGE",
+        "behaviorIndex": 2,
+        "AIStateType": "NPC_State_RockBossEngage"
+      },
+      { "name": "NPC_ATTACK",
+        "behaviorIndex": 3,       
+        "AIStateType": "NPC_State_RockBossAttack"
+      },
+      {
+        "name": "NPC_MOVETORANDOMPOINTINZONE",
+        "behaviorIndex": 5,
+        "AIStateType": "NPC_State_MoveToRandomPointInZone"
+      },
+      {
+        "name": "NPC_STUNNED",
+        "behaviorIndex": 6,
+        "AIStateType": "NPC_State_DashingStunned"
+      }   
+    ]
+	},
+    {
+      "Component": "Sprite",
+      "Texture": "T_RockEnemyAnim.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+      "lit": true,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },
+	{
+		"Component": "Animation",
+		"defaultAnimation": 1,
+		"MY_ANIMATIONS":[
+		{
+			"Name": "Walk",
+			"frames": 2,
+			"animationSpeed": 3,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Idle",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "ChargeAttack",
+			"frames": 5,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": true
+		},
+		{
+			"Name": "Stun",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Dead",
+			"frames": 1,
+			"animationSpeed": 8,
+			"isLooping": true,
+			"isPlayOnAwake": false
+		}
+		]
+	},
+	{
+		"Component": "Body",
+		"isStatic": false,
+		"mass": 0,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 55
+		}
+	},
+	{
+		"Component": "Health",
+		"startingHealth": 900,
+		"maxHealth": 900,
+		"isInvincible": false
+	},
+	{
+		"Component": "FlashOnTakeDamage",
+		"decaySpeed": 4,
+		"flashColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0
+		}
+	},
+	{
+		"Component": "DealDamageOnCollision",
+		"damage": 8,
+		"knockBackSpeed": 600
+	},
+	{
+		"Component": "Weapon",
+		"Attacks":[
+			{
+				"type": "Ranged",
+				"coolDown": 0.25,
+				"baseDamage": 3,
+				"projectileSpeed": 450,
+				"ammo": 0,
+				"isUnlimitedAmmo": true,
+				"instantiationOffset": 70,
+				"lifeTime": 1.5,
+				"projectilePrefab": "P_ProjectileBossBomb",
+				"knockBackSpeed": 300,
+				"isFlash": true
+			}
+		]
+	},
+	{	
+		"Component": "SpawnOnHealthZero",
+		"dropType": "prefab",
+		"prefab": "P_EggPickUp",
+		"RandomDrops": [
+			{
+				"prefab": "P_AmmoPickUp",
+				"weight": 20
+			},
+			{
+				"prefab": "P_MeatPickup",
+				"weight": 30
+			},
+			{
+				"prefab": "P_GoldenFeatherPickUp",
+				"weight": 10
+			},
+			{
+				"prefab": "",
+				"weight": 80
+			}
+		]
+	},
+	{
+	  "Component": "ScriptedAnimation",
+	  "isPlayOnAwake": false,
+	  "isRelative": true,
+	  "initialPos": {
+			"x" : 1536,
+			"y" : 1100,
+			"z" : 0
+	  },
+	  "initialRotation": 0,
+	  "initialScale": {
+			"x" : 600,
+			"y" : 600,
+			"z" : 0
+	  },
+	  "initialFade": 1,
+	  
+		  "ScriptedAnimation": [
+		    {
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 2,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 2,
+				
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				"isEaseIn": false
+			},
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : -1100,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				
+				"finalScale": {
+					"x" : -440,
+					"y" : -440,
+					"z" : 0
+				},
+				"scaleSpeed": 1,
+				
+				"isTranslate": true,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false
+			},
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 2,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 1,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 2,
+				
+				"isTranslate": false,
+				"isScale": true,
+				"isRotate": false,
+				"isFade": false,
+				"isEaseIn": true
+			}
+		]
+	}
+  ]
+}

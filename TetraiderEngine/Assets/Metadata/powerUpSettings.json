@@ -48,10 +48,10 @@
 					"name": "AmmoUpgrade",
 					"enumType": 6,
 					"maxLevel": 1,
-					"upgradeValue": 5,
+					"upgradeValue": 3,
 					"sprtieTexture": "T_ArrowPickUpIncrease.png",
 					"cost": 0,
-					"description": "+5 Arrows on pickup"
+					"description": "+3 Arrows on pickup"
 				},
 				{
 					"name": "IncreaseHealthFromPickUp",

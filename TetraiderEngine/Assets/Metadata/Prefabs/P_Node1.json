@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_SliderBall.png",
+        "Texture": "T_MountainPoint.png",
         "tiling": {
           "x": 1,
           "y": 1

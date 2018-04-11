@@ -26,6 +26,11 @@
     <ClCompile Include="Source\AI_RatBossIdle.cpp" />
     <ClCompile Include="Source\AI_RatBossReaction.cpp" />
     <ClCompile Include="Source\AI_RatBossRetreat.cpp" />
+    <ClCompile Include="Source\AI_RockBossAttack.cpp" />
+    <ClCompile Include="Source\AI_RockBossEngage.cpp" />
+    <ClCompile Include="Source\AI_RockBossIdle.cpp" />
+    <ClCompile Include="Source\AI_RockBossReaction.cpp" />
+    <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp" />
     <ClCompile Include="Source\ApplyTinyOnDifficultyUp.cpp" />
     <ClCompile Include="Source\HillNodes.cpp" />
     <ClCompile Include="Source\AI_BomberAttack.cpp" />
@@ -182,6 +187,11 @@
     <ClInclude Include="Source\AI_RatBossIdle.h" />
     <ClInclude Include="Source\AI_RatBossReaction.h" />
     <ClInclude Include="Source\AI_RatBossRetreat.h" />
+    <ClInclude Include="Source\AI_RockBossAttack.h" />
+    <ClInclude Include="Source\AI_RockBossEngage.h" />
+    <ClInclude Include="Source\AI_RockBossIdle.h" />
+    <ClInclude Include="Source\AI_RockBossReaction.h" />
+    <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h" />
     <ClInclude Include="Source\ApplyTinyOnDifficultyUp.h" />
     <ClInclude Include="Source\HillNodes.h" />
     <ClInclude Include="Source\AI_BomberAttack.h" />

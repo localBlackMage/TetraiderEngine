@@ -1,11 +1,3 @@
-//#include "Agent.h"
-//#include "AI_Idle.h"
-//#include "TetraiderAPI.h"
-//#include "Math\MathFunctions.h"
-//
-//#include <stdlib.h> // rand()
-//#include <iostream>
-
 #include <Stdafx.h>
 
 AI_Idle::AI_Idle()

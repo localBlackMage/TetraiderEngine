@@ -85,6 +85,13 @@
 			"animationSpeed": 14,
 			"isLooping": true,
 			"isPlayOnAwake": false
+		},
+		{
+			"Name": "Death",
+			"frames": 5,
+			"animationSpeed": 12,
+			"isLooping": false,
+			"isPlayOnAwake": false
 		}]
 	},
 	{
