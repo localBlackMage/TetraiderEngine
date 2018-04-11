@@ -953,8 +953,17 @@
     <ClInclude Include="Source\FBOSprite.h">
       <Filter>Source Files\Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SliderBallNames.h">
-      <Filter>Source Files\Components\UI</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\SliderBallNames.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TetraiderEngine.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Eggnapped.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
