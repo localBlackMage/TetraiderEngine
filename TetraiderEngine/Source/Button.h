@@ -14,6 +14,7 @@ private:
 	bool m_isRandomGenerated;
 	bool m_isLoadCanvas;
 	bool m_isCloseShop;
+	bool m_isResume;
 	bool m_isHover;
 	CanvasType m_canvasToActivate;
 	CanvasType m_canvasToDeActivate;

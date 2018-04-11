@@ -121,7 +121,6 @@ void Canvas::DeactivateCanvas(bool isForceDeactivation)
 		for (auto obj : m_UIelements) {
 			obj->m_isCollisionDisabled = true;
 		}
-
 		return;
 	}
 

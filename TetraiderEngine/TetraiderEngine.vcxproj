@@ -180,6 +180,7 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\AI_RangeAttack.h" />
@@ -341,6 +342,12 @@
     <ClInclude Include="Source\Weapon.h" />
     <ClInclude Include="Source\WinMessage.h" />
     <ClInclude Include="Source\UIManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TetraiderEngine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Eggnapped.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

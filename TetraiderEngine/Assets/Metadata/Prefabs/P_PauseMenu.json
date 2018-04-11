@@ -39,7 +39,7 @@
                     }
                 },
                 {
-                    "prefab":"P_RestartButton",
+                    "prefab":"P_ResumeButton",
                     "position":
                     {
                         "x":0,
@@ -48,10 +48,19 @@
                     }
                 },
                 {
+                    "prefab":"P_RestartButton",
+                    "position":
+                    {
+                        "x":0,
+                        "y":0,
+                        "z":0
+                    }
+                },
+                {
                   "prefab": "P_CntrlBtn_from_PauseMenu",
                   "position": {
                     "x": 0,
-                    "y": 0,
+                    "y": -75,
                     "z": 0
                   }
                 },
@@ -59,9 +68,17 @@
                   "prefab": "P_SoundBtn_from_PauseMenu",
                   "position": {
                     "x": 0,
-                    "y": -75,
+                    "y": -150,
                     "z": 0
                   }
+                },
+                {
+                    "prefab": "P_QuitButton",
+                    "position": {
+                      "x": 0,
+                      "y": -225,
+                      "z": 0
+                    }
                 },
                 {
                     "prefab": "P_Cursor",

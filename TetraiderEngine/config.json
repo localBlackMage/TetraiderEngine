@@ -218,6 +218,15 @@
 			"XboxKey": 0
 		},
 		{
+			"Name": "INCREMENT_LEVEL",
+			"EventType": 26,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 60,
+			"XboxKey": 0
+		},
+		{
 			"Name": "TOGGLE_LIGHTS",
 			"EventType": 15,
 			"InputType": 0,

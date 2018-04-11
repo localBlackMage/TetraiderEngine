@@ -61,7 +61,6 @@
     },
     {
       "Component": "Button",
-      "level"    : 2,
       "quit":true
     },
     {
