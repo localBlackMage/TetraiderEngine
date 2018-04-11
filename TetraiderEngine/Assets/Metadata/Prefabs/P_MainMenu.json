@@ -29,50 +29,49 @@
             "canvasType":0,
             "isActiveOnAwake": true,
             "UIElements": [
-                {
-                    "prefab": "P_Button",
-                    "position": {
-                      "x": 0,
-                      "y": 100,
-                      "z": 0
-                    }
-                  },
-                  
-                  {
-                    "prefab":"P_RGL_Button",
-                    "position":{
-                      "x":0,
-                      "y":25
-                    }
-                  },
-                  {
-                    "prefab": "P_ButtonLevelEditor",
-                    "position": {
-                      "x":0,
-                      "y":-50
-                    }
-                  },
-                  {
-                    "prefab":"P_QuitButton",
-                    "position":{
-                      "x":0,
-                      "y":-275
-                    }
-                  },
-                  {
-                    "prefab":"P_CreditsButton",
-                    "position":{
-                      "x":0,
-                      "y":-200
-                    }
-                  },
-                  {
-                    "prefab":"P_OptionsButton",
-                    "position":{
-                      "x":0,
-                      "y":-125
-                    }
-                }  
+				{
+					"prefab": "P_Button",
+					"position": {
+						"x": 0,
+						"y": 100,
+						"z": 0
+					}
+				},
+				{
+					"prefab":"P_RGL_Button",
+					"position":{
+						"x":0,
+						"y":25
+					}
+				},
+				{
+					"prefab": "P_ButtonLevelEditor",
+					"position": {
+						"x":0,
+						"y":-50
+					}
+				},
+				{
+					"prefab":"P_OptionsButton",
+					"position":{
+						"x":0,
+						"y":-125
+					}
+				},
+				{
+					"prefab":"P_CreditsButton",
+					"position":{
+						"x":0,
+						"y":-200
+					}
+				},
+				{
+					"prefab":"P_QuitButton",
+					"position":{
+						"x":0,
+						"y":-275
+					}
+				}
             ]
         }
     ]
