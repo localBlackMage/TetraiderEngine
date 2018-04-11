@@ -74,7 +74,7 @@
 		"Levels": [
 			{ "Name": "LVL_Editor" },
 			{ "Name": "LVL_Menu" },
-			{ "Name": "LVL_BossTest" },
+			{ "Name": "LVL_BossTest2" },
 			{ "Name": "LVL_PowerUpScreen" },
 			{ "Name": "LVL_CutScene" },
 			{ "Name": "LVL_DigiPenLogo" },

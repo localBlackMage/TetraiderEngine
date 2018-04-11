@@ -58,11 +58,11 @@
       {
         "name": "NPC_IDLE",
         "behaviorIndex": 0,
-        "AIStateType": "NPC_State_Idle"
+        "AIStateType": "NPC_State_RockBossIdle"
       },
       {	"name": "NPC_REACTION",
         "behaviorIndex": 1,
-        "AIStateType": "NPC_State_Reaction"
+        "AIStateType": "NPC_State_RockBossReaction"
       },   
       { "name": "NPC_ENGAGE",
         "behaviorIndex": 2,
@@ -161,8 +161,8 @@
 	},
 	{
 		"Component": "Health",
-		"startingHealth": 400,
-		"maxHealth": 400,
+		"startingHealth": 900,
+		"maxHealth": 900,
 		"isInvincible": false
 	},
 	{
@@ -185,14 +185,14 @@
 		"Attacks":[
 			{
 				"type": "Ranged",
-				"coolDown": 1,
+				"coolDown": 0.25,
 				"baseDamage": 3,
-				"projectileSpeed": 600,
+				"projectileSpeed": 450,
 				"ammo": 0,
 				"isUnlimitedAmmo": true,
 				"instantiationOffset": 70,
 				"lifeTime": 1.5,
-				"projectilePrefab": "P_ProjectileBomb",
+				"projectilePrefab": "P_ProjectileBossBomb",
 				"knockBackSpeed": 300,
 				"isFlash": true
 			}

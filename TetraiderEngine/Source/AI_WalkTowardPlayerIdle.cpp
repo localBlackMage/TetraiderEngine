@@ -1,21 +1,21 @@
 #include <Stdafx.h>
 
-AI_Idle::AI_Idle()
-: AI_State(NPC_State_Idle) {
+AI_WalkTowardPlayerIdle::AI_WalkTowardPlayerIdle()
+: AI_State(NPC_State_WalkTowardPlayerIdle) {
 	idleDuration = RandomFloat(1, 3); // get 1 - 3 sec
 	idledSoFar = 0.0f;
 }
 
-AI_Idle::~AI_Idle(){
+AI_WalkTowardPlayerIdle::~AI_WalkTowardPlayerIdle(){
 }
 
-void AI_Idle::OnEnter(){
+void AI_WalkTowardPlayerIdle::OnEnter(){
 	// reset idle data
 	idleDuration = RandomFloat(1, 3); 
 	idledSoFar = 0.0f;
 }
 
-void AI_Idle::OnUpdate(float dt){
+void AI_WalkTowardPlayerIdle::OnUpdate(float dt){
 	if (pAgent->IsPlayerInSight()) {
 		pAgent->StopMoving();
 		pAgent->ChangeState(NPC_REACTION);
@@ -29,18 +29,18 @@ void AI_Idle::OnUpdate(float dt){
 	}
 }
 
-void AI_Idle::OnExit(){
+void AI_WalkTowardPlayerIdle::OnExit(){
 	
 }
 
 
-void AI_Idle::HandleEvent(Event* pEvent) {
+void AI_WalkTowardPlayerIdle::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnTakeDamage:
-		pAgent->ChangeState(NPC_ENGAGE);
+		pAgent->ChangeState(NPC_ATTACK);
 	}
 }
 
-void AI_Idle::Serialize(const json& j) {
+void AI_WalkTowardPlayerIdle::Serialize(const json& j) {
 
 }

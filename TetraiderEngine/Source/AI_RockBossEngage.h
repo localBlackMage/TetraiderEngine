@@ -29,6 +29,7 @@ public:
 private:
 	float engageTimer;
 	float sinceEngage;
+	float bombAngleOffset;
 	
 };
 

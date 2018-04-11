@@ -597,7 +597,8 @@ BossPhase NPCController::GetCurrentPhase() {
 	float curHP = (float)pHealth->GetHealth();
 	float index = maxHP / (float)TOTAL_PHASE_NUM;
 
-	return static_cast<BossPhase>( (int)std::ceil(curHP / index) - 1);
+	BossPhase res = static_cast<BossPhase>((int)std::ceil(curHP / index) - 1);
+	return res;
 }
 
 

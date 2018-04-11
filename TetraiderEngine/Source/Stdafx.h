@@ -103,6 +103,7 @@ using namespace JsonReader;
 #include <AI_RangeAttack.h>
 #include <AI_Retreat.h>
 #include <AI_MoveToRandomPointInZone.h>
+#include <AI_WalkTowardPlayerIdle.h>
 #include <AI_WalkTowardPlayerAttack.h>
 #include <AI_WalkTowardPlayerEngage.h>
 #include <AI_DashingAttack.h>
@@ -120,6 +121,8 @@ using namespace JsonReader;
 #include <AI_RatBossEngage.h>
 #include <AI_RatBossAttack.h>
 #include <AI_RatBossRetreat.h>
+#include <AI_RockBossIdle.h>
+#include <AI_RockBossReaction.h>
 #include <AI_RockBossEngage.h>
 #include <AI_RockBossAttack.h>
 #include <AI_StateFactory.h>
