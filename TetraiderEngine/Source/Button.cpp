@@ -36,6 +36,7 @@ void Button::Serialize(const json & j)
 	m_isRestart = ParseBool(j,"restart");
 	m_isLoadCanvas = ParseBool(j, "isLoadCanvas");
 	m_isCloseShop = ParseBool(j, "isCloseShop");
+	m_isResume = ParseBool(j, "resume");
 	if (m_isLoadCanvas) {
 		m_canvasToActivate = (CanvasType)ParseInt(j, "canvasToActivate");
 		m_canvasToDeActivate = (CanvasType)ParseInt(j, "canvasToDeActivate");
@@ -84,6 +85,10 @@ void Button::HandleEvent(Event* pEvent)
 					TETRA_LEVELS.ActivateRandomGeneration(false);
 					TETRA_PLAYERSTATS.ClearStats();
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
+				}
+				else if (m_isResume)
+				{
+					TETRA_EVENTS.BroadcastEvent(&Event(EVENT_WINDOW_CLOSED));
 				}
 				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);
