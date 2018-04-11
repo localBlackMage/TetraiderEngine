@@ -4,6 +4,7 @@ static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 
 LevelManager::LevelManager(): m_isRandomlyGenerated(true), m_wasRandomlyGenerated(false), m_levelsCompleted(0) {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RESTART, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_INCREMENTLEVEL, this);
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnLoadNextLevel, this);
 }
@@ -176,5 +177,20 @@ void LevelManager::HandleEvent(Event* pEvent) {
 			TETRA_LEVELS.ChangeLevel(2);
 			break;
 		}
+		case EVENT_INPUT_INCREMENTLEVEL: {
+			IncrementLevelCompleted();
+			break;
+		}
+	}
+}
+
+void LevelManager::ResetGame() {
+	m_levelsCompleted = 0;
+}
+
+void LevelManager::IncrementLevelCompleted() {
+	m_levelsCompleted += 1;
+	if (m_levelsCompleted >= (int)m_levelConfigs.size()) {
+		m_levelsCompleted = m_levelConfigs.size() - 1;
 	}
 }
