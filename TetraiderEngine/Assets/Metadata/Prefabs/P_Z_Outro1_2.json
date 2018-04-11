@@ -54,8 +54,8 @@
 		  "Component": "ScriptedAnimation",
 		  "isPlayOnAwake": false,
 		  "initialPos": {
-				"x" : -240,
-				"y" : 0,
+				"x" : 1200,
+				"y" : -24,
 				"z" : 0
 		  },
 		  "initialRotation": 0,
@@ -68,8 +68,8 @@
 		  "ScriptedAnimation": [
 			{
 				"finalPos": {
-					"x" : -240,
-					"y" : 0,
+					"x" : 192,
+					"y" : -24,
 					"z" : 0
 				},
 				"translationSpeed": 1,
@@ -87,10 +87,66 @@
 				},
 				"scaleSpeed": 3,
 				
-				"isTranslate": false,
+				"isTranslate": true,
 				"isScale": false,
 				"isRotate": false,
-                "isFade": true,
+                "isFade": false,
+                "isEaseIn": true,
+                "isEaseOut": true
+      },
+      {
+				"finalPos": {
+					"x" : 192,
+					"y" : -24,
+					"z" : 0
+				},
+				"translationSpeed": 0.75,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": true,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": false,
+                "isEaseIn": true,
+                "isEaseOut": false
+      },
+      {
+				"finalPos": {
+					"x" : 192,
+					"y" : -24,
+					"z" : 0
+				},
+				"translationSpeed": 0.75,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": true,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": false,
                 "isEaseIn": true,
                 "isEaseOut": false
 			}

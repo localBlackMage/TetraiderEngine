@@ -10,8 +10,8 @@
             "z": 0
           },
           "scale": {
-            "x": 448,
-            "y": 656,
+            "x": 1280,
+            "y": 720,
             "z": 0
           },
           "pivotOffset": {
@@ -26,7 +26,7 @@
         },
         {
           "Component": "Sprite",
-          "Texture": "T_outro_Sc01_P01.png",
+          "Texture": "T_outro_Sc02.png",
           "tiling": {
             "x": 1,
             "y": 1
@@ -54,21 +54,21 @@
 		  "Component": "ScriptedAnimation",
 		  "isPlayOnAwake": false,
 		  "initialPos": {
-				"x" : -376,
+				"x" : 1300,
 				"y" : 0,
 				"z" : 0
 		  },
 		  "initialRotation": 0,
 		  "initialScale": {
-				"x" : 448,
-				"y" : 656,
+				"x" : 1280,
+				"y" : 720,
 				"z" : 0
 		  },
 		  "initialFade": 0,
 		  "ScriptedAnimation": [
 			{
 				"finalPos": {
-					"x" : -376,
+					"x" : 0,
 					"y" : 0,
 					"z" : 0
 				},
@@ -87,13 +87,41 @@
 				},
 				"scaleSpeed": 3,
 				
-				"isTranslate": false,
+				"isTranslate": true,
 				"isScale": false,
 				"isRotate": false,
-                "isFade": true,
+                "isFade": false,
                 "isEaseIn": true,
                 "isEaseOut": false
-			}
+            },
+            {
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 0.6,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 1,
+				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": true,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": false,
+                "isEaseIn": true,
+                "isEaseOut": false
+            }
 		  ]
 		}
 	]

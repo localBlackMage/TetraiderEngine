@@ -76,7 +76,7 @@
 			{ "Name": "LVL_Menu" },
 			{ "Name": "LVL_BossTest2" },
 			{ "Name": "LVL_PowerUpScreen" },
-			{ "Name": "LVL_CutScene" },
+			{ "Name": "LVL_OutroScene" },
 			{ "Name": "LVL_DigiPenLogo" },
 			{ "Name": "LVL_TetraidersLogo" }
 		],
