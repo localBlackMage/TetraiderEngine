@@ -21,7 +21,7 @@ void AI_RockBossEngage::OnEnter() {
 		std::cout << "ROCKBOSS PHASE 3" << std::endl;
 		engageTimer = 5.0f;
 		pAgent->LookAtPlayer();
-		bombAngleOffset = 0.0f;
+		bombAngleOffset = 90.0f;
 		sinceEngage = 0.0f;
 		pAgent->StopMoving();
 		break;
@@ -30,7 +30,7 @@ void AI_RockBossEngage::OnEnter() {
 		pAgent->SetProjectileSpeed(900.0f);
 		engageTimer = 5.0f;
 		pAgent->LookAtPlayer();
-		bombAngleOffset = 45.0f;
+		bombAngleOffset = 90.0f;
 		sinceEngage = 0.0f;
 		pAgent->StopMoving();
 		break;
