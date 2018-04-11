@@ -90,7 +90,6 @@ void Canvas::AddGameObjectToCanvas(GameObject* _pGO) {
 
 void Canvas::HandleEvent(Event * pEvent)
 {
-
 }
 
 void Canvas::ActivateCanvas()
@@ -122,7 +121,6 @@ void Canvas::DeactivateCanvas(bool isForceDeactivation)
 		for (auto obj : m_UIelements) {
 			obj->m_isCollisionDisabled = true;
 		}
-
 		return;
 	}
 

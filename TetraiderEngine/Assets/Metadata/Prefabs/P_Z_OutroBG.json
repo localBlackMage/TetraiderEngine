@@ -57,7 +57,7 @@
                   {
                     "prefab":"P_Z_Outro1_1",
                     "position":{
-                      "x":-376,
+                      "x":1200,
                       "y":0
                     },
                     "isDisablePreviousRendering": false,
@@ -69,8 +69,8 @@
                   {
                     "prefab":"P_Z_Outro1_2",
                     "position":{
-                      "x":1200,
-                      "y":-24
+                      "x":192,
+                      "y":1200
                     },
                     "isDisablePreviousRendering": false,
                     "isParentPrev": false,
@@ -79,13 +79,22 @@
 					"soundIndex": 1
                   },
                   {
-                    "prefab":"P_Z_Outro2",
+                    "prefab":"P_Z_Intro_transition_1-2",
                     "position":{
-                      "x":1300,
+                      "x":0,
                       "y":0
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": true
+                    "isParentPrev": false
+                  },
+                  {
+                    "prefab":"P_Z_Outro2",
+                    "position":{
+                      "x":0,
+                      "y":0
+                    },
+                    "isDisablePreviousRendering": true,
+                    "isParentPrev": false
                   },
                   {
                     "prefab":"P_Z_Intro_transition_1-2",

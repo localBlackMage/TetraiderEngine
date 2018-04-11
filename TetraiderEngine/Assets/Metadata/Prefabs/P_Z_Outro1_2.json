@@ -54,8 +54,8 @@
 		  "Component": "ScriptedAnimation",
 		  "isPlayOnAwake": false,
 		  "initialPos": {
-				"x" : 1200,
-				"y" : -24,
+				"x" : 192,
+				"y" : 1300,
 				"z" : 0
 		  },
 		  "initialRotation": 0,

@@ -41,7 +41,7 @@
             "r": 1,
             "g": 1,
             "b": 1,
-            "a": 1
+            "a": 0
           },
           "saturation": {
             "r": 0,
@@ -54,7 +54,7 @@
 		  "Component": "ScriptedAnimation",
 		  "isPlayOnAwake": false,
 		  "initialPos": {
-				"x" : 1300,
+				"x" : 0,
 				"y" : 0,
 				"z" : 0
 		  },
@@ -87,10 +87,10 @@
 				},
 				"scaleSpeed": 3,
 				
-				"isTranslate": true,
+				"isTranslate": false,
 				"isScale": false,
 				"isRotate": false,
-                "isFade": false,
+                "isFade": true,
                 "isEaseIn": true,
                 "isEaseOut": false
             },
@@ -115,10 +115,10 @@
 				},
 				"scaleSpeed": 3,
 				
-				"isTranslate": true,
+				"isTranslate": false,
 				"isScale": false,
 				"isRotate": false,
-                "isFade": false,
+                "isFade": true,
                 "isEaseIn": true,
                 "isEaseOut": false
             }
