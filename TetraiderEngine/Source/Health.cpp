@@ -47,8 +47,6 @@ void Health::TakeDamage(int damage, const Vector3D& directionOfAttack, float kno
 		m_currentHealth = 0;
 		if (pGO->m_tag == GameObjectTag::T_Player) {
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnPlayerHealthZero));
-			// For prototype deactivate player here
-			pGO->SetActive(false);
 		}
 		else if (pGO->m_tag == GameObjectTag::T_Enemy) {
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnEnemyHealthZero));

@@ -5,6 +5,7 @@
 CutScene::CutScene():Component(ComponentType::C_Cutscene), m_isCutsceneOver(false)
 {
 	m_count = 0;
+	timeDelay = 0;
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_SCREENBYPASS, this);
 }
 
@@ -22,6 +23,7 @@ void CutScene::Update(float dt)
 				m_isCutsceneOver = true;
 			else {
 				++m_count;
+				timeDelay = 0;
 				if (m_cutSceneObjects[m_count].m_isDisablePreviousRendering)
 					DisablePrevRendering();
 
@@ -31,10 +33,19 @@ void CutScene::Update(float dt)
 				m_cutSceneObjects[m_count].m_pGO->GetComponent<ScriptedAnimation>(ComponentType::C_ScriptedAnimation)->PlayAnimation();
 			}	
 		}
+		else if (m_cutSceneObjects[m_count].m_isPlaySound) {
+			if (timeDelay <= m_cutSceneObjects[m_count].m_delaySound) {
+				timeDelay += dt;
+				if (timeDelay > m_cutSceneObjects[m_count].m_delaySound) {
+					pGO->GetComponent<Audio>(ComponentType::C_Audio)->Play(m_cutSceneObjects[m_count].m_soundIndex);
+				}
+			}
+		}
 	}
 	else
 	{
 		if (m_isIntro) {
+			TETRA_AUDIO.StopAllSFXs();
 			TETRA_LEVELS.ActivateRandomGeneration(true);
 			TETRA_LEVELS.ChangeLevel(2);
 		}
@@ -63,7 +74,10 @@ void CutScene::Serialize(const json & j)
 		m_cutSceneObjects.push_back(CutSceneInfo(
 			TETRA_GAME_OBJECTS.CreateGameObject(ParseString(j["Scenes"][i], "prefab"), true, ParseVector3D(j["Scenes"][i], "position")),
 			ParseBool(j["Scenes"][i], "isDisablePreviousRendering"),
-			ParseBool(j["Scenes"][i], "isParentPrev")
+			ParseBool(j["Scenes"][i], "isParentPrev"),
+			ParseBool(j["Scenes"][i], "isPlaySound"),
+			ParseFloat(j["Scenes"][i], "delaySound"),
+			ParseInt(j["Scenes"][i], "soundIndex")
 		));
 		m_cutSceneObjects[i].m_pGO->GetComponent<ScriptedAnimation>(C_ScriptedAnimation)->SetInitialPos(ParseVector3D(j["Scenes"][i], "position"));
 	}
@@ -84,6 +98,7 @@ void CutScene::HandleEvent(Event * pEvent)
 	else if (pEvent->Type() == EVENT_INPUT_SCREENBYPASS) {
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
 		if (pData->m_isTrigger) {
+			TETRA_AUDIO.StopAllSFXs();
 			TETRA_LEVELS.ActivateRandomGeneration(true);
 			TETRA_LEVELS.ChangeLevel(2);
 		}

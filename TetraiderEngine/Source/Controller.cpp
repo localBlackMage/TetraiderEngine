@@ -53,6 +53,12 @@ void Controller::HandleEvent(Event* pEvent) {
 	if (m_isDead) return;
 
 	switch (pEvent->Type()) {
+		case EventType::EVENT_OnPlayerHealthZero: {
+			m_isControlAnimationOnVelocity = false;
+			m_isDead = true;
+			m_pAnimation->Play(3);
+			m_pWeapon->HideWeapon();
+		}
 		case EventType::EVENT_ShopOpened:
 		case EventType::EVENT_OnEnterBoss: {
 			m_targetVelocity = Vector3D();
@@ -220,6 +226,7 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_OnEnterBoss, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnExitBoss, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_GODMODE, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 }
 
 void Controller::FlyIn() {

@@ -63,7 +63,7 @@
 		"isHealth": false,
 		"isEgg": false,
 		"isAmmo": true,
-		"value": 5
+		"value": 3
 	},
 	{
 		"Component": "WaveMovement",

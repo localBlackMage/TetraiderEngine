@@ -100,7 +100,7 @@
 					"y" : -8,
 					"z" : 0
 				},
-				"translationSpeed": 0.8,
+				"translationSpeed": 0.6,
 				
 				"finalZRotation": 0,
 				"rotationSpeed": 1,

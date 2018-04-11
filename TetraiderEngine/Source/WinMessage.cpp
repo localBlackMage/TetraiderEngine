@@ -16,7 +16,7 @@ WinMessage::~WinMessage(){}
 
 void WinMessage::Update(float dt)
 {
-	if (TETRA_GAME_STATE.IsGamePaused()) return;
+	if (TETRA_GAME_STATE.IsGamePaused() && TETRA_GAME_STATE.IsShopOpen()) return;
 
 	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F5) && !m_isMessageOn) {
 		pGO->m_isRender = true;

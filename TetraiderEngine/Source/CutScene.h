@@ -4,10 +4,20 @@
 #include "ScriptedAnimation.h"
 
 struct CutSceneInfo {
-	CutSceneInfo(GameObject* _pGo, bool isDisablePreviousRendering, bool isParentPrev) : m_pGO(_pGo), m_isDisablePreviousRendering(isDisablePreviousRendering), m_isParentPrevious(isParentPrev) {}
+	CutSceneInfo(GameObject* _pGo, bool isDisablePreviousRendering, bool isParentPrev, bool isPlaySound, float delaySound, int soundIndex) :
+		m_pGO(_pGo), 
+		m_isDisablePreviousRendering(isDisablePreviousRendering),
+		m_isParentPrevious(isParentPrev),
+		m_isPlaySound(isPlaySound),
+		m_delaySound(delaySound),
+		m_soundIndex(soundIndex)
+	{}
 	GameObject* m_pGO;
 	bool m_isDisablePreviousRendering;
 	bool m_isParentPrevious;
+	bool m_isPlaySound;
+	float m_delaySound;
+	int m_soundIndex;
 };
 
 class CutScene :public Component
@@ -21,6 +31,7 @@ private:
 	bool m_isCutsceneOver;
 	void DisablePrevRendering();
 	void ParentPrevRendering();
+	float timeDelay;
 public:
 	CutScene();
 	~CutScene();

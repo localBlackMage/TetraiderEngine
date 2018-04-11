@@ -61,7 +61,10 @@
                       "y":0
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 0,
+					"soundIndex": 0
                   },
                   {
                     "prefab":"P_Z_Intro1_2",
@@ -70,7 +73,10 @@
                       "y":0
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 1.35,
+					"soundIndex": 1
                   },
                   {
                     "prefab":"P_Z_Intro_transition_1-2",
@@ -88,7 +94,10 @@
                       "y":152
                     },
                     "isDisablePreviousRendering": true,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 0.2,
+					"soundIndex": 6
                   },
                   {
                     "prefab":"P_Z_Intro2_2",
@@ -97,7 +106,10 @@
                       "y":-1300
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 0.25,
+					"soundIndex": 2
                   },
                   {
                     "prefab":"P_Z_Intro2_3",
@@ -106,7 +118,10 @@
                       "y":0
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 2.15,
+					"soundIndex": 3
                   },
                   {
                     "prefab":"P_Z_Intro3_1",
@@ -115,7 +130,10 @@
                       "y":-16
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": true
+                    "isParentPrev": true,
+					"isPlaySound": true,
+					"delaySound": 1.5,
+					"soundIndex": 4
                   },
                   {
                     "prefab":"P_Z_Intro3_2",
@@ -124,7 +142,10 @@
                       "y":-1200
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 0.5,
+					"soundIndex": 5
                   },
                   {
                     "prefab":"P_Z_Intro4_1",
@@ -133,7 +154,10 @@
                       "y":-8
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": true
+                    "isParentPrev": true,
+					"isPlaySound": true,
+					"delaySound": 1,
+					"soundIndex": 7
                   },
                   {
                     "prefab":"P_Z_Intro4_2",
@@ -155,6 +179,25 @@
                   }
 
             ]
-        }
+        },
+		{
+		"Component": "Audio",
+		"audioClip": [
+		 "SFX_CircketSound.wav",
+		 "SFX_EnemyLaugh.wav",
+		 "SFX_AriWalkDoorOpen.wav",
+		 "SFX_AriSurpriseGasp.wav",
+		 "SFX_AriAngry.wav",
+		 "SFX_AriRun.wav",
+		 "SFX_AmbientForest.wav",
+		 "SFX_VolcanoTheme.wav"
+		 ],
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D": false
+	   }
     ]
 }
