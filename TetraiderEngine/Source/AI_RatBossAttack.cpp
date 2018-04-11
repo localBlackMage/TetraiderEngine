@@ -6,6 +6,7 @@ AI_RatBossAttack::AI_RatBossAttack()
 	m_attackMaxLimit = 3;
 
 	m_steerFor = 0.2f;
+	idleDuration = 0.55;
 }
 
 AI_RatBossAttack::~AI_RatBossAttack(){
@@ -15,6 +16,7 @@ void AI_RatBossAttack::OnEnter(){
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
 		m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
+		pAgent->StopMoving();
 		break;
 	case PHASE2:
 		//pAgent->LookAtPlayer();
@@ -36,6 +38,12 @@ void AI_RatBossAttack::OnUpdate(float dt){
 		if (m_attackCounter > m_attackMaxLimit && pAgent->IsAttackAnimComplete()) {
 			pAgent->ChangeState(NPC_ENGAGE);
 		}
+
+		if (idleTime < idleDuration) {
+			idleTime += dt;
+			return;
+		}
+
 		if (pAgent->UseAttack(0)) {
 			pAgent->PlayAttackAnim();
 			m_attackCounter++;

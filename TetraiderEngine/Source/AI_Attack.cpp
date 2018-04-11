@@ -8,6 +8,7 @@ AI_Attack::AI_Attack()
 : AI_State(NPC_State_Attack) {
 	m_attackMinLimit = 1;
 	m_attackMaxLimit = 2;
+	idleDuration = 0.55f;
 }
 
 AI_Attack::~AI_Attack(){
@@ -15,19 +16,28 @@ AI_Attack::~AI_Attack(){
 
 void AI_Attack::OnEnter(){
 	m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit+1);
+	idleTime = 0.0f;
+	pAgent->StopMoving();
 }
 
-void AI_Attack::OnUpdate(float dt){
+void AI_Attack::OnUpdate(float dt) {
 	pAgent->LookAtPlayer();
 	if (m_attackCounter > m_attackMaxLimit && pAgent->IsAttackAnimComplete()) {
 		pAgent->ChangeState(NPC_ENGAGE);
 	}
-	if (pAgent->UseAttack(0)) {
-		pAgent->PlayAttackAnim();
-		m_attackCounter++;
+	if (idleTime < idleDuration) {
+		idleTime += dt;
+		return;
 	}
+		if (pAgent->UseAttack(0)) {
+			pAgent->PlayAttackAnim();
+			m_attackCounter++;
+		}
+	
 	if (pAgent->IsAttackAnimComplete())
 		pAgent->ControlAnimationOnVelocity(true);
+
+	idleTime += dt;
 }
 
 void AI_Attack::OnExit(){

@@ -461,26 +461,26 @@
     <ClCompile Include="Source\AI_RatBossRetreat.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AI_RockBossAttack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_RockBossEngage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_RockBossIdle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_RockBossReaction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SplashScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\FBOSprite.cpp">
       <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossAttack.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossEngage.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossIdle.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_RockBossReaction.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -944,14 +944,25 @@
     <ClInclude Include="Source\RoomNodeData.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AI_RockBossAttack.h" />
-    <ClInclude Include="Source\AI_RockBossEngage.h" />
-    <ClInclude Include="Source\AI_RockBossIdle.h" />
-    <ClInclude Include="Source\AI_RockBossReaction.h" />
-    <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h" />
     <ClInclude Include="Source\SplashScreen.h" />
     <ClInclude Include="Source\FBOSprite.h">
       <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SliderBallNames.h" />
+    <ClInclude Include="Source\AI_RockBossAttack.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_RockBossEngage.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_RockBossIdle.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_RockBossReaction.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h">
+      <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

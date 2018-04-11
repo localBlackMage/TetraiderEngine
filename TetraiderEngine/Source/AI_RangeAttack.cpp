@@ -8,6 +8,7 @@ AI_RangeAttack::AI_RangeAttack()
 : AI_State(NPC_State_RangeAttack) {
 	m_attackMinLimit = 1;
 	m_attackMaxLimit = 3;
+	idleDuration = 0.55f;
 }
 
 AI_RangeAttack::~AI_RangeAttack(){
@@ -15,6 +16,8 @@ AI_RangeAttack::~AI_RangeAttack(){
 
 void AI_RangeAttack::OnEnter(){
 	m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
+	idleTime = 0.0f;
+	pAgent->StopMoving();
 }
 
 void AI_RangeAttack::OnUpdate(float dt){
@@ -26,6 +29,12 @@ void AI_RangeAttack::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
+
+	if (idleTime < idleDuration) {
+		idleTime += dt;
+		return;
+	}
+
 	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
 		pAgent->PlayAttackAnim();

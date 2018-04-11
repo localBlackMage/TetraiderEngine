@@ -12,21 +12,25 @@ void AI_RockBossEngage::OnEnter() {
 	//printf("ENGAGE ENTERED\n");
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
-		sinceEngage = 0.0f;
-		engageTimer = 2.0f;
-		pAgent->StopMoving();
-		break;
-	case PHASE2:
 		std::cout << "ROCKBOSS PHASE 2" << std::endl;
 		sinceEngage = 0.0f;
 		engageTimer = 2.0f;
 		pAgent->StopMoving();
 		break;
-	case PHASE3:
+	case PHASE2:
 		std::cout << "ROCKBOSS PHASE 3" << std::endl;
-		engageTimer = 4.0f;
+		engageTimer = 5.0f;
 		pAgent->LookAtPlayer();
 		bombAngleOffset = 0.0f;
+		sinceEngage = 0.0f;
+		pAgent->StopMoving();
+		break;
+	case PHASE3:
+		std::cout << "ROCKBOSS PHASE 3" << std::endl;
+		pAgent->SetProjectileSpeed(900.0f);
+		engageTimer = 5.0f;
+		pAgent->LookAtPlayer();
+		bombAngleOffset = 45.0f;
 		sinceEngage = 0.0f;
 		pAgent->StopMoving();
 		break;
@@ -36,14 +40,13 @@ void AI_RockBossEngage::OnEnter() {
 void AI_RockBossEngage::OnUpdate(float dt) {
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL ROCK ENEMY BEHAVIOR
-		// always face player on engage
 		pAgent->LookAtPlayer();
 
 		if (sinceEngage > engageTimer) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
 		}
-		else if (sinceEngage < 0.4f) {
+		else if (sinceEngage < 1.2f) {
 			pAgent->MoveToPlayer();
 		}
 		else {
@@ -55,17 +58,19 @@ void AI_RockBossEngage::OnUpdate(float dt) {
 		break;
 	case PHASE2:
 		// always face player on engage
-		pAgent->LookAtPlayer();
-
 		if (sinceEngage > engageTimer) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
 		}
-		else if (sinceEngage < 0.4f) {
+		else if (sinceEngage < 1.2f) {
 			pAgent->MoveToPlayer();
 		}
 		else {
 			pAgent->PlayAnimation(2); // shaking
+			pAgent->LookAtPlayer(bombAngleOffset);
+			if (pAgent->UseAttack(0)) {
+				bombAngleOffset += 36;
+			}
 			pAgent->StopMoving();
 		}
 
@@ -77,7 +82,7 @@ void AI_RockBossEngage::OnUpdate(float dt) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
 		}
-		else if (sinceEngage < 0.4f) {
+		else if (sinceEngage < 0.8f) {
 			pAgent->MoveToPlayer();
 		}
 		else {

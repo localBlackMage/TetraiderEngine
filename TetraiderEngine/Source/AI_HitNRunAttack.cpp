@@ -9,6 +9,7 @@ AI_HitNRunAttack::AI_HitNRunAttack()
 	m_attackMinLimit = 1;
 	m_attackMaxLimit = 3;	
 	m_minDistanceToPlayer = 210.0f;
+	idleDuration = 0.55;
 }
 
 AI_HitNRunAttack::~AI_HitNRunAttack(){
@@ -16,7 +17,7 @@ AI_HitNRunAttack::~AI_HitNRunAttack(){
 
 void AI_HitNRunAttack::OnEnter(){
 	m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
-
+	idleTime = 0.0f;
 	pAgent->StopMoving();
 }
 
@@ -34,6 +35,11 @@ void AI_HitNRunAttack::OnUpdate(float dt){
 		pAgent->ChangeState(NPC_ENGAGE);
 		return;
 	}
+	if (idleTime < idleDuration) {
+		idleTime += dt;
+		return;
+	}
+
 	pAgent->LookAtPlayer(RandomFloat(-15, 15));
 	if (pAgent->UseAttack(0)) {
 		m_attackCounter++;

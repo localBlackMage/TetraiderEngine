@@ -31,6 +31,8 @@ private:
 	int m_attackCounter;
 	int m_attackMaxLimit;
 	int m_attackMinLimit;
+	float idleTime;
+	float idleDuration;
 };
 
 #endif

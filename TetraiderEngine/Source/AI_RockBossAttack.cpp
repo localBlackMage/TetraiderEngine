@@ -12,8 +12,14 @@ void AI_RockBossAttack::OnEnter(){
 	//printf("ATTACK ENTERED\n");
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL ROCK ENEMY BEHAVIOR
-		pAgent->SetPositionBehindPlayer(175.0f);
-		pAgent->SetSpeedMultiplier(4.5f);
+		m_phase2Attacks++;
+		if (m_phase2Attacks % 3 == 0) {
+			pAgent->SetPositionBehindPlayer(175.0f);
+		}
+		else {
+			pAgent->SetPositionBehindPlayer(-10.0f);
+		}
+		pAgent->SetSpeedMultiplier(5.0f);
 		triedSofar = 0.0f;
 		tryTime = 1.5f;
 		pAgent->SetAvoidObstacles(false);
@@ -25,9 +31,9 @@ void AI_RockBossAttack::OnEnter(){
 			pAgent->SetPositionBehindPlayer(175.0f);
 		}
 		else {
-			pAgent->SetPositionBehindPlayer(-5.0f);
+			pAgent->SetPositionBehindPlayer(-10.0f);
 		}
-		pAgent->SetSpeedMultiplier(4.5f);
+		pAgent->SetSpeedMultiplier(5.25f);
 		triedSofar = 0.0f;
 		tryTime = 1.5f;
 		pAgent->SetAvoidObstacles(false);
@@ -39,9 +45,9 @@ void AI_RockBossAttack::OnEnter(){
 			pAgent->SetPositionBehindPlayer(175.0f);
 		}
 		else {
-			pAgent->SetPositionBehindPlayer(-5.0f);
+			pAgent->SetPositionBehindPlayer(-10.0f);
 		}
-		pAgent->SetSpeedMultiplier(4.5f);
+		pAgent->SetSpeedMultiplier(5.5f);
 		triedSofar = 0.0f;
 		tryTime = 1.5f;
 		pAgent->SetAvoidObstacles(false);
@@ -54,7 +60,12 @@ void AI_RockBossAttack::OnUpdate(float dt){
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL ROCK ENEMY BEHAVIOR	
 		if (triedSofar > tryTime) {
-			pAgent->ChangeState(NPC_ENGAGE);
+			if (m_phase2Attacks % 3 == 0) {
+				pAgent->ChangeState(NPC_ENGAGE);
+			}
+			else {
+				pAgent->ChangeState(NPC_REACTION);
+			}
 		}
 		else {
 			triedSofar += dt;
@@ -62,7 +73,7 @@ void AI_RockBossAttack::OnUpdate(float dt){
 		break;
 	case PHASE2:
 		if (triedSofar > tryTime) {
-			if (m_phase2Attacks%3 == 0){
+			if (m_phase2Attacks % 3 == 0) {
 				pAgent->ChangeState(NPC_ENGAGE);
 			}
 			else {

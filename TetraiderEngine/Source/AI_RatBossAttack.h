@@ -32,6 +32,8 @@ private:
 
 	float m_steerTimer;
 	float m_steerFor;
+
+	float idleTime, idleDuration;
 };
 
 #endif

@@ -32,6 +32,7 @@ private:
 	int m_attackMaxLimit;
 	int m_attackMinLimit;
 	float m_minDistanceToPlayer;
+	float idleTime, idleDuration;
 };
 
 #endif

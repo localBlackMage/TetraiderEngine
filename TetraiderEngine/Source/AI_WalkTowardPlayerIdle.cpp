@@ -37,7 +37,7 @@ void AI_WalkTowardPlayerIdle::OnExit(){
 void AI_WalkTowardPlayerIdle::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 	case EventType::EVENT_OnTakeDamage:
-		pAgent->ChangeState(NPC_ATTACK);
+		pAgent->ChangeState(NPC_ENGAGE);
 	}
 }
 
