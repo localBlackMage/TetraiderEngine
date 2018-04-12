@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 120,
-          "y": 40,
+          "x": 144,
+          "y": 48,
           "z": 0
         },
         "pivotOffset": {
@@ -65,11 +65,11 @@
     },
     {
           "Component": "Text",
-          "letterHeight": 20,
-          "letterWidth": 20,
+          "letterHeight": 18,
+          "letterWidth": 18,
 		  "spacing": 0.65,
           "pivotOffset": {
-              "x": -37,
+              "x": -60,
               "y": 0
           },
           "tint": {
@@ -81,7 +81,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Resume"
+          "text": "Resume Game"
       },
     {
 		"Component": "Audio",
@@ -89,7 +89,7 @@
 			"SFX_MenuHover.wav",
 			"SFX_MenuClick.wav"
 		],
-		"volume": 1,
+		"volume": 0.3,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": false,
