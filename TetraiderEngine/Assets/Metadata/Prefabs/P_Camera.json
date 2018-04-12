@@ -33,7 +33,7 @@
 		{
 			"Component": "Audio",
 			"audioClip": "BGM_Ambience.wav",
-			"volume": 0.5,
+			"volume": 0.15,
 			"isMute": false,
 			"isLoop": true,
 			"isPlayOnAwake": true,

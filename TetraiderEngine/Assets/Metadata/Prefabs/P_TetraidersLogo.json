@@ -56,7 +56,7 @@
 	{
 		"Component": "Audio",
 		"audioClip": "SFX_MenuClick.wav",
-		"volume": 1,
+		"volume": 0.3,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": false,
