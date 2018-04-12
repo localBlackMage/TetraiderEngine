@@ -29,7 +29,7 @@ void SplashScreen::HandleEvent(Event * pEvent)
 		}
 		case EVENT_INPUT_SCREENBYPASS: {
 			InputButtonData* pData = pEvent->Data<InputButtonData>();
-			if (pData->m_isTrigger) {
+			if (pData->m_isReleased) {
 				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
 				if (pAudio)
 					pAudio->Play();

@@ -1,9 +1,5 @@
-//#include "Button.h"
-//#include "TetraiderAPI.h"
-//#include "Sprite.h"
-
 #include <Stdafx.h>
-//#include "Event.h"
+
 Button::Button() :Component(ComponentType::C_Button) 
 {
 	m_isQuit = false;

@@ -6,7 +6,7 @@ AI_RatBossAttack::AI_RatBossAttack()
 	m_attackMaxLimit = 3;
 
 	m_steerFor = 0.2f;
-	idleDuration = 0.55;
+	idleDuration = 0.55f;
 }
 
 AI_RatBossAttack::~AI_RatBossAttack(){

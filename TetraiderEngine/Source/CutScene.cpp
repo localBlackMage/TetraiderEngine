@@ -100,7 +100,7 @@ void CutScene::HandleEvent(Event * pEvent)
 	}
 	else if (pEvent->Type() == EVENT_INPUT_SCREENBYPASS) {
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
-		if (pData->m_isTrigger) {
+		if (pData->m_isReleased) {
 			TETRA_AUDIO.StopAllSFXs();
 			if (m_isIntro) {
 				TETRA_LEVELS.ActivateRandomGeneration(true);

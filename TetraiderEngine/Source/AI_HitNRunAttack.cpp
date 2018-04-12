@@ -9,7 +9,7 @@ AI_HitNRunAttack::AI_HitNRunAttack()
 	m_attackMinLimit = 1;
 	m_attackMaxLimit = 3;	
 	m_minDistanceToPlayer = 210.0f;
-	idleDuration = 0.55;
+	idleDuration = 0.55f;
 }
 
 AI_HitNRunAttack::~AI_HitNRunAttack(){

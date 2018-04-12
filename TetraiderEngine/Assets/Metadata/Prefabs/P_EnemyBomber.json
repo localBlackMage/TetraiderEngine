@@ -30,7 +30,7 @@
 			"speed": 130,
 			"acceleration": 8,
 			"knockBackMultiplier": 1,
-			"isIgnoreHazards" : true
+			"isIgnoreHazards" : false
 		},
 		"detectionRadius": 500,
 		"outOfSightRadius": 650,

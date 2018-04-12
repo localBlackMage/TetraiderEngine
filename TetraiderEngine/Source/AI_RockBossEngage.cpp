@@ -18,7 +18,7 @@ void AI_RockBossEngage::OnEnter() {
 		pAgent->StopMoving();
 		break;
 	case PHASE2:
-		std::cout << "ROCKBOSS PHASE 3" << std::endl;
+		std::cout << "ROCKBOSS PHASE 2" << std::endl;
 		engageTimer = 5.0f;
 		pAgent->LookAtPlayer();
 		bombAngleOffset = 90.0f;
@@ -46,7 +46,7 @@ void AI_RockBossEngage::OnUpdate(float dt) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
 		}
-		else if (sinceEngage < 1.2f) {
+		else if (sinceEngage < 0.75f) {
 			pAgent->MoveToPlayer();
 		}
 		else {
@@ -65,6 +65,9 @@ void AI_RockBossEngage::OnUpdate(float dt) {
 		else if (sinceEngage < 1.2f) {
 			pAgent->MoveToPlayer();
 		}
+		else if (sinceEngage < 1.75f) {
+			pAgent->StopMoving();
+		}
 		else {
 			pAgent->PlayAnimation(2); // shaking
 			pAgent->LookAtPlayer(bombAngleOffset);
@@ -82,8 +85,11 @@ void AI_RockBossEngage::OnUpdate(float dt) {
 			pAgent->ChangeState(NPC_REACTION);
 			return;
 		}
-		else if (sinceEngage < 0.8f) {
+		else if (sinceEngage < 2.0f) {
 			pAgent->MoveToPlayer();
+		}
+		else if (sinceEngage < 2.55f) {
+			pAgent->StopMoving();
 		}
 		else {
 			pAgent->PlayAnimation(2); // shaking
@@ -111,7 +117,6 @@ void AI_RockBossEngage::OnExit(){
 		break;
 	case PHASE3:
 		pAgent->ControlAnimationOnVelocity(true);
-		engageTimer = 2.0f;
 		break;
 	}
 }

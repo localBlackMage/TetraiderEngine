@@ -1,5 +1,4 @@
 #pragma once
-
 #include "CanvasTypeName.h"
 
 class Button :public Component
@@ -16,6 +15,7 @@ private:
 	bool m_isCloseShop;
 	bool m_isResume;
 	bool m_isHover;
+	bool m_isActive;
 	CanvasType m_canvasToActivate;
 	CanvasType m_canvasToDeActivate;
 	//Text* m_pText;
