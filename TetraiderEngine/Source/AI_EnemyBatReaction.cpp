@@ -35,7 +35,10 @@ void AI_EnemyBatReaction::OnExit(){
 
 
 void AI_EnemyBatReaction::HandleEvent(Event* pEvent) {
-
+	switch (pEvent->Type()) {
+	case EventType::EVENT_OnTakeDamage:
+		pAgent->ChangeState(NPC_ENGAGE);
+	}
 }
 
 void AI_EnemyBatReaction::Serialize(const json& j) {
