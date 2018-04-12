@@ -1,0 +1,82 @@
+{
+    "Tag": "UI",
+    "Layer": "UI",
+    "COMPONENTS": [
+        {
+          "Component": "Transform",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "scale": {
+            "x": 1400,
+            "y": 1000,
+            "z": 0
+          },
+          "pivotOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+            "Component": "Canvas",
+            "canvasType":2,
+            "isActiveOnAwake": false,
+            "UIElements": [
+                  
+                {
+                  "prefab": "P_CntrlBtn_from_PauseMenu",
+                  "position": {
+                    "x": 0,
+                    "y": 50,
+                    "z": 0
+                  }
+                },
+                {
+                  "prefab": "P_SoundBtn_from_PauseMenu",
+                  "position": {
+                    "x": 0,
+                    "y": -25,
+                    "z": 0
+                  }
+                },
+                  {
+                    "prefab":"P_Back2Pause_from_optionMenu",
+                    "position":{
+                      "x":0,
+                      "y":-250
+                    }
+                },
+                {
+                    "prefab":"P_OptionTitle",
+                    "position":{
+                      "x":0,
+                      "y":250
+                    }
+                } ,
+				{
+				  "prefab": "P_Cursor",
+				  "position": {
+					  "x": 100,
+					  "y": 100,
+					  "z": 0
+				  }
+				},
+			   {
+				"prefab": "P_MenuBg",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				} 
+				}
+            ]
+        }
+    ]
+}

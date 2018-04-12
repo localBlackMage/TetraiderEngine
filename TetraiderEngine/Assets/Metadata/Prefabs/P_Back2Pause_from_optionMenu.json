@@ -35,7 +35,6 @@
           "u": 0,
           "v": 0
         },
-        "lit": false,
         "tint": {
           "r": 1,
           "g": 1,
@@ -62,7 +61,7 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 4,
+      "canvasToActivate"    : 1,
       "canvasToDeActivate" : 2
     },
     {
@@ -71,7 +70,7 @@
           "letterWidth": 20,
           "spacing": 0.65,
           "pivotOffset": {
-              "x": -30,
+              "x": -23,
               "y": 0
           },
           "tint": {
@@ -83,7 +82,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Sounds"
+          "text": "Back"
       },
     {
 		"Component": "Audio",

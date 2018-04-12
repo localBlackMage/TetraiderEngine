@@ -66,11 +66,11 @@
     },
     {
           "Component": "Text",
-          "letterHeight": 20,
-          "letterWidth": 20,
+          "letterHeight": 17,
+          "letterWidth": 17,
 		  "spacing": 0.65,
           "pivotOffset": {
-              "x": -37,
+              "x": -60,
               "y": 0
           },
           "tint": {
@@ -82,7 +82,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Restart"
+          "text": "Restart Game"
       },
     {
 		"Component": "Audio",

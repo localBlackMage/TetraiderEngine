@@ -62,7 +62,7 @@ void GameStateManager::HandleEvent(Event * p_event) {
 			break;
 		}
 		case EVENT_INPUT_PAUSEGAME: {
-			if (m_isLevelOver || m_isShopOpen || !TETRA_UI.IsCanvasAvailable(CanvasType::CANVAS_PAUSE)) return;
+			if (m_isLevelOver || m_isShopOpen || m_isViewingCredits || !TETRA_UI.IsCanvasAvailable(CanvasType::CANVAS_PAUSE)) return;
 			InputButtonData* pData = p_event->Data<InputButtonData>();
 			if (pData->m_isTrigger) {
 				PauseGame(!m_isGamePaused);

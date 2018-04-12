@@ -62,8 +62,8 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 4,
-      "canvasToDeActivate" : 2
+      "canvasToActivate"    : 2,
+      "canvasToDeActivate" : 1
     },
     {
           "Component": "Text",
@@ -71,7 +71,7 @@
           "letterWidth": 20,
           "spacing": 0.65,
           "pivotOffset": {
-              "x": -30,
+              "x": -38,
               "y": 0
           },
           "tint": {
@@ -83,7 +83,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Sounds"
+          "text": "Options"
       },
     {
 		"Component": "Audio",

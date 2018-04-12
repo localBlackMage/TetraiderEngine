@@ -1,9 +1,3 @@
-//#include "GameObject.h"
-//#include "CamFollow.h"
-//#include "Transform.h"
-//#include "TetraiderAPI.h"
-//#include "Math/MathLibs.h"
-
 #include <Stdafx.h>
 
 CamFollow::CamFollow() :

@@ -37,7 +37,7 @@
 		"prefab":"P_inGameControlMenu"
 	},
 	{
-		"prefab": "P_OptionMenu"
+		"prefab": "P_OptionMenuInGame"
 	},
 	{
 		"prefab": "P_LoseMenu"
@@ -56,6 +56,9 @@
 	},
 	{
 	  "prefab": "P_ShopCanvas"
-	}
+	},
+	{
+      "prefab": "P_InGameCreditsMenu"
+    }
   ]
 }

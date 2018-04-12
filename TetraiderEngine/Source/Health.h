@@ -1,9 +1,6 @@
 #pragma once
 #ifndef HEALTH_H
 #define HEALTH_H
-//
-//#include "Component.h"
-//#include "Math\Vector3D.h"
 
 class Health : public Component {
 public:

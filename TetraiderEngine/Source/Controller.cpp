@@ -148,7 +148,7 @@ void Controller::HandleEvent(Event* pEvent) {
 		}
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) {
+			if (pButtonData->m_isPressed && (m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime()) || m_isGodMode)) {
 				_Fly();
 			}
 			else {

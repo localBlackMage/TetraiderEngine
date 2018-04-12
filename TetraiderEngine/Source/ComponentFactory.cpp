@@ -55,6 +55,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["TimeToLive"] = TimeToLive::CreateInstance;
 	m_creationFunctions["ApplyTintOnDifficultyUp"] = ApplyTintOnDifficultyUp::CreateInstance;
 	m_creationFunctions["SplashScreen"] = SplashScreen::CreateInstance;
+	m_creationFunctions["InGameCredits"] = InGameCredits::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

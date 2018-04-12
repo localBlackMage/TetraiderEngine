@@ -40,6 +40,7 @@ void Slider::LateInitialize()
 }
 void Slider::Update(float)
 {
+	pGO->GetComponent<Sprite>(C_Sprite)->SetVOffset(0.0f);
 	if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT))
 	{
 		m_isPressed = false;
@@ -48,6 +49,7 @@ void Slider::Update(float)
 	}
 	if (m_isPressed)
 	{
+		pGO->GetComponent<Sprite>(C_Sprite)->SetVOffset(0.6666f);
 		float x = m_pfollow->GetMousePosition().x;
 		if (x < m_pEndpoints->GetMin())
 		{
@@ -84,8 +86,9 @@ void Slider::HandleEvent(Event * pEvent)
 	if (pEvent->Type() == EVENT_OnCollide)
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
-		if (pData->pGO->m_tag == T_Cursor)
+		if (pData->pGO->m_tag == T_Cursor && m_isPressed == false)
 		{
+			pGO->GetComponent<Sprite>(C_Sprite)->SetVOffset(0.3333f);
 			m_pfollow = pData->pGO->GetComponent<FollowCursor>(ComponentType::C_FollowCursor);
 			if (m_pfollow->m_isSliderBallSeleced) return;
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT))

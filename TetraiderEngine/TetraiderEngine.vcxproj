@@ -45,6 +45,7 @@
     <ClCompile Include="Source\Gate.cpp" />
     <ClCompile Include="Source\GateTriggerBox.cpp" />
     <ClCompile Include="Source\ImageRenderer.cpp" />
+    <ClCompile Include="Source\InGameCredits.cpp" />
     <ClCompile Include="Source\NotEnoughGoldFeathers.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PostProcessing.cpp" />
@@ -181,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\InGameCredits.h" />
     <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\AI_RangeAttack.h" />

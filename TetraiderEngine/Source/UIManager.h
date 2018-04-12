@@ -17,7 +17,7 @@ public:
 	bool IsCanvasAvailable(const CanvasType);
 	void HandleEvent(Event* pEvent);
 	void AddGameObjectToCanvas(CanvasType type, GameObject* _pGO);
-
+	bool m_ignoreButtonsForOneFrame;
 private:
 	Canvas* m_Canvas[(int)CanvasType::CANVAS_NUM];
     int m_count;

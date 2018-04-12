@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 20,
-          "y": 20,
+          "x": 23,
+          "y": 23,
           "z": 0
         },
         "pivotOffset": {
@@ -26,10 +26,10 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_SliderBall.png",
+        "Texture": "T_RoundButtons.png",
         "tiling": {
           "x": 1,
-          "y": 1
+          "y": 0.3333
         },
         "uvOffset": {
           "u": 0,

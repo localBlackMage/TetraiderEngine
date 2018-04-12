@@ -1,6 +1,6 @@
 #include <Stdafx.h>
 
-ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0), m_isReverse(false), m_isRelative(false) {}
+ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0), m_isReverse(false), m_isRelative(false), m_isPlayOnPause(false) {}
 ScriptedAnimation::~ScriptedAnimation() {}
 
 void ScriptedAnimation::DeActivate() {
@@ -8,7 +8,7 @@ void ScriptedAnimation::DeActivate() {
 }
 
 void ScriptedAnimation::Update(float dt) {
-	if (TETRA_GAME_STATE.IsGamePaused()) return;
+	if (!m_isPlayOnPause && TETRA_GAME_STATE.IsGamePaused()) return;
 
 	int index = m_currentAnimationIndex;
 	if (m_isReverse)
@@ -105,6 +105,7 @@ void ScriptedAnimation::Serialize(const json& j) {
 	m_initialFade = ParseFloat(j, "initialFade");
 	m_isPlayOnAwake = ParseBool(j, "isPlayOnAwake");
 	m_isRelative = ParseBool(j, "isRelative");
+	m_isPlayOnPause = ParseBool(j, "isPlayOnPause");
 }
 
 void ScriptedAnimation::LateInitialize() {
@@ -140,6 +141,11 @@ void ScriptedAnimation::LateInitialize() {
 
 	if (m_isPlayOnAwake)
 		PlayAnimation();
+}
+
+void ScriptedAnimation::StopPlaying() {
+	m_isPlayAnimation = false;
+	m_pTransform->SetPosition(m_initialPos);
 }
 
 void ScriptedAnimation::PlayAnimation(bool isReverse) {

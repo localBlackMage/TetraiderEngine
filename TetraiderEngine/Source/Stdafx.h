@@ -208,6 +208,7 @@ using namespace JsonReader;
 #include <TimeToLive.h>
 #include <ApplyTinyOnDifficultyUp.h>
 #include <SplashScreen.h>
+#include <InGameCredits.h>
 
 #pragma endregion 
 

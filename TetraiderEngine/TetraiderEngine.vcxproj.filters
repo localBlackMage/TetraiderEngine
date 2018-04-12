@@ -482,6 +482,9 @@
     <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\InGameCredits.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -964,6 +967,9 @@
     </ClInclude>
     <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InGameCredits.h">
+      <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
