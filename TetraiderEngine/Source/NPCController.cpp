@@ -25,11 +25,13 @@ NPCController::NPCController() :
 	m_tagsToIgnore[0] = T_Projectile;
 	m_tagsToIgnore[1] = T_Player;
 	m_tagsToIgnore[2] = T_Enemy;
-	m_tagsToIgnore[3] = T_BoundaryObstacle;
+	m_tagsToIgnore[3] = T_None;
+	m_tagsToIgnore[4] = T_BoundaryObstacle;
 
 	m_tagsToIgnoreForObstacleAvoidance[0] = T_Projectile;
 	m_tagsToIgnoreForObstacleAvoidance[1] = T_Player;
-	m_tagsToIgnoreForObstacleAvoidance[2] = T_Hazard;
+	m_tagsToIgnoreForObstacleAvoidance[2] = T_None;
+	m_tagsToIgnoreForObstacleAvoidance[3] = T_Hazard;
 }
 
 NPCController::~NPCController() {
@@ -294,7 +296,7 @@ bool NPCController::IsPlayerInSight() {
 
 	if (GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius) {
 		LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 4);
+		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 5);
 	}
 	else return false;
 }
@@ -304,7 +306,7 @@ bool NPCController::IsPlayerOutOfSight() {
 		return true;
 
 	LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3)) {
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 4)) {
 		return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
 	}
 	else return true;
@@ -470,9 +472,9 @@ void NPCController::CheckForObstacleAvoidance() {
 
 	if (m_isAvoidingObstacle) return;
 
-	int tagNumber = 3;
+	int tagNumber = 4;
 	if (!m_isIgnoreHazards)
-		tagNumber = 2;
+		tagNumber = 3;
 
 	// Is there an obstacle right infront of me
 	Vector3D pos = m_pTransform->GetPosition();
@@ -555,9 +557,9 @@ void NPCController::AvoidObstacles(float dt) {
 	if (angle >= 180.0f) angle -= 360;
 	else if (angle < -180.0f) angle += 360;
 
-	int tagNumber = 3;
+	int tagNumber = 4;
 	if (!m_isIgnoreHazards)
-		tagNumber = 2;
+		tagNumber = 3;
 
 	Vector3D dir = Vector3D::VectorFromAngleDegrees(angle);
 	LineSegment2D ray(pos.x, pos.y, dir.x*ObstacleAvoidanceSideCheck + pos.x, dir.y*ObstacleAvoidanceSideCheck + pos.y);
