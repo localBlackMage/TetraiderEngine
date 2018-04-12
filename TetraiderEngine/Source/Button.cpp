@@ -33,6 +33,7 @@ void Button::Serialize(const json & j)
 	m_isLoadCanvas = ParseBool(j, "isLoadCanvas");
 	m_isCloseShop = ParseBool(j, "isCloseShop");
 	m_isResume = ParseBool(j, "resume");
+	m_isSelectable = ParseBool(j,"isSelectable");
 	if (m_isLoadCanvas) {
 		m_canvasToActivate = (CanvasType)ParseInt(j, "canvasToActivate");
 		m_canvasToDeActivate = (CanvasType)ParseInt(j, "canvasToDeActivate");

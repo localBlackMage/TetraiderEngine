@@ -10,8 +10,8 @@
           "z": 0
         },
         "scale": {
-          "x": 120,
-          "y": 40,
+          "x": 50,
+          "y": 52.125,
           "z": 0
         },
         "pivotOffset": {
@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "buttons.png",
+        "Texture": "T_SelectableLeft.png",
         "tiling": {
           "x": 1,
           "y": 0.333
@@ -62,36 +62,16 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 4,
+      "canvasToActivate"    : 9,
       "canvasToDeActivate" : 2
     },
-    {
-          "Component": "Text",
-          "letterHeight": 20,
-          "letterWidth": 20,
-          "spacing": 0.7,
-          "pivotOffset": {
-              "x": -32,
-              "y": 0
-          },
-          "tint": {
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 1
-          },
-          "rows": 6,
-          "cols": 16,
-          "font": "ShadowCardGothicFont.png",
-          "text": "Video"
-      },
     {
 		"Component": "Audio",
 		"audioClip": [
 			"SFX_MenuHover.wav",
 			"SFX_MenuClick.wav"
 		],
-		"volume": 1,
+		"volume": 0.3,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": false,

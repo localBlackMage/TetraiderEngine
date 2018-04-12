@@ -16,6 +16,7 @@ private:
 	bool m_isResume;
 	bool m_isHover;
 	bool m_isActive;
+	bool m_isSelectable;
 	CanvasType m_canvasToActivate;
 	CanvasType m_canvasToDeActivate;
 	//Text* m_pText;

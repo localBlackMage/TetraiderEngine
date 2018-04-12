@@ -26,46 +26,44 @@
         },
         {
             "Component": "Canvas",
-            "canvasType":2,
+            "canvasType":9,
             "isActiveOnAwake": false,
             "UIElements": [
-                  
                   {
-                    "prefab": "P_ControlsButton",
-                    "position": {
-                      "x": 0,
-                      "y": 25,
-                      "z": 0
-                    }
-                  },
-                  {
-                    "prefab":"P_SoundsButton",
-                    "position":{
-                      "x":0,
-                      "y":-50
-                    }
-                },
-                {
-                  "prefab":"P_ButtonVideo",
-                  "position":{
-                    "x":0,
-                    "y":-125
-                  }
-              },
-                  {
-                    "prefab":"P_Back2MainButton",
+                    "prefab":"P_ButtonBack2Option_from_video",
                     "position":{
                       "x":0,
                       "y":-200
                     }
-                },             
-                {
-                    "prefab":"P_OptionTitle",
+                  },
+                  {
+                    "prefab":"P_TitleVideo",
                     "position":{
-                      "x":0,
+                      "x":25,
                       "y":165
                     }
-                }  
+                  },
+                  {
+                    "prefab":"P_TitleResolution",
+                    "position":{
+                      "x":-200,
+                      "y":25
+                    }
+                  },
+                  {
+                    "prefab":"P_SelectableLeft",
+                    "position":{
+                      "x":-192,
+                      "y":-100
+                    }
+                  } ,
+                  {
+                    "prefab":"P_TitleWindowed",
+                    "position":{
+                      "x":-192,
+                      "y":-100
+                    }
+                  }                
             ]
         }
     ]
