@@ -65,11 +65,11 @@ Source: "Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
   IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+  IconFilename: "{app}\{#MyAppIcoName}";
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+  IconFilename: "{app}\{#MyAppIcoName}";
 Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+  IconFilename: "{app}\{#MyAppIcoName}";
 
 [Run]
 ; add the Parameters, WorkingDir and StatusMsg as you wish, just keep here

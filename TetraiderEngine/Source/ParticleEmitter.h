@@ -4,8 +4,8 @@
 #define PARTICLE_EMITTER_H
 
 struct Particle {
-	Vector3D m_pos_rot;			// x, y are location, z is rotation
-	Vector3D m_velocity_speed;	// x, y are velocity, z is speed
+	Vector3D m_pos_rot_animRow;			// x, y are location, z is rotation, w is row of animation frame
+	Vector3D m_velocity_speed_animCol;	// x, y are velocity, z is speed, w is col of animation frame
 	Color m_color;
 	float m_scale;
 	float m_life;
@@ -62,7 +62,7 @@ protected:
 
 	// Particle Configuration Properties
 	SurfaceTextureBuffer * m_texture;			// Texture for all particles in this emitter
-	float m_rows, m_cols;						// Number of rows & columns of sprite frames in the texture
+	float m_animRows, m_animCols;				// Number of rows & columns of sprite frames in the texture
 	float m_frameHeight, m_frameWidth;			// Size of each frame in the sprite texture
 	bool m_renderedOnTop;						// Will force particles associated with the parent GO to be rendered first 
 	float m_directionMod;						// If the scale of the parent object gets flipped, this will appropriately flip particle velocities

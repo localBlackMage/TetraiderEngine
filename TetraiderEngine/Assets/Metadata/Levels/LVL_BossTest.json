@@ -13,6 +13,16 @@
 				"z": 0
 			}
 		},
+		
+		{
+			"prefab": "P_ParticleTest",
+			"position": {
+				"x": 100,
+				"y": 0,
+				"z": 0
+			}
+		},
+		
 		{
 			"prefab": "P_EnemyRatBoss",
 			"position": {
