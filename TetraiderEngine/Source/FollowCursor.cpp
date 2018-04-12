@@ -1,8 +1,3 @@
-//#include "FollowCursor.h"
-//#include "Body.h"
-//#include "Transform.h"
-//#include "TetraiderAPI.h"
-
 #include <Stdafx.h>
 
 FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false), m_isSliderBallSeleced(false) {}
@@ -14,7 +9,6 @@ void FollowCursor::Update(float dt)
 	m_mousePos.x = (float)TETRA_INPUT.MousePosX() - (float)(TETRA_RENDERER.WindowWidth() / 2);
 	m_mousePos.y = -(float)TETRA_INPUT.MousePosY() + (float)(TETRA_RENDERER.WindowHeight() / 2);
 	m_pTransform->SetPosition(m_mousePos);
-	
 }
 
 void FollowCursor::Serialize(const json & j)
