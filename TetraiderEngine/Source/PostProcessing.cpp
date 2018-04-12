@@ -15,7 +15,6 @@ void PostProcessing::_End()
 
 void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 {
-#pragma region Paint Mask
 	// Draw MiniMap texture and Player Pos Indicator to Final MiniMap
 
 	m_pMiniMapMaskIR->BindFBO();
@@ -47,45 +46,6 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
 
 	m_pMiniMapMaskIR->UnbindFBO();
-
-#pragma endregion
-
-#pragma region Render Mask to Screen
-	//TETRA_RENDERER.SelectShaderProgram("default");
-	//GameObject* cam = TETRA_GAME_OBJECTS.GetCamera(1);
-	//TETRA_RENDERER._SetUpCamera(*cam);
-
-	//TETRA_RENDERER.BindMesh(m_mesh);
-
-	//Matrix4x4 trans = Matrix4x4::Translate(Vector3D(400, -200, 0));
-	//Matrix4x4 rot = Matrix4x4::Rotate(180, ZAXIS) * Matrix4x4::Rotate(180, YAXIS);
-	//scale = Matrix4x4::Scale(100, 100, 1.f);
-
-	//M = trans*rot*scale;
-	//Matrix4x4 N = Matrix4x4::Transpose3x3(Matrix4x4::Inverse3x3(M));
-	//glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
-	//glUniformMatrix4fv(SHADER_LOCATIONS::NORMAL_MATRIX, 1, true, (float*)N);
-
-	//glUniform1i(SHADER_LOCATIONS::LIT, false);
-	//glUniform2f(SHADER_LOCATIONS::FRAME_OFFSET, 0, 0);
-	//glUniform2f(SHADER_LOCATIONS::FRAME_SIZE, 1.f, 1.f);
-
-	//TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::TINT_COLOR, Vector3D(1, 1, 1, 1));
-	//TETRA_RENDERER._BindUniform4(SHADER_LOCATIONS::SATURATION_COLOR, Vector3D(0, 0, 0, 0));
-
-	//TETRA_RENDERER.EnableAlphaTest();
-
-	//// select the texture to use
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, m_pMiniMapMaskIR->FBO()->GetColorTexture());
-	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	//// draw the mesh
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
-	//glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
-#pragma endregion
 }
 
 void PostProcessing::_PaintMiniMap(Vector3D playerPos)
@@ -167,6 +127,7 @@ PostProcessing::~PostProcessing()
 void PostProcessing::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
+		case EVENT_INPUT_RESTART:
 		case EVENT_INPUT_EXITLEVEL:
 		case EVENT_EXITING_GAME_LEVEL:
 		{
@@ -208,6 +169,7 @@ void PostProcessing::InitImageRenderers(const ImageRenderersData& metadata, cons
 	m_pBaseShader = metadata.pBaseShader;
 
 	TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_INPUT_RESTART, this);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_INPUT_EXITLEVEL, this);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_EXITING_GAME_LEVEL, this);
 }

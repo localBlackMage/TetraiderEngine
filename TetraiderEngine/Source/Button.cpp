@@ -85,6 +85,7 @@ void Button::HandleEvent(Event* pEvent)
 					TETRA_LEVELS.ActivateRandomGeneration(false);
 					TETRA_PLAYERSTATS.ClearStats();
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
+					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_EXITING_GAME_LEVEL));
 				}
 				else if (m_isResume)
 				{
