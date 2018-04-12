@@ -12,7 +12,7 @@ void AI_RockBossEngage::OnEnter() {
 	//printf("ENGAGE ENTERED\n");
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
-		std::cout << "ROCKBOSS PHASE 2" << std::endl;
+		std::cout << "ROCKBOSS PHASE 1" << std::endl;
 		sinceEngage = 0.0f;
 		engageTimer = 2.0f;
 		pAgent->StopMoving();
@@ -27,7 +27,7 @@ void AI_RockBossEngage::OnEnter() {
 		break;
 	case PHASE3:
 		std::cout << "ROCKBOSS PHASE 3" << std::endl;
-		pAgent->SetProjectileSpeed(900.0f);
+		pAgent->SetProjectileSpeed(1300.0f);
 		engageTimer = 5.0f;
 		pAgent->LookAtPlayer();
 		bombAngleOffset = 90.0f;

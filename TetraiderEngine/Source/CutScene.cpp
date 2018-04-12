@@ -44,11 +44,14 @@ void CutScene::Update(float dt)
 	}
 	else
 	{
+		TETRA_AUDIO.StopAllSFXs();
 		if (m_isIntro) {
-			TETRA_AUDIO.StopAllSFXs();
 			TETRA_LEVELS.ActivateRandomGeneration(true);
-			TETRA_LEVELS.ChangeLevel(2);
 		}
+		else {
+			TETRA_LEVELS.ActivateRandomGeneration(false);
+		}
+		TETRA_LEVELS.ChangeLevel(m_levelToLoad);
 	}
 }
 
@@ -83,7 +86,7 @@ void CutScene::Serialize(const json & j)
 	}
 
 	m_isIntro = ParseBool(j, "isIntro");
-	m_isOutro = ParseBool(j, "isOutro");
+	m_levelToLoad = ParseInt(j, "levelToLoad");
 }
 
 void CutScene::HandleEvent(Event * pEvent)
@@ -99,8 +102,13 @@ void CutScene::HandleEvent(Event * pEvent)
 		InputButtonData* pData = pEvent->Data<InputButtonData>();
 		if (pData->m_isTrigger) {
 			TETRA_AUDIO.StopAllSFXs();
-			TETRA_LEVELS.ActivateRandomGeneration(true);
-			TETRA_LEVELS.ChangeLevel(2);
+			if (m_isIntro) {
+				TETRA_LEVELS.ActivateRandomGeneration(true);
+			}
+			else {
+				TETRA_LEVELS.ActivateRandomGeneration(false);
+			}
+			TETRA_LEVELS.ChangeLevel(m_levelToLoad);
 		}
 	}
 }

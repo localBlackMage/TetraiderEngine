@@ -53,6 +53,7 @@
         {
             "Component": "CutScene",
             "isIntro": false,
+			"levelToLoad": 9,
             "Scenes": [
                   {
                     "prefab":"P_Z_Outro1_1",
@@ -94,15 +95,6 @@
                       "y":0
                     },
                     "isDisablePreviousRendering": true,
-                    "isParentPrev": false
-                  },
-                  {
-                    "prefab":"P_Z_Intro_transition_1-2",
-                    "position":{
-                      "x":0,
-                      "y":0
-                    },
-                    "isDisablePreviousRendering": false,
                     "isParentPrev": false
                   }
             ]

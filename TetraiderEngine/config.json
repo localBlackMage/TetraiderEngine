@@ -87,7 +87,9 @@
 			{ "Name": "LVL_CutScene" },
 			{ "Name": "LVL_DigiPenLogo" },
 			{ "Name": "LVL_TetraidersLogo" },
-			{ "Name": "LVL_CreditsScreen" }
+			{ "Name": "LVL_CreditsScreen" },
+			{ "Name": "LVL_OutroScene" },
+			{ "Name": "LVL_ThanksForPlaying" }
 		],
 		"LevelParameters": [
 			{"cols": 3, "rows": 4, "difficulty": 1, "boss": false, "shop": false, "eggsToCollect": 3},

@@ -166,7 +166,8 @@
 		"timeToSpawnRightTransition": 1,
 		"timeToLoadNextLevel": 3,
 		"rightTransitionPrefab": "P_RightTransition",
-		"levelToLoad": 3
+		"levelToLoad": 3,
+		"outroLevel": 8
 	  },
 	  {
 		"Component": "Audio",

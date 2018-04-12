@@ -304,7 +304,7 @@ bool NPCController::IsPlayerOutOfSight() {
 		return true;
 
 	LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 4)) {
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 3)) {
 		return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
 	}
 	else return true;

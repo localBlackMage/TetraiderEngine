@@ -1,0 +1,15 @@
+{
+    "GAME_OBJECTS": 
+    [
+      {
+        "prefab": "P_UICameraMenu"
+      },
+      {
+        "prefab":"P_ThanksForPlaying"
+	  },
+	  {
+		"prefab": "P_SplashScreenTransition"
+	  }
+    ]
+    
+  }

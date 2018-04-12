@@ -50,6 +50,8 @@ public:
 	void RestartGame();
 	void ResetGame();
 	void IncrementLevelCompleted();
+	bool IsFinalLevel();
+	void LoadMainMenu();
 	int GetLevelsCompleted() { return m_levelsCompleted; }
 	int EggsToCollect() { return m_levelConfigs[m_levelsCompleted].eggsToCollect; }
 	void HandleEvent(Event* pEvent);

@@ -66,6 +66,34 @@
 		  },
 		  "initialFade": 0,
 		  "ScriptedAnimation": [
+		  {
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 1,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 0,
+				"fadeSpeed": 0.8,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": false,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": true,
+                "isEaseIn": true,
+                "isEaseOut": false
+            },
 			{
 				"finalPos": {
 					"x" : 0,
@@ -78,7 +106,7 @@
 				"rotationSpeed": 1,
 				
 				"finalFade": 1,
-				"fadeSpeed": 0.3,
+				"fadeSpeed": 0.4,
 				
 				"finalScale": {
 					"x" : 0,
@@ -107,6 +135,62 @@
 				
 				"finalFade": 1,
 				"fadeSpeed": 0.3,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": false,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": true,
+                "isEaseIn": true,
+                "isEaseOut": false
+            },
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 0.6,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 0,
+				"fadeSpeed": 0.4,
+				
+				"finalScale": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"scaleSpeed": 3,
+				
+				"isTranslate": false,
+				"isScale": false,
+				"isRotate": false,
+                "isFade": true,
+                "isEaseIn": true,
+                "isEaseOut": false
+            },
+			{
+				"finalPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+				},
+				"translationSpeed": 0.6,
+				
+				"finalZRotation": 0,
+				"rotationSpeed": 1,
+				
+				"finalFade": 0,
+				"fadeSpeed": 0.8,
 				
 				"finalScale": {
 					"x" : 0,

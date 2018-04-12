@@ -108,6 +108,15 @@ void LevelManager::UnLoadLevelForRestart() {
 	TETRA_EVENTS.ClearDelayedEvents();
 }
 
+bool LevelManager::IsFinalLevel() {
+	return m_levelsCompleted == m_levelConfigs.size();
+}
+
+void LevelManager::LoadMainMenu() {
+	ActivateRandomGeneration(false);
+	ChangeLevel(mainMenuLevel);
+}
+
 void LevelManager::ChangeLevel(int i) {
 	if (i == currentLevel) {
 		if (m_wasRandomlyGenerated)
@@ -178,7 +187,10 @@ void LevelManager::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EVENT_INPUT_INCREMENTLEVEL: {
-			IncrementLevelCompleted();
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isTrigger) {
+				IncrementLevelCompleted();
+			}
 			break;
 		}
 	}

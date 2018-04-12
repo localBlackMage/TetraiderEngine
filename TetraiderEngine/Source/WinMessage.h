@@ -24,5 +24,6 @@ private:
 	float m_timeToLoadNextLevel;
 	float m_timer;
 	int m_levelToLoad;
+	int m_outroLevel;
 };
 

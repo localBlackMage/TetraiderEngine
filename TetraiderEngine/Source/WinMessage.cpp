@@ -42,8 +42,11 @@ void WinMessage::Update(float dt)
 		
 		if (m_timer > m_timeToLoadNextLevel) {
 			TETRA_LEVELS.ActivateRandomGeneration(false);
-			TETRA_LEVELS.ChangeLevel(m_levelToLoad);
-			//TETRA_EVENTS.BroadcastEvent(&Event(RESTART_LEVEL));
+
+			if(TETRA_LEVELS.IsFinalLevel())
+				TETRA_LEVELS.ChangeLevel(m_outroLevel);
+			else
+				TETRA_LEVELS.ChangeLevel(m_levelToLoad);
 		}
 	}
 }
@@ -54,6 +57,7 @@ void WinMessage::Serialize(const json & j)
 	m_timeToLoadNextLevel = ParseFloat(j, "timeToLoadNextLevel");
 	m_rightTransitionPrefab = ParseString(j, "rightTransitionPrefab");
 	m_levelToLoad = ParseInt(j, "levelToLoad");
+	m_outroLevel = ParseInt(j, "outroLevel");
 }
 
 void WinMessage::HandleEvent(Event * pEvent)
@@ -111,10 +115,5 @@ void WinMessage::LateInitialize()
 	pGO->m_isRender = false;
 	TETRA_EVENTS.Subscribe(EVENT_LevelComplete , this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_EXITLEVEL, this);
-
-	
-	/*pGO->m_isRender = true;
-	m_pScriptedAnim->PlayAnimation();
-	m_isMessageOn = true;*/
 }
 

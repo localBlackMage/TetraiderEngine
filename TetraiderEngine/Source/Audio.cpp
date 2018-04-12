@@ -57,7 +57,7 @@ bool Audio::IsPlaying()
 
 void Audio::Play(int index)
 {
-	if (index >= m_audioClip.size())
+	if (index >= (int)m_audioClip.size())
 		return;
 	else {
 		m_currentIndex = index;

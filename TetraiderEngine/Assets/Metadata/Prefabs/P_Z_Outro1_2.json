@@ -100,7 +100,7 @@
 					"y" : -24,
 					"z" : 0
 				},
-				"translationSpeed": 0.75,
+				"translationSpeed": 0.9,
 				
 				"finalZRotation": 0,
 				"rotationSpeed": 1,
@@ -121,35 +121,7 @@
                 "isFade": false,
                 "isEaseIn": true,
                 "isEaseOut": false
-      },
-      {
-				"finalPos": {
-					"x" : 192,
-					"y" : -24,
-					"z" : 0
-				},
-				"translationSpeed": 0.75,
-				
-				"finalZRotation": 0,
-				"rotationSpeed": 1,
-				
-				"finalFade": 1,
-				"fadeSpeed": 0.3,
-				
-				"finalScale": {
-					"x" : 0,
-					"y" : 0,
-					"z" : 0
-				},
-				"scaleSpeed": 3,
-				
-				"isTranslate": true,
-				"isScale": false,
-				"isRotate": false,
-                "isFade": false,
-                "isEaseIn": true,
-                "isEaseOut": false
-			}
+      }
 		  ]
 		}
 	]

@@ -27,11 +27,12 @@ private:
 	int m_count;
 	ScriptedAnimation* mp_Animation;
 	bool m_isIntro;
-	bool m_isOutro;
 	bool m_isCutsceneOver;
 	void DisablePrevRendering();
 	void ParentPrevRendering();
 	float timeDelay;
+	int m_levelToLoad;
+	int m_outroLevel;
 public:
 	CutScene();
 	~CutScene();
