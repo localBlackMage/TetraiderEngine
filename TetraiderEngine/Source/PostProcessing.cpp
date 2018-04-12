@@ -25,6 +25,7 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	TETRA_RENDERER.EnableAlphaTest();
 
 	glActiveTexture(GL_TEXTURE0);
+	// TODO: Remove hard coded value
 	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_PlayerPos.png")->bufferId);
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
@@ -41,7 +42,7 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * scale;
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
-	//// draw the mesh
+	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
 

@@ -15,7 +15,7 @@
 		},
 		
 		{
-			"prefab": "P_FireParticleEmitter",
+			"prefab": "P_ParticleTest",
 			"position": {
 				"x": -100,
 				"y": 0,
