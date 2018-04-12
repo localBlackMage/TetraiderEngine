@@ -30,6 +30,7 @@ private:
 
 	Resolution m_resolutions[4];				// Array of supported resolutions, accepts a maximum of 4
 	unsigned short m_currentResolution;			// Index into m_resolutions for currently used resolution
+	unsigned short m_prevResolution;			// Saves the index into m_resolutions for toggling back and forth between full screen and windowed modes
 public:
 	GameConfig();
 	~GameConfig();
@@ -59,6 +60,8 @@ public:
 	void SelectResolution(unsigned short resolutionIndex);
 	void NextResolution();
 	void PrevResolution();
+	void SetToFullScreen();
+	void SetToWindowedMode();
 	inline unsigned short GetCurrentResolutionIndex() const { return m_currentResolution; }
 };
 

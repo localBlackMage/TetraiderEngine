@@ -673,6 +673,7 @@ void RenderManager::SetWindowToFullscreen()
 	if (!m_isFullscreen) {
 		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		m_isFullscreen = true;
+		TETRA_GAME_CONFIG.SetToFullScreen();
 	}
 }
 
@@ -681,6 +682,7 @@ void RenderManager::UnsetWindowFullscreen()
 	if (m_isFullscreen) {
 		SDL_SetWindowFullscreen(m_pWindow, 0);
 		m_isFullscreen = false;
+		TETRA_GAME_CONFIG.SetToWindowedMode();
 	}
 }
 
