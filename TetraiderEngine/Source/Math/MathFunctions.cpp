@@ -57,11 +57,11 @@ float CosWave(float amplitude, float frequency, float phaseShift, float time) {
 }
 
 float RandomFloat(float min, float max) {
-	return static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (max-min) + min;
+	return static_cast<float>(Rand()) / static_cast<float>(TETRA_RAND_MAX) * (max-min) + min;
 }
 
 int RandomInt(int min, int max) {
-	return rand() % (max-min) + min;
+	return Rand() % (max-min) + min;
 }
 
 unsigned int GetPascalEntry(unsigned short degree, unsigned short index)
@@ -104,14 +104,16 @@ bool IsSimilar(float a, float b)
 	return double(abs(a - b)) < EPSILON;
 }
 
-static long holdrand = 0;
+//long holdrand = 0;
 
 void SeedRand(unsigned int seed)
 {
-	holdrand = (long)seed;
+	srand(seed);
+	//holdrand = (long)seed;
 }
 
 int Rand()
 {
-	return (((holdrand = holdrand * 214012L + 2531011L) >> 16) & RAND_MAX);
+	return rand();
+	//return (((holdrand = holdrand * 214012L + 2531011L) >> 16) & TETRA_RAND_MAX);
 }

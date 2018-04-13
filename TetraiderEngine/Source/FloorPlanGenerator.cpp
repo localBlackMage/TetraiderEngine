@@ -207,7 +207,7 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 	std::vector<RoomNode*> selectedNodes;
 	std::vector<RoomType> types;
 	
-	short numTypes = rand() % 3 + 2;
+	short numTypes = Rand() % 3 + 2;
 	types.reserve(numTypes);
 	for (short idx = 0; idx < numTypes; ++idx) 
 		types.push_back(RoomType::INTERESTING);
@@ -226,15 +226,15 @@ std::vector<RoomNode*> FloorPlanGenerator::_SelectNodes(const LevelConfig& confi
 		
 		switch (types.back()) {
 			case RoomType::SPAWN: {	// Spawn nodes are always in the left most column
-				coords = std::pair<short, short>(short(rand() % m_rows), 0);
+				coords = std::pair<short, short>(short(Rand() % m_rows), 0);
 				break;
 			}
 			case RoomType::BOSS: { // Boss nodes are always in the right most column
-				coords = std::pair<short, short>(short(rand() % m_rows), m_maxColIdx);
+				coords = std::pair<short, short>(short(Rand() % m_rows), m_maxColIdx);
 				break;
 			}
 			default: {
-				coords = std::pair<short, short>(short(rand() % m_rows), short(rand() % m_cols));
+				coords = std::pair<short, short>(short(Rand() % m_rows), short(Rand() % m_cols));
 				break;
 			}
 		}
@@ -417,9 +417,9 @@ void FloorPlanGenerator::GenerateFloorPlan(const LevelConfig & config, int seed)
 {
 	ResetAllNodes();
 	_ConnectNeighbors();
-	m_seed = seed == -1 ? int(time(nullptr)) : seed;
+	m_seed = seed;
 	std::cout << "Seed: " << m_seed << std::endl;
-	srand(m_seed);
+	SeedRand(m_seed);
 
 	_ConnectSelectedNodes(_SelectNodes(config));
 	_SetRoomConnectionTypes();

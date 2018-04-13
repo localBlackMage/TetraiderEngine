@@ -31,6 +31,12 @@ private:
 	Resolution m_resolutions[4];				// Array of supported resolutions, accepts a maximum of 4
 	unsigned short m_currentResolution;			// Index into m_resolutions for currently used resolution
 	unsigned short m_prevResolution;			// Saves the index into m_resolutions for toggling back and forth between full screen and windowed modes
+
+	std::vector<unsigned int> m_seeds[4];		// Stores seeds for every given level 1-4
+	bool m_shouldUseSeeds;						// Determines if stored seeds are used (true) or a random seed (false)
+
+
+	void _ParseSeeds(const json& j, int index);
 public:
 	GameConfig();
 	~GameConfig();
@@ -63,6 +69,8 @@ public:
 	void SetToFullScreen();
 	void SetToWindowedMode();
 	inline unsigned short GetCurrentResolutionIndex() const { return m_currentResolution; }
+
+	unsigned int GetSeed(int level);
 };
 
 #endif
