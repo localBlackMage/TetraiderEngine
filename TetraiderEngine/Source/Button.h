@@ -1,6 +1,14 @@
 #pragma once
 #include "CanvasTypeName.h"
 
+enum class ChoiceType
+{
+	CHOICE_RESOLUTION,
+	CHOICE_FULLSCREEN,
+
+	CHOICE_NUM
+};
+
 class Button :public Component
 {
 private:
@@ -16,9 +24,10 @@ private:
 	bool m_isResume;
 	bool m_isHover;
 	bool m_isActive;
-	bool m_isSelectable;
+	bool m_isApplyButton;
 	CanvasType m_canvasToActivate;
 	CanvasType m_canvasToDeActivate;
+	int m_Choice[2];
 	//Text* m_pText;
 public:
 	Button();

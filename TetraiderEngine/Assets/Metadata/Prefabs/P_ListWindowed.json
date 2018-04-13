@@ -26,24 +26,27 @@
       },
       {
           "Component": "ListSelector",
-          "spawnOffset": 100,
+          "spawnOffset": 125,
           "isResolution":false,
           "leftSelectorPrefab":"P_SelectableLeft",
           "rightSelectorPrefab":"P_SelectableRight",
+          "textOffsetX": -10,
+          "textOffsetY": 100,
+        
 
           "Choice": [
             {
-              "text":"Yes"
+              "text":"No"
             },
             {
-                "text": "No"
+                "text": "Yes"
             }               
       ]
       },
       {
         "Component": "Text",
-        "letterHeight": 48,
-        "letterWidth": 48,
+        "letterHeight": 24,
+        "letterWidth": 24,
 		    "spacing": 0.65,
         "pivotOffset": {
             "x": 57,

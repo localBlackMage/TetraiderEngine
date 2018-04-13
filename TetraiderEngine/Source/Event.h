@@ -83,6 +83,11 @@ struct CanvasData : public EventData {
 	int m_canvasType;
 };
 
+struct ChoiceData : public EventData {
+	ChoiceData(int value) : m_choiceData(value) {}
+	int m_choiceData;
+};
+
 class Event
 {
 protected:

@@ -5,6 +5,8 @@ class ListSelector :
 {
 private:
 	float m_spawnOffset;
+	float m_textOffsetX;
+	float m_textOffsetY;
 	Text* m_pText;
 	Transform* m_pListTransform;
 	
@@ -21,6 +23,7 @@ public:
 	~ListSelector();
 	static Component* CreateInstance() { return new ListSelector(); }
 
+	int GetisResolution() { return m_isResolution; };
 	void Update(float dt);
 	void Serialize(const json & j);
 	void HandleEvent(Event* pEvent);

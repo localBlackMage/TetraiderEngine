@@ -28,11 +28,19 @@
             "Component": "Canvas",
             "canvasType":9,
             "isActiveOnAwake": false,
+            
             "UIElements": [
                   {
                     "prefab":"P_ButtonBack2Option_from_video",
                     "position":{
-                      "x":0,
+                      "x":-100,
+                      "y":-200
+                    }
+                  },
+                  {
+                    "prefab":"P_ButtonApply",
+                    "position":{
+                      "x": 100,
                       "y":-200
                     }
                   },
@@ -63,7 +71,14 @@
                       "x":-192,
                       "y":-100
                     }
-                  }               
+                  },
+                  {
+                    "prefab":"P_ListWindowed",
+                    "position":{
+                      "x": 125,
+                      "y":-100
+                    }
+                  }                
             ]
         }
     ]

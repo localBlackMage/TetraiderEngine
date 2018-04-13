@@ -32,8 +32,8 @@ void Button::Serialize(const json & j)
 	m_isRestart = ParseBool(j,"restart");
 	m_isLoadCanvas = ParseBool(j, "isLoadCanvas");
 	m_isCloseShop = ParseBool(j, "isCloseShop");
+	m_isApplyButton = ParseBool(j, "isApplyButton");
 	m_isResume = ParseBool(j, "resume");
-	m_isSelectable = ParseBool(j,"isSelectable");
 	if (m_isLoadCanvas) {
 		m_canvasToActivate = (CanvasType)ParseInt(j, "canvasToActivate");
 		m_canvasToDeActivate = (CanvasType)ParseInt(j, "canvasToDeActivate");
@@ -59,6 +59,12 @@ void Button::LateInitialize()
 			return;
 		}
 	}
+	if (m_isApplyButton)
+	{
+		TETRA_EVENTS.Subscribe(EVENT_OnResolutionChanged, this);
+		TETRA_EVENTS.Subscribe(EVENT_OnWindowedChanged, this);
+	}
+
 }
 
 void Button::HandleEvent(Event* pEvent)
@@ -100,6 +106,15 @@ void Button::HandleEvent(Event* pEvent)
 				else if (m_isCloseShop) {
 					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_ShopClosed));
 				}
+				else if (m_isApplyButton) 
+				{
+					TETRA_GAME_CONFIG.SelectResolution(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION]);
+
+					if (m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN]==0)
+						TETRA_RENDERER.UnsetWindowFullscreen();
+					else
+						TETRA_RENDERER.SetWindowToFullscreen();
+				}
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
 					TETRA_LEVELS.ChangeLevel(m_levelNumber);
@@ -107,6 +122,20 @@ void Button::HandleEvent(Event* pEvent)
 				}
 			}
 		}
+	}
+
+	if (pEvent->Type() == EVENT_OnResolutionChanged)
+	{
+		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
+		m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] = pChoiceData->m_choiceData;
+		std::cout << "in BUtton handle event, resultion changed. Choice : " << pChoiceData->m_choiceData << std::endl;
+	}
+
+	if (pEvent->Type() == EVENT_OnWindowedChanged)
+	{
+		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
+		m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = pChoiceData->m_choiceData;
+		std::cout << "in BUtton handle event, window changed. Choice : " << pChoiceData->m_choiceData << std::endl;
 	}
 }
 

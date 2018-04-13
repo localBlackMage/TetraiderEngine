@@ -125,6 +125,7 @@ public:
 	void Resize(int width, int height);
 	virtual void HandleEvent(Event * p_event);
 
+	inline bool GetFullScreenStatus() { return m_isFullscreen; };
 	void SetUpConsole();
 	void InitWindow(bool debugEnabled, bool startFullScreen);
 	void EnableWindowsCursor();

@@ -26,11 +26,13 @@
       },
       {
           "Component": "ListSelector",
-          "spawnOffset": 100,
+          "spawnOffset": 125,
           "isResolution":true,
           "leftSelectorPrefab":"P_SelectableLeft",
           "rightSelectorPrefab":"P_SelectableRight",
-          "defaultChoice": 0,
+          "textOffsetX": -75,
+          "textOffsetY": -25,
+         
           "Choice": [
             {
               "text":"1024 x 600"
@@ -44,12 +46,12 @@
             {
                 "text": "1920 x 1080"
             }                
-      ]
+          ]
       },
       {
         "Component": "Text",
-        "letterHeight": 48,
-        "letterWidth": 48,
+        "letterHeight": 24,
+        "letterWidth": 24,
 		    "spacing": 0.65,
         "pivotOffset": {
             "x": 57,

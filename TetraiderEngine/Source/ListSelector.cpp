@@ -16,7 +16,7 @@ void ListSelector::Update(float dt)
 {
 	if (m_pText) {
 		m_pText->SetText(m_Choice[m_currentChoice]);
-		m_pText->SetOffset(m_pListTransform->GetPosition());
+		m_pText->SetOffset(Vector3D( m_textOffsetX, m_pListTransform->GetPosition().y + m_textOffsetY, m_pListTransform->GetPosition().z));
 	}
 }
 
@@ -26,8 +26,10 @@ void ListSelector::Serialize(const json & j)
 	m_isResolution = ParseBool(j,"isResolution");
 	m_leftSelectorPrefab = ParseString(j, "leftSelectorPrefab");
 	m_rightSelecetorPrefab = ParseString(j, "rightSelectorPrefab");
-	m_defaultChoice = ParseInt(j, "defaultChoice");
-	m_currentChoice = m_defaultChoice;
+	//m_defaultChoice = ParseInt(j, "defaultChoice");
+	m_textOffsetX = ParseFloat(j,"textOffsetX");
+	m_textOffsetY = ParseFloat(j, "textOffsetY");
+	//m_currentChoice = m_defaultChoice;
 
 	int numberOfElements = j["Choice"].size();
 	for (int i = 0; i<numberOfElements; ++i)
@@ -83,4 +85,16 @@ void ListSelector::LateInitialize()
 	TETRA_UI.AddGameObjectToCanvas(CanvasType::CANVAS_VIDEO, right);
 	SelectableButton* pRight = right->GetComponent<SelectableButton>(ComponentType::C_SelectableButton);
 	pRight->SetSelectableOwner(this->pGO);
+
+	if (m_isResolution)
+	{
+		m_currentChoice = TETRA_GAME_CONFIG.GetCurrentResolutionIndex();
+		std::cout << "resolution choice " << m_currentChoice << std::endl;
+	}
+	else
+	{
+		m_currentChoice = (int)TETRA_RENDERER.GetFullScreenStatus();
+		std::cout << "fullscreen choice " << m_currentChoice << std::endl;
+	}
+		
 }
