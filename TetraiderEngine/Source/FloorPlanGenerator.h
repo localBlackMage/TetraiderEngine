@@ -127,7 +127,7 @@ public:
 	
 	void GenerateRoomNodes(unsigned short cols, unsigned short rows, unsigned short difficulty = 1);
 	void GenerateRoomNodes(const LevelConfig& config);
-	void GenerateFloorPlan(const LevelConfig& config, int seed = -1);
+	void GenerateFloorPlan(const LevelConfig& config, int seed);
 	void ResetAllNodes();
 	void PrintFloorPlan();
 	void GenerateLevelFromFloorPlan();
