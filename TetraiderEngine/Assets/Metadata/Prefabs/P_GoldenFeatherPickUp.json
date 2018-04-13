@@ -56,7 +56,7 @@
 		"looping": true,
 		"prewarmed": false,
 		"startDelay": 0,
-		"lifeTime": 1,
+		"lifeTime": 0.5,
 		"speedMin": 0.0,
 		"speedMax": 0.0,
 		"velocityX": {
@@ -119,7 +119,7 @@
 		"rotationOverTime": 0,
 		"particleTexture": "T_SparkleParticles.png",
 		"textureSelection": "sequence",
-		"animationSpeed": 0.125,
+		"animationSpeed": 0.0625,
 		"rows": 1,
 		"cols": 8,
 		"angleVariation": 0,

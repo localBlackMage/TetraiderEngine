@@ -59,7 +59,7 @@ public:
 	inline void Disable() { m_enabled = false; }
 	inline void Toggle() { m_enabled = !m_enabled; };
 	
-	void RenderBaseFBO() const;
+	void RenderBaseFBO();
 	void ClearBaseFBO(const Vector3D& color = Vector3D(0,0,0,0));
 	void BindBaseFBO();
 	void UnbindBaseFBO();

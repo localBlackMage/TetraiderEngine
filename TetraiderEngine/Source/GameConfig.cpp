@@ -10,7 +10,7 @@
 
 void GameConfig::_ParseSeeds(const json & j, int index)
 {
-	for (int i = 0; i < j.size(); ++i) {
+	for (unsigned int i = 0; i < j.size(); ++i) {
 		m_seeds[index].push_back(j[i]);
 	}
 }
