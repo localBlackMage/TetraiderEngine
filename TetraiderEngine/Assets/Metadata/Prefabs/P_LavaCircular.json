@@ -62,7 +62,10 @@
         "b": 0,
         "a": 0
       }
-    },
+    },	
+	{
+		"Component": "ParticleEmitterResizer"
+	},
 	{
 		"Component": "ParticleEmitter",
 

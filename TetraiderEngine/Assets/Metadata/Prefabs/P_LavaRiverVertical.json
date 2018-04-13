@@ -64,6 +64,9 @@
 		"damage": 5,
 		"knockBackSpeed": 1000,
 		"isForceKnockBack": true
+	},	
+	{
+		"Component": "ParticleEmitterResizer"
 	},
 	{
 		"Component": "ParticleEmitter",

@@ -485,6 +485,9 @@
     <ClCompile Include="Source\InGameCredits.cpp">
       <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ParticleEmitterResizer.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -970,6 +973,9 @@
     </ClInclude>
     <ClInclude Include="Source\InGameCredits.h">
       <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleEmitterResizer.h">
+      <Filter>Source Files\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

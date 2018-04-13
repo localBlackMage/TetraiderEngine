@@ -3,6 +3,8 @@
 #ifndef PARTICLE_EMITTER_H
 #define PARTICLE_EMITTER_H
 
+class ParticleEmitterResizer;
+
 struct Particle {
 	Vector3D m_pos_rot_animRow;			// x, y are location, z is rotation, w is row of animation frame
 	Vector3D m_velocity_speed_animCol;	// x, y are velocity, z is speed, w is col of animation frame
@@ -25,6 +27,7 @@ enum class P_TextureSelection {
 };
 
 class ParticleEmitter : public Component {
+	friend class ParticleEmitterResizer;
 protected:
 	// Emitter Configuration Properties
 	float m_loopDuration;						// Time it takes for the Emitter to complete a cycle in seconds

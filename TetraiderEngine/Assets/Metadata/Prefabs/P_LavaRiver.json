@@ -63,6 +63,9 @@
 		"Component": "DealDamageOnCollision",
 		"damage": 5,
 		"knockBackSpeed": 1000
+	},	
+	{
+		"Component": "ParticleEmitterResizer"
 	},
 	{
 		"Component": "ParticleEmitter",

@@ -47,6 +47,7 @@
     <ClCompile Include="Source\ImageRenderer.cpp" />
     <ClCompile Include="Source\InGameCredits.cpp" />
     <ClCompile Include="Source\NotEnoughGoldFeathers.cpp" />
+    <ClCompile Include="Source\ParticleEmitterResizer.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PostProcessing.cpp" />
     <ClCompile Include="Source\PowerUpButton.cpp" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\InGameCredits.h" />
+    <ClInclude Include="Source\ParticleEmitterResizer.h" />
     <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\AI_RangeAttack.h" />

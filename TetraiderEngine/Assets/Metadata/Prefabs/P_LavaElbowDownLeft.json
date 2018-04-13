@@ -50,6 +50,9 @@
       }
     },
 	{
+		"Component": "ParticleEmitterResizer"
+	},
+	{
 		"Component": "ParticleEmitter",
 
 		"loopDuration": 4.0,

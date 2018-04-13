@@ -4,6 +4,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
 	m_creationFunctions["FBOSprite"] = FBOSprite::CreateInstance;
 	m_creationFunctions["Sprite"] = Sprite::CreateInstance;
+	m_creationFunctions["ParticleEmitterResizer"] = ParticleEmitterResizer::CreateInstance;
 	m_creationFunctions["ParticleEmitter"] = ParticleEmitter::CreateInstance;
 	m_creationFunctions["Text"] = Text::CreateInstance;
 	m_creationFunctions["Animation"] = Animation::CreateInstance;
