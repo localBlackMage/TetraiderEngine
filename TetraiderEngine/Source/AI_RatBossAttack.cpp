@@ -17,6 +17,7 @@ void AI_RatBossAttack::OnEnter(){
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
 		m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
 		pAgent->StopMoving();
+		idleTime = 0.0f;
 		break;
 	case PHASE2:
 		//pAgent->LookAtPlayer();
