@@ -69,7 +69,7 @@
           "letterWidth": 20,
 		  "spacing": 0.65,
           "pivotOffset": {
-              "x": -20,
+              "x": -50,
               "y": 0
           },
           "tint": {
@@ -81,7 +81,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Menu"
+          "text": "Main Menu"
       },
     {
 		"Component": "Audio",

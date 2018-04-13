@@ -25,6 +25,7 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	TETRA_RENDERER.EnableAlphaTest();
 
 	glActiveTexture(GL_TEXTURE0);
+	// TODO: Remove hard coded value
 	glBindTexture(GL_TEXTURE_2D, TETRA_RESOURCES.GetTexture("T_PlayerPos.png")->bufferId);
 	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
 
@@ -41,7 +42,7 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * scale;
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
-	//// draw the mesh
+	// draw the mesh
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_mesh.GetFaceBuffer());
 	glDrawElements(GL_TRIANGLES, 3 * m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
 
@@ -174,9 +175,13 @@ void PostProcessing::InitImageRenderers(const ImageRenderersData& metadata, cons
 	TETRA_EVENTS.Subscribe(EventType::EVENT_EXITING_GAME_LEVEL, this);
 }
 
-void PostProcessing::RenderBaseFBO() const
+void PostProcessing::RenderBaseFBO()
 {
-	m_pBaseIR->RenderToScreen(*m_pBaseShader);
+	_Start();
+	int windowWidth, windowHeight;
+	TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+	m_pBaseIR->RenderToScreen(*m_pBaseShader, windowWidth, windowHeight);
+	_End();
 }
 
 void PostProcessing::ClearBaseFBO(const Vector3D& color)
@@ -216,7 +221,7 @@ FrameBufferObject * PostProcessing::GetImageRendererFBO(const std::string& image
 
 void PostProcessing::DoPostProcessing()
 {
-	//_Start();
+	_Start();
 	// Bind + clear gaus blur FBO
 	//m_pGaussianHIR->ClearBuffer();
 	//m_pGaussianVIR->ClearBuffer();
@@ -226,7 +231,7 @@ void PostProcessing::DoPostProcessing()
 	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
 	//int windowWidth, windowHeight;
 	//TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
-	//_End();
+	_End();
 }
 
 void PostProcessing::GenerateMiniMapTextureForFrame()

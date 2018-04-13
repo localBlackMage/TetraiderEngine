@@ -62,6 +62,81 @@
         "b": 0,
         "a": 0
       }
+    },	
+	{
+		"Component": "ParticleEmitterResizer"
+	},
+	{
+		"Component": "ParticleEmitter",
+
+		"loopDuration": 4.0,
+		"looping": true,
+		"prewarmed": false,
+		"startDelay": 0,
+		"lifeTime": 0.875,
+		"speedMin": 0.0,
+		"speedMax": 0.0,
+		"velocityX": {
+			"amplitude": 0.0,
+			"points": [
+			  {
+				"x": 0,
+				"y": 1
+			  },
+			  {
+				"x": 1,
+				"y": 1
+			  }
+			]
+		},
+		"velocityY": {
+			"amplitude": 1.0,
+			"points": [
+			  {
+				"x": 0,
+				"y": 1
+			  },
+			  {
+				"x": 1,
+				"y": 1
+			  }
+			]
+		},
+		"scale": {
+			"amplitude": 40,
+			"points": [{"x":0,"y":0.5444444444444438},{"x":0.3333333333333333,"y":0.8555555555555561},{"x":0.6666666666666666,"y":1},{"x":1,"y":1}]
+		},
+		"rotation": 0,
+		"color": {
+			"start": {
+			  "r": 0.97,
+			  "g": 1,
+			  "b": 0.2,
+			  "a": 1
+			},
+			"end": {
+			  "r": 0.97,
+			  "g": 1,
+			  "b": 0.2,
+			  "a": 1
+			}
+		},
+		"gravity": 0,
+		"emissionRate": 10,
+		"max": 20,
+		"rotationOverTime": 0,
+		"particleTexture": "T_BubbleParticle_2.png",
+		"textureSelection": "sequence",
+		"animationSpeed": 0.125,
+		"rows": 1,
+		"cols": 7,
+		"angleVariation": 0,
+		"renderOnTop": true,
+		"brightness": 1.4,
+		"SHAPE": {
+			"type": "circle",
+			"radius": 32
+		}
     }
   ]
 }

@@ -487,7 +487,7 @@
 			"gatePositions": [
 				{
 					"position": {
-						"x": -768.000000,
+						"x": -656.000000,
 						"y": 8.000000
 					},
 					"isHorizontal": false
@@ -495,7 +495,7 @@
 				{
 					"position": {
 						"x": 0.000000,
-						"y": 512.000000
+						"y": 400.000000
 					},
 					"isHorizontal": true
 				}

@@ -461,9 +461,6 @@
     <ClCompile Include="Source\AI_RatBossRetreat.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SplashScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FBOSprite.cpp">
       <Filter>Source Files\Components\Rendering</Filter>
     </ClCompile>
@@ -482,11 +479,14 @@
     <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SelectableButton.cpp">
+    <ClCompile Include="Source\InGameCredits.cpp">
       <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ListSelector.cpp">
-      <Filter>Source Files\Components\UI</Filter>
+    <ClCompile Include="Source\ParticleEmitterResizer.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SplashScreen.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -841,7 +841,6 @@
     <ClInclude Include="Source\CanvasTypeName.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FontInfo.h" />
     <ClInclude Include="Source\Slider.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
@@ -950,7 +949,6 @@
     <ClInclude Include="Source\RoomNodeData.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SplashScreen.h" />
     <ClInclude Include="Source\FBOSprite.h">
       <Filter>Source Files\Components\Rendering</Filter>
     </ClInclude>
@@ -970,14 +968,20 @@
     <ClInclude Include="Source\AI_WalkTowardPlayerIdle.h">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SelectableButton.h">
+    <ClInclude Include="Source\InGameCredits.h">
       <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ListSelector.h">
-      <Filter>Source Files\Components\UI</Filter>
+    <ClInclude Include="Source\ParticleEmitterResizer.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FontInfo.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\SliderBallNames.h">
-      <Filter>Source Files\Components\UI</Filter>
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SplashScreen.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

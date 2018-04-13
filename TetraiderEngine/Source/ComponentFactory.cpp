@@ -4,6 +4,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["Transform"] = Transform::CreateInstance;
 	m_creationFunctions["FBOSprite"] = FBOSprite::CreateInstance;
 	m_creationFunctions["Sprite"] = Sprite::CreateInstance;
+	m_creationFunctions["ParticleEmitterResizer"] = ParticleEmitterResizer::CreateInstance;
 	m_creationFunctions["ParticleEmitter"] = ParticleEmitter::CreateInstance;
 	m_creationFunctions["Text"] = Text::CreateInstance;
 	m_creationFunctions["Animation"] = Animation::CreateInstance;
@@ -57,6 +58,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["SplashScreen"] = SplashScreen::CreateInstance;
 	m_creationFunctions["SelectableButton"] = SelectableButton::CreateInstance;
 	m_creationFunctions["ListSelector"] = ListSelector::CreateInstance;
+	m_creationFunctions["InGameCredits"] = InGameCredits::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

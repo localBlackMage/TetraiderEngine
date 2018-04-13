@@ -212,14 +212,14 @@
 				{
 					"position": {
 						"x": 0.000000,
-						"y": 512.000000
+						"y": 400.000000
 					},
 					"isHorizontal": true
 				},
 				{
 					"position": {
 						"x": 0.000000,
-						"y": -512.000000
+						"y": -400.000000
 					},
 					"isHorizontal": true
 				}

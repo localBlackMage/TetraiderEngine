@@ -78,6 +78,23 @@ void Controller::HandleEvent(Event* pEvent) {
 			_ToggleGodMode();
 			break;
 		}
+		case EventType::EVENT_OnCamGoToBossRoom: {
+			Health* pHealth = pGO->GetComponent<Health>(C_Health);
+			pHealth->Invincibility(true);
+			m_targetVelocity = Vector3D();
+			m_pBody->SetVelocity(Vector3D());
+			m_isControlAnimationOnVelocity = true;
+			m_isIgnoreHazards = false;
+			m_isControlsEnabled = false;
+			_StopFlying();
+			break;
+		}
+		case EventType::EVENT_OnCamGoToPlayer: {
+			Health* pHealth = pGO->GetComponent<Health>(C_Health);
+			pHealth->Invincibility(false);
+			m_isControlsEnabled = true;
+			break;
+		}
 	}
 
 	if (!m_isControlsEnabled) return;
@@ -148,7 +165,7 @@ void Controller::HandleEvent(Event* pEvent) {
 		}
 		case EVENT_INPUT_FLY: {
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
-			if (pButtonData->m_isPressed && m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime())) {
+			if (pButtonData->m_isPressed && (m_pStamina->UseStamina(TETRA_FRAMERATE.GetFrameTime()) || m_isGodMode)) {
 				_Fly();
 			}
 			else {
@@ -227,6 +244,8 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_OnExitBoss, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_GODMODE, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnCamGoToBossRoom, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnCamGoToPlayer, this);
 }
 
 void Controller::FlyIn() {

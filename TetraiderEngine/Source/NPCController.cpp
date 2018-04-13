@@ -22,6 +22,10 @@ NPCController::NPCController() :
 {
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnBossLand, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnCamGoToBossRoom, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnCamGoToPlayer, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnPauseGame, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnGameResume, this);
 	m_tagsToIgnore[0] = T_Projectile;
 	m_tagsToIgnore[1] = T_Player;
 	m_tagsToIgnore[2] = T_Enemy;
@@ -45,7 +49,7 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	if (m_isDead || !m_isActive) return;
+	if (m_isDead || !m_isActive || TETRA_GAME_STATE.IsGamePaused()) return;
 
 	if (m_isBossEntering) {
 		SetOrientation();
@@ -193,52 +197,70 @@ void NPCController::ExitBoss() {
 }
 
 void NPCController::HandleEvent(Event* pEvent) {
-	if (pEvent->Type() == EVENT_OnLevelInitialized) {
-		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
-		m_pPlayerTransform = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform);
-		m_startingPoint = m_pTransform->GetPosition();
-		m_targetDestination = m_startingPoint;
-	}
-	else if (pEvent->Type() == EVENT_OnTakeDamage) {
-		if (m_healthBarUI) {
-			m_healthBarUI->m_isRender = true;
-			m_healthBarUI->HandleEvent(pEvent);
+	switch (pEvent->Type()) {
+		case EVENT_OnLevelInitialized: {
+			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_EnemySpawned));
+			m_pPlayerTransform = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform);
+			m_startingPoint = m_pTransform->GetPosition();
+			m_targetDestination = m_startingPoint;
+			break;
 		}
-	}
-	else if (pEvent->Type() == EVENT_OnPlayerHealthZero) {
-		m_currentState = NPC_IDLE;
-		m_isPlayerDead = true;
-	}
-	else if (pEvent->Type() == EVENT_OnEnemyHealthZero) {
-		if (m_isDeathAnim) {
-			m_pAnimation->Play(m_deathAnim);
-			if(m_pWeapon) m_pWeapon->HideWeapon();
-			pGO->m_isCollisionDisabled = true;
-			TETRA_GAME_OBJECTS.SwitchGameObjectLayer(pGO, RENDER_LAYER::L_ONE);
-			//pGO->SwitchTag(T_DeadEnemy);
-			m_pBody->SetVelocity(Vector3D(0, 0, 0));
-			m_isDead = true;
+		case EVENT_OnTakeDamage: {
+			if (m_healthBarUI) {
+				m_healthBarUI->m_isRender = true;
+				m_healthBarUI->HandleEvent(pEvent);
+			}
+			break;
+		}
+		case EVENT_OnPlayerHealthZero: {
+			m_currentState = NPC_IDLE;
+			m_isPlayerDead = true;
+			break;
+		}
+		case EVENT_OnEnemyHealthZero: {
+			if (m_isDeathAnim) {
+				m_pAnimation->Play(m_deathAnim);
+				if (m_pWeapon) m_pWeapon->HideWeapon();
+				pGO->m_isCollisionDisabled = true;
+				TETRA_GAME_OBJECTS.SwitchGameObjectLayer(pGO, RENDER_LAYER::L_ONE);
+				//pGO->SwitchTag(T_DeadEnemy);
+				m_pBody->SetVelocity(Vector3D(0, 0, 0));
+				m_isDead = true;
+				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play(0);
+			}
+			else {
+				pGO->Destroy();
+			}
+
+			if (m_isBoss) {
+				Event* e = new Event(EVENT_OnBossDefeated, 1.5f);
+				TETRA_EVENTS.AddDelayedEvent(e);
+			}
+			break;
+		}
+		case EVENT_OnEnterBoss: {
+			EnterBoss();
+			break;
+		}
+		case EVENT_OnBossLand: {
 			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
 			if (pAudio)
-				pAudio->Play(0);
+				pAudio->Play(1);
+			TETRA_GAME_OBJECTS.CreateGameObject(m_puffParticlePrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_puffOffset, 0));
+			break;
 		}
-		else {
-			pGO->Destroy();
+		case EVENT_OnCamGoToBossRoom: {
+			if (m_isBoss) return;
+			m_isActive = false;
+			break;
 		}
-
-		if (m_isBoss) {
-			Event* e = new Event(EVENT_OnBossDefeated, 1.5f);
-			TETRA_EVENTS.AddDelayedEvent(e);
+		case EVENT_OnCamGoToPlayer: {
+			if (m_isBoss) return;
+			m_isActive = true;
+			break;
 		}
-	}
-	else if (pEvent->Type() == EVENT_OnEnterBoss) {
-		EnterBoss();
-	}
-	else if (pEvent->Type() == EVENT_OnBossLand) {
-		Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
-		if (pAudio)
-			pAudio->Play(1);
-		TETRA_GAME_OBJECTS.CreateGameObject(m_puffParticlePrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_puffOffset,0));
 	}
 
 	if (m_isDead) return;
@@ -618,4 +640,9 @@ void NPCController::SteerTowardPlayer(float distance) {
 
 void NPCController::MoveInLookDirection(float distance) {
 	m_targetDestination += distance * m_lookDirection;
+}
+
+
+void NPCController::SetKnockBackMultiplier(float knockBackMultiplier) {
+	m_knockBackMultiplier = knockBackMultiplier;
 }

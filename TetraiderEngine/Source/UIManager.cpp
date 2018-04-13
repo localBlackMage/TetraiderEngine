@@ -8,6 +8,7 @@ UIManager::UIManager()
 	TETRA_EVENTS.Subscribe(EVENT_OnPauseGame, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnGameResume, this);
 	m_count = 1;
+	m_ignoreButtonsForOneFrame = false;
 }
 
 UIManager::~UIManager()

@@ -145,6 +145,7 @@ using namespace JsonReader;
 #include <FBOSprite.h>
 #include <Sprite.h>
 #include <ParticleEmitter.h>
+#include <ParticleEmitterResizer.h>
 #include <Text.h>
 #include <Animation.h>
 #include <Camera.h>
@@ -210,6 +211,7 @@ using namespace JsonReader;
 #include <TimeToLive.h>
 #include <ApplyTinyOnDifficultyUp.h>
 #include <SplashScreen.h>
+#include <InGameCredits.h>
 
 #pragma endregion 
 

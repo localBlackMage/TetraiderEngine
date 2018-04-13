@@ -67,23 +67,29 @@ void ParticleEmitter::_SpawnParticle()
 	int idx = _FindUnusedParticle();
 	if (idx > -1) {
 		m_particles[idx].m_life = m_lifeTime;
-		m_particles[idx].m_pos_rot = m_pTransform->GetPosition() + _GetSpawnPositionWithinShape();
+		m_particles[idx].m_pos_rot_animRow = m_pTransform->GetPosition() + _GetSpawnPositionWithinShape();
 
 		float variationOffset = RandomFloat(-m_angleVariation, m_angleVariation);
 		float angleOffset = (m_rotateToParentOnSpawn ? m_pTransform->GetAngleZ() : 0.f) +
 			variationOffset;
 
 		m_particles[idx].m_angleOffset = angleOffset;
-		m_particles[idx].m_pos_rot.z = angleOffset * DEG_TO_RAD;
+		m_particles[idx].m_pos_rot_animRow.z = angleOffset * DEG_TO_RAD;
 
-		m_particles[idx].m_velocity_speed.z = RandomFloat(m_speedMin, m_speedMax);
+		m_particles[idx].m_velocity_speed_animCol.z = RandomFloat(m_speedMin, m_speedMax);
+		m_particles[idx].m_animationTime = 0.f;
 
 		switch (m_textureSelection) {
 			case P_TextureSelection::RANDOM:
-				m_particles[idx].m_texCoords.u = float(RandomInt(0, (int)(m_cols + 1))) * m_frameWidth;
-				m_particles[idx].m_texCoords.v = float(RandomInt(0, (int)(m_rows + 1))) * m_frameHeight;
+				m_particles[idx].m_texCoords.u = float(RandomInt(0, (int)(m_animCols + 1))) * m_frameWidth;
+				m_particles[idx].m_texCoords.v = float(RandomInt(0, (int)(m_animRows + 1))) * m_frameHeight;
 				break;
 			case P_TextureSelection::CYCLE:
+				m_particles[idx].m_pos_rot_animRow.w = 0.f;
+				m_particles[idx].m_velocity_speed_animCol.w = 0.f;
+				m_particles[idx].m_texCoords.u = 0.f;
+				m_particles[idx].m_texCoords.v = 0.f;
+				break;
 			case P_TextureSelection::SINGLE:
 			default:
 				m_particles[idx].m_texCoords.u = 0.f;
@@ -114,35 +120,60 @@ void ParticleEmitter::_UpdateParticles(float deltaTime)
 						0.f,
 						0.f
 					);
-				float speed = p.m_velocity_speed.z; // save speed of the particle before modifying velocity
-				
-				p.m_velocity_speed = (velocityOffset * (speed * m_directionMod)) + Gravity;
-				
-				p.m_pos_rot += p.m_velocity_speed * deltaTime;
+				int animRow = p.m_pos_rot_animRow.w;		// Save anim row
+				int animCol = p.m_velocity_speed_animCol.w;	// Save anim col
 
-				p.m_velocity_speed.z = speed; // restore the speed of the particle
+				float speed = p.m_velocity_speed_animCol.z; // save speed of the particle before modifying velocity
+				
+				p.m_velocity_speed_animCol = (velocityOffset * (speed * m_directionMod)) + Gravity;
+				
+				p.m_pos_rot_animRow += p.m_velocity_speed_animCol * deltaTime;
+
+				p.m_velocity_speed_animCol.z = speed; // restore the speed of the particle
 
 				if (m_particlesFollowParent) {
 					Vector3D movement = m_pTransform->GetMovement();
 					movement.z = 0.f;
-					p.m_pos_rot += movement;
+					p.m_pos_rot_animRow += movement;
 				}
 
 				p.m_scale = BezierInterpolation(m_scale.points, t) * m_scale.amplitude;
 
 				// TODO: decide on a better way to get a camera
-				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos_rot, TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
-
+				p.m_cameraDistance = Vector3D::SquareDistance(p.m_pos_rot_animRow, TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition());
+				
 				Color color = Lerp(m_colorStart, m_colorEnd, t);
 				p.m_color.r = color.r;
 				p.m_color.g = color.g;
 				p.m_color.b = color.b;
 				p.m_color.a = color.a;
+				
 
+				if (m_textureSelection == P_TextureSelection::CYCLE) {
+					p.m_animationTime += deltaTime;
+					if (p.m_animationTime >= m_animationSpeed) {
+						p.m_animationTime = 0.f;
+						++animCol;
+						if (animCol >= m_animCols) {
+							animCol = 0;
+							++animRow;
+
+							if (animRow >= m_animRows)
+								animRow = 0;
+						}
+					}
+
+					p.m_texCoords.u = float(animCol) * m_frameWidth;
+					p.m_texCoords.v = float(animRow) * m_frameHeight;
+
+					p.m_pos_rot_animRow.w = animRow;		// Replace anim row
+					p.m_velocity_speed_animCol.w = animCol;	// Replace anim col
+				}
+				
 				// Fill the GPU buffer
-				m_positionsScales[4 * m_liveParticleCount + 0] = p.m_pos_rot.x;	// Location
-				m_positionsScales[4 * m_liveParticleCount + 1] = p.m_pos_rot.y;	// Location
-				m_positionsScales[4 * m_liveParticleCount + 2] = p.m_pos_rot.z;	// Rotation
+				m_positionsScales[4 * m_liveParticleCount + 0] = p.m_pos_rot_animRow.x;	// Location
+				m_positionsScales[4 * m_liveParticleCount + 1] = p.m_pos_rot_animRow.y;	// Location
+				m_positionsScales[4 * m_liveParticleCount + 2] = p.m_pos_rot_animRow.z;	// Rotation
 
 				m_positionsScales[4 * m_liveParticleCount + 3] = p.m_scale;
 
@@ -333,13 +364,13 @@ void ParticleEmitter::Serialize(const json & j)
 
 	std::string textureName = ParseString(j, "particleTexture");
 	m_texture = TETRA_RESOURCES.GetTexture(textureName);
-	m_rows = ParseFloat(j, "rows");
-	m_cols = ParseFloat(j, "cols");
+	m_animRows = ParseFloat(j, "rows");
+	m_animCols = ParseFloat(j, "cols");
 	m_frameHeight = ParseFloat(j, "frameHeight");
 	m_frameWidth = ParseFloat(j, "frameWidth");
-	if (m_rows != 0.f && m_frameHeight == 0.f)	m_frameHeight = (m_texture->surface->h / m_rows) / m_texture->surface->h;
+	if (m_animRows != 0.f && m_frameHeight == 0.f)	m_frameHeight = (m_texture->surface->h / m_animRows) / m_texture->surface->h;
 	else										m_frameHeight = 1.f;
-	if (m_cols != 0.f && m_frameWidth == 0.f)	m_frameWidth = (m_texture->surface->w / m_cols) / m_texture->surface->w;
+	if (m_animCols != 0.f && m_frameWidth == 0.f)	m_frameWidth = (m_texture->surface->w / m_animCols) / m_texture->surface->w;
 	else										m_frameWidth = 1.f;
 
 	std::string textureSelection = ParseString(j, "textureSelection");

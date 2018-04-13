@@ -15,6 +15,7 @@ enum RENDER_LAYER {
 	L_UI,
 	L_UI_ONE,
 	L_UI_TWO,
+	L_UI_THREE,
 
 	L_RENDER_DEBUG,
 
@@ -36,6 +37,7 @@ static std::unordered_map<std::string, RENDER_LAYER> RENDER_LAYER_STRINGS = {
 	{ "UI", RENDER_LAYER::L_UI },
 	{ "UI_1", RENDER_LAYER::L_UI_ONE },
 	{ "UI_2", RENDER_LAYER::L_UI_TWO },
+	{ "UI_3", RENDER_LAYER::L_UI_THREE },
 
 	{ "DEBUG", RENDER_LAYER::L_RENDER_DEBUG }
 };

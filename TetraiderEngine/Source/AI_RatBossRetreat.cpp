@@ -11,6 +11,7 @@ AI_RatBossRetreat::~AI_RatBossRetreat(){
 
 void AI_RatBossRetreat::OnEnter(){
 	m_retreatTimer = 0.0f;
+	pAgent->SetKnockBackMultiplier(0.0f);
 }
 
 void AI_RatBossRetreat::OnUpdate(float dt){
@@ -25,6 +26,7 @@ void AI_RatBossRetreat::OnUpdate(float dt){
 }
 
 void AI_RatBossRetreat::OnExit(){
+	pAgent->SetKnockBackMultiplier(1.0f);
 }
 
 

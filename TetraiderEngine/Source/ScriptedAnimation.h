@@ -51,6 +51,7 @@ public:
 	void SetInitialScale(const Vector3D& scale);
 	void SetInitialFade(float fade);
 	void SetInitialRot(float rot);
+	void StopPlaying();
 	bool IsPlaying() { return m_isPlayAnimation; }
 private:
 	std::vector<ScriptedAnimationData> m_scriptedAnimation;
@@ -77,6 +78,8 @@ private:
 	void NextAnim();
 	bool m_isReverse;
 	bool m_isRelative;
+
+	bool m_isPlayOnPause;
 };
 
 #endif

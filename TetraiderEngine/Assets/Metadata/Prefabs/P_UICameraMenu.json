@@ -20,7 +20,7 @@
 			"perspective": false,
 			"zoomLevels": [ 1.26, 1, 0.8, 0.66 ],
 			"primary": true,
-			"layers": ["UIBG", "UI", "UI_1", "UI_2", "DEBUG"]
+			"layers": ["UIBG", "UI", "UI_1", "UI_2","UI_3", "DEBUG"]
 		}
 	]
 }

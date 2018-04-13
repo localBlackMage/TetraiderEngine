@@ -12,7 +12,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{ABC051E6-0065-4C05-8716-CDB96B320E14}
+AppId={{D557A179-154B-4F64-8255-52B77C2F4813}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -63,13 +63,11 @@ Source: "Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+  IconFilename: "{app}\{#MyAppIcoName}";
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+  IconFilename: "{app}\{#MyAppIcoName}";
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}"; Tasks: desktopicon
+  IconFilename: "{app}\{#MyAppIcoName}";
 
 [Run]
 ; add the Parameters, WorkingDir and StatusMsg as you wish, just keep here

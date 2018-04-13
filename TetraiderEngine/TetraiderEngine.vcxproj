@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ListSelector.cpp" />
-    <ClCompile Include="Source\SelectableButton.cpp" />
     <ClCompile Include="Source\AI_EnemyBatReaction.cpp" />
     <ClCompile Include="Source\AI_RangeAttack.cpp" />
     <ClCompile Include="Source\AI_RatBossAttack.cpp" />
@@ -47,7 +45,9 @@
     <ClCompile Include="Source\Gate.cpp" />
     <ClCompile Include="Source\GateTriggerBox.cpp" />
     <ClCompile Include="Source\ImageRenderer.cpp" />
+    <ClCompile Include="Source\InGameCredits.cpp" />
     <ClCompile Include="Source\NotEnoughGoldFeathers.cpp" />
+    <ClCompile Include="Source\ParticleEmitterResizer.cpp" />
     <ClCompile Include="Source\PlayerStatsManager.cpp" />
     <ClCompile Include="Source\PostProcessing.cpp" />
     <ClCompile Include="Source\PowerUpButton.cpp" />
@@ -182,9 +182,9 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\ListSelector.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Source\SelectableButton.h" />
+    <ClInclude Include="Source\InGameCredits.h" />
+    <ClInclude Include="Source\ParticleEmitterResizer.h" />
     <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\AI_RangeAttack.h" />

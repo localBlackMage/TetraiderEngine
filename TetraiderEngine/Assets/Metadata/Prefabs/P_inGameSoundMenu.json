@@ -30,7 +30,7 @@
             "isActiveOnAwake": false,
             "UIElements": [
                   {
-                    "prefab":"P_Back2Pause_from_sound",
+                    "prefab":"P_Back2Option_from_sound",
                     "position":{
                       "x":0,
                       "y":-250
@@ -47,7 +47,7 @@
                     "prefab":"P_SoundTitle",
                     "position":{
                       "x":0,
-                      "y":200
+                      "y":250
                     }
                   },
                   {

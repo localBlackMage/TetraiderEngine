@@ -17,14 +17,17 @@ void AI_RatBossAttack::OnEnter(){
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
 		m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
 		pAgent->StopMoving();
+		idleTime = 0.0f;
 		break;
 	case PHASE2:
 		//pAgent->LookAtPlayer();
 		pAgent->SetSpeedMultiplier(2.75f);
+		pAgent->SetKnockBackMultiplier(0.0f);
 		m_steerTimer = 0.0f;
 		break;
 	case PHASE3:
 		pAgent->SetSpeedMultiplier(3.25f);
+		pAgent->SetKnockBackMultiplier(0.0f);
 		m_steerTimer = 0.0f;
 		break;
 	}
@@ -100,9 +103,11 @@ void AI_RatBossAttack::OnExit(){
 		pAgent->ControlAnimationOnVelocity(true);
 	case PHASE2:
 		pAgent->MoveInLookDirection(15.0f);
+		pAgent->SetKnockBackMultiplier(1.0f);
 		break;
 	case PHASE3:
 		pAgent->MoveInLookDirection(15.0f);
+		pAgent->SetKnockBackMultiplier(1.0f);
 		break;
 	}
 }

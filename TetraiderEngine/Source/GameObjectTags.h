@@ -38,6 +38,7 @@ static std::unordered_map<std::string, GameObjectTag> TAG_NAMES = {
 	{ "Text",T_Text },
 	{ "DeadEnemey", T_DeadEnemy},
 	{ "TriggerBox", T_TriggerBox },
+	{ "TriggerBoxBoss", T_TriggerBoxBoss},
 	{ "PlayerUI", T_PlayerUI },
 	{ "BoundaryObstacle", T_BoundaryObstacle },
 	{ "Background", T_Background },

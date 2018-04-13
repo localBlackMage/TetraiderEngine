@@ -8,7 +8,12 @@
 LevelStatus::LevelStatus(): Component(ComponentType::C_LevelStatus), m_eggsToCollect(3), m_enemiesInLevel(0) {}
 LevelStatus::~LevelStatus() {}
 
-void LevelStatus::Update(float dt) {}
+void LevelStatus::Update(float dt) {
+	/*if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_T)) {
+		Event* pEvent = new Event(EVENT_OnCamGoToBossRoom, 0.5f);
+		TETRA_EVENTS.AddDelayedEvent(pEvent);
+	}*/
+}
 
 void LevelStatus::Deactivate() {
 	pGO = nullptr;
@@ -42,7 +47,10 @@ void LevelStatus::HandleEvent(Event* pEvent) {
 			if (m_eggsCollected == m_eggsToCollect) {
 				Event* pEvent = new Event(EVENT_LevelComplete, 1.5f);
 				TETRA_EVENTS.AddDelayedEvent(pEvent);
-				m_enemiesInLevel = 0;
+			}
+			else if (TETRA_LEVELS.IsBossLevel() && m_eggsCollected == m_eggsToCollect - 1) {
+				Event* pEvent = new Event(EVENT_OnCamGoToBossRoom, 1.5f);
+				TETRA_EVENTS.AddDelayedEvent(pEvent);
 			}
 			break;
 		}

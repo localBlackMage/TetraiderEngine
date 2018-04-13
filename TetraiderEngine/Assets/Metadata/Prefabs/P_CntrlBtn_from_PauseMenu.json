@@ -62,15 +62,16 @@
       "Component": "Button",
       "isLoadCanvas":true,
       "canvasToActivate"    : 3,
-      "canvasToDeActivate" : 1
+      "canvasToDeActivate" : 2
     },
     {
           "Component": "Text",
-          "letterHeight": 20,
-          "letterWidth": 20,
+          "letterHeight": 18,
+          "letterWidth": 18,
           "spacing": 0.65,
+		  "alignment": "middle",
           "pivotOffset": {
-              "x": -48,
+              "x": 10,
               "y": 0
           },
           "tint": {
@@ -82,7 +83,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Controls"
+          "text": "How To Play"
       },
     {
 		"Component": "Audio",

@@ -8,6 +8,13 @@
 #define WINDOW_SETTINGS "WINDOW_SETTINGS"
 #define SHADER_LIST "SHADERS"
 
+void GameConfig::_ParseSeeds(const json & j, int index)
+{
+	for (unsigned int i = 0; i < j.size(); ++i) {
+		m_seeds[index].push_back(j[i]);
+	}
+}
+
 GameConfig::GameConfig() : m_consoleEnabled(false){}
 
 GameConfig::~GameConfig() {}
@@ -64,6 +71,12 @@ void GameConfig::LoadConfig(std::string s) {
 	TETRA_LEVELS.Initialize(levelSettings);
 	json inputSettings = j[INPUT_SETTINGS];
 	TETRA_INPUT.Initialize(inputSettings);
+
+	_ParseSeeds(j[LEVEL_SETTINGS]["1"], 0);
+	_ParseSeeds(j[LEVEL_SETTINGS]["2"], 1);
+	_ParseSeeds(j[LEVEL_SETTINGS]["3"], 2);
+	_ParseSeeds(j[LEVEL_SETTINGS]["4"], 3);
+	m_shouldUseSeeds = ParseBool(j[LEVEL_SETTINGS], "UseSeeds");
 
 	// Set debug parameters
 	TETRA_DEBUG.SetDebugMode(m_debugEnabled);
@@ -134,6 +147,16 @@ void GameConfig::SetToWindowedMode()
 	m_currentResolution = m_prevResolution;
 	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED,
 		&WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
+}
+
+unsigned int GameConfig::GetSeed(int level)
+{
+	if (m_shouldUseSeeds) {
+		return m_seeds[level][RandomInt(0, m_seeds[level].size())];
+	}
+	else {
+		return int(time(nullptr));
+	}
 }
 
 

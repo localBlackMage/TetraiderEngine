@@ -44,6 +44,7 @@ public:
 	void StopMoving();
 	void SetTargetDestination(const Vector3D& pos);
 	void SetPositionBehindPlayer(float distance);
+	void SetKnockBackMultiplier(float knockBackMultiplier);
 	void LookInDirectionOfMovement();
 	void LookAtPlayer();
 	void LookAtPlayer(float offsetAngle);

@@ -21,6 +21,7 @@ private:
 	bool m_isLevelOver;
 	bool m_isLevelEditorMode;
 	bool m_isShopOpen;
+	bool m_isViewingCredits;
 	void SetGameState(GameState);
 public:
 	GameStateManager();
@@ -35,6 +36,7 @@ public:
 	bool IsGamePaused() { return m_isGamePaused; }
 	bool IsEditorMode() { return m_isLevelEditorMode; }
 	bool IsShopOpen() { return m_isShopOpen;  }
+	void SetViewingCredits(bool isActive) { m_isViewingCredits = isActive; }
 };
 
 #endif

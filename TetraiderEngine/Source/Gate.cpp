@@ -34,9 +34,6 @@ void Gate::LateInitialize() {
 	if (!m_isInitilizeOnLevelInitialize) {
 		Init();
 	}
-
-	if(m_isOpen)
-		pGO->m_isCollisionDisabled = true;
 }
 
 void Gate::HandleEvent(Event* pEvent) {
@@ -104,5 +101,22 @@ void Gate::Init() {
 
 	for (int i = 0; i < m_numberOfGates; ++i) {
 		m_pGates.push_back(TETRA_GAME_OBJECTS.CreateGameObject(m_gateSpritePrefab, true, pGO->GetComponent<Transform>(C_Transform)->GetPosition() + m_startOffset + offset*(float)i));
+	}
+
+	if (m_isOpen)
+		pGO->m_isCollisionDisabled = true;
+	else {
+		for (unsigned int i = 0; i < m_pGates.size(); ++i) {
+			if (m_pGates[i]) {
+				Animation* pAnim = m_pGates[i]->GetComponent<Animation>(C_Animation);
+				if (pAnim)
+					pAnim->Play(0, false);
+
+				TETRA_GAME_OBJECTS.SwitchGameObjectLayer(m_pGates[i], RENDER_LAYER::L_TWO);
+			}
+		}
+
+		m_isOpen = false;
+		pGO->m_isCollisionDisabled = false;
 	}
 }

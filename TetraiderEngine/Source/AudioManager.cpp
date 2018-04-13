@@ -38,6 +38,8 @@ AudioManager::AudioManager() : m_pCurrentSongChannel(0), m_fade(FADE_NONE), m_is
 	TETRA_EVENTS.Subscribe(EVENT_ChangeBGMVol,this);
 	TETRA_EVENTS.Subscribe(EVENT_ChangeSFXVol, this);
 	TETRA_EVENTS.Subscribe(EVENT_ChangeMasterVol, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnPauseGame, this);
+	TETRA_EVENTS.Subscribe(EVENT_OnGameResume, this);
 
 	SetSFXsVolume(1);
 	SetSongsVolume(1);
@@ -344,22 +346,22 @@ void AudioManager::HandleEvent(Event* pEvent) {
 
 	case EVENT_ChangeBGMVol:
 			SetSongsVolume(pFloatData->mValue);
-			//m_pCurrentSongChannel->getVolume(&vol);
-			//std::cout << "BGM volume : " << vol << std::endl;
 		break;
 
 	case EVENT_ChangeMasterVol:
-		//FloatData * pFloatData = pEvent->Data<FloatData>();
 		SetMasterVolume(pFloatData->mValue);
-		//m_pMaster->getVolume(&vol);
-		//std::cout << "Master volume : " << vol << std::endl;
 		break;
 
 	case EVENT_ChangeSFXVol:
-		//FloatData * pFloatData = pEvent->Data<FloatData>();
 		SetSFXsVolume(pFloatData->mValue);
-		//m_pGroups[SFX]->getVolume(&vol);
-		//std::cout << "SFX volume : " << vol << std::endl;
+		break;
+
+	case EVENT_OnPauseGame:
+		PauseSound();
+		break;
+
+	case EVENT_OnGameResume:
+		ResumeSound();
 		break;
 	}
 }

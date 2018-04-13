@@ -69,10 +69,17 @@ void Button::LateInitialize()
 
 void Button::HandleEvent(Event* pEvent)
 {
+	if (!pGO->m_isActive) return; 
+
 	if (pEvent->Type() == EVENT_OnCollide)
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
 		if (pData->pGO->m_tag == T_Cursor) {
+			if (TETRA_UI.m_ignoreButtonsForOneFrame) {
+				TETRA_UI.m_ignoreButtonsForOneFrame = false;
+				return;
+			}
+
 			m_pSprite->SetVOffset(0.3333f);
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT)) {
 				m_pSprite->SetVOffset(0.6666f);

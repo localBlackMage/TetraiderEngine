@@ -38,8 +38,10 @@ void Slider::LateInitialize()
 	m_pEndpoints = o->GetComponent<Endpoints>(C_Endpoints);
 	m_diff = m_pEndpoints->GetMax() - m_pEndpoints->GetMin();
 }
+
 void Slider::Update(float)
 {
+	pGO->GetComponent<Sprite>(C_Sprite)->SetVOffset(0.0f);
 	if (TETRA_INPUT.IsMouseButtonReleased(MOUSEBTN::MOUSE_BTN_LEFT))
 	{
 		m_isPressed = false;
@@ -48,6 +50,7 @@ void Slider::Update(float)
 	}
 	if (m_isPressed)
 	{
+		pGO->GetComponent<Sprite>(C_Sprite)->SetVOffset(0.6666f);
 		float x = m_pfollow->GetMousePosition().x;
 		if (x < m_pEndpoints->GetMin())
 		{
@@ -62,7 +65,7 @@ void Slider::Update(float)
 			
 		m_pTransform->SetPosition(Vector3D(x, m_pTransform->GetLocalPosition().y, 0));
 			
-		m_currentValue = (x-m_pEndpoints->GetMin()) / m_diff;
+		m_currentValue = (x-m_pEndpoints->GetMin()) / m_diff; 
 		//std::cout <<"Value "<< m_currentValue << std::endl;
 		if(m_pEndpoints->GetSliderName()=="BGM_slider")
 			TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EVENT_ChangeBGMVol, &FloatData(m_currentValue)));
@@ -81,11 +84,12 @@ void Slider::Serialize(const json & j)
 
 void Slider::HandleEvent(Event * pEvent)
 {
-	if (pEvent->Type() == EVENT_OnCollide)
+	if (pEvent->Type() == EVENT_OnCollide) 
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
-		if (pData->pGO->m_tag == T_Cursor)
+		if (pData->pGO->m_tag == T_Cursor && m_isPressed == false)
 		{
+			pGO->GetComponent<Sprite>(C_Sprite)->SetVOffset(0.3333f);
 			m_pfollow = pData->pGO->GetComponent<FollowCursor>(ComponentType::C_FollowCursor);
 			if (m_pfollow->m_isSliderBallSeleced) return;
 			if (TETRA_INPUT.IsMouseButtonPressed(MOUSEBTN::MOUSE_BTN_LEFT))
