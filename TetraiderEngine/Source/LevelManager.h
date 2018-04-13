@@ -58,6 +58,7 @@ public:
 	bool IsLastLevel();
 	int GetCurrentLevel();
 	void LoadStaticGameObjects();
+	bool IsBossLevel(); 
 	void ActivateRandomGeneration(bool isActive) {	m_isRandomlyGenerated = isActive; }
 };
 

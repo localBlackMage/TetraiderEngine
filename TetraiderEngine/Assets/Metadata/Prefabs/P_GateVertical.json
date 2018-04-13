@@ -31,7 +31,7 @@
 		"offset": 40,
 		"gateSpritePrefab": "P_Gate",
 		"isInitilizeOnLevelInitialize": true,
-		"isOpen": true
+		"isOpen": false
 	},
 	{
 		"Component": "Body",

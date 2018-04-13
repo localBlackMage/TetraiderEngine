@@ -26,6 +26,7 @@ void GateTriggerBox::Serialize(const json& j) {
 
 	if (m_isBossTriggerBox) {
 		TETRA_EVENTS.Subscribe(EVENT_OnBossDefeated, this);
+		TETRA_EVENTS.Subscribe(EVENT_OnOpenBossRoom, this);
 	}
 }
 
@@ -74,6 +75,7 @@ void GateTriggerBox::HandleEvent(Event* pEvent) {
 			}
 			break;
 		}
+		case EVENT_OnOpenBossRoom:
 		case EVENT_OnBossDefeated: {
 			if (m_isBossTriggerBox) {
 				Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);

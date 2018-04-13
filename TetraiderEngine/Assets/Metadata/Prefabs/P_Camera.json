@@ -17,6 +17,7 @@
         {
             "Component": "CamFollow",
             "followSpeed": 10,
+			"showSpeed": 0.4,
             "defaultTargetTag": "Player"
         },
         {

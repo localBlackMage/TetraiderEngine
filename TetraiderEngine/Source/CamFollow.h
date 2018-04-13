@@ -11,9 +11,13 @@ class CamFollow : public Component
 private:
 	Transform* m_pTransform;
 	GameObject* m_pTarget;
+	Vector3D bossTarget;
 	float m_followSpeed;
+	float m_showSpeed;
+	float m_showTime;
 	std::string m_defaultTargetTag;
 	bool m_isActive;
+	bool m_isGoToBossRoom;
 public:
 	CamFollow();
 	~CamFollow();
