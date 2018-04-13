@@ -49,7 +49,7 @@ void NPCController::Deactivate() {
 }
 
 void NPCController::Update(float dt) {
-	if (m_isDead || !m_isActive) return;
+	if (m_isDead || !m_isActive || TETRA_GAME_STATE.IsGamePaused()) return;
 
 	if (m_isBossEntering) {
 		SetOrientation();
@@ -252,18 +252,12 @@ void NPCController::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EVENT_OnCamGoToBossRoom: {
+			if (m_isBoss) return;
 			m_isActive = false;
 			break;
 		}
 		case EVENT_OnCamGoToPlayer: {
-			m_isActive = true;
-			break;
-		}
-		case EVENT_OnPauseGame: {
-			m_isActive = false;
-			break;
-		}
-		case EVENT_OnGameResume: {
+			if (m_isBoss) return;
 			m_isActive = true;
 			break;
 		}
