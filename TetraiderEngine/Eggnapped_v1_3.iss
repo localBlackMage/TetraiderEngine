@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Eggnapped"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "DigiPen Institute of Technology"
 #define MyAppURL "http://www.digipen.edu/"
 #define MyAppExeName "Eggnapped.exe"
@@ -12,7 +12,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{D557A179-154B-4F64-8255-52B77C2F4813}
+AppId={{87ACC870-7B2E-4888-BC63-E3BD84D8379A}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -35,12 +35,14 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; \
   Flags: unchecked
-Name: "msvc2017redist"; Description: "Install Microsoft VS2017 Redistributable"; Flags: 
+Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; \
+  Flags: unchecked; OnlyBelowVersion: 0,6.1
+Name: "msvc2017redist"; Description: "Install Microsoft VS2017 Redistributable";
 
 [Files]
 Source: "Redist/VC_redist.x86.exe"; DestDir: {tmp}; Flags: deleteafterinstall
 Source: "../Release/TetraiderEngine.exe"; DestDir: "{app}"; DestName: "Eggnapped.exe"; Flags: ignoreversion
-; Source: "{#MyAppIcoName}"; DestDir: "{app}"
+Source: "{#MyAppIcoName}"; DestDir: "{app}"
 Source: "fmod.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fmodL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fmodstudioL.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -62,12 +64,12 @@ Source: "Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
-  IconFilename: "{app}\{#MyAppIcoName}";
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
   IconFilename: "{app}\{#MyAppIcoName}";
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; \
   IconFilename: "{app}\{#MyAppIcoName}";
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; \
+  Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon; IconFilename: "{app}\{#MyAppIcoName}";
 
 [Run]
 ; add the Parameters, WorkingDir and StatusMsg as you wish, just keep here

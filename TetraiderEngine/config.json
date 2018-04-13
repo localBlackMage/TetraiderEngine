@@ -29,7 +29,7 @@
 		"miniMapShader": "miniMapShader",
 		"miniMapFinalShader": "miniMapFinalShader",
 		
-		"consoleEnabled": true,
+		"consoleEnabled": false,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": false
 	},
@@ -65,8 +65,8 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 1,
-		"startInFullscreen": false
+		"defaultResolution": 3,
+		"startInFullscreen": true
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
