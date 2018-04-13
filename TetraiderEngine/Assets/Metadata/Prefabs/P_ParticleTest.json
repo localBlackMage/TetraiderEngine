@@ -10,8 +10,8 @@
 			"z": 0
 		},
 		"scale": {
-			"x": 1,
-			"y": 0,
+			"x": 128,
+			"y": 128,
 			"z": 0
 		},
 		"pivotOffset": {
@@ -24,14 +24,42 @@
 			"z": 80
 		}
     },
-    {
+	{
+      "Component": "Sprite",
+      "Texture": "T_Lava_Circle.png",
+      "tiling": {
+        "x": 1,
+        "y": 1
+      },
+      "uvOffset": {
+        "u": 0,
+        "v": 0
+      },
+	  "lit": false,
+      "tint": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+	  "saturation": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0
+      }
+    },	
+	{
+		"Component": "ParticleEmitterResizer"
+	},
+	{
 		"Component": "ParticleEmitter",
 
 		"loopDuration": 4.0,
 		"looping": true,
 		"prewarmed": false,
 		"startDelay": 0,
-		"lifeTime": 0.75,
+		"lifeTime": 0.875,
 		"speedMin": 0.0,
 		"speedMax": 0.0,
 		"velocityX": {
@@ -61,37 +89,40 @@
 			]
 		},
 		"scale": {
-			"amplitude": 64,
+			"amplitude": 40,
 			"points": [{"x":0,"y":0.5444444444444438},{"x":0.3333333333333333,"y":0.8555555555555561},{"x":0.6666666666666666,"y":1},{"x":1,"y":1}]
 		},
 		"rotation": 0,
 		"color": {
 			"start": {
-			  "r": 0.98,
-			  "g": 0.35,
-			  "b": 0.05,
+			  "r": 0.97,
+			  "g": 1,
+			  "b": 0.2,
 			  "a": 1
 			},
 			"end": {
-			  "r": 1,
-			  "g": 0.84,
-			  "b": 0.36,
+			  "r": 0.97,
+			  "g": 1,
+			  "b": 0.2,
 			  "a": 1
 			}
 		},
 		"gravity": 0,
-		"emissionRate": 15,
+		"emissionRate": 10,
 		"max": 20,
 		"rotationOverTime": 0,
-		"particleTexture": "T_BubbleParticle.png",
+		"particleTexture": "T_BubbleParticle_2.png",
 		"textureSelection": "sequence",
-		"animationSpeed": 0.15,
+		"animationSpeed": 0.125,
 		"rows": 1,
-		"cols": 5,
-		"angleVariation": 180,
+		"cols": 7,
+		"angleVariation": 0,
+		"renderOnTop": true,
+		"brightness": 1.4,
 		"SHAPE": {
-			"type": "circle",
-			"radius": 100
+			"type": "AABB",
+			"width": 30,
+			"height": 316
 		}
     }
   ]

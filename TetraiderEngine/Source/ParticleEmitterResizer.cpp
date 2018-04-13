@@ -43,7 +43,7 @@ void ParticleEmitterResizer::Override(const json & j)
 		}
 		case ShapeType::ST_Circle: {
 			Circle* circle = static_cast<Circle*>(m_pParticleEmitter->m_pSpawnShape);
-			circle->radius = min(xScale, yScale) - particleScale * 2.f;
+			circle->radius = min(xScale, yScale) - particleScale;
 			break;
 		}
 		}
