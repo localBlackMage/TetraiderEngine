@@ -461,9 +461,6 @@
     <ClCompile Include="Source\AI_RatBossRetreat.cpp">
       <Filter>Source Files\FiniteStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SplashScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FBOSprite.cpp">
       <Filter>Source Files\Components\Rendering</Filter>
     </ClCompile>
@@ -487,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="Source\ParticleEmitterResizer.cpp">
       <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SplashScreen.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -977,11 +977,11 @@
     <ClInclude Include="Source\FontInfo.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SplashScreen.h">
-      <Filter>Source Files\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SliderBallNames.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SplashScreen.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
