@@ -22,10 +22,12 @@ void AI_RatBossAttack::OnEnter(){
 	case PHASE2:
 		//pAgent->LookAtPlayer();
 		pAgent->SetSpeedMultiplier(2.75f);
+		pAgent->SetKnockBackMultiplier(0.0f);
 		m_steerTimer = 0.0f;
 		break;
 	case PHASE3:
 		pAgent->SetSpeedMultiplier(3.25f);
+		pAgent->SetKnockBackMultiplier(0.0f);
 		m_steerTimer = 0.0f;
 		break;
 	}
@@ -101,9 +103,11 @@ void AI_RatBossAttack::OnExit(){
 		pAgent->ControlAnimationOnVelocity(true);
 	case PHASE2:
 		pAgent->MoveInLookDirection(15.0f);
+		pAgent->SetKnockBackMultiplier(1.0f);
 		break;
 	case PHASE3:
 		pAgent->MoveInLookDirection(15.0f);
+		pAgent->SetKnockBackMultiplier(1.0f);
 		break;
 	}
 }

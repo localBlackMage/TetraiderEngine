@@ -647,3 +647,8 @@ void NPCController::SteerTowardPlayer(float distance) {
 void NPCController::MoveInLookDirection(float distance) {
 	m_targetDestination += distance * m_lookDirection;
 }
+
+
+void NPCController::SetKnockBackMultiplier(float knockBackMultiplier) {
+	m_knockBackMultiplier = knockBackMultiplier;
+}
