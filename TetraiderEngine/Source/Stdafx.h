@@ -175,6 +175,8 @@ using namespace JsonReader;
 #include <Slider.h>
 #include <Endpoints.h>
 #include <PowerUpButton.h>
+#include <SelectableButton.h>
+#include <ListSelector.h>
 
 #include<HillNodes.h>
 #include <CutScene.h>

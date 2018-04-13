@@ -55,6 +55,8 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["TimeToLive"] = TimeToLive::CreateInstance;
 	m_creationFunctions["ApplyTintOnDifficultyUp"] = ApplyTintOnDifficultyUp::CreateInstance;
 	m_creationFunctions["SplashScreen"] = SplashScreen::CreateInstance;
+	m_creationFunctions["SelectableButton"] = SelectableButton::CreateInstance;
+	m_creationFunctions["ListSelector"] = ListSelector::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

@@ -51,19 +51,19 @@
                     }
                   },
                   {
-                    "prefab":"P_SelectableLeft",
+                    "prefab":"P_ListResolution",
                     "position":{
-                      "x":-192,
-                      "y":-100
+                      "x":125,
+                      "y":25
                     }
-                  } ,
+                  },                 
                   {
                     "prefab":"P_TitleWindowed",
                     "position":{
                       "x":-192,
                       "y":-100
                     }
-                  }                
+                  }               
             ]
         }
     ]

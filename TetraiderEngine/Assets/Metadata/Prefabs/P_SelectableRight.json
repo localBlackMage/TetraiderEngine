@@ -26,7 +26,7 @@
       },
       {
         "Component": "Sprite",
-        "Texture": "T_SelectableLeft.png",
+        "Texture": "T_SelectableRight.png",
         "tiling": {
           "x": 1,
           "y": 1
@@ -61,8 +61,8 @@
     },
     {
       "Component": "SelectableButton",
-      "isRightSelectable":false,
-      "isLeftSelectable":true
+       "isRightSelectable":true,
+       "isLeftSelectable": false
     },
     {
 		"Component": "Audio",

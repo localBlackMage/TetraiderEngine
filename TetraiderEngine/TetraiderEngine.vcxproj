@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ListSelector.cpp" />
+    <ClCompile Include="Source\SelectableButton.cpp" />
     <ClCompile Include="Source\AI_EnemyBatReaction.cpp" />
     <ClCompile Include="Source\AI_RangeAttack.cpp" />
     <ClCompile Include="Source\AI_RatBossAttack.cpp" />
@@ -180,7 +182,9 @@
     <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\ListSelector.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\SelectableButton.h" />
     <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />
     <ClInclude Include="Source\AI_RangeAttack.h" />
