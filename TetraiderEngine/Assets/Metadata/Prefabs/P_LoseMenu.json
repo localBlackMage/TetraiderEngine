@@ -39,7 +39,7 @@
                     }
                 },
                 {
-                    "prefab":"P_RestartButton",
+                    "prefab":"P_ButtonRestartfromLose",
                     "position":
                     {
                         "x":0,
