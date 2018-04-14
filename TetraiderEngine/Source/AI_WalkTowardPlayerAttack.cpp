@@ -16,7 +16,7 @@ void AI_WalkTowardPlayerAttack::OnEnter(){
 	idleDuration = RandomFloat(0.5f, 0.9f); 
 	idledSoFar = 0.0f;
 	pAgent->LookAtPlayer();
-	
+	outOfSightTime = 0.0f;
 }
 
 void AI_WalkTowardPlayerAttack::OnUpdate(float dt){
@@ -27,10 +27,19 @@ void AI_WalkTowardPlayerAttack::OnUpdate(float dt){
 	else {
 		idledSoFar += dt;
 	}
-	//pAgent->LookAtPlayer();
-	//pAgent->MoveToPlayer();
+
 	if (pAgent->IsPlayerOutOfSight()) {
-		pAgent->ChangeState(NPC_STUNNED);
+		if (outOfSightTime > OUT_OF_SIGHTTIME) {
+			pAgent->ChangeState(NPC_STUNNED);
+			return;
+		}
+		else {
+			outOfSightTime += dt;
+			return;
+		}
+	}
+	else {
+		outOfSightTime = 0;
 	}
 }
 

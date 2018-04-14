@@ -40,7 +40,7 @@ void SelectableButton::HandleEvent(Event * pEvent)
 				else if(m_isRightSelectable)
 				{
 					m_pList->m_currentChoice++;
-					if (m_pList->m_currentChoice >= m_pList->m_Choice.size())
+					if (m_pList->m_currentChoice >= (int)m_pList->m_Choice.size())
 						m_pList->m_currentChoice = 0;
 
 					//std::cout << "Current Choice : " << m_pList->m_currentChoice << std::endl;

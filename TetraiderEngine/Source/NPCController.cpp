@@ -31,6 +31,8 @@ NPCController::NPCController() :
 	m_tagsToIgnore[2] = T_Enemy;
 	m_tagsToIgnore[3] = T_None;
 	m_tagsToIgnore[4] = T_BoundaryObstacle;
+	m_tagsToIgnore[5] = T_AcidHazard;
+	m_tagsToIgnore[6] = T_Hazard;
 
 	m_tagsToIgnoreForObstacleAvoidance[0] = T_Projectile;
 	m_tagsToIgnoreForObstacleAvoidance[1] = T_Player;
@@ -315,10 +317,14 @@ bool NPCController::IsArrivedAtDestination() {
 bool NPCController::IsPlayerInSight() {
 	if (m_isPlayerDead)
 		return false;
+	
+	int layersToIgnore = 7;
+	if (!m_isIgnoreHazards)
+		--layersToIgnore;
 
 	if (GetSquareDistanceToPlayer() < m_detectionRadius*m_detectionRadius) {
 		LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 5);
+		return !TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, layersToIgnore);
 	}
 	else return false;
 }
@@ -327,8 +333,12 @@ bool NPCController::IsPlayerOutOfSight() {
 	if (m_isPlayerDead) 
 		return true;
 
+	int layersToIgnore = 7;
+	if (!m_isIgnoreHazards)
+		--layersToIgnore;
+
 	LineSegment2D ray(m_pTransform->GetPosition().x, m_pTransform->GetPosition().y, m_pPlayerTransform->GetPosition().x, m_pPlayerTransform->GetPosition().y);
-	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, 4)) {
+	if (!TETRA_PHYSICS.Raycast(ray, m_tagsToIgnore, layersToIgnore)) {
 		return GetSquareDistanceToPlayer() > m_outOfSightRadius*m_outOfSightRadius;
 	}
 	else return true;

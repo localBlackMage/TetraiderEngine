@@ -13,13 +13,14 @@ Creation date: 2/22/18
 #ifndef AI_STATE_H
 #define AI_STATE_H
 
-// forward declaration
 class NPCController;
-//class Event;
+
+#define OUT_OF_SIGHTTIME 1.0f
 
 class AI_State: public Subscriber{
 protected:
 	AIStateType m_StateType;
+	float outOfSightTime;
 public:
 	AI_State(AIStateType _type): m_StateType(_type){}
 	virtual ~AI_State(){}

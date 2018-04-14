@@ -12,7 +12,8 @@ Agent::Agent(ComponentType _type) :
 	m_faceDirection(FaceDirection::Right),
 	m_isIgnoreHazards(false),
 	m_isDead(false),
-	m_isControlAnimationOnVelocity(true)
+	m_isControlAnimationOnVelocity(true),
+	m_isIgnoreAcid(false)
 {};
 
 void Agent::Deactivate() {
@@ -59,6 +60,7 @@ void Agent::Serialize(const json& j) {
 	m_acceleration = ParseFloat(j, "acceleration");
 	m_knockBackMultiplier = ParseFloat(j, "knockBackMultiplier");
 	m_isIgnoreHazards = ParseBool(j, "isIgnoreHazards");
+	m_isIgnoreAcid = ParseBool(j, "isIgnoreAcid");
 }
 
 void Agent::HandleEvent(Event* pEvent) {

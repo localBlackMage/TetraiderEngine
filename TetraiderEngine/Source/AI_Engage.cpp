@@ -21,6 +21,7 @@ void AI_Engage::OnEnter() {
 	engageTimer = RandomFloat(minimumEngage, 4);
 	triedMovingSoFar = 0.0f;
 	sinceEngage = 0.0f;
+	outOfSightTime = 0.0f;
 }
 
 void AI_Engage::OnUpdate(float dt) {
@@ -39,8 +40,17 @@ void AI_Engage::OnUpdate(float dt) {
 	}
 	// if player is out of sight, go back to idle
 	if (pAgent->IsPlayerOutOfSight()) {
-		pAgent->ChangeState(NPC_IDLE);
-		return;
+		if (outOfSightTime > OUT_OF_SIGHTTIME) {
+			pAgent->ChangeState(NPC_IDLE);
+			return;
+		}
+		else {
+			outOfSightTime += dt;
+			return;
+		}
+	}
+	else {
+		outOfSightTime = 0;
 	}
 	// if player is in attack range, attack!
 	if (pAgent->IsInAttackRange() && minimumEngage < sinceEngage) {

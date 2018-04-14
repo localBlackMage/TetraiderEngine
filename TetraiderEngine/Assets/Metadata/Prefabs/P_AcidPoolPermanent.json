@@ -1,5 +1,5 @@
 {
-  "Tag": "Hazard",
+  "Tag": "AcidHazard",
   "Layer": "1",
   "COMPONENTS": [
     {
@@ -64,6 +64,85 @@
 		"knockBackSpeed": 0,
 		"isForceKnockBack": false,
 		"hitCoolDown": 0.4
-	}
+	},
+	{
+		"Component": "TimeToLive",
+		"time": 10
+	},
+	  {
+			  "Component": "ScriptedAnimation",
+			  "isPlayOnAwake": true,
+			  "initialPos": {
+					"x" : 0,
+					"y" : 0,
+					"z" : 0
+			  },
+			  "initialRotation": 0,
+			  "initialScale": {
+				"x": 128,
+				"y": 128,
+					"z" : 0
+			  },
+			  "initialFade": 1,
+			  "isRelative": true,
+			  "ScriptedAnimation": [
+			  {
+					"finalPos": {
+						"x" : 0,
+						"y" : 0,
+						"z" : 0
+					},
+					"translationSpeed": 1,
+					
+					"finalZRotation": 0,
+					"rotationSpeed": 1,
+					
+					"finalFade": 1,
+					"fadeSpeed": 0.25,
+					
+					"finalScale": {
+						"x" : 1280,
+						"y" : 720,
+						"z" : 0
+					},
+					"scaleSpeed": 3,
+					
+					"isTranslate": false,
+					"isScale": false,
+					"isRotate": false,
+					"isFade": true,
+					"isEaseIn": true,
+					"isEaseOut": false
+				},
+				{
+					"finalPos": {
+						"x" : 0,
+						"y" : 0,
+						"z" : 0
+					},
+					"translationSpeed": 1,
+					
+					"finalZRotation": 0,
+					"rotationSpeed": 1,
+					
+					"finalFade": 0,
+					"fadeSpeed": 0.1666,
+					
+					"finalScale": {
+						"x" : 1280,
+						"y" : 720,
+						"z" : 0
+					},
+					"scaleSpeed": 3,
+					
+					"isTranslate": false,
+					"isScale": false,
+					"isRotate": false,
+					"isFade": true,
+					"isEaseIn": true,
+					"isEaseOut": false
+				}
+			  ]
+		}
   ]
 }

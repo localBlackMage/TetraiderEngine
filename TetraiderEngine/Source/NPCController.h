@@ -93,7 +93,7 @@ private:
 	float m_nextReactionIn;
 	std::string m_reactionPrefab;
 	const Transform* m_pPlayerTransform;
-	GameObjectTag m_tagsToIgnore[5];
+	GameObjectTag m_tagsToIgnore[7];
 	GameObjectTag m_tagsToIgnoreForObstacleAvoidance[4];
 	ObstacleAvoidanceDirection m_avoidDirection;
 	BossPhase m_currentBossPhase;

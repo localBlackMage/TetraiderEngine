@@ -34,7 +34,6 @@ void ListSelector::Serialize(const json & j)
 	int numberOfElements = j["Choice"].size();
 	for (int i = 0; i<numberOfElements; ++i)
 	{
-		GameObject *pObject;
 		m_Choice.push_back( ParseString(j["Choice"][i], "text"));		
 	}
 }
