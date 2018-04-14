@@ -1,11 +1,26 @@
 {
   "GAME_OBJECTS": [
+	{
+		"prefab": "P_LetterBoxTop"
+	},
+	{
+		"prefab": "P_LetterBoxBottom"
+	},
+	{
+		"prefab": "P_LetterBoxLeft"
+	},
+	{
+		"prefab": "P_LetterBoxRight"
+	},
     {
       "prefab": "P_Camera"
     },
 	{
       "prefab": "P_UICamera"
     },
+	{
+		"prefab": "P_LetterBoxCamera"
+	},
     {
       "prefab": "P_Player"
     },

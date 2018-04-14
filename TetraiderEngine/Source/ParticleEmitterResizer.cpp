@@ -17,6 +17,7 @@ ParticleEmitterResizer::~ParticleEmitterResizer()
 
 void ParticleEmitterResizer::Deactivate()
 {
+	pGO = nullptr;
 }
 
 void ParticleEmitterResizer::Override(const json & j)

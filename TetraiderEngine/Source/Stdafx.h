@@ -151,6 +151,7 @@ using namespace JsonReader;
 #include <Camera.h>
 #include <LightBase.h>
 #include <PointLight.h>
+#include <LetterBox.h>
 
 #include <Stamina.h>
 
