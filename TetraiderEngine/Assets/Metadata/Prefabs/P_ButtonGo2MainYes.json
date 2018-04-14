@@ -1,6 +1,6 @@
 {
-    "Tag": "Pause",
-    "Layer": "UI_1",
+    "Tag": "UI",
+    "Layer": "UI",
     "COMPONENTS": [
       {
         "Component": "Transform",
@@ -61,17 +61,15 @@
     },
     {
       "Component": "Button",
-      "isLoadCanvas":true,
-      "canvasToActivate":13,
-      "canvasToDeActivate":1 
+      "level": 1
     },
     {
           "Component": "Text",
           "letterHeight": 20,
           "letterWidth": 20,
-		  "spacing": 0.65,
+          "spacing": 0.7,
           "pivotOffset": {
-              "x": -50,
+              "x": -10,
               "y": 0
           },
           "tint": {
@@ -83,7 +81,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Main Menu"
+          "text": "Yes"
       },
     {
 		"Component": "Audio",

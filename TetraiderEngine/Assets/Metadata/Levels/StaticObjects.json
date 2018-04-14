@@ -49,6 +49,9 @@
 		"prefab": "P_inGameCanvasPromptRestart"
 	},
 	{
+		"prefab":"P_CanvasPrompt_from_mainButton"
+	},
+	{
 		"prefab": "P_LoseMenu"
 	},
 	{
