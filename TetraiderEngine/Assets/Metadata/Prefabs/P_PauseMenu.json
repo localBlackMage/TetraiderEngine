@@ -75,7 +75,7 @@
                     }
                 },
                 {
-                    "prefab": "P_QuitButton",
+                    "prefab": "P_inGameQuitButton",
                     "position": {
                       "x": 0,
                       "y": -250,

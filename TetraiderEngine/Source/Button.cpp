@@ -135,14 +135,14 @@ void Button::HandleEvent(Event* pEvent)
 	{
 		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
 		m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] = pChoiceData->m_choiceData;
-		std::cout << "in BUtton handle event, resultion changed. Choice : " << pChoiceData->m_choiceData << std::endl;
+		//std::cout << "in BUtton handle event, resultion changed. Choice : " << pChoiceData->m_choiceData << std::endl;
 	}
 
 	if (pEvent->Type() == EVENT_OnWindowedChanged)
 	{
 		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
 		m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = pChoiceData->m_choiceData;
-		std::cout << "in BUtton handle event, window changed. Choice : " << pChoiceData->m_choiceData << std::endl;
+		//std::cout << "in BUtton handle event, window changed. Choice : " << pChoiceData->m_choiceData << std::endl;
 	}
 }
 

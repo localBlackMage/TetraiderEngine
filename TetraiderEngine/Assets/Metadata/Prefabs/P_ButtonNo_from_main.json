@@ -1,6 +1,6 @@
 {
-    "Tag": "Pause",
-    "Layer": "UI_1",
+    "Tag": "UI",
+    "Layer": "UI",
     "COMPONENTS": [
       {
         "Component": "Transform",
@@ -62,16 +62,16 @@
     {
       "Component": "Button",
       "isLoadCanvas":true,
-      "canvasToActivate"    : 11,
-      "canvasToDeActivate" : 1
+      "canvasToActivate"    : 0,
+      "canvasToDeActivate" : 12
     },
     {
           "Component": "Text",
-          "letterHeight": 17,
-          "letterWidth": 17,
-		  "spacing": 0.65,
+          "letterHeight": 20,
+          "letterWidth": 20,
+          "spacing": 0.7,
           "pivotOffset": {
-              "x": -60,
+              "x": -10,
               "y": 0
           },
           "tint": {
@@ -83,7 +83,7 @@
           "rows": 6,
           "cols": 16,
           "font": "ShadowCardGothicFont.png",
-          "text": "Restart Game"
+          "text": "No"
       },
     {
 		"Component": "Audio",

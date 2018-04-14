@@ -61,7 +61,9 @@
     },
     {
       "Component": "Button",
-      "quit":true
+      "isLoadCanvas":true,
+      "canvasToActivate"    : 12,
+      "canvasToDeActivate" : 0
     },
     {
           "Component": "Text",

@@ -43,6 +43,12 @@
 		"prefab": "P_inGameCanvasMenuVideo"
 	},
 	{
+		"prefab": "P_inGameCanvasPromptQuit"
+	},
+	{
+		"prefab": "P_inGameCanvasPromptRestart"
+	},
+	{
 		"prefab": "P_LoseMenu"
 	},
 	{

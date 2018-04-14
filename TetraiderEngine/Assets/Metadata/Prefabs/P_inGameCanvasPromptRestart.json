@@ -1,0 +1,72 @@
+{
+    "Tag": "UI",
+    "Layer": "UI",
+    "COMPONENTS": [
+        {
+          "Component": "Transform",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "scale": {
+            "x": 1400,
+            "y": 1000,
+            "z": 0
+          },
+          "pivotOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+            "Component": "Canvas",
+            "canvasType":11,
+            "isActiveOnAwake": false,
+            "UIElements": [              
+                {
+                    "prefab":"P_ButtonRestartNo",
+                    "position":{
+                      "x":-100,
+                      "y": -50
+                    }
+                  },
+                  {
+                    "prefab":"P_ButtonRestartYes",
+                    "position":{
+                      "x": 100,
+                      "y": -50
+                    }
+                  },
+                {
+                    "prefab":"P_TitlePrompt",
+                    "position":{
+                      "x":-100,
+                      "y":100
+                    }
+                } ,
+				{
+				  "prefab": "P_Cursor",
+				  "position": {
+					  "x": 100,
+					  "y": 100,
+					  "z": 0
+				  }
+				},
+			   {
+				"prefab": "P_MenuBg",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				} 
+				}
+            ]
+        }
+    ]
+}
