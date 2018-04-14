@@ -46,6 +46,14 @@
                     "z": 0
                   }
                 },
+                {
+                  "prefab": "P_ButtonVideo",
+                  "position": {
+                    "x": 0,
+                    "y": -100,
+                    "z": 0
+                  }
+                },
                   {
                     "prefab":"P_Back2Pause_from_optionMenu",
                     "position":{

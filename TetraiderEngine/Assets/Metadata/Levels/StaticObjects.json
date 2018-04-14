@@ -40,6 +40,9 @@
 		"prefab": "P_OptionMenuInGame"
 	},
 	{
+		"prefab": "P_inGameCanvasMenuVideo"
+	},
+	{
 		"prefab": "P_LoseMenu"
 	},
 	{
