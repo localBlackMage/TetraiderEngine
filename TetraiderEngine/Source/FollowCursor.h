@@ -1,8 +1,5 @@
 #pragma once
-//#include "Component.h"
-//
-//class Transform;
-//class Body;
+
 class FollowCursor : public Component
 {
 private:

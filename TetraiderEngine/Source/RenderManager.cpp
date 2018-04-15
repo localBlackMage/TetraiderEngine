@@ -506,6 +506,9 @@ bool RenderManager::InitGlew()
 		std::cout << "Needs OpenGL version 2.0 or better" << std::endl;
 		return false;
 	}
+	FrameStart();
+	FrameEnd();
+
 	return true;
 }
 
@@ -590,6 +593,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 		SDL_WINDOWPOS_CENTERED,
 		m_width, m_height,
 		SDL_WINDOW_OPENGL);
+	SDL_GL_SwapWindow(m_pWindow);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 	if (startFullScreen)
 		SetWindowToFullscreen();

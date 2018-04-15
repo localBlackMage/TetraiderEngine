@@ -142,12 +142,12 @@ void PostProcessing::HandleEvent(Event * p_event)
 				Toggle();
 			break;
 		}
-		//case EventType::EVENT_WINDOW_RESIZED: {
-		//	WindowResizedData* data = p_event->Data<WindowResizedData>();
-		//	if (m_pBaseIR)	delete m_pBaseIR;
-		//	m_pBaseIR = new ImageRenderer(m_pBaseShader, data->resolution.width, data->resolution.height, FBO_DEPTH_RENDER_BUFFER);
-		//	break;
-		//}
+		case EventType::EVENT_WINDOW_RESIZED: {
+			WindowResizedData* data = p_event->Data<WindowResizedData>();
+			if (m_pBaseIR)	delete m_pBaseIR;
+			m_pBaseIR = new ImageRenderer(m_pBaseShader, data->resolution.width, data->resolution.height, FBO_DEPTH_RENDER_BUFFER);
+			break;
+		}
 	}
 }
 
@@ -169,7 +169,7 @@ void PostProcessing::InitImageRenderers(const ImageRenderersData& metadata, cons
 
 	m_pBaseShader = metadata.pBaseShader;
 
-	TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
+	//TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_INPUT_RESTART, this);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_INPUT_EXITLEVEL, this);
 	TETRA_EVENTS.Subscribe(EventType::EVENT_EXITING_GAME_LEVEL, this);
