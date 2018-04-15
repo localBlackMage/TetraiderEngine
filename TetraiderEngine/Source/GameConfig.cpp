@@ -112,14 +112,11 @@ void GameConfig::SelectResolution(unsigned short resolutionIndex)
 {
 	if (resolutionIndex > 3)	return;
 	m_currentResolution = resolutionIndex;
-	TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
-	if (m_currentResolution == 3)
-		TETRA_RENDERER.SetWindowToFullscreen();
-	else 
-		TETRA_RENDERER.UnsetWindowFullscreen();
 
-	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED, 
-		&WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
+	if (!TETRA_RENDERER.IsFullScreen())
+		TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
+
+	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution])));
 }
 
 void GameConfig::NextResolution()
@@ -132,21 +129,6 @@ void GameConfig::PrevResolution()
 {
 	if (--m_currentResolution > 3)	m_currentResolution = 3;
 	SelectResolution(m_currentResolution);
-}
-
-void GameConfig::SetToFullScreen()
-{
-	m_prevResolution = m_currentResolution;
-	m_currentResolution = 3;
-	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED,
-		&WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
-}
-
-void GameConfig::SetToWindowedMode()
-{
-	m_currentResolution = m_prevResolution;
-	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED,
-		&WindowResizedData(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height)));
 }
 
 unsigned int GameConfig::GetSeed(int level)

@@ -52,8 +52,8 @@ void Camera::HandleEvent(Event * pEvent)
 	switch (pEvent->Type()) {
 		case EventType::EVENT_WINDOW_RESIZED: {
 			WindowResizedData* data = pEvent->Data<WindowResizedData>();
-			m_screenWidth = data->width;
-			m_screenHeight = data->height;
+			m_screenWidth = data->resolution.width;
+			m_screenHeight = data->resolution.height;
 			m_currentZoomIndex = TETRA_GAME_CONFIG.GetCurrentResolutionIndex();
 			break;
 		}
@@ -115,16 +115,24 @@ float Camera::GetAspect() const
 
 Vector3D Camera::TransformPointToScreenSpace(const Vector3D& worldCoordinates) {
 	// TODO: talk to moodie
+	//Matrix4x4 viewPerspectiveMatrix = Matrix4x4::Orthographic(
+	//	float(m_screenWidth),
+	//	float(m_screenHeight),
+	//	0.1f) * 
+	//	GetViewMatrix(); 
+	float width = float(m_screenWidth);// *m_zoomLevels[m_currentZoomIndex];
+	float height = float(m_screenHeight);// *m_zoomLevels[m_currentZoomIndex];
+
 	Matrix4x4 viewPerspectiveMatrix = Matrix4x4::Orthographic(
-		float(m_screenWidth),
-		float(m_screenHeight),
-		0.1f) * 
-		GetViewMatrix(); 
+		width, 
+		height, 
+		0.1f) *
+		GetViewMatrix();
 	
 	// Transform point to clipping coordinates
 	Vector3D result = viewPerspectiveMatrix*worldCoordinates;
-	result.x = ((result.x / result.w) + 1.f) / 2.0f * m_screenWidth;
-	result.y = (1 - (result.y / result.w)) / 2.0f * m_screenHeight;
+	result.x = ((result.x / result.w) + 1.f) / 2.0f * width;
+	result.y = (1 - (result.y / result.w)) / 2.0f * height;
 	result.z = 0;
 	result.w = 1;
 

@@ -20,16 +20,22 @@ static const char* EventNameText[] =
 };
 #undef REGISTER_EVENT_NAME
 
+// THIS SHOULDN'T BE HERE BUT WE'RE SHORT ON TIME
+struct Resolution {
+	unsigned short width, height;
+	float aspectRatio;
+};
+
 class GameObject;
 
 // Abstract struct, data objects should inherit from this
 struct EventData {};
 
 struct WindowResizedData : public EventData {
-	WindowResizedData(int _width, int _height) :
-		width(_width), height(_height) {}
+	WindowResizedData(Resolution _resolution) :
+		resolution(_resolution) {}
 
-	int width, height;
+	Resolution resolution;
 };
 
 struct OnCollideData : public EventData {

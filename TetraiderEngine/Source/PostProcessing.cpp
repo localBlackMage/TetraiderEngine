@@ -142,12 +142,12 @@ void PostProcessing::HandleEvent(Event * p_event)
 				Toggle();
 			break;
 		}
-		case EventType::EVENT_WINDOW_RESIZED: {
-			WindowResizedData* data = p_event->Data<WindowResizedData>();
-			if (m_pBaseIR)	delete m_pBaseIR;
-			m_pBaseIR = new ImageRenderer(m_pBaseShader, data->width, data->height, FBO_DEPTH_RENDER_BUFFER);
-			break;
-		}
+		//case EventType::EVENT_WINDOW_RESIZED: {
+		//	WindowResizedData* data = p_event->Data<WindowResizedData>();
+		//	if (m_pBaseIR)	delete m_pBaseIR;
+		//	m_pBaseIR = new ImageRenderer(m_pBaseShader, data->resolution.width, data->resolution.height, FBO_DEPTH_RENDER_BUFFER);
+		//	break;
+		//}
 	}
 }
 

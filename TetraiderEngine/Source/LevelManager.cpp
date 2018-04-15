@@ -20,12 +20,22 @@ int LevelManager::GetCurrentLevel()
 
 void LevelManager::LoadStaticGameObjects()
 {
-	int gameObjectSize = staticObjects[GAME_OBJECTS].size();
+	int gameObjectSize = m_staticObjects[GAME_OBJECTS].size();
 	for (int i = 0; i < gameObjectSize; i++) {
-		TETRA_GAME_OBJECTS.CreateGameObject(staticObjects[GAME_OBJECTS][i]["prefab"]);
+		TETRA_GAME_OBJECTS.CreateGameObject(m_staticObjects[GAME_OBJECTS][i]["prefab"]);
 	}
 
 	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_StaticsLoaded));
+}
+
+void LevelManager::LoadLetterBoxObjects()
+{
+	int gameObjectSize = m_letterBoxObjects[GAME_OBJECTS].size();
+	for (int i = 0; i < gameObjectSize; i++) {
+		TETRA_GAME_OBJECTS.CreateGameObject(m_letterBoxObjects[GAME_OBJECTS][i]["prefab"]);
+	}
+
+	TETRA_EVENTS.BroadcastEvent(&Event(EventType::EVENT_LetterBoxesLoaded));
 }
 
 #define LEVEL_PARAMS "LevelParameters"
@@ -38,8 +48,10 @@ void LevelManager::Initialize(const json& j) {
 	m_isRandomlyGenerated = ParseBool(levelConfig, "isRandomGenerated");
 
 	std::string staticsFileName = levelConfig["Statics"];
+	std::string letterBoxObjectsFileName = levelConfig["LetterBoxObjects"];
 	// TODO: Find a better spot for this? - Holden
-	staticObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + staticsFileName + ".json");
+	m_staticObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + staticsFileName + ".json");
+	m_letterBoxObjects = JsonReader::OpenJsonFile(TETRA_GAME_CONFIG.LevelFilesDir() + letterBoxObjectsFileName + ".json");
 
 	m_levelConfigs.reserve(j[LEVEL_PARAMS].size());
 	for (unsigned int i = 0; i < j[LEVEL_PARAMS].size(); ++i) {
@@ -76,6 +88,7 @@ bool LevelManager::IsBossLevel() {
 }
 
 void LevelManager::LoadLevel() {
+	LoadLetterBoxObjects();
 	if (m_isRandomlyGenerated) {
 		if (m_levelsCompleted >= (int)m_levelConfigs.size()) {
 			std::cout << "Attempted to load a level out of index. Reverted to last level" << std::endl;
@@ -85,7 +98,7 @@ void LevelManager::LoadLevel() {
 		TETRA_LEVEL_GEN.GenerateRoomNodes(m_levelConfigs[m_levelsCompleted]);
 		TETRA_LEVEL_GEN.GenerateFloorPlan(m_levelConfigs[m_levelsCompleted], TETRA_GAME_CONFIG.GetSeed(m_levelsCompleted));
 		TETRA_LEVEL_GEN.PrintFloorPlan();
-		TETRA_LEVELS.LoadStaticGameObjects();
+		LoadStaticGameObjects();
 		TETRA_LEVEL_GEN.GenerateLevelFromFloorPlan();
 		m_wasRandomlyGenerated = true;
 		currentLevel = -1;

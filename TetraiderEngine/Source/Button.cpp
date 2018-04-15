@@ -118,7 +118,7 @@ void Button::HandleEvent(Event* pEvent)
 					TETRA_GAME_CONFIG.SelectResolution(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION]);
 
 					if (m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN]==0)
-						TETRA_RENDERER.UnsetWindowFullscreen();
+						TETRA_RENDERER.SetWindowToWindowedMode();
 					else
 						TETRA_RENDERER.SetWindowToFullscreen();
 				}

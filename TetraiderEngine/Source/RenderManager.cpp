@@ -523,45 +523,6 @@ void RenderManager::FrameEnd()
 void RenderManager::HandleEvent(Event * p_event)
 {
 	switch (p_event->Type()) {
-		//case EVENT_LIGHT_A_DOWN:
-		//	m_la -= 0.01f;
-		//	break;
-		//case EVENT_LIGHT_A_UP:
-		//	m_la += 0.01f;
-		//	break;
-		//case EVENT_LIGHT_B_DOWN:
-		//	m_lb -= 0.01f;
-		//	break;
-		//case EVENT_LIGHT_B_UP:
-		//	m_lb += 0.01f;
-		//	break;
-
-		case EVENT_PREV_RESOLUTION:
-		{
-			if (p_event->Data<InputButtonData>()->m_isReleased)	
-				TETRA_GAME_CONFIG.PrevResolution();
-			break;
-		}
-		case EVENT_NEXT_RESOLUTION:
-		{
-			if (p_event->Data<InputButtonData>()->m_isReleased)	
-				TETRA_GAME_CONFIG.NextResolution();
-			break;
-		}
-
-		case EVENT_ENTER_FULLSCREEN:
-		{
-			if (p_event->Data<InputButtonData>()->m_isReleased)	
-				SetWindowToFullscreen();
-			break;
-		}
-		case EVENT_LEAVE_FULLSCREEN:
-		{
-			if (p_event->Data<InputButtonData>()->m_isReleased)	
-				UnsetWindowFullscreen();
-			break;
-		}
-
 		case EVENT_TOGGLE_LIGHTS:
 		{
 			if (p_event->Data<InputButtonData>()->m_isReleased)	
@@ -608,19 +569,9 @@ void RenderManager::SetUpConsole()
 void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 {
 	if (debugEnabled) {
-		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_DOWN, this);
-		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_A_UP, this);
-		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_DOWN, this);
-		//TETRA_EVENTS.Subscribe(EventType::EVENT_LIGHT_B_UP, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
-
-		TETRA_EVENTS.Subscribe(EventType::EVENT_NEXT_RESOLUTION, this);
-		TETRA_EVENTS.Subscribe(EventType::EVENT_PREV_RESOLUTION, this);
 	}
-
-	TETRA_EVENTS.Subscribe(EventType::EVENT_ENTER_FULLSCREEN, this);
-	TETRA_EVENTS.Subscribe(EventType::EVENT_LEAVE_FULLSCREEN, this);
 
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -673,16 +624,16 @@ void RenderManager::SetWindowToFullscreen()
 	if (!m_isFullscreen) {
 		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		m_isFullscreen = true;
-		TETRA_GAME_CONFIG.SetToFullScreen();
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_ENTER_FULLSCREEN));
 	}
 }
 
-void RenderManager::UnsetWindowFullscreen()
+void RenderManager::SetWindowToWindowedMode()
 {
 	if (m_isFullscreen) {
 		SDL_SetWindowFullscreen(m_pWindow, 0);
 		m_isFullscreen = false;
-		TETRA_GAME_CONFIG.SetToWindowedMode();
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_LEAVE_FULLSCREEN));
 	}
 }
 

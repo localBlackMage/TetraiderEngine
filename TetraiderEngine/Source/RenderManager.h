@@ -132,7 +132,7 @@ public:
 	void EnableWindowsCursor();
 	void DisableWindowsCursor(); 
 	void SetWindowToFullscreen();
-	void UnsetWindowFullscreen();
+	void SetWindowToWindowedMode();
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
 	void SetWindowDimensions(int width, int height);

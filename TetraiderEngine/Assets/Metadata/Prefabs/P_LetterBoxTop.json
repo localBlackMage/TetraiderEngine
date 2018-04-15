@@ -52,7 +52,19 @@
 		},
 		{
 			"Component": "LetterBox",
-			"Anchor": "Top"
+			"Anchor": "Top",
+			"Dimensions": [
+				10,
+				10,
+				10,
+				0
+			],
+			"Positions": [
+				300,
+				400,
+				500,
+				0
+			]
 		}
 	]
 }

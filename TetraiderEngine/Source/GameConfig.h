@@ -3,11 +3,6 @@
 #ifndef GAME_CONFIG_H
 #define GAME_CONFIG_H
 
-struct Resolution {
-	unsigned short width, height;
-	float aspectRatio;
-};
-
 class GameConfig
 {
 private:
@@ -66,8 +61,7 @@ public:
 	void SelectResolution(unsigned short resolutionIndex);
 	void NextResolution();
 	void PrevResolution();
-	void SetToFullScreen();
-	void SetToWindowedMode();
+
 	inline unsigned short GetCurrentResolutionIndex() const { return m_currentResolution; }
 
 	unsigned int GetSeed(int level);

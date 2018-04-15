@@ -14,7 +14,10 @@ class LetterBox : public Component {
 protected:
 	Transform* m_pTransform;
 	AnchorSide m_anchor;
+	float m_scalePerResolution[4];
+	float m_posPerResolution[4];
 
+	void _SetPosAndScale();
 public:
 	LetterBox();
 	~LetterBox() {};

@@ -491,6 +491,12 @@
     <ClCompile Include="Source\LetterBox.cpp">
       <Filter>Source Files\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SelectableButton.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ListSelector.cpp">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -988,6 +994,12 @@
     </ClInclude>
     <ClInclude Include="Source\LetterBox.h">
       <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SelectableButton.h">
+      <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ListSelector.h">
+      <Filter>Source Files\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

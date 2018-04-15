@@ -10,8 +10,8 @@
 				"z": 0
 			},
 			"scale": {
-				"x": 2000,
-				"y": 100,
+				"x": 100,
+				"y": 2000,
 				"z": 0
 			},
 			"pivotOffset": {
@@ -52,7 +52,19 @@
 		},
 		{
 			"Component": "LetterBox",
-			"Anchor": "Left"
+			"Anchor": "Left",
+			"Dimensions": [
+				10,
+				10,
+				10,
+				0
+			],
+			"Positions": [
+				-600,
+				-600,
+				-600,
+				0
+			]
 		}
 	]
 }

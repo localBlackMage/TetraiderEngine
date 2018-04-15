@@ -15,7 +15,7 @@
 		
 		"powerUpSettings": "Metadata/powerUpSettings.json",
 		
-		"isDebugModeEnabled": false,
+		"isDebugModeEnabled": true,
 		"soundsMute": false
 	},
 	"RENDER_SETTINGS": {
@@ -77,6 +77,7 @@
 	"LEVEL_SETTINGS": {
 		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
+		"LetterBoxObjects": "LetterBoxObjects",
 		"Start": 5,
 		"MainMenu": 1,
 		"Levels": [
@@ -269,43 +270,6 @@
 			"isMouse": false,
 			"isJoystick": false,
 			"KeyBoardKey": 65,
-			"XboxKey": 0
-		},
-		{
-			"Name": "EVENT_PREV_RESOLUTION",
-			"EventType": 18,
-			"InputType": 0,
-			"isMouse": false,
-			"isJoystick": false,
-			"KeyBoardKey": 47,
-			"XboxKey": 0
-		},
-		{
-			"Name": "EVENT_NEXT_RESOLUTION",
-			"EventType": 19,
-			"InputType": 0,
-			"isMouse": false,
-			"isJoystick": false,
-			"KeyBoardKey": 48,
-			"XboxKey": 0
-		},
-		
-		{
-			"Name": "EVENT_ENTER_FULLSCREEN",
-			"EventType": 20,
-			"InputType": 0,
-			"isMouse": false,
-			"isJoystick": false,
-			"KeyBoardKey": 66,
-			"XboxKey": 0
-		},
-		{
-			"Name": "EVENT_LEAVE_FULLSCREEN",
-			"EventType": 21,
-			"InputType": 0,
-			"isMouse": false,
-			"isJoystick": false,
-			"KeyBoardKey": 68,
 			"XboxKey": 0
 		},
 		
