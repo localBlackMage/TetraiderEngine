@@ -57,7 +57,7 @@
 					"name": "IncreaseHealthFromPickUp",
 					"enumType": 4,
 					"maxLevel": 1,
-					"upgradeValue": 15,
+					"upgradeValue": 20,
 					"sprtieTexture": "T_IncreaseHealthFromMeat.png",
 					"cost": 0,
 					"description": "Recover more health from meat"
@@ -84,7 +84,7 @@
 					"name": "IncreaseAgility",
 					"enumType": 8,
 					"maxLevel": 1,
-					"upgradeValue": 1.18,
+					"upgradeValue": 1.176,
 					"sprtieTexture": "T_IncreaseAgility.png",
 					"cost": 0,
 					"description": "Increased movement and attack speed"

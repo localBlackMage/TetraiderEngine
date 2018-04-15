@@ -64,7 +64,7 @@
   {
 		"Component": "Audio",
 		"audioClip": "arrow.mp3",
-		"volume": 0.3,
+		"volume": 0.15,
 		"isMute": false,
 		"isLoop": false,
 		"isPlayOnAwake": true,
