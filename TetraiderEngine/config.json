@@ -49,12 +49,12 @@
 		"title" : "Eggnapped",
 		"resolutions": [
 			{
-				"width": 1024,
-				"height": 576
-			},
-			{
 				"width": 1280,
 				"height": 720
+			},
+			{
+				"width": 1536,
+				"height": 864
 			},
 			{
 				"width": 1600,

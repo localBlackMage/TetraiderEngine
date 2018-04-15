@@ -77,11 +77,11 @@ void Camera::LateInitialize()
 
 void Camera::Update(float dt)
 {
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_X))
-		m_zoomLevels[m_currentZoomIndex] -= 0.1f;
-		
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_Z))
-		m_zoomLevels[m_currentZoomIndex] += 0.1f;
+	//if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_X))
+	//	m_zoomLevels[m_currentZoomIndex] -= 0.01f;
+	//	
+	//if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_Z))
+	//	m_zoomLevels[m_currentZoomIndex] += 0.01f;
 }
 
 void Camera::LateUpdate(float dt)
