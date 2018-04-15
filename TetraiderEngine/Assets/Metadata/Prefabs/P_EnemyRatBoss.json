@@ -302,7 +302,7 @@
     {
 		"Component": "Audio",
 		"audioClip": [
-			"SFX_RatDead.wav",
+			"SFX_RockDeath.wav",
 			"SFX_BossLand.wav"
 		],
 		"volume": 1,

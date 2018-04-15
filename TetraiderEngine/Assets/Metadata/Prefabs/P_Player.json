@@ -130,7 +130,7 @@
 				"type": "Melee",
 				"coolDown": 0.36,
 				"baseDamage": 10,
-				"radius": 180,
+				"radius": 190,
 				"angle": 90,
 				"triggerAttackIn": 0.05,
 				"knockBackSpeed": 800

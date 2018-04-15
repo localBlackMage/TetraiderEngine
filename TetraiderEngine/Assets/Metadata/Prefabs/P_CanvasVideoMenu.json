@@ -54,29 +54,29 @@
                   {
                     "prefab":"P_TitleResolution",
                     "position":{
-                      "x":-200,
-                      "y":25
+                      "x":-125,
+                      "y":0
                     }
                   },
                   {
                     "prefab":"P_ListResolution",
                     "position":{
-                      "x":125,
-                      "y":25
+                      "x":130,
+                      "y":0
                     }
                   },                 
                   {
                     "prefab":"P_TitleWindowed",
                     "position":{
-                      "x":-192,
-                      "y":-100
+                      "x":-125,
+                      "y":-75
                     }
                   },
                   {
                     "prefab":"P_ListWindowed",
                     "position":{
-                      "x": 125,
-                      "y":-100
+                      "x": 130,
+                      "y":-75
                     }
                   }               
             ]

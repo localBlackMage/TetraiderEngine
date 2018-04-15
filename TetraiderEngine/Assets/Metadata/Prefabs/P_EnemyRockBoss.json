@@ -86,7 +86,7 @@
 	},
     {
       "Component": "Sprite",
-      "Texture": "T_RockEnemyAnim.png",
+      "Texture": "T_EnemyRockBoss.png",
       "tiling": {
         "x": 1,
         "y": 1
@@ -156,7 +156,7 @@
 		"mass": 0,
 		"SHAPE": {
 			"type": "circle",
-			"radius": 55
+			"radius": 65
 		}
 	},
 	{
@@ -282,8 +282,8 @@
 				"fadeSpeed": 1,
 				
 				"finalScale": {
-					"x" : -440,
-					"y" : -440,
+					"x" : -415,
+					"y" : -415,
 					"z" : 0
 				},
 				"scaleSpeed": 1,
@@ -321,6 +321,21 @@
 				"isEaseIn": true
 			}
 		]
+	},
+    {
+		"Component": "Audio",
+		"audioClip": [
+			"SFX_RatDead.wav",
+			"SFX_BossLand.wav"
+		],
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D":false,
+		"minDistance": 20,
+		"maxDistance": 900
 	}
   ]
 }

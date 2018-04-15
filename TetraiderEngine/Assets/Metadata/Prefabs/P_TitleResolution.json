@@ -26,9 +26,9 @@
       },
       {
         "Component": "Text",
-        "letterHeight": 24,
-        "letterWidth": 24,
-        "spacing":0.8,
+        "letterHeight": 22,
+        "letterWidth": 22,
+        "spacing":0.65,
         "pivotOffset": {
             "x": 0,
             "y": 0

@@ -30,8 +30,8 @@
           "isResolution":true,
           "leftSelectorPrefab":"P_SelectableLeft",
           "rightSelectorPrefab":"P_SelectableRight",
-          "textOffsetX": -75,
-          "textOffsetY": -25,
+          "textOffsetX": 0,
+          "textOffsetY": 0,
          
           "Choice": [
             {
@@ -50,9 +50,10 @@
       },
       {
         "Component": "Text",
-        "letterHeight": 24,
-        "letterWidth": 24,
-		    "spacing": 0.65,
+        "letterHeight": 22,
+        "letterWidth": 22,
+		"spacing": 0.65,
+		"alignment": "center",
         "pivotOffset": {
             "x": 57,
             "y": 0

@@ -237,12 +237,12 @@ void Controller::LateInitialize() {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_FLY, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_MELEE, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RANGE, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_GODMODE, this);
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_ShopOpened, this);
 	TETRA_EVENTS.Subscribe(EVENT_ShopClosed, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnEnterBoss, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnExitBoss, this);
-	TETRA_EVENTS.Subscribe(EVENT_INPUT_GODMODE, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnPlayerHealthZero, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnCamGoToBossRoom, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnCamGoToPlayer, this);

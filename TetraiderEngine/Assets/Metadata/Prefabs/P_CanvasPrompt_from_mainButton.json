@@ -46,10 +46,17 @@
                 {
                     "prefab":"P_TitlePrompt",
                     "position":{
-                      "x":-100,
+                      "x":0,
                       "y":100
                     }
                 } ,
+				{
+                    "prefab":"P_TitlePromptNote",
+                    "position":{
+                      "x": 0,
+                      "y":50
+                    }
+					},
 				{
 				  "prefab": "P_Cursor",
 				  "position": {
