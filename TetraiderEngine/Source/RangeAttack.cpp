@@ -19,10 +19,15 @@ RangeAttack::~RangeAttack() {}
 // Assumes direction is normalized
 bool RangeAttack::Use(const Vector3D& direction) {
 	if (!Attack::Use(direction)) return false;
-
+	int temp = m_multipleShot;
 	if (!m_isUnlimitedAmmo) {
 		if (m_ammo == 0) return false; // out of ammo
-		--m_ammo;
+
+		m_ammo -= m_multipleShot;
+		if (m_ammo < 0) {
+			m_multipleShot = m_ammo + m_multipleShot;
+			m_ammo = 0;
+		}
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_UIAmmoUpdate, &CollectibleData(m_ammo)));
 	}
 
@@ -66,6 +71,8 @@ bool RangeAttack::Use(const Vector3D& direction) {
 			m_isWeaponFlash = true;
 		}
 	}
+
+	m_multipleShot = temp;
 		
 	return true;
 }

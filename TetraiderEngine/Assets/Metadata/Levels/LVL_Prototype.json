@@ -650,6 +650,30 @@
 			"prefab": "P_WinMessage"
 		},
 		{
+		  "prefab": "P_InGameCreditsMenu"
+		},
+		{
+			"prefab":"P_inGameSoundMenu"
+		},
+		{
+			"prefab":"P_inGameControlMenu"
+		},
+		{
+			"prefab": "P_OptionMenuInGame"
+		},
+		{
+			"prefab": "P_inGameCanvasMenuVideo"
+		},
+		{
+			"prefab": "P_inGameCanvasPromptQuit"
+		},
+		{
+			"prefab": "P_inGameCanvasPromptRestart"
+		},
+		{
+			"prefab":"P_CanvasPrompt_from_mainButton"
+		},
+		{
 			"prefab": "P_BarrelWithEgg",
 			"position": {
 				"x": 1000,

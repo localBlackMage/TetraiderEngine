@@ -101,7 +101,7 @@ void Weapon::Serialize(const json& j) {
 				ParseFloat(j["Attacks"][i], "projectileSpeed"),
 				ParseFloat(j["Attacks"][i], "instantiationOffset"),
 				ParseFloat(j["Attacks"][i], "lifeTime"),
-				ParseInt(j["Attacks"][i], "multipleShots"),
+				ValueExists(j["Attacks"][i], "multipleShots") ? ParseInt(j["Attacks"][i], "multipleShots") : 1,
 				ParseFloat(j["Attacks"][i], "coneAngle"),
 				ParseBool(j["Attacks"][i], "isFlash"),
 				ParseString(j["Attacks"][i], "projectilePrefab")
@@ -273,7 +273,8 @@ void Weapon::CheckForPowerUps() {
 		MultiplyDamage(multiplier, 0);
 		// Add fire sword
 		m_pWeapon->GetComponent<ParticleEmitter>(C_ParticleEmitter)->ActivateParticles();
-		m_pWeapon->GetComponent<PointLight>(C_PointLight)->SetActive(true);
+		if(!m_isSecondaryCurrentlyEquipped)
+			m_pWeapon->GetComponent<PointLight>(C_PointLight)->SetActive(true);
 	}
 
 	if (TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseRangeDamage, multiplier)) {
@@ -319,6 +320,7 @@ void Weapon::HideWeapon(bool active) {
 void Weapon::SwapWeapons(bool isSecondary) {
 	if (isSecondary && !m_isSecondaryCurrentlyEquipped) {
 		m_pWeapon->m_isRender = false;
+		m_pWeapon->GetComponent<PointLight>(C_PointLight)->SetActive(false);
 		m_pSecondaryWeapon->m_isRender = true;
 		m_pWeaponTransform = m_pSecondaryWeapon->GetComponent<Transform>(C_Transform);
 		m_isSecondaryCurrentlyEquipped = true;
@@ -326,6 +328,9 @@ void Weapon::SwapWeapons(bool isSecondary) {
 	else if(!isSecondary && m_isSecondaryCurrentlyEquipped) {
 		m_pSecondaryWeapon->m_isRender = false;
 		m_pWeapon->m_isRender = true;
+		if(TETRA_PLAYERSTATS.IsPowerUpActive(PowerUpType::IncreaseMeleeDamage))
+			m_pWeapon->GetComponent<PointLight>(C_PointLight)->SetActive(true);
+
 		m_pWeaponTransform = m_pWeapon->GetComponent<Transform>(C_Transform);
 		m_isSecondaryCurrentlyEquipped = false;
 	}
