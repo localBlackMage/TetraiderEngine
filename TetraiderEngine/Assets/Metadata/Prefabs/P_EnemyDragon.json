@@ -178,7 +178,7 @@
 				"instantiationOffset": 50,
 				"lifeTime": 1.5,
 				"multipleShots": 3,
-				"coneAngle": 15,
+				"coneAngle": 30,
 				"projectilePrefab": "P_testProjectile",
 				"knockBackSpeed": 300
 			}
