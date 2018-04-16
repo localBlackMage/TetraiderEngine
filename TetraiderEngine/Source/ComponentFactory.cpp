@@ -8,6 +8,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["ParticleEmitter"] = ParticleEmitter::CreateInstance;
 	m_creationFunctions["Text"] = Text::CreateInstance;
 	m_creationFunctions["Animation"] = Animation::CreateInstance;
+	m_creationFunctions["LetterBox"] = LetterBox::CreateInstance;
 	m_creationFunctions["Controller"] = Controller::CreateInstance;
 	m_creationFunctions["Body"] = Body::CreateInstance;
 	m_creationFunctions["Camera"] = Camera::CreateInstance;

@@ -52,8 +52,8 @@ void Camera::HandleEvent(Event * pEvent)
 	switch (pEvent->Type()) {
 		case EventType::EVENT_WINDOW_RESIZED: {
 			WindowResizedData* data = pEvent->Data<WindowResizedData>();
-			m_screenWidth = data->width;
-			m_screenHeight = data->height;
+			m_screenWidth = data->resolution.width;
+			m_screenHeight = data->resolution.height;
 			m_currentZoomIndex = TETRA_GAME_CONFIG.GetCurrentResolutionIndex();
 			break;
 		}
@@ -67,7 +67,7 @@ void Camera::LateInitialize()
 	if (m_primary)
 		TETRA_GAME_OBJECTS.SetPrimaryCamera(pGO);
 
-	TETRA_EVENTS.Subscribe(EVENT_WINDOW_RESIZED, this);
+	TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
 	
 	Resolution res = TETRA_GAME_CONFIG.GetResolution();
 	m_screenWidth = res.width;
@@ -77,11 +77,11 @@ void Camera::LateInitialize()
 
 void Camera::Update(float dt)
 {
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_X))
-		m_zoomLevels[m_currentZoomIndex] -= 0.1f;
-		
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_Z))
-		m_zoomLevels[m_currentZoomIndex] += 0.1f;
+	//if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_X))
+	//	m_zoomLevels[m_currentZoomIndex] -= 0.01f;
+	//	
+	//if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_Z))
+	//	m_zoomLevels[m_currentZoomIndex] += 0.01f;
 }
 
 void Camera::LateUpdate(float dt)

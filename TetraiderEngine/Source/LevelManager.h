@@ -25,7 +25,8 @@ private:
 	int firstLevel;
 	int mainMenuLevel;
 	json levelConfig;
-	json staticObjects;
+	json m_staticObjects;
+	json m_letterBoxObjects;
 	bool m_isRandomlyGenerated;
 	bool m_wasRandomlyGenerated;
 	int m_levelsCompleted;
@@ -58,6 +59,7 @@ public:
 	bool IsLastLevel();
 	int GetCurrentLevel();
 	void LoadStaticGameObjects();
+	void LoadLetterBoxObjects();
 	bool IsBossLevel(); 
 	void ActivateRandomGeneration(bool isActive) {	m_isRandomlyGenerated = isActive; }
 };

@@ -127,11 +127,12 @@ public:
 
 	inline bool GetFullScreenStatus() { return m_isFullscreen; };
 	void SetUpConsole();
+	inline bool IsFullScreen() const { return m_isFullscreen; }
 	void InitWindow(bool debugEnabled, bool startFullScreen);
 	void EnableWindowsCursor();
 	void DisableWindowsCursor(); 
 	void SetWindowToFullscreen();
-	void UnsetWindowFullscreen();
+	void SetWindowToWindowedMode();
 	void SetWindowWidth(int width);
 	void SetWindowHeight(int height);
 	void SetWindowDimensions(int width, int height);

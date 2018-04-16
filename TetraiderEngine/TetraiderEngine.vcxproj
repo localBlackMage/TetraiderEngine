@@ -46,6 +46,7 @@
     <ClCompile Include="Source\GateTriggerBox.cpp" />
     <ClCompile Include="Source\ImageRenderer.cpp" />
     <ClCompile Include="Source\InGameCredits.cpp" />
+    <ClCompile Include="Source\LetterBox.cpp" />
     <ClCompile Include="Source\ListSelector.cpp" />
     <ClCompile Include="Source\NotEnoughGoldFeathers.cpp" />
     <ClCompile Include="Source\ParticleEmitterResizer.cpp" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\InGameCredits.h" />
+    <ClInclude Include="Source\LetterBox.h" />
     <ClInclude Include="Source\ListSelector.h" />
     <ClInclude Include="Source\ParticleEmitterResizer.h" />
     <ClInclude Include="Source\SelectableButton.h" />
