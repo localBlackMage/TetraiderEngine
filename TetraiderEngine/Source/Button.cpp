@@ -1,5 +1,8 @@
 #include <Stdafx.h>
 
+#define OPTION_WINDOWED 0
+#define OPTION_FULLSCREEN 1
+
 Button::Button() :Component(ComponentType::C_Button) 
 {
 	m_isQuit = false;
@@ -115,12 +118,7 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isApplyButton) 
 				{
-					TETRA_GAME_CONFIG.SelectResolution(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION]);
-
-					if (m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN]==0)
-						TETRA_RENDERER.SetWindowToWindowedMode();
-					else
-						TETRA_RENDERER.SetWindowToFullscreen();
+					TETRA_GAME_CONFIG.SelectResolutionAndScreenMode(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION], m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] == OPTION_FULLSCREEN);
 				}
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
@@ -146,3 +144,5 @@ void Button::HandleEvent(Event* pEvent)
 	}
 }
 
+#undef OPTION_WINDOWED
+#undef OPTION_FULLSCREEN

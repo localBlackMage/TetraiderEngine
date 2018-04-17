@@ -60,6 +60,7 @@ public:
 	inline const Resolution& GetResolution() const { return m_resolutions[m_currentResolution]; }
 	inline const Resolution& GetResolution(int i) const { return m_resolutions[i]; }
 	void SelectResolution(unsigned short resolutionIndex);
+	void SelectResolutionAndScreenMode(unsigned short resoutionIndex, bool isFullscreen);
 	void NextResolution();
 	void PrevResolution();
 	inline unsigned short GetCurrentResolutionIndex() const { return m_currentResolution; }
