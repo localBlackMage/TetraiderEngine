@@ -42,7 +42,7 @@ void Camera::Serialize(const json& j)
 		m_layersToRender[TETRA_GAME_OBJECTS.GetLayerFromString(layer)] = true;
 	}
 
-	for (unsigned int i = 0; i < 4; ++i) {
+	for (unsigned int i = 0; i < MAX_RESOLUTIONS; ++i) {
 		m_zoomLevels[i] = j["zoomLevels"][i];
 	}
 }

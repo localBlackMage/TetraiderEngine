@@ -23,7 +23,7 @@ private:
 	bool m_debugEnabled;
 	bool m_postProcessingEnabled;
 
-	Resolution m_resolutions[4];				// Array of supported resolutions, accepts a maximum of 4
+	Resolution m_resolutions[MAX_RESOLUTIONS];	// Array of supported resolutions, accepts a maximum of 4
 	unsigned short m_currentResolution;			// Index into m_resolutions for currently used resolution
 	unsigned short m_prevResolution;			// Saves the index into m_resolutions for toggling back and forth between full screen and windowed modes
 
