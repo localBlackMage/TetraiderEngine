@@ -78,16 +78,12 @@ void Button::HandleEvent(Event* pEvent)
 	{
 		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
 		m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] = pChoiceData->m_choiceData;
-		//TETRA_RENDERER.SetFullScreenStatus((bool)pChoiceData->m_choiceData);
-		std::cout << "in BUtton handle event, resultion changed. Choice : " << pChoiceData->m_choiceData << std::endl;
 	}
 
 	if (pEvent->Type() == EVENT_OnWindowedChanged)
 	{
 		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
 		m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = pChoiceData->m_choiceData;
-		//TETRA_RENDERER.SetFullScreenStatus((bool)pChoiceData->m_choiceData);
-		std::cout << "in BUtton handle event, window changed. Choice : " << pChoiceData->m_choiceData << std::endl;
 	}
 
 	if (pEvent->Type() == EVENT_OnCollide)
@@ -134,29 +130,6 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isApplyButton) 
 				{
-					/* stuff from outro 
-					//TETRA_GAME_CONFIG.SelectResolution(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION]);
-
-					//std::cout << "in Apply button, handle collision function, resultion changed. Choice : " << m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] << std::endl;
-					//get current window choice from render manager
-
-					/*bool isfullscreen=TETRA_RENDERER.GetFullScreenStatus();
-					m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = (int)isfullscreen;
-
-					if (m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] == 0 && TETRA_RENDERER.GetFullScreenStatus())
-					{
-						std::cout << "in Apply button, handle collision function set windowed. Choice : " << m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] << std::endl;
-						std::cout << "Fullscreen status " << TETRA_RENDERER.GetFullScreenStatus() << std::endl;
-						TETRA_RENDERER.SetWindowToWindowedMode();
-					}	
-					else
-					{
-						TETRA_RENDERER.SetWindowToFullscreen();
-						std::cout << "in Apply button,handle collision function, set fullscreen. Choice : " << m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] << std::endl;
-
-						std::cout << "Fullscreen status " << TETRA_RENDERER.GetFullScreenStatus() << std::endl;
-					}
-					*/
 					TETRA_GAME_CONFIG.SelectResolutionAndScreenMode(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION], m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] == OPTION_FULLSCREEN);
 				}
 				else {

@@ -1,7 +1,6 @@
 #include "Stdafx.h"
 #include "ListSelector.h"
 
-
 ListSelector::ListSelector():Component(ComponentType::C_ListSelector)
 {
 	
@@ -88,12 +87,11 @@ void ListSelector::LateInitialize()
 	if (m_isResolution)
 	{
 		m_currentChoice = TETRA_GAME_CONFIG.GetCurrentResolutionIndex();
-		std::cout << "initial resolution choice " << m_currentChoice << std::endl;
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnResolutionChanged, &ChoiceData(m_currentChoice)));
 	}
 	else
 	{
 		m_currentChoice = (int)TETRA_RENDERER.GetFullScreenStatus();
-		std::cout << "in list selector.cpp, initial fullscreen choice " << m_currentChoice << std::endl;
-	}
-		
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnWindowedChanged, &ChoiceData(m_currentChoice)));
+	}		
 }
