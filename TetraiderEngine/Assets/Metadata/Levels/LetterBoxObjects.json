@@ -1,8 +1,6 @@
 {
-	"GAME_OBJECTS": [
-
-	],
-	"OTHER": [
+	"GAME_OBJECTS": [],
+	"GAME_OBJECTS_OLD": [
 		{
 			"prefab": "P_LetterBoxCamera"
 		},

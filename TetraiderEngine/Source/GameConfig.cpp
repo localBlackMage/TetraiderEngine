@@ -119,6 +119,16 @@ void GameConfig::SelectResolution(unsigned short resolutionIndex)
 	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution])));
 }
 
+void GameConfig::SelectResolutionAndScreenMode(unsigned short resoutionIndex, bool isFullscreen)
+{
+	if (isFullscreen)
+		TETRA_RENDERER.SetWindowToFullscreen();
+	else
+		TETRA_RENDERER.SetWindowToWindowedMode();
+
+	SelectResolution(resoutionIndex);
+}
+
 void GameConfig::NextResolution()
 {
 	if (++m_currentResolution > 3)	m_currentResolution = 0;

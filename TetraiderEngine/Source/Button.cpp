@@ -1,5 +1,8 @@
 #include <Stdafx.h>
 
+#define OPTION_WINDOWED 0
+#define OPTION_FULLSCREEN 1
+
 Button::Button() :Component(ComponentType::C_Button) 
 {
 	m_isQuit = false;
@@ -131,13 +134,14 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isApplyButton) 
 				{
+					/* stuff from outro 
 					//TETRA_GAME_CONFIG.SelectResolution(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION]);
 
 					//std::cout << "in Apply button, handle collision function, resultion changed. Choice : " << m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] << std::endl;
 					//get current window choice from render manager
 
 					/*bool isfullscreen=TETRA_RENDERER.GetFullScreenStatus();
-					m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = (int)isfullscreen;*/
+					m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = (int)isfullscreen;
 
 					if (m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] == 0 && TETRA_RENDERER.GetFullScreenStatus())
 					{
@@ -152,7 +156,8 @@ void Button::HandleEvent(Event* pEvent)
 
 						std::cout << "Fullscreen status " << TETRA_RENDERER.GetFullScreenStatus() << std::endl;
 					}
-						
+					*/
+					TETRA_GAME_CONFIG.SelectResolutionAndScreenMode(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION], m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] == OPTION_FULLSCREEN);
 				}
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
@@ -166,3 +171,5 @@ void Button::HandleEvent(Event* pEvent)
 	
 }
 
+#undef OPTION_WINDOWED
+#undef OPTION_FULLSCREEN

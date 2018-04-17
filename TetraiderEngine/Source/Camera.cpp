@@ -42,7 +42,7 @@ void Camera::Serialize(const json& j)
 		m_layersToRender[TETRA_GAME_OBJECTS.GetLayerFromString(layer)] = true;
 	}
 
-	for (unsigned int i = 0; i < 4; ++i) {
+	for (unsigned int i = 0; i < MAX_RESOLUTIONS; ++i) {
 		m_zoomLevels[i] = j["zoomLevels"][i];
 	}
 }
@@ -77,11 +77,11 @@ void Camera::LateInitialize()
 
 void Camera::Update(float dt)
 {
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_X))
-		m_zoomLevels[m_currentZoomIndex] -= 0.1f;
-		
-	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_Z))
-		m_zoomLevels[m_currentZoomIndex] += 0.1f;
+	//if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_X))
+	//	m_zoomLevels[m_currentZoomIndex] -= 0.01f;
+	//	
+	//if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_Z))
+	//	m_zoomLevels[m_currentZoomIndex] += 0.01f;
 }
 
 void Camera::LateUpdate(float dt)

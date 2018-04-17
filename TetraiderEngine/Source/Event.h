@@ -3,6 +3,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#define MAX_RESOLUTIONS 4
+
 // Macro trick to make Event names enums from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,
 typedef enum

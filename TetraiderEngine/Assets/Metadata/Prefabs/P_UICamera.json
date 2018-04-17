@@ -18,7 +18,7 @@
 			"Component": "Camera",
 			"fov": 105,
 			"perspective": false,
-			"zoomLevels": [ 1.25, 1, 0.8, 0.66 ],
+			"zoomLevels": [ 1, 0.83, 0.8, 0.66 ],
 			"primary": false,
 			"layers": ["UIBG", "UI", "UI_1", "UI_2", "UI_3"]
 		}

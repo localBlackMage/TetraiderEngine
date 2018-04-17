@@ -63,7 +63,7 @@ void LetterBox::Serialize(const json & j)
 	else if (anchor == "Left")	m_anchor = A_LEFT;
 	else						m_anchor = A_RIGHT;
 
-	for (int i = 0; i < 4; ++i) 
+	for (int i = 0; i < MAX_RESOLUTIONS; ++i)
 	{
 		m_scalePerResolution[i] = j["Dimensions"][i];
 		m_posPerResolution[i] = j["Positions"][i];
