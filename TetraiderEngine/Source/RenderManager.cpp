@@ -650,7 +650,7 @@ void RenderManager::DisableWindowsCursor()
 void RenderManager::SetWindowToFullscreen()
 {
 	if (!m_isFullscreen) {
-		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
 		m_isFullscreen = true;
 		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_ENTER_FULLSCREEN));
 	}

@@ -111,7 +111,7 @@ void Agent::LateInitialize() {
 
 Vector3D Agent::GetDirectionFromPlayerToMouse() {
 	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetPrimaryCamera();
 	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
 	const Transform* pPlayerTransform = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform);
 	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(pPlayerTransform->GetPosition());
