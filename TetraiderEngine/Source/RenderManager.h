@@ -77,6 +77,7 @@ private:
 	std::string m_windowTitle, m_baseWindowTitle; // base window title is kinda hacky
 	SDL_GLContext m_context;
 	SDL_Window * m_pWindow;
+	SDL_Renderer * m_pRenderer;
 	bool m_cursorEnabled;
 	Vector3D m_clearColor;
 
@@ -110,6 +111,8 @@ private:
 	void _BindUniform2(SHADER_LOCATIONS location, float val1, float val2);
 	void _BindUniform3(SHADER_LOCATIONS location, const Vector3D& values);
 	void _BindUniform4(SHADER_LOCATIONS location, const Vector3D& values);
+
+	void _SetRendererLogicalSize(const Resolution& resolution);
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
 	~RenderManager();

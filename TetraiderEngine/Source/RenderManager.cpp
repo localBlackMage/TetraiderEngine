@@ -10,6 +10,7 @@ RenderManager::RenderManager(int width, int height, std::string title) :
 RenderManager::~RenderManager()
 {
 	EnableWindowsCursor();
+	SDL_DestroyRenderer(m_pRenderer);
 	SDL_GL_DeleteContext(m_context);
 	IMG_Quit();
 	TTF_Quit();
@@ -457,6 +458,11 @@ void RenderManager::_BindUniform4(SHADER_LOCATIONS location, const Vector3D& val
 	glUniform4f(location, values[0], values[1], values[2], values[3]);
 }
 
+void RenderManager::_SetRendererLogicalSize(const Resolution & resolution)
+{
+	SDL_RenderSetLogicalSize(m_pRenderer, int(resolution.width), int(resolution.height));
+}
+
 #pragma endregion
 
 #pragma endregion
@@ -543,6 +549,14 @@ void RenderManager::HandleEvent(Event * p_event)
 			}
 			break;
 		}
+		case EVENT_WINDOW_RESIZED:
+		{
+			if (m_isFullscreen) {
+				WindowResizedData * data = p_event->Data<WindowResizedData>();
+				_SetRendererLogicalSize(data->resolution);
+			}
+			break;
+		}
 	}
 }
 
@@ -575,6 +589,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_LIGHTS, this);
 		TETRA_EVENTS.Subscribe(EventType::EVENT_TOGGLE_CURSOR, this);
 	}
+	TETRA_EVENTS.Subscribe(EventType::EVENT_WINDOW_RESIZED, this);
 
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -588,15 +603,22 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 	//SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-	m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		m_width, m_height,
-		SDL_WINDOW_OPENGL);
+	//m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
+	//	SDL_WINDOWPOS_CENTERED,
+	//	SDL_WINDOWPOS_CENTERED,
+	//	m_width, m_height,
+	//	SDL_WINDOW_OPENGL);
+
+	SDL_CreateWindowAndRenderer(
+		m_width, m_height, SDL_WINDOW_OPENGL,
+		&m_pWindow, &m_pRenderer);
 	m_context = SDL_GL_CreateContext(m_pWindow);
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_GL_SwapWindow(m_pWindow);
+
+	SetWindowTitle(m_windowTitle);
+	SDL_SetWindowPosition(m_pWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	if (startFullScreen)
 		SetWindowToFullscreen();
 
