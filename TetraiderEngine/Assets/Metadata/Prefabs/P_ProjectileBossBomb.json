@@ -96,7 +96,7 @@
 		"isExplode": true,
 		"explosionRadius": 100,
 		"explosionKnockBack": 2000,
-		"explosionDamage": 40,
+		"explosionDamage": 25,
 		"explosionPrefab": "P_ExplosionSmall"
 	},
 	{

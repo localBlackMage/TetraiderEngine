@@ -622,6 +622,10 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 	if (startFullScreen)
 		SetWindowToFullscreen();
 
+	if (SDL_GL_SetSwapInterval(1) < 0) {
+		printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError());
+	}
+
 	// Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {

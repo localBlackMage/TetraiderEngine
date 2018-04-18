@@ -134,7 +134,7 @@
 				"rotationSpeed": 1,
 				
 				"finalFade": 1,
-				"fadeSpeed": 0.3,
+				"fadeSpeed": 0.23,
 				
 				"finalScale": {
 					"x" : 0,
