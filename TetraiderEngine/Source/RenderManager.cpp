@@ -479,11 +479,18 @@ void RenderManager::EnableAlphaTest()
 {
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_ALPHA_TEST);
-	//glAlphaFunc(GL_GREATER, 0.01f);
 	glAlphaFunc(GL_ALWAYS, 0.0f);
 	glEnable(GL_BLEND);
-	glColor4f(1.0f, 0.0f, 1.0f, 0.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void RenderManager::EnableAlphaTest_SourceNoDest()
+{
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_ALWAYS, 0.0f);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ZERO);
 }
 
 void RenderManager::EnableDepthTest()

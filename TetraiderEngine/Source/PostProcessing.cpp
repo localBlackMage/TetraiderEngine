@@ -230,14 +230,24 @@ void PostProcessing::DoPostProcessing()
 {
 	_Start();
 	// Bind + clear gaus blur FBO
-	//m_pGaussianHIR->ClearBuffer();
-	//m_pGaussianVIR->ClearBuffer();
-	//m_pGaussianVIR->Render(m_pBaseIR);
+	m_pGaussianHIR->ClearBuffer();
+	m_pGaussianVIR->ClearBuffer();
+	m_pGaussianVIR->Render(m_pBaseIR);
+
+	for (int i = 0; i < 10; ++i) {
+		m_pBaseIR->ClearBuffer();
+		m_pBaseIR->Render(m_pGaussianVIR);
+		m_pGaussianVIR->ClearBuffer();
+		m_pGaussianVIR->Render(m_pBaseIR);
+	}
+
 	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
 	//m_pGaussianHIR->Render(m_pGaussianVIR);
 	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
 	//int windowWidth, windowHeight;
 	//TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+	m_pBaseIR->ClearBuffer();
+	m_pBaseIR->Render(m_pGaussianVIR);
 	_End();
 }
 
