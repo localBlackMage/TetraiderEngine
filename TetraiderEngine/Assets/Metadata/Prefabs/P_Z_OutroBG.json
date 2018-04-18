@@ -63,8 +63,8 @@
                     },
                     "isDisablePreviousRendering": false,
                     "isParentPrev": false,
-					"isPlaySound": false,
-					"delaySound": 0,
+					"isPlaySound": true,
+					"delaySound": 0.1,
 					"soundIndex": 0
                   },
                   {
@@ -74,10 +74,7 @@
                       "y":1200
                     },
                     "isDisablePreviousRendering": false,
-                    "isParentPrev": false,
-					"isPlaySound": false,
-					"delaySound": 1.35,
-					"soundIndex": 1
+                    "isParentPrev": false
                   },
                   {
                     "prefab":"P_Z_Intro_transition_1-2",
@@ -95,9 +92,25 @@
                       "y":0
                     },
                     "isDisablePreviousRendering": true,
-                    "isParentPrev": false
+                    "isParentPrev": false,
+					"isPlaySound": true,
+					"delaySound": 1.6,
+					"soundIndex": 1
                   }
             ]
-        }
+        },
+		{
+		"Component": "Audio",
+		"audioClip": [
+		 "SFX_LavaBubble.wav",
+		 "SFX_PartyCrowdMusic.wav"
+		 ],
+		"volume": 1,
+		"isMute": false,
+		"isLoop": false,
+		"isPlayOnAwake": false,
+		"isBGM": false,
+		"is3D": false
+	   }
     ]
 }

@@ -65,8 +65,8 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 0,
-		"startInFullscreen": false
+		"defaultResolution": 3,
+		"startInFullscreen": true
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
@@ -98,15 +98,24 @@
 			{"cols": 4, "rows": 4, "difficulty": 3, "boss": false, "shop": true, "eggsToCollect": 3},
 			{"cols": 5, "rows": 4, "difficulty": 4, "boss": true, "shop": true, "eggsToCollect": 4}
 		],
-		"UseSeeds": false,
+		"UseSeeds": true,
 		"Seeds": {
 			"1": [
-				1523909643,
-				1523910109
+			1524087021,
+			1524087316,
+			1523909643,
+			1523910109
 			],
-			"2": [],
-			"3": [],
-			"4": []
+			"2": [
+			1524085768,
+			1524087660
+			],
+			"3": [
+			1524086005
+			],
+			"4": [
+			1524086218
+			]
 		}
 	},
 	"INPUT_SETTINGS": [

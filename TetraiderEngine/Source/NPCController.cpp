@@ -248,8 +248,10 @@ void NPCController::HandleEvent(Event* pEvent) {
 		}
 		case EVENT_OnBossLand: {
 			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
-			if (pAudio)
+			if (pAudio) {
 				pAudio->Play(1);
+				pAudio->Play(2);
+			}
 			TETRA_GAME_OBJECTS.CreateGameObject(m_puffParticlePrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_puffOffset, 0));
 			break;
 		}

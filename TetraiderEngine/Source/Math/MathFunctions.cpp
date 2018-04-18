@@ -61,6 +61,9 @@ float RandomFloat(float min, float max) {
 }
 
 int RandomInt(int min, int max) {
+	if (min == 0 && max == 0)
+		return 0;
+
 	return Rand() % (max-min) + min;
 }
 

@@ -303,7 +303,8 @@
 		"Component": "Audio",
 		"audioClip": [
 			"SFX_RockDeath.wav",
-			"SFX_BossLand.wav"
+			"SFX_BossLand.wav",
+			"SFX_EnemyGrowl.wav"
 		],
 		"volume": 1,
 		"isMute": false,

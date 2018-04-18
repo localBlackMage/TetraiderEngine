@@ -72,10 +72,10 @@ void GameConfig::LoadConfig(std::string s) {
 	json inputSettings = j[INPUT_SETTINGS];
 	TETRA_INPUT.Initialize(inputSettings);
 
-	_ParseSeeds(j[LEVEL_SETTINGS]["1"], 0);
-	_ParseSeeds(j[LEVEL_SETTINGS]["2"], 1);
-	_ParseSeeds(j[LEVEL_SETTINGS]["3"], 2);
-	_ParseSeeds(j[LEVEL_SETTINGS]["4"], 3);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["1"], 0);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["2"], 1);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["3"], 2);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["4"], 3);
 	m_shouldUseSeeds = ParseBool(j[LEVEL_SETTINGS], "UseSeeds");
 
 	// Set debug parameters
