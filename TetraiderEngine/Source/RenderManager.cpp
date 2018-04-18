@@ -627,6 +627,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 		m_width, m_height, SDL_WINDOW_OPENGL,
 		&m_pWindow, &m_pRenderer);
 	m_context = SDL_GL_CreateContext(m_pWindow);
+	SDL_GL_SetSwapInterval(1);
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_GL_SwapWindow(m_pWindow);

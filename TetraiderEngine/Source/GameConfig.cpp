@@ -120,7 +120,7 @@ void GameConfig::SelectResolution(unsigned short resolutionIndex)
 	if (resolutionIndex > 3)	return;
 	m_currentResolution = resolutionIndex;
 
-	if (!TETRA_RENDERER.IsFullScreen())
+	if (!TETRA_RENDERER.GetFullScreenStatus())
 		TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
 
 	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution])));
