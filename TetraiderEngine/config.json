@@ -15,7 +15,7 @@
 		
 		"powerUpSettings": "Metadata/powerUpSettings.json",
 		
-		"isDebugModeEnabled": true,
+		"isDebugModeEnabled": false,
 		"soundsMute": false
 	},
 	"RENDER_SETTINGS": {

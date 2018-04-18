@@ -10,7 +10,7 @@ Author: <Holden Profit>
 void LetterBox::_SetPosAndScale()
 {
 	// If we're not in full screen, there's no need for the letterboxing, so hide it away
-	if (!TETRA_RENDERER.IsFullScreen()) {
+	if (!TETRA_RENDERER.GetFullScreenStatus()) {
 		m_pTransform->SetScale(0, 0, 0);
 		m_pTransform->SetPosition(Vector3D(-2000.f, 0, 0));
 	}
