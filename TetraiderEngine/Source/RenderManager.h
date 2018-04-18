@@ -149,7 +149,14 @@ public:
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
+	/*
+		Performs normal alpha blending
+	*/
 	void EnableAlphaTest();
+	/*
+		Overrides destination with source
+	*/
+	void EnableAlphaTest_SourceNoDest();
 	void EnableDepthTest();
 	void BindMesh(const Mesh& mesh);
 	void ClearBuffer();

@@ -15,7 +15,7 @@
 		
 		"powerUpSettings": "Metadata/powerUpSettings.json",
 		
-		"isDebugModeEnabled": false,
+		"isDebugModeEnabled": true,
 		"soundsMute": false
 	},
 	"RENDER_SETTINGS": {
@@ -31,7 +31,7 @@
 		
 		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
-		"postProcessingEnabled": false
+		"postProcessingEnabled": true
 	},
 	"SHADERS": [
 		"fboRenderer",
