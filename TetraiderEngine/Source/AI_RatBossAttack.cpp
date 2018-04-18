@@ -16,7 +16,7 @@ void AI_RatBossAttack::OnEnter(){
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
 		m_attackCounter = RandomInt(m_attackMinLimit, m_attackMaxLimit + 1);
-		pAgent->StopMoving();
+		//pAgent->StopMoving();
 		idleTime = 0.0f;
 		break;
 	case PHASE2:
@@ -42,10 +42,10 @@ void AI_RatBossAttack::OnUpdate(float dt){
 			pAgent->ChangeState(NPC_ENGAGE);
 		}
 
-		if (idleTime < idleDuration) {
-			idleTime += dt;
-			return;
-		}
+		//if (idletime < idleduration) {
+		//	idletime += dt;
+		//	return;
+		//}
 
 		if (pAgent->UseAttack(0)) {
 			pAgent->PlayAttackAnim();
