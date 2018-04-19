@@ -40,7 +40,7 @@ void ImageRenderer::Render(FrameBufferObject * pOtherFBO) const
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
-	TETRA_RENDERER.EnableAlphaTest();
+	TETRA_RENDERER.EnableAlphaTest_SourceNoDest();
 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
@@ -87,7 +87,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram & shader, int width, int 
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
-	TETRA_RENDERER.EnableAlphaTest();
+	TETRA_RENDERER.EnableAlphaTest_SourceNoDest();
 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
@@ -109,7 +109,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram& shader) const
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
-	TETRA_RENDERER.EnableAlphaTest();
+	TETRA_RENDERER.EnableAlphaTest_SourceNoDest();
 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
@@ -131,7 +131,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram & shader, const ImageRend
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
-	TETRA_RENDERER.EnableAlphaTest();
+	TETRA_RENDERER.EnableAlphaTest_SourceNoDest();
 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);

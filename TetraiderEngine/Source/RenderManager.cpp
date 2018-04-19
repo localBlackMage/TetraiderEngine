@@ -479,11 +479,18 @@ void RenderManager::EnableAlphaTest()
 {
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_ALPHA_TEST);
-	//glAlphaFunc(GL_GREATER, 0.01f);
 	glAlphaFunc(GL_ALWAYS, 0.0f);
 	glEnable(GL_BLEND);
-	glColor4f(1.0f, 0.0f, 1.0f, 0.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void RenderManager::EnableAlphaTest_SourceNoDest()
+{
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_ALWAYS, 0.0f);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ZERO);
 }
 
 void RenderManager::EnableDepthTest()
@@ -620,6 +627,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 		m_width, m_height, SDL_WINDOW_OPENGL,
 		&m_pWindow, &m_pRenderer);
 	m_context = SDL_GL_CreateContext(m_pWindow);
+	SDL_GL_SetSwapInterval(1);
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_GL_SwapWindow(m_pWindow);

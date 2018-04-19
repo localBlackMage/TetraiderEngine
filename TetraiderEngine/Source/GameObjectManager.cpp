@@ -236,7 +236,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 	#pragma endregion
 	TETRA_POST_PROCESSING.UnbindBaseFBO();
-	//TETRA_POST_PROCESSING.DoPostProcessing();
+	TETRA_POST_PROCESSING.DoPostProcessing();
 	TETRA_RENDERER.DrawSceneFBO();
 }
 

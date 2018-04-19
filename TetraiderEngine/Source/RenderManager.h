@@ -129,9 +129,7 @@ public:
 	virtual void HandleEvent(Event * p_event);
 
 	inline bool GetFullScreenStatus()const { return m_isFullscreen; };
-	inline void SetFullScreenStatus(bool status) { m_isFullscreen = status; };
 	void SetUpConsole();
-	inline bool IsFullScreen() const { return m_isFullscreen; }
 	void InitWindow(bool debugEnabled, bool startFullScreen);
 	void EnableWindowsCursor();
 	void DisableWindowsCursor(); 
@@ -149,7 +147,14 @@ public:
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
 
+	/*
+		Performs normal alpha blending
+	*/
 	void EnableAlphaTest();
+	/*
+		Overrides destination with source
+	*/
+	void EnableAlphaTest_SourceNoDest();
 	void EnableDepthTest();
 	void BindMesh(const Mesh& mesh);
 	void ClearBuffer();
