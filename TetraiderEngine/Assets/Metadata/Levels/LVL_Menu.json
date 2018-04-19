@@ -5,7 +5,7 @@
       "prefab": "P_UICameraMenu"
     },
     {
-      "prefab": "P_MainMenu"
+      "prefab": "P_MainMenu_Release"
     },
 	{
 	  "prefab": "P_VolcanoBackGround"
