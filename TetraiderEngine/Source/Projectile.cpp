@@ -1,11 +1,9 @@
-//#include "Projectile.h"
-//#include "Transform.h"
-//#include "Body.h"
-//#include "GameObject.h"
-//#include "Event.h"
-//#include "Health.h"
-//#include "TetraiderAPI.h"
-//#include "Audio.h"
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
 
 #include <Stdafx.h>
 

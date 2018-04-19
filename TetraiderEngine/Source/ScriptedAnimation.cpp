@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 ScriptedAnimation::ScriptedAnimation(): Component(ComponentType::C_ScriptedAnimation), m_isPlayAnimation(false), m_currentAnimationIndex(0), m_isReverse(false), m_isRelative(false), m_isPlayOnPause(false) {}

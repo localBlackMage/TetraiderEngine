@@ -1,11 +1,13 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 #ifndef FOLLOW_CAMERA_H
 #define FOLLOW_CAMERA_H
-
-//#include "Component.h"
-//class Transform;
-//class GameObject;
-
 
 /*
 The intention of this component is for the GO it is attached to to follow the

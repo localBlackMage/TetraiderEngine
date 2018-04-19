@@ -1,9 +1,9 @@
-//#include "GameObject.h"
-//#include "Transform.h"
-//#include "ScaleByHPStamina.h"
-//#include "TetraiderAPI.h"
-//#include "Health.h"
-//#include "Stamina.h"
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
 
 #include <Stdafx.h>
 

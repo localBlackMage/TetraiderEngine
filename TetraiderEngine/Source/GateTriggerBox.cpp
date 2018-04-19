@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 GateTriggerBox::GateTriggerBox(): Component(ComponentType::C_GateTriggerBox), m_isTriggered(false), m_isBossTriggerBox(false) {}

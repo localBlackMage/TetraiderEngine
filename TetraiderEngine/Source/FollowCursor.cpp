@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 FollowCursor::FollowCursor() :Component(ComponentType::C_FollowCursor), m_isDisableRenderOnPause(false), m_isLevelOver(false), m_isSliderBallSeleced(false) {}

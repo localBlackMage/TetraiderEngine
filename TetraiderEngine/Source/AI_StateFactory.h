@@ -13,10 +13,6 @@ Creation date: 2/22/18
 #ifndef AI_STATE_FACTORY_H
 #define AI_STATE_FACTORY_H
 
-//#include "AI_State.h"
-//#include <string>
-//#include <unordered_map>
-
 // forward declaration
 class AI_State;
 

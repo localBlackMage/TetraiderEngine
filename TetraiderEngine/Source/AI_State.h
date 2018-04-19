@@ -2,13 +2,9 @@
 Copyright (C) 2018 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: AIComponent.h
-Purpose: AI component class for NPC Controller component inside the gameobject
-Language: C++
-Project: GAM541
-Author: Hyoyup Chung
-Creation date: 2/22/18
+Author: <Hyoyup Chung>
 - End Header --------------------------------------------------------*/
+
 #pragma once
 #ifndef AI_STATE_H
 #define AI_STATE_H

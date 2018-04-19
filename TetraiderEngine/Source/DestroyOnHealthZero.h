@@ -1,13 +1,13 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 #ifndef DESTROY_ONHEALTH_ZERO_H
 #define DESTROY_ONHEALTH_ZERO_H
-
-//class Sprite;
-//
-//#include "Component.h"
-//#include "Math/MathLibs.h"
-//
-//class Attack;
 
 class DestroyOnHealthZero : public Component {
 public:

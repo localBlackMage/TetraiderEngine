@@ -15,9 +15,6 @@ Creation date: 1/17/18
 #ifndef MATRIX4X4_H
 #define MATRIX4X4_H
 
-//#include "Vector3D.h"
-//#include "Matrix3x3.h"
-
 class Matrix4x4
 {
 private:
