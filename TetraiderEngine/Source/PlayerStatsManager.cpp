@@ -39,7 +39,7 @@ void PlayerStatsManager::HandleEvent(Event * p_event) {
 		}
 		case EVENT_INPUT_GOLDENFEATHERCHEAT: {
 			InputButtonData* pData = p_event->Data<InputButtonData>();
-			if(pData->m_isTrigger)
+			if(pData->m_isTrigger && TETRA_GAME_STATE.IsCheatsAllowed())
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_GoldenFeatherCollected, &CollectibleData(10)));
 		}
 	}

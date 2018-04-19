@@ -12,6 +12,7 @@ static const std::string GAME_OBJECTS = "GAME_OBJECTS";
 LevelManager::LevelManager(): m_isRandomlyGenerated(true), m_wasRandomlyGenerated(false), m_levelsCompleted(0) {
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_RESTART, this);
 	TETRA_EVENTS.Subscribe(EVENT_INPUT_INCREMENTLEVEL, this);
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_LOAD_LEVEL_EDITOR, this);
 	TETRA_EVENTS.Subscribe(EVENT_ExitLevel, this);
 	TETRA_EVENTS.Subscribe(EVENT_OnLoadNextLevel, this);
 }
@@ -191,6 +192,7 @@ void LevelManager::_LoadLevel(const json& j) {
 void LevelManager::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 		case EVENT_INPUT_RESTART: {
+			if (!TETRA_GAME_STATE.IsCheatsAllowed()) return;
 			if (TETRA_GAME_STATE.m_isLevelEditorMode) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isTrigger) {
@@ -211,9 +213,20 @@ void LevelManager::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EVENT_INPUT_INCREMENTLEVEL: {
+			if (!TETRA_GAME_STATE.IsCheatsAllowed()) return;
 			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
 			if (pButtonData->m_isTrigger) {
 				IncrementLevelCompleted();
+			}
+			break;
+		}
+		case EVENT_INPUT_LOAD_LEVEL_EDITOR: {
+			if (!TETRA_GAME_STATE.IsCheatsAllowed()) return;
+			if (currentLevel != mainMenuLevel) return;
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isTrigger) {
+				TETRA_RENDERER.EnableWindowsCursor();
+				LoadLevelEditor(0);
 			}
 			break;
 		}

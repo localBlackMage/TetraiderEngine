@@ -148,7 +148,7 @@ void DebugManager::RenderDebugCommands(GameObject* pCamera)
 
 void DebugManager::Update()
 {
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1))
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1) && TETRA_GAME_STATE.IsCheatsAllowed())
 		m_isDebugModeEnabled = !m_isDebugModeEnabled;
 }
 

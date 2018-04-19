@@ -334,7 +334,7 @@ void LevelEditor::GoBackToMainMenu() {
 	}
 
 	m_instances.clear();
-
+	TETRA_RENDERER.DisableWindowsCursor();
 	TETRA_LEVELS.ChangeLevel(1);
 }
 

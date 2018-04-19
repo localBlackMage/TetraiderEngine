@@ -171,17 +171,8 @@
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
-			"KeyBoardKey": 21,
+			"KeyBoardKey": 68,
 			"XboxKey": 4
-		},
-		{
-			"Name": "PauseMusic",
-			"EventType": 7,
-			"InputType": 0,
-			"isMouse": false,
-			"isJoystick": true,
-			"KeyBoardKey": 16,
-			"XboxKey": 11
 		},
 		{
 			"Name": "PauseGame",
@@ -264,6 +255,15 @@
 			"isMouse": false,
 			"isJoystick": false,
 			"KeyBoardKey": 63,
+			"XboxKey": 0
+		},
+		{
+			"Name": "LOAD_EDITOR",
+			"EventType": 27,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 66,
 			"XboxKey": 0
 		},
 		{

@@ -82,7 +82,9 @@ void Controller::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EventType::EVENT_INPUT_GODMODE: {
-			_ToggleGodMode();
+			if (!TETRA_GAME_STATE.IsCheatsAllowed()) return;
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isTrigger) _ToggleGodMode();
 			break;
 		}
 		case EventType::EVENT_OnCamGoToBossRoom: {
