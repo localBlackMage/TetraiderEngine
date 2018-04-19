@@ -65,8 +65,8 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 3,
-		"startInFullscreen": true
+		"defaultResolution": 0,
+		"startInFullscreen": false
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
