@@ -36,10 +36,10 @@
 	},
 	{
 		"Component": "DealDamageOnCollision",
-		"damage": 5,
+		"damage": 2,
 		"knockBackSpeed": 1000,
 		"isForceKnockBack": true,
-		"hitCoolDown": 0.4
+		"hitCoolDown": 0.15
 	}
   ]
 }

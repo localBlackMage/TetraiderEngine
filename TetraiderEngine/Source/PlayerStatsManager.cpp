@@ -47,6 +47,8 @@ void PlayerStatsManager::ClearStats() {
 		m_activePowerUps[i] = nullptr;
 	}
 
+	m_playerStats.m_goldenFeathers = 0;
+
 	InitializePowerUps(m_powerUpSettings);
 	m_isNewGame = true;
 }
