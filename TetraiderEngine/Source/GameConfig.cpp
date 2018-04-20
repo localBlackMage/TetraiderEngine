@@ -151,6 +151,7 @@ void GameConfig::PrevResolution()
 unsigned int GameConfig::GetSeed(int level)
 {
 	if (m_shouldUseSeeds) {
+		SeedRand(int(time(nullptr)));
 		return m_seeds[level][RandomInt(0, m_seeds[level].size())];
 	}
 	else {
