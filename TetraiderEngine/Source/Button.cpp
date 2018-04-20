@@ -126,6 +126,7 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);
+					TETRA_AUDIO.StopSongs();
 				}
 				else if(m_isLoadCanvas)
 				{

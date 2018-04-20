@@ -31,7 +31,7 @@ public:
 	void Update(float elapsed);
 	void PlaySFX(const std::string& path, float volume, bool loop, bool is3D, Vector3D SourcePos,float,float);
 	void PlaySFX(const std::string& path, float volume);
-	void PlaySong(const std::string& path, float volume);
+	void PlaySong(const std::string& path, float volume, bool isIgnoreDirectory = false);
 	void StopAllSFXs();
 	void StopSFX(std::string& path);
 	void StopSongs();

@@ -84,6 +84,7 @@ void AudioManager::Update(float elapsed)
 			ErrorCheck(m_pCurrentSongChannel->setVolume(nextVolume));
 		}
 	}
+
 	else if (m_pCurrentSongChannel != 0 && m_fade==FADE_OUT)
 	{
 		float volume;
@@ -103,7 +104,7 @@ void AudioManager::Update(float elapsed)
 	}
 	else if (m_pCurrentSongChannel == 0 && !m_nextSongPath.empty())
 	{
-		PlaySong(m_nextSongPath, m_musicVol);
+		PlaySong(m_nextSongPath, m_musicVol, true);
 		m_nextSongPath.clear();
 	}
 	ErrorCheck(m_pSystem->update());
@@ -163,13 +164,18 @@ void AudioManager::PlaySFX(const std::string & name, float volume)
 
 }
 
-void AudioManager::PlaySong(const std::string & name, float volume)
+void AudioManager::PlaySong(const std::string & name, float volume, bool isIgnoreDirectory)
 {
 	//store music volume
 	m_musicVol = ScaledVol(volume);
 
 	//ignore if song already playing
-	std::string soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	std::string soundFile;
+	if (!isIgnoreDirectory)
+		soundFile = TETRA_GAME_CONFIG.SFXDir() + name;
+	else
+		soundFile = name;
+
 	if (m_currentSongPath == soundFile)
 		return;
 
@@ -181,7 +187,12 @@ void AudioManager::PlaySong(const std::string & name, float volume)
 		return;
 	}
 	//find song in <-> sound map
-	FMOD::Sound* sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + name, SONG);
+	FMOD::Sound* sound;
+	if (!isIgnoreDirectory)
+		sound = TETRA_RESOURCES.GetSFX(TETRA_GAME_CONFIG.SFXDir() + name, SONG);
+	else 
+		sound = TETRA_RESOURCES.GetSFX(name, SONG);
+
 	if (!sound)
 		return;
 

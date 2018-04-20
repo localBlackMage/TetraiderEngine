@@ -10,10 +10,6 @@ Author: <Sujay Shah>
 Audio::Audio() :Component(ComponentType::C_Audio), m_currentIndex(0) {}
 Audio::~Audio() 
 {
-	if (m_isBGM)
-	{
-		TETRA_AUDIO.StopSongs();
-	}
 }
 
 void Audio::Deactivate() {
@@ -47,7 +43,9 @@ void Audio::Serialize(const json& j)
 
 	if (m_isBGM)
 	{
-		TETRA_RESOURCES.LoadSong(m_audioClip[m_currentIndex]);
+		for (unsigned int i = 0; i < m_audioClip.size(); ++i) {
+			TETRA_RESOURCES.LoadSong(m_audioClip[i]);
+		}
 		TETRA_AUDIO.SetFadeTime(m_fadeTime);
 	}	
 	else {
@@ -70,10 +68,18 @@ void Audio::Play(int index)
 		m_currentIndex = index;
 	}
 
-	 if (m_Ismute)
-		TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(),m_minDist,m_maxDist);
-	else
-		TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
+	if (m_isBGM) {
+		if (m_Ismute)
+			TETRA_AUDIO.PlaySong(m_audioClip[m_currentIndex], 0);
+		else
+			TETRA_AUDIO.PlaySong(m_audioClip[m_currentIndex], m_volume);
+	}
+	else {
+		if (m_Ismute)
+			TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], 0, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
+		else
+			TETRA_AUDIO.PlaySFX(m_audioClip[m_currentIndex], m_volume, m_isLoop, m_is3D, pGO->GetComponent<Transform>(ComponentType::C_Transform)->GetPosition(), m_minDist, m_maxDist);
+	}
 }
 
 void Audio::LateInitialize()

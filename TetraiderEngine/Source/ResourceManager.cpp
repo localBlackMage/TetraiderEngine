@@ -108,7 +108,7 @@ FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category typ
 	if (sound)
 		return sound;
 
-	std::cout << "Invalid sound name." << std::endl;
+	std::cout << path  <<" Invalid sound name." << std::endl;
 	return 0;
 }
 

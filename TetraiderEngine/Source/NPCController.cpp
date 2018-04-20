@@ -244,16 +244,24 @@ void NPCController::HandleEvent(Event* pEvent) {
 			}
 
 			if (m_isBoss) {
+				Audio* pAudio = TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play(0);
 				Event* e = new Event(EVENT_OnBossDefeated, 1.5f);
 				TETRA_EVENTS.AddDelayedEvent(e);
 			}
 			break;
 		}
 		case EVENT_OnEnterBoss: {
+			pGO->m_isCollisionDisabled = true;
 			EnterBoss();
+			Audio* pAudio = TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Audio>(C_Audio);
+			if (pAudio)
+				pAudio->Play(1);
 			break;
 		}
 		case EVENT_OnBossLand: {
+			pGO->m_isCollisionDisabled = false;
 			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
 			if (pAudio) {
 				pAudio->Play(1);

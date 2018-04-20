@@ -100,7 +100,8 @@ void Controller::HandleEvent(Event* pEvent) {
 		}
 		case EventType::EVENT_OnCamGoToPlayer: {
 			Health* pHealth = pGO->GetComponent<Health>(C_Health);
-			pHealth->Invincibility(false);
+			if (!m_isGodMode)
+				pHealth->Invincibility(false);
 			m_isControlsEnabled = true;
 			break;
 		}

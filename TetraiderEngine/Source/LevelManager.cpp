@@ -143,6 +143,10 @@ void LevelManager::LoadMainMenu() {
 }
 
 void LevelManager::ChangeLevel(int i) {
+	//Hard coded for credit screen
+	if (!(i == 7 || currentLevel == 7)) 
+		TETRA_AUDIO.StopSongs();
+
 	if (i == currentLevel) {
 		if (m_wasRandomlyGenerated)
 			m_isRandomlyGenerated = true;
