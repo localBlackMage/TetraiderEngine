@@ -29,7 +29,7 @@
 		"miniMapShader": "miniMapShader",
 		"miniMapFinalShader": "miniMapFinalShader",
 		
-		"consoleEnabled": false,
+		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": false
 	},
@@ -98,23 +98,30 @@
 			{"cols": 4, "rows": 4, "difficulty": 3, "boss": false, "shop": true, "eggsToCollect": 3},
 			{"cols": 5, "rows": 4, "difficulty": 4, "boss": true, "shop": true, "eggsToCollect": 4}
 		],
-		"UseSeeds": true,
+		"UseSeeds": false,
 		"Seeds": {
 			"1": [
 			1524087021,
 			1524087316,
 			1523909643,
-			1523910109
+			1523910109,
+			1524199737
 			],
 			"2": [
 			1524085768,
-			1524087660
+			1524087660,
+			1524200242
 			],
 			"3": [
-			1524086005
+			1524086005,
+			1524200784,
+			1524202169,
+			1524202384
 			],
 			"4": [
-			1524086218
+			1524086218,
+			1524201063,
+			1524202913
 			]
 		}
 	},
