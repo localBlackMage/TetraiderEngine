@@ -43,6 +43,15 @@ AlwaysRestart=no
 type
   HINSTANCE = THandle;
 
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  // the ItemEnabled property uses a 0 based index for item access, so the following
+  // code you can read as, if we have entered the tasks selection page, disable the
+  // first tasks list item
+  if CurPageID = wpSelectTasks then
+    WizardForm.TasksList.ItemEnabled[3] := False;
+end;
+
 procedure ExitProcess(uExitCode: UINT);
   external 'ExitProcess@kernel32.dll stdcall';
 function ShellExecute(hwnd: HWND; lpOperation: string; lpFile: string;
