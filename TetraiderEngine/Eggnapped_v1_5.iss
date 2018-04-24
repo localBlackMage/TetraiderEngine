@@ -191,7 +191,7 @@ IconFilename: "{app}\{#MyAppIcoName}"; Name: "{userappdata}\Microsoft\Internet E
 [Run]
 ; add the Parameters, WorkingDir and StatusMsg as you wish, just keep here
 ; the conditional installation Check
-Filename: "{tmp}\VC_redist.x86.exe"; Parameters: /silent /norestart; \
+Filename: "{tmp}\VC_redist.x86.exe"; Parameters: /install /passive /norestart; \
   StatusMsg: "Installing Microsoft VS2017 Redistributable"; Tasks: msvc2017redist;
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; \
   Flags: shellexec postinstall skipifsilent;
