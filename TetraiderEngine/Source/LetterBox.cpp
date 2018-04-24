@@ -1,9 +1,16 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 void LetterBox::_SetPosAndScale()
 {
 	// If we're not in full screen, there's no need for the letterboxing, so hide it away
-	if (!TETRA_RENDERER.IsFullScreen()) {
+	if (!TETRA_RENDERER.GetFullScreenStatus()) {
 		m_pTransform->SetScale(0, 0, 0);
 		m_pTransform->SetPosition(Vector3D(-2000.f, 0, 0));
 	}
@@ -63,7 +70,7 @@ void LetterBox::Serialize(const json & j)
 	else if (anchor == "Left")	m_anchor = A_LEFT;
 	else						m_anchor = A_RIGHT;
 
-	for (int i = 0; i < 4; ++i) 
+	for (int i = 0; i < MAX_RESOLUTIONS; ++i)
 	{
 		m_scalePerResolution[i] = j["Dimensions"][i];
 		m_posPerResolution[i] = j["Positions"][i];

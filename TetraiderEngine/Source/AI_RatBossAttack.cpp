@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Hyoyup Chung>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 AI_RatBossAttack::AI_RatBossAttack()
@@ -6,7 +13,7 @@ AI_RatBossAttack::AI_RatBossAttack()
 	m_attackMaxLimit = 3;
 
 	m_steerFor = 0.2f;
-	idleDuration = 0.55f;
+	idleDuration = 0.65f;
 }
 
 AI_RatBossAttack::~AI_RatBossAttack(){
@@ -38,15 +45,13 @@ void AI_RatBossAttack::OnUpdate(float dt){
 	switch (pAgent->GetCurrentPhase()) {
 	case PHASE1: // NORMAL MELEE ENEMY BEHAVIOR
 		pAgent->LookAtPlayer();
-		if (m_attackCounter > m_attackMaxLimit && pAgent->IsAttackAnimComplete()) {
-			pAgent->ChangeState(NPC_ENGAGE);
-		}
-
 		if (idleTime < idleDuration) {
 			idleTime += dt;
 			return;
 		}
-
+		if (m_attackCounter > m_attackMaxLimit && pAgent->IsAttackAnimComplete()) {
+			pAgent->ChangeState(NPC_ENGAGE);
+		}
 		if (pAgent->UseAttack(0)) {
 			pAgent->PlayAttackAnim();
 			m_attackCounter++;

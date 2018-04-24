@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 
@@ -18,7 +25,7 @@ void WinMessage::Update(float dt)
 {
 	if (TETRA_GAME_STATE.IsGamePaused() && TETRA_GAME_STATE.IsShopOpen()) return;
 
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F5) && !m_isMessageOn) {
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F5) && !m_isMessageOn && TETRA_GAME_STATE.IsCheatsAllowed()) {
 		pGO->m_isRender = true;
 		m_pScriptedAnim->PlayAnimation();
 		m_isMessageOn = true;

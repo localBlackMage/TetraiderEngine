@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 
 #ifndef GAME_CONFIG_H
@@ -23,7 +30,7 @@ private:
 	bool m_debugEnabled;
 	bool m_postProcessingEnabled;
 
-	Resolution m_resolutions[4];				// Array of supported resolutions, accepts a maximum of 4
+	Resolution m_resolutions[MAX_RESOLUTIONS];	// Array of supported resolutions, accepts a maximum of 4
 	unsigned short m_currentResolution;			// Index into m_resolutions for currently used resolution
 	unsigned short m_prevResolution;			// Saves the index into m_resolutions for toggling back and forth between full screen and windowed modes
 
@@ -60,6 +67,7 @@ public:
 	inline const Resolution& GetResolution() const { return m_resolutions[m_currentResolution]; }
 	inline const Resolution& GetResolution(int i) const { return m_resolutions[i]; }
 	void SelectResolution(unsigned short resolutionIndex);
+	void SelectResolutionAndScreenMode(unsigned short resoutionIndex, bool isFullscreen);
 	void NextResolution();
 	void PrevResolution();
 	inline unsigned short GetCurrentResolutionIndex() const { return m_currentResolution; }

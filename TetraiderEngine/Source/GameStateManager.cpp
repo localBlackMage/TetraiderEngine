@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 GameStateManager::GameStateManager() :
@@ -26,7 +33,7 @@ void GameStateManager::Update() {
 		// Game loop
 		while (m_currentState == m_nextState) {
 			// NOTE: This condition should be before frame start
-			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2))
+			if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F2) && IsCheatsAllowed())
 				m_debugPause = !m_debugPause; 
 
 			Tetraider::FrameStart();
@@ -35,6 +42,7 @@ void GameStateManager::Update() {
 			else if(!m_debugPause) Tetraider::Update(Tetraider::GetFrameTime());			// Game loop
 			else Tetraider::DebugMode();													// Debug mode
 
+			ActivateCheats();
 			Tetraider::FrameEnd();
 		}
 
@@ -95,4 +103,10 @@ void GameStateManager::SetGameState(GameState state) {
 	m_nextState = state; 
 	PauseGame(false);
 	m_isLevelOver = false;
+}
+
+void GameStateManager::ActivateCheats() {
+	if (TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_C) && TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_H) && TETRA_INPUT.IsKeyPressed(SDL_SCANCODE_E)) {
+		m_isCheatsActive = true;
+	}
 }

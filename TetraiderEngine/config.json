@@ -31,7 +31,7 @@
 		
 		"consoleEnabled": false,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
-		"postProcessingEnabled": true
+		"postProcessingEnabled": false
 	},
 	"SHADERS": [
 		"fboRenderer",
@@ -98,12 +98,31 @@
 			{"cols": 4, "rows": 4, "difficulty": 3, "boss": false, "shop": true, "eggsToCollect": 3},
 			{"cols": 5, "rows": 4, "difficulty": 4, "boss": true, "shop": true, "eggsToCollect": 4}
 		],
-		"UseSeeds": false,
+		"UseSeeds": true,
 		"Seeds": {
-			"1": [],
-			"2": [],
-			"3": [],
-			"4": []
+			"1": [
+			1524087021,
+			1524087316,
+			1523909643,
+			1523910109,
+			1524199737
+			],
+			"2": [
+			1524085768,
+			1524087660,
+			1524200242
+			],
+			"3": [
+			1524086005,
+			1524200784,
+			1524202169,
+			1524202384
+			],
+			"4": [
+			1524086218,
+			1524201063,
+			1524202913
+			]
 		}
 	},
 	"INPUT_SETTINGS": [
@@ -159,17 +178,8 @@
 			"InputType": 0,
 			"isMouse": false,
 			"isJoystick": true,
-			"KeyBoardKey": 21,
+			"KeyBoardKey": 68,
 			"XboxKey": 4
-		},
-		{
-			"Name": "PauseMusic",
-			"EventType": 7,
-			"InputType": 0,
-			"isMouse": false,
-			"isJoystick": true,
-			"KeyBoardKey": 16,
-			"XboxKey": 11
 		},
 		{
 			"Name": "PauseGame",
@@ -252,6 +262,15 @@
 			"isMouse": false,
 			"isJoystick": false,
 			"KeyBoardKey": 63,
+			"XboxKey": 0
+		},
+		{
+			"Name": "LOAD_EDITOR",
+			"EventType": 27,
+			"InputType": 0,
+			"isMouse": false,
+			"isJoystick": false,
+			"KeyBoardKey": 66,
 			"XboxKey": 0
 		},
 		{

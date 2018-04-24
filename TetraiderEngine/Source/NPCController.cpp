@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 NPCController::NPCController() :
@@ -237,19 +244,29 @@ void NPCController::HandleEvent(Event* pEvent) {
 			}
 
 			if (m_isBoss) {
+				Audio* pAudio = TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Audio>(C_Audio);
+				if (pAudio)
+					pAudio->Play(0);
 				Event* e = new Event(EVENT_OnBossDefeated, 1.5f);
 				TETRA_EVENTS.AddDelayedEvent(e);
 			}
 			break;
 		}
 		case EVENT_OnEnterBoss: {
+			pGO->m_isCollisionDisabled = true;
 			EnterBoss();
+			Audio* pAudio = TETRA_GAME_OBJECTS.GetPrimaryCamera()->GetComponent<Audio>(C_Audio);
+			if (pAudio)
+				pAudio->Play(1);
 			break;
 		}
 		case EVENT_OnBossLand: {
+			pGO->m_isCollisionDisabled = false;
 			Audio* pAudio = pGO->GetComponent<Audio>(C_Audio);
-			if (pAudio)
+			if (pAudio) {
 				pAudio->Play(1);
+				pAudio->Play(2);
+			}
 			TETRA_GAME_OBJECTS.CreateGameObject(m_puffParticlePrefab, true, m_pTransform->GetPosition() + Vector3D(0, m_puffOffset, 0));
 			break;
 		}
@@ -634,6 +651,9 @@ BossPhase NPCController::GetCurrentPhase() {
 	float maxHP = (float)pHealth->GetMaxHealth();
 	float curHP = (float)pHealth->GetHealth();
 	float index = maxHP / (float)TOTAL_PHASE_NUM;
+	if (curHP / maxHP < 0.4) {
+		return PHASE3;
+	}
 
 	BossPhase res = static_cast<BossPhase>((int)std::ceil(curHP / index) - 1);
 	return res;

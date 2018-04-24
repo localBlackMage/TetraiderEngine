@@ -44,8 +44,8 @@
           {
             "prefab":"P_Node1",
             "position":{
-              "x":262,
-              "y":10
+              "x":252,
+              "y":0
             },
             "nodeToGo": 2,
             "currentNode": 1

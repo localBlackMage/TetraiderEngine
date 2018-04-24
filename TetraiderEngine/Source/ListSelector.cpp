@@ -1,6 +1,12 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Sujay Shah>
+- End Header --------------------------------------------------------*/
+
 #include "Stdafx.h"
 #include "ListSelector.h"
-
 
 ListSelector::ListSelector():Component(ComponentType::C_ListSelector)
 {
@@ -88,12 +94,11 @@ void ListSelector::LateInitialize()
 	if (m_isResolution)
 	{
 		m_currentChoice = TETRA_GAME_CONFIG.GetCurrentResolutionIndex();
-		//std::cout << "resolution choice " << m_currentChoice << std::endl;
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnResolutionChanged, &ChoiceData(m_currentChoice)));
 	}
 	else
 	{
 		m_currentChoice = (int)TETRA_RENDERER.GetFullScreenStatus();
-		//std::cout << "fullscreen choice " << m_currentChoice << std::endl;
-	}
-		
+		TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnWindowedChanged, &ChoiceData(m_currentChoice)));
+	}		
 }

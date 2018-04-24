@@ -1,8 +1,12 @@
-#pragma once
-#include "Component.h"
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Sujay Shah>
+- End Header --------------------------------------------------------*/
 
-//class Transform;
-//class Body;
+#pragma once
+
 class Microphone : public Component
 {
 public:

@@ -1,13 +1,13 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 #ifndef LEVEL_EDITOR
 #define LEVEL_EDITOR
-
-//#include <vector>
-//#include <unordered_map>
-//#include "GameObject.h"
-//#include "Subscriber.h"
-//
-//class Transform;
 
 static const int fileNameSize = 256;
 static const std::string m_gizmoObject = "P_ZGizmoDrawing";

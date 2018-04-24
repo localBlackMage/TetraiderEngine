@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 #ifndef GAME_STATE_MANAGER_H
 #define GAME_STATE_MANAGER_H
@@ -22,7 +29,9 @@ private:
 	bool m_isLevelEditorMode;
 	bool m_isShopOpen;
 	bool m_isViewingCredits;
+	bool m_isCheatsActive;
 	void SetGameState(GameState);
+	void ActivateCheats();
 public:
 	GameStateManager();
 	~GameStateManager();
@@ -36,6 +45,7 @@ public:
 	bool IsGamePaused() { return m_isGamePaused; }
 	bool IsEditorMode() { return m_isLevelEditorMode; }
 	bool IsShopOpen() { return m_isShopOpen;  }
+	bool IsCheatsAllowed() { return m_isCheatsActive; }
 	void SetViewingCredits(bool isActive) { m_isViewingCredits = isActive; }
 };
 

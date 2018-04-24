@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 #define POWER_UP_SETTINGS "POWER_UP_SETTINGS"
@@ -32,7 +39,7 @@ void PlayerStatsManager::HandleEvent(Event * p_event) {
 		}
 		case EVENT_INPUT_GOLDENFEATHERCHEAT: {
 			InputButtonData* pData = p_event->Data<InputButtonData>();
-			if(pData->m_isTrigger)
+			if(pData->m_isTrigger && TETRA_GAME_STATE.IsCheatsAllowed())
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_GoldenFeatherCollected, &CollectibleData(10)));
 		}
 	}
@@ -46,6 +53,8 @@ void PlayerStatsManager::ClearStats() {
 	for (int i = 0; i < (int)PowerUpType::NUM; ++i) {
 		m_activePowerUps[i] = nullptr;
 	}
+
+	m_playerStats.m_goldenFeathers = 0;
 
 	InitializePowerUps(m_powerUpSettings);
 	m_isNewGame = true;

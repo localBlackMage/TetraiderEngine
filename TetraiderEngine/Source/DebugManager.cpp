@@ -1,7 +1,9 @@
-//#include "DebugManager.h"
-//#include "TetraiderAPI.h"
-//#include "GameObject.h"
-//#include "Math/MathLibs.h"
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
 
 #include <Stdafx.h>
 
@@ -146,7 +148,7 @@ void DebugManager::RenderDebugCommands(GameObject* pCamera)
 
 void DebugManager::Update()
 {
-	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1))
+	if (TETRA_INPUT.IsKeyTriggered(SDL_SCANCODE_F1) && TETRA_GAME_STATE.IsCheatsAllowed())
 		m_isDebugModeEnabled = !m_isDebugModeEnabled;
 }
 

@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 Camera::Camera() :
@@ -42,7 +49,7 @@ void Camera::Serialize(const json& j)
 		m_layersToRender[TETRA_GAME_OBJECTS.GetLayerFromString(layer)] = true;
 	}
 
-	for (unsigned int i = 0; i < 4; ++i) {
+	for (unsigned int i = 0; i < MAX_RESOLUTIONS; ++i) {
 		m_zoomLevels[i] = j["zoomLevels"][i];
 	}
 }
@@ -115,16 +122,12 @@ float Camera::GetAspect() const
 
 Vector3D Camera::TransformPointToScreenSpace(const Vector3D& worldCoordinates) {
 	// TODO: talk to moodie
-	Matrix4x4 viewPerspectiveMatrix = Matrix4x4::Orthographic(
-		float(m_screenWidth),
-		float(m_screenHeight),
-		0.1f) * 
-		GetViewMatrix(); 
+	Matrix4x4 viewPerspectiveMatrix = GetCameraMatrix() * GetViewMatrix(); 
 	
 	// Transform point to clipping coordinates
 	Vector3D result = viewPerspectiveMatrix*worldCoordinates;
-	result.x = ((result.x / result.w) + 1.f) / 2.0f * m_screenWidth;
-	result.y = (1 - (result.y / result.w)) / 2.0f * m_screenHeight;
+	result.x = ((result.x / result.w) + 1.f) / 2.0f * m_screenWidth*m_zoomLevels[m_currentZoomIndex];
+	result.y = (1 - (result.y / result.w)) / 2.0f * m_screenHeight * m_zoomLevels[m_currentZoomIndex];
 	result.z = 0;
 	result.w = 1;
 

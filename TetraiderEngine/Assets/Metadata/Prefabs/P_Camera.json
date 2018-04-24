@@ -33,7 +33,10 @@
         },
 		{
 			"Component": "Audio",
-			"audioClip": "BGM_Ambience.wav",
+			"audioClip": [
+				"BGM_Ambience.wav",
+				"BGM_BossFight.wav"
+			],
 			"volume": 0.15,
 			"isMute": false,
 			"isLoop": true,
@@ -41,7 +44,8 @@
 			"isBGM": true,
 			"is3D":false,
 			"minDistance": 20,
-			"maxDistance": 900
+			"maxDistance": 900,
+			"fadeTime": 10
 		}		
     ]
 }

@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 typedef std::pair<GameObject*, float> GO_Distance;
@@ -229,7 +236,7 @@ void GameObjectManager::_RenderWithPostProcessing()
 	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 	#pragma endregion
 	TETRA_POST_PROCESSING.UnbindBaseFBO();
-	//TETRA_POST_PROCESSING.DoPostProcessing();
+	TETRA_POST_PROCESSING.DoPostProcessing();
 	TETRA_RENDERER.DrawSceneFBO();
 }
 

@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 #include "PostProcessing.h"
 
@@ -32,14 +39,13 @@ void PostProcessing::_PaintMiniMapMask(Vector3D playerPos)
 	// Render player position to m_pMiniMapMaskIR
 	float scaleOfDot = .2f;
 	float scaleOfDotHalf = scaleOfDot / 2.f;
-	Matrix4x4 scale = Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 
 	playerPos.x -= scaleOfDotHalf;
 	playerPos.y -= scaleOfDotHalf;
 
 	Vector3D playerMMPos = Vector3D(playerPos.x, -playerPos.y, 0);
 
-	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * scale;
+	Matrix4x4 M = Matrix4x4::Translate(playerMMPos) * Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
 	// draw the mesh
@@ -68,7 +74,6 @@ void PostProcessing::_PaintMiniMap(Vector3D playerPos)
 	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
 
 	Matrix4x4 M = Matrix4x4::Scale(1, 1, 1);
-
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
 	// Bind Origin MiniMap texture
@@ -87,14 +92,13 @@ void PostProcessing::_PaintMiniMap(Vector3D playerPos)
 	// Render player position to m_pMiniMapFinalIR
 	float scaleOfDot = .025f;
 	float scaleOfDotHalf = scaleOfDot / 2.f;
-	Matrix4x4 scale = Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 
 	playerPos.x -= scaleOfDotHalf;
 	playerPos.y -= scaleOfDotHalf;
 
 	Vector3D playerMMPos = Vector3D(playerPos.x, -playerPos.y, 0);
 
-	M = Matrix4x4::Translate(playerMMPos) * scale;
+	M = Matrix4x4::Translate(playerMMPos) * Matrix4x4::Scale(scaleOfDot, scaleOfDot, 1);
 	glUniformMatrix4fv(SHADER_LOCATIONS::MODEL_MATRIX, 1, true, (float*)M);
 
 	// Bind the Player Position texture
@@ -226,11 +230,21 @@ void PostProcessing::DoPostProcessing()
 	//m_pGaussianHIR->ClearBuffer();
 	//m_pGaussianVIR->ClearBuffer();
 	//m_pGaussianVIR->Render(m_pBaseIR);
-	//m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
-	//m_pGaussianHIR->Render(m_pGaussianVIR);
-	//m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
-	//int windowWidth, windowHeight;
-	//TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+
+	//for (int i = 0; i < 10; ++i) {
+	//	m_pBaseIR->ClearBuffer();
+	//	m_pBaseIR->Render(m_pGaussianVIR);
+	//	m_pGaussianVIR->ClearBuffer();
+	//	m_pGaussianVIR->Render(m_pBaseIR);
+	//}
+
+	////m_pGaussianVIR->RenderToScreen(*m_pBaseShader);
+	////m_pGaussianHIR->Render(m_pGaussianVIR);
+	////m_pGaussianHIR->RenderToScreen(*m_pBaseShader);
+	////int windowWidth, windowHeight;
+	////TETRA_RENDERER.WindowDimensions(windowWidth, windowHeight);
+	//m_pBaseIR->ClearBuffer();
+	//m_pBaseIR->Render(m_pGaussianVIR);
 	_End();
 }
 

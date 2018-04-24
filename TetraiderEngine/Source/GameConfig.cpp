@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 #define GAME_SETTINGS "GAME_SETTINGS"
@@ -72,10 +79,10 @@ void GameConfig::LoadConfig(std::string s) {
 	json inputSettings = j[INPUT_SETTINGS];
 	TETRA_INPUT.Initialize(inputSettings);
 
-	_ParseSeeds(j[LEVEL_SETTINGS]["1"], 0);
-	_ParseSeeds(j[LEVEL_SETTINGS]["2"], 1);
-	_ParseSeeds(j[LEVEL_SETTINGS]["3"], 2);
-	_ParseSeeds(j[LEVEL_SETTINGS]["4"], 3);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["1"], 0);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["2"], 1);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["3"], 2);
+	_ParseSeeds(j[LEVEL_SETTINGS]["Seeds"]["4"], 3);
 	m_shouldUseSeeds = ParseBool(j[LEVEL_SETTINGS], "UseSeeds");
 
 	// Set debug parameters
@@ -113,10 +120,20 @@ void GameConfig::SelectResolution(unsigned short resolutionIndex)
 	if (resolutionIndex > 3)	return;
 	m_currentResolution = resolutionIndex;
 
-	if (!TETRA_RENDERER.IsFullScreen())
+	if (!TETRA_RENDERER.GetFullScreenStatus())
 		TETRA_RENDERER.SetWindowDimensions(m_resolutions[m_currentResolution].width, m_resolutions[m_currentResolution].height);
 
 	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_WINDOW_RESIZED, &WindowResizedData(m_resolutions[m_currentResolution])));
+}
+
+void GameConfig::SelectResolutionAndScreenMode(unsigned short resoutionIndex, bool isFullscreen)
+{
+	if (isFullscreen)
+		TETRA_RENDERER.SetWindowToFullscreen();
+	else
+		TETRA_RENDERER.SetWindowToWindowedMode();
+
+	SelectResolution(resoutionIndex);
 }
 
 void GameConfig::NextResolution()
@@ -134,6 +151,7 @@ void GameConfig::PrevResolution()
 unsigned int GameConfig::GetSeed(int level)
 {
 	if (m_shouldUseSeeds) {
+		SeedRand(int(time(nullptr)));
 		return m_seeds[level][RandomInt(0, m_seeds[level].size())];
 	}
 	else {

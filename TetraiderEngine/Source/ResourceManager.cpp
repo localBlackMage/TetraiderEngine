@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 namespace fs = std::experimental::filesystem;
@@ -101,7 +108,7 @@ FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category typ
 	if (sound)
 		return sound;
 
-	std::cout << "Invalid sound name." << std::endl;
+	std::cout << path  <<" Invalid sound name." << std::endl;
 	return 0;
 }
 

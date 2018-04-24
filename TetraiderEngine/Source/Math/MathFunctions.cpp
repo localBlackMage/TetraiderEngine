@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 #include "MathFunctions.h"
 
@@ -61,6 +68,9 @@ float RandomFloat(float min, float max) {
 }
 
 int RandomInt(int min, int max) {
+	if (min == 0 && max == 0)
+		return 0;
+
 	return Rand() % (max-min) + min;
 }
 

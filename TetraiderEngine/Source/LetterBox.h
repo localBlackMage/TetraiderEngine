@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 
 #ifndef LETTERBOX_H
@@ -14,8 +21,8 @@ class LetterBox : public Component {
 protected:
 	Transform* m_pTransform;
 	AnchorSide m_anchor;
-	float m_scalePerResolution[4];
-	float m_posPerResolution[4];
+	float m_scalePerResolution[MAX_RESOLUTIONS];
+	float m_posPerResolution[MAX_RESOLUTIONS];
 
 	void _SetPosAndScale();
 public:

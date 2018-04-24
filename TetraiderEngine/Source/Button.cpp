@@ -1,4 +1,14 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Sujay Shah>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
+
+#define OPTION_WINDOWED 0
+#define OPTION_FULLSCREEN 1
 
 Button::Button() :Component(ComponentType::C_Button) 
 {
@@ -71,6 +81,18 @@ void Button::HandleEvent(Event* pEvent)
 {
 	if (!pGO->m_isActive) return; 
 
+	if (pEvent->Type() == EVENT_OnResolutionChanged)
+	{
+		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
+		m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] = pChoiceData->m_choiceData;
+	}
+
+	if (pEvent->Type() == EVENT_OnWindowedChanged)
+	{
+		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
+		m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = pChoiceData->m_choiceData;
+	}
+
 	if (pEvent->Type() == EVENT_OnCollide)
 	{
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
@@ -104,6 +126,7 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isLoadLevelEditor) {
 					TETRA_LEVELS.LoadLevelEditor(m_levelNumber);
+					TETRA_AUDIO.StopSongs();
 				}
 				else if(m_isLoadCanvas)
 				{
@@ -115,12 +138,7 @@ void Button::HandleEvent(Event* pEvent)
 				}
 				else if (m_isApplyButton) 
 				{
-					TETRA_GAME_CONFIG.SelectResolution(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION]);
-
-					if (m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN]==0)
-						TETRA_RENDERER.SetWindowToWindowedMode();
-					else
-						TETRA_RENDERER.SetWindowToFullscreen();
+					TETRA_GAME_CONFIG.SelectResolutionAndScreenMode(m_Choice[(int)ChoiceType::CHOICE_RESOLUTION], m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] == OPTION_FULLSCREEN);
 				}
 				else {
 					TETRA_LEVELS.ActivateRandomGeneration(m_isRandomGenerated);
@@ -131,18 +149,8 @@ void Button::HandleEvent(Event* pEvent)
 		}
 	}
 
-	if (pEvent->Type() == EVENT_OnResolutionChanged)
-	{
-		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
-		m_Choice[(int)ChoiceType::CHOICE_RESOLUTION] = pChoiceData->m_choiceData;
-		//std::cout << "in BUtton handle event, resultion changed. Choice : " << pChoiceData->m_choiceData << std::endl;
-	}
-
-	if (pEvent->Type() == EVENT_OnWindowedChanged)
-	{
-		ChoiceData* pChoiceData = pEvent->Data<ChoiceData>();
-		m_Choice[(int)ChoiceType::CHOICE_FULLSCREEN] = pChoiceData->m_choiceData;
-		//std::cout << "in BUtton handle event, window changed. Choice : " << pChoiceData->m_choiceData << std::endl;
-	}
+	
 }
 
+#undef OPTION_WINDOWED
+#undef OPTION_FULLSCREEN

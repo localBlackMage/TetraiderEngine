@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Sujay Shah>
+- End Header --------------------------------------------------------*/
+
 #include "SelectableButton.h"
 #include "Stdafx.h"
 
@@ -23,7 +30,6 @@ void SelectableButton::HandleEvent(Event * pEvent)
 {
 	if (pEvent->Type() == EventType::EVENT_OnCollide)
 	{
-		//check for selectible type and + / - depending on the type
 		OnCollideData* pData = pEvent->Data<OnCollideData>();
 		if (pData->pGO->m_tag == T_Cursor)
 		{
@@ -34,21 +40,18 @@ void SelectableButton::HandleEvent(Event * pEvent)
 					--m_pList->m_currentChoice;
 					if (m_pList->m_currentChoice < 0)
 						m_pList->m_currentChoice = m_pList->m_Choice.size()-1;
-
-					//std::cout << "Current Choice : " << m_pList->m_currentChoice << std::endl;
 				}
 				else if(m_isRightSelectable)
 				{
 					m_pList->m_currentChoice++;
 					if (m_pList->m_currentChoice >= (int)m_pList->m_Choice.size())
 						m_pList->m_currentChoice = 0;
-
-					//std::cout << "Current Choice : " << m_pList->m_currentChoice << std::endl;
 				}
-				
-				
+
 				if (m_pList->GetisResolution())
+				{
 					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnResolutionChanged, &ChoiceData(m_pList->m_currentChoice)));
+				}					
 				else
 				{
 					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(EventType::EVENT_OnWindowedChanged, &ChoiceData(m_pList->m_currentChoice)));

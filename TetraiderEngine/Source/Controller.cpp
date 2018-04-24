@@ -1,3 +1,10 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
+
 #include <Stdafx.h>
 
 
@@ -75,7 +82,9 @@ void Controller::HandleEvent(Event* pEvent) {
 			break;
 		}
 		case EventType::EVENT_INPUT_GODMODE: {
-			_ToggleGodMode();
+			if (!TETRA_GAME_STATE.IsCheatsAllowed()) return;
+			InputButtonData* pButtonData = pEvent->Data<InputButtonData>();
+			if (pButtonData->m_isTrigger) _ToggleGodMode();
 			break;
 		}
 		case EventType::EVENT_OnCamGoToBossRoom: {
@@ -91,7 +100,8 @@ void Controller::HandleEvent(Event* pEvent) {
 		}
 		case EventType::EVENT_OnCamGoToPlayer: {
 			Health* pHealth = pGO->GetComponent<Health>(C_Health);
-			pHealth->Invincibility(false);
+			if (!m_isGodMode)
+				pHealth->Invincibility(false);
 			m_isControlsEnabled = true;
 			break;
 		}

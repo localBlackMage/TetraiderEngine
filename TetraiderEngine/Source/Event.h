@@ -1,7 +1,16 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Holden Profit>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 
 #ifndef EVENT_H
 #define EVENT_H
+
+#define MAX_RESOLUTIONS 4
 
 // Macro trick to make Event names enums from the file EventNames.h
 #define REGISTER_EVENT_NAME(x) x,

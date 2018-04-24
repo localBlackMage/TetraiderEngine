@@ -1,17 +1,14 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Sujay Shah>
+- End Header --------------------------------------------------------*/
+
 #pragma once
 #ifndef _AUDIO_ENGINE_H_
 #define _AUDIO_ENINGE_H_
 
-//#include "fmod_studio.hpp"
-//#include "fmod.hpp"
-//#include "fmod_errors.h"
-//#include <string>
-//#include <map>
-//#include <vector>
-//#include <math.h>
-//#include <iostream>
-//#include "Subscriber.h"
-//#include "Math\Vector3D.h"
 #define DEFAULT_VOL 0.5
 
 
@@ -34,7 +31,7 @@ public:
 	void Update(float elapsed);
 	void PlaySFX(const std::string& path, float volume, bool loop, bool is3D, Vector3D SourcePos,float,float);
 	void PlaySFX(const std::string& path, float volume);
-	void PlaySong(const std::string& path, float volume);
+	void PlaySong(const std::string& path, float volume, bool isIgnoreDirectory = false);
 	void StopAllSFXs();
 	void StopSFX(std::string& path);
 	void StopSongs();

@@ -1,8 +1,9 @@
-//#include "Microphone.h"
-//#include "GameObject.h"
-//#include "TetraiderAPI.h"
-//#include "Transform.h"
-//#include "Body.h"
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Sujay Shah>
+- End Header --------------------------------------------------------*/
 
 #include <Stdafx.h>
 

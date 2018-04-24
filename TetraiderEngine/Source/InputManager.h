@@ -6,7 +6,7 @@ File Name: InputManager.h
 Purpose: Provides all input related funcionality.
 Language: C++
 Project: GAM541
-Author: Holden Profit, Hyoyup Chung
+Author: Hyoyup Chung
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 

@@ -1,3 +1,9 @@
+/* Start Header -------------------------------------------------------
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+Author: <Moodie Ghaddar>
+- End Header --------------------------------------------------------*/
 
 #include <Stdafx.h>
 
@@ -92,54 +98,30 @@ void Agent::HandleEvent(Event* pEvent) {
 
 void Agent::LateInitialize() {
 	if (!m_pTransform) {
-		if (pGO)
-			m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
-		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pTransform) {
-			printf("No Transform component found. Controller component failed to operate.\n");
-			return;
-		}
+		assert(pGO && "No Game Object found. Controller component failed to operate.");
+		m_pTransform = pGO->GetComponent<Transform>(ComponentType::C_Transform);
+		assert(m_pTransform && "No Transform component found. Controller component failed to operate.");
 	}
 
 	if (!m_pBody) {
-		if (pGO)
-			m_pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
-		else {
-			printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pBody) {
-			printf("No Body component found. Controller component failed to operate.\n");
-			return;
-		}
+		assert(pGO && "No Game Object found. Controller component failed to operate.");
+		m_pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
+		assert(m_pBody && "No Body component found. Controller component failed to operate.");
 	}
 
 	if (!m_pAnimation) {
 		if (pGO)
 			m_pAnimation = pGO->GetComponent<Animation>(ComponentType::C_Animation);
-		else {
-			//printf("No Game Object found. Controller component failed to operate.\n");
-			return;
-		}
-
-		if (!m_pAnimation) {
-			//printf("No Body component found. Controller component failed to operate.\n");
-			return;
-		}
 	}
 }
 
 Vector3D Agent::GetDirectionFromPlayerToMouse() {
 	Vector3D mousePos = Vector3D((float)TETRA_INPUT.MousePosX(), (float)TETRA_INPUT.MousePosY(), 0);
-	GameObject* mainCam = TETRA_GAME_OBJECTS.GetCamera(0);
+	GameObject* mainCam = TETRA_GAME_OBJECTS.GetPrimaryCamera();
 	Camera* camComponent = mainCam->GetComponent<Camera>(ComponentType::C_Camera);
 	const Transform* pPlayerTransform = TETRA_GAME_OBJECTS.GetPlayer()->GetComponent<Transform>(C_Transform);
 	Vector3D screenSpace = camComponent->TransformPointToScreenSpace(pPlayerTransform->GetPosition());
+	mousePos = mousePos*camComponent->GetZoom();
 	Vector3D dirToMousePos = mousePos - screenSpace;
 	dirToMousePos.y *= -1;
 	dirToMousePos.Normalize();
