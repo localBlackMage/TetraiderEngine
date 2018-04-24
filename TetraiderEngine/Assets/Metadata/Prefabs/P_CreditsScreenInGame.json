@@ -6,12 +6,12 @@
       "Component": "Transform",
       "position": {
         "x": 0,
-        "y": -1320,
+        "y": -1450,
         "z": 0
       },
       "scale": {
         "x": 768,
-        "y": 2048,
+        "y": 2300,
         "z": 0
       },
       "pivotOffset": {
@@ -70,13 +70,13 @@
 		  "isPlayOnPause": true,
 		  "initialPos": {
 				"x" : 0,
-				"y" : -1350,
+				"y" : -1450,
 				"z" : 0
 		  },
 		  "initialRotation": 0,
 		  "initialScale": {
             "x": 768,
-            "y": 2048,
+            "y": 2300,
 				"z" : 0
 		  },
 		  "initialFade": 1,
@@ -84,7 +84,7 @@
 			{
 				"finalPos": {
 					"x" : 0,
-					"y" : 1320,
+					"y" : 1500,
 					"z" : 0
 				},
 				"translationSpeed": 0.025,
