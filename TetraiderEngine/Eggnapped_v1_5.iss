@@ -165,8 +165,6 @@ Source: "REDIST/VC_redist.x86.exe"; DestDir: {tmp}; Flags: deleteafterinstall
 Source: "../Release/TetraiderEngine.exe"; DestDir: "{app}"; DestName: "Eggnapped.exe"; Flags: ignoreversion
 Source: "{#MyAppIcoName}"; DestDir: "{app}"
 Source: "fmod.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "fmodL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "fmodstudioL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "glew32.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "libjpeg-9.dll"; DestDir: "{app}"; Flags: ignoreversion
