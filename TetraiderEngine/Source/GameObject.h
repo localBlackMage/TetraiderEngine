@@ -32,6 +32,7 @@ public:
 	~GameObject();
 
 	bool operator==(const GameObject& rhs) const;
+	bool operator!=(const GameObject& rhs) const;
 
 	virtual void HandleEvent(Event* pEvent);
 	void Update(float dt);

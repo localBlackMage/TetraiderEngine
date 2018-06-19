@@ -222,11 +222,11 @@ void InputManager::FireEvents() {
 					axisDir.Normalize();
 					TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(axisDir)));
 				}
-				else {
-					// This is the hardcoded part:
-					if(TETRA_GAME_OBJECTS.GetPlayer())
-						TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
-				}
+				//else {
+				//	//// This is the hardcoded part:
+				//	//if(TETRA_GAME_OBJECTS.GetPlayer())
+				//	//	TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(Agent::GetDirectionFromPlayerToMouse())));
+				//}
 				break;
 			}
 		}

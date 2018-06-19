@@ -9,7 +9,7 @@ Author: <Holden Profit>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false), 
+	m_pActiveCamera(nullptr), m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false),
 	m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
 {
 }
@@ -46,10 +46,11 @@ std::string RenderManager::_LoadTextFile(std::string fname)
 
 bool RenderManager::_GameObjectHasRenderableComponent(const GameObject & gameObject)
 {
-	return gameObject.HasComponent(ComponentType::C_Sprite) || 
+	return gameObject.HasComponent(ComponentType::C_Sprite) ||
 		gameObject.HasComponent(ComponentType::C_FBOSprite) ||
-		gameObject.HasComponent(ComponentType::C_ParticleEmitter) || 
-		gameObject.HasComponent(ComponentType::C_Text);
+		gameObject.HasComponent(ComponentType::C_ParticleEmitter) ||
+		gameObject.HasComponent(ComponentType::C_Text) ||
+		gameObject.HasComponent(ComponentType::C_Mesh);
 }
 
 void RenderManager::_RenderFBOSprite(const FBOSprite * pFBOSpriteComp)
@@ -222,11 +223,38 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 	}
 }
 
-void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
+void RenderManager::_RenderMesh(const MeshComponent * cpMeshComp)
 {
-	std::string shader = "";
+	BindMesh(*cpMeshComp->GetMesh());
+
+	//if (pSpriteComp->GetAlphaMode() == GL_RGBA)
+	//	EnableAlphaTest();
+	//else
+	//EnableDepthTest();
+
+
+
+	// select the texture to use
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	//GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
+
+	// draw the mesh
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cpMeshComp->GetMesh().get()->GetFaceBuffer());
+	glDrawElements(GL_TRIANGLES, 3 * cpMeshComp->GetMesh().get()->faceCount(), GL_UNSIGNED_INT, 0);
+}
+
+bool RenderManager::_SelectShaderProgram(const Component* renderingComponent)
+{
+	std::string shader = "default";
 
 	switch (renderingComponent->Type()) {
+	case ComponentType::C_Mesh:
+		shader = static_cast<const MeshComponent*>(renderingComponent)->Shader();
+		break;
 	case ComponentType::C_ParticleEmitter:
 		shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
 		break;
@@ -241,11 +269,12 @@ void RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 		break;
 	}
 
-	SelectShaderProgram(shader == "" ? "default" : shader);
+	return SelectShaderProgram(shader);
 }
 
 void RenderManager::_SetUpCamera(const GameObject & camera)
 {
+	m_pActiveCamera = &camera;
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	const Transform * transformComp = camera.GetComponent<Transform>(ComponentType::C_Transform);
 	glUseProgram(m_pCurrentProgram->GetProgramID());
@@ -503,6 +532,8 @@ void RenderManager::BindMesh(const Mesh & mesh)
 {
 	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, mesh.GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 	_BindVertexAttribute(SHADER_LOCATIONS::NORMAL, mesh.GetNormalBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::TANGENTS, mesh.GetTangentBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	_BindVertexAttribute(SHADER_LOCATIONS::BITANGENTS, mesh.GetBitangentBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 	_BindVertexAttribute(SHADER_LOCATIONS::TEXTURE_COORD, mesh.GetTextCoordBuffer(), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
 }
 
@@ -784,6 +815,25 @@ void RenderManager::RenderGameObject(const GameObject& camera, const GameObject&
 	}
 }
 
+void RenderManager::RenderGameObject(const GameObject & camera, const GameObject & gameObject)
+{
+	// Only attempt to draw if the game object has a renderable component and transform component
+	if (!gameObject.GetComponent<Transform>(ComponentType::C_Transform) || !_GameObjectHasRenderableComponent(gameObject))
+		return;
+
+	if (gameObject.HasComponent(ComponentType::C_Mesh)) {
+		const MeshComponent* cpMeshComp = gameObject.GetComponent<MeshComponent>(ComponentType::C_Mesh);
+		bool newShaderSelected = _SelectShaderProgram(cpMeshComp);
+		
+		if (newShaderSelected || camera != *m_pActiveCamera) {
+			_SetUpCamera(camera);
+
+			_BindGameObjectTransform(gameObject);
+			_RenderMesh(cpMeshComp);
+		}
+	}
+}
+
 GLuint RenderManager::GenerateStreamingVBO(unsigned int size)
 {
 	GLuint bufferId;
@@ -902,14 +952,19 @@ Shader * RenderManager::CreateFragmentShaderFromFile(std::string fileName)
 	return CreateFragmentShader(_LoadTextFile(fileName));
 }
 
-void RenderManager::SelectShaderProgram(std::string programName)
+bool RenderManager::SelectShaderProgram(std::string programName)
 {
 	if (!m_shaderPrograms[programName]) {
 		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;
-		return;
+		return false;
 	}
 
-	if (m_pCurrentProgram != m_shaderPrograms[programName])
+	// New shader
+	if (m_pCurrentProgram != m_shaderPrograms[programName]) {
 		m_pCurrentProgram = m_shaderPrograms[programName];
+		return true;
+	}
+	// Redundant shader selection
+	return false;
 }
 #pragma endregion

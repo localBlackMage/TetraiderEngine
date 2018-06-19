@@ -272,7 +272,7 @@ ParticleEmitter::ParticleEmitter() :
 	m_emissionTime(0.f),
 	m_emissionTimer(0.f),
 	m_liveParticleCount(0),
-	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
+	m_mesh(*TETRA_RESOURCES.GetInternalMesh(QUAD_MESH)),
 	m_pSpawnShape(nullptr),
 	m_directionMod(1.f),
 	m_brightness(1.f)

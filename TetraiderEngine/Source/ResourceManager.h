@@ -45,9 +45,11 @@ private:
 		std::string filename;
 		bool hasAlpha;
 	};
+
+	Assimp::Importer m_importer;
 	
 	DebugLineMesh * m_pDebugLineMesh;
-	std::unordered_map<std::string, Mesh*> m_meshes;
+	std::unordered_map<const char*, std::shared_ptr<Mesh> > m_meshes;
 	std::unordered_map< Font_Size, FontInfo*, Font_SizeHasher> m_fonts;
 	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
 	std::map<std::string, json*> m_prefabs;
@@ -69,8 +71,10 @@ public:
 	bool Init();
 
 	DebugLineMesh* GetDebugLineMesh();
-	Mesh * LoadMesh(const std::string& meshName);
-	Mesh * GetMesh(const std::string& meshName);
+	std::shared_ptr<Mesh> LoadInternalMesh(const std::string& meshName);
+	std::shared_ptr<Mesh> LoadMesh(const std::string& meshName);
+	std::shared_ptr<Mesh> GetInternalMesh(const std::string& meshName);
+	std::shared_ptr<Mesh> GetMesh(const std::string& meshName);
 	void UnloadMesh(const std::string& meshName);
 
 	FontInfo* GetFont(const Font_Size& font_size);

@@ -10,12 +10,10 @@ Author: Holden Profit
 Creation date: 1/17/18
 - End Header --------------------------------------------------------*/
 
-//#pragma once
+#pragma once
 
 #ifndef VECTOR3_H
 #define VECTOR3_H
-
-//#include "Vector2D.h"
 
 class Vector3D
 {
@@ -23,6 +21,9 @@ public:
 	float x, y, z, w;
 
 	Vector3D();
+	Vector3D(const aiVector3t<ai_real>& v);
+	Vector3D(const aiVector3t<ai_real>& v, const float& _w);
+	Vector3D(const Vector3D& vec, const float& _w);
 	Vector3D(const float& _x, const float& _y, const float& _z);
 	Vector3D(const float& _x, const float& _y, const float& _z, const float& _w);
 	Vector3D(const Vector3D & rhs);

@@ -1,13 +1,10 @@
 {
 	"GAME_SETTINGS": {
-		"deploymentMode": "release",
-		"assetDirectory": {
-			"debug": "../TetraiderEngine/Assets/",
-			"release": "Assets/"
-		},
+		"assetDirectory": "Assets/",
 		"levelFilesDir": "Metadata/Levels/",
 		"prefabsDir": "Metadata/Prefabs/",
 		"roomFilesDir": "Metadata/Rooms/",
+		"meshesDir": "Meshes/",
 		"sfxDir": "SFX/",
 		"shadersDir": "Shaders/",
 		"texturesDir": "Textures/",
@@ -15,7 +12,7 @@
 		
 		"powerUpSettings": "Metadata/powerUpSettings.json",
 		
-		"isDebugModeEnabled": false,
+		"isDebugModeEnabled": true,
 		"soundsMute": false
 	},
 	"RENDER_SETTINGS": {
@@ -29,7 +26,7 @@
 		"miniMapShader": "miniMapShader",
 		"miniMapFinalShader": "miniMapFinalShader",
 		
-		"consoleEnabled": false,
+		"consoleEnabled": true,
 		"globalAmbient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
 		"postProcessingEnabled": false
 	},
@@ -65,8 +62,8 @@
 				"height": 1080
 			}
 		],
-		"defaultResolution": 3,
-		"startInFullscreen": true
+		"defaultResolution": 0,
+		"startInFullscreen": false
 	},
 	"ROOM_SETTINGS": {
 		"cellWidth": 128,
@@ -77,20 +74,10 @@
 	"LEVEL_SETTINGS": {
 		"isRandomGenerated": false,
 		"Statics": "StaticObjects",
-		"LetterBoxObjects": "LetterBoxObjects",
-		"Start": 5,
+		"Start": 0,
 		"MainMenu": 1,
 		"Levels": [
-			{ "Name": "LVL_Editor" },
-			{ "Name": "LVL_Menu" },
-			{ "Name": "LVL_BossTest2" },
-			{ "Name": "LVL_PowerUpScreen" },
-			{ "Name": "LVL_CutScene" },
-			{ "Name": "LVL_DigiPenLogo" },
-			{ "Name": "LVL_TetraidersLogo" },
-			{ "Name": "LVL_CreditsScreen" },
-			{ "Name": "LVL_OutroScene" },
-			{ "Name": "LVL_ThanksForPlaying" }
+			{ "Name": "LVL_3D" }
 		],
 		"LevelParameters": [
 			{"cols": 3, "rows": 4, "difficulty": 1, "boss": false, "shop": false, "eggsToCollect": 3},

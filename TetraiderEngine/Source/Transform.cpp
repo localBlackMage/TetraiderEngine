@@ -17,13 +17,6 @@ void Transform::_UpdateLookAt()
 		YAXIS;
 }
 
-void Transform::_UpdateBodyComponent()
-{
-	Body* pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
-	if (pBody)
-		pBody->m_Position = m_position;
-}
-
 #pragma endregion
 
 Transform::Transform() :
@@ -108,7 +101,6 @@ void Transform::Override(const json & j)
 		m_position.x = ValueExists(j["position"], "x") ? j["position"]["x"] : m_position.x;
 		m_position.y = ValueExists(j["position"], "y") ? j["position"]["y"] : m_position.y;
 		m_position.z = ValueExists(j["position"], "z") ? j["position"]["z"] : m_position.z;
-		_UpdateBodyComponent();
 	}
 	if (ValueExists(j, "scale")) {
 		m_scale.x = ValueExists(j["scale"], "x") ? j["scale"]["x"] : m_scale.x;
@@ -157,13 +149,11 @@ Vector3D Transform::GetLocalPosition() const
 void Transform::SetPosition(const Vector3D& pos)
 {
 	m_position = pos;
-	_UpdateBodyComponent();
 }
 
 void Transform::Move(const Vector3D& amount)
 {
 	m_position += amount;
-	_UpdateBodyComponent();
 }
 #pragma endregion
 

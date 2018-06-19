@@ -116,33 +116,27 @@ FMOD::Sound* ResourceManager::GetSFX(const std::string& path, Sound_Category typ
 
 bool ResourceManager::Init()
 {
-	Mesh * quad = LoadMesh(QUAD_MESH);
+	std::shared_ptr<Mesh> quad = LoadInternalMesh(QUAD_MESH);
 
-	quad->AddTriangle(
-		-0.5f, -0.5f, 0.0f, .0f, 1.f, 0xFFFFFFFF,
-		0.5f, -0.5f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
-		-0.5f, 0.5f, 0.0f, .0f, .0f, 0xFFFFFFFF
-	);
-	quad->AddTriangle(
-		0.5f, -0.5f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
-		0.5f, 0.5f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
-		-0.5f, 0.5f, 0.0f, .0f, .0f, 0xFFFFFFFF
-	);
+	quad->AddVertex(-0.5f, -0.5f, 0.0f);
+	quad->AddVertex( 0.5f, -0.5f, 0.0f);
+	quad->AddVertex( 0.5f,  0.5f, 0.0f);
+	quad->AddVertex(-0.5f,  0.5f, 0.0f);
+
+	quad->AddFace(0, 1, 3);
+	quad->AddFace(1, 2, 3);
 
 	quad->FinishMesh();
 
-	Mesh * screenQuad = LoadMesh(SCREEN_QUAD_MESH);
+	std::shared_ptr<Mesh> screenQuad = LoadInternalMesh(SCREEN_QUAD_MESH);
 
-	screenQuad->AddTriangle(
-		-1.f, -1.f, 0.0f, .0f, .0f, 0xFFFFFFFF,
-		1.f, -1.f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
-		-1.f, 1.f, 0.0f, .0f, 1.f, 0xFFFFFFFF
-	);
-	screenQuad->AddTriangle(
-		1.f, -1.f, 0.0f, 1.f, .0f, 0xFFFFFFFF,
-		1.f, 1.f, 0.0f, 1.f, 1.f, 0xFFFFFFFF,
-		-1.f, 1.f, 0.0f, .0f, 1.f, 0xFFFFFFFF
-	);
+	screenQuad->AddVertex(-1.f, -1.f, 0.0f);
+	screenQuad->AddVertex(1.f, -1.f, 0.0f);
+	screenQuad->AddVertex(1.f, 1.f, 0.0f);
+	screenQuad->AddVertex(-1.f, 1.f, 0.0f);
+
+	screenQuad->AddFace(0, 1, 3);
+	screenQuad->AddFace(1, 2, 3);
 
 	screenQuad->FinishMesh();
 
@@ -159,37 +153,71 @@ DebugLineMesh * ResourceManager::GetDebugLineMesh()
 	return m_pDebugLineMesh;
 }
 
-Mesh * ResourceManager::LoadMesh(const std::string& meshName)
+std::shared_ptr<Mesh> ResourceManager::LoadInternalMesh(const std::string & meshName)
 {
-	Mesh * mesh = m_meshes[meshName];
+	std::shared_ptr<Mesh> mesh = m_meshes[meshName.c_str()];
 
 	if (mesh)
 		return mesh;
 
-	mesh = new Mesh();
+	mesh = std::shared_ptr<Mesh>(new Mesh());
 	if (mesh)
-		m_meshes[meshName] = mesh;
+		m_meshes[meshName.c_str()] = mesh;
 
 	return mesh;
 }
 
-Mesh * ResourceManager::GetMesh(const std::string& meshName)
+std::shared_ptr<Mesh> ResourceManager::LoadMesh(const std::string& meshName)
 {
-	Mesh * mesh = m_meshes[meshName];
+	std::shared_ptr<Mesh> mesh (new Mesh());
+
+	const aiScene* scene = m_importer.ReadFile(TETRA_GAME_CONFIG.MeshesDir() + meshName, 
+		aiProcess_CalcTangentSpace | 
+		aiProcess_Triangulate | 
+		aiProcess_JoinIdenticalVertices | 
+		aiProcess_SortByPType 
+	);
+
+	if (scene->HasMeshes()) {
+		for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
+			const aiMesh* mesh = scene->mMeshes[i];
+			m_meshes[mesh->mName.C_Str()] = std::shared_ptr<Mesh>(new Mesh(mesh));
+		}
+	}
+
+	if (mesh)
+		m_meshes[meshName.c_str()] = mesh;
+
+	return mesh;
+}
+
+std::shared_ptr<Mesh> ResourceManager::GetInternalMesh(const std::string & meshName)
+{
+	std::shared_ptr<Mesh> mesh = m_meshes[meshName.c_str()];
 
 	if (mesh)
 		return mesh;
 	else {
-		std::cerr << meshName << " has not yet been created." << std::endl;
-		return nullptr;
+		return LoadInternalMesh(meshName);
+	}
+}
+
+std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& meshName)
+{
+	std::shared_ptr<Mesh> mesh = m_meshes[meshName.c_str()];
+
+	if (mesh)
+		return mesh;
+	else {
+		return LoadMesh(meshName);
 	}
 }
 
 void ResourceManager::UnloadMesh(const std::string& meshName)
 {
-	if (m_meshes[meshName]) {
-		delete m_meshes[meshName];
-		m_meshes.erase(meshName);
+	if (m_meshes[meshName.c_str()] && m_meshes[meshName.c_str()].unique()) {
+		m_meshes[meshName.c_str()].reset();
+		m_meshes.erase(meshName.c_str());
 	}
 }
 
@@ -227,7 +255,6 @@ SurfaceTextureBuffer * ResourceManager::_LoadTexture(std::string textureName)
 	}
 }
 
-
 SurfaceTextureBuffer * ResourceManager::GetTexture(const std::string& textureName)
 {
 	if (textureName == "") return nullptr;
@@ -256,8 +283,8 @@ void ResourceManager::UnloadTexture(const std::string& textureName)
 void ResourceManager::UnloadAll()
 {
 	for (auto comp : m_meshes) {
-		if (comp.second)
-			delete comp.second;
+		if (comp.second && comp.second.unique())
+			comp.second.reset();
 	}
 	m_meshes.clear();
 

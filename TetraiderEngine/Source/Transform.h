@@ -10,9 +10,6 @@ Author: <Holden Profit>
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-//Forward declaration
-class Body;
-
 class Transform : public Component {
 private:
 	Vector3D m_position;
@@ -27,7 +24,6 @@ private:
 	bool m_is2d;
 
 	void _UpdateLookAt();
-	void _UpdateBodyComponent();
 public:
 	Transform();
 	~Transform();

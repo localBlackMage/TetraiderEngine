@@ -224,7 +224,8 @@ void Weapon::PlayEffect() {
 int Weapon::GetDamageMultiplier() {
 	if (pGO->Tag() == T_Player) {
 		Controller* pController = pGO->GetComponent<Controller>(C_Controller);
-		return pController->GetGodModeMultiplier();
+		//return pController->GetGodModeMultiplier();
+		return 0;
 	}
 	else
 		return 1;

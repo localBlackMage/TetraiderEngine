@@ -20,8 +20,13 @@ Creation date: 1/17/18
 
 struct Face {
 	unsigned int index[3];
-	explicit Face(unsigned int v1, unsigned int v2, unsigned int v3) { 
-		index[0] = v1; index[1] = v2; index[2] = v3; 
+	Face(unsigned int v1, unsigned int v2, unsigned int v3) {
+		index[0] = v1; index[1] = v2; index[2] = v3;
+	}
+	Face(const aiFace& face) {
+		index[0] = face.mIndices[0];
+		index[1] = face.mIndices[1];
+		index[2] = face.mIndices[2];
 	}
 	unsigned int operator[](int i) const { return index[i]; }
 	unsigned int& operator[](int i) { return index[i]; }
@@ -38,17 +43,20 @@ struct TexCoords {
 class Mesh
 {
 private:
-	std::vector<Vector3D> m_vertices, m_normals;
+	std::vector<Vector3D> m_vertices, m_normals, m_tangents, m_bitangents;
 	std::vector<GLfloat> m_texCoords;
 	std::vector<unsigned long> m_vertColors;
 	std::vector<Face> m_faces;
 	GLuint m_vertexBuffer;
 	GLuint m_normalBuffer;
+	GLuint m_tangentBuffer;
+	GLuint m_bitangentBuffer;
 	GLuint m_faceBuffer;
 	GLuint m_textCoordBuffer;
 
 public:
 	Mesh();
+	Mesh(const aiMesh* mesh);
 	~Mesh();
 
 	void AddTriangle(Vector3D p1, Vector3D p2, Vector3D p3);
@@ -58,7 +66,11 @@ public:
 	void AddTriangle(float p1x, float p1y, float p1z, float uv1u, float uv1v, float p2x, float p2y, float p2z, float uv2u, float uv2v, float p3x, float p3y, float p3z, float uv3u, float uv3v);
 	void AddTriangle(float p1x, float p1y, float p1z, float uv1u, float uv1v, unsigned long c1, float p2x, float p2y, float p2z, float uv2u, float uv2v, unsigned long c2, float p3x, float p3y, float p3z, float uv3u, float uv3v, unsigned long c3);
 
+	void AddVertex(float px, float py, float pz);
+	void AddFace(unsigned int a, unsigned int b, unsigned int c);
+
 	void FinishMesh();
+	void CalcNormals();
 
 	int vertexCount() const;
 	Vector3D* vertexArray();
@@ -66,6 +78,12 @@ public:
 
 	Vector3D* normalArray();
 	const GLuint& GetNormalBuffer() const;
+
+	Vector3D* tangentArray();
+	const GLuint& GetTangentBuffer() const;
+
+	Vector3D* bitangentArray();
+	const GLuint& GetBitangentBuffer() const;
 
 	int faceCount() const;
 	Face* faceArray();

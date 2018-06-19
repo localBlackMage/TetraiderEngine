@@ -1,0 +1,32 @@
+{
+    "Tag": "Player",
+    "Layer": "N/A",
+    "COMPONENTS": [
+        {
+			"Component": "Transform",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {},
+			"pivotOffset": {},
+			"rotation": {
+				"x": 0
+			},
+			"2D": false
+        },
+		{
+			"Component": "Mesh",
+			"Mesh": "Suzy.obj",
+			"shader": "base3DShader"
+		},
+		{
+			"Component": "Controller",
+			"AgentData": {
+				"speed": 1,
+				"acceleration": 1
+			}
+		}
+    ]
+}

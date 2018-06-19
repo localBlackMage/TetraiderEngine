@@ -497,6 +497,9 @@
     <ClCompile Include="Source\ListSelector.cpp">
       <Filter>Source Files\Components\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MeshComponent.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -687,9 +690,6 @@
     </ClInclude>
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>Source Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MyArray.h">
-      <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Collectible.h">
       <Filter>Source Files\Components</Filter>
@@ -1000,6 +1000,15 @@
     </ClInclude>
     <ClInclude Include="Source\ListSelector.h">
       <Filter>Source Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Plane.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Face.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshComponent.h">
+      <Filter>Source Files\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

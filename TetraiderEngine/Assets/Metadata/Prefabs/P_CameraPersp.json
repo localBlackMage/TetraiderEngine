@@ -1,0 +1,27 @@
+{
+    "Tag": "Camera",
+    "Layer": "N/A",
+    "COMPONENTS": [
+        {
+			"Component": "Transform",
+			"position": {
+				"x": 0,
+				"y": 10,
+				"z": 10
+			},
+			"scale": {},
+			"pivotOffset": {},
+			"rotation": {
+			},
+			"2D": false
+        },
+        {
+            "Component": "Camera",
+            "perspective": true,
+			"zoomLevels": [ 1,1,1,1 ],
+			"primary": true,
+            "fov": 105,
+            "layers": ["BG", "BG_1", "BG_2", "1", "2", "3", "4", "DEBUG"]
+        }
+    ]
+}

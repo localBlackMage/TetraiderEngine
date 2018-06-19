@@ -20,6 +20,7 @@ private:
 	std::string m_shadersDir;
 	std::string m_roomFilesDir;
 	std::string m_fontsDir;
+	std::string m_meshesDir;
 	
 	bool m_soundsMute;
 
@@ -54,6 +55,7 @@ public:
 	inline std::string ShadersDir() const { return m_shadersDir; }
 	inline std::string RoomFilesDir() const { return m_roomFilesDir; }
 	inline std::string FontsDir() const { return m_fontsDir; }
+	inline std::string MeshesDir() const { return m_meshesDir; }
 
 	inline bool GetsoundsMute(){ return m_soundsMute; }
 	inline unsigned short CellWidth() const { return m_cellWidth; }

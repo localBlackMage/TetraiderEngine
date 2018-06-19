@@ -116,7 +116,7 @@ void PostProcessing::_PaintMiniMap(Vector3D playerPos)
 
 PostProcessing::PostProcessing() : 
 	m_pBaseIR(nullptr), m_pGaussianHIR(nullptr), m_pGaussianVIR(nullptr),
-	m_mesh(*TETRA_RESOURCES.LoadMesh(SCREEN_QUAD_MESH)), m_shouldGenerateMiniMap(false)
+	m_mesh(*TETRA_RESOURCES.GetInternalMesh(SCREEN_QUAD_MESH)), m_shouldGenerateMiniMap(false)
 {}
 
 PostProcessing::~PostProcessing()

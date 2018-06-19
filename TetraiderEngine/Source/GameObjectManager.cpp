@@ -181,7 +181,7 @@ void GameObjectLayer::BindBufferDatas(const Vector3D& pos)
 
 #pragma region Private Methods
 void GameObjectManager::_InsertGameObjectIntoList(GameObject * pGO) {
-	mGameObjects.push_back(pGO);
+	m_gameObjects.push_back(pGO);
 
 	if (pGO->GetLayer() != RENDER_LAYER::L_NOT_RENDERED)
 		m_layers[pGO->GetLayer()].AddToLayer(pGO);
@@ -202,6 +202,19 @@ void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
 	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
 		if (pLightComp->GetLayer(i))
 			m_layers[i].AddLightToLayer(pGO);
+	}
+}
+
+void GameObjectManager::_RenderGameObjects()
+{
+	glEnable(GL_DEPTH_TEST);
+	glDrawBuffer(GL_FRONT_AND_BACK);
+	glCullFace(GL_BACK);
+	for (GameObject* cameraGO : m_pCameras) {
+		for (GameObject* pGO : m_gameObjects) {
+			if (pGO->m_isActive && pGO->m_isRender)
+				TETRA_RENDERER.RenderGameObject(*cameraGO, *pGO);
+		}
 	}
 }
 
@@ -262,11 +275,11 @@ GameObjectManager::GameObjectManager() : m_currentId(0) {}
 
 GameObjectManager::~GameObjectManager() {
 	DestroyAllGameObjects();
-	mGameObjects.clear();
+	m_gameObjects.clear();
 }
 
 void GameObjectManager::Update(float dt) {
-	for (auto gameObject : mGameObjects) {
+	for (auto gameObject : m_gameObjects) {
 		if (gameObject->m_isActive)
 			gameObject->Update(dt);
 	}
@@ -280,7 +293,7 @@ void GameObjectManager::UpdateStatus() {
 }
 
 void GameObjectManager::LateUpdate(float dt) {
-	for (auto gameObject : mGameObjects) {
+	for (auto gameObject : m_gameObjects) {
 		if (gameObject->m_isActive)
 			gameObject->LateUpdate(dt);
 	}
@@ -292,14 +305,14 @@ void GameObjectManager::LateUpdate(float dt) {
 }
 
 void GameObjectManager::UpdateForLevelEditor(float dt) {
-	for (auto gameObject : mGameObjects) {
+	for (auto gameObject : m_gameObjects) {
 		if (gameObject->m_isActive)
 			gameObject->UpdateForLevelEditor(dt);
 	}
 }
 
 void GameObjectManager::LateUpdateForLevelEditor(float dt) {
-	for (auto gameObject : mGameObjects) {
+	for (auto gameObject : m_gameObjects) {
 		if (gameObject->m_isActive)
 			gameObject->LateUpdateForLevelEditor(dt);
 	}
@@ -334,7 +347,7 @@ void GameObjectManager::AddGameObject(GameObject* pGO) {
 }
 
 void GameObjectManager::DestroyGameObjects() {
-	for (std::vector<GameObject*>::iterator it = mGameObjects.begin(); it != mGameObjects.end();) {
+	for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end();) {
 		if ((*it)->m_isDestroy) {
 			// Remove GO from any layer it may be on
 			if ((*it)->GetLayer() != L_NOT_RENDERED)
@@ -358,7 +371,7 @@ void GameObjectManager::DestroyGameObjects() {
 
 			TETRA_PHYSICS.RemoveGameObject(*it);
 			TETRA_MEMORY.DeleteGameObject(*it);
-			it = mGameObjects.erase(it);
+			it = m_gameObjects.erase(it);
 		}
 		else {
 			++it;
@@ -367,7 +380,7 @@ void GameObjectManager::DestroyGameObjects() {
 }
 
 void GameObjectManager::DestroyAllGameObjects() {
-	for (auto gameObject : mGameObjects) {
+	for (auto gameObject : m_gameObjects) {
 		gameObject->Destroy();
 	}
 
@@ -375,7 +388,7 @@ void GameObjectManager::DestroyAllGameObjects() {
 }
 
 GameObject* GameObjectManager::FindObjectWithTag(GameObjectTag tag) {
-	for (auto gameObject : mGameObjects) {
+	for (auto gameObject : m_gameObjects) {
 		if (gameObject->m_tag == tag)
 			return gameObject;
 	}

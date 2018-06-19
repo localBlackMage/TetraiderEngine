@@ -35,7 +35,7 @@ void Agent::Update(float dt) {
 		return;
 
 	m_currentVelocity = Lerp(m_currentVelocity, m_targetVelocity, dt*m_acceleration);
-	m_pBody->SetVelocity(m_currentVelocity);
+	//m_pBody->SetVelocity(m_currentVelocity);
 
 	if (m_pAnimation && m_isControlAnimationOnVelocity) {
 		if (m_currentVelocity.SquareLength()  < 200.0f)
@@ -82,11 +82,11 @@ void Agent::HandleEvent(Event* pEvent) {
 	else if (pEvent->Type() == EventType::EVENT_OnTakeDamage) {
 		HealthChangeData* healthData = pEvent->Data<HealthChangeData>();
 		if (healthData->mCurrentHealth == 0) {
-			m_pBody->SetVelocity(Vector3D(0, 0, 0));
+			//m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			m_isDead = true;
 		}
 		else if (healthData->mIsForceKnockBack && m_knockBackMultiplier == 0) {
-			m_pBody->SetVelocity(Vector3D(0, 0, 0));
+			//m_pBody->SetVelocity(Vector3D(0, 0, 0));
 			pGO->HandleEvent(&Event(EVENT_ForceKnockBack));
 			AddVelocity(healthData->m_directionOfAttack*healthData->mknockBackSpeed);
 		}
@@ -103,11 +103,11 @@ void Agent::LateInitialize() {
 		assert(m_pTransform && "No Transform component found. Controller component failed to operate.");
 	}
 
-	if (!m_pBody) {
-		assert(pGO && "No Game Object found. Controller component failed to operate.");
-		m_pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
-		assert(m_pBody && "No Body component found. Controller component failed to operate.");
-	}
+	//if (!m_pBody) {
+	//	assert(pGO && "No Game Object found. Controller component failed to operate.");
+	//	m_pBody = pGO->GetComponent<Body>(ComponentType::C_Body);
+	//	assert(m_pBody && "No Body component found. Controller component failed to operate.");
+	//}
 
 	if (!m_pAnimation) {
 		if (pGO)

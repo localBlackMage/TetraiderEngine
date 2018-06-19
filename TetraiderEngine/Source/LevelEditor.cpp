@@ -458,10 +458,10 @@ void LevelEditor::HandleEvent(Event* pEvent) {
 		if(pGO)
 			m_pCameraTransform = pGO->GetComponent<Transform>(C_Transform);
 
-		if (TETRA_LEVELS.GetCurrentLevel() == 0) {
-			m_pGizmoGO = TETRA_GAME_OBJECTS.CreateGameObject(m_gizmoObject);
-			m_pGizmoGO->SetActive(false);
-		}
+		//if (TETRA_LEVELS.GetCurrentLevel() == 0) {
+		//	m_pGizmoGO = TETRA_GAME_OBJECTS.CreateGameObject(m_gizmoObject);
+		//	m_pGizmoGO->SetActive(false);
+		//}
 	}
 	else if (pEvent->Type() == EVENT_INPUT_MOVE) {
 		InputAxisData* pData = pEvent->Data<InputAxisData>();

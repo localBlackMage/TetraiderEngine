@@ -66,7 +66,7 @@ Text::Text(std::string fontName) :
 	m_fontName(fontName),
 	m_texture(0),
 	m_alignment(TextAlignment::TEXT_LEFT),
-	m_mesh(*TETRA_RESOURCES.LoadMesh(QUAD_MESH)),
+	m_mesh(*TETRA_RESOURCES.GetInternalMesh(QUAD_MESH)),
 	m_shader("")
 {}
 

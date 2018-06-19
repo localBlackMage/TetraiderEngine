@@ -93,9 +93,9 @@ namespace Tetraider {
 		//TETRA_IMGUI.Update();									// Update all Imgui commands
 	}
 
-	Mesh * CreateMesh(std::string meshName)
+	std::shared_ptr<Mesh> CreateMesh(std::string meshName)
 	{
-		return TETRA_RESOURCES.LoadMesh(meshName);
+		return TETRA_RESOURCES.GetInternalMesh(meshName);
 	}
 
 	void UnloadResources()

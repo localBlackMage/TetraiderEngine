@@ -31,8 +31,11 @@ void GameConfig::LoadConfig(std::string s) {
 	json gameSettings = j[GAME_SETTINGS];
 	json renderSettings = j[RENDER_SETTINGS];
 
-	std::string deploymentMode = gameSettings["deploymentMode"];
-	std::string assetDirectory = gameSettings["assetDirectory"][deploymentMode];
+	m_consoleEnabled = ParseBool(renderSettings, "consoleEnabled");
+	if (m_consoleEnabled)
+		TETRA_RENDERER.SetUpConsole();
+
+	std::string assetDirectory = ParseString(gameSettings, "assetDirectory");
 
 	// Set project directories
 	m_levelFilesDir = assetDirectory + ParseString(gameSettings, "levelFilesDir");
@@ -42,15 +45,13 @@ void GameConfig::LoadConfig(std::string s) {
 	m_texturesDir = assetDirectory + ParseString(gameSettings, "texturesDir");
 	m_roomFilesDir = assetDirectory + ParseString(gameSettings, "roomFilesDir");
 	m_fontsDir = assetDirectory + ParseString(gameSettings, "fontsDir");
+	m_meshesDir = assetDirectory + ParseString(gameSettings, "meshesDir");
 
 	m_debugEnabled = ParseBool(gameSettings, "isDebugModeEnabled");
 
 	//set mute
 	m_soundsMute = ParseBool(gameSettings,"soundsMute");
-	
-	m_consoleEnabled = ParseBool(renderSettings, "consoleEnabled");
-	if (m_consoleEnabled)
-		TETRA_RENDERER.SetUpConsole();
+
 
 	m_cellWidth = j[ROOM_SETTINGS]["cellWidth"];
 	m_cellHeight = j[ROOM_SETTINGS]["cellHeight"];

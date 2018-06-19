@@ -33,6 +33,11 @@ bool GameObject::operator==(const GameObject& rhs) const
 	return rhs.m_id == m_id;
 }
 
+bool GameObject::operator!=(const GameObject & rhs) const
+{
+	return rhs.m_id != m_id;
+}
+
 void GameObject::Destroy() {
 	m_isDestroy = true;
 }

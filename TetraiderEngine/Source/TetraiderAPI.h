@@ -46,7 +46,7 @@ namespace Tetraider {
 	\param meshName - std::string name representing the Mesh to be created, used for resource management
 	\return pointer to the mesh created
 	*/
-	Mesh * CreateMesh(std::string meshName);
+	std::shared_ptr<Mesh> CreateMesh(std::string meshName);
 
 	//! void UnloadResources()
 	/*!

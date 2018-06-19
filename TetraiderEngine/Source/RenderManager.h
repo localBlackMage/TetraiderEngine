@@ -26,10 +26,12 @@ enum TEXTURE_LOCATIONS {
 enum SHADER_LOCATIONS {
 	POSITION = 0,		// 0
 	NORMAL,				// 1
-	TEXTURE_COORD,		// 2
-	P_POS_ROT_SIZE,		// 3
-	P_COLOR,			// 4
-	P_TEXTURE_COORD,	// 5
+	TANGENTS,			// 2
+	BITANGENTS,			// 3
+	TEXTURE_COORD,		// 4
+	P_POS_ROT_SIZE,		// 5
+	P_COLOR,			// 6
+	P_TEXTURE_COORD,	// 7
 
 	PERSP_MATRIX = 10,	// 10
 	VIEW_MATRIX,		// 11
@@ -62,7 +64,6 @@ enum SHADER_LOCATIONS {
 
 class GameObjectLayer;
 
-
 class RenderManager : public Subscriber
 {
 private:
@@ -81,11 +82,13 @@ private:
 	bool m_cursorEnabled;
 	Vector3D m_clearColor;
 
+	const GameObject* m_pActiveCamera;
 	std::map<std::string, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
 	std::string m_debugShaderName;
 
 	bool m_isFullscreen;
+
 
 	std::string _LoadTextFile(std::string fname);
 	bool _GameObjectHasRenderableComponent(const GameObject & gameObject);
@@ -93,7 +96,10 @@ private:
 	void _RenderSprite(const Sprite* pSpriteComp);
 	void _RenderParticles(const ParticleEmitter * pParticleEmitterComp);
 	void _RenderText(const Text* pTextComp, const Transform* pTransformComp);
-	void _SelectShaderProgram(const Component* renderingComponent);
+	void _RenderMesh(const MeshComponent* cpMeshComp);
+	/* Returns true if the shader program was actually changed,
+	false if it was not (redundant shader selection or invalid shader) */
+	bool _SelectShaderProgram(const Component* renderingComponent);
 	void _SetUpCamera(const GameObject& camera);
 	void _SetUpLights(const GameObject& gameObject, GameObjectLayer& gol);
 
@@ -146,6 +152,7 @@ public:
 	inline SDL_Window* GetWindow() { return m_pWindow; }
 
 	void RenderGameObject(const GameObject& camera, const GameObject& go, GameObjectLayer& gol);
+	void RenderGameObject(const GameObject& camera, const GameObject& go);
 
 	/*
 		Performs normal alpha blending
@@ -183,7 +190,9 @@ public:
 	Shader * CreateFragmentShader(std::string fragmentShaderText);
 	Shader * CreateFragmentShaderFromFile(std::string fileName);
 
-	void SelectShaderProgram(std::string programName);
+	/* Returns true if the shader program was actually changed, 
+	false if it was not (redundant shader selection or invalid shader) */
+	bool SelectShaderProgram(std::string programName);
 };
 
 #endif

@@ -8,7 +8,7 @@ Author: <Holden Profit>
 #include <Stdafx.h>
 
 ImageRenderer::ImageRenderer() :
-	m_mesh(*TETRA_RESOURCES.GetMesh(SCREEN_QUAD_MESH)),
+	m_mesh(*TETRA_RESOURCES.GetInternalMesh(SCREEN_QUAD_MESH)),
 	m_pShader(nullptr), 
 	m_pFBO(nullptr)
 {
@@ -17,7 +17,7 @@ ImageRenderer::ImageRenderer() :
 ImageRenderer::ImageRenderer(ShaderProgram* shader, GLsizei width, GLsizei height, FBOType fboType) :
 	m_pShader(shader),
 	m_pFBO(new FrameBufferObject(width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, fboType)),
-	m_mesh(*TETRA_RESOURCES.GetMesh(SCREEN_QUAD_MESH))
+	m_mesh(*TETRA_RESOURCES.GetInternalMesh(SCREEN_QUAD_MESH))
 {}
 
 ImageRenderer::~ImageRenderer()

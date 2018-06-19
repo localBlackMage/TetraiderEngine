@@ -9,6 +9,12 @@ Author: <Holden Profit>
 
 Vector3D::Vector3D() : x(0.f), y(0.f), z(0.f), w(1.f) { }
 
+Vector3D::Vector3D(const aiVector3t<ai_real> & v) : x(v.x), y(v.y), z(v.z), w(1.f) { }
+
+Vector3D::Vector3D(const aiVector3t<ai_real>& v, const float & _w) : x(v.x), y(v.y), z(v.z), w(_w) { }
+
+Vector3D::Vector3D(const Vector3D & vec, const float & _w) : x(vec.x), y(vec.y), z(vec.z), w(_w) { }
+
 Vector3D::Vector3D(const float& _x, const float& _y, const float& _z) : x(_x), y(_y), z(_z), w(1.f) { }
 
 Vector3D::Vector3D(const float& _x, const float& _y, const float& _z, const float& _w) : x(_x), y(_y), z(_z), w(_w) { }
@@ -242,7 +248,8 @@ Vector3D Vector3D::Cross(const Vector3D& vector0, const Vector3D& vector1)
 	return Vector3D(
 		vector0.y * vector1.z - vector0.z * vector1.y,
 		vector0.z * vector1.x - vector0.x * vector1.z,
-		vector0.x * vector1.y - vector0.y * vector1.x
+		vector0.x * vector1.y - vector0.y * vector1.x,
+		0.f
 	);
 }
 

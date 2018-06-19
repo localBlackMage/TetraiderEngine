@@ -26,6 +26,9 @@ Author: <Holden Profit>
 #include <External\Imgui\imgui.h>
 #include <External\Imgui\imgui_impl_sdl_gl3.h>
 #include <External\json.hpp>
+#include <assimp\Importer.hpp>
+#include <assimp\scene.h>
+#include <assimp\postprocess.h>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -149,6 +152,7 @@ using namespace JsonReader;
 #include <Body.h>
 
 // Components - Rendering
+#include <MeshComponent.h>
 #include <FBOSprite.h>
 #include <Sprite.h>
 #include <ParticleEmitter.h>

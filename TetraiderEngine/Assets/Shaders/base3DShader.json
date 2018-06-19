@@ -1,0 +1,6 @@
+{
+	"base3DShader": {
+		"vertex": "base3DShader.vert",
+		"fragment": "base3DShader.frag"
+	}
+}

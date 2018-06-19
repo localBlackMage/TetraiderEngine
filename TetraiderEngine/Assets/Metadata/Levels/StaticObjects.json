@@ -1,76 +1,7 @@
 {
   "GAME_OBJECTS": [
     {
-      "prefab": "P_Camera"
-    },
-	{
-      "prefab": "P_UICamera"
-    },
-    {
-      "prefab": "P_Player"
-    },
-	{
-      "prefab": "P_MiniMap"
-    },
-	{
-	  "prefab": "P_StaminaBar"	
-	},
-	{
-	  "prefab": "P_HealthBar"	
-	},
-	{
-      "prefab": "P_InGameCursor"
-		},
-	 {
-      "prefab": "P_LevelStatus"
-    },
-    {
-      "prefab": "P_EggUI"
-    },
-    {
-      "prefab": "P_PauseMenu"
-    },
-	{
-	  "prefab":"P_inGameSoundMenu"
-	},
-	{
-		"prefab":"P_inGameControlMenu"
-	},
-	{
-		"prefab": "P_OptionMenuInGame"
-	},
-	{
-		"prefab": "P_inGameCanvasMenuVideo"
-	},
-	{
-		"prefab": "P_inGameCanvasPromptQuit"
-	},
-	{
-		"prefab": "P_inGameCanvasPromptRestart"
-	},
-	{
-		"prefab":"P_CanvasPrompt_from_mainButton"
-	},
-	{
-		"prefab": "P_LoseMenu"
-	},
-	{
-	  "prefab": "P_UIarrowAmmo"
-	},
-	{
-	  "prefab": "P_UIGoldenFeathers"
-	},
-	{
-	  "prefab": "P_WinMessage"
-	},
-	{
-	  "prefab": "P_RightTransition_02"
-	},
-	{
-	  "prefab": "P_ShopCanvas"
-	},
-	{
-      "prefab": "P_InGameCreditsMenu"
+      "prefab": "P_CameraPersp"
     }
   ]
 }
