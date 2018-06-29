@@ -40,14 +40,15 @@
 		"particleShader",
 		"maskShader",
 		"miniMapShader",
-		"miniMapFinalShader"
+		"miniMapFinalShader",
+		"base3DShader"
 	],
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",
 		"resolutions": [
 			{
-				"width": 1280,
-				"height": 720
+				"width": 900,
+				"height": 900
 			},
 			{
 				"width": 1536,
@@ -121,8 +122,10 @@
 			"isJoystick": true,
 			"KeyBoardKeyPosX": 7,
 			"KeyBoardKeyNegX": 4,
-			"KeyBoardKeyPosY": 26,
-			"KeyBoardKeyNegY": 22,
+			"KeyBoardKeyPosY": 8,
+			"KeyBoardKeyNegY": 20,
+			"KeyBoardKeyPosZ": 22,
+			"KeyBoardKeyNegZ": 26,
 			"AnalogueStick": 0
 		},
 		{

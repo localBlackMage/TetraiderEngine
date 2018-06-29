@@ -278,8 +278,15 @@ Vector3D operator*(const float scalar, const Vector3D& other)
 	return Vector3D(
 		other.x * scalar,
 		other.y * scalar,
-		other.z * scalar
+		other.z * scalar,
+		other.w * scalar
 	);
+}
+
+std::ostream & operator<<(std::ostream & out, const Vector3D & vec)
+{
+	out << "X: " << vec.x << ", Y: " << vec.y << ", Z: " << vec.z;
+	return out;
 }
 
 #if TEST_MODE

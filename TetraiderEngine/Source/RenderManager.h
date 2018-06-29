@@ -192,7 +192,7 @@ public:
 
 	/* Returns true if the shader program was actually changed, 
 	false if it was not (redundant shader selection or invalid shader) */
-	bool SelectShaderProgram(std::string programName);
+	bool SelectShaderProgram(const std::string& programName);
 };
 
 #endif

@@ -28,25 +28,18 @@ layout(location = 6) out vec4 vtangent_vector;
 layout(location = 7) out vec4 vbitangent_vector;
 layout(location = 8) out vec4 vview_vector;
 
-layout(location = 10) out vec4 vl_lightVectors[MAX_LIGHTS];
+layout(location = 10) out vec4 vl_lightVector;
 
 void main() {
 	vec4 P = model_matrix * position;
 	gl_Position = persp_matrix * view_matrix * P;
 	vtexture_coord = texture_coord;
 
-
-	if (lit) {
-		for(int i = 0; i < MAX_LIGHTS; ++i) {
-			if (l_pos_dist[i].w == 0)
-				vl_lightVectors[i] = vec4(0,0,0,1);
-			else
-				vl_lightVectors[i] = vec4(l_pos_dist[i].xyz, 1) - P;
-		}
-	}
-
 	vnormal_vector = normal_matrix * normal;
 	vtangent_vector = normal_matrix * tangent;
 	vbitangent_vector = normal_matrix * bitangent;
-	vview_vector = camera_position - P;
+	vview_vector = normalize(camera_position - P);
+	
+	
+	vl_lightVector = vec4(50,100,100, 1) - P;
 }

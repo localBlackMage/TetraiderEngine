@@ -121,6 +121,11 @@ namespace JsonReader {
 		return 0;
 	}
 
+	String ParseStringUnsafe(const json & j, const String & first)
+	{
+		return j[first];
+	}
+
 	String ParseString(const json& j, const String& first)
 	{
 		if (j.find(first) != j.end())

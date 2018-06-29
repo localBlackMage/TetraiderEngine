@@ -96,7 +96,7 @@ void Camera::LateUpdate(float dt)
 	m_aspectRatio = TETRA_RENDERER.GetAspectRatio();
 	_CalcViewMatrix();
 	m_cameraMatrix = m_isPersp ? 
-		Matrix4x4::Perspective(m_fov, m_aspectRatio, 1.f) : 
+		Matrix4x4::Perspective(m_fov, m_aspectRatio, 0.1f) : 
 		Matrix4x4::Orthographic(float(m_screenWidth) * m_zoomLevels[m_currentZoomIndex], float(m_screenHeight) * m_zoomLevels[m_currentZoomIndex], 0.1f);
 }
 

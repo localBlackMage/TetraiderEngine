@@ -18,31 +18,45 @@ Creation date: 1/17/18
 #define QUAD_MESH "quad"
 #define SCREEN_QUAD_MESH "screenQuad"
 
-struct Face {
-	unsigned int index[3];
-	Face(unsigned int v1, unsigned int v2, unsigned int v3) {
-		index[0] = v1; index[1] = v2; index[2] = v3;
-	}
-	Face(const aiFace& face) {
-		index[0] = face.mIndices[0];
-		index[1] = face.mIndices[1];
-		index[2] = face.mIndices[2];
-	}
-	unsigned int operator[](int i) const { return index[i]; }
-	unsigned int& operator[](int i) { return index[i]; }
-};
-
 struct TexCoords {
 	GLfloat u, v;
-	explicit TexCoords(float _u, float _v) : u(_u), v(_v) {}
+	TexCoords(float _u, float _v) : u(_u), v(_v) {}
+	TexCoords(const aiVector3D* uv) : u(uv->x), v(uv->y) {}
 	GLfloat operator[](int idx) {
 		return idx == 0 ? u : v;
 	}
 };
 
+class Mesh;
+class MeshScene {
+protected:
+	unsigned short m_numMeshes;
+	std::shared_ptr<Mesh>* m_meshes;
+
+public:
+	MeshScene(unsigned short numMeshes);
+	~MeshScene();
+
+	std::shared_ptr<Mesh> operator[](const int idx) const;
+	std::shared_ptr<Mesh>& operator[](const int idx);
+};
+
 class Mesh
 {
-private:
+protected:
+	friend class MeshScene;
+
+	enum VBO_TYPE {
+		VBO_VERTICES = 0,
+		VBO_NORMALS,
+		VBO_TANGENTS,
+		VBO_BITANGENTS,
+		VBO_FACES,
+		VBO_TEX_COORDS,
+
+		NUM_VBO_TYPES
+	};
+
 	std::vector<Vector3D> m_vertices, m_normals, m_tangents, m_bitangents;
 	std::vector<GLfloat> m_texCoords;
 	std::vector<unsigned long> m_vertColors;
@@ -54,6 +68,9 @@ private:
 	GLuint m_faceBuffer;
 	GLuint m_textCoordBuffer;
 
+	GLuint m_VAO, m_VBO[NUM_VBO_TYPES];
+
+	void _LoadMeshToGraphicsCard();
 public:
 	Mesh();
 	Mesh(const aiMesh* mesh);
@@ -67,6 +84,7 @@ public:
 	void AddTriangle(float p1x, float p1y, float p1z, float uv1u, float uv1v, unsigned long c1, float p2x, float p2y, float p2z, float uv2u, float uv2v, unsigned long c2, float p3x, float p3y, float p3z, float uv3u, float uv3v, unsigned long c3);
 
 	void AddVertex(float px, float py, float pz);
+	void AddVertex(float px, float py, float pz, const TexCoords& uv);
 	void AddFace(unsigned int a, unsigned int b, unsigned int c);
 
 	void FinishMesh();

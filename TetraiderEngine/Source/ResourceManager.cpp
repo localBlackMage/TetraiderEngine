@@ -118,10 +118,10 @@ bool ResourceManager::Init()
 {
 	std::shared_ptr<Mesh> quad = LoadInternalMesh(QUAD_MESH);
 
-	quad->AddVertex(-0.5f, -0.5f, 0.0f);
-	quad->AddVertex( 0.5f, -0.5f, 0.0f);
-	quad->AddVertex( 0.5f,  0.5f, 0.0f);
-	quad->AddVertex(-0.5f,  0.5f, 0.0f);
+	quad->AddVertex(-0.5f, -0.5f, 0.0f, TexCoords(0.f, 0.f));
+	quad->AddVertex( 0.5f, -0.5f, 0.0f, TexCoords(1.f, 0.f));
+	quad->AddVertex( 0.5f,  0.5f, 0.0f, TexCoords(1.f, 1.f));
+	quad->AddVertex(-0.5f,  0.5f, 0.0f, TexCoords(0.f, 1.f));
 
 	quad->AddFace(0, 1, 3);
 	quad->AddFace(1, 2, 3);
@@ -130,10 +130,10 @@ bool ResourceManager::Init()
 
 	std::shared_ptr<Mesh> screenQuad = LoadInternalMesh(SCREEN_QUAD_MESH);
 
-	screenQuad->AddVertex(-1.f, -1.f, 0.0f);
-	screenQuad->AddVertex(1.f, -1.f, 0.0f);
-	screenQuad->AddVertex(1.f, 1.f, 0.0f);
-	screenQuad->AddVertex(-1.f, 1.f, 0.0f);
+	screenQuad->AddVertex(-1.f, -1.f, 0.0f, TexCoords(0.f, 0.f));
+	screenQuad->AddVertex( 1.f, -1.f, 0.0f, TexCoords(1.f, 0.f));
+	screenQuad->AddVertex( 1.f,  1.f, 0.0f, TexCoords(1.f, 1.f));
+	screenQuad->AddVertex(-1.f,  1.f, 0.0f, TexCoords(0.f, 1.f));
 
 	screenQuad->AddFace(0, 1, 3);
 	screenQuad->AddFace(1, 2, 3);
@@ -155,14 +155,14 @@ DebugLineMesh * ResourceManager::GetDebugLineMesh()
 
 std::shared_ptr<Mesh> ResourceManager::LoadInternalMesh(const std::string & meshName)
 {
-	std::shared_ptr<Mesh> mesh = m_meshes[meshName.c_str()];
+	std::shared_ptr<Mesh> mesh = m_meshes[meshName];
 
 	if (mesh)
 		return mesh;
 
 	mesh = std::shared_ptr<Mesh>(new Mesh());
 	if (mesh)
-		m_meshes[meshName.c_str()] = mesh;
+		m_meshes[meshName] = mesh;
 
 	return mesh;
 }
@@ -180,20 +180,21 @@ std::shared_ptr<Mesh> ResourceManager::LoadMesh(const std::string& meshName)
 
 	if (scene->HasMeshes()) {
 		for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
-			const aiMesh* mesh = scene->mMeshes[i];
-			m_meshes[mesh->mName.C_Str()] = std::shared_ptr<Mesh>(new Mesh(mesh));
+			const aiMesh* aiMeshPtr = scene->mMeshes[i];
+			//m_meshes[mesh->mName.C_Str()] = std::shared_ptr<Mesh>(new Mesh(mesh));
+			m_meshes[meshName] = std::shared_ptr<Mesh>(new Mesh(aiMeshPtr));
+
+			// SHOULD BE WORKED BETTER HERE
+			mesh = m_meshes[meshName];
 		}
 	}
-
-	if (mesh)
-		m_meshes[meshName.c_str()] = mesh;
 
 	return mesh;
 }
 
 std::shared_ptr<Mesh> ResourceManager::GetInternalMesh(const std::string & meshName)
 {
-	std::shared_ptr<Mesh> mesh = m_meshes[meshName.c_str()];
+	std::shared_ptr<Mesh> mesh = m_meshes[meshName];
 
 	if (mesh)
 		return mesh;
@@ -204,7 +205,7 @@ std::shared_ptr<Mesh> ResourceManager::GetInternalMesh(const std::string & meshN
 
 std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& meshName)
 {
-	std::shared_ptr<Mesh> mesh = m_meshes[meshName.c_str()];
+	std::shared_ptr<Mesh> mesh = m_meshes[meshName];
 
 	if (mesh)
 		return mesh;
@@ -215,9 +216,9 @@ std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& meshName)
 
 void ResourceManager::UnloadMesh(const std::string& meshName)
 {
-	if (m_meshes[meshName.c_str()] && m_meshes[meshName.c_str()].unique()) {
-		m_meshes[meshName.c_str()].reset();
-		m_meshes.erase(meshName.c_str());
+	if (m_meshes[meshName] && m_meshes[meshName].unique()) {
+		m_meshes[meshName].reset();
+		m_meshes.erase(meshName);
 	}
 }
 
@@ -330,11 +331,7 @@ void ResourceManager::LoadPrefabFiles() {
 		*j = OpenJsonFile(p.path().string());
 		std::string s = p.path().filename().string();
 		m_prefabs[s] = j;
-		s.pop_back();
-		s.pop_back();
-		s.pop_back();
-		s.pop_back();
-		s.pop_back();
+		s.erase(s.end() - 5, s.end());
 		m_prefabStrings.push_back(s);
 	}
 }

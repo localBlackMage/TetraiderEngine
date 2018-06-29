@@ -79,6 +79,7 @@ using namespace JsonReader;
 
 #include <Color.h>
 #include <Debug.h>
+#include <Face.h>
 #include <GameObjectTags.h>
 #include <ComponentTypes.h>
 #include <AI_StateTypes.h>
@@ -91,6 +92,7 @@ using namespace JsonReader;
 #include <RoomNodeData.h>
 #include <FrameBufferObject.h>
 #include <Mesh.h>
+#include <Plane.h>
 #include <DebugLineMesh.h>
 #include <Shader.h>
 #include <ShaderProgram.h>

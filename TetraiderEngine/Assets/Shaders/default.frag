@@ -59,5 +59,6 @@ void main(void) {
 	else
 		lightColor = vec3(1,1,1);
 
-	frag_color = ((texture(spriteTexture, offsetCoords) * vtint_color) + vsaturation_color) * vec4(lightColor,1);
+	frag_color = texture(spriteTexture, offsetCoords);
+	//frag_color = ((texture(spriteTexture, offsetCoords) * vtint_color) + vsaturation_color) * vec4(lightColor,1);
 }

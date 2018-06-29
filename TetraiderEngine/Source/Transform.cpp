@@ -11,10 +11,10 @@ Author: <Holden Profit>
 
 void Transform::_UpdateLookAt()
 {
-	m_lookAt = Matrix4x4::Rotate(GetAngleX(), XAXIS) *
-		Matrix4x4::Rotate(GetAngleY(), YAXIS) *
-		Matrix4x4::Rotate(GetAngleZ(), ZAXIS) *
-		YAXIS;
+	Matrix4x4 rot = Matrix4x4::Rotate(m_angleZ, ZAXIS) *
+		Matrix4x4::Rotate(m_angleY, YAXIS) *
+		Matrix4x4::Rotate(m_angleX, XAXIS);
+	m_lookAt = rot * (-1*ZAXIS);
 }
 
 #pragma endregion
@@ -53,19 +53,18 @@ void Transform::LateUpdate(float dt) {
 	Matrix4x4 scale;
 	if (m_parent) {
 		trans = Matrix4x4::Translate(m_position + m_parent->GetPosition());
-		int xSign = 1;
-		int ySign = 1;
+		int xSign = 1, ySign = 1, zSign = 1;
 		if (m_scale.x < 0 && m_parent->GetScaleX() < 0) xSign = -1;
 		if (m_scale.y < 0 && m_parent->GetScaleY() < 0) ySign = -1;
+		if (m_scale.z < 0 && m_parent->GetScaleZ() < 0) zSign = -1;
 		scale = Matrix4x4::Scale(m_scale.x*m_parent->GetScaleX()*xSign, m_scale.y*m_parent->GetScaleY()*ySign, 1.f); //	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
 	}
 	else {
 		trans = Matrix4x4::Translate(m_position);
-		scale = Matrix4x4::Scale(m_scale.x, m_scale.y, 1.f); //	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
+		scale = Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z); //	NOTE: Z SCALE IS HARD CODED FOR INVERSE PURPOSES
 	}
 	
-	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
-	//Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
+	Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
 	// TODO: Optimization, if pivot offset is zero do not create or multiply this component
 	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset));
@@ -105,9 +104,11 @@ void Transform::Override(const json & j)
 	if (ValueExists(j, "scale")) {
 		m_scale.x = ValueExists(j["scale"], "x") ? j["scale"]["x"] : m_scale.x;
 		m_scale.y = ValueExists(j["scale"], "y") ? j["scale"]["y"] : m_scale.y;
-		//m_scale.z = ValueExists(j["scale"], "z") ? j["scale"]["z"] : m_scale.z; // Likely not needed for our game
+		m_scale.z = ValueExists(j["scale"], "z") ? j["scale"]["z"] : m_scale.z;
 	}
 	if (ValueExists(j, "rotation")) {
+		m_angleX = ValueExists(j["rotation"], "x") ? j["rotation"]["x"] : m_angleX;
+		m_angleY = ValueExists(j["rotation"], "y") ? j["rotation"]["y"] : m_angleY;
 		m_angleZ = ValueExists(j["rotation"], "z") ? j["rotation"]["z"] : m_angleZ;
 	}
 
@@ -345,16 +346,15 @@ Matrix4x4 Transform::GetTransformAfterOffset(const Vector3D & offset) const
 	else
 		trans = Matrix4x4::Translate(m_position + offset);
 
-	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, 1.f));	// NOTE: Z SCALE IS HARD CODED FOR INVERSION
-	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
-													   //Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
+	Matrix4x4 scale(Matrix4x4::Scale(m_scale.x, m_scale.y, m_scale.z));
+	Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
-													   // TODO: Optimization, if pivot offset is zero do not create or multiply this component
+	// TODO: Optimization, if pivot offset is zero do not create or multiply this component
 	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset));
 
 	return trans*rot*scale*pivotOffset;
 }
-Matrix4x4 Transform::TransformWithOffsetAndScale(const Vector3D & offset, const float & scaleX, const float & scaleY) const
+Matrix4x4 Transform::TransformWithOffsetAndScale(const Vector3D & offset, const float & scaleX, const float & scaleY, const float& scaleZ) const
 {
 	Matrix4x4 trans;
 	if (m_parent)
@@ -362,11 +362,9 @@ Matrix4x4 Transform::TransformWithOffsetAndScale(const Vector3D & offset, const 
 	else
 		trans = Matrix4x4::Translate(m_position + offset);
 
-	Matrix4x4 scale(Matrix4x4::Scale(scaleX, scaleY, 1.f));
-	Matrix4x4 rot(Matrix4x4::Rotate(m_angleZ, ZAXIS)); // Optimization, since 2D game only get Z axis. Revert if other axis are required
-													   //Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
+	Matrix4x4 scale(Matrix4x4::Scale(scaleX, scaleY, scaleZ));
+	Matrix4x4 rot(Matrix4x4::Rotate(m_angleX, XAXIS) * Matrix4x4::Rotate(m_angleY, YAXIS) * Matrix4x4::Rotate(m_angleZ, ZAXIS));
 
-													   // TODO: Optimization, if pivot offset is zero do not create or multiply this component
 	Matrix4x4 pivotOffset(Matrix4x4::Translate(m_pivotOffset));
 
 	return trans*rot*scale*pivotOffset;

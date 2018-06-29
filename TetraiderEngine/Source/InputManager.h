@@ -67,6 +67,8 @@ struct InputCommandInfo {
 		SDL_Scancode _keyboardNegX,
 		SDL_Scancode _keyboardPosY,
 		SDL_Scancode _keyboardNegY,
+		SDL_Scancode _keyboardPosZ,
+		SDL_Scancode _keyboardNegZ,
 		JoystickAnalogueType _analogue,
 		MOUSEBTN _mouseBtn,
 		XBOX_SCANCODE _xboxKey) :
@@ -79,6 +81,8 @@ struct InputCommandInfo {
 		m_keyboardKeyNegX(_keyboardNegX),
 		m_keyboardKeyPosY(_keyboardPosY),
 		m_keyboardKeyNegY(_keyboardNegY),
+		m_keyboardKeyPosZ(_keyboardPosZ),
+		m_keyboardKeyNegZ(_keyboardNegZ),
 		m_analogue(_analogue),
 		m_mouseBtn(_mouseBtn),
 		m_xboxKey(_xboxKey) {}
@@ -91,6 +95,8 @@ struct InputCommandInfo {
 	SDL_Scancode m_keyboardKeyNegX;
 	SDL_Scancode m_keyboardKeyPosY;
 	SDL_Scancode m_keyboardKeyNegY;
+	SDL_Scancode m_keyboardKeyPosZ;
+	SDL_Scancode m_keyboardKeyNegZ;
 	JoystickAnalogueType m_analogue;
 	MOUSEBTN m_mouseBtn;
 	XBOX_SCANCODE m_xboxKey;

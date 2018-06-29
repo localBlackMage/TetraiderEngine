@@ -10,7 +10,7 @@ Author: <Holden Profit>
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
 	m_pActiveCamera(nullptr), m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false),
-	m_clearColor(Vector3D(0,0,0, 0.f)), m_isFullscreen(false)
+	m_clearColor(Vector3D(0.2f,0.2f,0.2f, 0.f)), m_isFullscreen(false)
 {
 }
 
@@ -825,12 +825,12 @@ void RenderManager::RenderGameObject(const GameObject & camera, const GameObject
 		const MeshComponent* cpMeshComp = gameObject.GetComponent<MeshComponent>(ComponentType::C_Mesh);
 		bool newShaderSelected = _SelectShaderProgram(cpMeshComp);
 		
-		if (newShaderSelected || camera != *m_pActiveCamera) {
+		//if (newShaderSelected || camera != *m_pActiveCamera) {
 			_SetUpCamera(camera);
 
 			_BindGameObjectTransform(gameObject);
 			_RenderMesh(cpMeshComp);
-		}
+		//}
 	}
 }
 
@@ -952,7 +952,7 @@ Shader * RenderManager::CreateFragmentShaderFromFile(std::string fileName)
 	return CreateFragmentShader(_LoadTextFile(fileName));
 }
 
-bool RenderManager::SelectShaderProgram(std::string programName)
+bool RenderManager::SelectShaderProgram(const std::string& programName)
 {
 	if (!m_shaderPrograms[programName]) {
 		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;

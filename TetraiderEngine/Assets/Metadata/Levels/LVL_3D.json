@@ -1,7 +1,54 @@
 {
+	"GAME_OBJECTS_": [
+		{
+			"prefab": "PointLight",
+			"position": {
+				"x": 0,
+				"y": 100,
+				"z": 0
+			}
+		},
+		{
+			"prefab": "Sphere",
+			"scale": {
+				"x": 30,
+				"y": 30,
+				"z": 30
+			}
+		},
+		{
+			"prefab": "Plane",
+			"position": {
+				"x": 0,
+				"y": 50,
+				"z": -50
+			},
+			"rotation": {
+				"x": 45
+			}
+		},
+		{
+			"prefab": "Suzy",
+			"scale": {
+				"x": 10,
+				"y": 10,
+				"z": 10
+			},
+			"position": {
+				"x": 50,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
 	"GAME_OBJECTS": [
 		{
-		  "prefab": "P_Suzy"
+			"prefab": "Canoe",
+			"scale": {
+				"x": 10,
+				"y": 10,
+				"z": 10
+			}
 		}
 	]
 }

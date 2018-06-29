@@ -57,6 +57,7 @@ private:
 
 	GameObjectLayer m_layers[RENDER_LAYER::L_NUM_LAYERS];
 	std::vector<GameObject*> m_gameObjects;
+	std::vector<GameObject*> m_lights;
 	GameObject* m_pPlayerReference;
 
 	void SetGameObjectTag(std::string tag, GameObject* pGO);

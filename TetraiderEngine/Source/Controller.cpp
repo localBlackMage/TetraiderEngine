@@ -33,6 +33,10 @@ void Controller::Serialize(const json& j) {
 
 void Controller::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
+		case EVENT_INPUT_MOVE: {
+			m_pTransform->Move(pEvent->Data<InputAxisData>()->m_dir);
+			break;
+		}
 	}
 
 	Agent::HandleEvent(pEvent);
@@ -40,5 +44,5 @@ void Controller::HandleEvent(Event* pEvent) {
 
 void Controller::LateInitialize() {
 	Agent::LateInitialize();
-
+	TETRA_EVENTS.Subscribe(EVENT_INPUT_MOVE, this);
 }

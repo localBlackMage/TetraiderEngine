@@ -33,13 +33,13 @@ void LightBase::Serialize(const json& j)
 	m_a = ValueExists(j, "falloffA") ? j["falloffA"] : m_a;
 	m_b = ValueExists(j, "falloffB") ? j["falloffB"] : m_b;
 
-	std::vector< std::string > layers = ParseStringList(j, "layers");
+	//std::vector< std::string > layers = ParseStringList(j, "layers");
 
-	for (std::string layer : layers) {
-		int idx = TETRA_GAME_OBJECTS.GetLayerFromString(layer);
-		if (idx < RENDER_LAYER::L_NUM_LAYERS)
-			m_layers[idx] = true;
-	}
+	//for (std::string layer : layers) {
+	//	int idx = TETRA_GAME_OBJECTS.GetLayerFromString(layer);
+	//	if (idx < RENDER_LAYER::L_NUM_LAYERS)
+	//		m_layers[idx] = true;
+	//}
 }
 
 void LightBase::Override(const json & j)

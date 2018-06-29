@@ -12,7 +12,7 @@ Author: <Moodie Ghaddar>
 
 class GameObject 
 {
-private:
+protected:
 	Component* mComponents[ComponentType::NUM_COMPONENTS];
 	std::vector<ComponentType> m_activeComponents;
 	unsigned int m_id;
@@ -20,6 +20,7 @@ private:
 	bool m_isSetToDestroy;
 	float m_destroyTimer;
 	float m_destroySetTimeStamp;
+
 public:
 	bool m_isActive;
 	bool m_isRender;
@@ -54,6 +55,8 @@ public:
 	
 	void SetParent(GameObject* pParent);
 	void SetActive(bool active);
+	inline bool IsActive() { return m_isActive; }
+	inline bool ShouldRender() { return m_isRender; }
 	bool IsParented();
 	
 	void SwitchTag(GameObjectTag t) { m_tag = t; }

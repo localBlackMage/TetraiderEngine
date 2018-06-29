@@ -1,0 +1,28 @@
+{
+    "Tag": "Player",
+    "Layer": "N/A",
+    "COMPONENTS": [
+        {
+			"Component": "Transform",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"pivotOffset": {},
+			"rotation": {
+			},
+			"2D": false
+        },
+		{
+			"Component": "Mesh",
+			"Mesh": "Suzy.obj",
+			"shader": "base3DShader"
+		}
+    ]
+}

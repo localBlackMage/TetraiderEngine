@@ -36,6 +36,7 @@ namespace JsonReader {
 	int ParseInt(const json& j, const String&, const String&);
 	int ParseInt(const json& j, const String&, const String&, const String&);
 
+	String ParseStringUnsafe(const json& j, const String&);
 	String ParseString(const json& j, const String&);
 	String ParseString(const json& j, const String&, const String&);
 	String ParseString(const json& j, const String&, const String&, const String&);

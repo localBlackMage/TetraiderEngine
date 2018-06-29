@@ -424,7 +424,14 @@ Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const floa
 
 Matrix4x4 Matrix4x4::Perspective(const float fov, const float aspect, const float nearVal)
 {
-	return Perspective(fov, aspect, nearVal, 1000.0f);
+	Matrix4x4 perspM = Matrix4x4();
+	perspM.Set(0, 0, 1.0f / tan(0.5f * DEG_TO_RAD * fov));
+	perspM.Set(1, 1, aspect * perspM.Get(0, 0));
+	perspM.Set(2, 2, -1.f);
+	perspM.Set(2, 3, -2.f * nearVal);
+	perspM.Set(3, 2, -1.f);
+
+	return perspM;
 }
 
 Matrix4x4 Matrix4x4::Orthographic(const float width, const float height, const float nearVal, const float farVal)

@@ -52,7 +52,7 @@ void Sprite::Serialize(const json& j)
 	m_saturationColor.z = j["saturation"]["b"];
 	m_saturationColor.w = j["saturation"]["a"];
 
-	m_shader = ValueExists(j, "shader") ?  j["shader"] : "default";
+	m_shader = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
 
 	m_posOffset = ParseVector3D(j, "posOffset");
 

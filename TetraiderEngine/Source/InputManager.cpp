@@ -61,6 +61,8 @@ void InputManager::Initialize(const json& j) {
 			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegX")),
 			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyPosY")),
 			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegY")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyPosZ")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegZ")),
 			static_cast<JoystickAnalogueType>(ParseInt(j[i], "AnalogueStick")),
 			static_cast<MOUSEBTN>(ParseInt(j[i], "MouseBtn")),
 			static_cast<XBOX_SCANCODE>(ParseInt(j[i], "XboxKey"))
@@ -183,7 +185,7 @@ void InputManager::FireEvents() {
 				break;
 			}
 			case InputType_Axis: {
-				float xAxis = 0, yAxis = 0;
+				float xAxis = 0, yAxis = 0, zAxis = 0;
 
 				if (command->m_isJoystick && command->m_analogue == JoystickAnalogue_Left) {
 					if (abs(GetLeftAxisX()) > JoystickDeadZone)  xAxis += GetLeftAxisX();
@@ -198,8 +200,10 @@ void InputManager::FireEvents() {
 				if (IsKeyPressed(command->m_keyboardKeyNegX)) xAxis -= 1;
 				if (IsKeyPressed(command->m_keyboardKeyPosY)) yAxis += 1;
 				if (IsKeyPressed(command->m_keyboardKeyNegY)) yAxis -= 1;
+				if (IsKeyPressed(command->m_keyboardKeyPosZ)) zAxis += 1;
+				if (IsKeyPressed(command->m_keyboardKeyNegZ)) zAxis -= 1;
 
-				Vector3D axisDir(xAxis, yAxis, 0);
+				Vector3D axisDir(xAxis, yAxis, zAxis);
 				axisDir.Normalize();
 				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(axisDir)));
 				break;

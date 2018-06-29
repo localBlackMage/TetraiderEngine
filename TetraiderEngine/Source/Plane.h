@@ -13,10 +13,10 @@ public:
 			for (int i = 0; i <= size; ++i) {
 				float x = i*d - 1.0f;
 				int index = (size + 1)*j + i;
-				vertices[index].x = x;
-				vertices[index].y = y;
-				vertices[index].z = 0;
-				vertices[index].w = 1;
+				m_vertices[index].x = x;
+				m_vertices[index].y = y;
+				m_vertices[index].z = 0;
+				m_vertices[index].w = 1;
 			}
 		}
 	};

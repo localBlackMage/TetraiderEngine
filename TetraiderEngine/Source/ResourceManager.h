@@ -49,7 +49,7 @@ private:
 	Assimp::Importer m_importer;
 	
 	DebugLineMesh * m_pDebugLineMesh;
-	std::unordered_map<const char*, std::shared_ptr<Mesh> > m_meshes;
+	std::unordered_map<std::string, std::shared_ptr<Mesh> > m_meshes;
 	std::unordered_map< Font_Size, FontInfo*, Font_SizeHasher> m_fonts;
 	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
 	std::map<std::string, json*> m_prefabs;

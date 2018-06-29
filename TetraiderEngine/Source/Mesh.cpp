@@ -7,6 +7,62 @@ Author: <Holden Profit>
 
 #include <Stdafx.h>
 
+void Mesh::_LoadMeshToGraphicsCard()
+{
+	int vertexBufferSize = sizeof(Vector3D) * vertexCount();
+
+#pragma region Vertex Buffer
+	glGenBuffers(1, &m_vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER,
+		vertexBufferSize,
+		vertexArray(), GL_STATIC_DRAW);
+#pragma endregion
+
+#pragma region Normal Buffer
+	glGenBuffers(1, &m_normalBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+	glBufferData(GL_ARRAY_BUFFER,
+		vertexBufferSize,
+		normalArray(), GL_STATIC_DRAW);
+#pragma endregion
+
+#pragma region Tangent Buffer
+	glGenBuffers(1, &m_tangentBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_tangentBuffer);
+	glBufferData(GL_ARRAY_BUFFER,
+		vertexBufferSize,
+		tangentArray(), GL_STATIC_DRAW);
+#pragma endregion
+
+#pragma region Bitangent Buffer
+	glGenBuffers(1, &m_bitangentBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_bitangentBuffer);
+	glBufferData(GL_ARRAY_BUFFER,
+		vertexBufferSize,
+		bitangentArray(), GL_STATIC_DRAW);
+#pragma endregion
+
+#pragma region Face Buffer
+	glGenBuffers(1, &m_faceBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_faceBuffer);
+	int faceBufferSize = sizeof(Face)*faceCount();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+		faceBufferSize,
+		faceArray(), GL_STATIC_DRAW);
+#pragma endregion
+
+#pragma region Texture Coordinate Buffer
+	glGenBuffers(1, &m_textCoordBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_textCoordBuffer);
+	int texCoordBufferSize = 2 * sizeof(GLfloat) * vertexCount();
+	glBufferData(GL_ARRAY_BUFFER,
+		texCoordBufferSize,
+		texCoordArray(), GL_STATIC_DRAW);
+#pragma endregion
+
+}
+
 Mesh::Mesh() {}
 
 Mesh::Mesh(const aiMesh * mesh)
@@ -30,6 +86,19 @@ Mesh::Mesh(const aiMesh * mesh)
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
 		m_bitangents.push_back(Vector3D(mesh->mBitangents[i]));
 	}
+
+	m_faces.reserve(mesh->mNumFaces);
+	for (unsigned int i = 0; i < mesh->mNumFaces; ++i) {
+		m_faces.push_back(Face(mesh->mFaces[i]));
+	}
+
+	m_texCoords.reserve(mesh->mNumVertices * 2);
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
+		m_texCoords.push_back(mesh->mTextureCoords[0][i].x);
+		m_texCoords.push_back(mesh->mTextureCoords[0][i].y);
+	}
+
+	_LoadMeshToGraphicsCard();
 }
 
 Mesh::~Mesh()
@@ -128,6 +197,13 @@ void Mesh::AddVertex(float px, float py, float pz)
 	m_vertices.push_back(Vector3D(px, py, pz));
 }
 
+void Mesh::AddVertex(float px, float py, float pz, const TexCoords& uv)
+{
+	m_vertices.push_back(Vector3D(px, py, pz));
+	m_texCoords.push_back(uv.u);
+	m_texCoords.push_back(uv.v);
+}
+
 void Mesh::AddFace(unsigned int a, unsigned int b, unsigned int c)
 {
 	m_faces.push_back(Face(a, b, c));
@@ -141,59 +217,7 @@ void Mesh::FinishMesh()
 	m_normals.shrink_to_fit();
 	m_tangents.shrink_to_fit();
 	m_bitangents.shrink_to_fit();
-	int vertexBufferSize = sizeof(Vector3D) * vertexCount();
-	//for (int n = 0; n < vertexCount(); ++n)
-	//	m_normals.push_back(Vector3D(0, 0, 1, 0));
-	
-#pragma region Vertex Buffer
-	glGenBuffers(1, &m_vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		vertexArray(), GL_STATIC_DRAW);
-#pragma endregion
-
-#pragma region Normal Buffer
-	glGenBuffers(1, &m_normalBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
-	glBufferData(GL_ARRAY_BUFFER, 
-		vertexBufferSize, 
-		normalArray(), GL_STATIC_DRAW);
-#pragma endregion
-
-#pragma region Tangent Buffer
-	glGenBuffers(1, &m_tangentBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_tangentBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		tangentArray(), GL_STATIC_DRAW);
-#pragma endregion
-
-#pragma region Bitangent Buffer
-	glGenBuffers(1, &m_bitangentBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_bitangentBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		bitangentArray(), GL_STATIC_DRAW);
-#pragma endregion
-
-#pragma region Face Buffer
-	glGenBuffers(1, &m_faceBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_faceBuffer);
-	int faceBufferSize = sizeof(Face)*faceCount();
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
-		faceBufferSize, 
-		faceArray(), GL_STATIC_DRAW);
-#pragma endregion
-
-#pragma region Texture Coordinate Buffer
-	glGenBuffers(1, &m_textCoordBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_textCoordBuffer);
-	int texCoordBufferSize = 2 * sizeof(GLfloat) * vertexCount();
-	glBufferData(GL_ARRAY_BUFFER, 
-		texCoordBufferSize, 
-		texCoordArray(), GL_STATIC_DRAW);
-#pragma endregion
+	_LoadMeshToGraphicsCard();
 }
 
 void Mesh::CalcNormals()
@@ -317,4 +341,25 @@ Vector3D ParseVec3(std::string& line) {
 	float third = std::stof(line);
 
 	return Vector3D(first, second, third);
+}
+
+MeshScene::MeshScene(unsigned short numMeshes) : 
+	m_numMeshes(numMeshes)
+{
+	m_meshes = (std::shared_ptr<Mesh>*)malloc(sizeof(std::shared_ptr<Mesh>) * m_numMeshes);
+}
+
+MeshScene::~MeshScene()
+{
+	
+}
+
+std::shared_ptr<Mesh> MeshScene::operator[](const int idx) const
+{
+	return std::shared_ptr<Mesh>();
+}
+
+std::shared_ptr<Mesh>& MeshScene::operator[](const int idx)
+{
+	// TODO: insert return statement here
 }

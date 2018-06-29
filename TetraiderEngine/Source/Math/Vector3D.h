@@ -19,7 +19,7 @@ class Vector3D
 {
 public:
 	float x, y, z, w;
-
+	
 	Vector3D();
 	Vector3D(const aiVector3t<ai_real>& v);
 	Vector3D(const aiVector3t<ai_real>& v, const float& _w);
@@ -73,6 +73,7 @@ public:
 };
 
 Vector3D operator*(const float scalar, const Vector3D& other);
+std::ostream& operator<<(std::ostream& out, const Vector3D& vec);
 
 static const Vector3D XAXIS = Vector3D(1, 0, 0, 0);
 static const Vector3D YAXIS = Vector3D(0, 1, 0, 0);

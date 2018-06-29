@@ -1,0 +1,38 @@
+{
+    "Tag": "Player",
+    "Layer": "N/A",
+    "COMPONENTS": [
+        {
+			"Component": "Transform",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 2,
+				"y": 2,
+				"z": 2
+			},
+			"pivotOffset": {},
+			"rotation": {
+			},
+			"2D": false
+        },
+		{
+			"Component": "Mesh",
+			"Mesh": "Sphere.obj",
+			"shader": "base3DShader"
+		},
+		{
+			"Component": "PointLight",
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1,
+				"a": 1
+			},
+			"distance": 10000.0
+		}
+    ]
+}

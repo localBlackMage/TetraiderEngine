@@ -6,12 +6,15 @@
 			"Component": "Transform",
 			"position": {
 				"x": 0,
-				"y": 10,
-				"z": 10
+				"y": 0,
+				"z": 100
 			},
 			"scale": {},
 			"pivotOffset": {},
 			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
 			},
 			"2D": false
         },
@@ -20,8 +23,15 @@
             "perspective": true,
 			"zoomLevels": [ 1,1,1,1 ],
 			"primary": true,
-            "fov": 105,
+            "fov": 80,
             "layers": ["BG", "BG_1", "BG_2", "1", "2", "3", "4", "DEBUG"]
-        }
+        },
+		{
+			"Component": "Controller",
+			"AgentData": {
+				"speed": 1,
+				"acceleration": 1
+			}
+		}
     ]
 }

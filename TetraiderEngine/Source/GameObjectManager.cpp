@@ -197,12 +197,13 @@ void GameObjectManager::SwitchGameObjectLayer(GameObject* pGO, RENDER_LAYER laye
 
 void GameObjectManager::_InsertLightIntoLayers(GameObject * pGO)
 {
-	LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
+	//LightBase* pLightComp = pGO->GetComponent<LightBase>(ComponentType::C_PointLight);
 
-	for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
-		if (pLightComp->GetLayer(i))
-			m_layers[i].AddLightToLayer(pGO);
-	}
+	//for (int i = 0; i < RENDER_LAYER::L_NUM_LAYERS; ++i) {
+	//	if (pLightComp->GetLayer(i))
+	//		m_layers[i].AddLightToLayer(pGO);
+	//}
+	m_lights.push_back(pGO);
 }
 
 void GameObjectManager::_RenderGameObjects()
@@ -212,8 +213,10 @@ void GameObjectManager::_RenderGameObjects()
 	glCullFace(GL_BACK);
 	for (GameObject* cameraGO : m_pCameras) {
 		for (GameObject* pGO : m_gameObjects) {
-			if (pGO->m_isActive && pGO->m_isRender)
-				TETRA_RENDERER.RenderGameObject(*cameraGO, *pGO);
+			if (pGO == cameraGO)	
+				continue;
+			if (pGO->IsActive() && pGO->ShouldRender())
+				TETRA_RENDERER.RenderGameObject(*cameraGO, *pGO);  
 		}
 	}
 }
@@ -255,8 +258,10 @@ void GameObjectManager::_RenderWithPostProcessing()
 
 void GameObjectManager::_RenderWithoutPostProcessing()
 {
-	// Render all layers but UI
-	_RenderGameObjectLayers(0, RENDER_LAYER::L_UIBG);
+	//// Render all layers but UI
+	//_RenderGameObjectLayers(0, RENDER_LAYER::L_UIBG);
+
+	_RenderGameObjects();
 
 	for (GameObject* cameraGO : m_pCameras) {
 		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
@@ -265,8 +270,8 @@ void GameObjectManager::_RenderWithoutPostProcessing()
 		}
 	}
 
-	// Render UI
-	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
+	//// Render UI
+	//_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
 }
 
 #pragma endregion
@@ -325,7 +330,7 @@ void GameObjectManager::LateUpdateForLevelEditor(float dt) {
 
 void GameObjectManager::RenderGameObjects()
 {
-	TETRA_POST_PROCESSING.GenerateMiniMapTextureForFrame();
+	//TETRA_POST_PROCESSING.GenerateMiniMapTextureForFrame();
 	if (TETRA_POST_PROCESSING.IsEnabled())
 		_RenderWithPostProcessing();
 	else

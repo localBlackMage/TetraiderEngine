@@ -24,8 +24,12 @@ void MeshComponent::Update(float dt) {}
 
 void MeshComponent::Serialize(const json& j)
 {
-	m_pMesh = TETRA_RESOURCES.GetMesh(ParseString(j, "Mesh"));
-	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
+	std::string meshName = ParseString(j, "Mesh");
+	if (meshName == "quad")
+		m_pMesh = TETRA_RESOURCES.GetInternalMesh(meshName);
+	else
+		m_pMesh = TETRA_RESOURCES.GetMesh(meshName);
+	m_shader = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
 }
 
 void MeshComponent::Override(const json& j) 

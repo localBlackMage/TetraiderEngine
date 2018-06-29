@@ -5,7 +5,7 @@ const int MAX_LIGHTS = 20;
 // NON-UNIFORM INPUTS
 layout(location = 0) in vec4 position;
 layout(location = 1) in vec4 normal;
-layout(location = 2) in vec2 texture_coord;
+layout(location = 4) in vec2 texture_coord;
 
 
 // UNIFORM INPUTS

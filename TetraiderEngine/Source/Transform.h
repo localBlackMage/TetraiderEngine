@@ -97,7 +97,7 @@ public:
 
 	Matrix4x4 GetTransform() const;
 	Matrix4x4 GetTransformAfterOffset(const Vector3D& offset) const;
-	Matrix4x4 TransformWithOffsetAndScale(const Vector3D& offset, const float& scaleX, const float& scaleY) const;
+	Matrix4x4 TransformWithOffsetAndScale(const Vector3D& offset, const float& scaleX, const float& scaleY, const float& scaleZ = 1.0f) const;
 	friend Body;
 };
 
