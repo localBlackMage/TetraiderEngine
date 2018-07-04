@@ -304,6 +304,7 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
+!TetraiderEngine/Assets/Meshes/*.obj
 !TetraiderEngine/SDL2/lib/*
 !TetraiderEngine/GL/lib/*
 TetraiderEngine/Source/Math/*.o
