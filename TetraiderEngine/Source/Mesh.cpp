@@ -353,13 +353,3 @@ MeshScene::~MeshScene()
 {
 	
 }
-
-std::shared_ptr<Mesh> MeshScene::operator[](const int idx) const
-{
-	return std::shared_ptr<Mesh>();
-}
-
-std::shared_ptr<Mesh>& MeshScene::operator[](const int idx)
-{
-	// TODO: insert return statement here
-}

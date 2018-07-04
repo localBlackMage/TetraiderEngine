@@ -36,9 +36,6 @@ protected:
 public:
 	MeshScene(unsigned short numMeshes);
 	~MeshScene();
-
-	std::shared_ptr<Mesh> operator[](const int idx) const;
-	std::shared_ptr<Mesh>& operator[](const int idx);
 };
 
 class Mesh
