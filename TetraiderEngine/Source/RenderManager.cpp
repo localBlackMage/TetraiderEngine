@@ -225,26 +225,23 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 
 void RenderManager::_RenderMesh(const MeshComponent * cpMeshComp)
 {
-	BindMesh(*cpMeshComp->GetMesh());
+	std::shared_ptr<Scene> pScene = cpMeshComp->GetScene();
+	for (unsigned short i = 0; i < pScene->NumMeshes(); ++i) {
+		std::shared_ptr<Mesh> pMesh = (*pScene)[i];
+		BindMesh((*pMesh.get()));
 
-	//if (pSpriteComp->GetAlphaMode() == GL_RGBA)
-	//	EnableAlphaTest();
-	//else
-	//EnableDepthTest();
+		// select the texture to use
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
+		//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+		//GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
 
-
-
-	// select the texture to use
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
-	//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-	//GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
-
-	// draw the mesh
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cpMeshComp->GetMesh().get()->GetFaceBuffer());
-	glDrawElements(GL_TRIANGLES, 3 * cpMeshComp->GetMesh().get()->faceCount(), GL_UNSIGNED_INT, 0);
+		// draw the mesh
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
+		glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
+	}
 }
 
 bool RenderManager::_SelectShaderProgram(const Component* renderingComponent)
@@ -552,7 +549,13 @@ void RenderManager::ClearBuffer(const Vector3D& color)
 bool RenderManager::InitGlew()
 {
 	// GLEW: get function bindings (if possible)
-	glewInit();
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		/* Problem: glewInit failed, something is seriously wrong. */
+		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
+		return false;
+	}
 	if (!GLEW_VERSION_2_0) {
 		std::cout << "Needs OpenGL version 2.0 or better" << std::endl;
 		return false;
@@ -639,14 +642,15 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 	SDL_Init(SDL_INIT_VIDEO);
 
 	/* Request opengl 4 context. */
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
 	/* Turn on double buffering with a 24bit Z buffer.
 	* You may need to change this to 16 or 32 for your system */
-	//SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 
 	//m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
 	//	SDL_WINDOWPOS_CENTERED,

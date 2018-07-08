@@ -148,6 +148,27 @@ bool ResourceManager::Init()
 
 #pragma region Mesh
 
+std::shared_ptr<Mesh> ResourceManager::_CreateMesh(const std::string & meshName)
+{
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(Mesh());
+	m_meshes[meshName] = mesh;
+	return mesh;
+}
+
+std::shared_ptr<Mesh> ResourceManager::_CreateMesh(const std::string& meshName, const aiMesh* aiMeshPtr)
+{
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(Mesh(aiMeshPtr));
+	m_meshes[meshName] = mesh;
+	return mesh;
+}
+
+std::shared_ptr<Scene> ResourceManager::_CreateScene(const std::string & sceneName, unsigned short meshCount)
+{
+	std::shared_ptr<Scene> scene = std::make_shared<Scene>(Scene(meshCount));
+	m_scenes[sceneName] = scene;
+	return scene;
+}
+
 DebugLineMesh * ResourceManager::GetDebugLineMesh()
 {
 	return m_pDebugLineMesh;
@@ -212,6 +233,39 @@ std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& meshName)
 	else {
 		return LoadMesh(meshName);
 	}
+}
+
+std::shared_ptr<Scene> ResourceManager::LoadScene(const std::string& meshSceneName)
+{
+	const aiScene* scene = m_importer.ReadFile(TETRA_GAME_CONFIG.MeshesDir() + meshSceneName,
+		aiProcess_CalcTangentSpace |
+		aiProcess_Triangulate |
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_SortByPType
+	);
+
+	if (scene->HasMeshes()) {
+		std::shared_ptr<Scene> meshScene = make_shared<Scene>(Scene(scene->mNumMeshes));
+		m_scenes[meshSceneName] = meshScene;
+		for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
+			const aiMesh* aiMeshPtr = scene->mMeshes[i];
+			m_meshes[aiMeshPtr->mName.C_Str()] = std::shared_ptr<Mesh>(new Mesh(aiMeshPtr));
+			(*meshScene.get())[i] = m_meshes[aiMeshPtr->mName.C_Str()];
+		}
+		return meshScene;
+	}
+	else
+		return nullptr;
+}
+
+std::shared_ptr<Scene> ResourceManager::GetScene(const std::string& meshSceneName)
+{
+	std::shared_ptr<Scene> meshScene = m_scenes[meshSceneName];
+
+	if (meshScene)
+		return meshScene;
+	else
+		return LoadScene(meshSceneName);
 }
 
 void ResourceManager::UnloadMesh(const std::string& meshName)

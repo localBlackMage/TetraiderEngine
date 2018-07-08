@@ -32,12 +32,12 @@ out vec4 frag_color;
 
 
 void main(void) {
-	vec3 diffuse_color = vec3(.25, .25, 0);
+	vec3 diffuse_color = vec3(1, 1, 0);
 	vec3 lightColor = vec3(0,0,0);
 
 	vec4 L = normalize(vl_lightVector);
 	vec4 m = normalize(vnormal_vector);
 	lightColor = max(dot(m, L), 0) * diffuse_color;
 	
-	frag_color = vec4(diffuse_color, 1);
+	frag_color = vec4(lightColor, 1);
 }

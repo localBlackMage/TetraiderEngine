@@ -13,6 +13,7 @@ class MeshComponent : public Component
 {
 protected:	
 	std::shared_ptr<Mesh> m_pMesh;
+	std::shared_ptr<Scene> m_pScene;
 	std::string m_shader;
 
 
@@ -27,6 +28,9 @@ public:
 
 	inline const std::shared_ptr<Mesh> GetMesh() const { return m_pMesh; }
 	inline void SetMesh(std::shared_ptr<Mesh> mesh) { m_pMesh = mesh; };
+
+	inline const std::shared_ptr<Scene> GetScene() const { return m_pScene; }
+	inline void SetScene(std::shared_ptr<Scene> scene) { m_pScene = scene; };
 
 	inline std::string Shader() const { return m_shader; };
 };

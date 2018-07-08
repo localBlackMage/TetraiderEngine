@@ -7,6 +7,16 @@ Author: <Holden Profit>
 
 #include <Stdafx.h>
 
+Scene::Scene(unsigned short numMeshes) : 
+	m_numMeshes(numMeshes)
+{
+	m_meshes = std::vector < std::shared_ptr<Mesh> >(m_numMeshes);
+	//std::fill(m_meshes.begin(), m_meshes.begin() + m_numMeshes, nullptr);
+}
+
+Scene::~Scene() {}
+
+
 void Mesh::_LoadMeshToGraphicsCard()
 {
 	int vertexBufferSize = sizeof(Vector3D) * vertexCount();
@@ -67,38 +77,7 @@ Mesh::Mesh() {}
 
 Mesh::Mesh(const aiMesh * mesh)
 {
-	m_vertices.reserve(mesh->mNumVertices);
-	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		m_vertices.push_back(Vector3D(mesh->mVertices[i]));
-	}
-
-	m_normals.reserve(mesh->mNumVertices);
-	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		m_normals.push_back(Vector3D(mesh->mNormals[i]));
-	}
-
-	m_tangents.reserve(mesh->mNumVertices);
-	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		m_tangents.push_back(Vector3D(mesh->mTangents[i]));
-	}
-
-	m_bitangents.reserve(mesh->mNumVertices);
-	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		m_bitangents.push_back(Vector3D(mesh->mBitangents[i]));
-	}
-
-	m_faces.reserve(mesh->mNumFaces);
-	for (unsigned int i = 0; i < mesh->mNumFaces; ++i) {
-		m_faces.push_back(Face(mesh->mFaces[i]));
-	}
-
-	m_texCoords.reserve(mesh->mNumVertices * 2);
-	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		m_texCoords.push_back(mesh->mTextureCoords[0][i].x);
-		m_texCoords.push_back(mesh->mTextureCoords[0][i].y);
-	}
-
-	_LoadMeshToGraphicsCard();
+	CreateFromAiMesh(mesh);
 }
 
 Mesh::~Mesh()
@@ -212,11 +191,6 @@ void Mesh::AddFace(unsigned int a, unsigned int b, unsigned int c)
 void Mesh::FinishMesh()
 {
 	CalcNormals();
-	m_faces.shrink_to_fit();
-	m_vertices.shrink_to_fit();
-	m_normals.shrink_to_fit();
-	m_tangents.shrink_to_fit();
-	m_bitangents.shrink_to_fit();
 	_LoadMeshToGraphicsCard();
 }
 
@@ -257,6 +231,42 @@ void Mesh::CalcNormals()
 		m_bitangents.push_back(Vector3D::Normalize(Vector3D::Cross(normal, tangent)));
 	}
 
+}
+
+void Mesh::CreateFromAiMesh(const aiMesh * mesh) 
+{
+	m_vertices.reserve(mesh->mNumVertices);
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
+		m_vertices.push_back(Vector3D(mesh->mVertices[i]));
+	}
+
+	m_normals.reserve(mesh->mNumVertices);
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
+		m_normals.push_back(Vector3D(mesh->mNormals[i]));
+	}
+
+	m_tangents.reserve(mesh->mNumVertices);
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
+		m_tangents.push_back(Vector3D(mesh->mTangents[i]));
+	}
+
+	m_bitangents.reserve(mesh->mNumVertices);
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
+		m_bitangents.push_back(Vector3D(mesh->mBitangents[i]));
+	}
+
+	m_faces.reserve(mesh->mNumFaces);
+	for (unsigned int i = 0; i < mesh->mNumFaces; ++i) {
+		m_faces.push_back(Face(mesh->mFaces[i]));
+	}
+
+	m_texCoords.reserve(mesh->mNumVertices * 2);
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
+		m_texCoords.push_back(mesh->mTextureCoords[0][i].x);
+		m_texCoords.push_back(mesh->mTextureCoords[0][i].y);
+	}
+
+	_LoadMeshToGraphicsCard();
 }
 
 int Mesh::vertexCount() const
@@ -341,15 +351,4 @@ Vector3D ParseVec3(std::string& line) {
 	float third = std::stof(line);
 
 	return Vector3D(first, second, third);
-}
-
-MeshScene::MeshScene(unsigned short numMeshes) : 
-	m_numMeshes(numMeshes)
-{
-	m_meshes = (std::shared_ptr<Mesh>*)malloc(sizeof(std::shared_ptr<Mesh>) * m_numMeshes);
-}
-
-MeshScene::~MeshScene()
-{
-	
 }

@@ -50,6 +50,7 @@ private:
 	
 	DebugLineMesh * m_pDebugLineMesh;
 	std::unordered_map<std::string, std::shared_ptr<Mesh> > m_meshes;
+	std::unordered_map<std::string, std::shared_ptr<Scene> > m_scenes;
 	std::unordered_map< Font_Size, FontInfo*, Font_SizeHasher> m_fonts;
 	std::unordered_map<std::string, SurfaceTextureBuffer * > m_textures;
 	std::map<std::string, json*> m_prefabs;
@@ -62,6 +63,9 @@ private:
 
 	GLuint _CreateTextureBuffer(const SDL_Surface * const sdlSurface, int alphaMode);
 	SurfaceTextureBuffer* _LoadTexture(std::string textureName);
+	std::shared_ptr<Mesh> _CreateMesh(const std::string& meshName);
+	std::shared_ptr<Mesh> _CreateMesh(const std::string& meshName, const aiMesh* aiMeshPtr);
+	std::shared_ptr<Scene> _CreateScene(const std::string& sceneName, unsigned short meshCount);
 public:
 	ResourceManager();
 	~ResourceManager();
@@ -75,6 +79,9 @@ public:
 	std::shared_ptr<Mesh> LoadMesh(const std::string& meshName);
 	std::shared_ptr<Mesh> GetInternalMesh(const std::string& meshName);
 	std::shared_ptr<Mesh> GetMesh(const std::string& meshName);
+
+	std::shared_ptr<Scene> LoadScene(const std::string& sceneName);
+	std::shared_ptr<Scene> GetScene(const std::string& meshSceneName);
 	void UnloadMesh(const std::string& meshName);
 
 	FontInfo* GetFont(const Font_Size& font_size);

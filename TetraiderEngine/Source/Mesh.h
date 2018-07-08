@@ -28,20 +28,30 @@ struct TexCoords {
 };
 
 class Mesh;
-class MeshScene {
+class Scene {
 protected:
 	unsigned short m_numMeshes;
-	std::shared_ptr<Mesh>* m_meshes;
+	std::vector< std::shared_ptr<Mesh> > m_meshes;
 
 public:
-	MeshScene(unsigned short numMeshes);
-	~MeshScene();
+	Scene(unsigned short numMeshes);
+	~Scene();
+
+	unsigned short NumMeshes()	const { return m_numMeshes; }
+	std::shared_ptr<Mesh>	operator[](const int idx) const { return m_meshes[idx]; };
+	std::shared_ptr<Mesh>&	operator[](const int idx) { return m_meshes[idx]; };
+
+	std::shared_ptr<Mesh>	operator[](const unsigned int idx) const { return m_meshes[idx]; };
+	std::shared_ptr<Mesh>&	operator[](const unsigned int idx) { return m_meshes[idx]; };
+
+	std::vector< std::shared_ptr<Mesh> >::iterator begin() { return std::begin(m_meshes); }
+	std::vector< std::shared_ptr<Mesh> >::iterator end() { return std::end(m_meshes); }
 };
 
 class Mesh
 {
 protected:
-	friend class MeshScene;
+	friend class Scene;
 
 	enum VBO_TYPE {
 		VBO_VERTICES = 0,
@@ -86,6 +96,7 @@ public:
 
 	void FinishMesh();
 	void CalcNormals();
+	void CreateFromAiMesh(const aiMesh* mesh);
 
 	int vertexCount() const;
 	Vector3D* vertexArray();

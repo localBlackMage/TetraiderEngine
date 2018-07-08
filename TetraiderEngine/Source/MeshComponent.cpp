@@ -28,7 +28,8 @@ void MeshComponent::Serialize(const json& j)
 	if (meshName == "quad")
 		m_pMesh = TETRA_RESOURCES.GetInternalMesh(meshName);
 	else
-		m_pMesh = TETRA_RESOURCES.GetMesh(meshName);
+		//m_pMesh = TETRA_RESOURCES.GetMesh(meshName);
+		m_pScene = TETRA_RESOURCES.GetScene(meshName);
 	m_shader = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
 }
 
