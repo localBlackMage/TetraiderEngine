@@ -27,6 +27,17 @@ struct TexCoords {
 	}
 };
 
+class Material {
+protected:
+	const aiMaterial * m_pMaterial;
+
+public:
+	Material(const aiMaterial * pAiMaterial) : m_pMaterial(pAiMaterial) {};
+	~Material() {};
+	inline const aiMaterial * GetMaterial() const { return m_pMaterial; }
+	inline void SetMaterial(const aiMaterial * pAiMaterial) { m_pMaterial = pAiMaterial; }
+};
+
 class Mesh;
 class Scene {
 protected:
