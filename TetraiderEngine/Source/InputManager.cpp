@@ -63,6 +63,12 @@ void InputManager::Initialize(const json& j) {
 			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegY")),
 			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyPosZ")),
 			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyNegZ")),
+
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyRotPosX")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyRotNegX")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyRotPosY")),
+			static_cast<SDL_Scancode>(ParseInt(j[i], "KeyBoardKeyRotNegY")),
+
 			static_cast<JoystickAnalogueType>(ParseInt(j[i], "AnalogueStick")),
 			static_cast<MOUSEBTN>(ParseInt(j[i], "MouseBtn")),
 			static_cast<XBOX_SCANCODE>(ParseInt(j[i], "XboxKey"))
@@ -185,7 +191,7 @@ void InputManager::FireEvents() {
 				break;
 			}
 			case InputType_Axis: {
-				float xAxis = 0, yAxis = 0, zAxis = 0;
+				float xAxis = 0, yAxis = 0, zAxis = 0, yRot = 0, xRot = 0;
 
 				if (command->m_isJoystick && command->m_analogue == JoystickAnalogue_Left) {
 					if (abs(GetLeftAxisX()) > JoystickDeadZone)  xAxis += GetLeftAxisX();
@@ -203,9 +209,17 @@ void InputManager::FireEvents() {
 				if (IsKeyPressed(command->m_keyboardKeyPosZ)) zAxis += 1;
 				if (IsKeyPressed(command->m_keyboardKeyNegZ)) zAxis -= 1;
 
+
+				if (IsKeyPressed(command->m_keyboardKeyPosRotY)) yRot += 1;
+				if (IsKeyPressed(command->m_keyboardKeyNegRotY)) yRot -= 1;
+
+				if (IsKeyPressed(command->m_keyboardKeyPosRotX)) xRot += 1;
+				if (IsKeyPressed(command->m_keyboardKeyNegRotX)) xRot -= 1;
+
 				Vector3D axisDir(xAxis, yAxis, zAxis);
 				axisDir.Normalize();
-				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisData(axisDir)));
+				Vector3D mouseMove(xRot, yRot, 0);
+				TETRA_EVENTS.BroadcastEventToSubscribers(&Event(command->m_event, &InputAxisAndMouseData(axisDir, mouseMove)));
 				break;
 			}
 			// This case is unique for our game regarding mouse (Check else statement below)

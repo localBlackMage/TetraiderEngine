@@ -31,6 +31,18 @@ void MeshComponent::Serialize(const json& j)
 		//m_pMesh = TETRA_RESOURCES.GetMesh(meshName);
 		m_pScene = TETRA_RESOURCES.GetScene(meshName);
 	m_shader = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+
+	std::string texture = ParseString(j, "Texture1");
+	if (texture != "")
+		m_pTexture = TETRA_RESOURCES.GetTexture(texture);
+	
+	texture = ParseString(j, "Normal");
+	if (texture != "")
+		m_pNormal = TETRA_RESOURCES.GetTexture(texture);
+
+	texture = ParseString(j, "Bump");
+	if (texture != "")
+		m_pBump = TETRA_RESOURCES.GetTexture(texture);
 }
 
 void MeshComponent::Override(const json& j) 

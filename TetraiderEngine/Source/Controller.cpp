@@ -34,7 +34,10 @@ void Controller::Serialize(const json& j) {
 void Controller::HandleEvent(Event* pEvent) {
 	switch (pEvent->Type()) {
 		case EVENT_INPUT_MOVE: {
-			m_pTransform->Move(pEvent->Data<InputAxisData>()->m_dir);
+			InputAxisAndMouseData* data = pEvent->Data<InputAxisAndMouseData>();
+			m_pTransform->MoveAlongLookAt(data->m_dir);
+			m_pTransform->RotateX(data->m_mouse.x);
+			m_pTransform->RotateY(data->m_mouse.y);
 			break;
 		}
 	}

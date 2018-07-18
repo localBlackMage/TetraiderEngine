@@ -86,8 +86,9 @@ protected:
 	GLuint m_faceBuffer;
 	GLuint m_textCoordBuffer;
 
-	GLuint m_VAO, m_VBO[NUM_VBO_TYPES];
+	GLuint m_vaoID, m_vboID[NUM_VBO_TYPES];
 
+	void _LoadMeshToGraphicsCard_OLD();
 	void _LoadMeshToGraphicsCard();
 public:
 	Mesh();
@@ -128,6 +129,8 @@ public:
 	
 	const GLuint& GetTextCoordBuffer() const;
 	GLfloat* texCoordArray();
+
+	inline GLuint GetVAO() const { return m_vaoID; }
 };
 
 #endif

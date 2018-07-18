@@ -11,10 +11,10 @@ Author: <Holden Profit>
 
 void Transform::_UpdateLookAt()
 {
-	Matrix4x4 rot = Matrix4x4::Rotate(m_angleZ, ZAXIS) *
+	m_rotation = Matrix4x4::Rotate(m_angleZ, ZAXIS) *
 		Matrix4x4::Rotate(m_angleY, YAXIS) *
 		Matrix4x4::Rotate(m_angleX, XAXIS);
-	m_lookAt = rot * (-1*ZAXIS);
+	m_lookAt = m_rotation * (-1*ZAXIS);
 }
 
 #pragma endregion
@@ -155,6 +155,11 @@ void Transform::SetPosition(const Vector3D& pos)
 void Transform::Move(const Vector3D& amount)
 {
 	m_position += amount;
+}
+
+void Transform::MoveAlongLookAt(const Vector3D & amount)
+{
+	m_position += (m_rotation * amount);
 }
 #pragma endregion
 

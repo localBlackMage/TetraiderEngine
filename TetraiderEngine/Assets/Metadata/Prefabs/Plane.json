@@ -1,6 +1,6 @@
 {
     "Tag": "Player",
-    "Layer": "1",
+    "Layer": "N/A",
     "COMPONENTS": [
         {
 			"Component": "Transform",
@@ -10,8 +10,8 @@
 				"z": 0
 			},
 			"scale": {
-				"x": 128,
-				"y": 128,
+				"x": 1,
+				"y": 1,
 				"z": 1
 			},
 			"pivotOffset": {},
@@ -21,8 +21,12 @@
         },
 		{
 			"Component": "Mesh",
-			"Mesh": "quad",
-			"shader": "base3DShader"
+			"Mesh_": "plane_20",
+			"Mesh": "Plane.obj",
+			"shader": "base3DShader",
+			"Texture1": "worldTexture2.jpg",
+			"Normal": "worldNormal.jpg",
+			"Bump_": "worldBump.jpg"
 		}
     ]
 }

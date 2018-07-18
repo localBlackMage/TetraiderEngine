@@ -88,6 +88,12 @@ struct InputAxisData : public EventData {
 	Vector3D m_dir;
 };
 
+struct InputAxisAndMouseData : public EventData {
+	InputAxisAndMouseData(const Vector3D& dir, const Vector3D& mouse) : m_dir(dir), m_mouse(mouse){}
+	Vector3D m_dir;
+	Vector3D m_mouse;
+};
+
 struct CollectibleData : public EventData {
 	CollectibleData(int value) : m_value(value) {}
 	int m_value;

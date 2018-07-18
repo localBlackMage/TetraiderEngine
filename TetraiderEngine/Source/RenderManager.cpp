@@ -229,18 +229,28 @@ void RenderManager::_RenderMesh(const MeshComponent * cpMeshComp)
 	for (unsigned short i = 0; i < pScene->NumMeshes(); ++i) {
 		std::shared_ptr<Mesh> pMesh = (*pScene)[i];
 		BindMesh((*pMesh.get()));
+		//glBindVertexArray(pMesh->GetVAO());
 
 		// select the texture to use
-		//glActiveTexture(GL_TEXTURE0);
-		//glBindTexture(GL_TEXTURE_2D, pSpriteComp->GetTextureBuffer());
-		//glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
-		//GLint repeatOrClamp = pSpriteComp->Repeats() ? GL_REPEAT : GL_CLAMP;
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatOrClamp);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatOrClamp);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, cpMeshComp->GetTextureBuffer());
+		glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, cpMeshComp->GetNormalTextureBuffer());
+		glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+
+		//GLint repeatOrClamp = cpMeshComp->Repeats() ? GL_REPEAT : GL_CLAMP;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
 		// draw the mesh
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
 		glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
+		//glDrawArrays(GL_TRIANGLES, 0, pMesh->vertexCount());
+
+
+		//glBindVertexArray(0);
 	}
 }
 
@@ -650,7 +660,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 	/* Turn on double buffering with a 24bit Z buffer.
 	* You may need to change this to 16 or 32 for your system */
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 	//m_pWindow = SDL_CreateWindow(m_windowTitle.c_str(),
 	//	SDL_WINDOWPOS_CENTERED,
@@ -677,7 +687,7 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 	}
 
 	// Initialize PNG loading
-	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
 		std::cout << "SDL Image failed to initialize." << std::endl << "Error: " << IMG_GetError() << std::endl;
 	}

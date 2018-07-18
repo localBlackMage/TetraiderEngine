@@ -39,15 +39,41 @@
 				"y": 0,
 				"z": 0
 			}
+		},
+		{
+			"prefab": "Cube",
+			"scale": {
+				"x": 5,
+				"y": 5,
+				"z": 5
+			},
+			"position": {
+				"x": 0,
+				"y": 10,
+				"z": 0
+			}
 		}
 	],
 	"GAME_OBJECTS": [
 		{
-			"prefab": "Canoe",
+			"prefab": "Plane",
 			"scale": {
 				"x": 10,
 				"y": 10,
 				"z": 10
+			}
+		},
+		{
+			"prefab": "Cube",
+			"scale": {
+				"x": 5,
+				"y": 5,
+				"z": 5
+			},
+			"position": {
+				"x": 0,
+				"y": 10,
+				"z": 0
 			}
 		}
 	]

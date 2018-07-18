@@ -126,6 +126,10 @@
 			"KeyBoardKeyNegY": 20,
 			"KeyBoardKeyPosZ": 22,
 			"KeyBoardKeyNegZ": 26,
+			"KeyBoardKeyRotPosX": 21,
+			"KeyBoardKeyRotNegX": 9,
+			"KeyBoardKeyRotPosY": 29,
+			"KeyBoardKeyRotNegY": 6,
 			"AnalogueStick": 0
 		},
 		{

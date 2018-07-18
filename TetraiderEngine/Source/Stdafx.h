@@ -226,6 +226,7 @@ using namespace JsonReader;
 #include <ApplyTinyOnDifficultyUp.h>
 #include <SplashScreen.h>
 #include <InGameCredits.h>
+#include <Spinner.h>
 
 #pragma endregion 
 

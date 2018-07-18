@@ -64,8 +64,14 @@ GLuint ResourceManager::_CreateTextureBuffer(const SDL_Surface * const sdlSurfac
 	GLuint textureBufferID;
 	glGenTextures(1, &textureBufferID);
 	glBindTexture(GL_TEXTURE_2D, textureBufferID);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	//glTexStorage2D(GL_TEXTURE_2D, 8, alphaMode, sdlSurface->w, sdlSurface->h);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, alphaMode,
 		sdlSurface->w, sdlSurface->h, 0,
@@ -139,6 +145,10 @@ bool ResourceManager::Init()
 	screenQuad->AddFace(1, 2, 3);
 
 	screenQuad->FinishMesh();
+
+	m_meshes[PLANE_MESH_DEFAULT] = std::make_shared<Mesh>(Plane(PLANE_MESH_DEFAULT_SIZE));
+	m_scenes[PLANE_MESH_DEFAULT] = std::make_shared<Scene>(Scene(1));
+	(*m_scenes[PLANE_MESH_DEFAULT].get())[0] = m_meshes[PLANE_MESH_DEFAULT];
 
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
 	LoadPrefabFiles();

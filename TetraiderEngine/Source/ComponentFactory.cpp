@@ -68,6 +68,7 @@ ComponentFactory::ComponentFactory() {
 	m_creationFunctions["SelectableButton"] = SelectableButton::CreateInstance;
 	m_creationFunctions["ListSelector"] = ListSelector::CreateInstance;
 	m_creationFunctions["InGameCredits"] = InGameCredits::CreateInstance;
+	m_creationFunctions["Spinner"] = Spinner::CreateInstance;
 }
 
 Component* ComponentFactory::CreateComponent(std::string component) {

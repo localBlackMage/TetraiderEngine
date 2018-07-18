@@ -1,0 +1,35 @@
+{
+    "Tag": "Player",
+    "Layer": "N/A",
+    "COMPONENTS": [
+        {
+			"Component": "Transform",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"pivotOffset": {},
+			"rotation": {
+			},
+			"2D": false
+        },
+		{
+			"Component": "Mesh",
+			"Mesh": "cube.obj",
+			"shader": "base3DShader",
+			"Texture1": "worldTexture2.jpg",
+			"Normal": "worldNormal.jpg",
+			"Bump_": "worldBump.jpg"
+		},
+		{
+			"Component": "Spinner",
+			"speed": 25.0
+		}
+    ]
+}

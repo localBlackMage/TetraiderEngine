@@ -29,6 +29,7 @@ layout(location = 7) out vec4 vbitangent_vector;
 layout(location = 8) out vec4 vview_vector;
 
 layout(location = 10) out vec4 vl_lightVector;
+layout(location = 11) out mat3 TBN;
 
 void main() {
 	vec4 P = model_matrix * position;
@@ -41,5 +42,12 @@ void main() {
 	vview_vector = normalize(camera_position - P);
 	
 	
-	vl_lightVector = vec4(50,100,100, 1) - P;
+	vec3 T = normalize(vec3(model_matrix * tangent));
+	vec3 B = normalize(vec3(model_matrix * bitangent));
+	vec3 N = normalize(vec3(model_matrix * normal));
+	TBN = mat3(T, B, N);
+	
+	
+	
+	vl_lightVector = vec4(0,100,100, 1) - P;
 }

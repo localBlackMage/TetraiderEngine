@@ -18,6 +18,7 @@ private:
 	Vector3D m_scale;
 	Vector3D m_pivotOffset;
 	Matrix4x4 m_transform;
+	Matrix4x4 m_rotation;
 	Vector3D m_lookAt;
 	Transform* m_parent;
 	float m_angleX, m_angleY, m_angleZ;
@@ -44,6 +45,7 @@ public:
 	Vector3D GetPosition() const;
 	Vector3D GetLocalPosition() const;
 	void Move(const Vector3D& amount);
+	void MoveAlongLookAt(const Vector3D& amount);
 	Vector3D GetMovement() const { return m_worldPosition - m_prevPosition; }
 
 	void SetAngles(float angleX, float angleY, float angleZ);

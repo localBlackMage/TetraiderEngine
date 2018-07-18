@@ -58,6 +58,25 @@ enum JoystickAnalogueType {
 };
 
 struct InputCommandInfo {
+	EventType m_event;
+	InputType m_inputType;
+	bool m_isMouse;
+	bool m_isJoystick;
+	SDL_Scancode m_keyboardKey;
+	SDL_Scancode m_keyboardKeyPosX;
+	SDL_Scancode m_keyboardKeyNegX;
+	SDL_Scancode m_keyboardKeyPosY;
+	SDL_Scancode m_keyboardKeyNegY;
+	SDL_Scancode m_keyboardKeyPosZ;
+	SDL_Scancode m_keyboardKeyNegZ;
+	SDL_Scancode m_keyboardKeyPosRotY;
+	SDL_Scancode m_keyboardKeyNegRotY;
+	SDL_Scancode m_keyboardKeyPosRotX;
+	SDL_Scancode m_keyboardKeyNegRotX;
+	JoystickAnalogueType m_analogue;
+	MOUSEBTN m_mouseBtn;
+	XBOX_SCANCODE m_xboxKey;
+
 	InputCommandInfo(EventType _event,
 		InputType _inputType,
 		bool _isMouse,
@@ -69,6 +88,10 @@ struct InputCommandInfo {
 		SDL_Scancode _keyboardNegY,
 		SDL_Scancode _keyboardPosZ,
 		SDL_Scancode _keyboardNegZ,
+		SDL_Scancode _keyboardPosRotX,
+		SDL_Scancode _keyboardNegRotX,
+		SDL_Scancode _keyboardPosRotY,
+		SDL_Scancode _keyboardNegRotY,
 		JoystickAnalogueType _analogue,
 		MOUSEBTN _mouseBtn,
 		XBOX_SCANCODE _xboxKey) :
@@ -83,23 +106,15 @@ struct InputCommandInfo {
 		m_keyboardKeyNegY(_keyboardNegY),
 		m_keyboardKeyPosZ(_keyboardPosZ),
 		m_keyboardKeyNegZ(_keyboardNegZ),
+		m_keyboardKeyPosRotX(_keyboardPosRotX),
+		m_keyboardKeyNegRotX(_keyboardNegRotX),
+		m_keyboardKeyPosRotY(_keyboardPosRotY),
+		m_keyboardKeyNegRotY(_keyboardNegRotY),
 		m_analogue(_analogue),
 		m_mouseBtn(_mouseBtn),
-		m_xboxKey(_xboxKey) {}
-	EventType m_event;
-	InputType m_inputType;
-	bool m_isMouse;
-	bool m_isJoystick;
-	SDL_Scancode m_keyboardKey;
-	SDL_Scancode m_keyboardKeyPosX;
-	SDL_Scancode m_keyboardKeyNegX;
-	SDL_Scancode m_keyboardKeyPosY;
-	SDL_Scancode m_keyboardKeyNegY;
-	SDL_Scancode m_keyboardKeyPosZ;
-	SDL_Scancode m_keyboardKeyNegZ;
-	JoystickAnalogueType m_analogue;
-	MOUSEBTN m_mouseBtn;
-	XBOX_SCANCODE m_xboxKey;
+		m_xboxKey(_xboxKey) 
+	{}
+
 };
 
 class InputManager: public Subscriber

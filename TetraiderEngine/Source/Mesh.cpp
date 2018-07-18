@@ -17,60 +17,114 @@ Scene::Scene(unsigned short numMeshes) :
 Scene::~Scene() {}
 
 
-void Mesh::_LoadMeshToGraphicsCard()
+void Mesh::_LoadMeshToGraphicsCard_OLD()
 {
 	int vertexBufferSize = sizeof(Vector3D) * vertexCount();
 
 #pragma region Vertex Buffer
 	glGenBuffers(1, &m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		vertexArray(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, vertexArray(), GL_STATIC_DRAW);
 #pragma endregion
 
 #pragma region Normal Buffer
 	glGenBuffers(1, &m_normalBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		normalArray(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, normalArray(), GL_STATIC_DRAW);
 #pragma endregion
 
 #pragma region Tangent Buffer
 	glGenBuffers(1, &m_tangentBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_tangentBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		tangentArray(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, tangentArray(), GL_STATIC_DRAW);
 #pragma endregion
 
 #pragma region Bitangent Buffer
 	glGenBuffers(1, &m_bitangentBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_bitangentBuffer);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexBufferSize,
-		bitangentArray(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, bitangentArray(), GL_STATIC_DRAW);
 #pragma endregion
 
 #pragma region Face Buffer
 	glGenBuffers(1, &m_faceBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_faceBuffer);
 	int faceBufferSize = sizeof(Face)*faceCount();
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-		faceBufferSize,
-		faceArray(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, faceBufferSize, faceArray(), GL_STATIC_DRAW);
 #pragma endregion
 
 #pragma region Texture Coordinate Buffer
 	glGenBuffers(1, &m_textCoordBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_textCoordBuffer);
 	int texCoordBufferSize = 2 * sizeof(GLfloat) * vertexCount();
-	glBufferData(GL_ARRAY_BUFFER,
-		texCoordBufferSize,
-		texCoordArray(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, texCoordBufferSize, texCoordArray(), GL_STATIC_DRAW);
+#pragma endregion
+}
+
+void Mesh::_LoadMeshToGraphicsCard()
+{
+	int vertexBufferSize = sizeof(Vector3D) * vertexCount();
+
+	glGenVertexArrays(1, &m_vaoID);
+
+	glGenBuffers(VBO_TYPE::NUM_VBO_TYPES, m_vboID);
+
+#pragma region Vertex Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_VERTICES]);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, vertexArray(), GL_STATIC_DRAW);
+	
+	glVertexAttribPointer(VBO_TYPE::VBO_VERTICES, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VBO_TYPE::VBO_VERTICES);
+	glBindVertexArray(0);
 #pragma endregion
 
+#pragma region Normal Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_NORMALS]);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, normalArray(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(VBO_TYPE::VBO_NORMALS, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VBO_TYPE::VBO_NORMALS);
+	glBindVertexArray(0);
+#pragma endregion
+
+#pragma region Tangent Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_TANGENTS]);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, tangentArray(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(VBO_TYPE::VBO_TANGENTS, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VBO_TYPE::VBO_TANGENTS);
+	glBindVertexArray(0);
+#pragma endregion
+
+#pragma region Bitangent Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_BITANGENTS]);
+	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, bitangentArray(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(VBO_TYPE::VBO_BITANGENTS, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VBO_TYPE::VBO_BITANGENTS);
+	glBindVertexArray(0);
+#pragma endregion
+
+#pragma region Face Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_FACES]);
+	int faceBufferSize = sizeof(Face)*faceCount();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, faceBufferSize, faceArray(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(VBO_TYPE::VBO_FACES, 3, GL_INT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VBO_TYPE::VBO_FACES);
+	glBindVertexArray(0);
+#pragma endregion
+
+#pragma region Texture Coordinate Buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_TEX_COORDS]);
+	int texCoordBufferSize = 2 * sizeof(GLfloat) * vertexCount();
+	glBufferData(GL_ARRAY_BUFFER, texCoordBufferSize, texCoordArray(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(VBO_TYPE::VBO_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VBO_TYPE::VBO_TEX_COORDS);
+	glBindVertexArray(0);
+#pragma endregion
+
+	glEnableVertexAttribArray(0);
 }
 
 Mesh::Mesh() {}
@@ -191,7 +245,7 @@ void Mesh::AddFace(unsigned int a, unsigned int b, unsigned int c)
 void Mesh::FinishMesh()
 {
 	CalcNormals();
-	_LoadMeshToGraphicsCard();
+	_LoadMeshToGraphicsCard_OLD();
 }
 
 void Mesh::CalcNormals()
@@ -266,7 +320,7 @@ void Mesh::CreateFromAiMesh(const aiMesh * mesh)
 		m_texCoords.push_back(mesh->mTextureCoords[0][i].y);
 	}
 
-	_LoadMeshToGraphicsCard();
+	_LoadMeshToGraphicsCard_OLD();
 }
 
 int Mesh::vertexCount() const
