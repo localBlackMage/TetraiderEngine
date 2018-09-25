@@ -22,11 +22,10 @@ enum TextAlignment : short {
 	TEXT_RIGHT
 };
 
-class Text : public Component 
+class Text : public RenderableComponent
 {
 protected:
 	std::string m_fontName;
-	std::string m_shader;
 	FontInfo* m_pFont;
 	SurfaceTextureBuffer * m_texture;
 	TexCoordsGrid m_textureOffsets; // collection of UV coordinates for each letter
@@ -63,9 +62,7 @@ public:
 	
 	const Mesh& GetMesh() const;
 	void SetMesh(Mesh& mesh);
-
-	inline std::string Shader() const { return m_shader; }
-
+	
 	virtual void SetFont(std::string fontName);
 	void SetText(std::string newText);
 	std::string GetText() const;

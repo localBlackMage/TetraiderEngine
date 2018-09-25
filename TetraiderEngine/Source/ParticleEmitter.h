@@ -33,7 +33,7 @@ enum class P_TextureSelection {
 	CYCLE, RANDOM, SINGLE
 };
 
-class ParticleEmitter : public Component {
+class ParticleEmitter : public RenderableComponent {
 	friend class ParticleEmitterResizer;
 protected:
 	// Emitter Configuration Properties
@@ -89,9 +89,7 @@ protected:
 	GLfloat* m_textureCoords;					// Array of texture coords
 	int m_liveParticleCount;					// Indicates how many particles are currently alive, set each Update loop
 	int m_lastUsedParticle;						// An index into m_particles, represents the index of the last used particle
-
-	std::string m_shader;
-
+	
 	int _FindUnusedParticle();
 	Vector3D _GetSpawnPositionWithinShape();
 	void _SpawnParticle();
@@ -136,8 +134,6 @@ public:
 
 	inline float Brightness() const { return m_brightness; }
 	inline bool ShouldRenderLast() const { return m_renderedOnTop; }
-
-	inline std::string Shader() const { return m_shader; }
 };
 
 #endif

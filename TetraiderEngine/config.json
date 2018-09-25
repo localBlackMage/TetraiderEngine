@@ -41,8 +41,11 @@
 		"maskShader",
 		"miniMapShader",
 		"miniMapFinalShader",
-		"base3DShader"
+		"base3DShader",
+		"testShader",
+		"terrainHeightMap"
 	],
+	
 	"WINDOW_SETTINGS": {
 		"title" : "Eggnapped",
 		"resolutions": [

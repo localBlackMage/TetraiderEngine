@@ -36,7 +36,7 @@ void ImageRenderer::Render(FrameBufferObject * pOtherFBO) const
 
 	m_pFBO->BindFrameBuffer();
 
-	glUseProgram(m_pShader->GetProgramID());
+	TETRA_RENDERER.SelectShaderProgram(m_pShader->GetProgramID());
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
@@ -61,7 +61,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram & shader, int width, int 
 {
 	TETRA_RENDERER.BindWindowFrameBuffer();
 
-	glUseProgram(shader.GetProgramID());
+	TETRA_RENDERER.SelectShaderProgram(shader.GetProgramID());
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
@@ -92,7 +92,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram & shader, int width, int 
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_pFBO->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, TEXTURE_LOCATIONS::FIRST);
 
 	glUniform1i(TEXTURE_LOCATIONS::NUM_TEXTURES, 1);
 
@@ -105,7 +105,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram& shader) const
 {
 	TETRA_RENDERER.BindWindowFrameBuffer();
 
-	glUseProgram(shader.GetProgramID());
+	TETRA_RENDERER.SelectShaderProgram(shader.GetProgramID());
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
@@ -114,7 +114,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram& shader) const
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_pFBO->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, TEXTURE_LOCATIONS::FIRST);
 
 	glUniform1i(TEXTURE_LOCATIONS::NUM_TEXTURES, 1);
 
@@ -127,7 +127,7 @@ void ImageRenderer::RenderToScreen(const ShaderProgram & shader, const ImageRend
 {
 	TETRA_RENDERER.BindWindowFrameBuffer();
 
-	glUseProgram(shader.GetProgramID());
+	TETRA_RENDERER.SelectShaderProgram(shader.GetProgramID());
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
@@ -136,11 +136,11 @@ void ImageRenderer::RenderToScreen(const ShaderProgram & shader, const ImageRend
 	// Bind PostProcessing's base FBO and render it
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_pFBO->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+	glUniform1i(TEXTURE_LOCATIONS::FIRST, TEXTURE_LOCATIONS::FIRST);
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, ir.m_pFBO->GetColorTexture());
-	glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+	glUniform1i(TEXTURE_LOCATIONS::SECOND, TEXTURE_LOCATIONS::SECOND);
 
 	glUniform1i(TEXTURE_LOCATIONS::NUM_TEXTURES, 2);
 
@@ -153,7 +153,7 @@ void ImageRenderer::RenderToFBO(const FrameBufferObject & fbo, const ShaderProgr
 {
 	fbo.BindFrameBuffer();
 
-	glUseProgram(shader.GetProgramID());
+	TETRA_RENDERER.SelectShaderProgram(shader.GetProgramID());
 
 	TETRA_RENDERER.BindMesh(m_mesh);
 
@@ -169,24 +169,4 @@ void ImageRenderer::RenderToFBO(const FrameBufferObject & fbo, const ShaderProgr
 	glDrawElements(GL_TRIANGLES, 3 & m_mesh.faceCount(), GL_UNSIGNED_INT, 0);
 
 	fbo.UnbindFrameBuffer();
-}
-
-void ImageRenderer::RenderToIR(const ImageRenderer & ir, const ShaderProgram & shader) const
-{
-	RenderToFBO(*ir.m_pFBO, shader);
-}
-
-void ImageRenderer::BindFBO()
-{
-	m_pFBO->BindFrameBuffer();
-}
-
-void ImageRenderer::UnbindFBO()
-{
-	m_pFBO->UnbindFrameBuffer();
-}
-
-void ImageRenderer::ClearBuffer(const Vector3D& color)
-{
-	m_pFBO->ClearFrameBuffer(color);
 }

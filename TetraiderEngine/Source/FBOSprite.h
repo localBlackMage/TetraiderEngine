@@ -9,7 +9,7 @@ Author: <Holden Profit>
 #ifndef FBO_SPRITE_H
 #define FBO_SPRITE_H
 
-class FBOSprite : public Component 
+class FBOSprite : public RenderableComponent
 {
 protected:	
 	bool m_repeats;
@@ -23,7 +23,6 @@ protected:
 	std::string m_irType;
 	FrameBufferObject * m_fbo;
 	Mesh& m_mesh;
-	std::string m_shader;
 
 	Vector3D m_posOffset;
 
@@ -58,8 +57,6 @@ public:
 	void SetTileX(float tile);
 	float TileY() const;
 	void SetTileY(float tile);
-
-	std::string Shader() const;
 
 	FrameBufferObject * GetTexture() const;
 

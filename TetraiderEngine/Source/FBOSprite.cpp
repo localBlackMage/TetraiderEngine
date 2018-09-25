@@ -8,7 +8,7 @@ Author: <Holden Profit>
 #include <Stdafx.h>
 
 FBOSprite::FBOSprite() :
-	Component(ComponentType::C_FBOSprite),
+	RenderableComponent(ComponentType::C_FBOSprite),
 	m_repeats(false),
 	m_isLit(false),
 	m_xTiling(1.0f), 
@@ -20,7 +20,6 @@ FBOSprite::FBOSprite() :
 	m_irType(""),
 	m_fbo(0),
 	m_mesh(*TETRA_RESOURCES.GetInternalMesh(QUAD_MESH)),
-	m_shader(""),
 	m_posOffset(Vector3D())
 {
 }
@@ -52,7 +51,8 @@ void FBOSprite::Serialize(const json& j)
 	m_saturationColor.z = j["saturation"]["b"];
 	m_saturationColor.w = j["saturation"]["a"];
 
-	m_shader = ValueExists(j, "shader") ?  j["shader"] : "default";
+	std::string shaderProgramName = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+	m_shaderProgramID = TETRA_RENDERER.GetShaderIDByName(shaderProgramName);
 
 	m_posOffset = ParseVector3D(j, "posOffset");
 
@@ -146,11 +146,6 @@ float FBOSprite::GetAlpha() {
 
 void FBOSprite::SetAlpha(float alpha) {
 	m_tintColor.w = alpha;
-}
-
-String FBOSprite::Shader() const
-{
-	return m_shader;
 }
 
 FrameBufferObject * FBOSprite::GetTexture() const

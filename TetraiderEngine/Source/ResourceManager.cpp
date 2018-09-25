@@ -146,9 +146,15 @@ bool ResourceManager::Init()
 
 	screenQuad->FinishMesh();
 
-	m_meshes[PLANE_MESH_DEFAULT] = std::make_shared<Mesh>(Plane(PLANE_MESH_DEFAULT_SIZE));
-	m_scenes[PLANE_MESH_DEFAULT] = std::make_shared<Scene>(Scene(1));
-	(*m_scenes[PLANE_MESH_DEFAULT].get())[0] = m_meshes[PLANE_MESH_DEFAULT];
+	//m_meshes[PLANE_MESH_NAME_20] = std::make_shared<Mesh>(Plane(PLANE_MESH_20));
+	m_scenes[PLANE_MESH_NAME_20] = std::make_shared<Scene>(Scene(1));
+	(*m_scenes[PLANE_MESH_NAME_20].get())[0] = std::shared_ptr<Mesh>(new Plane(PLANE_MESH_20));//m_meshes[PLANE_MESH_NAME_20];
+
+	m_scenes[PLANE_MESH_NAME_50] = std::make_shared<Scene>(Scene(1));
+	(*m_scenes[PLANE_MESH_NAME_50].get())[0] = std::shared_ptr<Mesh>(new Plane(PLANE_MESH_50));
+
+	m_scenes[PLANE_MESH_NAME_100] = std::make_shared<Scene>(Scene(1));
+	(*m_scenes[PLANE_MESH_NAME_100].get())[0] = std::shared_ptr<Mesh>(new Plane(PLANE_MESH_100));
 
 	m_pDebugLineMesh = new DebugLineMesh(.5f, .0f, .0f, -.5f, .0f, .0f);
 	LoadPrefabFiles();
@@ -259,7 +265,8 @@ std::shared_ptr<Scene> ResourceManager::LoadScene(const std::string& meshSceneNa
 		m_scenes[meshSceneName] = meshScene;
 		for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
 			const aiMesh* aiMeshPtr = scene->mMeshes[i];
-			m_meshes[aiMeshPtr->mName.C_Str()] = std::shared_ptr<Mesh>(new Mesh(aiMeshPtr));
+			m_meshes[aiMeshPtr->mName.C_Str()] = std::shared_ptr<Mesh>(new Mesh(aiMeshPtr));  // Works
+			//m_meshes[aiMeshPtr->mName.C_Str()] = std::make_shared<Mesh>(Mesh(aiMeshPtr));		// Doesn't work
 			(*meshScene.get())[i] = m_meshes[aiMeshPtr->mName.C_Str()];
 		}
 		return meshScene;

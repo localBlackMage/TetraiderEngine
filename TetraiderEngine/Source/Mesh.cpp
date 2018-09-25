@@ -68,13 +68,15 @@ void Mesh::_LoadMeshToGraphicsCard()
 
 	glGenBuffers(VBO_TYPE::NUM_VBO_TYPES, m_vboID);
 
+	glBindVertexArray(m_vaoID);
+
 #pragma region Vertex Buffer
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboID[VBO_TYPE::VBO_VERTICES]);
 	glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, vertexArray(), GL_STATIC_DRAW);
 	
 	glVertexAttribPointer(VBO_TYPE::VBO_VERTICES, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(VBO_TYPE::VBO_VERTICES);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 #pragma endregion
 
 #pragma region Normal Buffer
@@ -83,7 +85,7 @@ void Mesh::_LoadMeshToGraphicsCard()
 
 	glVertexAttribPointer(VBO_TYPE::VBO_NORMALS, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(VBO_TYPE::VBO_NORMALS);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 #pragma endregion
 
 #pragma region Tangent Buffer
@@ -92,7 +94,7 @@ void Mesh::_LoadMeshToGraphicsCard()
 
 	glVertexAttribPointer(VBO_TYPE::VBO_TANGENTS, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(VBO_TYPE::VBO_TANGENTS);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 #pragma endregion
 
 #pragma region Bitangent Buffer
@@ -101,7 +103,7 @@ void Mesh::_LoadMeshToGraphicsCard()
 
 	glVertexAttribPointer(VBO_TYPE::VBO_BITANGENTS, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(VBO_TYPE::VBO_BITANGENTS);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 #pragma endregion
 
 #pragma region Face Buffer
@@ -111,7 +113,7 @@ void Mesh::_LoadMeshToGraphicsCard()
 
 	glVertexAttribPointer(VBO_TYPE::VBO_FACES, 3, GL_INT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(VBO_TYPE::VBO_FACES);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 #pragma endregion
 
 #pragma region Texture Coordinate Buffer
@@ -121,16 +123,20 @@ void Mesh::_LoadMeshToGraphicsCard()
 
 	glVertexAttribPointer(VBO_TYPE::VBO_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(VBO_TYPE::VBO_TEX_COORDS);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 #pragma endregion
 
 	glEnableVertexAttribArray(0);
 }
 
-Mesh::Mesh() {}
-
-Mesh::Mesh(const aiMesh * mesh)
+Mesh::Mesh() : m_vaoID(0) 
 {
+	std::fill(m_vboID, m_vboID + NUM_VBO_TYPES / sizeof(GLuint), 0);
+}
+
+Mesh::Mesh(const aiMesh * mesh) : m_vaoID(0)
+{
+	std::fill(m_vboID, m_vboID + NUM_VBO_TYPES / sizeof(GLuint), 0);
 	CreateFromAiMesh(mesh);
 }
 
@@ -245,6 +251,7 @@ void Mesh::AddFace(unsigned int a, unsigned int b, unsigned int c)
 void Mesh::FinishMesh()
 {
 	CalcNormals();
+	//_LoadMeshToGraphicsCard();
 	_LoadMeshToGraphicsCard_OLD();
 }
 
@@ -321,6 +328,7 @@ void Mesh::CreateFromAiMesh(const aiMesh * mesh)
 	}
 
 	_LoadMeshToGraphicsCard_OLD();
+	//_LoadMeshToGraphicsCard();
 }
 
 int Mesh::vertexCount() const

@@ -9,7 +9,7 @@ Author: <Holden Profit>
 
 RenderManager::RenderManager(int width, int height, std::string title) :
 	m_la(-0.24f), m_lb(0.19f), m_lights(true), m_width(width), m_height(height), m_windowTitle(title), m_baseWindowTitle(title),
-	m_pActiveCamera(nullptr), m_pCurrentProgram(nullptr), m_debugShaderName(""), m_cursorEnabled(false),
+	m_pActiveCamera(nullptr), m_pCurrentProgram(nullptr), m_debugShaderID(0), m_cursorEnabled(false),
 	m_clearColor(Vector3D(0.2f,0.2f,0.2f, 0.f)), m_isFullscreen(false)
 {
 }
@@ -225,58 +225,45 @@ void RenderManager::_RenderText(const Text * pTextComp, const Transform * pTrans
 
 void RenderManager::_RenderMesh(const MeshComponent * cpMeshComp)
 {
+	glUniform4f(SHADER_LOCATIONS::L_POS, 0, 25, 25, 1);
+
 	std::shared_ptr<Scene> pScene = cpMeshComp->GetScene();
 	for (unsigned short i = 0; i < pScene->NumMeshes(); ++i) {
 		std::shared_ptr<Mesh> pMesh = (*pScene)[i];
+		// OLD
 		BindMesh((*pMesh.get()));
+		// Use this instead of BindMesh NEW
 		//glBindVertexArray(pMesh->GetVAO());
 
 		// select the texture to use
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, cpMeshComp->GetTextureBuffer());
-		glUniform1i(TEXTURE_LOCATIONS::FIRST, 0);
+		glUniform1i(TEXTURE_LOCATIONS::FIRST, TEXTURE_LOCATIONS::FIRST);
 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, cpMeshComp->GetNormalTextureBuffer());
-		glUniform1i(TEXTURE_LOCATIONS::SECOND, 1);
+		glUniform1i(TEXTURE_LOCATIONS::SECOND, TEXTURE_LOCATIONS::SECOND);
 
 		//GLint repeatOrClamp = cpMeshComp->Repeats() ? GL_REPEAT : GL_CLAMP;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-		// draw the mesh
+		// draw the mesh OLD
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pMesh->GetFaceBuffer());
 		glDrawElements(GL_TRIANGLES, 3 * pMesh->faceCount(), GL_UNSIGNED_INT, 0);
+
+
+
+		// draw the mesh NEW
 		//glDrawArrays(GL_TRIANGLES, 0, pMesh->vertexCount());
-
-
 		//glBindVertexArray(0);
 	}
 }
 
 bool RenderManager::_SelectShaderProgram(const Component* renderingComponent)
 {
-	std::string shader = "default";
-
-	switch (renderingComponent->Type()) {
-	case ComponentType::C_Mesh:
-		shader = static_cast<const MeshComponent*>(renderingComponent)->Shader();
-		break;
-	case ComponentType::C_ParticleEmitter:
-		shader = static_cast<const ParticleEmitter*>(renderingComponent)->Shader();
-		break;
-	case ComponentType::C_FBOSprite:
-		shader = static_cast<const FBOSprite*>(renderingComponent)->Shader();
-		break;
-	case ComponentType::C_Sprite:
-		shader = static_cast<const Sprite*>(renderingComponent)->Shader();
-		break;
-	case ComponentType::C_Text:
-		shader = static_cast<const Text*>(renderingComponent)->Shader();
-		break;
-	}
-
-	return SelectShaderProgram(shader);
+	const RenderableComponent* rComp = static_cast<const MeshComponent*>(renderingComponent);
+	return SelectShaderProgram(rComp->GetShaderProgramID());
 }
 
 void RenderManager::_SetUpCamera(const GameObject & camera)
@@ -284,7 +271,6 @@ void RenderManager::_SetUpCamera(const GameObject & camera)
 	m_pActiveCamera = &camera;
 	const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
 	const Transform * transformComp = camera.GetComponent<Transform>(ComponentType::C_Transform);
-	glUseProgram(m_pCurrentProgram->GetProgramID());
 
 	glUniformMatrix4fv(SHADER_LOCATIONS::PERSP_MATRIX, 1, true, (float*)cameraComp->GetCameraMatrix());
 	glUniformMatrix4fv(SHADER_LOCATIONS::VIEW_MATRIX, 1, true, (float*)cameraComp->GetViewMatrix());
@@ -304,7 +290,7 @@ void RenderManager::_SetUpLights(const GameObject& gameObject, GameObjectLayer &
 
 void RenderManager::_SetUpDebug(const GameObject& camera)
 {
-	SelectShaderProgram(m_debugShaderName);
+	SelectShaderProgram(m_debugShaderID);
 	_SetUpCamera(camera);
 	_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetDebugLineMesh()->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 	//_BindVertexAttribute(SHADER_LOCATIONS::POSITION, TETRA_RESOURCES.GetMesh(QUAD_MESH)->GetVertexBuffer(), 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
@@ -559,6 +545,7 @@ void RenderManager::ClearBuffer(const Vector3D& color)
 bool RenderManager::InitGlew()
 {
 	// GLEW: get function bindings (if possible)
+	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
@@ -570,6 +557,14 @@ bool RenderManager::InitGlew()
 		std::cout << "Needs OpenGL version 2.0 or better" << std::endl;
 		return false;
 	}
+	if (glGetError() != GL_NO_ERROR) {
+		/* Problem: glewInit failed, something is seriously wrong. */
+		std::cout << "Error: " << glGetError() << std::endl;
+		return false;
+	}
+
+	assert(glGetError() == GL_NO_ERROR);
+
 	FrameStart();
 	FrameEnd();
 
@@ -652,10 +647,10 @@ void RenderManager::InitWindow(bool debugEnabled, bool startFullScreen)
 	SDL_Init(SDL_INIT_VIDEO);
 
 	/* Request opengl 4 context. */
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	/* Turn on double buffering with a 24bit Z buffer.
 	* You may need to change this to 16 or 32 for your system */
@@ -839,8 +834,22 @@ void RenderManager::RenderGameObject(const GameObject & camera, const GameObject
 		const MeshComponent* cpMeshComp = gameObject.GetComponent<MeshComponent>(ComponentType::C_Mesh);
 		bool newShaderSelected = _SelectShaderProgram(cpMeshComp);
 		
+		if (gameObject.HasComponent(ComponentType::C_HeightMap)) {
+			const HeightMap * heightMapComp = gameObject.GetComponent<HeightMap>(ComponentType::C_HeightMap);
+			glUniform1f(SHADER_LOCATIONS::MAX_HEIGHT, heightMapComp->MaxHeight());
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, heightMapComp->GetHeightMapBuffer());
+			glUniform1i(TEXTURE_LOCATIONS::THIRD, TEXTURE_LOCATIONS::THIRD);
+		}
+
 		//if (newShaderSelected || camera != *m_pActiveCamera) {
 			_SetUpCamera(camera);
+
+			const Camera * cameraComp = camera.GetComponent<Camera>(ComponentType::C_Camera);
+			Matrix4x4 M = gameObject.GetComponent<Transform>(ComponentType::C_Transform)->GetTransform();
+			Matrix4x4 M2 = cameraComp->GetCameraMatrix() * cameraComp->GetViewMatrix() * M;
+			glUniformMatrix4fv(SHADER_LOCATIONS::FINAL_MATRIX, 1, true, (float*)M2);
 
 			_BindGameObjectTransform(gameObject);
 			_RenderMesh(cpMeshComp);
@@ -894,32 +903,27 @@ void RenderManager::DrawSceneFBO()
 
 #pragma region Shaders
 
-void RenderManager::LoadShaders(const std::vector<std::string>& shaders)
+void RenderManager::LoadShaders(const std::vector<std::string>& shaders, const std::string& debugShaderName)
 {
 	std::string shaderDir = TETRA_GAME_CONFIG.ShadersDir();
 	const std::string ext = ".json";
 
 	for (std::string shader : shaders) {
-		LoadShaderProgram(shaderDir, shader + ext);
+		LoadShaderProgram(shaderDir, shader + ext, debugShaderName);
 	}
 }
 
-void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName)
+void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName, const std::string& debugShaderName)
 {
 	try {
 		json j = JsonReader::OpenJsonFile(filePath + fileName);
 
 		if (j.is_object()) {
-			for (json::iterator it = j.begin(); it != j.end(); ++it) {
-				std::string programName = it.key();
-				ShaderProgram * program = CreateShaderProgram(programName);
-				Shader * vShader = CreateVertexShaderFromFile(filePath + ParseString(j, programName, "vertex"));
-				Shader * fShader = CreateFragmentShaderFromFile(filePath + ParseString(j, programName, "fragment"));
+			std::string programName = j.begin().key();
+			ShaderProgram* program = _CreateShaderProgram(programName, filePath, j);
 
-				program->AttachShader(*vShader);
-				program->AttachShader(*fShader);
-				program->LinkShaders();
-			}
+			if (debugShaderName == programName)
+				m_debugShaderID = program->GetProgramID();
 		}
 	}
 	catch (const json::parse_error& ex) {
@@ -927,20 +931,23 @@ void RenderManager::LoadShaderProgram(std::string filePath, std::string fileName
 	}
 }
 
-ShaderProgram * RenderManager::GetShaderProgram(std::string programName)
+ShaderProgram * RenderManager::_CreateShaderProgram(std::string programName, std::string filePath, const json& j)
 {
-	return m_shaderPrograms[programName];
-}
+	if (m_shaderNamesToIds[programName] != 0) {
+		std::cout << "ERROR: SHADER \"" << programName << "\" ALREADY EXISTS." << std::endl;
+		return nullptr;
+	}
 
-ShaderProgram * RenderManager::CreateShaderProgram(std::string programName)
-{
-	ShaderProgram * program = m_shaderPrograms[programName];
-	if (program)
-		return program;
+	ShaderProgram * program = new ShaderProgram();
+	Shader * vShader = CreateVertexShaderFromFile(filePath + ParseString(j, programName, "vertex"));
+	Shader * fShader = CreateFragmentShaderFromFile(filePath + ParseString(j, programName, "fragment"));
 
-	program = new ShaderProgram();
-	if (program)
-		m_shaderPrograms[programName] = program;
+	program->AttachShader(*vShader);
+	program->AttachShader(*fShader);
+	program->LinkShaders();
+
+	m_shaderNamesToIds[programName] = program->GetProgramID();
+	m_shaderPrograms[program->GetProgramID()] = program;
 
 	return program;
 }
@@ -958,7 +965,6 @@ Shader * RenderManager::CreateVertexShaderFromFile(std::string fileName)
 Shader * RenderManager::CreateFragmentShader(std::string fragmentShaderText)
 {
 	return new Shader(fragmentShaderText, FRAGMENT_SHADER);
-
 }
 
 Shader * RenderManager::CreateFragmentShaderFromFile(std::string fileName)
@@ -966,16 +972,30 @@ Shader * RenderManager::CreateFragmentShaderFromFile(std::string fileName)
 	return CreateFragmentShader(_LoadTextFile(fileName));
 }
 
-bool RenderManager::SelectShaderProgram(const std::string& programName)
-{
-	if (!m_shaderPrograms[programName]) {
-		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;
-		return false;
-	}
+//bool RenderManager::SelectShaderProgram(const std::string& programName)
+//{
+//	if (!m_shaderNamesToIds[programName] == 0) {
+//		std::cout << "Shader program \"" << programName << "\" does not exist." << std::endl;
+//		return false;
+//	}
+//
+//	// New shader
+//	if (m_pCurrentProgram != m_shaderPrograms[programName]) {
+//		m_pCurrentProgram = m_shaderPrograms[programName];
+//		glUseProgram(m_pCurrentProgram->GetProgramID());
+//		return true;
+//	}
+//	// Redundant shader selection
+//	return false;
+//}
 
+bool RenderManager::SelectShaderProgram(GLint programID)
+{
 	// New shader
-	if (m_pCurrentProgram != m_shaderPrograms[programName]) {
-		m_pCurrentProgram = m_shaderPrograms[programName];
+	if (!m_pCurrentProgram || m_pCurrentProgram->GetProgramID() != programID) {
+		m_pCurrentProgram = m_shaderPrograms[programID];
+		assert(m_pCurrentProgram && "ERROR: SHADER PROGRAM DOES NOT EXIST.");
+		glUseProgram(m_pCurrentProgram->GetProgramID());
 		return true;
 	}
 	// Redundant shader selection

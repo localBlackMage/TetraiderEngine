@@ -33,6 +33,7 @@
     <ClCompile Include="Source\AI_WalkTowardPlayerIdle.cpp" />
     <ClCompile Include="Source\ApplyTinyOnDifficultyUp.cpp" />
     <ClCompile Include="Source\FBOSprite.cpp" />
+    <ClCompile Include="Source\HeightMap.cpp" />
     <ClCompile Include="Source\HillNodes.cpp" />
     <ClCompile Include="Source\AI_BomberAttack.cpp" />
     <ClCompile Include="Source\AI_BomberRetreat.cpp" />
@@ -189,12 +190,14 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Face.h" />
+    <ClInclude Include="Source\HeightMap.h" />
     <ClInclude Include="Source\InGameCredits.h" />
     <ClInclude Include="Source\LetterBox.h" />
     <ClInclude Include="Source\ListSelector.h" />
     <ClInclude Include="Source\MeshComponent.h" />
     <ClInclude Include="Source\ParticleEmitterResizer.h" />
     <ClInclude Include="Source\Plane.h" />
+    <ClInclude Include="Source\Renderable.h" />
     <ClInclude Include="Source\SelectableButton.h" />
     <ClInclude Include="Source\SliderBallNames.h" />
     <ClInclude Include="Source\AI_EnemyBatReaction.h" />

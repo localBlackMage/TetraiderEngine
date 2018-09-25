@@ -23,9 +23,9 @@
 			"Component": "Mesh",
 			"Mesh": "Sphere2.obj",
 			"shader": "base3DShader",
-			"Texture1": "worldTexture2.jpg",
-			"Normal": "worldNormal.jpg",
-			"Bump": "worldBump.jpg"
+			"Texture2": "worldTexture2.jpg",
+			"Normal1": "worldNormal.jpg",
+			"Bump1": "worldBump.jpg"
 		}
     ]
 }

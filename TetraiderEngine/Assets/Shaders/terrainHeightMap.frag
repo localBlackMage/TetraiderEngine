@@ -5,6 +5,7 @@ const int MAX_LIGHTS = 20;
 // UNIFORM INPUTS
 layout(location = 0) uniform sampler2D baseTexture;
 layout(location = 1) uniform sampler2D normalMap;
+layout(location = 2) uniform sampler2D heightMap;
 
 layout(location = 40) uniform vec3 ambient_global_color;
 layout(location = 41) uniform vec3 ambient_color;
@@ -34,11 +35,8 @@ out vec4 frag_color;
 
 
 void main(void) {
-	vec3 diffuse_color_TMP = vec3(1, 1, 0);
-	vec3 lightColor = vec3(1,1,1);
-	vec3 ambient = vec3(0.1, 0.1, 0.1);
-	float spec_coef = 60;
-	vec3 specColor = vec3(1,1,1);
+	vec3 diffuse_color = vec3(.1, .5, .1);
+	vec4 lightColor = vec4(0,0,0,0);
 	
 	vec4 textureColor = texture(baseTexture, vtexture_coord);
 	//vec3 normalMapValue = normalize( texture(normalMap, vtexture_coord).rgb * 2.0 - 1.0);
@@ -51,18 +49,10 @@ void main(void) {
 		)
 	);
 	normal = normalize(TBN * normal);
-	
-	vec4 m = normalize(vnormal_vector);//vec4(normal, 0);//normalize(vnormal_vector);
+
 	vec4 L = normalize(vl_lightVector);
-	vec4 v = normalize(vview_vector);
-	vec4 H = normalize(v + L);
-	vec3 diffuse = (max(dot(m,L),0) * textureColor).xyz * lightColor;
-	vec3 specular = pow(max(dot(H,m), 0), spec_coef) * specColor * lightColor;
+	vec4 m = vec4(normal, 0);//normalize(vnormal_vector);
+	lightColor = max(dot(m, L), 0) * textureColor;
 	
-	//lightColor = max(dot(m, L), 0) * diffuse;//textureColor;
-	
-	frag_color = vec4(diffuse + specular + ambient,1);
-	
-	
-	//frag_color = texture(normalMap, vtexture_coord);
+	frag_color = textureColor;
 }

@@ -266,7 +266,7 @@ void ParticleEmitter::_WarmSystem()
 #pragma endregion
 
 ParticleEmitter::ParticleEmitter() :
-	Component(ComponentType::C_ParticleEmitter),
+	RenderableComponent(ComponentType::C_ParticleEmitter),
 	m_active(true),
 	m_currentTime(0.f),
 	m_emissionTime(0.f),
@@ -402,7 +402,8 @@ void ParticleEmitter::Serialize(const json & j)
 
 	m_emissionTime = m_loopDuration / float(m_emissionRate);
 
-	m_shader = ValueExists(j, "shader") ? j["shader"] : "particle";
+	std::string shaderProgramName = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "particle";
+	m_shaderProgramID = TETRA_RENDERER.GetShaderIDByName(shaderProgramName);
 	m_active = ValueExists(j, "isActive") ? j["isActive"] : true;
 
 

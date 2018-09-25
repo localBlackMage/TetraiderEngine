@@ -17,7 +17,9 @@ Creation date: 1/17/18
 
 const enum SHADER_TYPE {
 	VERTEX_SHADER = 0,
-	FRAGMENT_SHADER = 1
+	FRAGMENT_SHADER,
+	COMPUTE_SHADER,
+	GEOMETRY_SHADER
 };
 
 class Shader

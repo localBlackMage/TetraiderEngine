@@ -1,0 +1,6 @@
+{
+	"terrainHeightMap": {
+		"vertex": "terrainHeightMap.vert",
+		"fragment": "terrainHeightMap.frag"
+	}
+}

@@ -8,7 +8,7 @@ Author: <Holden Profit>
 #include <Stdafx.h>
 
 MeshComponent::MeshComponent() :
-	Component(ComponentType::C_Mesh),
+	RenderableComponent(ComponentType::C_Mesh),
 	m_pMesh(nullptr)
 {
 }
@@ -30,7 +30,8 @@ void MeshComponent::Serialize(const json& j)
 	else
 		//m_pMesh = TETRA_RESOURCES.GetMesh(meshName);
 		m_pScene = TETRA_RESOURCES.GetScene(meshName);
-	m_shader = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+	std::string shaderProgramName = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+	m_shaderProgramID = TETRA_RENDERER.GetShaderIDByName(shaderProgramName);
 
 	std::string texture = ParseString(j, "Texture1");
 	if (texture != "")

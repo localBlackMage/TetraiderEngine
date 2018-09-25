@@ -91,8 +91,7 @@ void GameConfig::LoadConfig(std::string s) {
 
 
 	if (!TETRA_RENDERER.InitGlew())	exit(1);
-	TETRA_RENDERER.SetDebugShaderName(renderSettings["debugShader"]);
-	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST));
+	TETRA_RENDERER.LoadShaders(ParseStringList(j, SHADER_LIST), renderSettings["debugShader"]);
 	TETRA_RENDERER.SetGlobalAmbientLight(ParseColor(renderSettings, "globalAmbient"));
 
 	ImageRenderersData IRD;

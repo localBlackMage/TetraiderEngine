@@ -16,9 +16,7 @@ layout(location = 11) uniform mat4 view_matrix;
 layout(location = 12) uniform mat4 model_matrix;
 layout(location = 13) uniform mat4 normal_matrix;
 layout(location = 14) uniform vec4 camera_position;
-layout(location = 15) uniform mat4 final_matrix;
 
-layout(location = 45) uniform vec4 light_pos;
 layout(location = 47) uniform bool lit;
 layout(location = 50) uniform vec4 l_pos_dist[MAX_LIGHTS];
 
@@ -35,23 +33,21 @@ layout(location = 11) out mat3 TBN;
 
 void main() {
 	vec4 P = model_matrix * position;
-	//gl_Position = persp_matrix * view_matrix * P;
-	gl_Position = final_matrix * position;
+	gl_Position = persp_matrix * view_matrix * P;
 	vtexture_coord = texture_coord;
 
 	vnormal_vector = normal_matrix * normal;
 	vtangent_vector = normal_matrix * tangent;
 	vbitangent_vector = normal_matrix * bitangent;
-
-
-
 	vview_vector = normalize(camera_position - P);
 	
 	
-	vec3 T = normalize(vec3(normal_matrix * tangent));
-	vec3 B = normalize(vec3(normal_matrix * bitangent));
-	vec3 N = normalize(vec3(normal_matrix * normal));
+	vec3 T = normalize(vec3(model_matrix * tangent));
+	vec3 B = normalize(vec3(model_matrix * bitangent));
+	vec3 N = normalize(vec3(model_matrix * normal));
 	TBN = mat3(T, B, N);
 	
-	vl_lightVector = light_pos - P;
+	
+	
+	vl_lightVector = vec4(0,100,100, 1) - P;
 }

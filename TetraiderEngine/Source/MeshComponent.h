@@ -9,12 +9,11 @@ Author: <Holden Profit>
 #ifndef MESH_COMPONENT_H
 #define MESH_COMPONENT_H
 
-class MeshComponent : public Component 
+class MeshComponent : public RenderableComponent
 {
 protected:	
 	std::shared_ptr<Mesh> m_pMesh;
 	std::shared_ptr<Scene> m_pScene;
-	std::string m_shader;
 	SurfaceTextureBuffer * m_pTexture;
 	SurfaceTextureBuffer * m_pNormal;
 	SurfaceTextureBuffer * m_pBump;
@@ -34,15 +33,13 @@ public:
 	inline const std::shared_ptr<Scene> GetScene() const { return m_pScene; }
 	inline void SetScene(std::shared_ptr<Scene> scene) { m_pScene = scene; };
 
-	inline std::string Shader() const { return m_shader; };
-
-	inline const GLuint GetTextureBuffer() const { return m_pTexture->bufferId; }
+	inline const GLuint GetTextureBuffer() const { return m_pTexture ? m_pTexture->bufferId : 0; }
 	inline const SurfaceTextureBuffer * GetTexture() const { return m_pTexture; }
 
-	inline const GLuint GetNormalTextureBuffer() const { return m_pNormal->bufferId; }
+	inline const GLuint GetNormalTextureBuffer() const { return m_pNormal ? m_pNormal->bufferId : 0; }
 	inline const SurfaceTextureBuffer * GetNormalTexture() const { return m_pNormal; }
 
-	inline const GLuint GetBumpTextureBuffer() const { return m_pBump->bufferId; }
+	inline const GLuint GetBumpTextureBuffer() const { return m_pBump ? m_pBump->bufferId : 0; }
 	inline const SurfaceTextureBuffer * GetBumpTexture() const { return m_pBump; }
 };
 

@@ -1,0 +1,6 @@
+{
+	"testShader": {
+		"vertex": "testShader.vert",
+		"fragment": "testShader.frag"
+	}
+}

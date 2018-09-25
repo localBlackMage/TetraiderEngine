@@ -15,23 +15,27 @@
 				"z": 1
 			},
 			"pivotOffset": {},
-			"rotation_OLD": {
-				"x": -90,
-				"z": 180
-			},
 			"rotation": {
+				"x": -90,
+				"y_": 180,
+				"z": 180
 			},
 			"2D": false
         },
 		{
 			"Component": "Mesh",
-			"Mesh": "plane_20",
+			"Mesh": "plane_100",
 			"Mesh_": "Plane.obj",
-			"shader_": "waterShader",
-			"shader": "base3DShader",
-			"Texture1": "worldTexture2.jpg",
-			"Normal": "worldNormal.jpg",
+			"shader": "terrainHeightMap",
+			"Texture1": "heightmapDiffuse.png",
+			"Texture1_": "worldTexture2.jpg",
+			"Normal_": "worldNormal.jpg",
 			"Bump_": "worldBump.jpg"
+		},
+		{
+			"Component": "HeightMap",
+			"height": 50,
+			"heightMap": "heightmap2.png"
 		}
     ]
 }

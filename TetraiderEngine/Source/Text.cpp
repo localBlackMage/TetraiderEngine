@@ -57,7 +57,7 @@ void Text::_InitFontOffsets()
 }
 
 Text::Text(std::string fontName) :
-	Component(ComponentType::C_Text),
+	RenderableComponent(ComponentType::C_Text),
 	m_rows(1.0f),
 	m_cols(1.0f),
 	m_frameHeight(0.f),
@@ -66,8 +66,7 @@ Text::Text(std::string fontName) :
 	m_fontName(fontName),
 	m_texture(0),
 	m_alignment(TextAlignment::TEXT_LEFT),
-	m_mesh(*TETRA_RESOURCES.GetInternalMesh(QUAD_MESH)),
-	m_shader("")
+	m_mesh(*TETRA_RESOURCES.GetInternalMesh(QUAD_MESH))
 {}
 
 void Text::Deactivate()
@@ -98,7 +97,8 @@ void Text::Serialize(const json & j)
 	m_cols = j["cols"];
 
 	m_text = JsonReader::ValueExists(j, "text") ? JsonReader::ParseString(j, "text") : m_text;
-	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
+	std::string shaderProgramName = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+	m_shaderProgramID = TETRA_RENDERER.GetShaderIDByName(shaderProgramName);
 
 	SetFont(JsonReader::ValueExists(j, "font") ? j["font"] : m_fontName);
 
@@ -108,8 +108,6 @@ void Text::Serialize(const json & j)
 		else if (align == "right")	m_alignment = TextAlignment::TEXT_RIGHT;
 		else						m_alignment = TextAlignment::TEXT_MIDDLE;
 	}
-
-	m_shader = ValueExists(j, "shader") ? j["shader"] : "default";
 }
 
 const Mesh & Text::GetMesh() const

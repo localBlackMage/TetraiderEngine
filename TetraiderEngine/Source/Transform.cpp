@@ -238,7 +238,8 @@ Vector3D Transform::Right() const
 	Vector3D up = m_is2d ? ZAXIS : YAXIS;
 	Vector3D lCrossR = Vector3D::Cross(m_lookAt, up);
 	float lenLCrossR = lCrossR.Length();
-	return lenLCrossR != 0.0f ? lCrossR * (1.0f / lenLCrossR) : (m_is2d ? YAXIS : ZAXIS);
+	return lenLCrossR != 0.0f ? lCrossR * 
+		(1.0f / lenLCrossR) : (m_is2d ? YAXIS : ZAXIS);
 }
 
 Vector3D Transform::Up() const

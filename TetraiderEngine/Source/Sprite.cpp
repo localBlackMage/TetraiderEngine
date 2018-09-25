@@ -8,7 +8,7 @@ Author: <Holden Profit>
 #include <Stdafx.h>
 
 Sprite::Sprite(std::string textureName) :
-	Component(ComponentType::C_Sprite),
+	RenderableComponent(ComponentType::C_Sprite),
 	m_repeats(false),
 	m_isLit(false),
 	m_xTiling(1.0f), 
@@ -20,7 +20,6 @@ Sprite::Sprite(std::string textureName) :
 	m_textureName(textureName),
 	m_texture(0),
 	m_mesh(*TETRA_RESOURCES.GetInternalMesh(QUAD_MESH)),
-	m_shader(""),
 	m_posOffset(Vector3D())
 {
 }
@@ -52,7 +51,8 @@ void Sprite::Serialize(const json& j)
 	m_saturationColor.z = j["saturation"]["b"];
 	m_saturationColor.w = j["saturation"]["a"];
 
-	m_shader = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+	std::string shaderProgramName = ValueExists(j, "shader") ? JsonReader::ParseStringUnsafe(j, "shader") : "default";
+	m_shaderProgramID = TETRA_RENDERER.GetShaderIDByName(shaderProgramName);
 
 	m_posOffset = ParseVector3D(j, "posOffset");
 
@@ -146,11 +146,6 @@ float Sprite::GetAlpha() {
 
 void Sprite::SetAlpha(float alpha) {
 	m_tintColor.w = alpha;
-}
-
-String Sprite::Shader() const
-{
-	return m_shader;
 }
 
 SurfaceTextureBuffer * Sprite::GetTexture() const

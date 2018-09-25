@@ -3,8 +3,14 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#define PLANE_MESH_DEFAULT_SIZE 20
-#define PLANE_MESH_DEFAULT "plane_20"
+#define PLANE_MESH_20 20
+#define PLANE_MESH_NAME_20 "plane_20"
+
+#define PLANE_MESH_50 50
+#define PLANE_MESH_NAME_50 "plane_50"
+
+#define PLANE_MESH_100 100
+#define PLANE_MESH_NAME_100 "plane_100"
 
 class Plane : public Mesh {
 public:
@@ -47,7 +53,7 @@ public:
 			m_texCoords.push_back(uv[0]);
 			m_texCoords.push_back(uv[1]);
 		}
-
+		//_LoadMeshToGraphicsCard();
 		_LoadMeshToGraphicsCard_OLD();
 	};
 

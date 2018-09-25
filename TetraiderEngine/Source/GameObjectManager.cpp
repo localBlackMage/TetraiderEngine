@@ -234,33 +234,10 @@ void GameObjectManager::_RenderGameObjectLayers(unsigned int startLayer, unsigne
 
 void GameObjectManager::_RenderWithPostProcessing()
 {
-	TETRA_POST_PROCESSING.ClearBaseFBO(Vector3D(0,0,0,0));
+	TETRA_POST_PROCESSING.ClearBaseFBO(TETRA_RENDERER.GetClearColor());// Vector3D(0, 0, 0, 0));
 	TETRA_POST_PROCESSING.BindBaseFBO();
 
 	#pragma region RENDER_GLOWING_OBJECTS
-	// Render all layers but UI
-	_RenderGameObjectLayers(0, RENDER_LAYER::L_UIBG);
-
-	for (GameObject* cameraGO : m_pCameras) {
-		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
-			TETRA_DEBUG.RenderDebugCommands(cameraGO);
-			break;
-		}
-	}
-	
-	// Render UI
-	_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
-	#pragma endregion
-	TETRA_POST_PROCESSING.UnbindBaseFBO();
-	TETRA_POST_PROCESSING.DoPostProcessing();
-	TETRA_RENDERER.DrawSceneFBO();
-}
-
-void GameObjectManager::_RenderWithoutPostProcessing()
-{
-	//// Render all layers but UI
-	//_RenderGameObjectLayers(0, RENDER_LAYER::L_UIBG);
-
 	_RenderGameObjects();
 
 	for (GameObject* cameraGO : m_pCameras) {
@@ -269,9 +246,23 @@ void GameObjectManager::_RenderWithoutPostProcessing()
 			break;
 		}
 	}
+	glCullFace(GL_NONE);
+	#pragma endregion
+	TETRA_POST_PROCESSING.UnbindBaseFBO();
+	TETRA_POST_PROCESSING.DoPostProcessing();
+	TETRA_RENDERER.DrawSceneFBO();
+}
 
-	//// Render UI
-	//_RenderGameObjectLayers(RENDER_LAYER::L_UIBG, RENDER_LAYER::L_NUM_LAYERS);
+void GameObjectManager::_RenderWithoutPostProcessing()
+{
+	_RenderGameObjects();
+
+	for (GameObject* cameraGO : m_pCameras) {
+		if (cameraGO->GetComponent<Camera>(ComponentType::C_Camera)->ShouldRenderLayer(RENDER_LAYER::L_RENDER_DEBUG)) {
+			TETRA_DEBUG.RenderDebugCommands(cameraGO);
+			break;
+		}
+	}
 }
 
 #pragma endregion

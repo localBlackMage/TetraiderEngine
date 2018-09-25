@@ -12,5 +12,6 @@ layout(location = 2) out vec2 vtexture_coord;
 
 void main() {
 	gl_Position = model_matrix * position;
-	vtexture_coord = texture_coord;
+	
+	vtexture_coord = position.xy * 0.5f + 0.5f;;
 }

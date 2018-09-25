@@ -503,6 +503,9 @@
     <ClCompile Include="Source\Spinner.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\HeightMap.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\json.hpp">
@@ -1015,6 +1018,12 @@
     </ClInclude>
     <ClInclude Include="Source\Spinner.h">
       <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HeightMap.h">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Renderable.h">
+      <Filter>Source Files\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

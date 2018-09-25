@@ -7,7 +7,7 @@
 			"position": {
 				"x": 0,
 				"y": 0,
-				"z": 100
+				"z": 10
 			},
 			"scale": {},
 			"pivotOffset": {},
@@ -23,7 +23,7 @@
             "perspective": true,
 			"zoomLevels": [ 1,1,1,1 ],
 			"primary": true,
-            "fov": 80,
+            "fov": 105,
             "layers": ["BG", "BG_1", "BG_2", "1", "2", "3", "4", "DEBUG"]
         },
 		{

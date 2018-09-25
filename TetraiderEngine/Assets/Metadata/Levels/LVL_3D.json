@@ -54,25 +54,52 @@
 			}
 		}
 	],
-	"GAME_OBJECTS": [
+	"GAME_OBJECTS_Old": [
 		{
 			"prefab": "Plane",
 			"scale": {
-				"x": 10,
-				"y": 10,
-				"z": 10
-			}
-		},
-		{
-			"prefab": "Cube",
-			"scale": {
-				"x": 5,
-				"y": 5,
-				"z": 5
+				"x": 50,
+				"y": 50,
+				"z": 50
 			},
 			"position": {
 				"x": 0,
-				"y": 10,
+				"y": 0,
+				"z": -25
+			},
+			"rotation": {
+				"z": 180
+			}
+		},
+		{
+			"prefab": "Plane",
+			"scale": {
+				"x": 25,
+				"y": 25,
+				"z": 25
+			},
+			"position": {
+				"x": 0,
+				"y": -50,
+				"z": 0
+			},
+			"rotation": {
+				"x": -90,
+				"z": 180
+			}
+		}
+	],
+	"GAME_OBJECTS" : [
+		{
+			"prefab": "Cube",
+			"scale": {
+				"x": 2.5,
+				"y": 2.5,
+				"z": 2.5
+			},
+			"position": {
+				"x": 0,
+				"y": 0,
 				"z": 0
 			}
 		}

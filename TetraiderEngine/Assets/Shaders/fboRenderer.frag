@@ -32,5 +32,13 @@ void main(void) {
 	if (texturesToRead >= 4)
 		finalColor = colorAbeforeColorB(color4, color3);
 	*/
+	
+	/*
+	frag_color.r = vtexture_coord.x;
+	frag_color.g = vtexture_coord.y;
+	frag_color.b = 0;
+	frag_color.a = 1;
+	*/
+	
 	frag_color = finalColor;
 }

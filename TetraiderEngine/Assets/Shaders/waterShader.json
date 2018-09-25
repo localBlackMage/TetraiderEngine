@@ -1,0 +1,6 @@
+{
+	"waterShader": {
+		"vertex": "waterShader.vert",
+		"fragment": "waterShader.frag"
+	}
+}

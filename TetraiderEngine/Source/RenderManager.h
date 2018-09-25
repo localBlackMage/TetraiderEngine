@@ -38,6 +38,7 @@ enum SHADER_LOCATIONS {
 	MODEL_MATRIX,		// 12
 	NORMAL_MATRIX,		// 13
 	CAMERA_POS,			// 14
+	FINAL_MATRIX,		// 15
 
 	TINT_COLOR = 30,	// 30
 	SATURATION_COLOR,	// 31
@@ -53,6 +54,8 @@ enum SHADER_LOCATIONS {
 	DIFFUSE,			// 42
 	SPECULAR,			// 43
 
+	L_POS = 45,			// 45
+	MAX_HEIGHT = 46,	// 46
 	LIT = 47,			// 47
 	L_GLOBAL_A = 48,	// 48
 	L_GLOBAL_B = 49,	// 49
@@ -83,9 +86,10 @@ private:
 	Vector3D m_clearColor;
 
 	const GameObject* m_pActiveCamera;
-	std::map<std::string, ShaderProgram *> m_shaderPrograms;
+	std::map<std::string, GLint> m_shaderNamesToIds;
+	std::map<GLint, ShaderProgram *> m_shaderPrograms;
 	ShaderProgram * m_pCurrentProgram;
-	std::string m_debugShaderName;
+	GLint m_debugShaderID;
 
 	bool m_isFullscreen;
 
@@ -119,6 +123,8 @@ private:
 	void _BindUniform4(SHADER_LOCATIONS location, const Vector3D& values);
 
 	void _SetRendererLogicalSize(const Resolution& resolution);
+
+	ShaderProgram * _CreateShaderProgram(std::string programName, std::string filePath, const json& j);
 public:
 	RenderManager(int width = 1200, int height = 800, std::string title = "Default Window Title");
 	~RenderManager();
@@ -179,11 +185,12 @@ public:
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, bufferData);
 	}
 
-	void LoadShaders(const std::vector<std::string>& shaders);
-	void SetDebugShaderName(std::string shaderName) { m_debugShaderName = shaderName; }
-	void LoadShaderProgram(std::string filePath, std::string fileName);
-	ShaderProgram * GetShaderProgram(std::string programName);
-	ShaderProgram * CreateShaderProgram(std::string programName);
+	void LoadShaders(const std::vector<std::string>& shaders, const std::string& debugShaderName);
+	void SetDebugShaderID(GLint programID) { m_debugShaderID = programID; }
+	void LoadShaderProgram(std::string filePath, std::string fileName, const std::string& debugShaderName);
+	inline ShaderProgram * GetShaderProgram(std::string programName) { return m_shaderPrograms[m_shaderNamesToIds[programName]]; }
+	inline ShaderProgram * GetShaderProgram(GLint programID) { return m_shaderPrograms[programID]; }
+	inline GLint GetShaderIDByName(std::string programName) { return m_shaderNamesToIds[programName]; }
 
 	Shader * CreateVertexShader(std::string vertexShaderText);
 	Shader * CreateVertexShaderFromFile(std::string fileName);
@@ -192,7 +199,8 @@ public:
 
 	/* Returns true if the shader program was actually changed, 
 	false if it was not (redundant shader selection or invalid shader) */
-	bool SelectShaderProgram(const std::string& programName);
+	//bool SelectShaderProgram(const std::string& programName);
+	bool SelectShaderProgram(GLint programID);
 };
 
 #endif

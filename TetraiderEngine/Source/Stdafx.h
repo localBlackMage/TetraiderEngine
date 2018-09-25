@@ -154,6 +154,7 @@ using namespace JsonReader;
 #include <Body.h>
 
 // Components - Rendering
+#include <Renderable.h>
 #include <MeshComponent.h>
 #include <FBOSprite.h>
 #include <Sprite.h>
@@ -165,6 +166,7 @@ using namespace JsonReader;
 #include <LightBase.h>
 #include <PointLight.h>
 #include <LetterBox.h>
+#include <HeightMap.h>
 
 #include <Stamina.h>
 

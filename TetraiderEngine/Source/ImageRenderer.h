@@ -13,13 +13,12 @@ Author: <Holden Profit>
 class ImageRenderer
 {
 private:
+	std::string m_shader;
 	ShaderProgram* m_pShader;
 	FrameBufferObject* m_pFBO;
 	Mesh& m_mesh;
 
 public:
-	//ImageRenderer();
-	//ImageRenderer(ShaderProgram* pShader, FrameBufferObject* pFBO);
 	ImageRenderer();
 	ImageRenderer(ShaderProgram*, GLsizei, GLsizei, FBOType);
 	~ImageRenderer();
@@ -61,12 +60,12 @@ public:
 	Renders this Image Renderer's FBO to the given Image Renderer's FBO
 	with the supplied shader
 	*/
-	void RenderToIR(const ImageRenderer&, const ShaderProgram&) const;
+	inline void RenderToIR(const ImageRenderer& ir, const ShaderProgram& shader) const { RenderToFBO(*ir.m_pFBO, shader); }
 
-	void BindFBO();
-	void UnbindFBO();
+	inline void BindFBO() const { m_pFBO->BindFrameBuffer(); }
+	inline void UnbindFBO() const { m_pFBO->UnbindFrameBuffer(); }
 
-	void ClearBuffer(const Vector3D& color = Vector3D(0,0,0,0));
+	inline void ClearBuffer(const Vector3D& color = Vector3D(0,0,0,0)) { m_pFBO->ClearFrameBuffer(color); }
 };
 
 #endif

@@ -22,7 +22,14 @@
 		{
 			"Component": "Mesh",
 			"Mesh": "Suzy.obj",
-			"shader": "base3DShader"
+			"shader": "base3DShader",
+			"Texture2": "worldTexture2.jpg",
+			"Normal1": "worldNormal.jpg",
+			"Bump_": "worldBump.jpg"
+		},
+		{
+			"Component": "Spinner",
+			"speed": 25.0
 		}
     ]
 }

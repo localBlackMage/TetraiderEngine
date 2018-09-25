@@ -1,7 +1,12 @@
 {
-  "GAME_OBJECTS": [
-    {
-      "prefab": "P_CameraPersp"
-    }
-  ]
+	"GAME_OBJECTS": [
+		{
+			"prefab": "P_CameraPersp",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 50
+			}
+		}
+	]
 }
